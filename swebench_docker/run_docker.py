@@ -125,6 +125,10 @@ async def run_docker_evaluation(
             docker_image,
         ]
 
+    # cmd_string is for logging only. however,  executing it via create_subprocess_shell
+    # breaks when any argument (e.g. a checkout path) has a space, since the
+    # shell re-splits the joined string. create_subprocess_exec runs the list
+    # directly so no quoting is needed.
     cmd_string = " ".join(docker_command)
 
     if verbose:
@@ -133,8 +137,8 @@ async def run_docker_evaluation(
     start_time = time.time()
 
     try:
-        process = await asyncio.create_subprocess_shell(
-            cmd_string, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
+        process = await asyncio.create_subprocess_exec(
+            *docker_command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT
         )
         stdout, stderr = await process.communicate()
         # Decode stdout and stderr from bytes to str
