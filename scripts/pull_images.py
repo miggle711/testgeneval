@@ -27,14 +27,17 @@ def parse_makefile(makefile_path):
 
 
 def pull_images(images):
-    for image, _ in images[:2]:
+    # Was previously `images[:2]` -- pulled only the first 2 of ~100 images
+    # (just the shared base layers, no real per-repo testbed image), with no
+    # comment or upstream discussion explaining the limit. Removed so this
+    # actually pulls the full image set the Makefile defines.
+    for image, _ in images:
         try:
-            # Build the image
             image_updated = image.replace("aorwall/", "kdjain/")
             subprocess.run(["docker", "pull", image_updated], check=True)
 
         except subprocess.CalledProcessError as e:
-            print(f"Error building, pushing, or removing image: {image}")
+            print(f"Error pulling image: {image}")
             print(e)
             continue
 
