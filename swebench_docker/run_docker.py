@@ -105,7 +105,13 @@ async def run_docker_evaluation(
             "--rm",
             "--network",
             "host",
-            "--memory_swappiness" "5",
+            # was "--memory_swappiness" "5" -- adjacent string literals join
+            # into one element ("--memory_swappiness5"), and the flag name
+            # itself was wrong (docker uses a hyphen: --memory-swappiness).
+            # docker rejected it outright ("unknown flag"), so every
+            # non-fork-dir evaluation run failed before this fix.
+            "--memory-swappiness",
+            "5",
             "-v",
             f"{log_dir}:{container_log_dir}",
             "-e",

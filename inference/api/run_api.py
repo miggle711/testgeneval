@@ -261,7 +261,7 @@ def llama_405B_inference(
     top_p = model_args.pop("top_p", 0.95 if temperature > 0 else 1)
     print(f"Using temperature={temperature}, top_p={top_p}")
     basic_args = {
-        "model_name_or_path": model_name_or_path + f"t={temperature}",
+        "model_name_or_path": model_name_or_path + f"_t={temperature}",
     }
     total_cost = 0
     print(f"Filtered to {len(test_dataset)} instances")
@@ -342,6 +342,7 @@ def openai_inference(
     system_message,
     system_message_full,
     skip_full,
+    model_nickname=None,
 ):
     """
     Runs inference on a dataset using the openai API.
@@ -354,6 +355,14 @@ def openai_inference(
     existing_ids (set): A set of ids that have already been processed.
     max_cost (float): The maximum cost to spend on inference.
     num_samples (int): The number of samples to generate for each prompt.
+    model_nickname (str): Slash-free name recorded as the eval-time model
+        id (basic_args["model_name_or_path"]) -- the container-side eval
+        code embeds this raw into a log filename
+        (f"{id}.{model}.{setting}.eval.log"), so a model_name_or_path with
+        a "/" (e.g. "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit") breaks
+        that path. The real model_name_or_path is still used for the
+        actual API calls below. Defaults to model_name_or_path when there's
+        no "/" to strip.
     """
     # tiktoken only knows real OpenAI model names -- a locally served model
     # (e.g. via LOCAL_MODEL_BASE_URL) falls back to gpt-4's encoding, which
@@ -404,8 +413,9 @@ def openai_inference(
     temperature = model_args.pop("temperature", 0.2)
     top_p = model_args.pop("top_p", 0.95 if temperature > 0 else 1)
     print(f"Using temperature={temperature}, top_p={top_p}")
+    recorded_name = model_nickname if model_nickname else model_name_or_path
     basic_args = {
-        "model_name_or_path": model_name_or_path + f"t={temperature}",
+        "model_name_or_path": recorded_name + f"_t={temperature}",
     }
     total_cost = 0
     print(f"Filtered to {len(test_dataset)} instances")
@@ -610,7 +620,7 @@ def anthropic_inference(
     top_p = model_args.pop("top_p", 0.95 if temperature > 0 else 1)
     print(f"Using temperature={temperature}, top_p={top_p}")
     basic_args = {
-        "model_name_or_path": model_name_or_path + f"t={temperature}",
+        "model_name_or_path": model_name_or_path + f"_t={temperature}",
     }
     total_cost = 0
     print(f"Filtered to {len(test_dataset)} instances")
@@ -787,8 +797,11 @@ def main(
         # A model served locally via an OpenAI-compatible endpoint
         # (LOCAL_MODEL_BASE_URL set) uses the same call_chat/openai_inference
         # path real OpenAI models do -- it's the request shape that matters,
-        # not the model name.
-        openai_inference(**inference_args)
+        # not the model name. model_nickname is the slash-free name (e.g.
+        # a "mlx-community/..." model id) recorded as the eval-time model
+        # id, since the container-side eval code embeds it raw into a log
+        # filename.
+        openai_inference(**inference_args, model_nickname=model_nickname)
     else:
         raise ValueError(f"Invalid model name or path {model_name_or_path}")
     logger.info(f"Done!")

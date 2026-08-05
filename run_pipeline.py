@@ -157,9 +157,12 @@ if __name__ == "__main__":
                 dataset_name_or_path,
                 "--output_dir",
                 pred_dir,
-                "--num_samples_full",
-                str(args.num_samples_full),
-                "--num_samples_completion",
+                # run_api.py only accepts a single --num_samples (used for
+                # every completion setting; 'full' is hardcoded to 1 sample
+                # internally) -- --num_samples_full/--num_samples_completion
+                # aren't real run_api.py flags, this previously errored for
+                # every API model, not just a local one.
+                "--num_samples",
                 str(args.num_samples_completion),
             ] + model_extra_cmd
             subprocess.run(model_cmd)
