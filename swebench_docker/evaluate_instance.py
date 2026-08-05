@@ -329,7 +329,12 @@ def completion_processing(
                     f.write(full_prompt)
 
         if not skip_prompt:
-            tcm.run_tests_task(task_instance, skip_mutation=True)
+            # Was hardcoded skip_mutation=True, ignoring the real
+            # skip_mutation parameter this function receives -- mutation
+            # testing was structurally unreachable for every completion
+            # setting (first/last/extra), for any model, regardless of any
+            # --skip_mutation flag.
+            tcm.run_tests_task(task_instance, skip_mutation=skip_mutation)
         else:
             tcm.log.write(TESTS_FAILED)
 

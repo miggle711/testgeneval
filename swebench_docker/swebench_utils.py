@@ -93,13 +93,17 @@ def get_logs_eval(log_fp: str) -> Dict[str, dict]:
                     "coverage": [],
                     "test_time": [],
                     "test_error": [],
+                    # Mutation testing now runs for every setting (was
+                    # hardcoded off for completion settings in
+                    # evaluate_instance.py's completion_processing), so
+                    # these are no longer full-only.
+                    "mutation_score": [],
+                    "mutation_uncertainty": [],
+                    "mutation_num": [],
                 }
                 if setting == "full":
                     results[setting]["unfiltered_tests_passed"] = []
                     results[setting]["unfiltered_tests_compiled"] = []
-                    results[setting]["mutation_score"] = []
-                    results[setting]["mutation_uncertainty"] = []
-                    results[setting]["mutation_num"] = []
 
             if "CoverageLOG" in config:
                 coverage = (
@@ -115,37 +119,38 @@ def get_logs_eval(log_fp: str) -> Dict[str, dict]:
             else:
                 test_time = -1
 
+            if "MutationLOG" in config:
+                mutation_score = (
+                    float(config.split("MutationLOG: ")[1].split("%")[0])
+                    if test_passed
+                    else -1
+                )
+            else:
+                mutation_score = -1
+
+            if "MutationUncertainty" in config:
+                mutation_uncertainty = (
+                    float(config.split("MutationUncertainty: ")[1].split("\n")[0])
+                    if test_passed
+                    else -1
+                )
+            else:
+                mutation_uncertainty = -1
+
+            if "MutationNum" in config:
+                mutation_num = (
+                    float(config.split("MutationNum: ")[1].split("\n")[0])
+                    if test_passed
+                    else -1
+                )
+            else:
+                mutation_num = -1
+
+            results[setting]["mutation_score"].append(mutation_score)
+            results[setting]["mutation_uncertainty"].append(mutation_uncertainty)
+            results[setting]["mutation_num"].append(mutation_num)
+
             if setting == "full":
-                if "MutationLOG" in config:
-                    mutation_score = (
-                        float(config.split("MutationLOG: ")[1].split("%")[0])
-                        if test_passed
-                        else -1
-                    )
-                else:
-                    mutation_score = -1
-
-                if "MutationUncertainty" in config:
-                    mutation_uncertainty = (
-                        float(config.split("MutationUncertainty: ")[1].split("\n")[0])
-                        if test_passed
-                        else -1
-                    )
-                else:
-                    mutation_uncertainty = -1
-
-                if "MutationNum" in config:
-                    mutation_num = (
-                        float(config.split("MutationNum: ")[1].split("\n")[0])
-                        if test_passed
-                        else -1
-                    )
-                else:
-                    mutation_num = -1
-
-                results[setting]["mutation_score"].append(mutation_score)
-                results[setting]["mutation_uncertainty"].append(mutation_uncertainty)
-                results[setting]["mutation_num"].append(mutation_num)
                 results[setting]["unfiltered_tests_passed"].append(
                     unfiltered_tests_passed
                 )
@@ -324,6 +329,22 @@ def get_eval_report(
             if setting == "full":
                 add_execution_metric(
                     eval_sm, final_results, setting, {}, "mutation_score"
+                )
+            else:
+                # mutation_score is now parsed for every setting (see
+                # get_logs_eval), not just 'full'. add_execution_metric's
+                # non-full branch requires a real baseline_info dict keyed
+                # by EXECUTION_MAPPING[setting] (it computes an "improvement
+                # over baseline" delta) -- there's no equivalent "baseline
+                # mutation score" concept for a completion setting, so
+                # report the raw average directly instead of routing
+                # through that branch.
+                mutation_ds = eval_sm[setting]["mutation_score"]
+                mutation_non_negative = [m for m in mutation_ds if m >= 0]
+                final_results[f"{setting}_av_mutation_score"] = (
+                    sum(mutation_non_negative) / len(mutation_non_negative)
+                    if mutation_non_negative
+                    else -1
                 )
         else:
             final_results[f"{setting}_av_coverage"] = eval_sm[setting]["coverage"][0]
