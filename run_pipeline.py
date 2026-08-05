@@ -93,6 +93,22 @@ if __name__ == "__main__":
         action="store_true",
         help="(Optional) Skip completion inference",
     )
+    parser.add_argument(
+        "--prompt_config",
+        type=str,
+        choices=["instruct", "kg_only"],
+        default="instruct",
+        help="Which prompt strategy to use (passed through to "
+             "inference.api.run_api). 'kg_only' requires --kg_prompts_path "
+             "and --skip_full (no KG-only full-file prompt exists).",
+    )
+    parser.add_argument(
+        "--kg_prompts_path",
+        type=str,
+        default="kg_prompts.json",
+        help="Path to pre-computed KG prompts (only used with "
+             "--prompt_config kg_only).",
+    )
     args = parser.parse_args()
 
     print(
@@ -146,6 +162,9 @@ if __name__ == "__main__":
             model_extra_cmd += ["--azure"] if args.azure else []
             model_extra_cmd += ["--skip_full"] if args.skip_full else []
             model_extra_cmd += ["--skip_completion"] if args.skip_completion else []
+            model_extra_cmd += ["--prompt_config", args.prompt_config]
+            if args.prompt_config == "kg_only":
+                model_extra_cmd += ["--kg_prompts_path", args.kg_prompts_path]
             # Run model prediction
             model_cmd = [
                 "python",

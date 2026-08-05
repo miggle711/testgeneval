@@ -725,6 +725,8 @@ def main(
     max_cost,
     num_samples,
     skip_full,
+    prompt_config="instruct",
+    kg_prompts_path="kg_prompts.json",
 ):
     if shard_id is None and num_shards is not None:
         logger.warning(
@@ -734,7 +736,11 @@ def main(
         logger.warning(f"Received shard_id={shard_id} but num_shards is None, ignoring")
     model_args = parse_model_args(model_args)
 
-    prompt_info = InstructPrompt()
+    if prompt_config == "kg_only":
+        from inference.configs.kg_only_prompt import KGOnlyPrompt
+        prompt_info = KGOnlyPrompt(prompts_path=kg_prompts_path)
+    else:
+        prompt_info = InstructPrompt()
 
     model_nickname = model_name_or_path
     if "checkpoint" in Path(model_name_or_path).name:
@@ -873,6 +879,24 @@ if __name__ == "__main__":
         "--skip_full",
         help="Whether to skip full setting.",
         action="store_true",
+    )
+    parser.add_argument(
+        "--prompt_config",
+        type=str,
+        choices=["instruct", "kg_only"],
+        default="instruct",
+        help="Which prompt strategy to use. 'instruct' (default) builds "
+             "prompts from code_src/test_src. 'kg_only' reads pre-computed "
+             "KG-derived prompts from --kg_prompts_path (no 'full' setting "
+             "supported -- pass --skip_full).",
+    )
+    parser.add_argument(
+        "--kg_prompts_path",
+        type=str,
+        default="kg_prompts.json",
+        help="Path to a JSON file of pre-computed KG prompts "
+             "(scripts/build_kg_prompts.py in repo-kg-construction). "
+             "Only used when --prompt_config kg_only.",
     )
     args = parser.parse_args()
     print(args.model_args)
