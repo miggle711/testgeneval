@@ -38,6 +38,7 @@ if __name__ == "__main__":
             "google/gemma-2-9b-it",
             "google/gemma-2-27b-it",
             "baseline",
+            "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit",
         ],
         required=True,
     )
@@ -137,6 +138,7 @@ if __name__ == "__main__":
         "gpt-4-turbo-2024-04-09",
         "gpt-3.5-turbo-0125",
         "Meta-Llama-3.1-405B-Instruct",
+        "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit",
     ]
     if not os.path.exists(preds_file):
         if args.model in API_MODELS:

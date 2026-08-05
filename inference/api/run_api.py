@@ -28,12 +28,16 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(mess
 logger = logging.getLogger(__name__)
 dotenv.load_dotenv()
 
+# mlx-community/Meta-Llama-3.1-8B-Instruct-4bit: served locally (e.g. via an
+# OpenAI-compatible local server), not a real OpenAI model -- 0 cost, and its
+# context window/output limit follow the underlying Llama-3.1-8B model.
 MODEL_LIMITS = {
     "gpt-3.5-turbo-0125": 16_385,
     "gpt-4-turbo-2024-04-09": 128_000,
     "gpt-4o-2024-05-13": 128_000,
     "gpt-4-0613": 8_192,
     "Meta-Llama-3.1-405B-Instruct": 128_000,
+    "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit": 128_000,
 }
 
 # The cost per token for each model input.
@@ -43,6 +47,7 @@ MODEL_COST_PER_INPUT = {
     "gpt-4o-2024-05-13": 0.000005,
     "gpt-4-0613": 0.00001,
     "Meta-Llama-3.1-405B-Instruct": 0,
+    "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit": 0,
 }
 
 # The cost per token for each model output.
@@ -52,6 +57,7 @@ MODEL_COST_PER_OUTPUT = {
     "gpt-4o-2024-05-13": 0.000015,
     "gpt-4-0613": 0.00003,
     "Meta-Llama-3.1-405B-Instruct": 0,
+    "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit": 0,
 }
 
 OUTPUT_LIMITS = {
@@ -60,6 +66,7 @@ OUTPUT_LIMITS = {
     "gpt-4o-2024-05-13": 4_096,
     "gpt-4-0613": 8_192,
     "Meta-Llama-3.1-405B-Instruct": 4_096,
+    "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit": 4_096,
 }
 
 EPSILON = 1000
@@ -348,7 +355,14 @@ def openai_inference(
     max_cost (float): The maximum cost to spend on inference.
     num_samples (int): The number of samples to generate for each prompt.
     """
-    encoding = tiktoken.encoding_for_model(model_name_or_path)
+    # tiktoken only knows real OpenAI model names -- a locally served model
+    # (e.g. via LOCAL_MODEL_BASE_URL) falls back to gpt-4's encoding, which
+    # is a reasonable approximation for token-count-based truncation, not an
+    # exact match for the local model's own tokenizer.
+    try:
+        encoding = tiktoken.encoding_for_model(model_name_or_path)
+    except KeyError:
+        encoding = tiktoken.encoding_for_model("gpt-4")
     model_limit = (
         MODEL_LIMITS[model_name_or_path] - OUTPUT_LIMITS[model_name_or_path] - EPSILON
     )
@@ -368,13 +382,24 @@ def openai_inference(
 
     test_dataset = test_dataset.map(truncate_prompts, load_from_cache_file=False)
 
-    openai_key = os.environ.get("OPENAI_API_KEY", None)
-    if openai_key is None:
-        raise ValueError(
-            "Must provide an api key. Expected in OPENAI_API_KEY environment variable."
-        )
-    openai.api_key = openai_key
-    print(f"Using OpenAI key {'*' * max(0, len(openai_key)-5) + openai_key[-5:]}")
+    # LOCAL_MODEL_BASE_URL (e.g. http://127.0.0.1:8000/v1/: trailing slash
+    # required, or the openai client concatenates the path without a
+    # separator and every request 404s) points the openai client at a local
+    # OpenAI-compatible server instead of api.openai.com. No real API key
+    # needed, since it's not actually OpenAI.
+    local_base_url = os.environ.get("LOCAL_MODEL_BASE_URL")
+    if local_base_url:
+        openai.base_url = local_base_url
+        openai.api_key = "not-needed"
+        print(f"Using local model server at {local_base_url}")
+    else:
+        openai_key = os.environ.get("OPENAI_API_KEY", None)
+        if openai_key is None:
+            raise ValueError(
+                "Must provide an api key. Expected in OPENAI_API_KEY environment variable."
+            )
+        openai.api_key = openai_key
+        print(f"Using OpenAI key {'*' * max(0, len(openai_key)-5) + openai_key[-5:]}")
     print(model_args)
     temperature = model_args.pop("temperature", 0.2)
     top_p = model_args.pop("top_p", 0.95 if temperature > 0 else 1)
@@ -758,7 +783,11 @@ def main(
         anthropic_inference(**inference_args)
     elif model_name_or_path == "Meta-Llama-3.1-405B-Instruct":
         llama_405B_inference(**inference_args)
-    elif model_name_or_path.startswith("gpt"):
+    elif model_name_or_path.startswith("gpt") or os.environ.get("LOCAL_MODEL_BASE_URL"):
+        # A model served locally via an OpenAI-compatible endpoint
+        # (LOCAL_MODEL_BASE_URL set) uses the same call_chat/openai_inference
+        # path real OpenAI models do -- it's the request shape that matters,
+        # not the model name.
         openai_inference(**inference_args)
     else:
         raise ValueError(f"Invalid model name or path {model_name_or_path}")
