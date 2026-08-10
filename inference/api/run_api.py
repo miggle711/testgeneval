@@ -128,9 +128,14 @@ def calc_cost(model_name, input_tokens, output_tokens):
     Returns:
     float: The cost of the response.
     """
+    # .get(..., 0): an unregistered model (any model served via
+    # LOCAL_MODEL_BASE_URL that hasn't been added to these dicts -- e.g.
+    # each of the ~8 planned M3 models) has no real per-token pricing here,
+    # so cost is 0 rather than a KeyError. Add a real entry if accurate
+    # cost tracking matters for that model.
     cost = (
-        MODEL_COST_PER_INPUT[model_name] * input_tokens
-        + MODEL_COST_PER_OUTPUT[model_name] * output_tokens
+        MODEL_COST_PER_INPUT.get(model_name, 0) * input_tokens
+        + MODEL_COST_PER_OUTPUT.get(model_name, 0) * output_tokens
     )
     logger.info(
         f"input_tokens={input_tokens}, output_tokens={output_tokens}, cost={cost:.2f}"
@@ -423,8 +428,14 @@ def openai_inference(
         encoding = tiktoken.encoding_for_model(model_name_or_path)
     except KeyError:
         encoding = tiktoken.encoding_for_model("gpt-4")
+    # .get(..., default): an unregistered model served via
+    # LOCAL_MODEL_BASE_URL (e.g. one of the ~8 planned M3 models before
+    # it's added to MODEL_LIMITS/OUTPUT_LIMITS) falls back to a
+    # conservative default rather than a KeyError. Add real entries once a
+    # model's actual context window/output limit are known.
+    default_output_limit = OUTPUT_LIMITS.get(model_name_or_path, 4_096)
     model_limit = (
-        MODEL_LIMITS[model_name_or_path] - OUTPUT_LIMITS[model_name_or_path] - EPSILON
+        MODEL_LIMITS.get(model_name_or_path, 32_000) - default_output_limit - EPSILON
     )
 
     # Adjust dataset to truncate prompts to the last model_limit tokens
@@ -497,7 +508,7 @@ def openai_inference(
                             temperature,
                             top_p,
                             (
-                                OUTPUT_LIMITS[model_name_or_path]
+                                default_output_limit
                                 if prompt_name == "full"
                                 else 512
                             ),
