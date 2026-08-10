@@ -28,9 +28,51 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(mess
 logger = logging.getLogger(__name__)
 dotenv.load_dotenv()
 
+
+class _KeyRotator:
+    """Round-robins across multiple API keys for a custom OpenAI-compatible
+    endpoint (LOCAL_MODEL_BASE_URL) -- e.g. several separate Groq accounts,
+    to multiply effective per-minute throughput when one key's rate limit
+    is too small for the request volume. Only active when
+    LOCAL_MODEL_KEY_PREFIX is set; a single-key setup (LOCAL_MODEL_API_KEY)
+    is unaffected. Does not help an individual request that's larger than
+    any one key's per-request limit -- only spreads separate requests
+    across more quota.
+    """
+
+    def __init__(self, prefix: str):
+        self.keys = [
+            v for k, v in sorted(os.environ.items())
+            if k.endswith(prefix) and v
+        ]
+        self._i = 0
+
+    def next(self):
+        if not self.keys:
+            return None
+        key = self.keys[self._i % len(self.keys)]
+        self._i += 1
+        return key
+
+
+_key_rotator = None
+if os.environ.get("LOCAL_MODEL_KEY_PREFIX"):
+    _key_rotator = _KeyRotator(os.environ["LOCAL_MODEL_KEY_PREFIX"])
+    logger.info(f"Key rotation enabled: {len(_key_rotator.keys)} keys found "
+                f"matching suffix '{os.environ['LOCAL_MODEL_KEY_PREFIX']}'")
+
 # mlx-community/Meta-Llama-3.1-8B-Instruct-4bit: served locally (e.g. via an
 # OpenAI-compatible local server), not a real OpenAI model -- 0 cost, and its
 # context window/output limit follow the underlying Llama-3.1-8B model.
+#
+# llama-3.1-8b-instant: Groq-hosted (via LOCAL_MODEL_BASE_URL=
+# https://api.groq.com/openai/v1/, LOCAL_MODEL_API_KEY=<real groq key>).
+# Cost left at 0 -- Groq's real per-token pricing wasn't verified against a
+# live source when this was added; update MODEL_COST_PER_INPUT/OUTPUT with
+# real numbers from https://groq.com/pricing if accurate cost tracking
+# matters. Context window/output limit are Groq's documented values for
+# this model as of when this was added -- worth double-checking against
+# Groq's docs if this starts erroring on token limits.
 MODEL_LIMITS = {
     "gpt-3.5-turbo-0125": 16_385,
     "gpt-4-turbo-2024-04-09": 128_000,
@@ -38,6 +80,7 @@ MODEL_LIMITS = {
     "gpt-4-0613": 8_192,
     "Meta-Llama-3.1-405B-Instruct": 128_000,
     "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit": 128_000,
+    "llama-3.1-8b-instant": 128_000,
 }
 
 # The cost per token for each model input.
@@ -48,6 +91,7 @@ MODEL_COST_PER_INPUT = {
     "gpt-4-0613": 0.00001,
     "Meta-Llama-3.1-405B-Instruct": 0,
     "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit": 0,
+    "llama-3.1-8b-instant": 0,
 }
 
 # The cost per token for each model output.
@@ -58,6 +102,7 @@ MODEL_COST_PER_OUTPUT = {
     "gpt-4-0613": 0.00003,
     "Meta-Llama-3.1-405B-Instruct": 0,
     "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit": 0,
+    "llama-3.1-8b-instant": 0,
 }
 
 OUTPUT_LIMITS = {
@@ -67,6 +112,7 @@ OUTPUT_LIMITS = {
     "gpt-4-0613": 8_192,
     "Meta-Llama-3.1-405B-Instruct": 4_096,
     "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit": 4_096,
+    "llama-3.1-8b-instant": 8_192,
 }
 
 EPSILON = 1000
@@ -167,6 +213,11 @@ def call_chat(
         {"role": "system", "content": system_message},
         {"role": "user", "content": user_message},
     ]
+
+    if _key_rotator is not None:
+        next_key = _key_rotator.next()
+        if next_key:
+            openai.api_key = next_key
 
     try:
         response = openai.chat.completions.create(
@@ -391,16 +442,19 @@ def openai_inference(
 
     test_dataset = test_dataset.map(truncate_prompts, load_from_cache_file=False)
 
-    # LOCAL_MODEL_BASE_URL (e.g. http://127.0.0.1:8000/v1/: trailing slash
+    # LOCAL_MODEL_BASE_URL (e.g. http://127.0.0.1:8000/v1/ for a local
+    # server, or https://api.groq.com/openai/v1/ for Groq: trailing slash
     # required, or the openai client concatenates the path without a
-    # separator and every request 404s) points the openai client at a local
-    # OpenAI-compatible server instead of api.openai.com. No real API key
-    # needed, since it's not actually OpenAI.
+    # separator and every request 404s) points the openai client at any
+    # OpenAI-compatible endpoint instead of api.openai.com. Despite the
+    # name, this also covers real hosted providers like Groq, not just a
+    # local server -- LOCAL_MODEL_API_KEY supplies the real key for those;
+    # a genuinely local, unauthenticated server can leave it unset.
     local_base_url = os.environ.get("LOCAL_MODEL_BASE_URL")
     if local_base_url:
         openai.base_url = local_base_url
-        openai.api_key = "not-needed"
-        print(f"Using local model server at {local_base_url}")
+        openai.api_key = os.environ.get("LOCAL_MODEL_API_KEY", "not-needed")
+        print(f"Using custom OpenAI-compatible endpoint at {local_base_url}")
     else:
         openai_key = os.environ.get("OPENAI_API_KEY", None)
         if openai_key is None:
