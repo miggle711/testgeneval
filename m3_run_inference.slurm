@@ -33,6 +33,17 @@
 #   - DATASET_PATH: the filtered dataset (e.g. testgenevallite_django,
 #     produced locally via datasets.Dataset.save_to_disk) transferred to M3
 #   - TEMPERATURE: 0 / 0.5 / 1 per the planned sensitivity sweep
+#
+# Model storage: the ~8 planned open-weight models range from ~15GB
+# (7-8B) to ~140GB (70B) at float16 -- keeping several cached at once can
+# exceed the team's 150GB model-storage budget (e.g. 5 of the originally
+# discussed models total ~263GB together). DELETE_MODEL_AFTER_RUN=1
+# removes this run's HuggingFace cache entry once inference finishes, so
+# each model's full slice of jobs (all temperatures x both arms) can run
+# back-to-back without manual cleanup, at the cost of re-downloading if a
+# later job needs the same model again. Defaults to NOT deleting, since a
+# job that's one of several back-to-back runs on the same model shouldn't
+# force a redundant re-download for the next one.
 
 set -euo pipefail
 
@@ -44,6 +55,7 @@ DATASET_PATH="${DATASET_PATH:-CHANGE_ME}"
 OUTPUT_DIR="${OUTPUT_DIR:-$PWD/results/${PROMPT_CONFIG}}"
 VLLM_PORT="${VLLM_PORT:-8003}"
 TEMPERATURE="${TEMPERATURE:-0.2}"
+DELETE_MODEL_AFTER_RUN="${DELETE_MODEL_AFTER_RUN:-0}"   # 1 = delete this model's HF cache when done
 
 mkdir -p "$OUTPUT_DIR"
 
@@ -93,3 +105,26 @@ echo "Done. Predictions written under $OUTPUT_DIR"
 echo "Transfer that output back off M3 (e.g. scp/rsync) for Docker-based"
 echo "evaluation, since M3 does not support Docker -- see run_evaluation.py"
 echo "which must run elsewhere."
+
+# ---- Optional: free this model's disk space now that inference is done ----
+if [ "$DELETE_MODEL_AFTER_RUN" = "1" ]; then
+    echo "DELETE_MODEL_AFTER_RUN=1 -- removing HuggingFace cache for $MODEL"
+    # huggingface-cli's own cache tooling resolves the real cache dir for
+    # this exact model id rather than guessing a path -- safer than a
+    # hand-built rm -rf against ~/.cache/huggingface/hub/models--org--name,
+    # which breaks silently if HF's cache-dir naming scheme ever changes.
+    python3 -c "
+from huggingface_hub import scan_cache_dir
+model_id = '$MODEL'
+cache = scan_cache_dir()
+matches = [r for r in cache.repos if r.repo_id == model_id]
+if not matches:
+    print(f'No cached files found for {model_id}, nothing to delete.')
+else:
+    for repo in matches:
+        size_gb = repo.size_on_disk / 1e9
+        print(f'Deleting {repo.repo_id} ({size_gb:.1f} GB) from {repo.repo_path}')
+        strategy = cache.delete_revisions(*[rev.commit_hash for rev in repo.revisions])
+        strategy.execute()
+"
+fi
