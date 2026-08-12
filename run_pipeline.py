@@ -168,8 +168,11 @@ if __name__ == "__main__":
             model_extra_cmd += ["--skip_full"] if args.skip_full else []
             model_extra_cmd += ["--skip_completion"] if args.skip_completion else []
             model_extra_cmd += ["--prompt_config", args.prompt_config]
-            if args.prompt_config == "kg_only":
-                model_extra_cmd += ["--kg_prompts_path", args.kg_prompts_path]
+            # Forwarded regardless of prompt_config: run_api.py's instruct
+            # path also reads this, for its target_functions/target_classes
+            # focus-line wording (miggle711/pycodekg#125, this repo's #6) --
+            # not just kg_only, which needs it for the prompt content itself.
+            model_extra_cmd += ["--kg_prompts_path", args.kg_prompts_path]
             # Run model prediction
             model_cmd = [
                 "python",

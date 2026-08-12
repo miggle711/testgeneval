@@ -68,3 +68,16 @@ def get_first_method_partial_python(text_cleaned):
 
     # Join the lines of the first method to form the complete method body
     return "\n".join(first_method) if first_method else "this does not compile"
+
+
+def postprocess_python_output(text, is_full):
+    """Strip a ```python fence and return the full text or first method.
+
+    Shared by InstructPrompt and KGOnlyPrompt to avoid duplicating this
+    logic (and risking it drifting between the two).
+    """
+    text = text.replace("```python", "```")
+    if "```" not in text:
+        return "compilation error"
+    text_cleaned = text.split("```")[1].split("```")[0]
+    return text_cleaned if is_full else get_first_method_partial_python(text_cleaned)

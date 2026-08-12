@@ -3,7 +3,7 @@
 import json
 
 from datasets import Dataset, DatasetDict
-from inference.configs.config_utils import get_first_method_partial_python
+from inference.configs.config_utils import postprocess_python_output
 
 
 class InstructPrompt:
@@ -25,8 +25,10 @@ class InstructPrompt:
         if kg_prompts_path:
             with open(kg_prompts_path) as f:
                 kg_prompts = json.load(f)
+            # Keys coerced to str (JSON keys always are, dataset ids
+            # might not be) so a type mismatch can't cause silent misses.
             self._target_by_id = {
-                row_id: (
+                str(row_id): (
                     entry.get("target_functions", []),
                     entry.get("target_classes", []),
                 )
@@ -131,24 +133,21 @@ Next unit test Python code
         return self.SYSTEM_MESSAGE_FULL
 
     def postprocess_output(self, text, is_full):
-        text = text.replace("```python", "```")
-        if "```" not in text:
-            return "compilation error"
-        text_cleaned = text.split("```")[1].split("```")[0]
-        return (
-            text_cleaned if is_full else get_first_method_partial_python(text_cleaned)
-        )
+        return postprocess_python_output(text, is_full)
 
     def add_prompts_to_dataset(self, dataset, no_import=False, tokenizer=None):
         test_data = dataset["test"]
 
         new_arr = []
+        target_lookup_misses = 0
         for new_data in test_data:
             code_src = new_data["code_src"]
 
             target_functions, target_classes = self._target_by_id.get(
-                new_data["id"], ([], [])
+                str(new_data["id"]), ([], [])
             )
+            if self._target_by_id and not target_functions:
+                target_lookup_misses += 1
             targets = [
                 f"{cls}.{fn}" if cls else fn
                 for fn, cls in zip(target_functions, target_classes)
@@ -188,6 +187,16 @@ Next unit test Python code
                 "extra": extra_context,
             }
             new_arr.append(new_data)
+
+        # 100% miss against a non-empty kg_prompts.json signals a
+        # systemic problem (e.g. id type mismatch), not routine misses.
+        if self._target_by_id and len(new_arr) > 0 and target_lookup_misses == len(new_arr):
+            print(
+                f"WARNING: InstructPrompt found 0/{len(new_arr)} rows in "
+                f"kg_prompts.json despite it having {len(self._target_by_id)} "
+                f"entries -- check that dataset row ids match kg_prompts.json's "
+                f"keys."
+            )
 
         final_dataset = DatasetDict({"test": Dataset.from_list(new_arr)})
 

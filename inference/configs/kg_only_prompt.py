@@ -3,7 +3,7 @@
 import json
 
 from datasets import Dataset, DatasetDict
-from inference.configs.config_utils import get_first_method_partial_python
+from inference.configs.config_utils import postprocess_python_output
 
 
 class KGOnlyPrompt:
@@ -43,24 +43,27 @@ class KGOnlyPrompt:
         return self.SYSTEM_MESSAGE
 
     def postprocess_output(self, text, is_full):
-        text = text.replace("```python", "```")
-        if "```" not in text:
-            return "compilation error"
-        text_cleaned = text.split("```")[1].split("```")[0]
-        return (
-            text_cleaned if is_full else get_first_method_partial_python(text_cleaned)
-        )
+        return postprocess_python_output(text, is_full)
 
     def add_prompts_to_dataset(self, dataset, no_import=False, tokenizer=None):
         test_data = dataset["test"]
 
         new_arr = []
         missing = []
+        wrong_schema = []
         for new_data in test_data:
             row_id = new_data["id"]
             pre_computed = self._prompts_by_id.get(row_id)
             if pre_computed is None:
                 missing.append(row_id)
+                continue
+            if "prompt" not in pre_computed:
+                # Real gap seen in practice: a kg_prompts.json built by an
+                # older pycodekg (the retired completion-setting schema,
+                # {first, last, extra} keys instead of a single "prompt")
+                # would otherwise KeyError deep in this loop with no
+                # diagnostic pointing at the actual mismatch.
+                wrong_schema.append(row_id)
                 continue
 
             new_data["preds_prompts"] = {
@@ -73,6 +76,15 @@ class KGOnlyPrompt:
                 f"{len(missing)} row(s) have no pre-computed KG prompt "
                 f"(run build_kg_prompts.py first): {missing[:5]}"
                 + (" ..." if len(missing) > 5 else "")
+            )
+        if wrong_schema:
+            raise ValueError(
+                f"{len(wrong_schema)} row(s) have a kg_prompts.json entry "
+                f"with no 'prompt' key -- likely built by an older "
+                f"pycodekg (the retired completion-setting schema had "
+                f"first/last/extra keys instead). Rebuild kg_prompts.json "
+                f"with the current build_kg_prompts.py: {wrong_schema[:5]}"
+                + (" ..." if len(wrong_schema) > 5 else "")
             )
 
         final_dataset = DatasetDict({"test": Dataset.from_list(new_arr)})

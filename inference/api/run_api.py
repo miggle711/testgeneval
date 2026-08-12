@@ -476,12 +476,24 @@ def main(
         from inference.configs.kg_only_prompt import KGOnlyPrompt
         prompt_info = KGOnlyPrompt(prompts_path=kg_prompts_path)
     else:
-        # Also reads kg_prompts_path for target_function/target_class,
-        # so instruct focuses on the same changed function kg_only does.
-        # Falls back to unfocused prompts if the file doesn't exist.
-        prompt_info = InstructPrompt(
-            kg_prompts_path=kg_prompts_path if os.path.exists(kg_prompts_path) else None
-        )
+        # Also reads kg_prompts_path for target_functions/target_classes,
+        # so instruct focuses on the same changed function(s) kg_only
+        # does. Falls back to unfocused prompts if the file doesn't
+        # exist -- logged loudly, since os.path.exists is resolved
+        # against whatever CWD this process happens to run from (e.g.
+        # via subprocess from run_pipeline.py or the M3 slurm script),
+        # so a real file elsewhere can silently miss with no other signal.
+        if os.path.exists(kg_prompts_path):
+            resolved_kg_prompts_path = kg_prompts_path
+        else:
+            resolved_kg_prompts_path = None
+            logger.warning(
+                f"kg_prompts_path={kg_prompts_path!r} not found relative to "
+                f"cwd={os.getcwd()!r} -- instruct will use unfocused prompts "
+                f"(no target function/class wording). If this file exists "
+                f"elsewhere, pass an absolute path."
+            )
+        prompt_info = InstructPrompt(kg_prompts_path=resolved_kg_prompts_path)
 
     model_nickname = model_name_or_path
     if "checkpoint" in Path(model_name_or_path).name:
