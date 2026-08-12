@@ -76,20 +76,17 @@ CUDA_VISIBLE_DEVICES=0 vllm serve "$MODEL" \
 VLLM_PID=$!
 trap 'kill "$VLLM_PID" 2>/dev/null || true' EXIT
 
-# Wait for the server to actually be up before calling it -- a fixed sleep
+# Wait for the server to actually be up before calling it. a fixed sleep
 # is a placeholder; poll /v1/models instead if model load time varies a lot
 # across the ~8 planned models.
 sleep 60
 
 # ---- Run inference via this repo's proven run_api.py ----
-# NOTE: base_url needs a trailing slash (LOCAL_MODEL_BASE_URL=.../v1/, not
-# .../v1) -- the openai client concatenates the path without a separator
-# otherwise and every request 404s. This bit us with the local MLX/Groq
-# setup earlier; Aaron's example client code omits /v1 entirely, which is
-# a separate, real bug worth flagging to him if his script is used as-is.
-EXTRA_ARGS=(--skip_full)
+# Under the current test-generation scope, only the full setting is used
+# (see pycodekg's docs/EXPERIMENT_PLAN.md) -- skip completion, not full.
+EXTRA_ARGS=(--skip_completion --kg_prompts_path "$KG_PROMPTS_PATH")
 if [ "$PROMPT_CONFIG" = "kg_only" ]; then
-    EXTRA_ARGS+=(--prompt_config kg_only --kg_prompts_path "$KG_PROMPTS_PATH")
+    EXTRA_ARGS+=(--prompt_config kg_only)
 fi
 
 LOCAL_MODEL_BASE_URL="http://127.0.0.1:${VLLM_PORT}/v1/" \

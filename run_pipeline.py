@@ -100,15 +100,18 @@ if __name__ == "__main__":
         choices=["instruct", "kg_only"],
         default="instruct",
         help="Which prompt strategy to use (passed through to "
-             "inference.api.run_api). 'kg_only' requires --kg_prompts_path "
-             "and --skip_full (no KG-only full-file prompt exists).",
+             "inference.api.run_api). Under the current test-generation "
+             "scope, both 'instruct' and 'kg_only' only support 'full' "
+             "-- pass --skip_completion, not --skip_full.",
     )
     parser.add_argument(
         "--kg_prompts_path",
         type=str,
         default="kg_prompts.json",
-        help="Path to pre-computed KG prompts (only used with "
-             "--prompt_config kg_only).",
+        help="Path to pre-computed KG prompts (scripts/build_kg_prompts.py "
+             "in pycodekg). Required for --prompt_config kg_only; also "
+             "read by 'instruct' for its target_function/target_class "
+             "focus wording.",
     )
     args = parser.parse_args()
 
@@ -165,8 +168,11 @@ if __name__ == "__main__":
             model_extra_cmd += ["--skip_full"] if args.skip_full else []
             model_extra_cmd += ["--skip_completion"] if args.skip_completion else []
             model_extra_cmd += ["--prompt_config", args.prompt_config]
-            if args.prompt_config == "kg_only":
-                model_extra_cmd += ["--kg_prompts_path", args.kg_prompts_path]
+            # Forwarded regardless of prompt_config: run_api.py's instruct
+            # path also reads this, for its target_functions/target_classes
+            # focus-line wording (miggle711/pycodekg#125, this repo's #6) --
+            # not just kg_only, which needs it for the prompt content itself.
+            model_extra_cmd += ["--kg_prompts_path", args.kg_prompts_path]
             # Run model prediction
             model_cmd = [
                 "python",
