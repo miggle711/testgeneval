@@ -12,11 +12,12 @@ class InstructPrompt:
         Args:
             kg_prompts_path: Path to the same kg_prompts.json the kg_only
                 arm reads (built by pycodekg's build_kg_prompts.py). Used
-                only for its target_function/target_class fields, to name
-                the same changed function to this arm that kg_only's own
-                patch-seeded subgraph already focuses on -- see
-                miggle711/pycodekg#125, miggle711/testgeneval#6. If not
-                given, prompts fall back to their original, unfocused
+                only for its target_functions/target_classes fields (both
+                lists -- a patch can change more than one function), to
+                name the same changed function(s) to this arm that
+                kg_only's own patch-seeded subgraph already focuses on --
+                see miggle711/pycodekg#125, miggle711/testgeneval#6. If
+                not given, prompts fall back to their original, unfocused
                 wording (no crash -- lets instruct run standalone without
                 a pycodekg-side build having happened first).
         """
@@ -25,7 +26,10 @@ class InstructPrompt:
             with open(kg_prompts_path) as f:
                 kg_prompts = json.load(f)
             self._target_by_id = {
-                row_id: (entry.get("target_function"), entry.get("target_class"))
+                row_id: (
+                    entry.get("target_functions", []),
+                    entry.get("target_classes", []),
+                )
                 for row_id, entry in kg_prompts.items()
             }
 
@@ -76,8 +80,8 @@ Unit test Python code (file level)
 ```
 """
 
-        # Named per instance's changed function/class, from
-        # target_function/target_class (merged in from pycodekg's
+        # Named per instance's changed function(s)/class(es), from
+        # target_functions/target_classes (merged in from pycodekg's
         # build_kg_prompts.py output before add_prompts_to_dataset runs)
         # -- not from patch/test_patch content itself, which stay
         # evaluation-only for both arms. Matches kg_only's own
@@ -85,11 +89,16 @@ Unit test Python code (file level)
         # ("focus on this function") rather than kg_only silently
         # answering a narrower task than instruct's generic "test this
         # file" wording (miggle711/pycodekg#125,
-        # miggle711/testgeneval#6). Empty when no target_function is
-        # available for a row, so the prompt degrades to its original,
-        # unfocused wording rather than failing.
-        self.FOCUS_LINE_TEMPLATE = (
+        # miggle711/testgeneval#6). A patch can change more than one
+        # function -- both templates handle a single target or several.
+        # Empty when no targets are available for a row, so the prompt
+        # degrades to its original, unfocused wording rather than failing.
+        self.FOCUS_LINE_TEMPLATE_SINGLE = (
             "\nPay particular attention to testing `{target}`, which was "
+            "recently modified.\n"
+        )
+        self.FOCUS_LINE_TEMPLATE_MULTI = (
+            "\nPay particular attention to testing {targets}, which were "
             "recently modified.\n"
         )
 
@@ -137,14 +146,19 @@ Next unit test Python code
         for new_data in test_data:
             code_src = new_data["code_src"]
 
-            target_function, target_class = self._target_by_id.get(
-                new_data["id"], (None, None)
+            target_functions, target_classes = self._target_by_id.get(
+                new_data["id"], ([], [])
             )
-            if target_function:
-                target = (
-                    f"{target_class}.{target_function}" if target_class else target_function
-                )
-                focus_line = self.FOCUS_LINE_TEMPLATE.format(target=target)
+            targets = [
+                f"{cls}.{fn}" if cls else fn
+                for fn, cls in zip(target_functions, target_classes)
+                if fn
+            ]
+            if len(targets) == 1:
+                focus_line = self.FOCUS_LINE_TEMPLATE_SINGLE.format(target=targets[0])
+            elif len(targets) > 1:
+                targets_str = ", ".join(f"`{t}`" for t in targets)
+                focus_line = self.FOCUS_LINE_TEMPLATE_MULTI.format(targets=targets_str)
             else:
                 focus_line = ""
 
