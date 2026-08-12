@@ -256,134 +256,135 @@ def claude_tokenize(string: str, api) -> int:
     return num_tokens
 
 
-def llama_405B_inference(
-    test_dataset,
-    model_name_or_path,
-    output_file,
-    model_args,
-    existing_ids,
-    max_cost,
-    num_samples,
-    postprocess_fn,
-    system_message,
-    system_message_full,
-    skip_full,
-):
-    """
-    Runs inference on a dataset using the openai API.
+# def llama_405B_inference(
+#     test_dataset,
+#     model_name_or_path,
+#     output_file,
+#     model_args,
+#     existing_ids,
+#     max_cost,
+#     num_samples,
+#     postprocess_fn,
+#     system_message,
+#     system_message_full,
+#     skip_full,
+#     skip_completion=False,
+# ):
+#     """
+#     Runs inference on a dataset using the openai API.
 
-    Args:
-    test_dataset (datasets.Dataset): The dataset to run inference on.
-    model_name_or_path (str): The name or path of the model to use.
-    output_file (str): The path to the output file.
-    model_args (dict): A dictionary of model arguments.
-    existing_ids (set): A set of ids that have already been processed.
-    max_cost (float): The maximum cost to spend on inference.
-    num_samples (int): The number of samples to generate for each prompt.
-    """
-    tokenizer = AutoTokenizer.from_pretrained(
-        "meta-llama/Meta-Llama-3.1-405B-Instruct",
-        trust_remote_code=True,
-        use_auth_token=True,
-        truncation_side="left",
-        padding_side="right",
-    )
-    model_limit = (
-        MODEL_LIMITS[model_name_or_path] - OUTPUT_LIMITS[model_name_or_path] - EPSILON
-    )
+#     Args:
+#     test_dataset (datasets.Dataset): The dataset to run inference on.
+#     model_name_or_path (str): The name or path of the model to use.
+#     output_file (str): The path to the output file.
+#     model_args (dict): A dictionary of model arguments.
+#     existing_ids (set): A set of ids that have already been processed.
+#     max_cost (float): The maximum cost to spend on inference.
+#     num_samples (int): The number of samples to generate for each prompt.
+#     """
+#     tokenizer = AutoTokenizer.from_pretrained(
+#         "meta-llama/Meta-Llama-3.1-405B-Instruct",
+#         trust_remote_code=True,
+#         use_auth_token=True,
+#         truncation_side="left",
+#         padding_side="right",
+#     )
+#     model_limit = (
+#         MODEL_LIMITS[model_name_or_path] - OUTPUT_LIMITS[model_name_or_path] - EPSILON
+#     )
 
-    def truncate_prompts(example):
-        truncated = {}
-        max_len = 0
-        for key, prompt in example["preds_prompts"].items():
-            tokens = tokenizer.encode(prompt)
-            curr_len = min(len(tokens), model_limit)
-            if curr_len > max_len:
-                max_len = curr_len
-            if len(tokens) > model_limit:
-                # Truncate to the last model_limit tokens and decode back to text
-                truncated_tokens = tokens[-model_limit:]
-                truncated[key] = tokenizer.decode(
-                    truncated_tokens
-                )  # Assuming direct slicing works, adjust if necessary
-            else:
-                truncated[key] = prompt
-        example["preds_prompts"] = truncated
-        return example
+#     def truncate_prompts(example):
+#         truncated = {}
+#         max_len = 0
+#         for key, prompt in example["preds_prompts"].items():
+#             tokens = tokenizer.encode(prompt)
+#             curr_len = min(len(tokens), model_limit)
+#             if curr_len > max_len:
+#                 max_len = curr_len
+#             if len(tokens) > model_limit:
+#                 # Truncate to the last model_limit tokens and decode back to text
+#                 truncated_tokens = tokens[-model_limit:]
+#                 truncated[key] = tokenizer.decode(
+#                     truncated_tokens
+#                 )  # Assuming direct slicing works, adjust if necessary
+#             else:
+#                 truncated[key] = prompt
+#         example["preds_prompts"] = truncated
+#         return example
 
-    test_dataset = test_dataset.map(truncate_prompts, load_from_cache_file=False)
-    print(model_args)
-    temperature = model_args.pop("temperature", 0.2)
-    top_p = model_args.pop("top_p", 0.95 if temperature > 0 else 1)
-    print(f"Using temperature={temperature}, top_p={top_p}")
-    basic_args = {
-        "model_name_or_path": model_name_or_path + f"_t={temperature}",
-    }
-    total_cost = 0
-    print(f"Filtered to {len(test_dataset)} instances")
-    with open(output_file, "a+") as f:
-        for datum in tqdm(test_dataset, desc=f"Inference for {model_name_or_path}"):
-            print(datum.keys())
-            curr_id = datum["id"]
-            if curr_id in existing_ids:
-                continue
-            output_dict = {"id": curr_id, "instance_id": datum["instance_id"]}
-            output_dict.update(basic_args)
-            output_dict["preds_prompts"] = datum["preds_prompts"]
-            output_dict["preds"] = {}
-            failed = False
-            headers = frozendict(
-                {
-                    "Content-Type": "application/json",
-                }
-            )
-            client = OpenAI(base_url=f"http://$HOSTNAME:8000/v1", api_key="EMPTY")
-            for prompt_name, prompt_text in datum["preds_prompts"].items():
-                prompt_predictions = []
-                num_samples_curr = 1 if prompt_name == "full" else num_samples
-                if skip_full and prompt_name == "full":
-                    continue
-                for _ in range(num_samples_curr):
-                    try:
-                        response, cost = call_chat_llama_405B(
-                            model_name_or_path,
-                            client,
-                            prompt_text,
-                            temperature,
-                            top_p,
-                            (
-                                OUTPUT_LIMITS[model_name_or_path]
-                                if prompt_name == "full"
-                                else 512
-                            ),
-                            (
-                                system_message_full
-                                if prompt_name == "full"
-                                else system_message
-                            ),
-                        )
-                        completion = response
-                        prompt_predictions.append(
-                            postprocess_fn(completion, prompt_name == "full")
-                        )
-                        total_cost += cost
-                        if max_cost is not None and total_cost >= max_cost:
-                            print(f"Reached max cost {max_cost}, exiting")
-                            return
-                    except Exception as e:
-                        print(f"Error: {e}")
-                        failed = True
+#     test_dataset = test_dataset.map(truncate_prompts, load_from_cache_file=False)
+#     print(model_args)
+#     temperature = model_args.pop("temperature", 0.2)
+#     top_p = model_args.pop("top_p", 0.95 if temperature > 0 else 1)
+#     print(f"Using temperature={temperature}, top_p={top_p}")
+#     basic_args = {
+#         "model_name_or_path": model_name_or_path + f"_t={temperature}",
+#     }
+#     total_cost = 0
+#     print(f"Filtered to {len(test_dataset)} instances")
+#     with open(output_file, "a+") as f:
+#         for datum in tqdm(test_dataset, desc=f"Inference for {model_name_or_path}"):
+#             print(datum.keys())
+#             curr_id = datum["id"]
+#             if curr_id in existing_ids:
+#                 continue
+#             output_dict = {"id": curr_id, "instance_id": datum["instance_id"]}
+#             output_dict.update(basic_args)
+#             output_dict["preds_prompts"] = datum["preds_prompts"]
+#             output_dict["preds"] = {}
+#             failed = False
+#             headers = frozendict(
+#                 {
+#                     "Content-Type": "application/json",
+#                 }
+#             )
+#             client = OpenAI(base_url=f"http://$HOSTNAME:8000/v1", api_key="EMPTY")
+#             for prompt_name, prompt_text in datum["preds_prompts"].items():
+#                 prompt_predictions = []
+#                 num_samples_curr = 1 if prompt_name == "full" else num_samples
+#                 if skip_full and prompt_name == "full":
+#                     continue
+#                 for _ in range(num_samples_curr):
+#                     try:
+#                         response, cost = call_chat_llama_405B(
+#                             model_name_or_path,
+#                             client,
+#                             prompt_text,
+#                             temperature,
+#                             top_p,
+#                             (
+#                                 OUTPUT_LIMITS[model_name_or_path]
+#                                 if prompt_name == "full"
+#                                 else 512
+#                             ),
+#                             (
+#                                 system_message_full
+#                                 if prompt_name == "full"
+#                                 else system_message
+#                             ),
+#                         )
+#                         completion = response
+#                         prompt_predictions.append(
+#                             postprocess_fn(completion, prompt_name == "full")
+#                         )
+#                         total_cost += cost
+#                         if max_cost is not None and total_cost >= max_cost:
+#                             print(f"Reached max cost {max_cost}, exiting")
+#                             return
+#                     except Exception as e:
+#                         print(f"Error: {e}")
+#                         failed = True
 
-                    if failed:
-                        break
-                if failed:
-                    break
-                output_dict["preds"][prompt_name] = prompt_predictions
-            if not failed:
-                print(json.dumps(output_dict), file=f, flush=True)
-                print(f"Total Cost: {total_cost:.2f}")
-            else:
-                print("Failed, skipping...")
+#                     if failed:
+#                         break
+#                 if failed:
+#                     break
+#                 output_dict["preds"][prompt_name] = prompt_predictions
+#             if not failed:
+#                 print(json.dumps(output_dict), file=f, flush=True)
+#                 print(f"Total Cost: {total_cost:.2f}")
+#             else:
+#                 print("Failed, skipping...")
 
 
 def openai_inference(
@@ -398,6 +399,7 @@ def openai_inference(
     system_message,
     system_message_full,
     skip_full,
+    skip_completion=False,
     model_nickname=None,
 ):
     """
@@ -499,6 +501,8 @@ def openai_inference(
                 prompt_predictions = []
                 num_samples_curr = 1 if prompt_name == "full" else num_samples
                 if skip_full and prompt_name == "full":
+                    continue
+                if skip_completion and prompt_name != "full":
                     continue
                 for _ in range(num_samples_curr):
                     try:
@@ -790,6 +794,7 @@ def main(
     max_cost,
     num_samples,
     skip_full,
+    skip_completion=False,
     prompt_config="instruct",
     kg_prompts_path="kg_prompts.json",
 ):
@@ -805,7 +810,12 @@ def main(
         from inference.configs.kg_only_prompt import KGOnlyPrompt
         prompt_info = KGOnlyPrompt(prompts_path=kg_prompts_path)
     else:
-        prompt_info = InstructPrompt()
+        # Also reads kg_prompts_path for target_function/target_class,
+        # so instruct focuses on the same changed function kg_only does.
+        # Falls back to unfocused prompts if the file doesn't exist.
+        prompt_info = InstructPrompt(
+            kg_prompts_path=kg_prompts_path if os.path.exists(kg_prompts_path) else None
+        )
 
     model_nickname = model_name_or_path
     if "checkpoint" in Path(model_name_or_path).name:
@@ -859,6 +869,7 @@ def main(
         "system_message": prompt_info.system_message,
         "system_message_full": prompt_info.system_message_full,
         "skip_full": skip_full,
+        "skip_completion": skip_completion,
     }
     if model_name_or_path.startswith("claude"):
         anthropic_inference(**inference_args)
@@ -946,22 +957,31 @@ if __name__ == "__main__":
         action="store_true",
     )
     parser.add_argument(
+        "--skip_completion",
+        help="Whether to skip the completion settings (first/last/extra).",
+        action="store_true",
+    )
+    parser.add_argument(
         "--prompt_config",
         type=str,
         choices=["instruct", "kg_only"],
         default="instruct",
         help="Which prompt strategy to use. 'instruct' (default) builds "
-             "prompts from code_src/test_src. 'kg_only' reads pre-computed "
-             "KG-derived prompts from --kg_prompts_path (no 'full' setting "
-             "supported -- pass --skip_full).",
+             "prompts from code_src/test_src ('full' setting only under "
+             "the current test-generation scope). 'kg_only' reads "
+             "pre-computed KG-derived prompts from --kg_prompts_path "
+             "('full' setting only).",
     )
     parser.add_argument(
         "--kg_prompts_path",
         type=str,
         default="kg_prompts.json",
         help="Path to a JSON file of pre-computed KG prompts "
-             "(scripts/build_kg_prompts.py in repo-kg-construction). "
-             "Only used when --prompt_config kg_only.",
+             "(scripts/build_kg_prompts.py in pycodekg). Required content "
+             "for --prompt_config kg_only; also read by --prompt_config "
+             "instruct for its target_function/target_class fields, so "
+             "both arms are told to focus on the same changed function "
+             "(miggle711/pycodekg#125, miggle711/testgeneval#6).",
     )
     args = parser.parse_args()
     print(args.model_args)

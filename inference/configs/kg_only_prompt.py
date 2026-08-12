@@ -7,28 +7,27 @@ from inference.configs.config_utils import get_first_method_partial_python
 
 
 class KGOnlyPrompt:
-    """KG-only completion prompt: reads pre-computed prompt text (built from
-    pycodekg's TestContextExtractor + LLMSerializer output, in a separate
-    repo/environment) instead of code_src/test_src.
+    """KG-only test-generation prompt: reads pre-computed prompt text
+    (built from pycodekg's TestContextExtractor + LLMSerializer output,
+    in a separate repo/environment) instead of code_src/test_src.
 
-    Deliberately different from InstructPrompt's additive design (whole
-    file + test fragment) -- this arm gets NO whole-file context at all,
-    only the seed function's own source plus structural context
-    (callers/callees/siblings/existing tests). Answers "does KG-only,
-    surgical context work as a substitute for the whole file," not "does
-    KG context help on top of it."
-
-    'full' setting is not supported (KG-only full-file generation is
-    separate, deferred work -- pycodekg-side issue tracking that) --
-    add_prompts_to_dataset raises if a row has no pre-computed prompt.
+    Targets TestGenEval's `full` setting only -- generate a complete test
+    file from scratch, given only the seed function's KG-derived
+    structural context (its own source, callers/callees/siblings,
+    existing tests already linked to it) instead of the whole code file.
+    No test content of any kind is shown to either arm under `full`, so
+    this is a fair comparison to instruct's `full`-setting prompt on the
+    test side; the completion settings (first/last/extra) are out of
+    scope for this arm (see miggle711/pycodekg's
+    docs/EXPERIMENT_PLAN.md for the scope decision).
     """
 
     SYSTEM_MESSAGE = (
-        "You are an expert Python software testing assistant. Your job is "
-        "to complete the next test given structural context about the "
-        "function under test (no full source file is provided -- work "
-        "from the function's own source and its callers/callees/related "
-        "tests)."
+        "You are an expert Python software testing assistant. Your job "
+        "is to generate a complete test file for the given code, using "
+        "structural context about the function under test (no full "
+        "source file is provided -- work from the function's own source "
+        "and its callers/callees/related tests)."
     )
 
     def __init__(self, prompts_path: str = "kg_prompts.json"):
@@ -41,23 +40,16 @@ class KGOnlyPrompt:
 
     @property
     def system_message_full(self):
-        # Read unconditionally by run_api.py's inference_args construction
-        # regardless of --skip_full, so this can't raise -- the real guard
-        # is postprocess_output(is_full=True) and add_prompts_to_dataset
-        # never producing a 'full' key, so this value is built but never
-        # actually sent to the model when --skip_full is passed.
         return self.SYSTEM_MESSAGE
 
     def postprocess_output(self, text, is_full):
-        if is_full:
-            raise NotImplementedError(
-                "KGOnlyPrompt has no 'full' setting -- pass --skip_full."
-            )
         text = text.replace("```python", "```")
         if "```" not in text:
             return "compilation error"
         text_cleaned = text.split("```")[1].split("```")[0]
-        return get_first_method_partial_python(text_cleaned)
+        return (
+            text_cleaned if is_full else get_first_method_partial_python(text_cleaned)
+        )
 
     def add_prompts_to_dataset(self, dataset, no_import=False, tokenizer=None):
         test_data = dataset["test"]
@@ -72,9 +64,7 @@ class KGOnlyPrompt:
                 continue
 
             new_data["preds_prompts"] = {
-                "first": pre_computed["first"],
-                "last": pre_computed["last"],
-                "extra": pre_computed["extra"],
+                "full": pre_computed["prompt"],
             }
             new_arr.append(new_data)
 

@@ -100,15 +100,18 @@ if __name__ == "__main__":
         choices=["instruct", "kg_only"],
         default="instruct",
         help="Which prompt strategy to use (passed through to "
-             "inference.api.run_api). 'kg_only' requires --kg_prompts_path "
-             "and --skip_full (no KG-only full-file prompt exists).",
+             "inference.api.run_api). Under the current test-generation "
+             "scope, both 'instruct' and 'kg_only' only support 'full' "
+             "-- pass --skip_completion, not --skip_full.",
     )
     parser.add_argument(
         "--kg_prompts_path",
         type=str,
         default="kg_prompts.json",
-        help="Path to pre-computed KG prompts (only used with "
-             "--prompt_config kg_only).",
+        help="Path to pre-computed KG prompts (scripts/build_kg_prompts.py "
+             "in pycodekg). Required for --prompt_config kg_only; also "
+             "read by 'instruct' for its target_function/target_class "
+             "focus wording.",
     )
     args = parser.parse_args()
 
