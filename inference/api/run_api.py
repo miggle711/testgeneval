@@ -142,53 +142,6 @@ def calc_cost(model_name, input_tokens, output_tokens):
 
 
 @retry(wait=wait_random_exponential(min=30, max=600), stop=stop_after_attempt(3))
-def call_chat_llama_405B(
-    model_name_or_path,
-    client,
-    inputs,
-    temperature,
-    top_p,
-    max_tokens,
-    system_message,
-    **model_args,
-):
-    """
-    Calls the OpenAI API to generate completions for the given inputs using the new API interface.
-
-    Args:
-        model_name_or_path (str): The name or path of the model to use.
-        inputs (str): The inputs to generate completions for.
-        temperature (float): The temperature to use.
-        top_p (float): The top_p to use.
-        **model_args (dict): Additional model arguments.
-
-    Returns:
-        tuple: A tuple containing the response and the cost of the completion.
-    """
-    user_message = inputs
-    messages = [
-        {"role": "system", "content": system_message},
-        {"role": "user", "content": user_message},
-    ]
-
-    model = "meta-llama/Meta-Llama-3.1-405B-Instruct"
-
-    try:
-        completion = client.chat.completions.create(
-            model=model,
-            messages=messages,
-            max_tokens=max_tokens,
-            temperature=temperature,
-        )
-        print(completion.choices[0].message.content)
-        return completion.choices[0].message.content, 0
-
-    except Exception as e:
-        print(f"API Error: {e}")
-        raise
-
-
-@retry(wait=wait_random_exponential(min=30, max=600), stop=stop_after_attempt(3))
 def call_chat(
     model_name_or_path,
     inputs,
@@ -246,14 +199,6 @@ def gpt_tokenize(string: str, encoding) -> int:
     """Returns the number of tokens in a text string."""
     num_tokens = len(encoding.encode(string))
     return num_tokens
-
-
-def claude_tokenize(string: str, api) -> int:
-    """Returns the number of tokens in a text string."""
-    num_tokens = api.count_tokens(string)
-    return num_tokens
-
-
 
 
 def openai_inference(
