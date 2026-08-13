@@ -58,7 +58,8 @@ conda activate "$CONDA_ENV"
 # found first without this. Without it, vllm fails to import
 # (confirmed real on M3: sqlite3 pulls in libicui18n, which needs a
 # CXXABI version the system libstdc++.so.6 doesn't have).
-export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
+# LD_LIBRARY_PATH isn't always already set, :- keeps set -u happy.
+export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:${LD_LIBRARY_PATH:-}"
 
 # dirname "$0" is unreliable under sbatch, SLURM can stage or invoke
 # the script in a way that leaves it resolving to "." (confirmed
