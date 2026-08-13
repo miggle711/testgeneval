@@ -525,8 +525,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "--model_name_or_path",
         type=str,
-        help="Name of API model. Update MODEL* constants in this file to add new models.",
-        choices=sorted(list(MODEL_LIMITS.keys())),
+        help="Name of API model, or a real HuggingFace model id for the "
+             "local/M3 vLLM path. Unknown models fall back to a "
+             "conservative default token limit (see MODEL_LIMITS.get).",
         default="gpt-3.5-turbo-1106",
     )
     parser.add_argument(
