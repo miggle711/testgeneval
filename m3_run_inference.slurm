@@ -46,6 +46,7 @@ mkdir -p "$OUTPUT_DIR" "$HF_HOME"
 export HF_HOME
 
 module load miniforge3
+source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate "$CONDA_ENV"
 
 cd "$(dirname "$0")"
