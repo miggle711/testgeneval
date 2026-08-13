@@ -100,55 +100,91 @@ def get_logs_eval(log_fp: str) -> Dict[str, dict]:
                     "mutation_score": [],
                     "mutation_uncertainty": [],
                     "mutation_num": [],
+                    "function_coverage": [],
+                    "function_mutation_score": [],
+                    "function_mutation_num": [],
                 }
                 if setting == "full":
                     results[setting]["unfiltered_tests_passed"] = []
                     results[setting]["unfiltered_tests_compiled"] = []
 
-            if "CoverageLOG" in config:
+            # "\n" markers below distinguish e.g. "CoverageLOG" from
+            # "FunctionCoverageLOG" (the latter contains the former as a
+            # substring), since both can appear in the same log block.
+            if "\nCoverageLOG" in config:
                 coverage = (
-                    float(config.split("CoverageLOG: ")[1].split("%")[0])
+                    float(config.split("\nCoverageLOG: ")[1].split("%")[0])
                     if test_passed
                     else -1
                 )
             else:
                 coverage = -1
 
+            if "\nFunctionCoverageLOG" in config:
+                function_coverage = (
+                    float(config.split("\nFunctionCoverageLOG: ")[1].split("%")[0])
+                    if test_passed
+                    else -1
+                )
+            else:
+                function_coverage = -1
+
             if "TestsTime: " in config:
                 test_time = float(config.split(f"TestsTime: ")[1].split("\n")[0])
             else:
                 test_time = -1
 
-            if "MutationLOG" in config:
+            if "\nMutationLOG" in config:
                 mutation_score = (
-                    float(config.split("MutationLOG: ")[1].split("%")[0])
+                    float(config.split("\nMutationLOG: ")[1].split("%")[0])
                     if test_passed
                     else -1
                 )
             else:
                 mutation_score = -1
 
-            if "MutationUncertainty" in config:
+            if "\nMutationUncertainty" in config:
                 mutation_uncertainty = (
-                    float(config.split("MutationUncertainty: ")[1].split("\n")[0])
+                    float(config.split("\nMutationUncertainty: ")[1].split("\n")[0])
                     if test_passed
                     else -1
                 )
             else:
                 mutation_uncertainty = -1
 
-            if "MutationNum" in config:
+            if "\nMutationNum" in config:
                 mutation_num = (
-                    float(config.split("MutationNum: ")[1].split("\n")[0])
+                    float(config.split("\nMutationNum: ")[1].split("\n")[0])
                     if test_passed
                     else -1
                 )
             else:
                 mutation_num = -1
 
+            if "\nFunctionMutationLOG" in config:
+                function_mutation_score = (
+                    float(config.split("\nFunctionMutationLOG: ")[1].split("%")[0])
+                    if test_passed
+                    else -1
+                )
+            else:
+                function_mutation_score = -1
+
+            if "\nFunctionMutationNum" in config:
+                function_mutation_num = (
+                    float(config.split("\nFunctionMutationNum: ")[1].split("\n")[0])
+                    if test_passed
+                    else -1
+                )
+            else:
+                function_mutation_num = -1
+
             results[setting]["mutation_score"].append(mutation_score)
             results[setting]["mutation_uncertainty"].append(mutation_uncertainty)
             results[setting]["mutation_num"].append(mutation_num)
+            results[setting]["function_coverage"].append(function_coverage)
+            results[setting]["function_mutation_score"].append(function_mutation_score)
+            results[setting]["function_mutation_num"].append(function_mutation_num)
 
             if setting == "full":
                 results[setting]["unfiltered_tests_passed"].append(
