@@ -18,16 +18,26 @@
 # python=3.9 for unrelated reasons (its dependency set covers this
 # whole repo, not just the inference path), so this env is built with
 # its own newer Python instead of matching that file.
+#
+# 3.12, not just 3.10+: vllm's flashinfer dependency uses
+# array.array[int] as a real type hint, which only became
+# subscriptable in Python 3.12 (confirmed real on M3, 3.11 crashed
+# loading the model with "type 'array.array' is not subscriptable").
 
 set -euo pipefail
 
 CONDA_ENV="${CONDA_ENV:-testgeneval-vllm}"
-PYTHON_VERSION="${PYTHON_VERSION:-3.11}"
+PYTHON_VERSION="${PYTHON_VERSION:-3.12}"
 
 module load miniforge3
 # conda activate needs the shell hook sourced first in a non
 # interactive script, module load alone doesn't always wire it up.
 source "$(conda info --base)/etc/profile.d/conda.sh"
+
+# conda create fails outright if the env already exists. Remove any
+# prior attempt first so this script can be re-run after a fix,
+# not just run once.
+conda env remove -y -n "$CONDA_ENV" 2>/dev/null || true
 
 conda create -y -n "$CONDA_ENV" "python=$PYTHON_VERSION"
 conda activate "$CONDA_ENV"
