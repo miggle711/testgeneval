@@ -32,15 +32,18 @@ source "$(conda info --base)/etc/profile.d/conda.sh"
 conda create -y -n "$CONDA_ENV" "python=$PYTHON_VERSION"
 conda activate "$CONDA_ENV"
 
-# vllm pulls in its own compatible torch build, install it first.
+# vllm first, then everything else unpinned on openai and numpy so
+# pip's resolver keeps whatever versions vllm actually needs. Pinning
+# openai==1.35.9 here fought vllm's own openai>=2.0.0 requirement and
+# pip silently downgraded it anyway (confirmed real on M3). run_api.py
+# only uses openai's older module level API style (openai.api_key =
+# ..., openai.chat.completions.create), confirmed that still works
+# fine on openai 2.x. numpy is imported in run_api.py but never
+# actually used, so it doesn't need a specific version either.
 pip install vllm
 
-# Real, minimal set run_api.py and its own imports need, pinned to
-# the versions confirmed working in testgeneval.crossplatform.yaml.
 pip install \
     "python-dotenv==1.0.1" \
-    "numpy==1.26.4" \
-    "openai==1.35.9" \
     "tiktoken==0.7.0" \
     "datasets==2.18.0" \
     "frozendict==2.4.4" \
