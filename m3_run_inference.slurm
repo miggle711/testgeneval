@@ -60,7 +60,13 @@ conda activate "$CONDA_ENV"
 # CXXABI version the system libstdc++.so.6 doesn't have).
 export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
 
-cd "$(dirname "$0")"
+# dirname "$0" is unreliable under sbatch, SLURM can stage or invoke
+# the script in a way that leaves it resolving to "." (confirmed
+# real on M3: python -m inference.api.run_api failed with
+# ModuleNotFoundError, not actually in the repo directory).
+# SLURM sets SLURM_SUBMIT_DIR to the real directory sbatch was run
+# from, use that instead.
+cd "$SLURM_SUBMIT_DIR"
 
 # Start vLLM, serving an OpenAI-compatible endpoint on this node.
 CUDA_VISIBLE_DEVICES=0 vllm serve "$MODEL" \
