@@ -29,6 +29,10 @@ set -euo pipefail
 CONDA_ENV="${CONDA_ENV:-testgeneval-vllm}"
 PYTHON_VERSION="${PYTHON_VERSION:-3.12}"
 
+# flashinfer (a vllm dependency) JIT compiles some CUDA kernels on
+# first use, which needs nvcc on PATH (confirmed real on M3, see
+# m3_run_inference.slurm's comment).
+module load cuda/12.8
 module load miniforge3
 # conda activate needs the shell hook sourced first in a non
 # interactive script, module load alone doesn't always wire it up.
