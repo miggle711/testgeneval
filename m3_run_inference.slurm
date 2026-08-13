@@ -7,43 +7,26 @@
 #SBATCH --time=4:00:00
 #SBATCH --output=slurm-%j.out
 
-# Runs LLM inference for the testgeneval comparison (instruct vs kg_only arms)
-# on an M3 GPU node, via vLLM serving an OpenAI-compatible endpoint (matches
-# Aaron's working M3 setup: https://zenodo.org/records/18893780), then
-# calling this repo's own inference.api.run_api (the same script already
-# proven against local MLX and Groq -- one generation path for every
-# environment instead of a second, parallel script).
+# Runs testgeneval inference (instruct vs kg_only) on an M3 GPU node.
+# vLLM serves an OpenAI-compatible endpoint, then this repo's own
+# inference.api.run_api calls it, same as the local/Groq paths.
 #
 # TODO before running:
-#   - CONDA_ENV: name of a conda env on M3 with vllm pip-installed, plus
-#     this repo's own deps (datasets, openai, tiktoken, python-dotenv --
-#     see testgeneval.crossplatform.yaml in the sibling pycodekg repo for
-#     the known-working non-vllm package list). No dedicated vllm module
-#     exists on M3 (checked docs.erc.monash.edu/Compute/HPC/M3/Software/) --
-#     `pip install vllm` into this env once, on a GPU node (per M3's Python
-#     in HPC guidance: GPU-dependent packages should be installed on a GPU
-#     node, not the login node).
-#   - MODEL: real HuggingFace model id (e.g. Qwen/Qwen3-4B-Instruct-2507,
-#     matching Aaron's example -- swap for whichever of the ~8 models this
-#     job run is for).
-#   - PROMPT_CONFIG / KG_PROMPTS_PATH: set per which arm this job runs
-#     (instruct needs no extra args; kg_only needs a kg_prompts.json built
-#     locally via pycodekg's scripts/build_kg_prompts.py and transferred
-#     to M3 first -- this job does NOT build the KG itself)
-#   - DATASET_PATH: the filtered dataset (e.g. testgenevallite_django,
-#     produced locally via datasets.Dataset.save_to_disk) transferred to M3
-#   - TEMPERATURE: 0 / 0.5 / 1 per the planned sensitivity sweep
+#   CONDA_ENV: conda env on M3 with vllm plus this repo's deps
+#     (datasets, openai, tiktoken, python-dotenv). Install on a GPU
+#     node, not the login node.
+#   HF_HOME: defaults to al49 scratch space now, override if needed.
+#   MODEL: real HuggingFace model id for the model this job is for.
+#   PROMPT_CONFIG / KG_PROMPTS_PATH: kg_only needs a kg_prompts.json
+#     built locally (pycodekg's build_kg_prompts.py) and transferred.
+#   DATASET_PATH: filtered dataset, transferred to M3.
+#   TEMPERATURE: 0 / 0.5 / 1 per the sensitivity sweep.
 #
-# Model storage: the ~8 planned open-weight models range from ~15GB
-# (7-8B) to ~140GB (70B) at float16 -- keeping several cached at once can
-# exceed the team's 150GB model-storage budget (e.g. 5 of the originally
-# discussed models total ~263GB together). DELETE_MODEL_AFTER_RUN=1
-# removes this run's HuggingFace cache entry once inference finishes, so
-# each model's full slice of jobs (all temperatures x both arms) can run
-# back-to-back without manual cleanup, at the cost of re-downloading if a
-# later job needs the same model again. Defaults to NOT deleting, since a
-# job that's one of several back-to-back runs on the same model shouldn't
-# force a redundant re-download for the next one.
+# Model storage: the planned models range ~15GB to ~140GB at float16,
+# easily exceeding the team's model storage budget if several are
+# cached at once. DELETE_MODEL_AFTER_RUN=1 frees this run's model
+# after inference finishes. Defaults off, since back to back jobs on
+# the same model shouldn't force a redundant redownload.
 
 set -euo pipefail
 
@@ -56,18 +39,18 @@ OUTPUT_DIR="${OUTPUT_DIR:-$PWD/results/${PROMPT_CONFIG}}"
 VLLM_PORT="${VLLM_PORT:-8003}"
 TEMPERATURE="${TEMPERATURE:-0.2}"
 DELETE_MODEL_AFTER_RUN="${DELETE_MODEL_AFTER_RUN:-0}"   # 1 = delete this model's HF cache when done
+# Scratch space, not $HOME. $USER resolves per teammate.
+HF_HOME="${HF_HOME:-/home/$USER/al49_scratch/hf-cache}"
 
-mkdir -p "$OUTPUT_DIR"
+mkdir -p "$OUTPUT_DIR" "$HF_HOME"
+export HF_HOME
 
 module load miniforge3
 conda activate "$CONDA_ENV"
 
 cd "$(dirname "$0")"
 
-# ---- Start vLLM, serving an OpenAI-compatible endpoint on this node ----
-# Matches Aaron's working command (https://zenodo.org/records/18893780):
-#   CUDA_VISIBLE_DEVICES=0 vllm serve <model> --trust-remote-code \
-#     --dtype float16 --max-num-seqs 8 --port 8003
+# Start vLLM, serving an OpenAI-compatible endpoint on this node.
 CUDA_VISIBLE_DEVICES=0 vllm serve "$MODEL" \
     --trust-remote-code \
     --dtype float16 \
@@ -76,14 +59,11 @@ CUDA_VISIBLE_DEVICES=0 vllm serve "$MODEL" \
 VLLM_PID=$!
 trap 'kill "$VLLM_PID" 2>/dev/null || true' EXIT
 
-# Wait for the server to actually be up before calling it. a fixed sleep
-# is a placeholder; poll /v1/models instead if model load time varies a lot
-# across the ~8 planned models.
+# Fixed wait for the server to come up. Placeholder, poll /v1/models
+# instead if model load time varies a lot across models.
 sleep 60
 
-# ---- Run inference via this repo's proven run_api.py ----
-# Under the current test-generation scope, only the full setting is used
-# (see pycodekg's docs/EXPERIMENT_PLAN.md) -- skip completion, not full.
+# Only the full setting is in scope, skip completion.
 EXTRA_ARGS=(--skip_completion --kg_prompts_path "$KG_PROMPTS_PATH")
 if [ "$PROMPT_CONFIG" = "kg_only" ]; then
     EXTRA_ARGS+=(--prompt_config kg_only)
@@ -103,13 +83,10 @@ echo "Transfer that output back off M3 (e.g. scp/rsync) for Docker-based"
 echo "evaluation, since M3 does not support Docker -- see run_evaluation.py"
 echo "which must run elsewhere."
 
-# ---- Optional: free this model's disk space now that inference is done ----
+# Optional: free this model's disk space now that inference is done.
 if [ "$DELETE_MODEL_AFTER_RUN" = "1" ]; then
     echo "DELETE_MODEL_AFTER_RUN=1 -- removing HuggingFace cache for $MODEL"
-    # huggingface-cli's own cache tooling resolves the real cache dir for
-    # this exact model id rather than guessing a path -- safer than a
-    # hand-built rm -rf against ~/.cache/huggingface/hub/models--org--name,
-    # which breaks silently if HF's cache-dir naming scheme ever changes.
+    # Uses huggingface_hub's own cache resolver instead of guessing a path.
     python3 -c "
 from huggingface_hub import scan_cache_dir
 model_id = '$MODEL'
