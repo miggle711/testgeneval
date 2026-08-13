@@ -49,6 +49,12 @@ module load miniforge3
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate "$CONDA_ENV"
 
+# The env's own libstdc++ is newer than the system one, but isn't
+# found first without this. Without it, vllm fails to import
+# (confirmed real on M3: sqlite3 pulls in libicui18n, which needs a
+# CXXABI version the system libstdc++.so.6 doesn't have).
+export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
+
 cd "$(dirname "$0")"
 
 # Start vLLM, serving an OpenAI-compatible endpoint on this node.
