@@ -24,8 +24,9 @@ def _changed_line_ranges(patch: str, code_file: str) -> List[Tuple[int, int]]:
             continue
         if line.startswith("+++ "):
             # Exact match, not substring: avoids "models.py" matching
-            # "+++ b/test_models.py" in a multi-file patch.
-            path = line[len("+++ "):]
+            # "+++ b/test_models.py" in a multi-file patch. git appends
+            # a trailing tab for paths containing spaces, strip it too.
+            path = line[len("+++ "):].rstrip("\t")
             if path.startswith(("a/", "b/")):
                 path = path[2:]
             in_target_file = path == code_file

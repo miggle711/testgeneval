@@ -98,6 +98,18 @@ index b6e3c44..ccc7fa6 100644
      return y
 """
 
+SPACE_IN_PATH_SOURCE = "def foo():\n    return 999\n"
+SPACE_IN_PATH_PATCH = (
+    "diff --git a/weird dir/foo.py b/weird dir/foo.py\n"
+    "index c2119dc..9a313fc 100644\n"
+    "--- a/weird dir/foo.py\t\n"
+    "+++ b/weird dir/foo.py\t\n"
+    "@@ -1,2 +1,2 @@\n"
+    " def foo():\n"
+    "-    return 1\n"
+    "+    return 999\n"
+)
+
 
 class TestResolveTargetLineRange(unittest.TestCase):
     def test_multiple_hunks_merge_into_one_range(self):
@@ -139,6 +151,14 @@ class TestResolveTargetLineRange(unittest.TestCase):
             MULTI_FILE_SOURCE, MULTI_FILE_PATCH, "models.py"
         )
         self.assertEqual(result, (1, 3))
+
+    def test_path_with_space_still_matches_despite_trailing_tab(self):
+        # git appends a trailing tab to +++/--- lines for paths with
+        # spaces; the exact-match must strip it, not just substring it.
+        result = resolve_target_line_range(
+            SPACE_IN_PATH_SOURCE, SPACE_IN_PATH_PATCH, "weird dir/foo.py"
+        )
+        self.assertEqual(result, (1, 2))
 
 
 if __name__ == "__main__":
