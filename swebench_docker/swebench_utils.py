@@ -416,8 +416,8 @@ def get_eval_report(
                     final_results[f"{setting}_av_{metric}"] = -1
                 else:
                     final_results[f"{setting}_av_{metric}"] = sum(
-                        eval_sm[setting][metric]
-                    ) / len(eval_sm[setting][metric])
+                        met_non_negative
+                    ) / len(met_non_negative)
     return final_results
 
 

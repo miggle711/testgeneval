@@ -4,7 +4,7 @@ import os
 import tempfile
 import unittest
 
-from swebench_docker.swebench_utils import get_logs_eval
+from swebench_docker.swebench_utils import get_eval_report, get_logs_eval
 
 TESTS_CONFIG_MARKER = ">>>>> Tests config"
 
@@ -67,6 +67,28 @@ class TestGetLogsEvalFunctionMetrics(unittest.TestCase):
         self.assertEqual(r["function_coverage"], [-1])
         self.assertEqual(r["function_mutation_score"], [-1])
         self.assertEqual(r["function_mutation_num"], [-1])
+
+
+class TestGetEvalReportAveraging(unittest.TestCase):
+    def test_negative_one_sentinels_excluded_from_average(self):
+        # -1 sentinels (from rows where the target range couldn't be
+        # resolved) must be excluded from both the sum and the count,
+        # not just the count.
+        eval_sm = {
+            "full": {
+                "tests_passed": [True],
+                "tests_compiled": [True],
+                "coverage": [42.0],
+                "test_time": [1.5],
+                "test_error": ["Success"],
+                "mutation_score": [30.0],
+                "function_coverage": [90.0, 90.0, 90.0, -1],
+            }
+        }
+        report = get_eval_report(
+            eval_sm, {"inst-1": {"baseline_covs": {}}}, "inst-1", is_baseline=False
+        )
+        self.assertEqual(report["full_av_function_coverage"], 90.0)
 
 
 if __name__ == "__main__":

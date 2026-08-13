@@ -76,6 +76,28 @@ index a0abe96..f95279a 100644
      return x
 """
 
+MULTI_FILE_SOURCE = "def foo():\n    x = 999\n    return x\n"
+MULTI_FILE_PATCH = """diff --git a/models.py b/models.py
+index a366f20..042d686 100644
+--- a/models.py
++++ b/models.py
+@@ -1,3 +1,3 @@
+ def foo():
+-    x = 1
++    x = 999
+     return x
+diff --git a/test_models.py b/test_models.py
+index b6e3c44..ccc7fa6 100644
+--- a/test_models.py
++++ b/test_models.py
+@@ -1,4 +1,4 @@
+ def bar():
+     y = 1
+-    z = 2
++    z = 888
+     return y
+"""
+
 
 class TestResolveTargetLineRange(unittest.TestCase):
     def test_multiple_hunks_merge_into_one_range(self):
@@ -109,6 +131,14 @@ class TestResolveTargetLineRange(unittest.TestCase):
     def test_invalid_source_returns_none(self):
         result = resolve_target_line_range("def foo(:\n", SINGLE_FN_PATCH, "mod.py")
         self.assertIsNone(result)
+
+    def test_code_file_is_not_matched_as_substring_of_another_file(self):
+        # models.py must not pick up test_models.py's hunk just because
+        # "models.py" is a substring of "test_models.py".
+        result = resolve_target_line_range(
+            MULTI_FILE_SOURCE, MULTI_FILE_PATCH, "models.py"
+        )
+        self.assertEqual(result, (1, 3))
 
 
 if __name__ == "__main__":

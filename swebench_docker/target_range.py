@@ -20,8 +20,15 @@ def _changed_line_ranges(patch: str, code_file: str) -> List[Tuple[int, int]]:
     cur_line = None
 
     for line in lines:
-        if line.startswith("--- ") or line.startswith("+++ "):
-            in_target_file = code_file in line
+        if line.startswith("--- "):
+            continue
+        if line.startswith("+++ "):
+            # Exact match, not substring: avoids "models.py" matching
+            # "+++ b/test_models.py" in a multi-file patch.
+            path = line[len("+++ "):]
+            if path.startswith(("a/", "b/")):
+                path = path[2:]
+            in_target_file = path == code_file
             continue
 
         if not in_target_file:
