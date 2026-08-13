@@ -32,6 +32,11 @@ source "$(conda info --base)/etc/profile.d/conda.sh"
 conda create -y -n "$CONDA_ENV" "python=$PYTHON_VERSION"
 conda activate "$CONDA_ENV"
 
+# The env's own libstdc++ is newer than the system one, but isn't
+# found first without this. Needed for vllm to import at all
+# (confirmed real on M3, see m3_run_inference.slurm's comment).
+export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
+
 # vllm first, then everything else unpinned on openai and numpy so
 # pip's resolver keeps whatever versions vllm actually needs. Pinning
 # openai==1.35.9 here fought vllm's own openai>=2.0.0 requirement and
