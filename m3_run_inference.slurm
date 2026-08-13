@@ -56,6 +56,12 @@ HF_HOME="${HF_HOME:-/home/$USER/al49_scratch/$USER/hf-cache}"
 mkdir -p "$OUTPUT_DIR" "$HF_HOME"
 export HF_HOME
 
+# flashinfer (a vllm dependency) JIT compiles some CUDA kernels on
+# first use, which needs nvcc. The conda env has PyTorch's bundled
+# CUDA runtime but not a full toolkit, nvcc isn't on PATH without
+# this (confirmed real on M3: "/usr/local/cuda/bin/nvcc: No such
+# file or directory").
+module load cuda/12.8
 module load miniforge3
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate "$CONDA_ENV"
