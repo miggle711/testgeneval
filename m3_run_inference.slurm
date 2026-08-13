@@ -38,6 +38,12 @@ DATASET_PATH="${DATASET_PATH:-CHANGE_ME}"
 OUTPUT_DIR="${OUTPUT_DIR:-$PWD/results/${PROMPT_CONFIG}}"
 VLLM_PORT="${VLLM_PORT:-8003}"
 TEMPERATURE="${TEMPERATURE:-0.2}"
+# Some models default to a very large max sequence length that needs
+# more KV cache than a single GPU has (confirmed real on M3:
+# Qwen3-4B-Instruct-2507 defaults to 262144, needs 36 GiB, only
+# 31.62 GiB was available). This experiment's prompts and generated
+# tests are nowhere near that long, so cap it.
+MAX_MODEL_LEN="${MAX_MODEL_LEN:-32768}"
 DELETE_MODEL_AFTER_RUN="${DELETE_MODEL_AFTER_RUN:-0}"   # 1 = delete this model's HF cache when done
 # Scratch space, not $HOME. al49_scratch is shared across the whole
 # project, not per user, so this needs its own subfolder under it or
@@ -74,13 +80,32 @@ CUDA_VISIBLE_DEVICES=0 vllm serve "$MODEL" \
     --trust-remote-code \
     --dtype float16 \
     --max-num-seqs 8 \
+    --max-model-len "$MAX_MODEL_LEN" \
     --port "$VLLM_PORT" &
 VLLM_PID=$!
 trap 'kill "$VLLM_PID" 2>/dev/null || true' EXIT
 
-# Fixed wait for the server to come up. Placeholder, poll /v1/models
-# instead if model load time varies a lot across models.
-sleep 60
+# Poll /v1/models instead of a fixed sleep, and fail loudly if the
+# server never comes up instead of running the full dataset against
+# a dead endpoint (confirmed real on M3: vllm crashed at startup,
+# but the old fixed sleep 60 had no way to notice and run_api.py
+# silently "processed" the whole dataset against nothing, tenacity
+# retrying and giving up per instance -- see testgeneval#20).
+VLLM_STARTUP_TIMEOUT="${VLLM_STARTUP_TIMEOUT:-300}"
+elapsed=0
+until curl -s -f "http://127.0.0.1:${VLLM_PORT}/v1/models" > /dev/null 2>&1; do
+    if ! kill -0 "$VLLM_PID" 2>/dev/null; then
+        echo "vllm server process exited before becoming ready. Check the log above for its real startup error." >&2
+        exit 1
+    fi
+    if [ "$elapsed" -ge "$VLLM_STARTUP_TIMEOUT" ]; then
+        echo "vllm server did not become ready within ${VLLM_STARTUP_TIMEOUT}s." >&2
+        exit 1
+    fi
+    sleep 5
+    elapsed=$((elapsed + 5))
+done
+echo "vllm server ready after ${elapsed}s."
 
 # Only the full setting is in scope, skip completion.
 EXTRA_ARGS=(--skip_completion --kg_prompts_path "$KG_PROMPTS_PATH")
