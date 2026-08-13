@@ -23,6 +23,7 @@
 #     `pip install vllm` into this env once, on a GPU node (per M3's Python
 #     in HPC guidance: GPU-dependent packages should be installed on a GPU
 #     node, not the login node).
+#   - HF_HOME: defaults to al49 scratch space now, override if needed.
 #   - MODEL: real HuggingFace model id (e.g. Qwen/Qwen3-4B-Instruct-2507,
 #     matching Aaron's example -- swap for whichever of the ~8 models this
 #     job run is for).
@@ -56,8 +57,11 @@ OUTPUT_DIR="${OUTPUT_DIR:-$PWD/results/${PROMPT_CONFIG}}"
 VLLM_PORT="${VLLM_PORT:-8003}"
 TEMPERATURE="${TEMPERATURE:-0.2}"
 DELETE_MODEL_AFTER_RUN="${DELETE_MODEL_AFTER_RUN:-0}"   # 1 = delete this model's HF cache when done
+# Scratch space, not $HOME (small quota). $USER resolves per teammate.
+HF_HOME="${HF_HOME:-/home/$USER/al49_scratch/hf-cache}"
 
-mkdir -p "$OUTPUT_DIR"
+mkdir -p "$OUTPUT_DIR" "$HF_HOME"
+export HF_HOME
 
 module load miniforge3
 conda activate "$CONDA_ENV"
