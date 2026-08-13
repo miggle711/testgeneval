@@ -45,7 +45,9 @@ conda activate "$CONDA_ENV"
 # The env's own libstdc++ is newer than the system one, but isn't
 # found first without this. Needed for vllm to import at all
 # (confirmed real on M3, see m3_run_inference.slurm's comment).
-export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
+# LD_LIBRARY_PATH isn't always already set, :- keeps set -u happy
+# (confirmed real on M3: unbound variable otherwise).
+export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:${LD_LIBRARY_PATH:-}"
 
 # vllm first, then everything else unpinned on openai and numpy so
 # pip's resolver keeps whatever versions vllm actually needs. Pinning
