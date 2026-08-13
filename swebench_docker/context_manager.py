@@ -28,6 +28,7 @@ from swebench_docker.constants import (
     PatchType,
 )
 from swebench_docker.swebench_utils import get_test_directives
+from swebench_docker.target_range import resolve_target_line_range
 
 logger_taskenv = logging.getLogger("taskenv")
 
@@ -339,6 +340,33 @@ class TaskEnvContextManager:
             f.write(f"{APPLY_PATCH_PASS} ({patch_type})\n")
         return True
 
+    def _resolve_target_range(self, instance):
+        """Post-patch (start, end) line range of the patch's target
+        function(s). None means fall back to whole-file behavior.
+        """
+        try:
+            with open(instance["code_file"], "r") as f:
+                source = f.read()
+        except OSError:
+            return None
+        return resolve_target_line_range(
+            source, instance.get("patch", ""), instance["code_file"]
+        )
+
+    def _log_function_coverage(self, instance, file_data):
+        target_range = self._resolve_target_range(instance)
+        if target_range is None:
+            return
+        start, end = target_range
+        target_lines = set(range(start, end + 1))
+        executed = set(file_data.get("executed_lines", []))
+        missing = set(file_data.get("missing_lines", []))
+        relevant = target_lines & (executed | missing)
+        if not relevant:
+            return
+        func_covered = len(target_lines & executed) / len(relevant) * 100
+        self.log.write(f"\nFunctionCoverageLOG: {func_covered}%\n")
+
     def run_mutation_testing(self, instance, specifications, test_time, test_cmd):
         with open("mutation.toml", "w") as mutant_file:
             formatted_content = MUTATION_TEMPLATE.format(
@@ -429,6 +457,42 @@ class TaskEnvContextManager:
             self.log.write(f"\nMutationUncertainty: {confidence_range}")
         else:
             self.log.write(f"\nMutationFAIL")
+
+        self._log_function_mutation_score(instance)
+
+    def _log_function_mutation_score(self, instance):
+        """Mutation score over only the mutants inside the patch's target
+        function(s). Same formula as cosmic_ray's survival_rate, just a
+        filtered subset of mutation.sqlite instead of the whole file.
+        """
+        target_range = self._resolve_target_range(instance)
+        if target_range is None:
+            return
+        start, end = target_range
+
+        from cosmic_ray.work_db import WorkDB
+
+        db = WorkDB("mutation.sqlite", WorkDB.Mode.open)
+        try:
+            job_ids_in_range = {
+                item.job_id
+                for item in db.work_items
+                for spec in item.mutations
+                if str(spec.module_path) == instance["code_file"]
+                and start <= spec.start_pos[0] <= end
+            }
+            if not job_ids_in_range:
+                return
+            results = dict(db.results)
+            relevant = [jid for jid in job_ids_in_range if jid in results]
+            if not relevant:
+                return
+            kills = sum(1 for jid in relevant if results[jid].is_killed)
+            func_mutation_score = (kills / len(relevant)) * 100
+            self.log.write(f"\nFunctionMutationLOG: {func_mutation_score}%")
+            self.log.write(f"\nFunctionMutationNum: {len(relevant)}")
+        finally:
+            db.close()
 
     def run_testing_diagnostic(self, instance: dict, log_data=True):
         specifications = MAP_VERSION_TO_INSTALL[self.instance["repo"]][
@@ -562,6 +626,7 @@ class TaskEnvContextManager:
                             self.log.write(
                                 f"\nCoverageLOG: {file_data['summary']['percent_covered']}%\n"
                             )
+                            self._log_function_coverage(instance, file_data)
                         else:
                             self.log.write(
                                 f"\nCoverageFAIL:{instance['code_file']} not found in coverage data\n"
