@@ -39,8 +39,13 @@ OUTPUT_DIR="${OUTPUT_DIR:-$PWD/results/${PROMPT_CONFIG}}"
 VLLM_PORT="${VLLM_PORT:-8003}"
 TEMPERATURE="${TEMPERATURE:-0.2}"
 DELETE_MODEL_AFTER_RUN="${DELETE_MODEL_AFTER_RUN:-0}"   # 1 = delete this model's HF cache when done
-# Scratch space, not $HOME. $USER resolves per teammate.
-HF_HOME="${HF_HOME:-/home/$USER/al49_scratch/hf-cache}"
+# Scratch space, not $HOME. al49_scratch is shared across the whole
+# project, not per user, so this needs its own subfolder under it or
+# it can collide with a teammate's existing, differently owned cache
+# (confirmed real on M3: another teammate's hf-cache already existed
+# there, not group writable, every download failed with a permission
+# error).
+HF_HOME="${HF_HOME:-/home/$USER/al49_scratch/$USER/hf-cache}"
 
 mkdir -p "$OUTPUT_DIR" "$HF_HOME"
 export HF_HOME
