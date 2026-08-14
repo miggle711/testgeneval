@@ -21,6 +21,10 @@
 #     built locally (pycodekg's build_kg_prompts.py) and transferred.
 #   DATASET_PATH: filtered dataset, transferred to M3.
 #   TEMPERATURE: 0 / 0.5 / 1 per the sensitivity sweep.
+#   SHARD_ID / NUM_SHARDS: optional, split the dataset across several
+#     parallel jobs for a large run (confirmed real on M3 that this
+#     project can run multiple GPU jobs at once, see testgeneval#23).
+#     Submit one job per shard id, same NUM_SHARDS each time.
 #
 # Model storage: the planned models range ~15GB to ~140GB at float16,
 # easily exceeding the team's model storage budget if several are
@@ -36,8 +40,16 @@ PROMPT_CONFIG="${PROMPT_CONFIG:-instruct}"          # instruct | kg_only
 KG_PROMPTS_PATH="${KG_PROMPTS_PATH:-kg_prompts.json}"
 DATASET_PATH="${DATASET_PATH:-CHANGE_ME}"
 OUTPUT_DIR="${OUTPUT_DIR:-$PWD/results/${PROMPT_CONFIG}}"
-VLLM_PORT="${VLLM_PORT:-8003}"
 TEMPERATURE="${TEMPERATURE:-0.2}"
+# For splitting a large dataset across parallel jobs (confirmed real
+# on M3: this project can run several GPU jobs at once, see
+# testgeneval#23). Both unset by default, matching run_api.py's own
+# --shard_id/--num_shards default of processing everything in one job.
+SHARD_ID="${SHARD_ID:-}"
+NUM_SHARDS="${NUM_SHARDS:-}"
+# Each shard needs its own vLLM port so parallel jobs landing on the
+# same node don't collide. Offsets from a base port by shard id.
+VLLM_PORT="${VLLM_PORT:-$((8003 + ${SHARD_ID:-0}))}"
 # Some models default to a very large max sequence length that needs
 # more KV cache than a single GPU has (confirmed real on M3:
 # Qwen3-4B-Instruct-2507 defaults to 262144, needs 36 GiB, only
@@ -118,6 +130,9 @@ EXTRA_ARGS=(--skip_completion --kg_prompts_path "$KG_PROMPTS_PATH")
 if [ "$PROMPT_CONFIG" = "kg_only" ]; then
     EXTRA_ARGS+=(--prompt_config kg_only)
 fi
+if [ -n "$SHARD_ID" ] && [ -n "$NUM_SHARDS" ]; then
+    EXTRA_ARGS+=(--shard_id "$SHARD_ID" --num_shards "$NUM_SHARDS")
+fi
 
 LOCAL_MODEL_BASE_URL="http://127.0.0.1:${VLLM_PORT}/v1/" \
     python -m inference.api.run_api \
@@ -134,6 +149,9 @@ echo "evaluation, since M3 does not support Docker -- see run_evaluation.py"
 echo "which must run elsewhere."
 
 # Optional: free this model's disk space now that inference is done.
+# Unsafe to combine with sharding if other shards of the same model
+# might still be running, this would delete the cache out from under
+# them. Leave off (default) when running shards in parallel.
 if [ "$DELETE_MODEL_AFTER_RUN" = "1" ]; then
     echo "DELETE_MODEL_AFTER_RUN=1 -- removing HuggingFace cache for $MODEL"
     # Uses huggingface_hub's own cache resolver instead of guessing a path.
