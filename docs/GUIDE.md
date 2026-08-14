@@ -4,13 +4,10 @@ This is a fork of Meta's [TestGenEval](https://github.com/facebookresearch/testg
 benchmark, adapted for a specific comparison: a plain LLM baseline
 (`instruct`) against an LLM given structural context pulled from a
 knowledge graph (`kg_only`), both asked to generate a complete test file
-from scratch for a changed function. The upstream README still describes
+from scratch for a changed function. The original README still describes
 the original benchmark's four settings and general-purpose design; this
 doc describes how the fork actually works today, and how to run it.
 
-If you've never touched testgeneval before, read this straight through.
-If you already know the upstream project, skip to "What's different in
-this fork."
 
 ## What's different in this fork
 
@@ -35,7 +32,7 @@ the `full` prompt. Two are supported, selected with `--prompt_config`:
   this repo as a JSON file (`kg_prompts.json`).
 
 Both arms are told to focus on the same function, and neither is shown
-any existing test content — the comparison is meant to isolate
+any existing test content, the comparison is meant to isolate
 *representation* (structured KG sections vs. a flat file), not have the
 two arms secretly doing different jobs. If you want the full reasoning
 behind that design, it's written up in the `pycodekg` repo's
@@ -44,7 +41,7 @@ behind that design, it's written up in the `pycodekg` repo's
 Evaluation has also grown a second pair of metrics. Coverage and
 mutation score were originally computed over the whole file. This fork
 adds function-scoped versions of both, restricted to just the lines of
-the function the patch actually touched — because `kg_only` can
+the function the patch actually touched, because `kg_only` can
 structurally only write tests for the function it was shown, while
 `instruct` has the whole file in front of it and could pick up
 incidental credit elsewhere. Both the whole-file and function-scoped
@@ -75,7 +72,7 @@ the right Python version, the target repo checked out, and coverage/
 mutation tooling installed. You need these images before you can
 evaluate anything.
 
-Easiest path — pull pre-built images instead of building them yourself:
+Easiest path: pull pre-built images instead of building them yourself:
 
 ```bash
 python scripts/pull_images.py --makefile Makefile.testgenevallite
@@ -151,17 +148,10 @@ has to happen somewhere else, generate predictions on M3, copy them
 off, then run `run_evaluation.py` (or the rest of `run_pipeline.py`) on
 a machine that has Docker.
 
-Everything in this section has actually been run and confirmed working
-on real M3, sharding included. If something breaks that isn't covered
-here, it's a new issue worth filing on the repo, not something you're
-doing wrong.
-
-You need an M3 account and access to the al49 project before any of
-this works. If you don't have that yet, sort it out first.
 
 ### Clone the repo on M3
 
-Do this from the login node, it's just git, no compute needed.
+Do this from the login node.
 
 ```bash
 cd ~/al49_scratch
@@ -195,8 +185,7 @@ You only need to do this once. If the environment ever gets into a bad
 state, just rerun `sbatch m3_setup_env.slurm`, it removes the old
 environment first, so it's safe to rerun.
 
-Worth sanity checking afterward, since we've hit this being silently
-broken before:
+Double check:
 
 ```bash
 module load miniforge3
