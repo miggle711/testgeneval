@@ -472,14 +472,20 @@ def main(
     dataset = dataset[split]
 
     print(dataset[0].keys())
+    # Shard before filtering existing_ids, not after. Each shard's
+    # output file can have a different number of already-completed
+    # ids (resumed at a different point), so filtering first would
+    # shrink the dataset by a different amount per shard, before
+    # contiguous=True computes its slice, drifting shard boundaries
+    # out of alignment and producing overlapping shards.
+    if shard_id is not None and num_shards is not None:
+        dataset = dataset.shard(num_shards, shard_id, contiguous=True)
     if len(existing_ids) > 0:
         dataset = dataset.filter(
             lambda x: x["id"] not in existing_ids,
             desc="Filtering out existing ids",
             load_from_cache_file=False,
         )
-    if shard_id is not None and num_shards is not None:
-        dataset = dataset.shard(num_shards, shard_id, contiguous=True)
     inference_args = {
         "test_dataset": dataset,
         "model_name_or_path": model_name_or_path,
