@@ -93,6 +93,16 @@ export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:${LD_LIBRARY_PATH:-}"
 # from, use that instead.
 cd "$SLURM_SUBMIT_DIR"
 
+# vLLM's own model loading (via transformers' hub code) doesn't reliably
+# pick up `hf auth login`'s cached token under sbatch, even though the
+# hf CLI does, export it explicitly so gated models (Llama, CodeGemma)
+# actually authenticate. Falls back to the CLI's cached token file if
+# HF_TOKEN isn't already set.
+if [ -z "${HF_TOKEN:-}" ] && [ -f "$HOME/.cache/huggingface/token" ]; then
+    HF_TOKEN="$(cat "$HOME/.cache/huggingface/token")"
+fi
+export HF_TOKEN
+
 # Start vLLM, serving an OpenAI-compatible endpoint on this node.
 CUDA_VISIBLE_DEVICES=0 vllm serve "$MODEL" \
     --trust-remote-code \
