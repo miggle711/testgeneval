@@ -56,6 +56,12 @@ VLLM_PORT="${VLLM_PORT:-$((8003 + ${SHARD_ID:-0}))}"
 # 31.62 GiB was available). This experiment's prompts and generated
 # tests are nowhere near that long, so cap it.
 MAX_MODEL_LEN="${MAX_MODEL_LEN:-32768}"
+# Some models' chat templates reject a system role entirely (confirmed
+# real on M3: bigcode/starcoder2-15b-instruct-v0.1 400s on every single
+# request with "System messages are not allowed in this template").
+# Set NO_SYSTEM_MESSAGE=1 for those, folds the system message into the
+# user turn instead.
+NO_SYSTEM_MESSAGE="${NO_SYSTEM_MESSAGE:-0}"
 DELETE_MODEL_AFTER_RUN="${DELETE_MODEL_AFTER_RUN:-0}"   # 1 = delete this model's HF cache when done
 # Scratch space, not $HOME. al49_scratch is shared across the whole
 # project, not per user, so this needs its own subfolder under it or
@@ -142,6 +148,9 @@ if [ "$PROMPT_CONFIG" = "kg_only" ]; then
 fi
 if [ -n "$SHARD_ID" ] && [ -n "$NUM_SHARDS" ]; then
     EXTRA_ARGS+=(--shard_id "$SHARD_ID" --num_shards "$NUM_SHARDS")
+fi
+if [ "$NO_SYSTEM_MESSAGE" = "1" ]; then
+    EXTRA_ARGS+=(--no_system_message)
 fi
 
 LOCAL_MODEL_BASE_URL="http://127.0.0.1:${VLLM_PORT}/v1/" \
