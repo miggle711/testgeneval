@@ -25,6 +25,14 @@
 #     parallel jobs for a large run (confirmed real on M3 that this
 #     project can run multiple GPU jobs at once, see testgeneval#23).
 #     Submit one job per shard id, same NUM_SHARDS each time.
+#   TENSOR_PARALLEL_SIZE: for models too large for one GPU (e.g. a 32B
+#     model needs ~64GB at float16, more than one L40S's 48GB). Splits
+#     the model itself across N GPUs in one job, not N separate jobs
+#     like sharding. The #SBATCH --gres line above only requests 1 GPU
+#     by default -- override it at submission time to match, e.g.:
+#       TENSOR_PARALLEL_SIZE=2 sbatch --gres=gpu:L40S:2 m3_run_inference.slurm
+#     #SBATCH directives can't read shell/env vars, so --gres has to be
+#     passed on the sbatch command line, not just as this env var.
 #
 # Model storage: the planned models range ~15GB to ~140GB at float16,
 # easily exceeding the team's model storage budget if several are
@@ -50,6 +58,9 @@ NUM_SHARDS="${NUM_SHARDS:-}"
 # Each shard needs its own vLLM port so parallel jobs landing on the
 # same node don't collide. Offsets from a base port by shard id.
 VLLM_PORT="${VLLM_PORT:-$((8003 + ${SHARD_ID:-0}))}"
+# GPUs to split the model across for one job (see the TENSOR_PARALLEL_SIZE
+# note above the TODO block). 1 keeps the existing single-GPU behavior.
+TENSOR_PARALLEL_SIZE="${TENSOR_PARALLEL_SIZE:-1}"
 # Some models default to a very large max sequence length that needs
 # more KV cache than a single GPU has (confirmed real on M3:
 # Qwen3-4B-Instruct-2507 defaults to 262144, needs 36 GiB, only
@@ -110,11 +121,17 @@ fi
 export HF_TOKEN
 
 # Start vLLM, serving an OpenAI-compatible endpoint on this node.
-CUDA_VISIBLE_DEVICES=0 vllm serve "$MODEL" \
+# CUDA_VISIBLE_DEVICES lists every GPU this job's own SLURM allocation
+# gives it (0..TENSOR_PARALLEL_SIZE-1, SLURM isolates each job to its
+# own view starting at 0 regardless of the physical device numbers on
+# the node), so vLLM's tensor parallelism has all of them to split the
+# model across.
+CUDA_VISIBLE_DEVICES=$(seq 0 $((TENSOR_PARALLEL_SIZE - 1)) | paste -sd, -) vllm serve "$MODEL" \
     --trust-remote-code \
     --dtype float16 \
     --max-num-seqs 8 \
     --max-model-len "$MAX_MODEL_LEN" \
+    --tensor-parallel-size "$TENSOR_PARALLEL_SIZE" \
     --port "$VLLM_PORT" &
 VLLM_PID=$!
 trap 'kill "$VLLM_PID" 2>/dev/null || true' EXIT
