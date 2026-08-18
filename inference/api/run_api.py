@@ -149,6 +149,7 @@ def call_chat(
     top_p,
     max_tokens,
     system_message,
+    no_system_message=False,
     **model_args,
 ):
     """
@@ -159,16 +160,26 @@ def call_chat(
         inputs (str): The inputs to generate completions for.
         temperature (float): The temperature to use.
         top_p (float): The top_p to use.
+        no_system_message (bool): Fold system_message into the user turn
+            instead of sending a separate system role. Some models' chat
+            templates reject a system role entirely (confirmed real:
+            bigcode/starcoder2-15b-instruct-v0.1 400s on every request
+            with "System messages are not allowed in this template").
         **model_args (dict): Additional model arguments.
 
     Returns:
         tuple: A tuple containing the response and the cost of the completion.
     """
     user_message = inputs
-    messages = [
-        {"role": "system", "content": system_message},
-        {"role": "user", "content": user_message},
-    ]
+    if no_system_message:
+        messages = [
+            {"role": "user", "content": f"{system_message}\n\n{user_message}"},
+        ]
+    else:
+        messages = [
+            {"role": "system", "content": system_message},
+            {"role": "user", "content": user_message},
+        ]
 
     if _key_rotator is not None:
         next_key = _key_rotator.next()
@@ -215,6 +226,7 @@ def openai_inference(
     skip_full,
     skip_completion=False,
     model_nickname=None,
+    no_system_message=False,
 ):
     """
     Runs inference on a dataset using the openai API.
@@ -335,6 +347,7 @@ def openai_inference(
                                 if prompt_name == "full"
                                 else system_message
                             ),
+                            no_system_message=no_system_message,
                         )
                         completion = response.choices[0].message.content
                         print(postprocess_fn(completion, prompt_name == "full"))
@@ -408,6 +421,7 @@ def main(
     skip_completion=False,
     prompt_config="instruct",
     kg_prompts_path="kg_prompts.json",
+    no_system_message=False,
 ):
     if shard_id is None and num_shards is not None:
         logger.warning(
@@ -508,7 +522,11 @@ def main(
         # a "mlx-community/..." model id) recorded as the eval-time model
         # id, since the container-side eval code embeds it raw into a log
         # filename.
-        openai_inference(**inference_args, model_nickname=model_nickname)
+        openai_inference(
+            **inference_args,
+            model_nickname=model_nickname,
+            no_system_message=no_system_message,
+        )
     else:
         raise ValueError(f"Invalid model name or path {model_name_or_path}")
     logger.info(f"Done!")
@@ -608,6 +626,15 @@ if __name__ == "__main__":
              "instruct for its target_function/target_class fields, so "
              "both arms are told to focus on the same changed function "
              "(miggle711/pycodekg#125, miggle711/testgeneval#6).",
+    )
+    parser.add_argument(
+        "--no_system_message",
+        action="store_true",
+        help="Fold the system message into the user turn instead of "
+             "sending a separate system role. Some models' chat templates "
+             "reject a system role entirely (confirmed real: "
+             "bigcode/starcoder2-15b-instruct-v0.1 400s on every request "
+             "with 'System messages are not allowed in this template').",
     )
     args = parser.parse_args()
     print(args.model_args)
