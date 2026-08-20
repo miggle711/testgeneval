@@ -19,9 +19,9 @@ the `instruct` (baseline) arm, temperature 0, `full` setting only.
 | StarCoder2-15B-Instruct-v0.1 | 832 / 1210 | 378 | MAX_MODEL_LEN=16384 (model's real limit, confirmed via vLLM's own derived-max-model-len error). Highest loss rate so far (~31%), consistent with having half the context budget of the 32768-context models. |
 | CodeGemma-7B-IT | not completed | -- | Abandoned. MAX_MODEL_LEN=8192 (model's real limit) would produce an even higher loss rate than StarCoder2; deprioritized in favor of medium-tier models instead of forcing a run through it. |
 | Meta-Llama-3.1-8B-Instruct | not run | -- | Gated, license access not yet confirmed. |
-| Qwen2.5-Coder-32B-Instruct | in progress | -- | Needs TENSOR_PARALLEL_SIZE=2 (32B doesn't fit one 48GB L40S at float16). Shard 0 confirmed generating; shards 1-7 submitted, running under the 4-GPU QOS cap (2 shards at a time). |
+| Qwen2.5-Coder-32B-Instruct | 1210 / 1210 | 0 | Needs TENSOR_PARALLEL_SIZE=2 (32B doesn't fit one 48GB L40S at float16). All 8 shards completed, merged via `cat` per GUIDE.md, no losses. |
 | Codestral-22B-v0.1 | not run | -- | ~44GB at float16, tight against 48GB L40S, real OOM risk. Not yet attempted. |
-| Meta-Llama-3.1-70B-Instruct | not run | -- | Gated. Needs multi-GPU (TENSOR_PARALLEL_SIZE support now exists, not yet tried at this scale). |
+| Meta-Llama-3.1-70B-Instruct | in progress | -- | Gated, access confirmed. TENSOR_PARALLEL_SIZE=4, 8 shards submitted, running one at a time under the 4-GPU QOS cap. |
 | Qwen2.5-72B-Instruct | not run | -- | ~145GB at float16, needs multi-GPU. Not yet attempted. |
 
 ## kg_only arm
