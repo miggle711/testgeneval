@@ -138,12 +138,20 @@ Use `run_evaluation.py` directly instead, it's model-agnostic, no
 `--model` choices restriction, and just reads a predictions file:
 
 ```bash
+mkdir -p results/instruct/data_logs
 python3 run_evaluation.py \
   --predictions_path results/instruct/<model>__testgeneval__0__test.jsonl \
   --log_dir results/instruct/data_logs \
   --swe_bench_tasks kjain14/testgeneval \
   --num_processes 4
 ```
+
+`--log_dir` has to already exist as a real directory, `run_evaluation.py`
+doesn't create it and fails with `--log_dir must exist and point at a
+directory` otherwise. It's not part of the repo (empty directories
+aren't tracked by git), so a fresh clone always needs the `mkdir -p`
+first, even if it already exists in someone else's checkout of the same
+repo.
 
 `--swe_bench_tasks` takes the same dataset name used for inference
 (`kjain14/testgenevallite` or `kjain14/testgeneval`). If you pulled
