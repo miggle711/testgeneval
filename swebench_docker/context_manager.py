@@ -495,23 +495,32 @@ class TaskEnvContextManager:
                 "    if relevant:\n"
                 "        kills = sum(1 for jid in relevant if results[jid].is_killed)\n"
                 "        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')\n"
+                "    else:\n"
+                "        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')\n"
                 "finally:\n"
                 "    db.close()\n"
             )
 
-            output = str(
-                self.exec(
-                    f"{self.cmd_conda_run} python -c".split() + [script],
-                    shell=False,
-                    check=False,
-                ).stdout
+            result = self.exec(
+                f"{self.cmd_conda_run} python -c".split() + [script],
+                shell=False,
+                check=False,
             )
-            for line in output.splitlines():
-                if line.startswith("FUNC_MUTATION_RESULT"):
-                    _, score, num = line.split()
-                    self.log.write(f"\nFunctionMutationLOG: {score}%")
-                    self.log.write(f"\nFunctionMutationNum: {num}")
-                    break
+            output = str(result.stdout)
+            lines = output.splitlines()
+            if any(line.startswith("FUNC_MUTATION_NO_MUTANTS_IN_RANGE") for line in lines):
+                pass
+            elif result_line := next(
+                (l for l in lines if l.startswith("FUNC_MUTATION_RESULT")), None
+            ):
+                _, score, num = result_line.split()
+                self.log.write(f"\nFunctionMutationLOG: {score}%")
+                self.log.write(f"\nFunctionMutationNum: {num}")
+            else:
+                self.log.write(
+                    f"\nFunctionMutationFAIL: subprocess exited "
+                    f"{result.returncode}, no result line in output: {output}"
+                )
         except Exception as e:
             self.log.write(f"\nFunctionMutationFAIL: {e}")
 
