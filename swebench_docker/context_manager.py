@@ -464,35 +464,65 @@ class TaskEnvContextManager:
         """Mutation score over only the mutants inside the patch's target
         function(s). Same formula as cosmic_ray's survival_rate, just a
         filtered subset of mutation.sqlite instead of the whole file.
+
+        cosmic_ray is only installed inside the per-repo conda testbed env
+        (self.cmd_conda_run), not the outer environment evaluate_instance.py
+        itself runs in, so the WorkDB query has to happen as a subprocess in
+        that env rather than an in-process import. This is a bonus metric on
+        top of an otherwise-successful run, so any failure here (missing
+        module, corrupt db, etc) is swallowed instead of erroring the whole
+        instance's evaluation.
         """
-        target_range = self._resolve_target_range(instance)
-        if target_range is None:
-            return
-        start, end = target_range
-
-        from cosmic_ray.work_db import WorkDB
-
-        db = WorkDB("mutation.sqlite", WorkDB.Mode.open)
         try:
-            job_ids_in_range = {
-                item.job_id
-                for item in db.work_items
-                for spec in item.mutations
-                if str(spec.module_path) == instance["code_file"]
-                and start <= spec.start_pos[0] <= end
-            }
-            if not job_ids_in_range:
+            target_range = self._resolve_target_range(instance)
+            if target_range is None:
                 return
-            results = dict(db.results)
-            relevant = [jid for jid in job_ids_in_range if jid in results]
-            if not relevant:
-                return
-            kills = sum(1 for jid in relevant if results[jid].is_killed)
-            func_mutation_score = (kills / len(relevant)) * 100
-            self.log.write(f"\nFunctionMutationLOG: {func_mutation_score}%")
-            self.log.write(f"\nFunctionMutationNum: {len(relevant)}")
-        finally:
-            db.close()
+            start, end = target_range
+
+            script = (
+                "from cosmic_ray.work_db import WorkDB\n"
+                f"db = WorkDB('mutation.sqlite', WorkDB.Mode.open)\n"
+                "try:\n"
+                "    job_ids_in_range = {\n"
+                "        item.job_id\n"
+                "        for item in db.work_items\n"
+                "        for spec in item.mutations\n"
+                f"        if str(spec.module_path) == {instance['code_file']!r}\n"
+                f"        and {start} <= spec.start_pos[0] <= {end}\n"
+                "    }\n"
+                "    results = dict(db.results)\n"
+                "    relevant = [jid for jid in job_ids_in_range if jid in results]\n"
+                "    if relevant:\n"
+                "        kills = sum(1 for jid in relevant if results[jid].is_killed)\n"
+                "        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')\n"
+                "    else:\n"
+                "        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')\n"
+                "finally:\n"
+                "    db.close()\n"
+            )
+
+            result = self.exec(
+                f"{self.cmd_conda_run} python -c".split() + [script],
+                shell=False,
+                check=False,
+            )
+            output = str(result.stdout)
+            lines = output.splitlines()
+            if any(line.startswith("FUNC_MUTATION_NO_MUTANTS_IN_RANGE") for line in lines):
+                pass
+            elif result_line := next(
+                (l for l in lines if l.startswith("FUNC_MUTATION_RESULT")), None
+            ):
+                _, score, num = result_line.split()
+                self.log.write(f"\nFunctionMutationLOG: {score}%")
+                self.log.write(f"\nFunctionMutationNum: {num}")
+            else:
+                self.log.write(
+                    f"\nFunctionMutationFAIL: subprocess exited "
+                    f"{result.returncode}, no result line in output: {output}"
+                )
+        except Exception as e:
+            self.log.write(f"\nFunctionMutationFAIL: {e}")
 
     def run_testing_diagnostic(self, instance: dict, log_data=True):
         specifications = MAP_VERSION_TO_INSTALL[self.instance["repo"]][
