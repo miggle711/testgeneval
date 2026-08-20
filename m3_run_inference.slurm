@@ -21,6 +21,13 @@
 #     built locally (pycodekg's build_kg_prompts.py) and transferred.
 #   DATASET_PATH: filtered dataset, transferred to M3.
 #   TEMPERATURE: 0 / 0.5 / 1 per the sensitivity sweep.
+#   MAX_CONCURRENCY: requests run_api.py keeps in flight at once. vLLM
+#     serves requests one at a time by default, leaving continuous
+#     batching and GPU KV cache mostly unused. Keep it <= --max-num-seqs
+#     below (8) -- vLLM won't run more concurrent sequences regardless
+#     of what's requested. Defaults to 1 (unchanged, sequential); watch
+#     vLLM's own GPU KV cache usage log line before raising it on a new
+#     model/GPU combination.
 #   SHARD_ID / NUM_SHARDS: optional, split the dataset across several
 #     parallel jobs for a large run (confirmed real on M3 that this
 #     project can run multiple GPU jobs at once, see testgeneval#23).
@@ -49,6 +56,7 @@ KG_PROMPTS_PATH="${KG_PROMPTS_PATH:-kg_prompts.json}"
 DATASET_PATH="${DATASET_PATH:-CHANGE_ME}"
 OUTPUT_DIR="${OUTPUT_DIR:-$PWD/results/${PROMPT_CONFIG}}"
 TEMPERATURE="${TEMPERATURE:-0.2}"
+MAX_CONCURRENCY="${MAX_CONCURRENCY:-1}"   # requests in flight at once; match vLLM's --max-num-seqs below
 # For splitting a large dataset across parallel jobs (confirmed real
 # on M3: this project can run several GPU jobs at once, see
 # testgeneval#23). Both unset by default, matching run_api.py's own
@@ -176,6 +184,7 @@ LOCAL_MODEL_BASE_URL="http://127.0.0.1:${VLLM_PORT}/v1/" \
     --dataset_name_or_path "$DATASET_PATH" \
     --output_dir "$OUTPUT_DIR" \
     --num_samples 1 \
+    --max_concurrency "$MAX_CONCURRENCY" \
     --model_args "temperature=${TEMPERATURE}" \
     "${EXTRA_ARGS[@]}"
 
