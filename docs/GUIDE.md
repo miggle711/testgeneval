@@ -125,6 +125,45 @@ If you built images locally rather than pulling them, that's all you
 need. If you pulled from Dockerhub, add `--namespace kdjain` so the
 pipeline looks for images under the right account.
 
+## Evaluating predictions already generated elsewhere (e.g. on M3)
+
+`run_pipeline.py`'s `--model` flag only accepts a fixed, pre-registered
+list of model names. Most of the models actually used for M3 inference
+(`Qwen/Qwen2.5-Coder-7B-Instruct`, `deepseek-ai/DeepSeek-Coder-6.7B-Instruct`,
+`bigcode/starcoder2-15b-instruct-v0.1`, and so on) aren't in that list,
+so `run_pipeline.py` rejects them outright, even though the predictions
+file itself is already sitting there ready to evaluate.
+
+Use `run_evaluation.py` directly instead, it's model-agnostic, no
+`--model` choices restriction, and just reads a predictions file:
+
+```bash
+mkdir -p results/instruct/data_logs
+python3 run_evaluation.py \
+  --predictions_path results/instruct/<model>__testgeneval__0__test.jsonl \
+  --log_dir results/instruct/data_logs \
+  --swe_bench_tasks kjain14/testgeneval \
+  --num_processes 4
+```
+
+`--log_dir` has to already exist as a real directory, `run_evaluation.py`
+doesn't create it and fails with `--log_dir must exist and point at a
+directory` otherwise. It's not part of the repo (empty directories
+aren't tracked by git), so a fresh clone always needs the `mkdir -p`
+first, even if it already exists in someone else's checkout of the same
+repo.
+
+`--swe_bench_tasks` takes the same dataset name used for inference
+(`kjain14/testgenevallite` or `kjain14/testgeneval`). If you pulled
+images from Dockerhub rather than building locally, pass `--namespace
+kdjain` here too, same account as `pull_images.py`/`run_pipeline.py`.
+
+Run this from the project's own conda env (`conda activate
+testgeneval`), not system Python. A stock/Anaconda base Python's numpy
+and pandas can have an ABI mismatch that breaks this script's imports
+with a confusing, unrelated-looking error (`AttributeError: _ARRAY_API
+not found`) rather than anything mentioning the real cause.
+
 ## Reading the results
 
 Once a run finishes, `results/<dataset>/` has three files per model:
