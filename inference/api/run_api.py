@@ -7,9 +7,11 @@ It sorts instances by length and continually writes the outputs to a specified f
 import json
 import logging
 import os
+import threading
 import time
 import traceback
 from argparse import ArgumentParser
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 import dotenv
@@ -52,6 +54,8 @@ class _KeyRotator:
         self._i += 1
         return key
 
+
+_thread_local = threading.local()
 
 _key_rotator = None
 if os.environ.get("LOCAL_MODEL_KEY_PREFIX"):
@@ -181,13 +185,27 @@ def call_chat(
             {"role": "user", "content": user_message},
         ]
 
+    # A per-thread client (rather than mutating the shared openai.api_key/
+    # base_url module globals) so concurrent requests under a
+    # ThreadPoolExecutor can't race and send one thread's rotated key on
+    # another thread's request. Cached on _thread_local so each worker
+    # thread builds its client once, not per-request -- the key-rotator
+    # path still needs a fresh client per call since the key can change
+    # call to call.
     if _key_rotator is not None:
         next_key = _key_rotator.next()
-        if next_key:
-            openai.api_key = next_key
+        client = openai.OpenAI(
+            api_key=next_key or openai.api_key, base_url=openai.base_url
+        )
+    else:
+        if not hasattr(_thread_local, "client"):
+            _thread_local.client = openai.OpenAI(
+                api_key=openai.api_key, base_url=openai.base_url
+            )
+        client = _thread_local.client
 
     try:
-        response = openai.chat.completions.create(
+        response = client.chat.completions.create(
             model=model_name_or_path,
             messages=messages,
             temperature=temperature,
@@ -227,6 +245,7 @@ def openai_inference(
     skip_completion=False,
     model_nickname=None,
     no_system_message=False,
+    max_concurrency=1,
 ):
     """
     Runs inference on a dataset using the openai API.
@@ -310,63 +329,94 @@ def openai_inference(
     basic_args = {
         "model_name_or_path": recorded_name + f"_t={temperature}",
     }
-    total_cost = 0
     print(f"Filtered to {len(test_dataset)} instances")
-    with open(output_file, "a+") as f:
-        for datum in tqdm(test_dataset, desc=f"Inference for {model_name_or_path}"):
-            print(datum.keys())
-            curr_id = datum["id"]
-            if curr_id in existing_ids:
+
+    # Shared across worker threads: a lock around both, since
+    # ThreadPoolExecutor runs process_instance concurrently for
+    # max_concurrency > 1. max_cost is a soft stop -- in-flight requests
+    # aren't cancelled, new ones just stop being submitted once it's hit.
+    cost_lock = threading.Lock()
+    state = {"total_cost": 0, "cost_exceeded": False}
+    write_lock = threading.Lock()
+
+    def process_instance(datum):
+        curr_id = datum["id"]
+        if curr_id in existing_ids:
+            return None
+        with cost_lock:
+            if state["cost_exceeded"]:
+                return None
+        output_dict = {"id": curr_id, "instance_id": datum["instance_id"]}
+        output_dict.update(basic_args)
+        output_dict["preds_prompts"] = datum["preds_prompts"]
+        output_dict["preds"] = {}
+        failed = False
+        for prompt_name, prompt_text in datum["preds_prompts"].items():
+            prompt_predictions = []
+            num_samples_curr = 1 if prompt_name == "full" else num_samples
+            if skip_full and prompt_name == "full":
                 continue
-            output_dict = {"id": curr_id, "instance_id": datum["instance_id"]}
-            output_dict.update(basic_args)
-            output_dict["preds_prompts"] = datum["preds_prompts"]
-            output_dict["preds"] = {}
-            failed = False
-            for prompt_name, prompt_text in datum["preds_prompts"].items():
-                prompt_predictions = []
-                num_samples_curr = 1 if prompt_name == "full" else num_samples
-                if skip_full and prompt_name == "full":
-                    continue
-                if skip_completion and prompt_name != "full":
-                    continue
-                for _ in range(num_samples_curr):
-                    try:
-                        response, cost = call_chat(
-                            model_name_or_path,
-                            prompt_text,
-                            temperature,
-                            top_p,
-                            (
-                                default_output_limit
-                                if prompt_name == "full"
-                                else 512
-                            ),
-                            (
-                                system_message_full
-                                if prompt_name == "full"
-                                else system_message
-                            ),
-                            no_system_message=no_system_message,
-                        )
-                        completion = response.choices[0].message.content
-                        print(postprocess_fn(completion, prompt_name == "full"))
-                        prompt_predictions.append(
-                            postprocess_fn(completion, prompt_name == "full")
-                        )
-                        total_cost += cost
-                        if max_cost is not None and total_cost >= max_cost:
+            if skip_completion and prompt_name != "full":
+                continue
+            for _ in range(num_samples_curr):
+                try:
+                    response, cost = call_chat(
+                        model_name_or_path,
+                        prompt_text,
+                        temperature,
+                        top_p,
+                        default_output_limit if prompt_name == "full" else 512,
+                        (
+                            system_message_full
+                            if prompt_name == "full"
+                            else system_message
+                        ),
+                        no_system_message=no_system_message,
+                    )
+                    completion = response.choices[0].message.content
+                    prompt_predictions.append(
+                        postprocess_fn(completion, prompt_name == "full")
+                    )
+                    with cost_lock:
+                        state["total_cost"] += cost
+                        if max_cost is not None and state["total_cost"] >= max_cost:
                             print(f"Reached max cost {max_cost}, exiting")
-                            return
-                    except Exception as e:
-                        print(f"Error: {e}")
-                        failed = True
-                output_dict["preds"][prompt_name] = prompt_predictions
-            if not failed:
-                print(json.dumps(output_dict), file=f, flush=True)
-                print(f"Total Cost: {total_cost:.2f}")
-            else:
-                print("Failed, skipping...")
+                            state["cost_exceeded"] = True
+                except Exception as e:
+                    print(f"Error: {e}")
+                    failed = True
+            output_dict["preds"][prompt_name] = prompt_predictions
+        if failed:
+            print("Failed, skipping...")
+            return None
+        return output_dict
+
+    with open(output_file, "a+") as f:
+        if max_concurrency <= 1:
+            for datum in tqdm(
+                test_dataset, desc=f"Inference for {model_name_or_path}"
+            ):
+                result = process_instance(datum)
+                if result is not None:
+                    print(json.dumps(result), file=f, flush=True)
+                if state["cost_exceeded"]:
+                    return
+        else:
+            with ThreadPoolExecutor(max_workers=max_concurrency) as executor:
+                futures = {
+                    executor.submit(process_instance, datum): datum
+                    for datum in test_dataset
+                }
+                for future in tqdm(
+                    as_completed(futures),
+                    total=len(futures),
+                    desc=f"Inference for {model_name_or_path}",
+                ):
+                    result = future.result()
+                    if result is not None:
+                        with write_lock:
+                            print(json.dumps(result), file=f, flush=True)
+        print(f"Total Cost: {state['total_cost']:.2f}")
 
 
 
@@ -422,6 +472,7 @@ def main(
     prompt_config="instruct",
     kg_prompts_path="kg_prompts.json",
     no_system_message=False,
+    max_concurrency=1,
 ):
     if shard_id is None and num_shards is not None:
         logger.warning(
@@ -526,6 +577,7 @@ def main(
             **inference_args,
             model_nickname=model_nickname,
             no_system_message=no_system_message,
+            max_concurrency=max_concurrency,
         )
     else:
         raise ValueError(f"Invalid model name or path {model_name_or_path}")
@@ -549,9 +601,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--model_name_or_path",
         type=str,
-        help="Name of API model, or a real HuggingFace model id for the "
-             "local/M3 vLLM path. Unknown models fall back to a "
-             "conservative default token limit (see MODEL_LIMITS.get).",
+        help="Name of API model. Update MODEL* constants in this file to add new models.",
+        choices=sorted(list(MODEL_LIMITS.keys())),
         default="gpt-3.5-turbo-1106",
     )
     parser.add_argument(
@@ -635,6 +686,19 @@ if __name__ == "__main__":
              "reject a system role entirely (confirmed real: "
              "bigcode/starcoder2-15b-instruct-v0.1 400s on every request "
              "with 'System messages are not allowed in this template').",
+    )
+    parser.add_argument(
+        "--max_concurrency",
+        type=int,
+        default=1,
+        help="Number of instances to run inference on concurrently. "
+             "Default 1 preserves the original one-request-at-a-time "
+             "behavior. A local vLLM server has real headroom for more "
+             "(continuous batching means multiple concurrent requests "
+             "raise total throughput even though any one request's own "
+             "latency is unchanged) -- 4-8 is a reasonable starting point "
+             "on a single GPU node, watch vLLM's own GPU KV cache usage "
+             "log line to see how much headroom is actually left.",
     )
     args = parser.parse_args()
     print(args.model_args)
