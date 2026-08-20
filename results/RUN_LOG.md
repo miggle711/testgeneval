@@ -22,7 +22,7 @@ the `instruct` (baseline) arm, temperature 0, `full` setting only.
 | Qwen2.5-Coder-32B-Instruct | 1210 / 1210 | 0 | Needs TENSOR_PARALLEL_SIZE=2 (32B doesn't fit one 48GB L40S at float16). All 8 shards completed, merged via `cat` per GUIDE.md, no losses. |
 | Codestral-22B-v0.1 | not run | -- | ~44GB at float16, tight against 48GB L40S, real OOM risk. Not yet attempted. |
 | Meta-Llama-3.1-70B-Instruct | in progress | -- | Gated, access confirmed. TENSOR_PARALLEL_SIZE=4, 8 shards submitted, running one at a time under the 4-GPU QOS cap. |
-| Qwen2.5-72B-Instruct | not run | -- | ~145GB at float16, needs multi-GPU. Not yet attempted. |
+| Qwen2.5-72B-Instruct | in progress | -- | ~145GB at float16. TENSOR_PARALLEL_SIZE=4, 8 shards submitted by jliu0290 under his own M3 account (separate GPU quota from mvar0010's runs). |
 
 ## kg_only arm
 
