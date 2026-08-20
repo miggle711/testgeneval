@@ -262,6 +262,24 @@ over. `PROMPT_CONFIG` is `instruct` or `kg_only`; `kg_only` also needs
 in the pycodekg repo. `TEMPERATURE` is whatever's being tested in the
 sensitivity sweep (0, 0.5, 1).
 
+By default requests go to vLLM one at a time, `MAX_CONCURRENCY` (default
+1) raises that, so vLLM's continuous batching actually has multiple
+requests to work with instead of sitting mostly idle between them. Keep
+it at or below the script's own `--max-num-seqs 8` passed to `vllm
+serve` -- that's vLLM's hard ceiling on concurrent sequences regardless
+of what's requested. Watch vLLM's own `GPU KV cache usage` log line
+after raising it; that's the real signal for how much headroom is left,
+not a fixed safe number for every model/GPU combination.
+
+```bash
+MODEL="Qwen/Qwen2.5-Coder-7B-Instruct" \
+DATASET_PATH="kjain14/testgenevallite" \
+PROMPT_CONFIG="instruct" \
+TEMPERATURE="0" \
+MAX_CONCURRENCY="8" \
+sbatch m3_run_inference.slurm
+```
+
 Both scripts default `HF_HOME` to project scratch space rather than your
 M3 home directory. Specifically, each user gets their own subfolder
 under the shared `al49_scratch`, since that directory is shared across
