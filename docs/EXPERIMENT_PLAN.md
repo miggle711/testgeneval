@@ -149,9 +149,33 @@ and set aside, their storage footprint at float16 (roughly 470GB and
 setup is expected to support. Qwen2.5-72B-Instruct is listed above as a
 same-tier substitute.
 
-**Open decision:** the exact final model shortlist and how many samples
-are generated per configuration is not yet locked down as a concrete run
-plan. (Sheryl to do)
+**Locked shortlist** (2026-08-22, set for the funding/budget request):
+
+- **Small:** Qwen2.5-Coder-7B-Instruct, DeepSeek-Coder-6.7B-Instruct
+- **Medium:** Qwen2.5-Coder-32B-Instruct, Codestral-22B-v0.1 — both likely
+  need `TENSOR_PARALLEL_SIZE=2` (2x L40S), Qwen2.5-Coder-32B is ~64GB at
+  float16, over one 48GB card, and Codestral-22B at ~44GB is too tight
+  once KV cache is added.
+- **Large:** open, priced as three funding-request options (Qwen2.5-72B-Instruct
+  only / both it and Llama-3.1-70B-Instruct / neither), since the
+  multi-GPU tensor-parallel setup for 70B+ models on this M3 account is
+  untested (see the M3 guide's "Worth knowing" section) and shouldn't be
+  folded into a single guessed number.
+
+Dropped from the small/medium tiers: Meta-Llama-3.1-8B-Instruct (gated,
+no code-specialization benefit worth the license-approval wait),
+CodeGemma-7B-IT (least-benchmarked of the small candidates, redundant
+once two code-specialized small models are already covered),
+StarCoder2-15B-Instruct-v0.1 (needs the `NO_SYSTEM_MESSAGE=1` workaround
+for a known chat-template rejection, see the M3 guide). DeepSeek-Coder-V2-Lite-Instruct
+is a possible optional 5th medium-tier model if a cheap extra data point
+is wanted later.
+
+**Samples per configuration:** 1 sample/config as the base plan (matches
+`run_api.py`'s current default). A priced addendum option: 3 samples at
+T=0.5 and T=1.0 only (T=0 is deterministic, repeats add no signal there),
+to get a real repeat-based variance estimate at the two non-deterministic
+temperatures.
 
 Inference is planned to run on Monash's M3 HPC cluster. M3 does not
 support Docker, so evaluation (Stage 5) will either run in a ported Apptainer image or 
@@ -188,11 +212,28 @@ test quality on the file as a whole.
 sole primary result or presented alongside whole-file numbers as two
 named, distinct comparisons in the eventual write-up.
 
-Since Docker is unavailable on M3, running evaluation has two options: a local workstation, or a refactor of the TestGenEval code to port the Docker image to Apptainer. 
+Since Docker is unavailable on M3, evaluation runs via an Apptainer port
+of the TestGenEval Docker images instead (`swebench_docker/run_apptainer.py`,
+selected via `run_evaluation.py --backend apptainer`). Validated for real
+2026-08-23: after two fixes (`--writable-tmpfs`, since Apptainer mounts
+`.sif` images read-only by default unlike Docker's writable layer; and
+`--cleanenv`, since Apptainer leaks the host's environment into the
+container by default unlike Docker's clean one), a full real evaluation
+of `astropy__astropy-13579` ran end-to-end on M3 and produced real
+output: `coverage.json`, whole-file coverage 35.98%, function-scoped
+coverage 4.76%, all filtered tests passing. This runs on M3 itself, at
+no additional cost, for any repo/version with a `.sif` image already
+built. As of this check, only one exists (`astropy_astropy_5.0.sif`);
+TestGenEval spans roughly 30 repos, so the remaining `.sif` images still
+need building (off-M3, then transferred over, since M3 requires sudo to
+build/pull them directly) before a full evaluation pass across the whole
+dataset is possible. A local workstation or cloud VM running Docker
+remains a fallback only for whichever repos' `.sif` images aren't built
+in time, not the default path.
 
-Test execution, mutation testing in particular, is comparatively slow per instance, so the choice affects how
-long a full evaluation pass takes; not yet decided which is the better fit
-once the run matrix (Stage 4) is finalised.
+Test execution, mutation testing in particular, is comparatively slow per instance, so this affects how
+long a full evaluation pass takes; not yet measured at scale since only
+one real instance has been run through this path so far.
 
 ## Known limitations
 
@@ -221,10 +262,19 @@ once the run matrix (Stage 4) is finalised.
 1. Whether the completion settings (`first`/`last`/`extra`) are dropped
    from the codebase entirely, or retained as an available secondary
    comparison.
-2. The concrete run matrix for Stage 4, final model shortlist and sample
-   counts per configuration.
-3. Whether Stage 5 evaluation runs on a local workstation or a shared,
-   Docker-capable cluster.
+2. ~~The concrete run matrix for Stage 4, final model shortlist and sample
+   counts per configuration.~~ Small/medium tiers locked 2026-08-22 (see
+   Stage 4 above). Large tier: both Llama-3.1-70B-Instruct and
+   Qwen2.5-72B-Instruct are in fact already complete (1210/1210 each,
+   verified 2026-08-22, `TENSOR_PARALLEL_SIZE=4` confirmed working in
+   practice) — the multi-GPU risk this item used to flag no longer
+   applies, this is sunk, already-spent compute.
+3. ~~Whether Stage 5 evaluation runs on a local workstation or a shared,
+   Docker-capable cluster.~~ Resolved 2026-08-22: evaluation runs on M3
+   itself via the Apptainer backend (see Stage 5 above), validated on a
+   real instance. The MacBook Pro (M2 Max, Apple Silicon) Docker/Rosetta
+   path is no longer the default plan — kept only as a fallback for
+   repos whose `.sif` image isn't built in time.
 4. Whether Stage 5's function-scoped coverage/mutation numbers are reported
    as the sole primary metric, or alongside whole-file numbers as two
    named comparisons.
