@@ -187,6 +187,15 @@ surprises (e.g. StarCoder2's chat-template rejection, `docs/GUIDE.md`).
 | General contingency, 25% | $231.50 AUD | Standard buffer rate + repeat-mechanism/new-model risk × the row above |
 | **Total requested** | **≈$1,157.50 AUD** | |
 
+**Where this goes:** two subscriptions cover all 11 priced models.
+`inference/api/run_api.py` already supports either via
+`LOCAL_MODEL_BASE_URL`/`LOCAL_MODEL_API_KEY`, no code changes needed.
+
+| Provider | Covers | Share of priced inference |
+|---|---|---|
+| DeepInfra | 10 of 11 models (everything except Codestral) | $746 AUD |
+| Mistral AI (La Plateforme) | Codestral-22B-v0.1 | $180 AUD |
+
 ## Disclaimers
 
 - **Data provenance**: the real per-instance token count this whole
