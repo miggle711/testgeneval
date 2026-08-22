@@ -114,6 +114,8 @@ async def run_apptainer_evaluation(
     apptainer_command = [
         "apptainer",
         "exec",
+        "--writable-tmpfs",
+        "--cleanenv",
         "--pwd",
         entrypoint_parent,
         "-B",
