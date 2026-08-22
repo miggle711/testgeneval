@@ -18,7 +18,7 @@ the `instruct` (baseline) arm, temperature 0, `full` setting only.
 | Qwen2.5-Coder-7B-Instruct | 1210 / 1210 | 0 | Clean run, no losses. |
 | DeepSeek-Coder-6.7B-Instruct | 1100 / 1210 | 110 | 32768 context, largest `instruct` prompts exceed it. |
 | CodeGemma-7B-IT | not completed | -- | Abandoned. MAX_MODEL_LEN=8192 (model's real limit) would produce an even higher loss rate than StarCoder2; deprioritized in favor of medium-tier models instead of forcing a run through it. |
-| Meta-Llama-3.1-8B-Instruct | not run | -- | Gated, license access not yet confirmed. |
+| Meta-Llama-3.1-8B-Instruct | 1210 / 1210 | 0 | Access was in fact confirmed and a full 8-shard run completed; this row was stale (previously read "not run, license access not yet confirmed"). Corrected 2026-08-22 after verifying real `wc -l` counts on all 8 shard files summed to 1210, merged via `cat` per GUIDE.md. |
 
 ### Medium (~15-32B params)
 
@@ -27,23 +27,31 @@ the `instruct` (baseline) arm, temperature 0, `full` setting only.
 | DeepSeek-Coder-V2-Lite-Instruct | 1117 / 1210 | 93 | 32768 context. |
 | StarCoder2-15B-Instruct-v0.1 | 832 / 1210 | 378 | MAX_MODEL_LEN=16384 (model's real limit, confirmed via vLLM's own derived-max-model-len error). Highest loss rate so far (~31%), consistent with having half the context budget of the 32768-context models. |
 | Qwen2.5-Coder-32B-Instruct | 1210 / 1210 | 0 | Needs TENSOR_PARALLEL_SIZE=2 (32B doesn't fit one 48GB L40S at float16). All 8 shards completed, merged via `cat` per GUIDE.md, no losses. |
-| Codestral-22B-v0.1 | not run | -- | ~44GB at float16, tight against 48GB L40S, real OOM risk. Not yet attempted. |
+| Codestral-22B-v0.1 | 323 / 1210 (partial) | unknown | ~44GB at float16, tight against 48GB L40S, real OOM risk. A real partial run exists (verified 2026-08-22 via `wc -l`) but `squeue` shows nothing currently active under this account, so the job stalled or was killed rather than still running -- needs resuming, not restarting from scratch (`m3_run_inference.slurm` picks up from the existing output file). Row previously read "not run"; corrected after checking the real file. |
 
 ### Large (~70-73B params)
 
 | Model | Completed | Context-overflow losses | Notes |
 |---|---|---|---|
-| Meta-Llama-3.1-70B-Instruct | in progress | -- | Gated, access confirmed. TENSOR_PARALLEL_SIZE=4, 8 shards submitted, running one at a time under the 4-GPU QOS cap. |
-| Qwen2.5-72B-Instruct | in progress | -- | ~145GB at float16. TENSOR_PARALLEL_SIZE=4, 8 shards submitted by jliu0290 under his own M3 account (separate GPU quota from mvar0010's runs). |
+| Meta-Llama-3.1-70B-Instruct | 1210 / 1210 | 0 | Gated, access confirmed. TENSOR_PARALLEL_SIZE=4, 8 shards, all completed and merged via `cat` 2026-08-22. Real per-instance token counts logged in the job's own `slurm-*.out` files (via `run_api.py`'s `input_tokens=`/`output_tokens=` logging): 11,077,947 input / 2,350,216 output tokens total across all 1210 instances. Row previously read "in progress"; corrected after verifying real `wc -l` counts. |
+| Qwen2.5-72B-Instruct | 1210 / 1210 | 0 | ~145GB at float16. TENSOR_PARALLEL_SIZE=4, 8 shards submitted by jliu0290 under his own M3 account (separate GPU quota from mvar0010's runs), all completed and merged via `cat` 2026-08-22. Real per-instance token counts aren't available here -- jliu0290's `slurm-*.out` logs live under his own directory, not this shared one; worth pulling if exact token counts for this model are ever needed. Row previously read "in progress"; corrected after verifying real `wc -l` counts. |
 
 Tiers match `docs/EXPERIMENT_PLAN.md`'s Stage 4 shortlist.
 
 ## kg_only arm
 
-Not started. Needs `kg_prompts.json` built from the full-dataset KG set
-(`scripts/build_kg_prompts.py` in `pycodekg`/`repo-kg-construction`) before
-any `kg_only` run can happen. KG build (4 GitHub Actions batches) and merge
-are done; `kg_prompts.json` generation is the next step.
+`kg_prompts.json` is in fact already built and complete at the repo root
+-- verified 2026-08-22 via `python3 -c "import json; print(len(json.load(open('kg_prompts.json'))))"`,
+which returned 1210 (the full dataset). This row previously read "KG build
+done, `kg_prompts.json` generation is the next step"; that step was already
+finished by the time this was checked.
+
+First real `kg_only` run submitted 2026-08-22: Qwen2.5-Coder-7B-Instruct,
+full `kjain14/testgeneval` dataset, temperature 0, job 59370304 (single
+job, no sharding). Chosen because this model's `instruct` arm is already
+clean (1210/1210, no context-overflow losses), giving a matched head-to-head
+comparison once this finishes. Update this row with the real completed
+count once the job finishes.
 
 ## Why context-overflow losses happen
 
