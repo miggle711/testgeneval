@@ -14,6 +14,7 @@ from swebench_docker.constants import (
     KEY_PREDICTIONS,
     MAP_REPO_TO_TEST_FRAMEWORK,
 )
+from swebench_docker.run_apptainer import run_apptainer_evaluation
 from swebench_docker.run_docker import run_docker_evaluation
 from swebench_docker.swebench_utils import get_instances, get_test_directives
 from swebench_docker.utils import get_eval_refs
@@ -61,6 +62,7 @@ async def main(
     timeout: int = 900,
     num_processes: int = -1,
     skip_mutation: bool = False,
+    backend: str = "docker",
 ):
     """
     Runs evaluation on predictions for each model/repo/version combination.
@@ -159,14 +161,18 @@ async def main(
 
     task_instances = sorted(task_instances, key=lambda x: x[KEY_ID])
 
+    run_evaluation_fn = (
+        run_apptainer_evaluation if backend == "apptainer" else run_docker_evaluation
+    )
+
     sem = asyncio.Semaphore(num_processes if num_processes > 0 else len(task_instances))
     tasks = []
     for task_instance in task_instances:
         if task_instance[KEY_PREDICTIONS]:
 
-            async def run_docker_throttled(*args, **kwargs):
+            async def run_throttled(*args, **kwargs):
                 async with sem:
-                    return await run_docker_evaluation(
+                    return await run_evaluation_fn(
                         *args,
                         **kwargs,
                         only_baseline=False,
@@ -175,7 +181,7 @@ async def main(
 
             for setting in task_instance[KEY_PREDICTIONS]:
                 task = asyncio.create_task(
-                    run_docker_throttled(
+                    run_throttled(
                         task_instance, namespace, log_dir, setting, timeout
                     )
                 )
@@ -224,6 +230,18 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--skip_mutation", action="store_true", help="(Optional) Skip mutation"
+    )
+    parser.add_argument(
+        "--backend",
+        type=str,
+        choices=["docker", "apptainer"],
+        default="docker",
+        help="(Optional) Container backend. 'docker' (default) is "
+             "unchanged from before. 'apptainer' is for M3, which does "
+             "not support Docker -- requires .sif files already built "
+             "and present locally (see swebench_docker/run_apptainer.py "
+             "and testgeneval#2, M3 needs sudo to build/pull these "
+             "itself, which regular accounts don't have).",
     )
     args = parser.parse_args()
     asyncio.run(main(**vars(args)))
