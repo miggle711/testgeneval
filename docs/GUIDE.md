@@ -363,9 +363,52 @@ time limit, resubmit the exact same command and it picks up where it
 left off instead of starting over, as long as the earlier output file
 is still there.
 
-The larger models in the planned lineup (the 70B tier) don't fit on a
-single M3 GPU at full precision, that needs either a multi-GPU setup or
-a smaller/quantized variant, and hasn't been resolved yet.
+The larger models in the planned lineup (the 70B/72B tier) don't fit on
+a single M3 GPU at full precision. Set `TENSOR_PARALLEL_SIZE` to split
+the model across multiple GPUs in one job, and pass a matching
+`--gres=gpu:L40S:N` on the `sbatch` command line, since `#SBATCH`
+directives can't read shell/env vars. See the script's own header
+comment for the exact pattern.
+
+**New teammate on the shared `al49_scratch` directory, jobs die instantly
+with no output file at all?** Confirmed real (twice, for two different
+teammates) that being added to the `al49` SLURM account/association
+(`sacctmgr show associations user=<username>`) does *not* automatically
+grant write access to files already in the shared `kg-testing/testgeneval`
+directory. A job that can't even create its own `slurm-<jobid>.out`
+fails in under a second with exit code `0:53` and produces zero output
+anywhere, easy to mistake for a conda-env or script bug rather than a
+permissions issue. Confirm directly with `touch
+/fs04/scratch2/al49/kg-testing/testgeneval/test_<username>.txt` before
+chasing anything else, if that fails with `Permission denied`, the fix
+is someone who already has write access running:
+
+```bash
+setfacl -R -m u:<new-username>:rwx /fs04/scratch2/al49/kg-testing/testgeneval
+setfacl -R -d -m u:<new-username>:rwx /fs04/scratch2/al49/kg-testing/testgeneval
+```
+
+(`-R` applies to existing files/directories, the second `-d` command sets
+the *default* ACL so new files created afterward also inherit access.)
+Expect `Operation not permitted` on some files during this, that's normal
+for files owned by other teammates you don't have permission to modify,
+not a sign the fix failed, what matters is whether new file creation
+works afterward.
+
+Output filenames have several `__` (double underscore) separators
+between fields (model name, dataset, temperature, split, shard info).
+These are easy to mangle by hand, retyping or copy-pasting across some
+terminals silently collapses or drops repeated underscores. Prefer
+`glob` over typing the filename out:
+
+```bash
+python3 -c "
+import glob
+print(glob.glob('results/instruct/*<distinctive-part-of-model-name>*'))
+"
+```
+
+instead of constructing the exact filename yourself.
 
 ## Adding a new model
 
