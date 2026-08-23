@@ -1,11 +1,13 @@
 # Experiment Plan: `instruct` vs `kg_only` on TestGenEval
 
-Copied here from the `repo-kg-construction`/`pycodekg` repo, where it's the
-canonical source. Stages 1 and 2 (knowledge graph construction and
-per-instance subgraph extraction) describe work that happens in that repo,
-not this one; this fork covers Stages 3 onward (prompt construction,
-inference, evaluation). If you're editing this, check whether the same
-change needs to land in both copies.
+Sole copy as of 2026-08-24 — a duplicate previously lived in the
+`repo-kg-construction`/`pycodekg` repo but had drifted badly out of sync
+(missing RQ1/RQ4, the locked model shortlist, the statistical analysis
+plan, and other since-decided content) and was deleted rather than kept
+in sync. This document covers Stages 3 onward (prompt construction,
+inference, evaluation); Stages 1 and 2 (knowledge graph construction and
+per-instance subgraph extraction) describe work that happens in the
+`pycodekg` repo, which no longer has its own copy of this plan.
 
 This document describes the current design of the comparison experiment for
 the Patch-Aware Knowledge Graph Retrieval for LLM-Based Repository-Level
@@ -29,12 +31,23 @@ Current direction is `full`-only as the primary and, likely, only result.
 
 ## Research questions
 
-> **RQ2 (Patch-Based Subgraph Retrieval):** How effectively can code
+Locked 2026-08-23 as a full four-RQ set — RQ1 and RQ4 previously had no
+dedicated evaluation methodology in this document and are now scoped
+with one (see "RQ1 validation design" and "RQ4 instrumentation" below).
+
+> **RQ1 (KG Construction Quality):** How accurately does the
+> repository-level KG capture code structure, dependencies, and API
+> relationships?
+
+> **RQ2 (Patch-Based Structural Retrieval):** How effectively can code
 > patches identify affected entities and retrieve relevant KG subgraphs?
 
 > **RQ3 (Test Generation Correctness and Coverage):** To what extent does
 > patch-aware KG subgraph retrieval improve the correctness and coverage of
 > LLM-generated test cases compared to retrieval-free baselines?
+
+> **RQ4 (Efficiency):** What is the computational cost of the proposed
+> approach relative to the quality gains achieved?
 
 TestGenEval instances already
 come with `code_file` and `test_file` pre-selected by the benchmark itself,
@@ -46,9 +59,30 @@ concrete question than "search a whole repository": given the file TGE
 already selected, how well does patch-based analysis identify the specific
 function(s) within it that changed, and how well does KG traversal from
 that point recover genuinely relevant structural context (callers, callees,
-class relationships) versus missing it. RQ3 is the direct behavioural
-question: does the structured context `kg_only` retrieves lead to better
-generated tests than `instruct` reading the file directly.
+class relationships) versus missing it.
+
+RQ2 is answered as **retrieval characterization, not "relevance"** —
+patch-to-seed localization success rate, nodes/edges retrieved, cross-file
+node proportion, and caller/callee/sibling/class distribution, alongside
+token count. Whether that retrieved context is actually *useful* is left
+entirely to RQ3, not claimed twice under RQ2 as well.
+
+RQ3 is the direct behavioural question: does the structured context
+`kg_only` retrieves lead to better generated tests than `instruct` reading
+the file directly. Function-scoped correctness/coverage/mutation-score
+numbers are the primary comparison; whole-file numbers are secondary,
+reported alongside rather than dropped (see Stage 5).
+
+**Framing note:** this experiment evaluates patch-aware KG retrieval as a
+combined context-selection approach against a retrieval-free, focal-file
+baseline — a system-level comparison, not a causal isolation of graph
+structure from cross-file access or structured presentation. Because
+`kg_only`'s context can include cross-file code the `instruct` baseline
+has no way to see, an observed difference cannot by itself be attributed
+specifically to *graph-based* retrieval versus *repository-level access*
+versus *structured formatting*. Isolating those would need a semantic
+text-RAG baseline and targeted component ablations, both explicitly out of
+scope here (see Known limitations).
 
 ## Stage 1: Knowledge graph construction
 
@@ -171,15 +205,52 @@ for a known chat-template rejection, see the M3 guide). DeepSeek-Coder-V2-Lite-I
 is a possible optional 5th medium-tier model if a cheap extra data point
 is wanted later.
 
-**Samples per configuration:** 1 sample/config as the base plan (matches
-`run_api.py`'s current default). A priced addendum option: 3 samples at
-T=0.5 and T=1.0 only (T=0 is deterministic, repeats add no signal there),
-to get a real repeat-based variance estimate at the two non-deterministic
-temperatures.
+**Samples per configuration:** 1 sample at T=0 (deterministic — repeats
+add no signal there), 5 samples at T=0.5 and T=1.0 (genuinely
+non-deterministic, so repeats are needed to estimate real variance
+rather than report a single noisy draw), both arms — 11 samples/arm ×
+2 arms = 22 full passes per model, matching `docs/funding-proposal.md`'s
+priced run matrix. (This corrects an earlier version of this section
+that said 3 samples at the non-deterministic temperatures instead of 5
+— 5 is the figure actually priced and locked in the funding proposal.)
+Implementing real repeats needs either a small code change or a
+separate output path per repeat, since `run_api.py` currently hardcodes
+1 sample for the `full` setting regardless of what's requested — not
+just resubmitting the same job multiple times.
 
 Inference is planned to run on Monash's M3 HPC cluster. M3 does not
 support Docker, so evaluation (Stage 5) will either run in a ported Apptainer image or 
 run in a separate environment.
+
+## BFS-depth ablation
+
+An additive experiment answering a question more central to this
+paper's actual contribution than temperature sensitivity: why depth 2,
+specifically, for the bounded BFS subgraph expansion in Stage 2? Runs
+`kg_only` only — BFS depth has no meaning for `instruct`, which does no
+graph retrieval — at depths **{1, 2, 3}**, on three models spanning the
+shortlist's size tiers rather than the full shortlist, on a
+**150-instance representative subset** (~12.4% of the 1210-instance
+dataset) rather than the full dataset, since this supports a secondary,
+design-justifying claim rather than the paper's primary result.
+
+**Temperature for the ablation itself: T=0, 1 sample per instance** —
+chosen independently of the primary run's sweep, since this experiment
+is characterizing depth's effect, not temperature's; holding temperature
+fixed and deterministic keeps that comparison clean rather than adding
+a second varying dimension to a supplementary result. Revisit this if a
+depth-by-temperature interaction turns out to matter.
+
+Cost derivation is in `docs/funding-proposal.md`'s "BFS-depth ablation"
+section — negligible (~$3.54 AUD) relative to the rest of the budget,
+since it scales with a small subset × three models × one temperature
+rather than the full shortlist × full dataset × sweep.
+
+Measured per depth: retrieved node/edge count, prompt token count,
+target-function coverage, and target-function mutation score. Reported
+descriptively as a trend across depths 1/2/3 (see "Statistical analysis
+plan" below) — not treated as a significance-testing exercise, since
+the goal is characterizing a design choice, not establishing an effect.
 
 ## Stage 5: Evaluation
 
@@ -235,6 +306,69 @@ Test execution, mutation testing in particular, is comparatively slow per instan
 long a full evaluation pass takes; not yet measured at scale since only
 one real instance has been run through this path so far.
 
+## Statistical analysis plan
+
+Predefined 2026-08-23, before the primary run, to avoid choosing an
+analysis after seeing results. **Experimental unit: the TestGenEval
+instance, paired across `instruct` and `kg_only`** — this governs every
+row below, since a paired design (same instance, both arms) supports
+paired-difference methods that an unpaired design wouldn't.
+
+| Outcome type | Analysis |
+|---|---|
+| Primary continuous (target-function mutation score, target-function coverage) | Paired differences (Δᵢ = KG − Instruct), 95% paired bootstrap CI |
+| Secondary continuous (whole-file mutation/coverage) | Same paired-bootstrap approach |
+| Binary (Any Pass / All Pass) | McNemar's test + report discordant pair counts (KG-wins / baseline-wins), not just a p-value |
+| Efficiency (token count, latency) | Primarily descriptive, paired, CIs where meaningful |
+| RQ1 (edge precision) | Overall + per-relationship-type precision with binomial 95% CIs; separately report the exact/ambiguous/dropped resolution distribution |
+| BFS ablation | Descriptive trend across depths 1/2/3 (context size, token cost, quality) — not a significance-testing exercise |
+
+**Multi-model / multi-sample handling:** report per-model, not pooled,
+unless an aggregation method is explicitly justified in the write-up.
+Since the primary run is now 1 sample per instance at T=0 (see Stage 4),
+there's no repeated-sample structure to model there; the BFS ablation is
+also 1 sample per instance at T=0, so the same applies.
+
+## RQ1 validation design
+
+RQ1 is answered by **stratified manual validation**, not the resolver's
+own confidence tags alone (those — exact/ambiguous/dropped — are useful
+as a cheap, automatic first-order signal, reported as a distribution
+across the dataset, but "the resolver believes this match is exact" is
+not the same claim as "this match is correct").
+
+- **80 manually validated relationships**, stratified across
+  relationship type — suggested split ~50 function calls / 40
+  attribute-access / 30 inheritance / 30 instantiation / remainder
+  other, adjusted proportionally to what the constructed KG actually
+  contains once real counts are available.
+- Reported as a **stratified validation sample**, not a definitive
+  ground truth: precision is reported with binomial 95% CIs (see
+  Statistical analysis plan above), not as a bare percentage.
+- **Why 80, not a larger sample (e.g. 170):** at ~2–3 minutes per
+  annotation, 80 is ~3–4 hours including setup and reconciliation; 170
+  approaches a full working day for diminishing marginal CI-width
+  improvement. That time is better spent on the BFS ablation, pipeline
+  integrity work, or writing.
+
+## RQ4 instrumentation
+
+Cheap to collect alongside inference — no separate experimental pass
+needed, just logging that isn't currently in place:
+
+- **KG build time**, measured separately for AST parsing vs. edge
+  resolution (as already promised in the paper's Methodology), not as a
+  single combined number.
+- **Per-instance token count** of the serialized KG context sent to the
+  model.
+- Distinguish **one-time KG construction cost** (per repository/commit,
+  shared across every instance that references that commit) from
+  **per-instance retrieval + inference cost** (paid every time, not
+  amortized).
+- Compare `kg_only` vs `instruct` prompt token counts directly — the
+  funding proposal's existing token-cost measurements are the starting
+  point for this comparison.
+
 ## Known limitations
 
 - **Knowledge graph completeness.** Static analysis currently misses a
@@ -256,12 +390,29 @@ one real instance has been run through this path so far.
   schema has no issue-report/problem-statement field at all, so RQ2 as
   originally worded (patches *and* issue reports) is answered here using
   only the patch signal, which is the only one the dataset provides.
+- **System-level comparison, not causal isolation (locked 2026-08-23).**
+  The experiment evaluates the combined patch-aware KG retrieval approach
+  against a focal-file, retrieval-free baseline as a system-level
+  intervention, rather than causally isolating individual components.
+  Because the retrieved KG context may include cross-file code
+  unavailable to the focal-file baseline, observed differences cannot be
+  attributed specifically to graph-based structural selection versus
+  repository-level context access or structured presentation alone. A
+  semantic repository-retrieval (text-RAG) baseline and targeted
+  component ablations would be required to isolate these effects, and
+  are left to future work.
+- **Explicitly out of scope for this paper** (locked 2026-08-23): a
+  text-RAG baseline arm, SWT-Bench, issue-report-based retrieval, the
+  test completion settings (`first`/`last`/`extra`), and component-level
+  causal attribution of why KG context helps (structure vs. scope vs.
+  representation are bundled together, not isolated from one another).
 
 ## Open decisions requiring sign-off
 
-1. Whether the completion settings (`first`/`last`/`extra`) are dropped
+1. ~~Whether the completion settings (`first`/`last`/`extra`) are dropped
    from the codebase entirely, or retained as an available secondary
-   comparison.
+   comparison.~~ Resolved 2026-08-23: dropped from primary scope, listed
+   under "Explicitly out of scope" above.
 2. ~~The concrete run matrix for Stage 4, final model shortlist and sample
    counts per configuration.~~ Small/medium tiers locked 2026-08-22 (see
    Stage 4 above). Large tier: both Llama-3.1-70B-Instruct and
@@ -275,6 +426,18 @@ one real instance has been run through this path so far.
    real instance. The MacBook Pro (M2 Max, Apple Silicon) Docker/Rosetta
    path is no longer the default plan — kept only as a fallback for
    repos whose `.sif` image isn't built in time.
-4. Whether Stage 5's function-scoped coverage/mutation numbers are reported
-   as the sole primary metric, or alongside whole-file numbers as two
-   named comparisons.
+4. ~~Whether Stage 5's function-scoped coverage/mutation numbers are
+   reported as the sole primary metric, or alongside whole-file numbers
+   as two named comparisons.~~ Resolved 2026-08-23: function-scoped is
+   primary, whole-file is secondary and reported alongside — see the
+   Research questions section's RQ3 framing note above.
+5. ~~This document was mirrored from the `repo-kg-construction`/`pycodekg`
+   repo; changes made here needed porting to that repo's canonical
+   copy.~~ Resolved 2026-08-24: the `pycodekg` copy had drifted badly out
+   of sync and was deleted rather than kept in sync going forward — this
+   is now the sole copy of the experiment plan (see the note at the top
+   of this file).
+6. Whether to drop Stage 4's temperature sweep (0/0.5/1.0) down to a
+   single setting, redirecting the freed compute/budget elsewhere (e.g.
+   the BFS-depth ablation). Sweep stays as the current default pending
+   this decision — to be decided by the team.

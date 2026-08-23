@@ -8,12 +8,10 @@ Test Generation (ENG4702 FYP). Covers the compute needed to finish the
 ## What this is funding
 
 A dollar budget for the inference side of the complete experiment —
-every model, both arms, every temperature — priced as real, paid API
-infrastructure rather than relying on free compute, so the total
-reflects what the project actually costs to run inference for, not
-what's left after free compute is used up. Evaluation (coverage +
-mutation testing) is separate: it runs on M3 at no cost, validated for
-real (see below), so it isn't part of this dollar figure.
+every model, both arms, every temperature — priced as paid API
+infrastructure. Evaluation (coverage + mutation testing) is separate: 
+it runs on M3 at no cost, validated for real (see below), so it isn't 
+part of this dollar figure.
 
 ## Experiment scope
 
@@ -31,8 +29,7 @@ shortlist and a temperature sensitivity sweep.
 | Large | Llama-3.1-70B-Instruct, Llama-4-Scout-17B-16E-Instruct, Qwen2.5-72B-Instruct, DeepSeek-V3.2 (API-only, see below) |
 
 **How this shortlist was arrived at.** Three papers were checked
-directly for their own model choices, not just what's technically
-newest:
+directly for their own model choices:
 
 - **TestGenEval** (Meta, Oct 2024) — this project's own benchmark.
   Evaluated Llama 3.1 (8B/70B/405B), GPT-4o, and Codestral; Codestral
@@ -46,8 +43,7 @@ newest:
   (arXiv:2505.14394) — the paper closest to this project's actual
   research question. Built almost entirely on closed-source models
   (GPT-4, GPT-4o, Claude 3.5 Sonnet), open models only as weaker
-  baselines — this project's open-source-only design is a real point
-  of distinction from the closest prior work, not a gap relative to it.
+  baselines.
 
 | Model | Tier | Status | Why |
 |---|---|---|---|
@@ -164,6 +160,53 @@ verified against public 2026 pricing) rather than a mainstream provider
 (AWS-class pricing runs roughly 10x higher at this scale, which would
 exceed this entire budget on its own): **≈$305 USD (~$458 AUD)**.
 
+## BFS-depth ablation
+
+A small ablation answering "why depth 2?" directly, rather than leaving it an unjustified default — a question a reviewer would otherwise raise, and arguably more central to the paper's contribution than temperature sensitivity. This is additive to the existing run matrix: the 0/0.5/1.0 temperature sweep for the main `instruct`-vs-`kg_only` comparison stays as-is. Runs `kg_only` only (BFS depth has no meaning for `instruct`, which does no graph retrieval), at depths **{1, 2, 3}**, 1 sample per instance at **T=0** — chosen independently of the primary run's sweep, since this ablation characterizes depth's effect, not temperature's, and holding temperature fixed keeps that comparison clean — on **three models spanning the shortlist's tiers** rather than all 13 — enough to check whether the depth-vs-quality trend holds across model size, without scaling a supplementary characterization experiment to the full shortlist's cost:
+
+| Tier | Model |
+|---|---|
+| Small | Qwen2.5-Coder-7B-Instruct |
+| Medium | Qwen2.5-Coder-32B-Instruct |
+| Large | Qwen2.5-72B-Instruct |
+
+**Subset size:** 150 instances (~12.4% of the 1210-instance dataset) —
+representative, not exhaustive, since this supports a secondary claim
+(the depth-2 design choice), not the paper's primary result.
+
+**Cost basis, and its real limit:** the same real per-instance token
+count used throughout this document (9,155.3 input / 1,942.3 output,
+measured at the current default depth, 2) is applied to all three
+depths as a proxy. This is a real approximation, not a measurement —
+depth 1's serialized context is very likely smaller and depth 3's
+larger, since BFS depth directly changes how much structural context
+gets included in the prompt. The ablation itself is what produces the
+real per-depth token counts; this estimate necessarily predates that
+data and should be treated as directional, not exact.
+
+**Cost:** 150 instances × 3 depths = 450 `kg_only` calls per model,
+priced at each model's already-established per-instance rate (cost/pass
+÷ 1210, from the per-model table above):
+
+| Model | Cost/instance | × 450 calls |
+|---|---|---|
+| Qwen2.5-Coder-7B-Instruct | $0.000322 | $0.15 |
+| Qwen2.5-Coder-32B-Instruct | $0.000843 | $0.38 |
+| Qwen2.5-72B-Instruct | $0.004074 | $1.83 |
+| **Total** | | **≈$2.36 USD (~$3.54 AUD)** |
+
+Negligible relative to the rest of the budget — the ablation is cheap
+because it runs a small subset against three models, not the full
+shortlist against the full dataset. The BFS traversal itself (across
+all three depths) is free M3 compute, identical to the rest of KG
+construction; only the resulting LLM calls carry a dollar cost.
+
+**Additive to the priced inference line below, not a replacement for
+any part of it** — the $926 AUD figure reflects the confirmed 0/0.5/1.0
+temperature sweep for the primary `instruct`-vs-`kg_only` comparison,
+unaffected by this ablation. The ablation's own $3.54 AUD is a separate
+line in the budget table below.
+
 ## Final budget request
 
 DeepSeek-Coder-6.7B-Instruct and DeepSeek-Coder-V2-Lite-Instruct have
@@ -179,13 +222,14 @@ requested), and three new models (Llama-4-Scout, Gemma-3, Phi-4) have
 never run through this pipeline, which has a real history of per-model
 surprises (e.g. StarCoder2's chat-template rejection, `docs/GUIDE.md`).
 
-**Requested: ≈$1,157.50 AUD**, within the $1000–1500 AUD available:
+**Requested: ≈$1,161.04 AUD**
 
 | Component | Amount | How it was derived |
 |---|---|---|
-| Priced inference, 11 models, full run matrix | $926 AUD | Real token count × real per-model API rates (see table above) |
-| General contingency, 25% | $231.50 AUD | Standard buffer rate + repeat-mechanism/new-model risk × the row above |
-| **Total requested** | **≈$1,157.50 AUD** | |
+| Priced inference, 11 models, full run matrix | $926 AUD | Real token count × real per-model API rates (see table above) — 0/0.5/1.0 temperature sweep |
+| BFS-depth ablation, 3 models × 150-instance subset × 3 depths, T=0 | $3.54 AUD | See "BFS-depth ablation" section above — additive, independent of the sweep above |
+| General contingency, 25% | $231.50 AUD | Standard buffer rate + repeat-mechanism/new-model risk × the priced-inference row only |
+| **Total requested** | **≈$1,161.04 AUD** | |
 
 **Where this goes:** two subscriptions cover all 11 priced models.
 `inference/api/run_api.py` already supports either via
@@ -200,12 +244,9 @@ surprises (e.g. StarCoder2's chat-template rejection, `docs/GUIDE.md`).
 
 - **Data provenance**: the real per-instance token count this whole
   inference cost table is built on (11,077,947 input / 2,350,216 output
-  tokens) was measured from a real completed run on M3 — the number
-  itself is real, measured data, used here regardless of where
-  inference actually runs. Inference is priced as paid API
-  infrastructure in this document; evaluation runs on M3 for free (see
-  above) — these are two separate, deliberate choices, not an
-  inconsistency.
+  tokens) was measured from a real completed run on M3. Inference is 
+  priced as paid API infrastructure in this document; evaluation runs 
+  on M3 for free (see above).
 - Real timing/cost data: one real per-instance token count (measured on
   one model, Llama-3.1-70B-Instruct, applied to every other model as a
   proxy — see the token basis note above) and two real evaluation
