@@ -165,3 +165,52 @@ consistency problem when comparing results later. Worth fixing between
 runs: surface the real exception name (e.g. `ImproperlyConfigured`)
 instead of the generic label, so this kind of failure doesn't need
 re-diagnosing from scratch next time.
+
+## Evaluation can now run directly on M3, not just locally
+
+Confirmed 2026-08-24: a real evaluation run through the new Apptainer
+backend (`run_evaluation.py --backend apptainer`, see testgeneval#2)
+produces identical results to the same instance run through Docker.
+Same instance (`astropy__astropy-13579-15669`), same numbers: All Tests
+Passed, `CoverageLOG` 35.978%, `FunctionCoverageLOG` 4.762%,
+`MutationLOG` 12.37%, `FunctionMutationLOG` 0.0%. Not just "it ran
+without crashing", the actual scientific output matches, including
+`FunctionMutationLOG`, the metric behind the cosmic-ray subprocess fix
+in testgeneval#27/#28.
+
+`FunctionCoverageLOG`/`FunctionMutationLOG` are this fork's own addition
+on top of the original TestGenEval benchmark (see
+`docs/EXPERIMENT_PLAN.md`'s Stage 5), scoped to just the lines of the
+patch's target function rather than the whole file. They're the intended
+primary comparison metric for RQ2/RQ3, since `kg_only` can structurally
+only generate tests for the function it was shown while `instruct` sees
+the whole file and could pick up incidental coverage or mutation kills
+elsewhere. Whole-file `CoverageLOG`/`MutationLOG` are the original
+benchmark's metrics, kept as secondary/contextual numbers. Worth noting
+for this one instance: the function-scoped numbers are much lower than
+the whole-file ones (4.76% vs 35.98% coverage, 0% vs 12.37% mutation
+score), which is structurally plausible on a single instance (the
+generated test may exercise the file broadly without deeply exercising
+the target function's own lines) but shouldn't be read as a trend from
+one data point.
+
+Two real gotchas hit getting this working, both worth knowing before
+trying it yourself:
+- `load_dataset`'s cache defaults to `$HOME`, not scratch space, and
+  `$HOME` has its own small, easy to exhaust quota that `lfs quota`
+  can't even inspect (it's not a Lustre filesystem). Set
+  `HF_DATASETS_CACHE` to somewhere under scratch, same idea as the
+  existing `HF_HOME` fix for model weights.
+- A shared git checkout with commits from more than one account can end
+  up with `.git` objects owned by different people, breaking `git pull`
+  for everyone but each object's original owner, and it's not fixable
+  with `setfacl` (would need per-object grants from each owner). Clone
+  fresh into your own directory instead of continuing to share one
+  checkout across accounts.
+
+Only `astropy_astropy_5.0.sif` exists on M3 so far. The remaining ~142
+testbed `.sif` files (one per repo/version combination) still need
+building and transferring before this can replace the local Docker
+evaluation path at full scale, see testgeneval#2 for the build process
+(has to happen off M3, M3 needs `sudo` for `apptainer build`/`pull`
+from Docker Hub, which regular accounts don't have).
