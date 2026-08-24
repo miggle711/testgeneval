@@ -32,8 +32,11 @@ Current direction is `full`-only as the primary and, likely, only result.
 ## Research questions
 
 Locked 2026-08-23 as a full four-RQ set — RQ1 and RQ4 previously had no
-dedicated evaluation methodology in this document and are now scoped
-with one (see "RQ1 validation design" and "RQ4 instrumentation" below).
+dedicated evaluation methodology in this document. The four RQs
+themselves stand; the specific procedures now attached to them ("RQ1
+validation design" and "RQ4 instrumentation" below) are proposals only,
+not yet signed off by the team — see "Open decisions requiring
+sign-off."
 
 > **RQ1 (KG Construction Quality):** How accurately does the
 > repository-level KG capture code structure, dependencies, and API
@@ -69,9 +72,10 @@ entirely to RQ3, not claimed twice under RQ2 as well.
 
 RQ3 is the direct behavioural question: does the structured context
 `kg_only` retrieves lead to better generated tests than `instruct` reading
-the file directly. Function-scoped correctness/coverage/mutation-score
-numbers are the primary comparison; whole-file numbers are secondary,
-reported alongside rather than dropped (see Stage 5).
+the file directly. Both function-scoped and whole-file
+correctness/coverage/mutation-score numbers are reported (see Stage 5);
+treating the function-scoped figures as primary is a proposal, not yet
+signed off by the team — see "Open decisions requiring sign-off."
 
 **Framing note:** this experiment evaluates patch-aware KG retrieval as a
 combined context-selection approach against a retrieval-free, focal-file
@@ -224,6 +228,10 @@ run in a separate environment.
 
 ## BFS-depth ablation
 
+**Status: proposed, pending team sign-off** — whether this ablation runs
+at all, and the specific depths/subset/models below, have not been
+confirmed by the team; see "Open decisions requiring sign-off."
+
 An additive experiment answering a question more central to this
 paper's actual contribution than temperature sensitivity: why depth 2,
 specifically, for the bounded BFS subgraph expansion in Stage 2? Runs
@@ -270,18 +278,21 @@ the real, current repository state, along three dimensions:
 Coverage and mutation score are each computed at two scopes: the
 conventional whole-file measurement, and a function-scoped measurement
 restricted to the lines of the specific function the instance's patch
-touched. Both are recorded; the function-scoped figures are intended as the
-primary comparison numbers for RQ2/RQ3, since `kg_only` is structurally
-only able to generate tests for the function it was given, while `instruct`
-has the whole file available and could pick up incidental coverage or
-mutation kills elsewhere in the file unrelated to the function actually
-under test. Whole-file figures are kept as secondary/contextual numbers
-rather than dropped, since they remain informative about overall generated
-test quality on the file as a whole.
+touched. Both are recorded. Treating the function-scoped figures as the
+primary comparison numbers for RQ2/RQ3 has been proposed, since `kg_only`
+is structurally only able to generate tests for the function it was given,
+while `instruct` has the whole file available and could pick up incidental
+coverage or mutation kills elsewhere in the file unrelated to the function
+actually under test — but this is not yet a team-confirmed decision.
+Whole-file figures would be kept as secondary/contextual numbers rather
+than dropped either way, since they remain informative about overall
+generated test quality on the file as a whole.
 
-**Open decision:** whether the function-scoped numbers are reported as the
-sole primary result or presented alongside whole-file numbers as two
-named, distinct comparisons in the eventual write-up.
+**Proposed, pending team sign-off:** the write-up would report both, as
+two named, distinct comparisons — function-scoped coverage/mutation score
+as the primary outcomes for RQ2/RQ3, whole-file figures alongside as
+secondary/contextual numbers, not dropped. See "Open decisions requiring
+sign-off."
 
 Since Docker is unavailable on M3, evaluation runs via an Apptainer port
 of the TestGenEval Docker images instead (`swebench_docker/run_apptainer.py`,
@@ -308,6 +319,10 @@ one real instance has been run through this path so far.
 
 ## Statistical analysis plan
 
+**Status: proposed, pending team sign-off** — the analysis choices below
+(paired bootstrap CIs, McNemar's test, per-model reporting, etc.) have not
+been confirmed by the team; see "Open decisions requiring sign-off."
+
 Predefined 2026-08-23, before the primary run, to avoid choosing an
 analysis after seeing results. **Experimental unit: the TestGenEval
 instance, paired across `instruct` and `kg_only`** — this governs every
@@ -331,6 +346,10 @@ also 1 sample per instance at T=0, so the same applies.
 
 ## RQ1 validation design
 
+**Status: proposed, pending team sign-off** — the sample size,
+relationship-type split, and validation method below have not been
+confirmed by the team; see "Open decisions requiring sign-off."
+
 RQ1 is answered by **stratified manual validation**, not the resolver's
 own confidence tags alone (those — exact/ambiguous/dropped — are useful
 as a cheap, automatic first-order signal, reported as a distribution
@@ -352,6 +371,10 @@ not the same claim as "this match is correct").
   integrity work, or writing.
 
 ## RQ4 instrumentation
+
+**Status: proposed, pending team sign-off** — what "efficiency" means for
+RQ4 and which metrics below actually get collected have not been
+confirmed by the team; see "Open decisions requiring sign-off."
 
 Cheap to collect alongside inference — no separate experimental pass
 needed, just logging that isn't currently in place:
@@ -412,7 +435,10 @@ needed, just logging that isn't currently in place:
 1. ~~Whether the completion settings (`first`/`last`/`extra`) are dropped
    from the codebase entirely, or retained as an available secondary
    comparison.~~ Resolved 2026-08-23: dropped from primary scope, listed
-   under "Explicitly out of scope" above.
+   under "Explicitly out of scope" above — `first`/`last`/`extra` hand the
+   model part of an existing test file, which is structurally incompatible
+   with the "no existing test content shown to either arm" principle the
+   whole experiment is built around (see Scope).
 2. ~~The concrete run matrix for Stage 4, final model shortlist and sample
    counts per configuration.~~ Small/medium tiers locked 2026-08-22 (see
    Stage 4 above). Large tier: both Llama-3.1-70B-Instruct and
@@ -426,11 +452,12 @@ needed, just logging that isn't currently in place:
    real instance. The MacBook Pro (M2 Max, Apple Silicon) Docker/Rosetta
    path is no longer the default plan — kept only as a fallback for
    repos whose `.sif` image isn't built in time.
-4. ~~Whether Stage 5's function-scoped coverage/mutation numbers are
+4. Whether Stage 5's function-scoped coverage/mutation numbers are
    reported as the sole primary metric, or alongside whole-file numbers
-   as two named comparisons.~~ Resolved 2026-08-23: function-scoped is
-   primary, whole-file is secondary and reported alongside — see the
-   Research questions section's RQ3 framing note above.
+   as two named comparisons. Proposed (not team-signed-off): function-
+   scoped primary, whole-file secondary and reported alongside — see the
+   Research questions section's RQ3 note above. Reopened 2026-08-24
+   pending team confirmation.
 5. ~~This document was mirrored from the `repo-kg-construction`/`pycodekg`
    repo; changes made here needed porting to that repo's canonical
    copy.~~ Resolved 2026-08-24: the `pycodekg` copy had drifted badly out
@@ -441,3 +468,17 @@ needed, just logging that isn't currently in place:
    single setting, redirecting the freed compute/budget elsewhere (e.g.
    the BFS-depth ablation). Sweep stays as the current default pending
    this decision — to be decided by the team.
+7. The RQ1 validation procedure (sample size, relationship-type split,
+   validation method) — see "RQ1 validation design" above. Drafted as a
+   proposal 2026-08-23, not yet signed off by the team.
+8. What "efficiency" means for RQ4 and which metrics actually get
+   collected — see "RQ4 instrumentation" above. Drafted as a proposal
+   2026-08-23, not yet signed off by the team.
+9. Whether the BFS-depth ablation runs at all, and if so, its depths/
+   subset size/selection procedure/models — see "BFS-depth ablation"
+   above. Drafted as a proposal 2026-08-23, not yet signed off by the
+   team.
+10. The statistical analysis plan in full (paired bootstrap CIs,
+    McNemar's test, per-model reporting, multi-sample handling) — see
+    "Statistical analysis plan" above. Drafted as a proposal 2026-08-23,
+    not yet signed off by the team.

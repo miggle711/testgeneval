@@ -45,8 +45,10 @@ the function the patch actually touched, because `kg_only` can
 structurally only write tests for the function it was shown, while
 `instruct` has the whole file in front of it and could pick up
 incidental credit elsewhere. Both the whole-file and function-scoped
-numbers get written to the results; which one to treat as the headline
-number is still an open call.
+numbers get written to the results; treating function-scoped
+coverage/mutation score as the headline numbers (whole-file alongside as
+secondary/contextual) is proposed but not yet signed off by the team —
+see `EXPERIMENT_PLAN.md`'s "Open decisions requiring sign-off."
 
 ## Setting up
 
