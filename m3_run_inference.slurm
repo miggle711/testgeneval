@@ -193,6 +193,15 @@ echo "Transfer that output back off M3 (e.g. scp/rsync) for Docker-based"
 echo "evaluation, since M3 does not support Docker -- see run_evaluation.py"
 echo "which must run elsewhere."
 
+# A job dying partway through with a PermissionError or Connection error
+# is sometimes actually a disk-full problem in disguise (confirmed real:
+# 2625 Connection errors traced to /fs04 sitting at 99% capacity during
+# a run, see results/RUN_LOG.md's Codestral entry). Printing usage at
+# the end of every job keeps it visible without anyone needing to
+# remember to check, doesn't delete anything itself.
+echo "---- /fs04 disk usage ----"
+lfs quota -g al49 /fs04 2>/dev/null || df -h /fs04 2>/dev/null || true
+
 # Optional: free this model's disk space now that inference is done.
 # Unsafe to combine with sharding if other shards of the same model
 # might still be running, this would delete the cache out from under
