@@ -34,11 +34,7 @@ directly for their own model choices:
 - **TestGenEval** (Meta, Oct 2024) — this project's own benchmark.
   Evaluated Llama 3.1 (8B/70B/405B), GPT-4o, and Codestral; Codestral
   generated the most passing tests of the models it tested.
-- **ULT** (arXiv:2508.00408, Aug 2025) — a recent, open-source-only
-  unit-test-generation benchmark directly comparable to this project's
-  task. Evaluated CodeLlama-7B, Seed-Coder-8B, DeepSeek-Coder
-  (1.3B/6.7B/33B), Gemma-3 (4B/12B/27B), Qwen2.5-Coder (7B/14B/32B),
-  and Phi-4-mini.
+- **ULT / UnLeakedTestbench** (Huang et al., 2025; subsequently accepted by TOSEM) — relevant as recent unit-test-generation benchmarking evidence, but not directly equivalent to this project's task. ULT evaluates function-level test generation on 3,909 curated real-world Python functions, with emphasis on high cyclomatic complexity and reducing test contamination. It evaluates contemporary open-weight coding models including CodeLlama, DeepSeek-Coder, Gemma 3, Qwen2.5-Coder, and Phi-4-mini. Unlike this project, ULT does not evaluate patch-anchored repository-level retrieval or cross-file KG context. Its value here is primarily in identifying contemporary open models used for unit-test generation and providing recent evidence about model performance on realistic test-generation tasks.
 - **Knowledge Graph Based Repository-Level Code Generation**
   (arXiv:2505.14394) — the paper closest to this project's actual
   research question. Built almost entirely on closed-source models
