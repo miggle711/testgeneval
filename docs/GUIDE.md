@@ -324,20 +324,27 @@ output file with a suffix showing which shard it is, something like
 Check `squeue -u <your-username>` and confirm several rows actually show
 `R` on different nodes at once, not queued up behind each other.
 
-Once every shard finishes, concatenate the files back into one, plain
-`jsonl` needs no special tooling for this:
+Once every shard finishes, merge them with `scripts/merge_and_validate.py`
+instead of a manual `cat`:
 
 ```bash
-cd results/instruct
-cat Qwen2.5-Coder-7B-Instruct__testgenevallite__0__test__shard-0__num_shards-4.jsonl \
-    Qwen2.5-Coder-7B-Instruct__testgenevallite__0__test__shard-1__num_shards-4.jsonl \
-    Qwen2.5-Coder-7B-Instruct__testgenevallite__0__test__shard-2__num_shards-4.jsonl \
-    Qwen2.5-Coder-7B-Instruct__testgenevallite__0__test__shard-3__num_shards-4.jsonl \
-    > Qwen2.5-Coder-7B-Instruct__testgenevallite__0__test.jsonl
+python3 scripts/merge_and_validate.py \
+  --output_dir results/instruct \
+  --model_nickname Qwen2.5-Coder-7B-Instruct \
+  --dataset testgenevallite \
+  --temperature 0 \
+  --num_shards 4 \
+  --expected_total 160
 ```
 
-Double check the total line count matches what you expect before
-trusting it (`wc -l` the merged file).
+It refuses to merge if any shard file is missing, so it never produces a
+silent partial file. It also validates the result afterward: total line
+count, plus a check that every `id` is unique, which catches corrupted
+or interleaved writes (something that could in principle happen under
+`MAX_CONCURRENCY > 1` if two requests write at the same instant).
+`--expected_total` is optional and only prints a note, not an error,
+when the count differs. Context overflow losses are a real, expected
+outcome for some models, not a bug, see `results/RUN_LOG.md`.
 
 Don't set `DELETE_MODEL_AFTER_RUN=1` when running several shards of the
 same model in parallel. One shard finishing and deleting the model
