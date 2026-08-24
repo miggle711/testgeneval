@@ -40,6 +40,12 @@
 #       TENSOR_PARALLEL_SIZE=2 sbatch --gres=gpu:L40S:2 m3_run_inference.slurm
 #     #SBATCH directives can't read shell/env vars, so --gres has to be
 #     passed on the sbatch command line, not just as this env var.
+#   MAX_NUM_SEQS: vLLM's own ceiling on concurrent requests, MAX_CONCURRENCY
+#     can never exceed this. Defaults to 8, confirmed safe (real but not
+#     dangerous GPU KV cache headroom) for large models. Smaller models
+#     use far less KV cache per request, so this can go higher, e.g.
+#     MAX_NUM_SEQS=16 MAX_CONCURRENCY=16 for a 7-8B model on one GPU.
+#     Watch vLLM's own "GPU KV cache usage" log line after raising it.
 #
 # Model storage: the planned models range ~15GB to ~140GB at float16,
 # easily exceeding the team's model storage budget if several are
@@ -56,7 +62,15 @@ KG_PROMPTS_PATH="${KG_PROMPTS_PATH:-kg_prompts.json}"
 DATASET_PATH="${DATASET_PATH:-CHANGE_ME}"
 OUTPUT_DIR="${OUTPUT_DIR:-$PWD/results/${PROMPT_CONFIG}}"
 TEMPERATURE="${TEMPERATURE:-0.2}"
-MAX_CONCURRENCY="${MAX_CONCURRENCY:-1}"   # requests in flight at once; match vLLM's --max-num-seqs below
+MAX_CONCURRENCY="${MAX_CONCURRENCY:-1}"   # requests in flight at once; match MAX_NUM_SEQS below
+# vLLM's own ceiling on concurrent sequences, MAX_CONCURRENCY can never
+# exceed this regardless of what's requested. 8 is safe for the large
+# models this project runs (confirmed real on a 70B/4-GPU job: 8
+# concurrent requests sat around 75-78% GPU KV cache usage, real but not
+# dangerous headroom). Smaller models use far less KV cache per request,
+# so this can go higher for them, watch vLLM's own "GPU KV cache usage"
+# log line after raising it to confirm it's not approaching 100%.
+MAX_NUM_SEQS="${MAX_NUM_SEQS:-8}"
 # For splitting a large dataset across parallel jobs (confirmed real
 # on M3: this project can run several GPU jobs at once, see
 # testgeneval#23). Both unset by default, matching run_api.py's own
@@ -137,7 +151,7 @@ export HF_TOKEN
 CUDA_VISIBLE_DEVICES=$(seq 0 $((TENSOR_PARALLEL_SIZE - 1)) | paste -sd, -) vllm serve "$MODEL" \
     --trust-remote-code \
     --dtype float16 \
-    --max-num-seqs 8 \
+    --max-num-seqs "$MAX_NUM_SEQS" \
     --max-model-len "$MAX_MODEL_LEN" \
     --tensor-parallel-size "$TENSOR_PARALLEL_SIZE" \
     --port "$VLLM_PORT" &
