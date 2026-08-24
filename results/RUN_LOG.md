@@ -38,6 +38,13 @@ the `instruct` (baseline) arm, temperature 0, `full` setting only.
 
 Tiers match `docs/EXPERIMENT_PLAN.md`'s Stage 4 shortlist.
 
+All 8 completed `instruct` models above (everything except Codestral,
+still resuming) have their merged predictions gzipped locally and backed
+up to the team's shared Google Drive folder
+(https://drive.google.com/drive/folders/1YWtuRmoFjjiQx6GntXZamsel1iIY0Mb1)
+as of 2026-08-24, so a fresh evaluation run doesn't need to re-pull them
+from M3.
+
 ## kg_only arm
 
 `kg_prompts.json` is in fact already built and complete at the repo root
