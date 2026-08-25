@@ -61,12 +61,12 @@ def resolve_target_line_range(
     post_patch_source: str, patch: str, code_file: str
 ) -> Optional[List[Tuple[int, int]]]:
     """Function def line ranges (1-indexed, inclusive) enclosing the
-    patch's changed lines in code_file -- one range per distinct touched
+    patch's changed lines in code_file, one range per distinct touched
     function, returned as-is rather than merged into a single (min, max)
     span. Merging would silently fold in any untouched code lying
     between two non-adjacent touched functions (confirmed real for
     ~30% of TestGenEval instances, some with thousands of lines of
-    untouched code between two touched functions -- see
+    untouched code between two touched functions, see
     miggle711/testgeneval#31). None if no changed line falls inside a
     function (e.g. a module-level-only change).
     """
@@ -85,7 +85,16 @@ def resolve_target_line_range(
             end_lineno = getattr(node, "end_lineno", None)
             if end_lineno is None:
                 continue
-            func_ranges.append((node.lineno, end_lineno))
+            # node.lineno points at the `def` line only; a decorator's own
+            # lines are part of "this function changed" just as much as the
+            # def line itself (mirrors repo-kg-construction's
+            # kg_construction/extraction/patch.py::_function_ranges, which
+            # treats KG-side target function ranges the same way, keeping
+            # both sides in agreement about what counts as "the function").
+            start_lineno = node.lineno
+            if node.decorator_list:
+                start_lineno = min(start_lineno, node.decorator_list[0].lineno)
+            func_ranges.append((start_lineno, end_lineno))
 
     matched = []
     for changed_start, changed_end in changed_ranges:

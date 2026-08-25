@@ -41,6 +41,19 @@ index a0abe96..f95279a 100644
 +        return z
 """
 
+DECORATOR_ONLY_SOURCE = "@property\ndef foo():\n    x = 1\n    return x\n"
+DECORATOR_ONLY_PATCH = """diff --git a/mod.py b/mod.py
+index a0abe96..f95279a 100644
+--- a/mod.py
++++ b/mod.py
+@@ -1,3 +1,3 @@
+-@staticmethod
++@property
+ def foo():
+     x = 1
+     return x
+"""
+
 SINGLE_FN_SOURCE = "def foo():\n    x = 1\n    x += 1\n    return x\n"
 SINGLE_FN_PATCH = """diff --git a/mod.py b/mod.py
 index a0abe96..f95279a 100644
@@ -172,6 +185,18 @@ class TestResolveTargetLineRange(unittest.TestCase):
 
     def test_single_function_patch(self):
         result = resolve_target_line_range(SINGLE_FN_SOURCE, SINGLE_FN_PATCH, "mod.py")
+        self.assertEqual(result, [(1, 4)])
+
+    def test_decorator_only_change_resolves_to_decorated_function(self):
+        # Regression test: node.lineno points at the def line, not the
+        # decorator line, so a hunk that only touches a decorator (e.g.
+        # django__django-15442-16112 adding @keep_lazy(SafeString) above
+        # def mark_safe) used to fall outside the matched function's
+        # [start, end] and silently return None (whole-file fallback)
+        # even though the patch is unambiguously scoped to one function.
+        result = resolve_target_line_range(
+            DECORATOR_ONLY_SOURCE, DECORATOR_ONLY_PATCH, "mod.py"
+        )
         self.assertEqual(result, [(1, 4)])
 
     def test_module_level_only_change_returns_none(self):
