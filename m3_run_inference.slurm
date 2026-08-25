@@ -40,6 +40,15 @@
 #       TENSOR_PARALLEL_SIZE=2 sbatch --gres=gpu:L40S:2 m3_run_inference.slurm
 #     #SBATCH directives can't read shell/env vars, so --gres has to be
 #     passed on the sbatch command line, not just as this env var.
+#   MAX_NUM_SEQS: vLLM's own ceiling on concurrent requests, MAX_CONCURRENCY
+#     can never exceed this. Defaults to 8, confirmed safe (real but not
+#     dangerous GPU KV cache headroom) for large models. Smaller models
+#     use far less KV cache per request, so this can go higher, e.g.
+#     MAX_NUM_SEQS=16 MAX_CONCURRENCY=16 for a 7-8B model on one GPU.
+#     Watch vLLM's own "GPU KV cache usage" log line after raising it.
+#   DTYPE: defaults to float16. Some architectures reject it outright
+#     (confirmed real: google/gemma-3-4b-it, "does not support float16.
+#     Reason: Numerical instability"). Set DTYPE=bfloat16 for those.
 #
 # Model storage: the planned models range ~15GB to ~140GB at float16,
 # easily exceeding the team's model storage budget if several are
@@ -56,7 +65,22 @@ KG_PROMPTS_PATH="${KG_PROMPTS_PATH:-kg_prompts.json}"
 DATASET_PATH="${DATASET_PATH:-CHANGE_ME}"
 OUTPUT_DIR="${OUTPUT_DIR:-$PWD/results/${PROMPT_CONFIG}}"
 TEMPERATURE="${TEMPERATURE:-0.2}"
-MAX_CONCURRENCY="${MAX_CONCURRENCY:-1}"   # requests in flight at once; match vLLM's --max-num-seqs below
+MAX_CONCURRENCY="${MAX_CONCURRENCY:-1}"   # requests in flight at once; match MAX_NUM_SEQS below
+# vLLM's own ceiling on concurrent sequences, MAX_CONCURRENCY can never
+# exceed this regardless of what's requested. 8 is safe for the large
+# models this project runs (confirmed real on a 70B/4-GPU job: 8
+# concurrent requests sat around 75-78% GPU KV cache usage, real but not
+# dangerous headroom). Smaller models use far less KV cache per request,
+# so this can go higher for them, watch vLLM's own "GPU KV cache usage"
+# log line after raising it to confirm it's not approaching 100%.
+MAX_NUM_SEQS="${MAX_NUM_SEQS:-8}"
+# Some model architectures reject float16 outright (confirmed real:
+# google/gemma-3-4b-it failed vLLM's own startup validation with "The
+# model type 'gemma3' does not support float16. Reason: Numerical
+# instability. Please use bfloat16 or float32 instead."). float16 stays
+# the default since every other model run so far has been fine with it,
+# override per job for architectures that need bfloat16.
+DTYPE="${DTYPE:-float16}"
 # For splitting a large dataset across parallel jobs (confirmed real
 # on M3: this project can run several GPU jobs at once, see
 # testgeneval#23). Both unset by default, matching run_api.py's own
@@ -136,8 +160,8 @@ export HF_TOKEN
 # model across.
 CUDA_VISIBLE_DEVICES=$(seq 0 $((TENSOR_PARALLEL_SIZE - 1)) | paste -sd, -) vllm serve "$MODEL" \
     --trust-remote-code \
-    --dtype float16 \
-    --max-num-seqs 8 \
+    --dtype "$DTYPE" \
+    --max-num-seqs "$MAX_NUM_SEQS" \
     --max-model-len "$MAX_MODEL_LEN" \
     --tensor-parallel-size "$TENSOR_PARALLEL_SIZE" \
     --port "$VLLM_PORT" &
@@ -192,6 +216,15 @@ echo "Done. Predictions written under $OUTPUT_DIR"
 echo "Transfer that output back off M3 (e.g. scp/rsync) for Docker-based"
 echo "evaluation, since M3 does not support Docker -- see run_evaluation.py"
 echo "which must run elsewhere."
+
+# A job dying partway through with a PermissionError or Connection error
+# is sometimes actually a disk-full problem in disguise (confirmed real:
+# 2625 Connection errors traced to /fs04 sitting at 99% capacity during
+# a run, see results/RUN_LOG.md's Codestral entry). Printing usage at
+# the end of every job keeps it visible without anyone needing to
+# remember to check, doesn't delete anything itself.
+echo "---- /fs04 disk usage ----"
+lfs quota -g al49 /fs04 2>/dev/null || df -h /fs04 2>/dev/null || true
 
 # Optional: free this model's disk space now that inference is done.
 # Unsafe to combine with sharding if other shards of the same model
