@@ -1,0 +1,869 @@
+[django__django__3.0] [django__django-11119] Task Metadata:
+	- Instance ID: django__django-11119
+	- Testbed: django__django__3.0
+	- Evaluation Model: Qwen2.5-Coder-32B-Instruct_t=0
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-11119] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11119] Std. Output:
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] Command: git -c advice.detachedHead=false checkout d4df5e1b0b1c643fe0fc521add0236764ec8e92a 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11119] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at d4df5e1b0b Fixed #27360 -- Added app or ModelAdmin details for AreadyRegistered exceptions.
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] Command: git diff > /opt/temp_django__django-11119_gold_init.patch 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11119] Std. Output:
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] Command: git apply -v /opt/temp_django__django-11119_gold.patch 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11119] Std. Output:
+Checking patch django/template/engine.py...
+Applied patch django/template/engine.py cleanly.
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-11119] Command: git diff > /opt/temp_django__django-11119_test_init.patch 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11119] Std. Output:
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] Command: git restore tests/template_tests/test_engine.py 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11119] Std. Output:
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] Command: git apply -v /opt/temp_django__django-11119_test.patch 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11119] Std. Output:
+Checking patch tests/template_tests/test_engine.py...
+Applied patch tests/template_tests/test_engine.py cleanly.
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_init_defaults (template_tests.test_engine.TestEngine) ... FAIL
+
+======================================================================
+FAIL: test_init_defaults (template_tests.test_engine.TestEngine)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/template_tests/test_engine.py", line 20, in test_init_defaults
+    self.assertEqual(self.engine.loaders, ['django.template.loaders.filesystem.Loader'])
+AssertionError: Lists differ: [('django.template.loaders.cached.Loader',[43 chars]r'])] != ['django.template.loaders.filesystem.Loader']
+
+First differing element 0:
+('django.template.loaders.cached.Loader',[42 chars]er'])
+'django.template.loaders.filesystem.Loader'
+
+- [('django.template.loaders.cached.Loader',
+-   ['django.template.loaders.filesystem.Loader'])]
+? --                                             --
+
++ ['django.template.loaders.filesystem.Loader']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 1 
+[django__django__3.0] [django__django-11119] TestsTime: 1.1393136978149414 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_init_with_custom_values (template_tests.test_engine.TestEngine) ... ERROR
+
+======================================================================
+ERROR: test_init_with_custom_values (template_tests.test_engine.TestEngine)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/template_tests/test_engine.py", line 26, in test_init_with_custom_values
+    autoescape=False
+  File "/opt/django__django/django/template/engine.py", line 36, in __init__
+    "app_dirs must not be set when loaders is defined.")
+django.core.exceptions.ImproperlyConfigured: app_dirs must not be set when loaders is defined.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 1 
+[django__django__3.0] [django__django-11119] TestsTime: 0.6432614326477051 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_init_app_dirs_with_loaders (template_tests.test_engine.TestEngine) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] TestsTime: 0.37787461280822754 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_get_default (template_tests.test_engine.TestEngine) ... ERROR
+
+======================================================================
+ERROR: test_get_default (template_tests.test_engine.TestEngine)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1175, in patched
+    arg = patching.__enter__()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1247, in __enter__
+    original, local = self.get_original()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1221, in get_original
+    "%s does not have the attribute %r" % (target, name)
+AttributeError: <module 'django.template.engine' from '/opt/django__django/django/template/engine.py'> does not have the attribute 'DjangoTemplates'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 1 
+[django__django__3.0] [django__django-11119] TestsTime: 0.5015673637390137 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_get_default_no_backend (template_tests.test_engine.TestEngine) ... ERROR
+
+======================================================================
+ERROR: test_get_default_no_backend (template_tests.test_engine.TestEngine)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1175, in patched
+    arg = patching.__enter__()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1247, in __enter__
+    original, local = self.get_original()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1221, in get_original
+    "%s does not have the attribute %r" % (target, name)
+AttributeError: <module 'django.template.engine' from '/opt/django__django/django/template/engine.py'> does not have the attribute 'engines'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 1 
+[django__django__3.0] [django__django-11119] TestsTime: 0.4388766288757324 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_template_context_processors (template_tests.test_engine.TestEngine) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] TestsTime: 0.6495451927185059 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_get_template_builtins (template_tests.test_engine.TestEngine) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] TestsTime: 0.493664026260376 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_get_template_libraries (template_tests.test_engine.TestEngine) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] TestsTime: 0.6522049903869629 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_get_template_loaders (template_tests.test_engine.TestEngine) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] TestsTime: 0.6560134887695312 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_find_template_loader_str (template_tests.test_engine.TestEngine) ... ERROR
+
+======================================================================
+ERROR: test_find_template_loader_str (template_tests.test_engine.TestEngine)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/template_tests/test_engine.py", line 21, in test_find_template_loader_str
+    self.assertIsInstance(loader, mock_loader_class)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 1244, in assertIsInstance
+    if not isinstance(obj, cls):
+TypeError: isinstance() arg 2 must be a type or tuple of types
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 1 
+[django__django__3.0] [django__django-11119] TestsTime: 0.6260213851928711 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_find_template_loader_tuple (template_tests.test_engine.TestEngine) ... ERROR
+
+======================================================================
+ERROR: test_find_template_loader_tuple (template_tests.test_engine.TestEngine)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/template_tests/test_engine.py", line 21, in test_find_template_loader_tuple
+    self.assertIsInstance(loader, mock_loader_class)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 1244, in assertIsInstance
+    if not isinstance(obj, cls):
+TypeError: isinstance() arg 2 must be a type or tuple of types
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 1 
+[django__django__3.0] [django__django-11119] TestsTime: 0.42374634742736816 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_find_template_loader_invalid (template_tests.test_engine.TestEngine) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] TestsTime: 0.3971824645996094 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_template_loaders (template_tests.test_engine.TestEngine) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] TestsTime: 0.5064940452575684 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_get_template (template_tests.test_engine.TestEngine) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] TestsTime: 0.6145772933959961 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_get_template_needs_compilation (template_tests.test_engine.TestEngine) ... ERROR
+
+======================================================================
+ERROR: test_get_template_needs_compilation (template_tests.test_engine.TestEngine)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/template_tests/test_engine.py", line 24, in test_get_template_needs_compilation
+    self.assertEqual(template.template, mock_template_code)
+AttributeError: 'Template' object has no attribute 'template'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 1 
+[django__django__3.0] [django__django-11119] TestsTime: 0.5635628700256348 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_render_to_string_single_template (template_tests.test_engine.TestEngine) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] TestsTime: 0.3658413887023926 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_render_to_string_multiple_templates (template_tests.test_engine.TestEngine) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] TestsTime: 0.3496570587158203 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_select_template (template_tests.test_engine.TestEngine) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] TestsTime: 0.392392635345459 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_select_template_not_found (template_tests.test_engine.TestEngine) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] TestsTime: 1.6531550884246826 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_from_string (template_tests.test_engine.TestEngine) ... ERROR
+
+======================================================================
+ERROR: test_from_string (template_tests.test_engine.TestEngine)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/template_tests/test_engine.py", line 19, in test_from_string
+    self.assertEqual(template.template, 'Hello {{ name }}!')
+AttributeError: 'Template' object has no attribute 'template'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 1 
+[django__django__3.0] [django__django-11119] TestsTime: 0.2979416847229004 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_find_template (template_tests.test_engine.TestEngine) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] TestsTime: 0.3167073726654053 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_find_template_not_found (template_tests.test_engine.TestEngine) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] TestsTime: 2.7404513359069824 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_find_template_skip (template_tests.test_engine.TestEngine) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] TestsTime: 1.2881214618682861 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11119] Test Script:  coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine;
+ 
+[django__django__3.0] [django__django-11119] Command: coverage run ./tests/runtests.py --verbosity 2 template_tests.test_engine 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+test_find_template (template_tests.test_engine.TestEngine) ... ok
+test_find_template_loader_invalid (template_tests.test_engine.TestEngine) ... ok
+test_find_template_not_found (template_tests.test_engine.TestEngine) ... ok
+test_find_template_skip (template_tests.test_engine.TestEngine) ... ok
+test_get_template (template_tests.test_engine.TestEngine) ... ok
+test_get_template_builtins (template_tests.test_engine.TestEngine) ... ok
+test_get_template_libraries (template_tests.test_engine.TestEngine) ... ok
+test_get_template_loaders (template_tests.test_engine.TestEngine) ... ok
+test_init_app_dirs_with_loaders (template_tests.test_engine.TestEngine) ... ok
+test_render_to_string_multiple_templates (template_tests.test_engine.TestEngine) ... ok
+test_render_to_string_single_template (template_tests.test_engine.TestEngine) ... ok
+test_select_template (template_tests.test_engine.TestEngine) ... ok
+test_select_template_not_found (template_tests.test_engine.TestEngine) ... ok
+test_template_context_processors (template_tests.test_engine.TestEngine) ... ok
+test_template_loaders (template_tests.test_engine.TestEngine) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.005s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application template_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] TestsTime: 1.2366416454315186 
+[django__django__3.0] [django__django-11119] 
+>>>>> All Tests Passed
+ 
+[django__django__3.0] [django__django-11119] Current Working Directory: /opt/django__django 
+[django__django__3.0] [django__django-11119] Command: coverage json -o coverage.json 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11119] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] 
+CoverageLOG: 88.18181818181819%
+ 
+[django__django__3.0] [django__django-11119] 
+FunctionCoverageLOG: 85.71428571428571%
+ 
+[django__django__3.0] [django__django-11119] Running mutation testing 
+[django__django__3.0] [django__django-11119] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11119] Std. Output:
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.0] [django__django-11119] Std. Output:
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11119] Std. Output:
+19.40 19.40 19.40
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] Command: cr-report mutation.sqlite 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11119] Std. Output:
+[job-id] 1b6367d0407f46d88057a35f7662d420
+django/template/engine.py core/ReplaceBinaryOperator_Add_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 49fe386a311e4e299db6c33559b494e9
+django/template/engine.py core/ReplaceBinaryOperator_Add_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] d2d7e0d421d9408ab595cdfe70baf0ff
+django/template/engine.py core/ReplaceBinaryOperator_Add_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] 9fcd37b1dfd54d67b489feb748639b31
+django/template/engine.py core/ReplaceBinaryOperator_Add_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] b7998890c49c48eb92463d14145ec2d4
+django/template/engine.py core/ReplaceBinaryOperator_Add_Mod 0
+worker outcome: normal, test outcome: killed
+[job-id] 9d01d23eff93442182dbe7f394581a70
+django/template/engine.py core/ReplaceBinaryOperator_Add_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] 7eca4625acf944bdb51e7646e9c25e7a
+django/template/engine.py core/ReplaceBinaryOperator_Add_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] fecd98d55691499295cb1d55bc2143a0
+django/template/engine.py core/ReplaceBinaryOperator_Add_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] f693dafae35c4ef2af0c84185d6fd490
+django/template/engine.py core/ReplaceBinaryOperator_Add_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 6e20d7ff4b8d48539826acd488da46a7
+django/template/engine.py core/ReplaceBinaryOperator_Add_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 2d39e79e2ea44078843c9ec3e95cd936
+django/template/engine.py core/ReplaceBinaryOperator_Add_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] 80eb9d05477342ce84c177e97c945b52
+django/template/engine.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] 9c9ff551e49f477f8390dfb886d20bb8
+django/template/engine.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] c1d7a7cedcec433a873d2a9271567488
+django/template/engine.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] b2d8aab811d64211b4573a00831c5d50
+django/template/engine.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] b5e3f304f82b4af28b9acbd194f23be0
+django/template/engine.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] cb583c3ebe7f49618dc020353f52c0e5
+django/template/engine.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] b4ef0a029d8e40cea03705b2e43d527f
+django/template/engine.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] dfd714f01fe94bbba77563e197e61196
+django/template/engine.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 729d3e25047f47f5856170a53c8311a2
+django/template/engine.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] b3b743e99280481a95b23e5d186a506c
+django/template/engine.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 0a9d612f0c0247bf8bfd908599a28e8d
+django/template/engine.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] c56cc176f09d437796bd33d0281c4922
+django/template/engine.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: killed
+[job-id] a964344324834d0894c82d1997d64e6f
+django/template/engine.py core/ReplaceComparisonOperator_Is_IsNot 1
+worker outcome: normal, test outcome: killed
+[job-id] 40a8944187894043988e1bc9c49950e7
+django/template/engine.py core/ReplaceComparisonOperator_Is_IsNot 2
+worker outcome: normal, test outcome: killed
+[job-id] cd4637a8ff914f29b2a7c0eb4d80ad8b
+django/template/engine.py core/ReplaceComparisonOperator_Is_IsNot 3
+worker outcome: normal, test outcome: killed
+[job-id] 7f1f5e7071f84c4286008fbe78eaf88a
+django/template/engine.py core/ReplaceComparisonOperator_Is_IsNot 4
+worker outcome: normal, test outcome: killed
+[job-id] b5cddb5865be40668ed97e0bfe12c407
+django/template/engine.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] e6eeb313d3694593964dab5f46b51530
+django/template/engine.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] 31a70ef68efc4fb58f777ebc668792b1
+django/template/engine.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: killed
+[job-id] 6d9cf700b2184faf9eb70e401796fa4f
+django/template/engine.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: normal, test outcome: killed
+[job-id] 3d59afbfc1fa4cf598cb39d8f50628d4
+django/template/engine.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] 9f86519f0c98468da6d8599e56608f77
+django/template/engine.py core/AddNot 1
+worker outcome: normal, test outcome: killed
+[job-id] 45d7c59ca3044e33b5406affe557275d
+django/template/engine.py core/AddNot 2
+worker outcome: normal, test outcome: killed
+[job-id] e8919f3325434848ad2b27a704dae314
+django/template/engine.py core/AddNot 3
+worker outcome: normal, test outcome: killed
+[job-id] 1230a0ce31464554a2fb9152b8783cc8
+django/template/engine.py core/AddNot 4
+worker outcome: normal, test outcome: survived
+[job-id] c9ce0135115b40da9fdfae749099bda0
+django/template/engine.py core/AddNot 5
+worker outcome: normal, test outcome: killed
+[job-id] e27edd23feab4e809a1f139787ff51cd
+django/template/engine.py core/AddNot 6
+worker outcome: normal, test outcome: killed
+[job-id] 6ea062f33f3742329c6c2ff07745db8b
+django/template/engine.py core/AddNot 7
+worker outcome: normal, test outcome: killed
+[job-id] b799642b9e9a4e96adb902e5fa9bd222
+django/template/engine.py core/AddNot 8
+worker outcome: normal, test outcome: survived
+[job-id] 709b0b948c224ccb993681f085dd4b97
+django/template/engine.py core/AddNot 9
+worker outcome: normal, test outcome: killed
+[job-id] b9c92061d1f5482ea438a68c05ca3893
+django/template/engine.py core/AddNot 10
+worker outcome: normal, test outcome: killed
+[job-id] b0f4c02b75f14eb2a6b8c60867353e12
+django/template/engine.py core/AddNot 11
+worker outcome: normal, test outcome: killed
+[job-id] 30bfccb12cb24e96a5ab707ad06a688d
+django/template/engine.py core/AddNot 12
+worker outcome: normal, test outcome: killed
+[job-id] 6c44464f07504c2f981bd179f6c331d4
+django/template/engine.py core/AddNot 13
+worker outcome: normal, test outcome: killed
+[job-id] 42c9fb416dda46de9742f5b282b29690
+django/template/engine.py core/AddNot 14
+worker outcome: normal, test outcome: killed
+[job-id] 54d5e99a4c4c4519b5926aa9d3ae0700
+django/template/engine.py core/AddNot 15
+worker outcome: normal, test outcome: killed
+[job-id] f290a87d677740f79f15d59a077464af
+django/template/engine.py core/AddNot 16
+worker outcome: normal, test outcome: survived
+[job-id] cbb1d86c083f4f2f8b83322239f0a764
+django/template/engine.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: survived
+[job-id] 327141f8a2a144bfa14dd47fd3ebf982
+django/template/engine.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: killed
+[job-id] bff007b1009940a795632e36fac909e6
+django/template/engine.py core/ReplaceFalseWithTrue 1
+worker outcome: normal, test outcome: survived
+[job-id] e7c4ac8882924c7a92fbac2a17242894
+django/template/engine.py core/ReplaceContinueWithBreak 0
+worker outcome: normal, test outcome: killed
+[job-id] 66f173c13dc0481ca2ada2cee2728707
+django/template/engine.py core/ExceptionReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] 343ce50a977d4f9e914fe5eca067c594
+django/template/engine.py core/ExceptionReplacer 1
+worker outcome: normal, test outcome: killed
+[job-id] 16786d4e8b4c47e1ab9e41f45ca1891a
+django/template/engine.py core/NumberReplacer 0
+worker outcome: normal, test outcome: killed
+[job-id] 8fbfae8d459a4a158a5b128c649b4b86
+django/template/engine.py core/NumberReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] e0f896e2590640a48cbfbee9591b4ca0
+django/template/engine.py core/NumberReplacer 2
+worker outcome: normal, test outcome: killed
+[job-id] 7a0b13765d3844198dbb925088b8d2fa
+django/template/engine.py core/NumberReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] fb120573876a480c9aaa8536a729e569
+django/template/engine.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: survived
+[job-id] 22948db09f934fba82109229f075b210
+django/template/engine.py core/RemoveDecorator 1
+worker outcome: normal, test outcome: survived
+[job-id] 403197a992b54a9395f5e8125f0df436
+django/template/engine.py core/RemoveDecorator 2
+worker outcome: normal, test outcome: killed
+[job-id] afb0c98c1fb64f52a604b06ce1ba4581
+django/template/engine.py core/RemoveDecorator 3
+worker outcome: normal, test outcome: killed
+[job-id] 193cbf5685424d7baf9eb5161ac7d02d
+django/template/engine.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: survived
+[job-id] 580d104dff2045648c669a49b0d64f69
+django/template/engine.py core/ZeroIterationForLoop 1
+worker outcome: normal, test outcome: killed
+[job-id] 3e16814670554887bcd04d3536e85023
+django/template/engine.py core/ZeroIterationForLoop 2
+worker outcome: normal, test outcome: killed
+[job-id] 5ba7dfcb093742e5a8b1ad98aade07ec
+django/template/engine.py core/ZeroIterationForLoop 3
+worker outcome: normal, test outcome: killed
+[job-id] d5c638be0eb14a4c885e16fb01aa1883
+django/template/engine.py core/ZeroIterationForLoop 4
+worker outcome: normal, test outcome: killed
+total jobs: 67
+complete: 67 (100.00%)
+surviving mutants: 13 (19.40%)
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] 
+MutationNum: 67 
+[django__django__3.0] [django__django-11119] 
+MutationLOG: 80.6% 
+[django__django__3.0] [django__django-11119] 
+MutationUncertainty: 0.0 
+[django__django__3.0] [django__django-11119] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/template/engine.py'
+        and 149 <= spec.start_pos[0] <= 163
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__3.0] [django__django-11119] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11119] Std. Output:
+FUNC_MUTATION_RESULT 100.0 2
+ 
+[django__django__3.0] [django__django-11119] Return Code: 0 
+[django__django__3.0] [django__django-11119] 
+FunctionMutationLOG: 100.0% 
+[django__django__3.0] [django__django-11119] 
+FunctionMutationNum: 2 
+[django__django__3.0] [django__django-11119] Test script run successful 
+[django__django__3.0] [django__django-11119] Removing coverage 
+[django__django__3.0] [django__django-11119] >>>>> Unfiltered Tests Failed 

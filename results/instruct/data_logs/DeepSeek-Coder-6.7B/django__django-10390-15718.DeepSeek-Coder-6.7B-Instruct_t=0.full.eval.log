@@ -1,0 +1,408 @@
+[django__django__3.0] [django__django-10390] Task Metadata:
+	- Instance ID: django__django-10390
+	- Testbed: django__django__3.0
+	- Evaluation Model: DeepSeek-Coder-6.7B-Instruct_t=0
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-10390] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-10390] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10390] Std. Output:
+ 
+[django__django__3.0] [django__django-10390] Return Code: 0 
+[django__django__3.0] [django__django-10390] Command: git -c advice.detachedHead=false checkout 4c086d7da4c5cf23935a5340dbb9a8d6835cf7cc 
+[django__django__3.0] [django__django-10390] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10390] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at 4c086d7da4 Fixed #29459 -- Initialized form data/files with empty MultiValueDicts.
+ 
+[django__django__3.0] [django__django-10390] Return Code: 0 
+[django__django__3.0] [django__django-10390] Command: git diff > /opt/temp_django__django-10390_gold_init.patch 
+[django__django__3.0] [django__django-10390] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10390] Std. Output:
+ 
+[django__django__3.0] [django__django-10390] Return Code: 0 
+[django__django__3.0] [django__django-10390] Command: git apply -v /opt/temp_django__django-10390_gold.patch 
+[django__django__3.0] [django__django-10390] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10390] Std. Output:
+Checking patch django/db/models/functions/datetime.py...
+Applied patch django/db/models/functions/datetime.py cleanly.
+ 
+[django__django__3.0] [django__django-10390] Return Code: 0 
+[django__django__3.0] [django__django-10390] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-10390] Command: git diff > /opt/temp_django__django-10390_test_init.patch 
+[django__django__3.0] [django__django-10390] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10390] Std. Output:
+ 
+[django__django__3.0] [django__django-10390] Return Code: 0 
+[django__django__3.0] [django__django-10390] Command: git restore tests/db_functions/datetime/test_extract_trunc.py 
+[django__django__3.0] [django__django-10390] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10390] Std. Output:
+ 
+[django__django__3.0] [django__django-10390] Return Code: 0 
+[django__django__3.0] [django__django-10390] Command: git apply -v /opt/temp_django__django-10390_test.patch 
+[django__django__3.0] [django__django-10390] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10390] Std. Output:
+Checking patch tests/db_functions/datetime/test_extract_trunc.py...
+Applied patch tests/db_functions/datetime/test_extract_trunc.py cleanly.
+ 
+[django__django__3.0] [django__django-10390] Return Code: 0 
+[django__django__3.0] [django__django-10390] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-10390] Command: coverage run ./tests/runtests.py --verbosity 2 db_functions.datetime.test_extract_trunc 
+[django__django__3.0] [django__django-10390] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10390] Std. Output:
+test_extract_year (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions) ... ERROR
+
+======================================================================
+ERROR: test_extract_year (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/db_functions/datetime/test_extract_trunc.py", line 17, in test_extract_year
+    result = ExtractYear(self.date_time_field).resolve_expression(self.date_time)
+  File "/opt/django__django/django/db/models/functions/datetime.py", line 65, in resolve_expression
+    field = copy.lhs.output_field
+  File "/opt/django__django/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/opt/django__django/django/db/models/expressions.py", line 262, in output_field
+    raise FieldError('Cannot resolve expression type, unknown output_field')
+django.core.exceptions.FieldError: Cannot resolve expression type, unknown output_field
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application db_functions
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10390] Return Code: 1 
+[django__django__3.0] [django__django-10390] TestsTime: 1.5645334720611572 
+[django__django__3.0] [django__django-10390] Test script run successful 
+[django__django__3.0] [django__django-10390] Removing coverage 
+[django__django__3.0] [django__django-10390] Command: coverage run ./tests/runtests.py --verbosity 2 db_functions.datetime.test_extract_trunc 
+[django__django__3.0] [django__django-10390] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10390] Std. Output:
+test_extract_month (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions) ... ERROR
+
+======================================================================
+ERROR: test_extract_month (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/db_functions/datetime/test_extract_trunc.py", line 17, in test_extract_month
+    result = ExtractMonth(self.date_time_field).resolve_expression(self.date_time)
+  File "/opt/django__django/django/db/models/functions/datetime.py", line 65, in resolve_expression
+    field = copy.lhs.output_field
+  File "/opt/django__django/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/opt/django__django/django/db/models/expressions.py", line 262, in output_field
+    raise FieldError('Cannot resolve expression type, unknown output_field')
+django.core.exceptions.FieldError: Cannot resolve expression type, unknown output_field
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application db_functions
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10390] Return Code: 1 
+[django__django__3.0] [django__django-10390] TestsTime: 0.8991644382476807 
+[django__django__3.0] [django__django-10390] Test script run successful 
+[django__django__3.0] [django__django-10390] Removing coverage 
+[django__django__3.0] [django__django-10390] Command: coverage run ./tests/runtests.py --verbosity 2 db_functions.datetime.test_extract_trunc 
+[django__django__3.0] [django__django-10390] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10390] Std. Output:
+test_extract_day (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions) ... ERROR
+
+======================================================================
+ERROR: test_extract_day (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/db_functions/datetime/test_extract_trunc.py", line 17, in test_extract_day
+    result = ExtractDay(self.date_time_field).resolve_expression(self.date_time)
+  File "/opt/django__django/django/db/models/functions/datetime.py", line 65, in resolve_expression
+    field = copy.lhs.output_field
+  File "/opt/django__django/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/opt/django__django/django/db/models/expressions.py", line 262, in output_field
+    raise FieldError('Cannot resolve expression type, unknown output_field')
+django.core.exceptions.FieldError: Cannot resolve expression type, unknown output_field
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application db_functions
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10390] Return Code: 1 
+[django__django__3.0] [django__django-10390] TestsTime: 0.857330322265625 
+[django__django__3.0] [django__django-10390] Test script run successful 
+[django__django__3.0] [django__django-10390] Removing coverage 
+[django__django__3.0] [django__django-10390] Command: coverage run ./tests/runtests.py --verbosity 2 db_functions.datetime.test_extract_trunc 
+[django__django__3.0] [django__django-10390] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10390] Std. Output:
+test_extract_hour (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions) ... ERROR
+
+======================================================================
+ERROR: test_extract_hour (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/db_functions/datetime/test_extract_trunc.py", line 17, in test_extract_hour
+    result = ExtractHour(self.date_time_field).resolve_expression(self.date_time)
+  File "/opt/django__django/django/db/models/functions/datetime.py", line 65, in resolve_expression
+    field = copy.lhs.output_field
+  File "/opt/django__django/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/opt/django__django/django/db/models/expressions.py", line 262, in output_field
+    raise FieldError('Cannot resolve expression type, unknown output_field')
+django.core.exceptions.FieldError: Cannot resolve expression type, unknown output_field
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application db_functions
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10390] Return Code: 1 
+[django__django__3.0] [django__django-10390] TestsTime: 0.884462833404541 
+[django__django__3.0] [django__django-10390] Test script run successful 
+[django__django__3.0] [django__django-10390] Removing coverage 
+[django__django__3.0] [django__django-10390] Command: coverage run ./tests/runtests.py --verbosity 2 db_functions.datetime.test_extract_trunc 
+[django__django__3.0] [django__django-10390] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10390] Std. Output:
+test_extract_minute (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions) ... ERROR
+
+======================================================================
+ERROR: test_extract_minute (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/db_functions/datetime/test_extract_trunc.py", line 17, in test_extract_minute
+    result = ExtractMinute(self.date_time_field).resolve_expression(self.date_time)
+  File "/opt/django__django/django/db/models/functions/datetime.py", line 65, in resolve_expression
+    field = copy.lhs.output_field
+  File "/opt/django__django/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/opt/django__django/django/db/models/expressions.py", line 262, in output_field
+    raise FieldError('Cannot resolve expression type, unknown output_field')
+django.core.exceptions.FieldError: Cannot resolve expression type, unknown output_field
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application db_functions
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10390] Return Code: 1 
+[django__django__3.0] [django__django-10390] TestsTime: 0.8045439720153809 
+[django__django__3.0] [django__django-10390] Test script run successful 
+[django__django__3.0] [django__django-10390] Removing coverage 
+[django__django__3.0] [django__django-10390] Command: coverage run ./tests/runtests.py --verbosity 2 db_functions.datetime.test_extract_trunc 
+[django__django__3.0] [django__django-10390] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10390] Std. Output:
+test_extract_minute (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions) ... ERROR
+
+======================================================================
+ERROR: test_extract_minute (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/db_functions/datetime/test_extract_trunc.py", line 17, in test_extract_minute
+    result = ExtractSecond(self.date_time_field).resolve_expression(self.date_time)
+  File "/opt/django__django/django/db/models/functions/datetime.py", line 65, in resolve_expression
+    field = copy.lhs.output_field
+  File "/opt/django__django/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/opt/django__django/django/db/models/expressions.py", line 262, in output_field
+    raise FieldError('Cannot resolve expression type, unknown output_field')
+django.core.exceptions.FieldError: Cannot resolve expression type, unknown output_field
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application db_functions
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10390] Return Code: 1 
+[django__django__3.0] [django__django-10390] TestsTime: 0.8645570278167725 
+[django__django__3.0] [django__django-10390] Test script run successful 
+[django__django__3.0] [django__django-10390] Removing coverage 
+[django__django__3.0] [django__django-10390] Command: coverage run ./tests/runtests.py --verbosity 2 db_functions.datetime.test_extract_trunc 
+[django__django__3.0] [django__django-10390] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10390] Std. Output:
+test_trunc_date (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions) ... ERROR
+
+======================================================================
+ERROR: test_trunc_date (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/db_functions/datetime/test_extract_trunc.py", line 17, in test_trunc_date
+    result = TruncDate(self.date_time_field).resolve_expression(self.date_time)
+  File "/opt/django__django/django/db/models/functions/datetime.py", line 193, in resolve_expression
+    field = copy.lhs.output_field
+  File "/opt/django__django/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/opt/django__django/django/db/models/expressions.py", line 262, in output_field
+    raise FieldError('Cannot resolve expression type, unknown output_field')
+django.core.exceptions.FieldError: Cannot resolve expression type, unknown output_field
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application db_functions
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10390] Return Code: 1 
+[django__django__3.0] [django__django-10390] TestsTime: 0.7514030933380127 
+[django__django__3.0] [django__django-10390] Test script run successful 
+[django__django__3.0] [django__django-10390] Removing coverage 
+[django__django__3.0] [django__django-10390] Command: coverage run ./tests/runtests.py --verbosity 2 db_functions.datetime.test_extract_trunc 
+[django__django__3.0] [django__django-10390] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10390] Std. Output:
+test_trunc_time (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions) ... ERROR
+
+======================================================================
+ERROR: test_trunc_time (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/db_functions/datetime/test_extract_trunc.py", line 17, in test_trunc_time
+    result = TruncTime(self.date_time_field).resolve_expression(self.date_time)
+  File "/opt/django__django/django/db/models/functions/datetime.py", line 193, in resolve_expression
+    field = copy.lhs.output_field
+  File "/opt/django__django/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/opt/django__django/django/db/models/expressions.py", line 262, in output_field
+    raise FieldError('Cannot resolve expression type, unknown output_field')
+django.core.exceptions.FieldError: Cannot resolve expression type, unknown output_field
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application db_functions
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10390] Return Code: 1 
+[django__django__3.0] [django__django-10390] TestsTime: 1.1125502586364746 
+[django__django__3.0] [django__django-10390] Test script run successful 
+[django__django__3.0] [django__django-10390] Removing coverage 
+[django__django__3.0] [django__django-10390] Command: coverage run ./tests/runtests.py --verbosity 2 db_functions.datetime.test_extract_trunc 
+[django__django__3.0] [django__django-10390] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10390] Std. Output:
+test_trunc_hour (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions) ... ERROR
+
+======================================================================
+ERROR: test_trunc_hour (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/db_functions/datetime/test_extract_trunc.py", line 17, in test_trunc_hour
+    result = TruncHour(self.date_time_field).resolve_expression(self.date_time)
+  File "/opt/django__django/django/db/models/functions/datetime.py", line 193, in resolve_expression
+    field = copy.lhs.output_field
+  File "/opt/django__django/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/opt/django__django/django/db/models/expressions.py", line 262, in output_field
+    raise FieldError('Cannot resolve expression type, unknown output_field')
+django.core.exceptions.FieldError: Cannot resolve expression type, unknown output_field
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application db_functions
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10390] Return Code: 1 
+[django__django__3.0] [django__django-10390] TestsTime: 0.9087402820587158 
+[django__django__3.0] [django__django-10390] Test script run successful 
+[django__django__3.0] [django__django-10390] Removing coverage 
+[django__django__3.0] [django__django-10390] Command: coverage run ./tests/runtests.py --verbosity 2 db_functions.datetime.test_extract_trunc 
+[django__django__3.0] [django__django-10390] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10390] Std. Output:
+test_trunc_minute (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions) ... ERROR
+
+======================================================================
+ERROR: test_trunc_minute (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/db_functions/datetime/test_extract_trunc.py", line 17, in test_trunc_minute
+    result = TruncMinute(self.date_time_field).resolve_expression(self.date_time)
+  File "/opt/django__django/django/db/models/functions/datetime.py", line 193, in resolve_expression
+    field = copy.lhs.output_field
+  File "/opt/django__django/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/opt/django__django/django/db/models/expressions.py", line 262, in output_field
+    raise FieldError('Cannot resolve expression type, unknown output_field')
+django.core.exceptions.FieldError: Cannot resolve expression type, unknown output_field
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application db_functions
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10390] Return Code: 1 
+[django__django__3.0] [django__django-10390] TestsTime: 0.9014074802398682 
+[django__django__3.0] [django__django-10390] Test script run successful 
+[django__django__3.0] [django__django-10390] Removing coverage 
+[django__django__3.0] [django__django-10390] Command: coverage run ./tests/runtests.py --verbosity 2 db_functions.datetime.test_extract_trunc 
+[django__django__3.0] [django__django-10390] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10390] Std. Output:
+test_trunc_second (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions) ... ERROR
+
+======================================================================
+ERROR: test_trunc_second (db_functions.datetime.test_extract_trunc.TestDjangoDateTimeFunctions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/db_functions/datetime/test_extract_trunc.py", line 17, in test_trunc_second
+    result = TruncSecond(self.date_time_field).resolve_expression(self.date_time)
+  File "/opt/django__django/django/db/models/functions/datetime.py", line 193, in resolve_expression
+    field = copy.lhs.output_field
+  File "/opt/django__django/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/opt/django__django/django/db/models/expressions.py", line 262, in output_field
+    raise FieldError('Cannot resolve expression type, unknown output_field')
+django.core.exceptions.FieldError: Cannot resolve expression type, unknown output_field
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application db_functions
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10390] Return Code: 1 
+[django__django__3.0] [django__django-10390] TestsTime: 0.6973166465759277 
+[django__django__3.0] [django__django-10390] Test script run successful 
+[django__django__3.0] [django__django-10390] Removing coverage 
+[django__django__3.0] [django__django-10390] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-10390] TestsTime: 0.0 
+[django__django__3.0] [django__django-10390] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-10390] >>>>> Unfiltered Tests Failed 

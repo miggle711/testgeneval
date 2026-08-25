@@ -1,0 +1,392 @@
+[django__django__3.0] [django__django-10880] Task Metadata:
+	- Instance ID: django__django-10880
+	- Testbed: django__django__3.0
+	- Evaluation Model: DeepSeek-Coder-6.7B-Instruct_t=0
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-10880] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-10880] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10880] Std. Output:
+ 
+[django__django__3.0] [django__django-10880] Return Code: 0 
+[django__django__3.0] [django__django-10880] Command: git -c advice.detachedHead=false checkout 838e432e3e5519c5383d12018e6c78f8ec7833c1 
+[django__django__3.0] [django__django-10880] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10880] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at 838e432e3e Completed test coverage for utils.text.Truncator.chars().
+ 
+[django__django__3.0] [django__django-10880] Return Code: 0 
+[django__django__3.0] [django__django-10880] Command: git diff > /opt/temp_django__django-10880_gold_init.patch 
+[django__django__3.0] [django__django-10880] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10880] Std. Output:
+ 
+[django__django__3.0] [django__django-10880] Return Code: 0 
+[django__django__3.0] [django__django-10880] Command: git apply -v /opt/temp_django__django-10880_gold.patch 
+[django__django__3.0] [django__django-10880] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10880] Std. Output:
+Checking patch django/db/models/aggregates.py...
+Applied patch django/db/models/aggregates.py cleanly.
+ 
+[django__django__3.0] [django__django-10880] Return Code: 0 
+[django__django__3.0] [django__django-10880] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-10880] Command: git diff > /opt/temp_django__django-10880_test_init.patch 
+[django__django__3.0] [django__django-10880] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10880] Std. Output:
+ 
+[django__django__3.0] [django__django-10880] Return Code: 0 
+[django__django__3.0] [django__django-10880] Command: git restore tests/aggregation/tests.py 
+[django__django__3.0] [django__django-10880] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10880] Std. Output:
+ 
+[django__django__3.0] [django__django-10880] Return Code: 0 
+[django__django__3.0] [django__django-10880] Command: git apply -v /opt/temp_django__django-10880_test.patch 
+[django__django__3.0] [django__django-10880] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10880] Std. Output:
+Checking patch tests/aggregation/tests.py...
+Applied patch tests/aggregation/tests.py cleanly.
+ 
+[django__django__3.0] [django__django-10880] Return Code: 0 
+[django__django__3.0] [django__django-10880] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-10880] Command: coverage run ./tests/runtests.py --verbosity 2 aggregation.tests 
+[django__django__3.0] [django__django-10880] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10880] Std. Output:
+test_init (aggregation.tests.TestAggregate) ... ERROR
+
+======================================================================
+ERROR: test_init (aggregation.tests.TestAggregate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/aggregation/tests.py", line 15, in setUp
+    self.aggregate = Avg(*self.expressions, distinct=True, filter=self.filter)
+  File "/opt/django__django/django/db/models/aggregates.py", line 26, in __init__
+    raise TypeError("%s does not allow distinct." % self.__class__.__name__)
+TypeError: Avg does not allow distinct.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application aggregation
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10880] Return Code: 1 
+[django__django__3.0] [django__django-10880] TestsTime: 2.404120445251465 
+[django__django__3.0] [django__django-10880] Test script run successful 
+[django__django__3.0] [django__django-10880] Removing coverage 
+[django__django__3.0] [django__django-10880] Command: coverage run ./tests/runtests.py --verbosity 2 aggregation.tests 
+[django__django__3.0] [django__django-10880] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10880] Std. Output:
+test_get_source_fields (aggregation.tests.TestAggregate) ... ERROR
+
+======================================================================
+ERROR: test_get_source_fields (aggregation.tests.TestAggregate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/aggregation/tests.py", line 15, in setUp
+    self.aggregate = Avg(*self.expressions, distinct=True, filter=self.filter)
+  File "/opt/django__django/django/db/models/aggregates.py", line 26, in __init__
+    raise TypeError("%s does not allow distinct." % self.__class__.__name__)
+TypeError: Avg does not allow distinct.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application aggregation
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10880] Return Code: 1 
+[django__django__3.0] [django__django-10880] TestsTime: 1.0052287578582764 
+[django__django__3.0] [django__django-10880] Test script run successful 
+[django__django__3.0] [django__django-10880] Removing coverage 
+[django__django__3.0] [django__django-10880] Command: coverage run ./tests/runtests.py --verbosity 2 aggregation.tests 
+[django__django__3.0] [django__django-10880] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10880] Std. Output:
+test_get_source_expressions (aggregation.tests.TestAggregate) ... ERROR
+
+======================================================================
+ERROR: test_get_source_expressions (aggregation.tests.TestAggregate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/aggregation/tests.py", line 15, in setUp
+    self.aggregate = Avg(*self.expressions, distinct=True, filter=self.filter)
+  File "/opt/django__django/django/db/models/aggregates.py", line 26, in __init__
+    raise TypeError("%s does not allow distinct." % self.__class__.__name__)
+TypeError: Avg does not allow distinct.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application aggregation
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10880] Return Code: 1 
+[django__django__3.0] [django__django-10880] TestsTime: 0.7263350486755371 
+[django__django__3.0] [django__django-10880] Test script run successful 
+[django__django__3.0] [django__django-10880] Removing coverage 
+[django__django__3.0] [django__django-10880] Command: coverage run ./tests/runtests.py --verbosity 2 aggregation.tests 
+[django__django__3.0] [django__django-10880] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10880] Std. Output:
+test_set_source_expressions (aggregation.tests.TestAggregate) ... ERROR
+
+======================================================================
+ERROR: test_set_source_expressions (aggregation.tests.TestAggregate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/aggregation/tests.py", line 15, in setUp
+    self.aggregate = Avg(*self.expressions, distinct=True, filter=self.filter)
+  File "/opt/django__django/django/db/models/aggregates.py", line 26, in __init__
+    raise TypeError("%s does not allow distinct." % self.__class__.__name__)
+TypeError: Avg does not allow distinct.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application aggregation
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10880] Return Code: 1 
+[django__django__3.0] [django__django-10880] TestsTime: 0.7700681686401367 
+[django__django__3.0] [django__django-10880] Test script run successful 
+[django__django__3.0] [django__django-10880] Removing coverage 
+[django__django__3.0] [django__django-10880] Command: coverage run ./tests/runtests.py --verbosity 2 aggregation.tests 
+[django__django__3.0] [django__django-10880] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10880] Std. Output:
+test_resolve_expression (aggregation.tests.TestAggregate) ... ERROR
+
+======================================================================
+ERROR: test_resolve_expression (aggregation.tests.TestAggregate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/aggregation/tests.py", line 15, in setUp
+    self.aggregate = Avg(*self.expressions, distinct=True, filter=self.filter)
+  File "/opt/django__django/django/db/models/aggregates.py", line 26, in __init__
+    raise TypeError("%s does not allow distinct." % self.__class__.__name__)
+TypeError: Avg does not allow distinct.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application aggregation
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10880] Return Code: 1 
+[django__django__3.0] [django__django-10880] TestsTime: 0.8102848529815674 
+[django__django__3.0] [django__django-10880] Test script run successful 
+[django__django__3.0] [django__django-10880] Removing coverage 
+[django__django__3.0] [django__django-10880] Command: coverage run ./tests/runtests.py --verbosity 2 aggregation.tests 
+[django__django__3.0] [django__django-10880] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10880] Std. Output:
+test_default_alias (aggregation.tests.TestAggregate) ... ERROR
+
+======================================================================
+ERROR: test_default_alias (aggregation.tests.TestAggregate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/aggregation/tests.py", line 15, in setUp
+    self.aggregate = Avg(*self.expressions, distinct=True, filter=self.filter)
+  File "/opt/django__django/django/db/models/aggregates.py", line 26, in __init__
+    raise TypeError("%s does not allow distinct." % self.__class__.__name__)
+TypeError: Avg does not allow distinct.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application aggregation
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10880] Return Code: 1 
+[django__django__3.0] [django__django-10880] TestsTime: 0.96942138671875 
+[django__django__3.0] [django__django-10880] Test script run successful 
+[django__django__3.0] [django__django-10880] Removing coverage 
+[django__django__3.0] [django__django-10880] Command: coverage run ./tests/runtests.py --verbosity 2 aggregation.tests 
+[django__django__3.0] [django__django-10880] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10880] Std. Output:
+test_get_group_by_cols (aggregation.tests.TestAggregate) ... ERROR
+
+======================================================================
+ERROR: test_get_group_by_cols (aggregation.tests.TestAggregate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/aggregation/tests.py", line 15, in setUp
+    self.aggregate = Avg(*self.expressions, distinct=True, filter=self.filter)
+  File "/opt/django__django/django/db/models/aggregates.py", line 26, in __init__
+    raise TypeError("%s does not allow distinct." % self.__class__.__name__)
+TypeError: Avg does not allow distinct.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application aggregation
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10880] Return Code: 1 
+[django__django__3.0] [django__django-10880] TestsTime: 0.7744419574737549 
+[django__django__3.0] [django__django-10880] Test script run successful 
+[django__django__3.0] [django__django-10880] Removing coverage 
+[django__django__3.0] [django__django-10880] Command: coverage run ./tests/runtests.py --verbosity 2 aggregation.tests 
+[django__django__3.0] [django__django-10880] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10880] Std. Output:
+test_as_sql (aggregation.tests.TestAggregate) ... ERROR
+
+======================================================================
+ERROR: test_as_sql (aggregation.tests.TestAggregate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/aggregation/tests.py", line 15, in setUp
+    self.aggregate = Avg(*self.expressions, distinct=True, filter=self.filter)
+  File "/opt/django__django/django/db/models/aggregates.py", line 26, in __init__
+    raise TypeError("%s does not allow distinct." % self.__class__.__name__)
+TypeError: Avg does not allow distinct.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application aggregation
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10880] Return Code: 1 
+[django__django__3.0] [django__django-10880] TestsTime: 0.8529016971588135 
+[django__django__3.0] [django__django-10880] Test script run successful 
+[django__django__3.0] [django__django-10880] Removing coverage 
+[django__django__3.0] [django__django-10880] Command: coverage run ./tests/runtests.py --verbosity 2 aggregation.tests 
+[django__django__3.0] [django__django-10880] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10880] Std. Output:
+test_as_sql_without_filter (aggregation.tests.TestAggregate) ... ERROR
+
+======================================================================
+ERROR: test_as_sql_without_filter (aggregation.tests.TestAggregate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/aggregation/tests.py", line 15, in setUp
+    self.aggregate = Avg(*self.expressions, distinct=True, filter=self.filter)
+  File "/opt/django__django/django/db/models/aggregates.py", line 26, in __init__
+    raise TypeError("%s does not allow distinct." % self.__class__.__name__)
+TypeError: Avg does not allow distinct.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application aggregation
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10880] Return Code: 1 
+[django__django__3.0] [django__django-10880] TestsTime: 0.8864290714263916 
+[django__django__3.0] [django__django-10880] Test script run successful 
+[django__django__3.0] [django__django-10880] Removing coverage 
+[django__django__3.0] [django__django-10880] Command: coverage run ./tests/runtests.py --verbosity 2 aggregation.tests 
+[django__django__3.0] [django__django-10880] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10880] Std. Output:
+test_as_sql_without_distinct (aggregation.tests.TestAggregate) ... ERROR
+
+======================================================================
+ERROR: test_as_sql_without_distinct (aggregation.tests.TestAggregate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/aggregation/tests.py", line 15, in setUp
+    self.aggregate = Avg(*self.expressions, distinct=True, filter=self.filter)
+  File "/opt/django__django/django/db/models/aggregates.py", line 26, in __init__
+    raise TypeError("%s does not allow distinct." % self.__class__.__name__)
+TypeError: Avg does not allow distinct.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application aggregation
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10880] Return Code: 1 
+[django__django__3.0] [django__django-10880] TestsTime: 0.7865269184112549 
+[django__django__3.0] [django__django-10880] Test script run successful 
+[django__django__3.0] [django__django-10880] Removing coverage 
+[django__django__3.0] [django__django-10880] Command: coverage run ./tests/runtests.py --verbosity 2 aggregation.tests 
+[django__django__3.0] [django__django-10880] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10880] Std. Output:
+test_as_sql_without_distinct_without_filter (aggregation.tests.TestAggregate) ... ERROR
+
+======================================================================
+ERROR: test_as_sql_without_distinct_without_filter (aggregation.tests.TestAggregate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/aggregation/tests.py", line 15, in setUp
+    self.aggregate = Avg(*self.expressions, distinct=True, filter=self.filter)
+  File "/opt/django__django/django/db/models/aggregates.py", line 26, in __init__
+    raise TypeError("%s does not allow distinct." % self.__class__.__name__)
+TypeError: Avg does not allow distinct.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application aggregation
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10880] Return Code: 1 
+[django__django__3.0] [django__django-10880] TestsTime: 0.8029875755310059 
+[django__django__3.0] [django__django-10880] Test script run successful 
+[django__django__3.0] [django__django-10880] Removing coverage 
+[django__django__3.0] [django__django-10880] Command: coverage run ./tests/runtests.py --verbosity 2 aggregation.tests 
+[django__django__3.0] [django__django-10880] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10880] Std. Output:
+test_convert_value (aggregation.tests.TestAggregate) ... ERROR
+
+======================================================================
+ERROR: test_convert_value (aggregation.tests.TestAggregate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/aggregation/tests.py", line 15, in setUp
+    self.aggregate = Avg(*self.expressions, distinct=True, filter=self.filter)
+  File "/opt/django__django/django/db/models/aggregates.py", line 26, in __init__
+    raise TypeError("%s does not allow distinct." % self.__class__.__name__)
+TypeError: Avg does not allow distinct.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application aggregation
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10880] Return Code: 1 
+[django__django__3.0] [django__django-10880] TestsTime: 0.8865053653717041 
+[django__django__3.0] [django__django-10880] Test script run successful 
+[django__django__3.0] [django__django-10880] Removing coverage 
+[django__django__3.0] [django__django-10880] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-10880] TestsTime: 0.0 
+[django__django__3.0] [django__django-10880] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-10880] >>>>> Unfiltered Tests Failed 

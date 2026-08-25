@@ -1,0 +1,2173 @@
+[django__django__3.0] [django__django-11216] Task Metadata:
+	- Instance ID: django__django-11216
+	- Testbed: django__django__3.0
+	- Evaluation Model: Qwen2.5-Coder-32B-Instruct_t=0
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-11216] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11216] Std. Output:
+ 
+[django__django__3.0] [django__django-11216] Return Code: 0 
+[django__django__3.0] [django__django-11216] Command: git -c advice.detachedHead=false checkout 34ec52269ade54af31a021b12969913129571a3f 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at 34ec52269a Applied jQuery patch for CVE-2019-11358.
+ 
+[django__django__3.0] [django__django-11216] Return Code: 0 
+[django__django__3.0] [django__django-11216] Command: git diff > /opt/temp_django__django-11216_gold_init.patch 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11216] Std. Output:
+ 
+[django__django__3.0] [django__django-11216] Return Code: 0 
+[django__django__3.0] [django__django-11216] Command: git apply -v /opt/temp_django__django-11216_gold.patch 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Checking patch django/contrib/staticfiles/storage.py...
+Applied patch django/contrib/staticfiles/storage.py cleanly.
+ 
+[django__django__3.0] [django__django-11216] Return Code: 0 
+[django__django__3.0] [django__django-11216] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-11216] Command: git diff > /opt/temp_django__django-11216_test_init.patch 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11216] Std. Output:
+ 
+[django__django__3.0] [django__django-11216] Return Code: 0 
+[django__django__3.0] [django__django-11216] Command: git restore tests/staticfiles_tests/test_storage.py 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11216] Std. Output:
+ 
+[django__django__3.0] [django__django-11216] Return Code: 0 
+[django__django__3.0] [django__django-11216] Command: git apply -v /opt/temp_django__django-11216_test.patch 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Checking patch tests/staticfiles_tests/test_storage.py...
+Applied patch tests/staticfiles_tests/test_storage.py cleanly.
+ 
+[django__django__3.0] [django__django-11216] Return Code: 0 
+[django__django__3.0] [django__django-11216] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_init_with_defaults (staticfiles_tests.test_storage.TestStaticFilesStorage) ... FAIL
+
+======================================================================
+FAIL: test_init_with_defaults (staticfiles_tests.test_storage.TestStaticFilesStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 370, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/staticfiles_tests/test_storage.py", line 21, in test_init_with_defaults
+    self.assertEqual(storage.location, '/static/')
+AssertionError: '/static' != '/static/'
+- /static
++ /static/
+?        +
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 1 
+[django__django__3.0] [django__django-11216] TestsTime: 1.0710387229919434 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_init_with_empty_settings (staticfiles_tests.test_storage.TestStaticFilesStorage) ... FAIL
+
+======================================================================
+FAIL: test_init_with_empty_settings (staticfiles_tests.test_storage.TestStaticFilesStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 370, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/staticfiles_tests/test_storage.py", line 20, in test_init_with_empty_settings
+    self.assertEqual(storage.location, '/custom/static/')
+AssertionError: '/custom/static' != '/custom/static/'
+- /custom/static
++ /custom/static/
+?               +
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 1 
+[django__django__3.0] [django__django-11216] TestsTime: 0.8080158233642578 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_init_with_none_settings (staticfiles_tests.test_storage.TestStaticFilesStorage) ... ERROR
+
+======================================================================
+ERROR: test_init_with_none_settings (staticfiles_tests.test_storage.TestStaticFilesStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 370, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/staticfiles_tests/test_storage.py", line 19, in test_init_with_none_settings
+    with self.assertRaises(ImproperlyConfigured):
+NameError: name 'ImproperlyConfigured' is not defined
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 1 
+[django__django__3.0] [django__django-11216] TestsTime: 0.4753727912902832 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_path_without_location (staticfiles_tests.test_storage.TestStaticFilesStorage) ... ERROR
+
+======================================================================
+ERROR: test_path_without_location (staticfiles_tests.test_storage.TestStaticFilesStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 370, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/staticfiles_tests/test_storage.py", line 20, in test_path_without_location
+    with self.assertRaises(ImproperlyConfigured):
+NameError: name 'ImproperlyConfigured' is not defined
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 1 
+[django__django__3.0] [django__django-11216] TestsTime: 0.5989224910736084 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_path_with_location (staticfiles_tests.test_storage.TestStaticFilesStorage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 0 
+[django__django__3.0] [django__django-11216] TestsTime: 1.52042555809021 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_file_hash (staticfiles_tests.test_storage.TestHashedFilesMixin) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 0 
+[django__django__3.0] [django__django-11216] TestsTime: 0.3954293727874756 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_hashed_name (staticfiles_tests.test_storage.TestHashedFilesMixin) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 0 
+[django__django__3.0] [django__django-11216] TestsTime: 0.7991271018981934 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_url_in_debug_mode (staticfiles_tests.test_storage.TestHashedFilesMixin) ... ERROR
+
+======================================================================
+ERROR: test_url_in_debug_mode (staticfiles_tests.test_storage.TestHashedFilesMixin)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/staticfiles_tests/test_storage.py", line 22, in test_url_in_debug_mode
+    self.assertEqual(self.mixin.url('test.txt'), 'test.txt')
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 153, in url
+    return self._url(self.stored_name, name, force)
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 134, in _url
+    final_url = super().url(hashed_name)
+AttributeError: 'super' object has no attribute 'url'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 1 
+[django__django__3.0] [django__django-11216] TestsTime: 0.5668885707855225 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_url_not_in_debug_mode (staticfiles_tests.test_storage.TestHashedFilesMixin) ... ERROR
+
+======================================================================
+ERROR: test_url_not_in_debug_mode (staticfiles_tests.test_storage.TestHashedFilesMixin)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/staticfiles_tests/test_storage.py", line 22, in test_url_not_in_debug_mode
+    self.assertEqual(self.mixin.url('test.txt'), 'test.txt')
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 153, in url
+    return self._url(self.stored_name, name, force)
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 132, in _url
+    hashed_name = hashed_name_func(*args)
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 357, in stored_name
+    self.hashed_name(name, content=None, filename=intermediate_name)
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 92, in hashed_name
+    if not self.exists(filename):
+AttributeError: 'HashedFilesMixin' object has no attribute 'exists'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 1 
+[django__django__3.0] [django__django-11216] TestsTime: 0.5883545875549316 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_post_process (staticfiles_tests.test_storage.TestHashedFilesMixin) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 0 
+[django__django__3.0] [django__django-11216] TestsTime: 0.6616959571838379 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test__post_process (staticfiles_tests.test_storage.TestHashedFilesMixin) ... ERROR
+
+======================================================================
+ERROR: test__post_process (staticfiles_tests.test_storage.TestHashedFilesMixin)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/staticfiles_tests/test_storage.py", line 23, in test__post_process
+    with patch.object(self.mixin, '_save', return_value='test.hash.txt'):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1247, in __enter__
+    original, local = self.get_original()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1221, in get_original
+    "%s does not have the attribute %r" % (target, name)
+AttributeError: <django.contrib.staticfiles.storage.HashedFilesMixin object at 0x79fcb2680a10> does not have the attribute '_save'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 1 
+[django__django__3.0] [django__django-11216] TestsTime: 1.7274181842803955 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_load_manifest (staticfiles_tests.test_storage.TestManifestFilesMixin) ... ERROR
+
+======================================================================
+ERROR: test_load_manifest (staticfiles_tests.test_storage.TestManifestFilesMixin)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/staticfiles_tests/test_storage.py", line 17, in setUp
+    self.mixin = ManifestFilesMixin()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 379, in __init__
+    self.hashed_files = self.load_manifest()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 389, in load_manifest
+    content = self.read_manifest()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 383, in read_manifest
+    with self.open(self.manifest_name) as manifest:
+AttributeError: 'ManifestFilesMixin' object has no attribute 'open'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 1 
+[django__django__3.0] [django__django-11216] TestsTime: 2.639845132827759 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_load_manifest_invalid_version (staticfiles_tests.test_storage.TestManifestFilesMixin) ... ERROR
+
+======================================================================
+ERROR: test_load_manifest_invalid_version (staticfiles_tests.test_storage.TestManifestFilesMixin)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/staticfiles_tests/test_storage.py", line 17, in setUp
+    self.mixin = ManifestFilesMixin()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 379, in __init__
+    self.hashed_files = self.load_manifest()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 389, in load_manifest
+    content = self.read_manifest()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 383, in read_manifest
+    with self.open(self.manifest_name) as manifest:
+AttributeError: 'ManifestFilesMixin' object has no attribute 'open'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 1 
+[django__django__3.0] [django__django-11216] TestsTime: 0.5524935722351074 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_load_manifest_no_manifest (staticfiles_tests.test_storage.TestManifestFilesMixin) ... ERROR
+
+======================================================================
+ERROR: test_load_manifest_no_manifest (staticfiles_tests.test_storage.TestManifestFilesMixin)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/staticfiles_tests/test_storage.py", line 17, in setUp
+    self.mixin = ManifestFilesMixin()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 379, in __init__
+    self.hashed_files = self.load_manifest()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 389, in load_manifest
+    content = self.read_manifest()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 383, in read_manifest
+    with self.open(self.manifest_name) as manifest:
+AttributeError: 'ManifestFilesMixin' object has no attribute 'open'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 1 
+[django__django__3.0] [django__django-11216] TestsTime: 0.6172881126403809 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_post_process (staticfiles_tests.test_storage.TestManifestFilesMixin) ... ERROR
+
+======================================================================
+ERROR: test_post_process (staticfiles_tests.test_storage.TestManifestFilesMixin)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/staticfiles_tests/test_storage.py", line 17, in setUp
+    self.mixin = ManifestFilesMixin()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 379, in __init__
+    self.hashed_files = self.load_manifest()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 389, in load_manifest
+    content = self.read_manifest()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 383, in read_manifest
+    with self.open(self.manifest_name) as manifest:
+AttributeError: 'ManifestFilesMixin' object has no attribute 'open'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 1 
+[django__django__3.0] [django__django-11216] TestsTime: 0.9235122203826904 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_save_manifest (staticfiles_tests.test_storage.TestManifestFilesMixin) ... ERROR
+
+======================================================================
+ERROR: test_save_manifest (staticfiles_tests.test_storage.TestManifestFilesMixin)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/staticfiles_tests/test_storage.py", line 17, in setUp
+    self.mixin = ManifestFilesMixin()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 379, in __init__
+    self.hashed_files = self.load_manifest()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 389, in load_manifest
+    content = self.read_manifest()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 383, in read_manifest
+    with self.open(self.manifest_name) as manifest:
+AttributeError: 'ManifestFilesMixin' object has no attribute 'open'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 1 
+[django__django__3.0] [django__django-11216] TestsTime: 0.7276308536529541 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_stored_name (staticfiles_tests.test_storage.TestManifestFilesMixin) ... ERROR
+
+======================================================================
+ERROR: test_stored_name (staticfiles_tests.test_storage.TestManifestFilesMixin)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/staticfiles_tests/test_storage.py", line 17, in setUp
+    self.mixin = ManifestFilesMixin()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 379, in __init__
+    self.hashed_files = self.load_manifest()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 389, in load_manifest
+    content = self.read_manifest()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 383, in read_manifest
+    with self.open(self.manifest_name) as manifest:
+AttributeError: 'ManifestFilesMixin' object has no attribute 'open'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 1 
+[django__django__3.0] [django__django-11216] TestsTime: 1.8943967819213867 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_stored_name_missing_manifest_entry (staticfiles_tests.test_storage.TestManifestFilesMixin) ... ERROR
+
+======================================================================
+ERROR: test_stored_name_missing_manifest_entry (staticfiles_tests.test_storage.TestManifestFilesMixin)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/staticfiles_tests/test_storage.py", line 17, in setUp
+    self.mixin = ManifestFilesMixin()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 379, in __init__
+    self.hashed_files = self.load_manifest()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 389, in load_manifest
+    content = self.read_manifest()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 383, in read_manifest
+    with self.open(self.manifest_name) as manifest:
+AttributeError: 'ManifestFilesMixin' object has no attribute 'open'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 1 
+[django__django__3.0] [django__django-11216] TestsTime: 0.949608564376831 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/staticfiles_tests/test_storage.py", line 14, in <module>
+    class TestCachedFilesMixin(TestCase):
+  File "/opt/django__django/tests/staticfiles_tests/test_storage.py", line 20, in TestCachedFilesMixin
+    @patch('django.contrib.staticfiles.storage.caches.__getitem__', side_effect=InvalidCacheBackendError)
+NameError: name 'InvalidCacheBackendError' is not defined
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+ 
+[django__django__3.0] [django__django-11216] Return Code: 1 
+[django__django__3.0] [django__django-11216] TestsTime: 2.294032096862793 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_hash_key (staticfiles_tests.test_storage.TestCachedFilesMixin) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 0 
+[django__django__3.0] [django__django-11216] TestsTime: 0.6669070720672607 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_deprecated_warning (staticfiles_tests.test_storage.TestCachedStaticFilesStorage) ... ERROR
+
+======================================================================
+ERROR: test_deprecated_warning (staticfiles_tests.test_storage.TestCachedStaticFilesStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/staticfiles_tests/test_storage.py", line 17, in setUp
+    self.storage = CachedStaticFilesStorage()
+  File "/opt/django__django/django/contrib/staticfiles/storage.py", line 485, in __init__
+    RemovedInDjango31Warning, stacklevel=2,
+django.utils.deprecation.RemovedInDjango31Warning: CachedStaticFilesStorage is deprecated in favor of ManifestStaticFilesStorage.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 1 
+[django__django__3.0] [django__django-11216] TestsTime: 1.221123218536377 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_init (staticfiles_tests.test_storage.TestManifestStaticFilesStorage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 0 
+[django__django__3.0] [django__django-11216] TestsTime: 0.4828007221221924 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_setup (staticfiles_tests.test_storage.TestConfiguredStorage) ... ERROR
+
+======================================================================
+ERROR: test_setup (staticfiles_tests.test_storage.TestConfiguredStorage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 370, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/staticfiles_tests/test_storage.py", line 19, in test_setup
+    storage = ConfiguredStorage()
+NameError: name 'ConfiguredStorage' is not defined
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11216] Return Code: 1 
+[django__django__3.0] [django__django-11216] TestsTime: 0.5068702697753906 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11216] Test Script:  coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage;
+ 
+[django__django__3.0] [django__django-11216] Command: coverage run ./tests/runtests.py --verbosity 2 staticfiles_tests.test_storage 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application staticfiles_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, staticfiles_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_path_with_location (staticfiles_tests.test_storage.TestStaticFilesStorage) ... ok
+test_init (staticfiles_tests.test_storage.TestManifestStaticFilesStorage) ... ok
+test_hash_key (staticfiles_tests.test_storage.TestCachedFilesMixin) ... ok
+test_file_hash (staticfiles_tests.test_storage.TestHashedFilesMixin) ... ok
+test_hashed_name (staticfiles_tests.test_storage.TestHashedFilesMixin) ... ok
+test_post_process (staticfiles_tests.test_storage.TestHashedFilesMixin) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.129s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__3.0] [django__django-11216] Return Code: 0 
+[django__django__3.0] [django__django-11216] TestsTime: 0.8751342296600342 
+[django__django__3.0] [django__django-11216] 
+>>>>> All Tests Passed
+ 
+[django__django__3.0] [django__django-11216] Current Working Directory: /opt/django__django 
+[django__django__3.0] [django__django-11216] Command: coverage json -o coverage.json 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11216] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.0] [django__django-11216] Return Code: 0 
+[django__django__3.0] [django__django-11216] 
+CoverageLOG: 20.86092715231788%
+ 
+[django__django__3.0] [django__django-11216] 
+FunctionCoverageLOG: 2.127659574468085%
+ 
+[django__django__3.0] [django__django-11216] Running mutation testing 
+[django__django__3.0] [django__django-11216] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11216] Std. Output:
+ 
+[django__django__3.0] [django__django-11216] Return Code: 0 
+[django__django__3.0] [django__django-11216] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.0] [django__django-11216] Std. Output:
+ 
+[django__django__3.0] [django__django-11216] Return Code: 0 
+[django__django__3.0] [django__django-11216] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11216] Std. Output:
+80.63 80.63 80.63
+ 
+[django__django__3.0] [django__django-11216] Return Code: 0 
+[django__django__3.0] [django__django-11216] Command: cr-report mutation.sqlite 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11216] Std. Output:
+[job-id] fc1dc593476d499ab707875959c575fe
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] 0a310d1c65c64375957e5c728c442173
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] c2dead43469a42c09c39b8cdcc97af05
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_Sub 2
+worker outcome: normal, test outcome: survived
+[job-id] 7e3dd4b087d04a328f283cfac7251b39
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] 5765d8937c1c4f17bfe736a8405eec84
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] c84009de24044c1ca94d121cc247cbfd
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] 7fae73a71ac14d0bba78acf31da7dbb4
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] e26cd25836db4d939c24dda842861e1f
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] ec205bb185ed4b6b8d1e232eab0a8cd9
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] 53722a6aadd6414e92a73fc6c50a7e1b
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 5205a2253f9f4a34999ff23d3e0241de
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] 70a3eadf213f4c69a6c060ae438f6b4f
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] 804cd43dbcd840ebae559f585f8019ac
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] 96693146438847ad9af1618ff2206c08
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_Mod 1
+worker outcome: normal, test outcome: survived
+[job-id] 7d38c7231bfd4f3c9c3f9d58a82e3cb3
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_Mod 2
+worker outcome: normal, test outcome: survived
+[job-id] 64c84f23717847b5a4ba908e111d3b7b
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 51f1d2f5b3c14105a1f3dc445cbbff6a
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 798b6fe003584e1b94ee90a01fd6a1a8
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] 39224bc61831475298c2573717f36067
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] c93c64a5adf0402cb341b1eb15926a5b
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 3cae54969b43404ebbf605bf0aba7dfb
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] bed81b7d7bab42ca8fb9607f08a4a98d
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 49dfbc51f75b4fa08b85a78d60354660
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 09ae4055279d48dca2846028e1e31a5d
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] 4924a79364e44aedb98358f8816757f1
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 2f3bd856bd6347b7b0fdc71c23b9bb65
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 8cd757ca0a9e445eb6df8af0eb76640a
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] fabbdd56a94e4a2eaead87fcf026cb9c
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] fd9b28e9243a4fb59bf88e62a7d415bb
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] d12d9c4c74af4743a2fa46d8b44fc879
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] c60c2b71245449f9b04b7e7914de2242
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] 2352513733c44452b5f7ed4d9602947a
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] 40db052c145e4c329ef90409a937fa47
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Add_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] b45ab2be5dad4f35841b19dcea9d2980
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] cdde9e868ba244668b2902c0b572fd94
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Add 1
+worker outcome: normal, test outcome: killed
+[job-id] ae0c118f8ba94ca5bf80d50b52016fe2
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Add 2
+worker outcome: normal, test outcome: killed
+[job-id] 4d5e2db5dcac43dab68600c83b47cbe9
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Add 3
+worker outcome: normal, test outcome: survived
+[job-id] 4fa4699c0a944045a4e8a099db76aec7
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Add 4
+worker outcome: normal, test outcome: survived
+[job-id] b95d80d94de04a69af30c022dd6dca07
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Add 5
+worker outcome: normal, test outcome: survived
+[job-id] d035a7fe458b47beaffb99224ed88c51
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Add 6
+worker outcome: normal, test outcome: survived
+[job-id] 3e5f5802af9e4211b1d76619603b221c
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Add 7
+worker outcome: normal, test outcome: survived
+[job-id] 046be854339e45ef99c7ee69ac713165
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Add 8
+worker outcome: normal, test outcome: killed
+[job-id] 739a1a14ace4411c9a40df66a206806c
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] 43f8b187c5fb42a2ba21f46607f3c939
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Sub 1
+worker outcome: normal, test outcome: killed
+[job-id] 57cdc650a36e49f29ca2e19709c8d523
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Sub 2
+worker outcome: normal, test outcome: killed
+[job-id] 50aed20902784d07b05edecc8b312743
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Sub 3
+worker outcome: normal, test outcome: survived
+[job-id] 45d089446b0349e380730fb8715ab08d
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Sub 4
+worker outcome: normal, test outcome: survived
+[job-id] b3fb05cc787043b1afc23f95b192f29c
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Sub 5
+worker outcome: normal, test outcome: survived
+[job-id] de51936f6e1146f69c7bf0ddcbfbd5d4
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Sub 6
+worker outcome: normal, test outcome: survived
+[job-id] e0b06ba48863478589d1e1759217e075
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Sub 7
+worker outcome: normal, test outcome: survived
+[job-id] 2aeca1878a8645d8bd21f0149e79ac76
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Sub 8
+worker outcome: normal, test outcome: killed
+[job-id] 8352385f1f574c949e5ba37a3df450cc
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] 81478c03fed44ab6abd81002a7deb291
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Mul 1
+worker outcome: normal, test outcome: killed
+[job-id] f6b6b9f08f0a4405aef58f8975a0518a
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Mul 2
+worker outcome: normal, test outcome: killed
+[job-id] 3bac8ed1a0824596a4c963e38f9cf02e
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Mul 3
+worker outcome: normal, test outcome: survived
+[job-id] 47d20d68f9794009843f79d96779cd45
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Mul 4
+worker outcome: normal, test outcome: survived
+[job-id] c991b5a862054af5b418faeea5a5c0db
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Mul 5
+worker outcome: normal, test outcome: survived
+[job-id] e2c61d7ec1424bb4bca06f1d4a75ed47
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Mul 6
+worker outcome: normal, test outcome: survived
+[job-id] 3fc92e022a6e4cb6b063252b58ce1b09
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Mul 7
+worker outcome: normal, test outcome: survived
+[job-id] 0c6dfcd8aa0d4938a6c028240e44e9a5
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Mul 8
+worker outcome: normal, test outcome: killed
+[job-id] 1445919a65f947138385f4eeac5498df
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 0c21f25402f844ca94a1ce5bfcbd0a81
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Div 1
+worker outcome: normal, test outcome: killed
+[job-id] 3d3229b1112e4bd99ee17623a51a93b2
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Div 2
+worker outcome: normal, test outcome: killed
+[job-id] ffe48c8d79c44e3085aa46c6abcc4c69
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Div 3
+worker outcome: normal, test outcome: survived
+[job-id] 99f3403e8ea64910bd7f30aaf24083e2
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Div 4
+worker outcome: normal, test outcome: survived
+[job-id] 93abfb0165004deaa9bb13c43d134ae9
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Div 5
+worker outcome: normal, test outcome: survived
+[job-id] 8e4a1add296149f48e34b7c63e9fb9ea
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Div 6
+worker outcome: normal, test outcome: survived
+[job-id] 7dbbe44bee9847f0b920aa96fa8392f4
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Div 7
+worker outcome: normal, test outcome: survived
+[job-id] 4351dbd823be42f0b2e2bfe839afc252
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Div 8
+worker outcome: normal, test outcome: killed
+[job-id] 0a7852bb6e424daa9416c3bd25660636
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 931d14c5367d46399fe75f0af882822f
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_FloorDiv 1
+worker outcome: normal, test outcome: killed
+[job-id] 52dbfb4fbbcc4e6ab6791202806f9944
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_FloorDiv 2
+worker outcome: normal, test outcome: killed
+[job-id] 95105c157c914553a747510669d985e0
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_FloorDiv 3
+worker outcome: normal, test outcome: survived
+[job-id] f4e02cd8d1ab44f6b44cb11be254e3ce
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_FloorDiv 4
+worker outcome: normal, test outcome: survived
+[job-id] 6e2a2efb97a94a71b0dca31c66fa27de
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_FloorDiv 5
+worker outcome: normal, test outcome: survived
+[job-id] 8d0b3603c4bb40678f28db96c3db2313
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_FloorDiv 6
+worker outcome: normal, test outcome: survived
+[job-id] b1c7e908692f4851a1331e42b6829782
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_FloorDiv 7
+worker outcome: normal, test outcome: survived
+[job-id] cc5ebbf39f2f4ac6981b66b56bef3b3f
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_FloorDiv 8
+worker outcome: normal, test outcome: killed
+[job-id] 6aa2370fcf2e430fa5e80f19a2a99f2e
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 21c13356ca47432ab6fded03657107b7
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Pow 1
+worker outcome: normal, test outcome: killed
+[job-id] a807c1cf961f4f4eab61703aaee1cc00
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Pow 2
+worker outcome: normal, test outcome: killed
+[job-id] deac91d70506402999c7f8c2086f4f9b
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Pow 3
+worker outcome: normal, test outcome: survived
+[job-id] b0ae939af88041c1a3be3d771b99d531
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Pow 4
+worker outcome: normal, test outcome: survived
+[job-id] dc17717c9c58498f8467a50ef69db3b4
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Pow 5
+worker outcome: normal, test outcome: survived
+[job-id] d05c2298cf45488c9f1372e4191d67df
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Pow 6
+worker outcome: normal, test outcome: survived
+[job-id] 0218d441e67246c18338e3ebf8b9d8c4
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Pow 7
+worker outcome: normal, test outcome: survived
+[job-id] d8e8a39b5e0a4dcdab3e54cab8e68eb4
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_Pow 8
+worker outcome: normal, test outcome: killed
+[job-id] 7481d8405cf943ada0fea154573740a9
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] e411765da543473f97aa9e3a05b59040
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_RShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 7778621123574b369309fa9103df87b3
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_RShift 2
+worker outcome: normal, test outcome: killed
+[job-id] 5ce5854861ef45ccb8e8daae2684c2d5
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_RShift 3
+worker outcome: normal, test outcome: survived
+[job-id] ff6e6ebebd104614b33c7233932c95da
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_RShift 4
+worker outcome: normal, test outcome: survived
+[job-id] af2d5ebbbe14457ca0f697761f64481f
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_RShift 5
+worker outcome: normal, test outcome: survived
+[job-id] c2547c283e87498688c44c47defe4c19
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_RShift 6
+worker outcome: normal, test outcome: survived
+[job-id] d6711973a77949ae9d016f32836d4c35
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_RShift 7
+worker outcome: normal, test outcome: survived
+[job-id] cda3fae066024c4792fbac30377eb071
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_RShift 8
+worker outcome: normal, test outcome: killed
+[job-id] 24645b70730b4e229046ffeb5144ab6c
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 41bf2df73c6b410fa3c1186b57db9024
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_LShift 1
+worker outcome: normal, test outcome: killed
+[job-id] f2455330838c44a2bdaa0a2c32d2a7fb
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_LShift 2
+worker outcome: normal, test outcome: killed
+[job-id] f5953e4a2f3d406c85ce55eb2c80082e
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_LShift 3
+worker outcome: normal, test outcome: survived
+[job-id] 98dadc290b554b7582e4fb247f52d297
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_LShift 4
+worker outcome: normal, test outcome: survived
+[job-id] f4d5a9a3015a4a8e893a5fd8e8ef5b40
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_LShift 5
+worker outcome: normal, test outcome: survived
+[job-id] 2c0bace10ecf4aa382f6ee8598320691
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_LShift 6
+worker outcome: normal, test outcome: survived
+[job-id] a86e3e05158745b1a7b7c95d781ba9a9
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_LShift 7
+worker outcome: normal, test outcome: survived
+[job-id] 2bc8876edce24902a9586558e01b5fe6
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_LShift 8
+worker outcome: normal, test outcome: killed
+[job-id] e42601797b434b50acfaf982bc2490db
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 3fa0b22d887440cab77fd3ddaee566fb
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 4aca1301c5bf4e73a2f3c3f60ee460a4
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitOr 2
+worker outcome: normal, test outcome: killed
+[job-id] 3d23dfaf5cf34f8b869c47236883b32a
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitOr 3
+worker outcome: normal, test outcome: survived
+[job-id] dbbc9354553a408ba6ca82024f163ee6
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitOr 4
+worker outcome: normal, test outcome: survived
+[job-id] 52ecfc31a5b243bf8b5c1620961fe74f
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitOr 5
+worker outcome: normal, test outcome: survived
+[job-id] 6a119deb61a74c6b938e01e762f0d8c0
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitOr 6
+worker outcome: normal, test outcome: survived
+[job-id] 9d98b669474c4eb0b4a2ac10a3f30fa4
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitOr 7
+worker outcome: normal, test outcome: survived
+[job-id] 521efe073f0f4a9e88a601ed06aa96c9
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitOr 8
+worker outcome: normal, test outcome: killed
+[job-id] 74a4dd8a181549cf812e365bf9c1ae93
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 9b84247ecbe24db19b32e866618e17a5
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] c9f82689e4a249be971268db8b171dc0
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitAnd 2
+worker outcome: normal, test outcome: killed
+[job-id] fc8ba73929474e9392bef5c36cbd9494
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] 111aa535105c48e8b2d3dd698b17c74c
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitAnd 4
+worker outcome: normal, test outcome: survived
+[job-id] 4359c01038994cff9f75b8840121c280
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitAnd 5
+worker outcome: normal, test outcome: survived
+[job-id] 759ed3e55c614767a98bc303b0baba46
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitAnd 6
+worker outcome: normal, test outcome: survived
+[job-id] 723ec5210ae74bbfa097cdaa1cef83b2
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitAnd 7
+worker outcome: normal, test outcome: survived
+[job-id] 7e072ddcffde4dee8eba81d7f484efd6
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitAnd 8
+worker outcome: normal, test outcome: killed
+[job-id] 74a73fb159034ff3a75ad5c36d7794e0
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] 51a46f25438443198e81c05d978f192b
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitXor 1
+worker outcome: normal, test outcome: killed
+[job-id] ef878ac65e79437586057e2b737b4b81
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitXor 2
+worker outcome: normal, test outcome: killed
+[job-id] c79eca3c1b38487bbbbd2d185e706148
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitXor 3
+worker outcome: normal, test outcome: survived
+[job-id] 9e2fa1f7b1194df2bd70f399b4e74b98
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitXor 4
+worker outcome: normal, test outcome: survived
+[job-id] c6f1cab7bd0a45f4be6eb25587f8e90a
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitXor 5
+worker outcome: normal, test outcome: survived
+[job-id] b7c22b54ad41441e9a9e895327b8ef12
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitXor 6
+worker outcome: normal, test outcome: survived
+[job-id] 508c9d7e8ac24bd38c817d1cdc71886f
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitXor 7
+worker outcome: normal, test outcome: survived
+[job-id] cf49cc6c0f374e4bbeb0b55fd6262568
+django/contrib/staticfiles/storage.py core/ReplaceBinaryOperator_Mod_BitXor 8
+worker outcome: normal, test outcome: killed
+[job-id] 4b36c7c349c54a2cb05ef5fd9be4fba2
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] ce379f72083a4025a76f38762336d4d6
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_NotEq 1
+worker outcome: normal, test outcome: survived
+[job-id] ff7a891ee0cd440eb85b95a999f7a485
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_NotEq 2
+worker outcome: normal, test outcome: survived
+[job-id] d966d6f4d96048948e9e5e235d144882
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_NotEq 3
+worker outcome: normal, test outcome: survived
+[job-id] f99d54c3477a4a2097f45f6c581e571c
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] c843565cf8d34ac7aec68482b645a4e3
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] b0c593d8693f4ed299f2028a83c11c1d
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_Lt 2
+worker outcome: normal, test outcome: survived
+[job-id] 0c4f454db7ae4ad5ad65b738f471bf91
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_Lt 3
+worker outcome: normal, test outcome: survived
+[job-id] fef35fa6b2df4cd7b65ccb345be721d1
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 78995daee22747d398baa83bc4d11193
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] ddd6823a73b34b3f8520fc921e5c2c79
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_LtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 90936fe617bf48b982cd2e9e13c9523f
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_LtE 3
+worker outcome: normal, test outcome: survived
+[job-id] 3e41e9f4c91b4385aac5b0f873ecd2df
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 9536d7b730244e29ba54a55f2fd1fb38
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] 5a76c8358d2c48659d45c31a9cdbc6b5
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_Gt 2
+worker outcome: normal, test outcome: survived
+[job-id] d587bc436ae94fc69633efb6a21705d0
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_Gt 3
+worker outcome: normal, test outcome: survived
+[job-id] c2675b896ca9436b981addadd19e6799
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 2642515d9c2a47bda4e3e0937011a8e0
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 9e25f991327342efa5474c81b834c88a
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_GtE 2
+worker outcome: normal, test outcome: survived
+[job-id] d3a1fa55a2b045de811e837d929fc870
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_GtE 3
+worker outcome: normal, test outcome: survived
+[job-id] 3b743c847b0e4a488d107d6392332b42
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 07729c553e7943ed96a313a7e93ee0bd
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 7bf37f5f16bd48b08f2c5b35f49a706c
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] 0dfacd248ca541c9a2afacef40bbdbc6
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_Is 3
+worker outcome: normal, test outcome: survived
+[job-id] 1dfc7d7fca9b44d48360138d79816bad
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] f2a5ce45ea59447197ec9bb1580a36a2
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] e8340e35b068453d9c01059efa7e8559
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 71fe2d7d1a0d4352969801942bcc76be
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Eq_IsNot 3
+worker outcome: normal, test outcome: survived
+[job-id] 67ce1ac6d17749e1b667b58adcca7f65
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: killed
+[job-id] 732c6f80760d4f8c898892f4ba1194f2
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Is_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 7c59cdfbceae4a43a6eb6b20392a2881
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Is_IsNot 2
+worker outcome: normal, test outcome: killed
+[job-id] b427db4eafe54731b8a5655626f0540d
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Is_IsNot 3
+worker outcome: normal, test outcome: killed
+[job-id] c549ef4f0349458aa6b1e80b9dcdcf74
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Is_IsNot 4
+worker outcome: normal, test outcome: survived
+[job-id] eb14a981d0954d928df4d5f114bb8144
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Is_IsNot 5
+worker outcome: normal, test outcome: survived
+[job-id] 1b2aa76cadc54459b571a4136012c13a
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Is_IsNot 6
+worker outcome: normal, test outcome: killed
+[job-id] 4731ab3912014e7a964ea46bb91c5d81
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Is_IsNot 7
+worker outcome: normal, test outcome: survived
+[job-id] d98b84d5ae3741dda373d575b47c9688
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_Is_IsNot 8
+worker outcome: normal, test outcome: survived
+[job-id] 94c8cd070ab340bf8c0af68ba77ec8ee
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] fb3d9ce2a45342ada8f1b07309f02aab
+django/contrib/staticfiles/storage.py core/ReplaceComparisonOperator_IsNot_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 01953e5531b8459daf6e65149a1239fe
+django/contrib/staticfiles/storage.py core/ReplaceUnaryOperator_USub_UAdd 0
+worker outcome: normal, test outcome: survived
+[job-id] e8c1442cbc7e4c828e2438464bfa0d03
+django/contrib/staticfiles/storage.py core/ReplaceUnaryOperator_USub_UAdd 1
+worker outcome: normal, test outcome: survived
+[job-id] 70ad46aae51644a98ad16ed57187ae4b
+django/contrib/staticfiles/storage.py core/ReplaceUnaryOperator_USub_Invert 0
+worker outcome: normal, test outcome: survived
+[job-id] 9124d18aac464e9784546e4cb5e5873d
+django/contrib/staticfiles/storage.py core/ReplaceUnaryOperator_USub_Invert 1
+worker outcome: normal, test outcome: survived
+[job-id] 7eaa686b4f7f45e6b4bfff511730495d
+django/contrib/staticfiles/storage.py core/ReplaceUnaryOperator_USub_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] e5c8836c25ae442fb0ed354b5a97818b
+django/contrib/staticfiles/storage.py core/ReplaceUnaryOperator_USub_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] 4eb3d0e94c1d47348f197988eafc8baf
+django/contrib/staticfiles/storage.py core/ReplaceUnaryOperator_Delete_USub 0
+worker outcome: normal, test outcome: survived
+[job-id] 1abc7708dffb4b57a57dc5b6ce47a62c
+django/contrib/staticfiles/storage.py core/ReplaceUnaryOperator_Delete_USub 1
+worker outcome: normal, test outcome: survived
+[job-id] 1c99f8ab89d54ae7b1b7e4bee086dc60
+django/contrib/staticfiles/storage.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: killed
+[job-id] d74e39bd6e8b470bb75cd85b1b86b69c
+django/contrib/staticfiles/storage.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: killed
+[job-id] 8e53abf2fbce48d4be346351f8c54be8
+django/contrib/staticfiles/storage.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: normal, test outcome: survived
+[job-id] 8e175a69edca40e787e0a238fa3b4838
+django/contrib/staticfiles/storage.py core/ReplaceUnaryOperator_Delete_Not 3
+worker outcome: normal, test outcome: survived
+[job-id] 23e731e263b6461a974de61cf31fcbba
+django/contrib/staticfiles/storage.py core/ReplaceUnaryOperator_Delete_Not 4
+worker outcome: normal, test outcome: survived
+[job-id] 6f676a664bea44cbbf11dce620979649
+django/contrib/staticfiles/storage.py core/ReplaceUnaryOperator_Delete_Not 5
+worker outcome: normal, test outcome: survived
+[job-id] 42e4a4219c3a4d06ac9369fe1653f0c3
+django/contrib/staticfiles/storage.py core/ReplaceUnaryOperator_Delete_Not 6
+worker outcome: normal, test outcome: survived
+[job-id] c5394961923d431d9fa9d5b0da2fb7da
+django/contrib/staticfiles/storage.py core/ReplaceUnaryOperator_Delete_Not 7
+worker outcome: normal, test outcome: survived
+[job-id] a532383e26094f7c8016a43cc60dccbd
+django/contrib/staticfiles/storage.py core/ReplaceUnaryOperator_Delete_Not 8
+worker outcome: normal, test outcome: survived
+[job-id] bc5636ba11f746d8a13ff011e2574023
+django/contrib/staticfiles/storage.py core/ReplaceUnaryOperator_Delete_Not 9
+worker outcome: normal, test outcome: survived
+[job-id] 3e2283e1faea46b6a63c8ef29052ed55
+django/contrib/staticfiles/storage.py core/ReplaceUnaryOperator_Delete_Not 10
+worker outcome: normal, test outcome: survived
+[job-id] c8665c5c729b4b3a89e97d988e885ac0
+django/contrib/staticfiles/storage.py core/ReplaceUnaryOperator_Delete_Not 11
+worker outcome: normal, test outcome: survived
+[job-id] 9ad9e3bebe4847c48caf9157853a3950
+django/contrib/staticfiles/storage.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] bffceb8c2d0a4e888a36e9507493f772
+django/contrib/staticfiles/storage.py core/AddNot 1
+worker outcome: normal, test outcome: survived
+[job-id] df864cff8acf43e9937acb5e09f5c3a1
+django/contrib/staticfiles/storage.py core/AddNot 2
+worker outcome: normal, test outcome: killed
+[job-id] 911c9e9236c64d43b8dc787fd74b172f
+django/contrib/staticfiles/storage.py core/AddNot 3
+worker outcome: normal, test outcome: killed
+[job-id] d69b5d6b23b84ecf97f5b7c4d430acad
+django/contrib/staticfiles/storage.py core/AddNot 4
+worker outcome: normal, test outcome: killed
+[job-id] 99cb1c7db7894fc99d0284ead598ace8
+django/contrib/staticfiles/storage.py core/AddNot 5
+worker outcome: normal, test outcome: killed
+[job-id] a6bcf986371a4af8b4e16c849886617f
+django/contrib/staticfiles/storage.py core/AddNot 6
+worker outcome: normal, test outcome: killed
+[job-id] 55b24629b5384e57b4cbefd91e1d7796
+django/contrib/staticfiles/storage.py core/AddNot 7
+worker outcome: normal, test outcome: survived
+[job-id] 3639e48cafd1409f80d6715cc895fc6a
+django/contrib/staticfiles/storage.py core/AddNot 8
+worker outcome: normal, test outcome: survived
+[job-id] 4c311ece13df42fabf6796a539fbcc58
+django/contrib/staticfiles/storage.py core/AddNot 9
+worker outcome: normal, test outcome: killed
+[job-id] 326185fbbfb74932b8bcd075f401ef28
+django/contrib/staticfiles/storage.py core/AddNot 10
+worker outcome: normal, test outcome: killed
+[job-id] 3cf478b2e24144769b37370e7ecf0206
+django/contrib/staticfiles/storage.py core/AddNot 11
+worker outcome: normal, test outcome: survived
+[job-id] a5a498ca1ade4a55abbe0b6a39f9d9f1
+django/contrib/staticfiles/storage.py core/AddNot 12
+worker outcome: normal, test outcome: survived
+[job-id] 4251a346c8844a1d833c0e5c5830b9be
+django/contrib/staticfiles/storage.py core/AddNot 13
+worker outcome: normal, test outcome: survived
+[job-id] baa5fde019524f58b2cd824ca0fa5643
+django/contrib/staticfiles/storage.py core/AddNot 14
+worker outcome: normal, test outcome: survived
+[job-id] e645cd8915d14d84a18936355aaa2861
+django/contrib/staticfiles/storage.py core/AddNot 15
+worker outcome: normal, test outcome: survived
+[job-id] f307bcbe56cf4aeda4f6915ff896e6e3
+django/contrib/staticfiles/storage.py core/AddNot 16
+worker outcome: normal, test outcome: survived
+[job-id] 9a8f79902a4249a0b7492b7a68c43610
+django/contrib/staticfiles/storage.py core/AddNot 17
+worker outcome: normal, test outcome: survived
+[job-id] 8fb8ae37ee5f4cab88afc95f0b24255a
+django/contrib/staticfiles/storage.py core/AddNot 18
+worker outcome: normal, test outcome: survived
+[job-id] a0100d2411f64a1cbc9c8eb1a2f7b649
+django/contrib/staticfiles/storage.py core/AddNot 19
+worker outcome: normal, test outcome: survived
+[job-id] 7586ce12186b4fc19c7ff2bc68f72327
+django/contrib/staticfiles/storage.py core/AddNot 20
+worker outcome: normal, test outcome: survived
+[job-id] 7c13479112b74997ac048fd5c5a2fd07
+django/contrib/staticfiles/storage.py core/AddNot 21
+worker outcome: normal, test outcome: survived
+[job-id] 3e99677ead244a4aa19baea0f84384df
+django/contrib/staticfiles/storage.py core/AddNot 22
+worker outcome: normal, test outcome: survived
+[job-id] dfc63705d40b45119acf936335161f56
+django/contrib/staticfiles/storage.py core/AddNot 23
+worker outcome: normal, test outcome: survived
+[job-id] c6c5dd3c0ec747c8a39ea744df59f7c4
+django/contrib/staticfiles/storage.py core/AddNot 24
+worker outcome: normal, test outcome: survived
+[job-id] 7da79e4a8a274d29a9745c23a90e6290
+django/contrib/staticfiles/storage.py core/AddNot 25
+worker outcome: normal, test outcome: survived
+[job-id] 8392ec69b2064580bc832f1694f9f5d5
+django/contrib/staticfiles/storage.py core/AddNot 26
+worker outcome: normal, test outcome: survived
+[job-id] f0338a6e3faf47b29a49996bc7a59f8b
+django/contrib/staticfiles/storage.py core/AddNot 27
+worker outcome: normal, test outcome: killed
+[job-id] 85abe08c73a145a190eb47074470b4a0
+django/contrib/staticfiles/storage.py core/AddNot 28
+worker outcome: normal, test outcome: survived
+[job-id] 559b0d9ffab540508609d28d8df7c2c8
+django/contrib/staticfiles/storage.py core/AddNot 29
+worker outcome: normal, test outcome: survived
+[job-id] 22f9b90483c747ed8208dce5f408a5ca
+django/contrib/staticfiles/storage.py core/AddNot 30
+worker outcome: normal, test outcome: survived
+[job-id] 460e3003832e406ab47af5e93cc5bbde
+django/contrib/staticfiles/storage.py core/AddNot 31
+worker outcome: normal, test outcome: survived
+[job-id] 4491c9c0bac44d8298df92e82b068c4c
+django/contrib/staticfiles/storage.py core/AddNot 32
+worker outcome: normal, test outcome: survived
+[job-id] b0c458aeac014e22b88d3c1efa1ace89
+django/contrib/staticfiles/storage.py core/AddNot 33
+worker outcome: normal, test outcome: survived
+[job-id] acc640ae5804451a97866a4cd2004596
+django/contrib/staticfiles/storage.py core/AddNot 34
+worker outcome: normal, test outcome: survived
+[job-id] 8bc8cd324fb94dac9b44533d4b121763
+django/contrib/staticfiles/storage.py core/AddNot 35
+worker outcome: normal, test outcome: survived
+[job-id] 0371aac4375c4705844696430631ff70
+django/contrib/staticfiles/storage.py core/AddNot 36
+worker outcome: normal, test outcome: survived
+[job-id] 0a681d2bda5f4b78aada51e72b6fae64
+django/contrib/staticfiles/storage.py core/AddNot 37
+worker outcome: normal, test outcome: survived
+[job-id] 5ed5bc1218254076b248bf5c7b1ccafa
+django/contrib/staticfiles/storage.py core/AddNot 38
+worker outcome: normal, test outcome: survived
+[job-id] dcb5dcd1961643ffa59bb6f3a3f9f1e8
+django/contrib/staticfiles/storage.py core/AddNot 39
+worker outcome: normal, test outcome: survived
+[job-id] 34c15343f6d04ac0985517598b261921
+django/contrib/staticfiles/storage.py core/AddNot 40
+worker outcome: normal, test outcome: survived
+[job-id] 2469ca277ac04c33a7abbc1c5f663580
+django/contrib/staticfiles/storage.py core/AddNot 41
+worker outcome: normal, test outcome: killed
+[job-id] 14e764be0ddc48859aa7395cfce31509
+django/contrib/staticfiles/storage.py core/AddNot 42
+worker outcome: normal, test outcome: survived
+[job-id] a19a3c3383974ed88af217773ed8355f
+django/contrib/staticfiles/storage.py core/AddNot 43
+worker outcome: normal, test outcome: survived
+[job-id] 8af4c5884a624338abd981f367390b9a
+django/contrib/staticfiles/storage.py core/AddNot 44
+worker outcome: normal, test outcome: survived
+[job-id] b3bff08cef0544f79c391af10cd96291
+django/contrib/staticfiles/storage.py core/AddNot 45
+worker outcome: normal, test outcome: survived
+[job-id] 7fbb5cffd30a40d195fc0899778e58a8
+django/contrib/staticfiles/storage.py core/AddNot 46
+worker outcome: normal, test outcome: survived
+[job-id] 2f6488fcd5a346dbbda01eebd6d2a8cd
+django/contrib/staticfiles/storage.py core/AddNot 47
+worker outcome: normal, test outcome: survived
+[job-id] 0d672d395b66432d8061dc968d4d9a60
+django/contrib/staticfiles/storage.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: survived
+[job-id] e10c615eb37b4de48570cd77ba2bcf79
+django/contrib/staticfiles/storage.py core/ReplaceTrueWithFalse 1
+worker outcome: normal, test outcome: survived
+[job-id] ad80a39272b24be8a34b8afdfbcaf998
+django/contrib/staticfiles/storage.py core/ReplaceTrueWithFalse 2
+worker outcome: normal, test outcome: survived
+[job-id] 5aa9df1de4e24bdcad40c110c7229fbb
+django/contrib/staticfiles/storage.py core/ReplaceTrueWithFalse 3
+worker outcome: normal, test outcome: survived
+[job-id] 82726269782f41f18f9a756b7b62b3b8
+django/contrib/staticfiles/storage.py core/ReplaceTrueWithFalse 4
+worker outcome: normal, test outcome: survived
+[job-id] 530627f946854beea5e9b6af13308007
+django/contrib/staticfiles/storage.py core/ReplaceTrueWithFalse 5
+worker outcome: normal, test outcome: survived
+[job-id] 8c414adee44a469db4223b10ed4f1bde
+django/contrib/staticfiles/storage.py core/ReplaceTrueWithFalse 6
+worker outcome: normal, test outcome: survived
+[job-id] 706babf9c1e04e5fb2be9fb71079b7a4
+django/contrib/staticfiles/storage.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: survived
+[job-id] 892170463ce3491991764378e1d8e5e6
+django/contrib/staticfiles/storage.py core/ReplaceFalseWithTrue 1
+worker outcome: normal, test outcome: survived
+[job-id] 5b10e55846144402b4c75e7b4ab8e292
+django/contrib/staticfiles/storage.py core/ReplaceFalseWithTrue 2
+worker outcome: normal, test outcome: survived
+[job-id] 1850ff561df84dfbb61e13a231cbdaf8
+django/contrib/staticfiles/storage.py core/ReplaceFalseWithTrue 3
+worker outcome: normal, test outcome: killed
+[job-id] ef112ac3bb0848ddbd97643ea3e160f4
+django/contrib/staticfiles/storage.py core/ReplaceFalseWithTrue 4
+worker outcome: normal, test outcome: survived
+[job-id] 91ee738612ef4a4891a288c81f847fb1
+django/contrib/staticfiles/storage.py core/ReplaceFalseWithTrue 5
+worker outcome: normal, test outcome: survived
+[job-id] a8668b9c86ae409d8d253ffba69352f5
+django/contrib/staticfiles/storage.py core/ReplaceFalseWithTrue 6
+worker outcome: normal, test outcome: survived
+[job-id] c88ec1910ec8461ca63f09f2b142f070
+django/contrib/staticfiles/storage.py core/ReplaceFalseWithTrue 7
+worker outcome: normal, test outcome: survived
+[job-id] cb24b2cb31504d2b814d11948c2e11f0
+django/contrib/staticfiles/storage.py core/ReplaceAndWithOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 41dfd59428884337a4f8cc8bbc250ab4
+django/contrib/staticfiles/storage.py core/ReplaceAndWithOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 95933e47e0ee4ebdb581b710455ecf7e
+django/contrib/staticfiles/storage.py core/ReplaceAndWithOr 2
+worker outcome: normal, test outcome: survived
+[job-id] defb584d406244b1988387dcaa18b006
+django/contrib/staticfiles/storage.py core/ReplaceAndWithOr 3
+worker outcome: normal, test outcome: survived
+[job-id] c742502df93644aa8d1067ea58de8d63
+django/contrib/staticfiles/storage.py core/ReplaceAndWithOr 4
+worker outcome: normal, test outcome: survived
+[job-id] b2720b3669104900a52fe7e9a3721389
+django/contrib/staticfiles/storage.py core/ReplaceAndWithOr 5
+worker outcome: normal, test outcome: survived
+[job-id] 02cf32f505e94038a353619019a9b50f
+django/contrib/staticfiles/storage.py core/ReplaceAndWithOr 6
+worker outcome: normal, test outcome: survived
+[job-id] 6a131c51e13547fd90b6876ea6299442
+django/contrib/staticfiles/storage.py core/ReplaceOrWithAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] b280215f6f374bffb208c467fbff0b15
+django/contrib/staticfiles/storage.py core/ReplaceOrWithAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 11ac48511b9b40b69e399d6c73f3f838
+django/contrib/staticfiles/storage.py core/ReplaceOrWithAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] e0ab76914d6f466da4d84274a425953d
+django/contrib/staticfiles/storage.py core/ReplaceBreakWithContinue 0
+worker outcome: normal, test outcome: survived
+[job-id] 5da0eaf6c5184de2b0a12e8b2e4794df
+django/contrib/staticfiles/storage.py core/ExceptionReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] 4e451f65af91416087357e63a4ba7da1
+django/contrib/staticfiles/storage.py core/ExceptionReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] 31f77706ba2947e2accfa3355691728a
+django/contrib/staticfiles/storage.py core/ExceptionReplacer 2
+worker outcome: normal, test outcome: killed
+[job-id] 42a318bf9a29416f884b45f858a12a81
+django/contrib/staticfiles/storage.py core/ExceptionReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] 6999c6f324db4e8f96ba1dc972ea62b7
+django/contrib/staticfiles/storage.py core/ExceptionReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] fffe56fdc15a4f6faf593701e09adf56
+django/contrib/staticfiles/storage.py core/ExceptionReplacer 5
+worker outcome: normal, test outcome: killed
+[job-id] 2b3272ad504b4c94a8f818c7b201accf
+django/contrib/staticfiles/storage.py core/NumberReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] 5b6176e7339b4db98bd8ca11043afa20
+django/contrib/staticfiles/storage.py core/NumberReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] 28ca952717154c6d913e19e7cfbfc320
+django/contrib/staticfiles/storage.py core/NumberReplacer 2
+worker outcome: normal, test outcome: killed
+[job-id] 16d6844072a74f2b8a96039cd505f94d
+django/contrib/staticfiles/storage.py core/NumberReplacer 3
+worker outcome: normal, test outcome: killed
+[job-id] eb934c01620a435ab1dfa71c64ea0de0
+django/contrib/staticfiles/storage.py core/NumberReplacer 4
+worker outcome: normal, test outcome: killed
+[job-id] 0346d93d656a48438e3968497507d43b
+django/contrib/staticfiles/storage.py core/NumberReplacer 5
+worker outcome: normal, test outcome: killed
+[job-id] 139aeaeddfda4dde9ae1c4be9f5f33c0
+django/contrib/staticfiles/storage.py core/NumberReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] b9f0fde7522047358d3f79b1f88ab1a5
+django/contrib/staticfiles/storage.py core/NumberReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] ca81f2484443422b93ffc96268503592
+django/contrib/staticfiles/storage.py core/NumberReplacer 8
+worker outcome: normal, test outcome: survived
+[job-id] ebaa2372423f43ba85ab2cb94392ea12
+django/contrib/staticfiles/storage.py core/NumberReplacer 9
+worker outcome: normal, test outcome: survived
+[job-id] 3f2508846fd04074bc7343b38b9a7fd7
+django/contrib/staticfiles/storage.py core/NumberReplacer 10
+worker outcome: normal, test outcome: survived
+[job-id] 47b70196e75e4545aac7ab5bb0952380
+django/contrib/staticfiles/storage.py core/NumberReplacer 11
+worker outcome: normal, test outcome: survived
+[job-id] 7c8bf537c8214f74bdd4c62a5847288a
+django/contrib/staticfiles/storage.py core/NumberReplacer 12
+worker outcome: normal, test outcome: survived
+[job-id] 716fdba4ff64449bb481c2c4f9af51f7
+django/contrib/staticfiles/storage.py core/NumberReplacer 13
+worker outcome: normal, test outcome: survived
+[job-id] 93f8ce7962d94f5681f2459dc94e3f56
+django/contrib/staticfiles/storage.py core/NumberReplacer 14
+worker outcome: normal, test outcome: survived
+[job-id] 24dd36e25a274077a0c75ff683467f0e
+django/contrib/staticfiles/storage.py core/NumberReplacer 15
+worker outcome: normal, test outcome: survived
+[job-id] 150970628ae143949aabbc4ee6c861dc
+django/contrib/staticfiles/storage.py core/NumberReplacer 16
+worker outcome: normal, test outcome: survived
+[job-id] 62c6b27845794621b139ec5357234c8b
+django/contrib/staticfiles/storage.py core/NumberReplacer 17
+worker outcome: normal, test outcome: survived
+[job-id] 27abd60e9966491a94a18dfc538b3881
+django/contrib/staticfiles/storage.py core/NumberReplacer 18
+worker outcome: normal, test outcome: survived
+[job-id] 210ff06bb60d4699907bfe9781e2d7eb
+django/contrib/staticfiles/storage.py core/NumberReplacer 19
+worker outcome: normal, test outcome: survived
+[job-id] 7473e89667bb49659f98fda230c48882
+django/contrib/staticfiles/storage.py core/NumberReplacer 20
+worker outcome: normal, test outcome: survived
+[job-id] a6cb90d718c14e1ebf35833bf230a257
+django/contrib/staticfiles/storage.py core/NumberReplacer 21
+worker outcome: normal, test outcome: survived
+[job-id] 18d2bbd8b4cf445291568210951aa1d4
+django/contrib/staticfiles/storage.py core/NumberReplacer 22
+worker outcome: normal, test outcome: survived
+[job-id] 07e29687b94c4e6cbed3349807f04fba
+django/contrib/staticfiles/storage.py core/NumberReplacer 23
+worker outcome: normal, test outcome: survived
+[job-id] 850f71d307a544cd98f13bd881caa8b3
+django/contrib/staticfiles/storage.py core/NumberReplacer 24
+worker outcome: normal, test outcome: survived
+[job-id] 7fb6d5296e72415781736e19c90cb129
+django/contrib/staticfiles/storage.py core/NumberReplacer 25
+worker outcome: normal, test outcome: survived
+[job-id] 08f421505c7341138bf90a862e3dc488
+django/contrib/staticfiles/storage.py core/NumberReplacer 26
+worker outcome: normal, test outcome: survived
+[job-id] 3b70f22e204a459b83599daac44a5f30
+django/contrib/staticfiles/storage.py core/NumberReplacer 27
+worker outcome: normal, test outcome: survived
+[job-id] 2fa3136ce72748ef9453b552e7db4736
+django/contrib/staticfiles/storage.py core/NumberReplacer 28
+worker outcome: normal, test outcome: survived
+[job-id] 31bab9de1cc74774927c9c73ede11559
+django/contrib/staticfiles/storage.py core/NumberReplacer 29
+worker outcome: normal, test outcome: survived
+[job-id] a8e7586995644196a2d21c98fbeb0009
+django/contrib/staticfiles/storage.py core/NumberReplacer 30
+worker outcome: normal, test outcome: survived
+[job-id] 0af0d9794cdb4a559dda62d2e9ad4d32
+django/contrib/staticfiles/storage.py core/NumberReplacer 31
+worker outcome: normal, test outcome: survived
+[job-id] 408d057ee5a84ea5bdba9c5001c90fa5
+django/contrib/staticfiles/storage.py core/NumberReplacer 32
+worker outcome: normal, test outcome: survived
+[job-id] b29f322548a94ea2a2a4b48de27645ce
+django/contrib/staticfiles/storage.py core/NumberReplacer 33
+worker outcome: normal, test outcome: survived
+[job-id] 33dae703e2074f6aa211aa930d6c80fa
+django/contrib/staticfiles/storage.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: survived
+[job-id] c38b334d6a0b470ea2838e2d8d3e1feb
+django/contrib/staticfiles/storage.py core/ZeroIterationForLoop 1
+worker outcome: normal, test outcome: survived
+[job-id] f32aa6b56414407991551a0f612de5c5
+django/contrib/staticfiles/storage.py core/ZeroIterationForLoop 2
+worker outcome: normal, test outcome: killed
+[job-id] b787ff8987be483bbe37770587aa6b74
+django/contrib/staticfiles/storage.py core/ZeroIterationForLoop 3
+worker outcome: normal, test outcome: survived
+[job-id] 356c752f493549f2845c57481c2ac55b
+django/contrib/staticfiles/storage.py core/ZeroIterationForLoop 4
+worker outcome: normal, test outcome: killed
+[job-id] 84479ea1707646189d49567a6cecd102
+django/contrib/staticfiles/storage.py core/ZeroIterationForLoop 5
+worker outcome: normal, test outcome: survived
+[job-id] fc1ff445b09043e1924fdd057a7d155c
+django/contrib/staticfiles/storage.py core/ZeroIterationForLoop 6
+worker outcome: normal, test outcome: survived
+[job-id] 4f6705e33af846648e89251bcbb87627
+django/contrib/staticfiles/storage.py core/ZeroIterationForLoop 7
+worker outcome: normal, test outcome: survived
+[job-id] 6edcec96666c4cc89af9f13e33f3b17a
+django/contrib/staticfiles/storage.py core/ZeroIterationForLoop 8
+worker outcome: normal, test outcome: survived
+[job-id] a126c4691f5a45b38e5b11d5dc4c301d
+django/contrib/staticfiles/storage.py core/ZeroIterationForLoop 9
+worker outcome: normal, test outcome: survived
+total jobs: 315
+complete: 315 (100.00%)
+surviving mutants: 254 (80.63%)
+ 
+[django__django__3.0] [django__django-11216] Return Code: 0 
+[django__django__3.0] [django__django-11216] 
+MutationNum: 315 
+[django__django__3.0] [django__django-11216] 
+MutationLOG: 19.370000000000005% 
+[django__django__3.0] [django__django-11216] 
+MutationUncertainty: 0.0 
+[django__django__3.0] [django__django-11216] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/contrib/staticfiles/storage.py'
+        and 257 <= spec.start_pos[0] <= 327
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__3.0] [django__django-11216] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11216] Std. Output:
+FUNC_MUTATION_RESULT 0.0 32
+ 
+[django__django__3.0] [django__django-11216] Return Code: 0 
+[django__django__3.0] [django__django-11216] 
+FunctionMutationLOG: 0.0% 
+[django__django__3.0] [django__django-11216] 
+FunctionMutationNum: 32 
+[django__django__3.0] [django__django-11216] Test script run successful 
+[django__django__3.0] [django__django-11216] Removing coverage 
+[django__django__3.0] [django__django-11216] >>>>> Unfiltered Tests Failed 

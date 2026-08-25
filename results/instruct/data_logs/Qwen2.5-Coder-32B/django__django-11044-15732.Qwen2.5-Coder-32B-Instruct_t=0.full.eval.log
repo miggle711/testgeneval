@@ -1,0 +1,986 @@
+[django__django__3.0] [django__django-11044] Task Metadata:
+	- Instance ID: django__django-11044
+	- Testbed: django__django__3.0
+	- Evaluation Model: Qwen2.5-Coder-32B-Instruct_t=0
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-11044] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11044] Std. Output:
+ 
+[django__django__3.0] [django__django-11044] Return Code: 0 
+[django__django__3.0] [django__django-11044] Command: git -c advice.detachedHead=false checkout 8ec7ded3706fe66bf307ed339eb852d73f6d10d0 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11044] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at 8ec7ded370 Refs #30227 -- Added helpful message for non-ASCII Content-Type in mulitpart request.
+ 
+[django__django__3.0] [django__django-11044] Return Code: 0 
+[django__django__3.0] [django__django-11044] Command: git diff > /opt/temp_django__django-11044_gold_init.patch 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11044] Std. Output:
+ 
+[django__django__3.0] [django__django-11044] Return Code: 0 
+[django__django__3.0] [django__django-11044] Command: git apply -v /opt/temp_django__django-11044_gold.patch 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11044] Std. Output:
+Checking patch django/forms/forms.py...
+Applied patch django/forms/forms.py cleanly.
+ 
+[django__django__3.0] [django__django-11044] Return Code: 0 
+[django__django__3.0] [django__django-11044] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-11044] Command: git diff > /opt/temp_django__django-11044_test_init.patch 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11044] Std. Output:
+ 
+[django__django__3.0] [django__django-11044] Return Code: 0 
+[django__django__3.0] [django__django-11044] Command: git restore tests/forms_tests/tests/test_forms.py 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11044] Std. Output:
+ 
+[django__django__3.0] [django__django-11044] Return Code: 0 
+[django__django__3.0] [django__django-11044] Command: git apply -v /opt/temp_django__django-11044_test.patch 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11044] Std. Output:
+Checking patch tests/forms_tests/tests/test_forms.py...
+Applied patch tests/forms_tests/tests/test_forms.py cleanly.
+ 
+[django__django__3.0] [django__django-11044] Return Code: 0 
+[django__django__3.0] [django__django-11044] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 1.0406341552734375 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 1.044602632522583 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 1.5324442386627197 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 2.2465155124664307 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 0.3365604877471924 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 0.49985408782958984 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 0.8869311809539795 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 0.5290186405181885 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 2.4728550910949707 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 1.9481697082519531 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 0.300823450088501 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 1.33060622215271 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 0.4743072986602783 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 0.7227532863616943 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 1.7559540271759033 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 0.32698607444763184 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 0.946242094039917 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 0.36104393005371094 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 0.40978431701660156 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 0.7361648082733154 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 0.4013063907623291 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 0.5154995918273926 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 0.7529866695404053 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 1.013695478439331 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 0.9211130142211914 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 0.8725299835205078 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 0.9995806217193604 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 1.6178171634674072 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 1.3678944110870361 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 1.7222671508789062 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.0] [django__django-11044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11044] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 5, in <module>
+    from django.forms import Form, BaseForm, DeclarativeFieldsMetaclass, Field, FileField, MultiValueDict, ErrorList, get_default_renderer
+ImportError: cannot import name 'DeclarativeFieldsMetaclass'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11044] Return Code: 1 
+[django__django__3.0] [django__django-11044] TestsTime: 0.8986208438873291 
+[django__django__3.0] [django__django-11044] Test script run successful 
+[django__django__3.0] [django__django-11044] Removing coverage 
+[django__django__3.0] [django__django-11044] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11044] TestsTime: 0.0 
+[django__django__3.0] [django__django-11044] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11044] >>>>> Unfiltered Tests Failed 
