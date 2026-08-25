@@ -1,0 +1,1101 @@
+[django__django__3.0] [django__django-11417] Task Metadata:
+	- Instance ID: django__django-11417
+	- Testbed: django__django__3.0
+	- Evaluation Model: Qwen2.5-Coder-32B-Instruct_t=0
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-11417] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11417] Std. Output:
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] Command: git -c advice.detachedHead=false checkout 3dca8738cbbbb5674f795169e5ea25e2002f2d71 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11417] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at 3dca8738cb Simplified GISFunctionsTests.test_point_on_surface().
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] Command: git diff > /opt/temp_django__django-11417_gold_init.patch 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11417] Std. Output:
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] Command: git apply -v /opt/temp_django__django-11417_gold.patch 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11417] Std. Output:
+Checking patch django/core/mail/message.py...
+Applied patch django/core/mail/message.py cleanly.
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-11417] Command: git diff > /opt/temp_django__django-11417_test_init.patch 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11417] Std. Output:
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] Command: git restore tests/mail/tests.py 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11417] Std. Output:
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] Command: git apply -v /opt/temp_django__django-11417_test.patch 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11417] Std. Output:
+Checking patch tests/mail/tests.py...
+Applied patch tests/mail/tests.py cleanly.
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-11417] Command: coverage run ./tests/runtests.py --verbosity 2 mail.tests 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11417] Std. Output:
+test_forbid_multi_line_headers (mail.tests.TestEmailMessage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application mail
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] TestsTime: 1.0132567882537842 
+[django__django__3.0] [django__django-11417] Test script run successful 
+[django__django__3.0] [django__django-11417] Removing coverage 
+[django__django__3.0] [django__django-11417] Command: coverage run ./tests/runtests.py --verbosity 2 mail.tests 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11417] Std. Output:
+test_sanitize_address (mail.tests.TestEmailMessage) ... FAIL
+
+======================================================================
+FAIL: test_sanitize_address (mail.tests.TestEmailMessage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/mail/tests.py", line 42, in test_sanitize_address
+    self.assertEqual(sanitize_address("John Doe <john.doe@example.com>", "utf-8"), "John Doe <john.doe@example.com>")
+AssertionError: '=?utf-8?q?John_Doe?= <john.doe@example.com>' != 'John Doe <john.doe@example.com>'
+- =?utf-8?q?John_Doe?= <john.doe@example.com>
+? ----------    ^   --
++ John Doe <john.doe@example.com>
+?     ^
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application mail
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11417] Return Code: 1 
+[django__django__3.0] [django__django-11417] TestsTime: 0.43741321563720703 
+[django__django__3.0] [django__django-11417] Test script run successful 
+[django__django__3.0] [django__django-11417] Removing coverage 
+[django__django__3.0] [django__django-11417] Command: coverage run ./tests/runtests.py --verbosity 2 mail.tests 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11417] Std. Output:
+test_safe_mime_message (mail.tests.TestEmailMessage) ... ERROR
+
+======================================================================
+ERROR: test_safe_mime_message (mail.tests.TestEmailMessage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/mail/tests.py", line 42, in test_safe_mime_message
+    msg = SafeMIMEMessage(message_from_string("Subject: Test\n\nBody"), "rfc822")
+NameError: name 'message_from_string' is not defined
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application mail
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11417] Return Code: 1 
+[django__django__3.0] [django__django-11417] TestsTime: 0.6429238319396973 
+[django__django__3.0] [django__django-11417] Test script run successful 
+[django__django__3.0] [django__django-11417] Removing coverage 
+[django__django__3.0] [django__django-11417] Command: coverage run ./tests/runtests.py --verbosity 2 mail.tests 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11417] Std. Output:
+test_safe_mime_text (mail.tests.TestEmailMessage) ... FAIL
+
+======================================================================
+FAIL: test_safe_mime_text (mail.tests.TestEmailMessage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/mail/tests.py", line 43, in test_safe_mime_text
+    self.assertEqual(msg.as_string(), "Content-Type: text/plain; charset=\"utf-8\"\nMIME-Version: 1.0\nContent-Transfer-Encoding: quoted-printable\n\nHello, world!\n")
+AssertionError: 'Cont[58 chars]Content-Transfer-Encoding: 7bit\n\nHello, world!' != 'Cont[58 chars]Content-Transfer-Encoding: quoted-printable\n\nHello, world!\n'
+  Content-Type: text/plain; charset="utf-8"
+  MIME-Version: 1.0
+- Content-Transfer-Encoding: 7bit
+?                            ^ ^^
++ Content-Transfer-Encoding: quoted-printable
+?                            ^^^^^^^^^^^^^ ^^
+  
+- Hello, world!+ Hello, world!
+?              +
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application mail
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11417] Return Code: 1 
+[django__django__3.0] [django__django-11417] TestsTime: 0.43684959411621094 
+[django__django__3.0] [django__django-11417] Test script run successful 
+[django__django__3.0] [django__django-11417] Removing coverage 
+[django__django__3.0] [django__django-11417] Command: coverage run ./tests/runtests.py --verbosity 2 mail.tests 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11417] Std. Output:
+test_safe_mime_multipart (mail.tests.TestEmailMessage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application mail
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] TestsTime: 0.4219648838043213 
+[django__django__3.0] [django__django-11417] Test script run successful 
+[django__django__3.0] [django__django-11417] Removing coverage 
+[django__django__3.0] [django__django-11417] Command: coverage run ./tests/runtests.py --verbosity 2 mail.tests 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11417] Std. Output:
+test_email_message_initialization (mail.tests.TestEmailMessage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application mail
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] TestsTime: 0.42394089698791504 
+[django__django__3.0] [django__django-11417] Test script run successful 
+[django__django__3.0] [django__django-11417] Removing coverage 
+[django__django__3.0] [django__django-11417] Command: coverage run ./tests/runtests.py --verbosity 2 mail.tests 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11417] Std. Output:
+test_email_message_recipients (mail.tests.TestEmailMessage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application mail
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] TestsTime: 0.6236710548400879 
+[django__django__3.0] [django__django-11417] Test script run successful 
+[django__django__3.0] [django__django-11417] Removing coverage 
+[django__django__3.0] [django__django-11417] Command: coverage run ./tests/runtests.py --verbosity 2 mail.tests 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11417] Std. Output:
+test_email_message_attach (mail.tests.TestEmailMessage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application mail
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] TestsTime: 0.4955298900604248 
+[django__django__3.0] [django__django-11417] Test script run successful 
+[django__django__3.0] [django__django-11417] Removing coverage 
+[django__django__3.0] [django__django-11417] Command: coverage run ./tests/runtests.py --verbosity 2 mail.tests 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11417] Std. Output:
+test_email_message_attach_file (mail.tests.TestEmailMessage) ... FAIL
+
+======================================================================
+FAIL: test_email_message_attach_file (mail.tests.TestEmailMessage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/mail/tests.py", line 45, in test_email_message_attach_file
+    self.assertEqual(len(self.email.attachments), 3)
+AssertionError: 2 != 3
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application mail
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11417] Return Code: 1 
+[django__django__3.0] [django__django-11417] TestsTime: 0.37587642669677734 
+[django__django__3.0] [django__django-11417] Test script run successful 
+[django__django__3.0] [django__django-11417] Removing coverage 
+[django__django__3.0] [django__django-11417] Command: coverage run ./tests/runtests.py --verbosity 2 mail.tests 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11417] Std. Output:
+test_email_message_send (mail.tests.TestEmailMessage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application mail
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] TestsTime: 0.413196325302124 
+[django__django__3.0] [django__django-11417] Test script run successful 
+[django__django__3.0] [django__django-11417] Removing coverage 
+[django__django__3.0] [django__django-11417] Command: coverage run ./tests/runtests.py --verbosity 2 mail.tests 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11417] Std. Output:
+test_email_multialternatives (mail.tests.TestEmailMessage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application mail
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] TestsTime: 0.4207291603088379 
+[django__django__3.0] [django__django-11417] Test script run successful 
+[django__django__3.0] [django__django-11417] Removing coverage 
+[django__django__3.0] [django__django-11417] Command: coverage run ./tests/runtests.py --verbosity 2 mail.tests 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11417] Std. Output:
+test_utf8_charset (mail.tests.TestEmailMessage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application mail
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] TestsTime: 0.6664557456970215 
+[django__django__3.0] [django__django-11417] Test script run successful 
+[django__django__3.0] [django__django-11417] Removing coverage 
+[django__django__3.0] [django__django-11417] Command: coverage run ./tests/runtests.py --verbosity 2 mail.tests 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11417] Std. Output:
+test_default_attachment_mime_type (mail.tests.TestEmailMessage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application mail
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] TestsTime: 0.7126185894012451 
+[django__django__3.0] [django__django-11417] Test script run successful 
+[django__django__3.0] [django__django-11417] Removing coverage 
+[django__django__3.0] [django__django-11417] Command: coverage run ./tests/runtests.py --verbosity 2 mail.tests 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11417] Std. Output:
+test_rfc5322_email_line_length_limit (mail.tests.TestEmailMessage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application mail
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] TestsTime: 0.42730283737182617 
+[django__django__3.0] [django__django-11417] Test script run successful 
+[django__django__3.0] [django__django-11417] Removing coverage 
+[django__django__3.0] [django__django-11417] Command: coverage run ./tests/runtests.py --verbosity 2 mail.tests 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11417] Std. Output:
+test_address_headers (mail.tests.TestEmailMessage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application mail
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] TestsTime: 0.7131710052490234 
+[django__django__3.0] [django__django-11417] Test script run successful 
+[django__django__3.0] [django__django-11417] Removing coverage 
+[django__django__3.0] [django__django-11417] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11417] Test Script:  coverage run ./tests/runtests.py --verbosity 2 mail.tests;
+ 
+[django__django__3.0] [django__django-11417] Command: coverage run ./tests/runtests.py --verbosity 2 mail.tests 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11417] Std. Output:
+test_address_headers (mail.tests.TestEmailMessage) ... ok
+test_default_attachment_mime_type (mail.tests.TestEmailMessage) ... ok
+test_email_message_attach (mail.tests.TestEmailMessage) ... ok
+test_email_message_initialization (mail.tests.TestEmailMessage) ... ok
+test_email_message_recipients (mail.tests.TestEmailMessage) ... ok
+test_email_message_send (mail.tests.TestEmailMessage) ... ok
+test_email_multialternatives (mail.tests.TestEmailMessage) ... ok
+test_forbid_multi_line_headers (mail.tests.TestEmailMessage) ... ok
+test_rfc5322_email_line_length_limit (mail.tests.TestEmailMessage) ... ok
+test_safe_mime_multipart (mail.tests.TestEmailMessage) ... ok
+test_utf8_charset (mail.tests.TestEmailMessage) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.003s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application mail
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] TestsTime: 0.44686341285705566 
+[django__django__3.0] [django__django-11417] 
+>>>>> All Tests Passed
+ 
+[django__django__3.0] [django__django-11417] Current Working Directory: /opt/django__django 
+[django__django__3.0] [django__django-11417] Command: coverage json -o coverage.json 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11417] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] 
+CoverageLOG: 70.8%
+ 
+[django__django__3.0] [django__django-11417] 
+FunctionCoverageLOG: 3.8461538461538463%
+ 
+[django__django__3.0] [django__django-11417] Running mutation testing 
+[django__django__3.0] [django__django-11417] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11417] Std. Output:
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.0] [django__django-11417] Std. Output:
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11417] Std. Output:
+63.94 63.94 63.94
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] Command: cr-report mutation.sqlite 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11417] Std. Output:
+[job-id] 40e6cb1142094d9a9e653664d09032c8
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 9f5d3ee221e149a89decb012dddb563f
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_Sub 1
+worker outcome: normal, test outcome: killed
+[job-id] 09cbb6ba23a4473e8a67a386ac87e3d7
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] 09c8a2b55bd04a628a30b23bc49afa1e
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_Mul 1
+worker outcome: normal, test outcome: killed
+[job-id] 38d8c5bce3fe40dc829ecab434aeffcf
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] d70603319fc140a1a0eacf095f32dba6
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_Div 1
+worker outcome: normal, test outcome: killed
+[job-id] 82c30f82c8c9405a8e923e09c7aee98b
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] 4885269745dd4b0d803fa68d5a22c943
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_FloorDiv 1
+worker outcome: normal, test outcome: killed
+[job-id] 2e367dfd47484d539140ae3d7a5ae425
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_Mod 0
+worker outcome: normal, test outcome: killed
+[job-id] 1b141e9023a34996bc4ecd989eb2aa8d
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_Mod 1
+worker outcome: normal, test outcome: killed
+[job-id] 71631f7afed84ce4bb33eb7cc9e1dca9
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] 9fda0eaa1b93432db0279d27c4469ea8
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_Pow 1
+worker outcome: normal, test outcome: killed
+[job-id] 2d3f962baf62471e8dba8037713fc709
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 02aae2f18a0445ef913a95a21bdeaddb
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_RShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 475cd98c9dbc40b3b2028ed6ae0ec663
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] cf82f764a3ac4314bde4584efa7a62e7
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_LShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 1745a78194e942d0aa3e8668d80009c1
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] d7d57f0376d74e94af76dc3c7c3f1a2b
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_BitOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 3d6d1485bdc94976a874439fe347277c
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 6dcaac559573462d86d9ce119cddae3d
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_BitAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] 3ee36853adb44b978ba962135394189c
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] 2f84d3e41e684eb0a49e0ffa703f2c45
+django/core/mail/message.py core/ReplaceBinaryOperator_Add_BitXor 1
+worker outcome: normal, test outcome: killed
+[job-id] e051952239b94ab5981fc814523507db
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] 45bc64e13a9e4b649c47068cb303b15c
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_Add 1
+worker outcome: normal, test outcome: survived
+[job-id] b69212f68c494c24ad5fe4fafa4e964f
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_Add 2
+worker outcome: normal, test outcome: survived
+[job-id] 1f64db9c62ef41db87555d59f3231adf
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] f0080a83bbb64d3abb4a5f2ca9532be6
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] 56559b883c8d454b85614234d5cd09b5
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_Sub 2
+worker outcome: normal, test outcome: survived
+[job-id] f6b97a2354084ea2b0c0b2aeda113cf5
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] 7cd8c98bab7942f6810e10be120f2886
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] fc6804d8d08347b9bb7760aef8564bcb
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] 471dd919097244859127fc356acf262c
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] b215354f68b74b60b3b783154d9207be
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] 58c04ed261e0466094a8b179e63cdb59
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] f47ad556eac641bb99c609b0d2dddc3b
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] 44e804aa3af6449898f6eeb9ee588692
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] eab09cd246744cb0aac6e5e2b764b48e
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] 2f8ee57d3fd2475eaaf6c6ad6cbfaa9c
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] 460452be603a4dc091ed7aef853046cc
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] c587dc827f104259a3c5f0ff496bab19
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] caf1da52fde94660a034095af3a5b769
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 28bd7a66014143faae452a3584cea0c1
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] b203e1d69e69415f9fc1c751d4f289f6
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] e68443c35d594d7280ebbbe79b648984
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] a4a94f51b68a4395a62e17f783aecbbe
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 46b2ab0406fe493a91a5db2d09938f5d
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] a7131e31efdc4d318570487040391728
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 1d4ecefc9a8b443fb9985751693fff4d
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] a91bc55b06964d298b6bf42da897e03e
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] 18e8e40509da46bdbc5852e560a8dd16
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 58eb78c13af84fac891e76e045bb87fd
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 295629f2091c45a89d26e175c2970759
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] 017ad7a0e323495eb99cb0de0e838cf8
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] d1a59dbf15db40799d095bbf4a11d8e9
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] 76665e2539a8455ab9bcef8176984f34
+django/core/mail/message.py core/ReplaceBinaryOperator_Mod_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] ed7ce165f70444a7b5ac11e11f65f1bd
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 383530bd72e54e2799a78d25883e2f6e
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_NotEq 1
+worker outcome: normal, test outcome: killed
+[job-id] 429d5736f1ad416c8e0adca54350a08a
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_NotEq 2
+worker outcome: normal, test outcome: survived
+[job-id] 9331149ad20a49f8b10fa5c8862d4901
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_NotEq 3
+worker outcome: normal, test outcome: killed
+[job-id] 27a7f95b8eeb43f39e9799b46728c07f
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_NotEq 4
+worker outcome: normal, test outcome: survived
+[job-id] cf433d3c14854a98a24b137fc9790158
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_NotEq 5
+worker outcome: normal, test outcome: survived
+[job-id] 0a97af99062a47b090a8946ea8ac939f
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] c4b2430a77304ea7bedfdc4fe67992be
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_Lt 1
+worker outcome: normal, test outcome: killed
+[job-id] 89fbbc76598241aea1f078ab6562b0b9
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_Lt 2
+worker outcome: normal, test outcome: survived
+[job-id] b1537095e81642a6a4f3e6213cd3fa8f
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_Lt 3
+worker outcome: normal, test outcome: killed
+[job-id] 5171c8d8da964ac29e643267075603d2
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_Lt 4
+worker outcome: normal, test outcome: survived
+[job-id] e6f8614a0ab640e2a42f0c04e416d96e
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_Lt 5
+worker outcome: normal, test outcome: survived
+[job-id] e608a3d017de414d84894be7e3f4c1a1
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] f04defdf306d4777917a87fb3add271c
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] e6285ebca47f429e93e09c9afa9ad2f1
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_LtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 259892a2ae4348cabbc595f0222a4855
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_LtE 3
+worker outcome: normal, test outcome: survived
+[job-id] d6cba53316f7406fa831c1369d39d718
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_LtE 4
+worker outcome: normal, test outcome: survived
+[job-id] 3684389e7b604893a45828c1179b8bbb
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_LtE 5
+worker outcome: normal, test outcome: survived
+[job-id] 2a144426ee41493bbbbdfb704a9b7d78
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] a5e0fa1c0a0143448a52a608dca86890
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_Gt 1
+worker outcome: normal, test outcome: killed
+[job-id] 53e3f6b884374d70b974b47306c43fe1
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_Gt 2
+worker outcome: normal, test outcome: survived
+[job-id] 3227600a41f244bf9faac6341940d9fa
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_Gt 3
+worker outcome: normal, test outcome: killed
+[job-id] f62bcda2b5e44ea9a68759f449a35287
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_Gt 4
+worker outcome: normal, test outcome: survived
+[job-id] fb08b3847b2f437fb1b036e6f0eb5580
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_Gt 5
+worker outcome: normal, test outcome: survived
+[job-id] 5c8e5fe3d0f24f3b959ff84579e6f2e8
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] b1bff2c7e08848aba28f7be8ee39a953
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 8755442a7d0b4d8aa5613f2f125986ee
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_GtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 3473dee054cf45f69d3f4960eac4474a
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_GtE 3
+worker outcome: normal, test outcome: survived
+[job-id] c68ad6f4d1264e43a4ea7d72eea71d57
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_GtE 4
+worker outcome: normal, test outcome: survived
+[job-id] f27711cf91a342a3a678e4645bb8a3b4
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_GtE 5
+worker outcome: normal, test outcome: survived
+[job-id] bd44080bba4445f7995fd510a1b0feec
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 22517d8d8d4a4a4c99eff61d1e031cee
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_Is 1
+worker outcome: normal, test outcome: killed
+[job-id] 8a6c66ebe49f4f11b92fe1af406c71b0
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] 74c919dbc46c40bfb0a65db477d49a63
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_Is 3
+worker outcome: normal, test outcome: killed
+[job-id] 406442113d3240278d334834cf56f619
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_Is 4
+worker outcome: normal, test outcome: survived
+[job-id] f3bcb3acece647308cb055622698f55a
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_Is 5
+worker outcome: normal, test outcome: survived
+[job-id] 1319dd7a97fa4006a4b2c1fe0b70f4f0
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 8dc72254ad4f4b95ab33ed8732e77975
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 53a4aeb7ffe84675ad7f553f149f881e
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 9a25535ae03a4427b77fedb6b113db11
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_IsNot 3
+worker outcome: normal, test outcome: survived
+[job-id] d2d5332bf12e4ea393bd418fb82c50af
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_IsNot 4
+worker outcome: normal, test outcome: survived
+[job-id] 1536ba3c93b24039a1c4fae15f52f890
+django/core/mail/message.py core/ReplaceComparisonOperator_Eq_IsNot 5
+worker outcome: normal, test outcome: survived
+[job-id] 4ac1b939f8a045db9837923a28dada7b
+django/core/mail/message.py core/ReplaceComparisonOperator_NotEq_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] 63c651c227a34a67865fdfa50d84ca3f
+django/core/mail/message.py core/ReplaceComparisonOperator_NotEq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 881f4100602a40cbb8ba288bb57156a5
+django/core/mail/message.py core/ReplaceComparisonOperator_NotEq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] c6f09b4b26634fb2a07bbf6e50a996fe
+django/core/mail/message.py core/ReplaceComparisonOperator_NotEq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 5e9fb2efa9d74d26a09f26825f6562d9
+django/core/mail/message.py core/ReplaceComparisonOperator_NotEq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 7c38420862e54394aefdc27f13bd7534
+django/core/mail/message.py core/ReplaceComparisonOperator_NotEq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 6a1060bb756a484d9ae40872321e6c9c
+django/core/mail/message.py core/ReplaceComparisonOperator_NotEq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] cc3ad5e5dbc74478bcbbdeefb0992556
+django/core/mail/message.py core/ReplaceComparisonOperator_Gt_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] bd772c2ee5b14785befad8680ade8473
+django/core/mail/message.py core/ReplaceComparisonOperator_Gt_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] cd656d4cc6b646a4b8cc62e3dfbbc3fb
+django/core/mail/message.py core/ReplaceComparisonOperator_Gt_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] bc7987f2429f42ed969b5814b35d341c
+django/core/mail/message.py core/ReplaceComparisonOperator_Gt_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 1da3c01723ac4897acc1d7b0d1ab9ca7
+django/core/mail/message.py core/ReplaceComparisonOperator_Gt_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 5278c52108ab4556ae0a2fd83a18ef60
+django/core/mail/message.py core/ReplaceComparisonOperator_Gt_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 6afbc1d5482042259e6811f527d739fb
+django/core/mail/message.py core/ReplaceComparisonOperator_Gt_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 9d26615c33234a698dccface0d6b4da3
+django/core/mail/message.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] b4e303ab6da244b5a1f905cbbc298ea7
+django/core/mail/message.py core/ReplaceComparisonOperator_Is_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] ebd6455f9b47483b950c75668e133c89
+django/core/mail/message.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] be347861b4224b3d85a96909231eeab3
+django/core/mail/message.py core/ReplaceComparisonOperator_IsNot_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 503d91ce303b4c5e921311fab1f79403
+django/core/mail/message.py core/ReplaceComparisonOperator_IsNot_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] a2303867d74e4448ab8de67384b494ed
+django/core/mail/message.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] aa55b297e16248e29f6fb8c6f162c45d
+django/core/mail/message.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: killed
+[job-id] f1db62d66e084c92a6bc7a5f5039d270
+django/core/mail/message.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: normal, test outcome: survived
+[job-id] 1202b954fb5d4b088f88934ed3abca79
+django/core/mail/message.py core/ReplaceUnaryOperator_Delete_Not 3
+worker outcome: normal, test outcome: killed
+[job-id] 1643ccc414f043c78268bb0e32933612
+django/core/mail/message.py core/ReplaceUnaryOperator_Delete_Not 4
+worker outcome: normal, test outcome: survived
+[job-id] 21cbbf364d314777867f04dc53d9cc97
+django/core/mail/message.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] bbc6d5c48df04806a475364b2987c86a
+django/core/mail/message.py core/AddNot 1
+worker outcome: normal, test outcome: survived
+[job-id] a8a35201602a4eb2a70cefde07266304
+django/core/mail/message.py core/AddNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 4005f7f746474b5985c6a5dc13ebdb71
+django/core/mail/message.py core/AddNot 3
+worker outcome: normal, test outcome: survived
+[job-id] 049d467db8db404084d3f2c92bf2886b
+django/core/mail/message.py core/AddNot 4
+worker outcome: normal, test outcome: survived
+[job-id] 92dc46d542b24f9090a55b3be6fc67d8
+django/core/mail/message.py core/AddNot 5
+worker outcome: normal, test outcome: killed
+[job-id] ddcad053e6604054b1f1eaf7cc4c22a0
+django/core/mail/message.py core/AddNot 6
+worker outcome: normal, test outcome: survived
+[job-id] 51af6bcef2914d4a9e7475b288fea58c
+django/core/mail/message.py core/AddNot 7
+worker outcome: normal, test outcome: killed
+[job-id] a983790597ce43e798395c9b717733ed
+django/core/mail/message.py core/AddNot 8
+worker outcome: normal, test outcome: killed
+[job-id] 5199e434a0044ad78de7a39fa7ac61d9
+django/core/mail/message.py core/AddNot 9
+worker outcome: normal, test outcome: killed
+[job-id] 93b7e3b7272f4c84bd6f0f75387dcdd5
+django/core/mail/message.py core/AddNot 10
+worker outcome: normal, test outcome: killed
+[job-id] d48e01dedf864d7a89e18bee264a37d2
+django/core/mail/message.py core/AddNot 11
+worker outcome: normal, test outcome: killed
+[job-id] 5d602fcd3afd4e3c80ea5be6a0823350
+django/core/mail/message.py core/AddNot 12
+worker outcome: normal, test outcome: killed
+[job-id] ea713fbeffa0434f9790b863a19fec9a
+django/core/mail/message.py core/AddNot 13
+worker outcome: normal, test outcome: killed
+[job-id] a4cb385cb85d4cdba06f87ce6ad87cf1
+django/core/mail/message.py core/AddNot 14
+worker outcome: normal, test outcome: killed
+[job-id] 9b486e3d1aa04f4eb38f5e312568dbb6
+django/core/mail/message.py core/AddNot 15
+worker outcome: normal, test outcome: killed
+[job-id] 1c2b612e5d8448bba2aed087d724a52b
+django/core/mail/message.py core/AddNot 16
+worker outcome: normal, test outcome: killed
+[job-id] 75966c06344f4267abf5d19151dd0817
+django/core/mail/message.py core/AddNot 17
+worker outcome: normal, test outcome: survived
+[job-id] 576df13ce0574235b20546e6bfd73325
+django/core/mail/message.py core/AddNot 18
+worker outcome: normal, test outcome: survived
+[job-id] 6d876d0141c74a6aab01035bf170d685
+django/core/mail/message.py core/AddNot 19
+worker outcome: normal, test outcome: survived
+[job-id] 249cbf5e751b415fb402893141166c1f
+django/core/mail/message.py core/AddNot 20
+worker outcome: normal, test outcome: survived
+[job-id] 79478645d7a443b8ad6c784878745ad4
+django/core/mail/message.py core/AddNot 21
+worker outcome: normal, test outcome: killed
+[job-id] 7ca820c23d3e402f9e4b3f1bc58b1bd7
+django/core/mail/message.py core/AddNot 22
+worker outcome: normal, test outcome: killed
+[job-id] b173dca91f8042dbbde5a1c0bbb9b21d
+django/core/mail/message.py core/AddNot 23
+worker outcome: normal, test outcome: survived
+[job-id] c2c4ba293d8c4d649fe0d31966cf1c90
+django/core/mail/message.py core/AddNot 24
+worker outcome: normal, test outcome: survived
+[job-id] 7efadf3f4bfd4e4ebb509c8f069b2732
+django/core/mail/message.py core/AddNot 25
+worker outcome: normal, test outcome: killed
+[job-id] eb7ec57ba5764659befccd14cc074741
+django/core/mail/message.py core/AddNot 26
+worker outcome: normal, test outcome: survived
+[job-id] c91babbefbad45c5be3ecdff2254a1d5
+django/core/mail/message.py core/AddNot 27
+worker outcome: normal, test outcome: killed
+[job-id] fcd669754ebe4d88ad5dd2472de49196
+django/core/mail/message.py core/AddNot 28
+worker outcome: normal, test outcome: survived
+[job-id] d8c49ca4ff8c4eab8d456c0590cc2925
+django/core/mail/message.py core/AddNot 29
+worker outcome: normal, test outcome: survived
+[job-id] 5bbf5f1905e64ca993fc540775ee0626
+django/core/mail/message.py core/AddNot 30
+worker outcome: normal, test outcome: killed
+[job-id] 60656155a2d54d9d8c8277f5bcd2bbd0
+django/core/mail/message.py core/AddNot 31
+worker outcome: normal, test outcome: killed
+[job-id] 08356a1bee624d3ba3c281b6d74392ea
+django/core/mail/message.py core/AddNot 32
+worker outcome: normal, test outcome: survived
+[job-id] b7826bb3dcc34d8e8c92f9c700cf67bc
+django/core/mail/message.py core/AddNot 33
+worker outcome: normal, test outcome: survived
+[job-id] 93be1532437f4e7c96744865ab734a41
+django/core/mail/message.py core/AddNot 34
+worker outcome: normal, test outcome: survived
+[job-id] f8d7da4590c94a82a555211e8cda40c4
+django/core/mail/message.py core/AddNot 35
+worker outcome: normal, test outcome: survived
+[job-id] 4b0297d4c4604b2ab1eec652f6199fb3
+django/core/mail/message.py core/AddNot 36
+worker outcome: normal, test outcome: survived
+[job-id] 3a506f6b38e5430abbb4f2b7e6281b1e
+django/core/mail/message.py core/AddNot 37
+worker outcome: normal, test outcome: killed
+[job-id] 93c90a1f2f6247df968c23caf892963e
+django/core/mail/message.py core/AddNot 38
+worker outcome: normal, test outcome: survived
+[job-id] 23c5a5a6f3e148f3aaa1482241a6735f
+django/core/mail/message.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: survived
+[job-id] 38cb4d1f50184480996f8be7d3a0da25
+django/core/mail/message.py core/ReplaceFalseWithTrue 1
+worker outcome: normal, test outcome: survived
+[job-id] 5b42a177c67a4de4a68cc5c3ecdeedb5
+django/core/mail/message.py core/ReplaceFalseWithTrue 2
+worker outcome: normal, test outcome: survived
+[job-id] 29cf5c3f34924788bf86c54a5f070270
+django/core/mail/message.py core/ReplaceFalseWithTrue 3
+worker outcome: normal, test outcome: survived
+[job-id] c52b8f5e6a5547d7ace56a572c117857
+django/core/mail/message.py core/ReplaceFalseWithTrue 4
+worker outcome: normal, test outcome: survived
+[job-id] 5e37f58d4677427da516e20015200503
+django/core/mail/message.py core/ReplaceFalseWithTrue 5
+worker outcome: normal, test outcome: survived
+[job-id] d06ce40c800f4fff87f894b1a8233fd1
+django/core/mail/message.py core/ReplaceAndWithOr 0
+worker outcome: normal, test outcome: survived
+[job-id] bf652bfae96a4caa8e3d58acfdb0d0db
+django/core/mail/message.py core/ReplaceAndWithOr 1
+worker outcome: normal, test outcome: survived
+[job-id] add60b113e574c5fb73f2505413c8bf6
+django/core/mail/message.py core/ReplaceOrWithAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 0c634080dfd942e987a9d98605861dd6
+django/core/mail/message.py core/ReplaceOrWithAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] 5efa27b86afe4153b1d3462feaa2bb8f
+django/core/mail/message.py core/ReplaceOrWithAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] 4d26d750d4da422b8b14fdf27995ecc7
+django/core/mail/message.py core/ReplaceOrWithAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] 9e860196e00843c2b6fdd86797d2e002
+django/core/mail/message.py core/ReplaceOrWithAnd 4
+worker outcome: normal, test outcome: killed
+[job-id] acaf516a2e734f91ab03caf593ea3396
+django/core/mail/message.py core/ReplaceOrWithAnd 5
+worker outcome: normal, test outcome: killed
+[job-id] 7e14968fcea54f7895dffafd7cf4b54c
+django/core/mail/message.py core/ReplaceOrWithAnd 6
+worker outcome: normal, test outcome: killed
+[job-id] 5ec0e4597f5a415693366905883c0df4
+django/core/mail/message.py core/ReplaceOrWithAnd 7
+worker outcome: normal, test outcome: survived
+[job-id] 6d8701ffb42f453ca50823ab1d20b837
+django/core/mail/message.py core/ReplaceOrWithAnd 8
+worker outcome: normal, test outcome: survived
+[job-id] 2859baceb0fe4f70bc5d6effe6ee209f
+django/core/mail/message.py core/ReplaceOrWithAnd 9
+worker outcome: normal, test outcome: survived
+[job-id] dc4fcec0fe41424eb75f999cfc4c61ce
+django/core/mail/message.py core/ReplaceOrWithAnd 10
+worker outcome: normal, test outcome: survived
+[job-id] 0ef718e1ae6240418264b53679768088
+django/core/mail/message.py core/ReplaceOrWithAnd 11
+worker outcome: normal, test outcome: survived
+[job-id] dc644a072744464b9c2a329a6b3ccae9
+django/core/mail/message.py core/ReplaceOrWithAnd 12
+worker outcome: normal, test outcome: survived
+[job-id] 44902232c13043f58ac2c2d4a78fbca6
+django/core/mail/message.py core/ReplaceOrWithAnd 13
+worker outcome: normal, test outcome: killed
+[job-id] 30f95862ef71470097f90c0467b51adc
+django/core/mail/message.py core/ReplaceOrWithAnd 14
+worker outcome: normal, test outcome: survived
+[job-id] b0276fdf2f16442e8b2b02c7cc6efa74
+django/core/mail/message.py core/ExceptionReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] 71d33e2b6f264c76b90f25e90ef45961
+django/core/mail/message.py core/ExceptionReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] 081718e1595642ce8c71d52c8da0387d
+django/core/mail/message.py core/ExceptionReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] 1cb2aa5be28744b4bcb741da21b866bf
+django/core/mail/message.py core/ExceptionReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] 4a53098fa56e4ea7b907b13c1ea4a965
+django/core/mail/message.py core/ExceptionReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] 809cf919ff2d45c9bf71adfbed08a132
+django/core/mail/message.py core/ExceptionReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] a6b78232c1d3477c89f7d9b2e1b06267
+django/core/mail/message.py core/ExceptionReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] 05a955183d5349ef86a4e46281a1d39c
+django/core/mail/message.py core/ExceptionReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] fa03424c427c46daa811b5c989ea60d6
+django/core/mail/message.py core/ExceptionReplacer 8
+worker outcome: normal, test outcome: killed
+[job-id] d1216f70f8694075a86f1ed87de12032
+django/core/mail/message.py core/NumberReplacer 0
+worker outcome: normal, test outcome: killed
+[job-id] 09dc769eed37485195df03d0f5e04a06
+django/core/mail/message.py core/NumberReplacer 1
+worker outcome: normal, test outcome: killed
+[job-id] f7caa295a3f5419ca730930e911433c8
+django/core/mail/message.py core/NumberReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] eb65d289bac244f5bda571b5acc0cd19
+django/core/mail/message.py core/NumberReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] 088f9dd999614cfa96d67d85a83b3c9b
+django/core/mail/message.py core/NumberReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] 190d470132ce4d5b8946507c8094d99e
+django/core/mail/message.py core/NumberReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] fadb363cb8ca40298b0c3979d0d691ef
+django/core/mail/message.py core/NumberReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] 5f62d8c5a159401b893d092af7a4f892
+django/core/mail/message.py core/NumberReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] 31a608ecfe944d10b04298c53b5146b6
+django/core/mail/message.py core/NumberReplacer 8
+worker outcome: normal, test outcome: survived
+[job-id] f642383de79b4b0ba94b76059cc08f7c
+django/core/mail/message.py core/NumberReplacer 9
+worker outcome: normal, test outcome: killed
+[job-id] 3e2aeaedf5f043aebb295efe35a572e4
+django/core/mail/message.py core/NumberReplacer 10
+worker outcome: normal, test outcome: survived
+[job-id] 4c3473ff0f764f77b1363445592f8b37
+django/core/mail/message.py core/NumberReplacer 11
+worker outcome: normal, test outcome: killed
+[job-id] cb0cd6686f7642bfa8e9a82aeba07645
+django/core/mail/message.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: killed
+[job-id] f5297a31ea3c4f63a820543fe6c6f5c9
+django/core/mail/message.py core/ZeroIterationForLoop 1
+worker outcome: normal, test outcome: survived
+[job-id] e27e7cf4fa7747c4bfba8dbb7318782b
+django/core/mail/message.py core/ZeroIterationForLoop 2
+worker outcome: normal, test outcome: survived
+[job-id] 67259c036c294e55a091877f02d6a2e1
+django/core/mail/message.py core/ZeroIterationForLoop 3
+worker outcome: normal, test outcome: killed
+total jobs: 208
+complete: 208 (100.00%)
+surviving mutants: 133 (63.94%)
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] 
+MutationNum: 208 
+[django__django__3.0] [django__django-11417] 
+MutationLOG: 36.06% 
+[django__django__3.0] [django__django-11417] 
+MutationUncertainty: 0.0 
+[django__django__3.0] [django__django-11417] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/core/mail/message.py'
+        and 74 <= spec.start_pos[0] <= 111
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__3.0] [django__django-11417] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11417] Std. Output:
+FUNC_MUTATION_RESULT 0.0 34
+ 
+[django__django__3.0] [django__django-11417] Return Code: 0 
+[django__django__3.0] [django__django-11417] 
+FunctionMutationLOG: 0.0% 
+[django__django__3.0] [django__django-11417] 
+FunctionMutationNum: 34 
+[django__django__3.0] [django__django-11417] Test script run successful 
+[django__django__3.0] [django__django-11417] Removing coverage 
+[django__django__3.0] [django__django-11417] >>>>> Unfiltered Tests Failed 

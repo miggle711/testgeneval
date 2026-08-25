@@ -1,0 +1,707 @@
+[django__django__3.0] [django__django-11155] Task Metadata:
+	- Instance ID: django__django-11155
+	- Testbed: django__django__3.0
+	- Evaluation Model: Qwen2.5-Coder-32B-Instruct_t=0
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-11155] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-11155] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11155] Std. Output:
+ 
+[django__django__3.0] [django__django-11155] Return Code: 0 
+[django__django__3.0] [django__django-11155] Command: git -c advice.detachedHead=false checkout cef3f2d3c64055c9fc1757fd61dba24b557a2add 
+[django__django__3.0] [django__django-11155] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11155] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at cef3f2d3c6 Fixed #28373 -- Used connection timezone instead of UTC when making dates timezone-aware on MySQL, SQLite, and Oracle.
+ 
+[django__django__3.0] [django__django-11155] Return Code: 0 
+[django__django__3.0] [django__django-11155] Command: git diff > /opt/temp_django__django-11155_gold_init.patch 
+[django__django__3.0] [django__django-11155] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11155] Std. Output:
+ 
+[django__django__3.0] [django__django-11155] Return Code: 0 
+[django__django__3.0] [django__django-11155] Command: git apply -v /opt/temp_django__django-11155_gold.patch 
+[django__django__3.0] [django__django-11155] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11155] Std. Output:
+Checking patch django/conf/global_settings.py...
+Checking patch django/views/i18n.py...
+Applied patch django/conf/global_settings.py cleanly.
+Applied patch django/views/i18n.py cleanly.
+ 
+[django__django__3.0] [django__django-11155] Return Code: 0 
+[django__django__3.0] [django__django-11155] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-11155] Command: git diff > /opt/temp_django__django-11155_test_init.patch 
+[django__django__3.0] [django__django-11155] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11155] Std. Output:
+ 
+[django__django__3.0] [django__django-11155] Return Code: 0 
+[django__django__3.0] [django__django-11155] Command: git restore tests/view_tests/tests/test_i18n.py 
+[django__django__3.0] [django__django-11155] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11155] Std. Output:
+ 
+[django__django__3.0] [django__django-11155] Return Code: 0 
+[django__django__3.0] [django__django-11155] Command: git apply -v /opt/temp_django__django-11155_test.patch 
+[django__django__3.0] [django__django-11155] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11155] Std. Output:
+Checking patch tests/view_tests/tests/test_i18n.py...
+Applied patch tests/view_tests/tests/test_i18n.py cleanly.
+ 
+[django__django__3.0] [django__django-11155] Return Code: 0 
+[django__django__3.0] [django__django-11155] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-11155] Command: coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_i18n 
+[django__django__3.0] [django__django-11155] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11155] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_set_language_post_valid (view_tests.tests.test_i18n.TestSetLanguage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application view_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, view_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table view_tests_author
+    Creating table view_tests_article
+    Creating table view_tests_urlarticle
+    Creating table view_tests_datearticle
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11155] Return Code: 0 
+[django__django__3.0] [django__django-11155] TestsTime: 1.4247713088989258 
+[django__django__3.0] [django__django-11155] Test script run successful 
+[django__django__3.0] [django__django-11155] Removing coverage 
+[django__django__3.0] [django__django-11155] Command: coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_i18n 
+[django__django__3.0] [django__django-11155] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11155] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_set_language_post_invalid (view_tests.tests.test_i18n.TestSetLanguage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application view_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, view_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table view_tests_author
+    Creating table view_tests_article
+    Creating table view_tests_urlarticle
+    Creating table view_tests_datearticle
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11155] Return Code: 0 
+[django__django__3.0] [django__django-11155] TestsTime: 0.44941043853759766 
+[django__django__3.0] [django__django-11155] Test script run successful 
+[django__django__3.0] [django__django-11155] Removing coverage 
+[django__django__3.0] [django__django-11155] Command: coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_i18n 
+[django__django__3.0] [django__django-11155] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11155] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_set_language_get (view_tests.tests.test_i18n.TestSetLanguage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application view_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, view_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table view_tests_author
+    Creating table view_tests_article
+    Creating table view_tests_urlarticle
+    Creating table view_tests_datearticle
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11155] Return Code: 0 
+[django__django__3.0] [django__django-11155] TestsTime: 0.7016341686248779 
+[django__django__3.0] [django__django-11155] Test script run successful 
+[django__django__3.0] [django__django-11155] Removing coverage 
+[django__django__3.0] [django__django-11155] Command: coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_i18n 
+[django__django__3.0] [django__django-11155] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11155] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_set_language_get (view_tests.tests.test_i18n.TestSetLanguage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application view_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, view_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table view_tests_author
+    Creating table view_tests_article
+    Creating table view_tests_urlarticle
+    Creating table view_tests_datearticle
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11155] Return Code: 0 
+[django__django__3.0] [django__django-11155] TestsTime: 0.4938511848449707 
+[django__django__3.0] [django__django-11155] Test script run successful 
+[django__django__3.0] [django__django-11155] Removing coverage 
+[django__django__3.0] [django__django-11155] Command: coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_i18n 
+[django__django__3.0] [django__django-11155] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11155] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_set_language_unsafe_next (view_tests.tests.test_i18n.TestSetLanguage) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application view_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, view_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table view_tests_author
+    Creating table view_tests_article
+    Creating table view_tests_urlarticle
+    Creating table view_tests_datearticle
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11155] Return Code: 0 
+[django__django__3.0] [django__django-11155] TestsTime: 0.4994771480560303 
+[django__django__3.0] [django__django-11155] Test script run successful 
+[django__django__3.0] [django__django-11155] Removing coverage 
+[django__django__3.0] [django__django-11155] Command: coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_i18n 
+[django__django__3.0] [django__django-11155] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11155] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_get_formats (view_tests.tests.test_i18n.TestGetFormats) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application view_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, view_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table view_tests_author
+    Creating table view_tests_article
+    Creating table view_tests_urlarticle
+    Creating table view_tests_datearticle
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11155] Return Code: 0 
+[django__django__3.0] [django__django-11155] TestsTime: 0.711235761642456 
+[django__django__3.0] [django__django-11155] Test script run successful 
+[django__django__3.0] [django__django-11155] Removing coverage 
+[django__django__3.0] [django__django-11155] Command: coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_i18n 
+[django__django__3.0] [django__django-11155] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11155] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_get (view_tests.tests.test_i18n.TestJavaScriptCatalog) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application view_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, view_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table view_tests_author
+    Creating table view_tests_article
+    Creating table view_tests_urlarticle
+    Creating table view_tests_datearticle
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11155] Return Code: 0 
+[django__django__3.0] [django__django-11155] TestsTime: 0.6122231483459473 
+[django__django__3.0] [django__django-11155] Test script run successful 
+[django__django__3.0] [django__django-11155] Removing coverage 
+[django__django__3.0] [django__django-11155] Command: coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_i18n 
+[django__django__3.0] [django__django-11155] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11155] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_get_with_packages (view_tests.tests.test_i18n.TestJavaScriptCatalog) ... ERROR
+
+======================================================================
+ERROR: test_get_with_packages (view_tests.tests.test_i18n.TestJavaScriptCatalog)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/view_tests/tests/test_i18n.py", line 28, in test_get_with_packages
+    response = self.view(request, packages='django.contrib.auth+django.contrib.contenttypes')
+  File "/opt/django__django/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/opt/django__django/django/views/generic/base.py", line 97, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/opt/django__django/django/views/i18n.py", line 207, in get
+    context = self.get_context_data(**kwargs)
+  File "/opt/django__django/django/views/i18n.py", line 277, in get_context_data
+    'catalog': self.get_catalog(),
+  File "/opt/django__django/django/views/i18n.py", line 258, in get_catalog
+    trans_fallback_cat = self.translation._fallback._catalog if self.translation._fallback else {}
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 582, in __getattr__
+    raise AttributeError("Mock object has no attribute %r" % name)
+AttributeError: Mock object has no attribute '_fallback'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application view_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, view_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table view_tests_author
+    Creating table view_tests_article
+    Creating table view_tests_urlarticle
+    Creating table view_tests_datearticle
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11155] Return Code: 1 
+[django__django__3.0] [django__django-11155] TestsTime: 0.549689531326294 
+[django__django__3.0] [django__django-11155] Test script run successful 
+[django__django__3.0] [django__django-11155] Removing coverage 
+[django__django__3.0] [django__django-11155] Command: coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_i18n 
+[django__django__3.0] [django__django-11155] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11155] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_get_invalid_package (view_tests.tests.test_i18n.TestJavaScriptCatalog) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application view_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, view_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table view_tests_author
+    Creating table view_tests_article
+    Creating table view_tests_urlarticle
+    Creating table view_tests_datearticle
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11155] Return Code: 0 
+[django__django__3.0] [django__django-11155] TestsTime: 0.8409473896026611 
+[django__django__3.0] [django__django-11155] Test script run successful 
+[django__django__3.0] [django__django-11155] Removing coverage 
+[django__django__3.0] [django__django-11155] Command: coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_i18n 
+[django__django__3.0] [django__django-11155] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11155] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_get_context_data (view_tests.tests.test_i18n.TestJavaScriptCatalog) ... ERROR
+
+======================================================================
+ERROR: test_get_context_data (view_tests.tests.test_i18n.TestJavaScriptCatalog)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/view_tests/tests/test_i18n.py", line 29, in test_get_context_data
+    context = view.get_context_data()
+  File "/opt/django__django/django/views/i18n.py", line 277, in get_context_data
+    'catalog': self.get_catalog(),
+  File "/opt/django__django/django/views/i18n.py", line 255, in get_catalog
+    num_plurals = self._num_plurals
+  File "/opt/django__django/django/views/i18n.py", line 227, in _num_plurals
+    match = re.search(r'nplurals=\s*(\d+)', self._plural_string or '')
+  File "/opt/django__django/django/views/i18n.py", line 238, in _plural_string
+    if '' in self.translation._catalog:
+AttributeError: 'JavaScriptCatalog' object has no attribute 'translation'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application view_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, view_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table view_tests_author
+    Creating table view_tests_article
+    Creating table view_tests_urlarticle
+    Creating table view_tests_datearticle
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11155] Return Code: 1 
+[django__django__3.0] [django__django-11155] TestsTime: 0.5473251342773438 
+[django__django__3.0] [django__django-11155] Test script run successful 
+[django__django__3.0] [django__django-11155] Removing coverage 
+[django__django__3.0] [django__django-11155] Command: coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_i18n 
+[django__django__3.0] [django__django-11155] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11155] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_render_to_response (view_tests.tests.test_i18n.TestJavaScriptCatalog) ... ERROR
+
+======================================================================
+ERROR: test_render_to_response (view_tests.tests.test_i18n.TestJavaScriptCatalog)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/view_tests/tests/test_i18n.py", line 28, in test_render_to_response
+    response = self.view(request)
+  File "/opt/django__django/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/opt/django__django/django/views/generic/base.py", line 97, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/opt/django__django/django/views/i18n.py", line 207, in get
+    context = self.get_context_data(**kwargs)
+  File "/opt/django__django/django/views/i18n.py", line 277, in get_context_data
+    'catalog': self.get_catalog(),
+  File "/opt/django__django/django/views/i18n.py", line 258, in get_catalog
+    trans_fallback_cat = self.translation._fallback._catalog if self.translation._fallback else {}
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 582, in __getattr__
+    raise AttributeError("Mock object has no attribute %r" % name)
+AttributeError: Mock object has no attribute '_fallback'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application view_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, view_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table view_tests_author
+    Creating table view_tests_article
+    Creating table view_tests_urlarticle
+    Creating table view_tests_datearticle
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11155] Return Code: 1 
+[django__django__3.0] [django__django-11155] TestsTime: 0.4336667060852051 
+[django__django__3.0] [django__django-11155] Test script run successful 
+[django__django__3.0] [django__django-11155] Removing coverage 
+[django__django__3.0] [django__django-11155] Command: coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_i18n 
+[django__django__3.0] [django__django-11155] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11155] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_get (view_tests.tests.test_i18n.TestJSONCatalog) ... ERROR
+
+======================================================================
+ERROR: test_get (view_tests.tests.test_i18n.TestJSONCatalog)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/view_tests/tests/test_i18n.py", line 28, in test_get
+    response = self.view(request)
+  File "/opt/django__django/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/opt/django__django/django/views/generic/base.py", line 97, in dispatch
+    return handler(request, *args, **kwargs)
+  File "/opt/django__django/django/views/i18n.py", line 207, in get
+    context = self.get_context_data(**kwargs)
+  File "/opt/django__django/django/views/i18n.py", line 277, in get_context_data
+    'catalog': self.get_catalog(),
+  File "/opt/django__django/django/views/i18n.py", line 258, in get_catalog
+    trans_fallback_cat = self.translation._fallback._catalog if self.translation._fallback else {}
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 582, in __getattr__
+    raise AttributeError("Mock object has no attribute %r" % name)
+AttributeError: Mock object has no attribute '_fallback'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application view_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, view_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table view_tests_author
+    Creating table view_tests_article
+    Creating table view_tests_urlarticle
+    Creating table view_tests_datearticle
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11155] Return Code: 1 
+[django__django__3.0] [django__django-11155] TestsTime: 0.39762210845947266 
+[django__django__3.0] [django__django-11155] Test script run successful 
+[django__django__3.0] [django__django-11155] Removing coverage 
+[django__django__3.0] [django__django-11155] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11155] Test Script:  coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_i18n;
+ 
+[django__django__3.0] [django__django-11155] Command: coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_i18n 
+[django__django__3.0] [django__django-11155] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11155] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application view_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, view_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table view_tests_author
+    Creating table view_tests_article
+    Creating table view_tests_urlarticle
+    Creating table view_tests_datearticle
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_get_formats (view_tests.tests.test_i18n.TestGetFormats) ... ok
+test_get (view_tests.tests.test_i18n.TestJavaScriptCatalog) ... ok
+test_get_invalid_package (view_tests.tests.test_i18n.TestJavaScriptCatalog) ... ok
+test_set_language_get (view_tests.tests.test_i18n.TestSetLanguage) ... ok
+test_set_language_no_next (view_tests.tests.test_i18n.TestSetLanguage) ... FAIL
+test_set_language_post_invalid (view_tests.tests.test_i18n.TestSetLanguage) ... ok
+test_set_language_post_valid (view_tests.tests.test_i18n.TestSetLanguage) ... ok
+test_set_language_unsafe_next (view_tests.tests.test_i18n.TestSetLanguage) ... ok
+
+======================================================================
+FAIL: test_set_language_no_next (view_tests.tests.test_i18n.TestSetLanguage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 59, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 605, in run
+    testMethod()
+  File "/opt/django__django/tests/view_tests/tests/test_i18n.py", line 48, in test_set_language_no_next
+    self.assertEqual(response.status_code, 204)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 829, in assertEqual
+    assertion_func(first, second, msg=msg)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 822, in _baseAssertEqual
+    raise self.failureException(msg)
+AssertionError: 302 != 204
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.153s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__3.0] [django__django-11155] Return Code: 1 
+[django__django__3.0] [django__django-11155] TestsTime: 0.8762774467468262 
+[django__django__3.0] [django__django-11155] 
+>>>>> Some Tests Failed
+ 
+[django__django__3.0] [django__django-11155] Test script run successful 
+[django__django__3.0] [django__django-11155] Removing coverage 
+[django__django__3.0] [django__django-11155] >>>>> Unfiltered Tests Failed 

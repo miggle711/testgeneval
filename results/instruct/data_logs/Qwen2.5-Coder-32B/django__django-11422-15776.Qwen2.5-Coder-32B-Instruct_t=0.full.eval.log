@@ -1,0 +1,1167 @@
+[django__django__3.0] [django__django-11422] Task Metadata:
+	- Instance ID: django__django-11422
+	- Testbed: django__django__3.0
+	- Evaluation Model: Qwen2.5-Coder-32B-Instruct_t=0
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-11422] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11422] Std. Output:
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] Command: git -c advice.detachedHead=false checkout df46b329e0900e9e4dc1d60816c1dce6dfc1094e 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11422] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at df46b329e0 Refs #30485 -- Avoided unnecessary instance checks in urlencode.
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] Command: git diff > /opt/temp_django__django-11422_gold_init.patch 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11422] Std. Output:
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] Command: git apply -v /opt/temp_django__django-11422_gold.patch 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11422] Std. Output:
+Checking patch django/utils/autoreload.py...
+Applied patch django/utils/autoreload.py cleanly.
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-11422] Command: git diff > /opt/temp_django__django-11422_test_init.patch 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11422] Std. Output:
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] Command: git restore tests/utils_tests/test_autoreload.py 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11422] Std. Output:
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] Command: git apply -v /opt/temp_django__django-11422_test.patch 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11422] Std. Output:
+Checking patch tests/utils_tests/test_autoreload.py...
+Applied patch tests/utils_tests/test_autoreload.py cleanly.
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_iter_all_python_module_files (utils_tests.test_autoreload.TestAutoreload) ... FAIL
+
+======================================================================
+FAIL: test_iter_all_python_module_files (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 62, in test_iter_all_python_module_files
+    self.assertIn('/path/to/module1.py', result)
+AssertionError: '/path/to/module1.py' not found in frozenset()
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.8877639770507812 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_common_roots (utils_tests.test_autoreload.TestAutoreload) ... ERROR
+
+======================================================================
+ERROR: test_common_roots (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 59, in test_common_roots
+    roots = common_roots(frozenset(paths))
+  File "/opt/django__django/django/utils/autoreload.py", line 175, in common_roots
+    return tuple(_walk(tree, ()))
+  File "/opt/django__django/django/utils/autoreload.py", line 173, in _walk
+    yield Path(*path)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/pathlib.py", line 1001, in __new__
+    self = cls._from_parts(args, init=False)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/pathlib.py", line 656, in _from_parts
+    drv, root, parts = self._parse_args(args)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/pathlib.py", line 649, in _parse_args
+    return cls._flavour.parse_parts(parts)
+AttributeError: type object 'Path' has no attribute '_flavour'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.018s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.6695761680603027 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_sys_path_directories (utils_tests.test_autoreload.TestAutoreload) ... FAIL
+
+======================================================================
+FAIL: test_sys_path_directories (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 66, in test_sys_path_directories
+    self.assertIn('/path/to/dir1', directories)
+AssertionError: '/path/to/dir1' not found in []
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.5130176544189453 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_get_child_arguments (utils_tests.test_autoreload.TestAutoreload) ... ERROR
+
+======================================================================
+ERROR: test_get_child_arguments (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1175, in patched
+    arg = patching.__enter__()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1231, in __enter__
+    self.target = self.getter()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1401, in <lambda>
+    getter = lambda: _importer(target)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1088, in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1077, in _dot_lookup
+    __import__(import_path)
+ModuleNotFoundError: No module named 'django.utils.autoreload.django'; 'django.utils.autoreload' is not a package
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.4421424865722656 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_ensure_echo_on (utils_tests.test_autoreload.TestAutoreload) ... FAIL
+
+======================================================================
+FAIL: test_ensure_echo_on (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 61, in test_ensure_echo_on
+    mock_termios.tcsetattr.assert_called_once()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 795, in assert_called_once
+    raise AssertionError(msg)
+AssertionError: Expected 'tcsetattr' to have been called once. Called 0 times.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.4858548641204834 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_check_errors (utils_tests.test_autoreload.TestAutoreload) ... FAIL
+
+======================================================================
+FAIL: test_check_errors (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 61, in test_check_errors
+    check_errors(lambda: None)()
+AssertionError: ImportError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.8687388896942139 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_raise_last_exception (utils_tests.test_autoreload.TestAutoreload) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] TestsTime: 0.6630129814147949 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_trigger_reload (utils_tests.test_autoreload.TestAutoreload) ... ERROR
+
+======================================================================
+ERROR: test_trigger_reload (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 57, in test_trigger_reload
+    trigger_reload('/path/to/file.py')
+  File "/opt/django__django/django/utils/autoreload.py", line 215, in trigger_reload
+    sys.exit(3)
+SystemExit: 3
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.7164251804351807 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_restart_with_reloader (utils_tests.test_autoreload.TestAutoreload) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] TestsTime: 0.40343451499938965 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_start_django (utils_tests.test_autoreload.TestAutoreload) ... FAIL
+
+======================================================================
+FAIL: test_start_django (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 69, in test_start_django
+    mock_base_reloader_instance.run.assert_called_once_with(mock_thread_instance)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 824, in assert_called_once_with
+    raise AssertionError(msg)
+AssertionError: Expected 'run' to be called once. Called 0 times.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.5806248188018799 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_run_with_reloader (utils_tests.test_autoreload.TestAutoreload) ... FAIL
+
+======================================================================
+FAIL: test_run_with_reloader (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 64, in test_run_with_reloader
+    mock_start_django.assert_called_once_with(mock_reloader_instance, lambda: None)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 825, in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 814, in assert_called_with
+    raise AssertionError(_error_message()) from cause
+AssertionError: Expected call: start_django(<MagicMock name='get_reloader()' id='130456557202256'>, <function TestAutoreload.test_run_with_reloader.<locals>.<lambda> at 0x76a648c06b90>)
+Actual call: start_django(<MagicMock name='get_reloader()' id='130456557202256'>, <function TestAutoreload.test_run_with_reloader.<locals>.<lambda> at 0x76a648d3a290>)
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.5653018951416016 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_watchman_unavailable (utils_tests.test_autoreload.TestAutoreload) ... ERROR
+
+======================================================================
+ERROR: test_watchman_unavailable (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 59, in test_watchman_unavailable
+    WatchmanReloader.check_availability()
+  File "/opt/django__django/django/utils/autoreload.py", line 543, in check_availability
+    client = pywatchman.client(timeout=0.1)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 939, in __call__
+    return _mock_self._mock_call(*args, **kwargs)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 999, in _mock_call
+    raise effect
+Exception: Connection failed
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.562546968460083 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_watchman_unavailable_version (utils_tests.test_autoreload.TestAutoreload) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] TestsTime: 0.5818779468536377 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_watchman_available (utils_tests.test_autoreload.TestAutoreload) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] TestsTime: 0.3913717269897461 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_get_reloader (utils_tests.test_autoreload.TestAutoreload) ... FAIL
+
+======================================================================
+FAIL: test_get_reloader (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 60, in test_get_reloader
+    self.assertIsInstance(reloader, StatReloader)
+AssertionError: <MagicMock name='StatReloader()' id='128477123558416'> is not an instance of <class 'django.utils.autoreload.StatReloader'>
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.5501117706298828 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_get_reloader_watchman (utils_tests.test_autoreload.TestAutoreload) ... FAIL
+
+======================================================================
+FAIL: test_get_reloader_watchman (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 58, in test_get_reloader_watchman
+    self.assertIsInstance(reloader, WatchmanReloader)
+AssertionError: <MagicMock name='WatchmanReloader()' id='139835228285776'> is not an instance of <class 'django.utils.autoreload.WatchmanReloader'>
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 1.3760573863983154 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_notify_file_changed (utils_tests.test_autoreload.TestAutoreload) ... ERROR
+
+======================================================================
+ERROR: test_notify_file_changed (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 58, in test_notify_file_changed
+    reloader.notify_file_changed('/path/to/file.py')
+  File "/opt/django__django/django/utils/autoreload.py", line 320, in notify_file_changed
+    trigger_reload(path)
+  File "/opt/django__django/django/utils/autoreload.py", line 215, in trigger_reload
+    sys.exit(3)
+SystemExit: 3
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.32213830947875977 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_watched_roots (utils_tests.test_autoreload.TestAutoreload) ... ERROR
+
+======================================================================
+ERROR: test_watched_roots (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 61, in test_watched_roots
+    roots = reloader.watched_roots([])
+  File "/opt/django__django/django/utils/autoreload.py", line 462, in watched_roots
+    sys_paths = list(sys_path_directories())
+  File "/opt/django__django/django/utils/autoreload.py", line 184, in sys_path_directories
+    path = Path(path)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/pathlib.py", line 1001, in __new__
+    self = cls._from_parts(args, init=False)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/pathlib.py", line 656, in _from_parts
+    drv, root, parts = self._parse_args(args)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/pathlib.py", line 649, in _parse_args
+    return cls._flavour.parse_parts(parts)
+AttributeError: type object 'Path' has no attribute '_flavour'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.32364439964294434 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_update_watches (utils_tests.test_autoreload.TestAutoreload) ... ERROR
+
+======================================================================
+ERROR: test_update_watches (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 59, in test_update_watches
+    reloader.directory_globs[Path('/path/to/dir1')] = {'*.py'}
+NameError: name 'Path' is not defined
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.539099931716919 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_update_watches_parent (utils_tests.test_autoreload.TestAutoreload) ... ERROR
+
+======================================================================
+ERROR: test_update_watches_parent (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 59, in test_update_watches_parent
+    reloader.directory_globs[Path('/path/to/nonexistent/dir1')] = {'*.py'}
+NameError: name 'Path' is not defined
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.3102099895477295 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_tick (utils_tests.test_autoreload.TestAutoreload) ... ERROR
+
+======================================================================
+ERROR: test_tick (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 59, in test_tick
+    mock_client.receive.side_effect = [None, pywatchman.SocketTimeout(), pywatchman.WatchmanError('Error'), StopIteration]
+NameError: name 'pywatchman' is not defined
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.33242154121398926 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_stop (utils_tests.test_autoreload.TestAutoreload) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] TestsTime: 0.5553081035614014 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_check_server_status (utils_tests.test_autoreload.TestAutoreload) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] TestsTime: 0.39371681213378906 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_check_server_status_unavailable (utils_tests.test_autoreload.TestAutoreload) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] TestsTime: 0.5036063194274902 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test__watch_glob (utils_tests.test_autoreload.TestAutoreload) ... ERROR
+
+======================================================================
+ERROR: test__watch_glob (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 59, in test__watch_glob
+    reloader._watch_glob(Path('/path/to/dir1'), {'*.py'})
+NameError: name 'Path' is not defined
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.3816947937011719 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test__watch_glob_parent (utils_tests.test_autoreload.TestAutoreload) ... ERROR
+
+======================================================================
+ERROR: test__watch_glob_parent (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 59, in test__watch_glob_parent
+    reloader._watch_glob(Path('/path/to/nonexistent/dir1'), {'*.py'})
+NameError: name 'Path' is not defined
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.32380104064941406 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test__subscribe_dir (utils_tests.test_autoreload.TestAutoreload) ... ERROR
+
+======================================================================
+ERROR: test__subscribe_dir (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 59, in test__subscribe_dir
+    reloader._subscribe_dir(Path('/path/to/dir1'), {'file1.py', 'file2.py'})
+NameError: name 'Path' is not defined
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.37279415130615234 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test__subscribe_dir_parent (utils_tests.test_autoreload.TestAutoreload) ... ERROR
+
+======================================================================
+ERROR: test__subscribe_dir_parent (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 59, in test__subscribe_dir_parent
+    reloader._subscribe_dir(Path('/path/to/nonexistent/dir1'), {'file1.py', 'file2.py'})
+NameError: name 'Path' is not defined
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.6168303489685059 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test__watch_root (utils_tests.test_autoreload.TestAutoreload) ... ERROR
+
+======================================================================
+ERROR: test__watch_root (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 59, in test__watch_root
+    reloader._watch_root(Path('/path/to/dir1'))
+NameError: name 'Path' is not defined
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.3549504280090332 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test__watch_root_parent (utils_tests.test_autoreload.TestAutoreload) ... ERROR
+
+======================================================================
+ERROR: test__watch_root_parent (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 59, in test__watch_root_parent
+    reloader._watch_root(Path('/path/to/nonexistent/dir1'))
+NameError: name 'Path' is not defined
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.4166998863220215 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test__get_clock (utils_tests.test_autoreload.TestAutoreload) ... ERROR
+
+======================================================================
+ERROR: test__get_clock (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/site-packages/pywatchman/__init__.py", line 893, in _resolvesockname
+    p = subprocess.Popen(cmd, **args)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/subprocess.py", line 729, in __init__
+    restore_signals, start_new_session)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/subprocess.py", line 1364, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'watchman': 'watchman'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 59, in test__get_clock
+    reloader._get_clock('root')
+  File "/opt/django__django/django/utils/autoreload.py", line 407, in _get_clock
+    return self.client.query('clock', root)['clock']
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/site-packages/pywatchman/__init__.py", line 1048, in query
+    self._connect()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/site-packages/pywatchman/__init__.py", line 917, in _connect
+    self.sockpath = self._resolvesockname()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/site-packages/pywatchman/__init__.py", line 896, in _resolvesockname
+    raise WatchmanError('"watchman" executable not in PATH (%s)', e)
+pywatchman.WatchmanError: "watchman" executable not in PATH (%s), while executing [Errno 2] No such file or directory: 'watchman': 'watchman'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.416s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.9077482223510742 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test__check_subscription (utils_tests.test_autoreload.TestAutoreload) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] TestsTime: 0.45395731925964355 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_request_processed (utils_tests.test_autoreload.TestAutoreload) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] TestsTime: 0.3358578681945801 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_run_loop (utils_tests.test_autoreload.TestAutoreload) ... ERROR
+
+======================================================================
+ERROR: test_run_loop (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 60, in test_run_loop
+    reloader.run_loop()
+  File "/opt/django__django/django/utils/autoreload.py", line 297, in run_loop
+    next(ticker)
+TypeError: 'NoneType' object is not an iterator
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.48749470710754395 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_run_loop (utils_tests.test_autoreload.TestAutoreload) ... ERROR
+
+======================================================================
+ERROR: test_run_loop (utils_tests.test_autoreload.TestAutoreload)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 60, in test_run_loop
+    reloader.run(MagicMock())
+  File "/opt/django__django/django/utils/autoreload.py", line 297, in run_loop
+    next(ticker)
+TypeError: 'NoneType' object is not an iterator
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.5184471607208252 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_wait_for_apps_ready (utils_tests.test_autoreload.TestAutoreload) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] TestsTime: 0.508795976638794 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_watch_file (utils_tests.test_autoreload.TestAutoreload) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] TestsTime: 0.45896005630493164 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_watch_dir (utils_tests.test_autoreload.TestAutoreload) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] TestsTime: 0.3863058090209961 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test_watched_files (utils_tests.test_autoreload.TestAutoreload) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] TestsTime: 0.429607629776001 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 526, in <module>
+    getattr(options, 'test_name_patterns', None),
+  File "./tests/runtests.py", line 299, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 63
+    @patch
+         ^
+SyntaxError: unexpected EOF while parsing
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+ 
+[django__django__3.0] [django__django-11422] Return Code: 1 
+[django__django__3.0] [django__django-11422] TestsTime: 0.4302699565887451 
+[django__django__3.0] [django__django-11422] Test script run successful 
+[django__django__3.0] [django__django-11422] Removing coverage 
+[django__django__3.0] [django__django-11422] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11422] Test Script:  coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload;
+ 
+[django__django__3.0] [django__django-11422] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+test__check_subscription (utils_tests.test_autoreload.TestAutoreload) ... ok
+test_check_server_status (utils_tests.test_autoreload.TestAutoreload) ... ok
+test_check_server_status_unavailable (utils_tests.test_autoreload.TestAutoreload) ... ok
+test_raise_last_exception (utils_tests.test_autoreload.TestAutoreload) ... ok
+test_request_processed (utils_tests.test_autoreload.TestAutoreload) ... ok
+test_restart_with_reloader (utils_tests.test_autoreload.TestAutoreload) ... ok
+test_stop (utils_tests.test_autoreload.TestAutoreload) ... ok
+test_wait_for_apps_ready (utils_tests.test_autoreload.TestAutoreload) ... ok
+test_watch_dir (utils_tests.test_autoreload.TestAutoreload) ... ok
+test_watch_file (utils_tests.test_autoreload.TestAutoreload) ... ok
+test_watched_files (utils_tests.test_autoreload.TestAutoreload) ... ok
+test_watchman_available (utils_tests.test_autoreload.TestAutoreload) ... ok
+test_watchman_unavailable_version (utils_tests.test_autoreload.TestAutoreload) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.009s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] TestsTime: 0.42086195945739746 
+[django__django__3.0] [django__django-11422] 
+>>>>> All Tests Passed
+ 
+[django__django__3.0] [django__django-11422] Current Working Directory: /opt/django__django 
+[django__django__3.0] [django__django-11422] Command: coverage json -o coverage.json 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11422] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] 
+CoverageLOG: 35.07853403141361%
+ 
+[django__django__3.0] [django__django-11422] 
+FunctionCoverageLOG: 0.0%
+ 
+[django__django__3.0] [django__django-11422] Running mutation testing 
+[django__django__3.0] [django__django-11422] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11422] Std. Output:
+ 
+[django__django__3.0] [django__django-11422] Return Code: 0 
+[django__django__3.0] [django__django-11422] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.0] [django__django-11422] MutationTimeout 
+[django__django__3.0] [django__django-11422] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.0] [django__django-11422] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
