@@ -59,10 +59,15 @@ def _changed_line_ranges(patch: str, code_file: str) -> List[Tuple[int, int]]:
 
 def resolve_target_line_range(
     post_patch_source: str, patch: str, code_file: str
-) -> Optional[Tuple[int, int]]:
-    """Smallest set of function def line ranges (1-indexed, inclusive)
-    covering the patch's changed lines in code_file, merged into one
-    (min start, max end) range. None if no changed line falls inside a
+) -> Optional[List[Tuple[int, int]]]:
+    """Function def line ranges (1-indexed, inclusive) enclosing the
+    patch's changed lines in code_file -- one range per distinct touched
+    function, returned as-is rather than merged into a single (min, max)
+    span. Merging would silently fold in any untouched code lying
+    between two non-adjacent touched functions (confirmed real for
+    ~30% of TestGenEval instances, some with thousands of lines of
+    untouched code between two touched functions -- see
+    miggle711/testgeneval#31). None if no changed line falls inside a
     function (e.g. a module-level-only change).
     """
     changed_ranges = _changed_line_ranges(patch, code_file)
@@ -89,10 +94,10 @@ def resolve_target_line_range(
             if func_start <= changed_start and changed_end <= func_end:
                 if best is None or (func_end - func_start) < (best[1] - best[0]):
                     best = (func_start, func_end)
-        if best:
+        if best and best not in matched:
             matched.append(best)
 
     if not matched:
         return None
 
-    return (min(r[0] for r in matched), max(r[1] for r in matched))
+    return sorted(matched)

@@ -111,14 +111,68 @@ SPACE_IN_PATH_PATCH = (
 )
 
 
+MULTI_HUNK_WITH_GAP_SOURCE = """def foo():
+    x = 1
+    x += 1
+    return x
+
+
+def untouched():
+    a = 1
+    b = 2
+    c = 3
+    return a + b + c
+
+
+class C:
+    def method(self):
+        z = 5
+        return z
+"""
+
+MULTI_HUNK_WITH_GAP_PATCH = """diff --git a/mod.py b/mod.py
+index a0abe96..f95279a 100644
+--- a/mod.py
++++ b/mod.py
+@@ -1,5 +1,6 @@
+ def foo():
+     x = 1
++    x += 1
+     return x
+
+
+@@ -13,4 +14,5 @@ def bar():
+
+ class C:
+     def method(self):
+-        return 1
++        z = 5
++        return z
+"""
+
+
 class TestResolveTargetLineRange(unittest.TestCase):
-    def test_multiple_hunks_merge_into_one_range(self):
+    def test_multiple_hunks_return_separate_function_ranges(self):
         result = resolve_target_line_range(MOD_SOURCE, MULTI_HUNK_PATCH, "mod.py")
-        self.assertEqual(result, (1, 15))
+        self.assertEqual(result, [(1, 4), (13, 15)])
+
+    def test_untouched_function_between_two_touched_functions_is_excluded(self):
+        # Regression test for the merge bug: foo() and C.method() are
+        # touched, untouched() sits between them and must not be folded
+        # into the reported ranges just because its lines fall inside
+        # the old min/max span.
+        result = resolve_target_line_range(
+            MULTI_HUNK_WITH_GAP_SOURCE, MULTI_HUNK_WITH_GAP_PATCH, "mod.py"
+        )
+        self.assertEqual(result, [(1, 4), (15, 17)])
+        untouched_range = (7, 11)
+        for start, end in result:
+            self.assertFalse(start <= untouched_range[0] <= end)
+            self.assertFalse(start <= untouched_range[1] <= end)
 
     def test_single_function_patch(self):
         result = resolve_target_line_range(SINGLE_FN_SOURCE, SINGLE_FN_PATCH, "mod.py")
-        self.assertEqual(result, (1, 4))
+        self.assertEqual(result, [(1, 4)])
 
     def test_module_level_only_change_returns_none(self):
         result = resolve_target_line_range(
@@ -134,7 +188,7 @@ class TestResolveTargetLineRange(unittest.TestCase):
         result = resolve_target_line_range(
             DELETION_ONLY_SOURCE, DELETION_ONLY_PATCH, "mod.py"
         )
-        self.assertEqual(result, (1, 3))
+        self.assertEqual(result, [(1, 3)])
 
     def test_empty_patch_returns_none(self):
         result = resolve_target_line_range(SINGLE_FN_SOURCE, "", "mod.py")
@@ -150,7 +204,7 @@ class TestResolveTargetLineRange(unittest.TestCase):
         result = resolve_target_line_range(
             MULTI_FILE_SOURCE, MULTI_FILE_PATCH, "models.py"
         )
-        self.assertEqual(result, (1, 3))
+        self.assertEqual(result, [(1, 3)])
 
     def test_path_with_space_still_matches_despite_trailing_tab(self):
         # git appends a trailing tab to +++/--- lines for paths with
@@ -158,7 +212,7 @@ class TestResolveTargetLineRange(unittest.TestCase):
         result = resolve_target_line_range(
             SPACE_IN_PATH_SOURCE, SPACE_IN_PATH_PATCH, "weird dir/foo.py"
         )
-        self.assertEqual(result, (1, 2))
+        self.assertEqual(result, [(1, 2)])
 
 
 if __name__ == "__main__":

@@ -340,9 +340,12 @@ class TaskEnvContextManager:
             f.write(f"{APPLY_PATCH_PASS} ({patch_type})\n")
         return True
 
-    def _resolve_target_range(self, instance):
-        """Post-patch (start, end) line range of the patch's target
-        function(s). None means fall back to whole-file behavior.
+    def _resolve_target_ranges(self, instance):
+        """Post-patch (start, end) line ranges of the patch's target
+        function(s), one per distinct touched function, not merged into
+        a single span, since two non-adjacent touched functions would
+        otherwise silently fold in the untouched code between them. None
+        means fall back to whole-file behavior.
         """
         try:
             with open(instance["code_file"], "r") as f:
@@ -354,11 +357,12 @@ class TaskEnvContextManager:
         )
 
     def _log_function_coverage(self, instance, file_data):
-        target_range = self._resolve_target_range(instance)
-        if target_range is None:
+        target_ranges = self._resolve_target_ranges(instance)
+        if target_ranges is None:
             return
-        start, end = target_range
-        target_lines = set(range(start, end + 1))
+        target_lines = set()
+        for start, end in target_ranges:
+            target_lines |= set(range(start, end + 1))
         executed = set(file_data.get("executed_lines", []))
         missing = set(file_data.get("missing_lines", []))
         relevant = target_lines & (executed | missing)
@@ -474,11 +478,14 @@ class TaskEnvContextManager:
         instance's evaluation.
         """
         try:
-            target_range = self._resolve_target_range(instance)
-            if target_range is None:
+            target_ranges = self._resolve_target_ranges(instance)
+            if target_ranges is None:
                 return
-            start, end = target_range
 
+            range_clause = " or ".join(
+                f"({start} <= spec.start_pos[0] <= {end})"
+                for start, end in target_ranges
+            )
             script = (
                 "from cosmic_ray.work_db import WorkDB\n"
                 f"db = WorkDB('mutation.sqlite', WorkDB.Mode.open)\n"
@@ -488,7 +495,7 @@ class TaskEnvContextManager:
                 "        for item in db.work_items\n"
                 "        for spec in item.mutations\n"
                 f"        if str(spec.module_path) == {instance['code_file']!r}\n"
-                f"        and {start} <= spec.start_pos[0] <= {end}\n"
+                f"        and ({range_clause})\n"
                 "    }\n"
                 "    results = dict(db.results)\n"
                 "    relevant = [jid for jid in job_ids_in_range if jid in results]\n"
