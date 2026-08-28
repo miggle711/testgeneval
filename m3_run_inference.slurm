@@ -21,6 +21,11 @@
 #     built locally (pycodekg's build_kg_prompts.py) and transferred.
 #   DATASET_PATH: filtered dataset, transferred to M3.
 #   TEMPERATURE: 0 / 0.5 / 1 per the sensitivity sweep.
+#   NUM_SAMPLES: samples per instance for the full setting, k in pass@k
+#     when set above 1. Requested in one API call via run_api.py's n
+#     parameter, not NUM_SAMPLES separate calls. Needs TEMPERATURE > 0
+#     to produce genuinely different samples; at TEMPERATURE=0 every
+#     sample would be identical. Defaults to 1 (unchanged, pass@1).
 #   MAX_CONCURRENCY: requests run_api.py keeps in flight at once. vLLM
 #     serves requests one at a time by default, leaving continuous
 #     batching and GPU KV cache mostly unused. Keep it <= --max-num-seqs
@@ -65,6 +70,11 @@ KG_PROMPTS_PATH="${KG_PROMPTS_PATH:-kg_prompts.json}"
 DATASET_PATH="${DATASET_PATH:-CHANGE_ME}"
 OUTPUT_DIR="${OUTPUT_DIR:-$PWD/results/${PROMPT_CONFIG}}"
 TEMPERATURE="${TEMPERATURE:-0.2}"
+# Samples per instance for the full setting, k in pass@k when > 1 (needs
+# TEMPERATURE > 0 to produce genuinely different samples, not one
+# completion repeated num_samples times). Requested in one call via
+# run_api.py's own n parameter, not num_samples separate calls.
+NUM_SAMPLES="${NUM_SAMPLES:-1}"
 MAX_CONCURRENCY="${MAX_CONCURRENCY:-1}"   # requests in flight at once; match MAX_NUM_SEQS below
 # vLLM's own ceiling on concurrent sequences, MAX_CONCURRENCY can never
 # exceed this regardless of what's requested. 8 is safe for the large
@@ -207,7 +217,7 @@ LOCAL_MODEL_BASE_URL="http://127.0.0.1:${VLLM_PORT}/v1/" \
     --model_name_or_path "$MODEL" \
     --dataset_name_or_path "$DATASET_PATH" \
     --output_dir "$OUTPUT_DIR" \
-    --num_samples 1 \
+    --num_samples "$NUM_SAMPLES" \
     --max_concurrency "$MAX_CONCURRENCY" \
     --model_args "temperature=${TEMPERATURE}" \
     "${EXTRA_ARGS[@]}"
