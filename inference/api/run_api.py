@@ -154,6 +154,7 @@ def call_chat(
     max_tokens,
     system_message,
     no_system_message=False,
+    n=1,
     **model_args,
 ):
     """
@@ -169,6 +170,12 @@ def call_chat(
             templates reject a system role entirely (confirmed real:
             bigcode/starcoder2-15b-instruct-v0.1 400s on every request
             with "System messages are not allowed in this template").
+        n (int): Number of independent completions to request in this one
+            call, via the OpenAI API's own n parameter (supported by
+            vLLM's server too). One prompt prefill, n samples, instead of
+            n separate calls each repaying prefill cost. Only meaningful
+            when temperature > 0; requesting n > 1 at temperature 0 would
+            just return n identical completions.
         **model_args (dict): Additional model arguments.
 
     Returns:
@@ -211,10 +218,14 @@ def call_chat(
             temperature=temperature,
             max_tokens=max_tokens,  # Adjust max_tokens as needed
             top_p=top_p,
+            n=n,
             **model_args,
         )
 
         input_tokens = response.usage.prompt_tokens
+        # completion_tokens is the sum across all n completions, not
+        # per-completion -- that's the real cost incurred, so calc_cost
+        # doesn't need adjusting for n > 1.
         output_tokens = response.usage.completion_tokens
         cost = calc_cost(model_name_or_path, input_tokens, output_tokens)
         return response, cost
@@ -353,30 +364,32 @@ def openai_inference(
         failed = False
         for prompt_name, prompt_text in datum["preds_prompts"].items():
             prompt_predictions = []
-            num_samples_curr = 1 if prompt_name == "full" else num_samples
             if skip_full and prompt_name == "full":
                 continue
             if skip_completion and prompt_name != "full":
                 continue
-            for _ in range(num_samples_curr):
+            if prompt_name == "full":
+                # One call requesting num_samples completions via the
+                # API's own n parameter, instead of num_samples separate
+                # calls -- one prompt prefill instead of num_samples of
+                # them. Previously hardcoded to 1 sample regardless of
+                # --num_samples for this setting; num_samples now applies
+                # here too, needed for pass@k evaluation (k=num_samples).
                 try:
                     response, cost = call_chat(
                         model_name_or_path,
                         prompt_text,
                         temperature,
                         top_p,
-                        default_output_limit if prompt_name == "full" else 512,
-                        (
-                            system_message_full
-                            if prompt_name == "full"
-                            else system_message
-                        ),
+                        default_output_limit,
+                        system_message_full,
                         no_system_message=no_system_message,
+                        n=num_samples,
                     )
-                    completion = response.choices[0].message.content
-                    prompt_predictions.append(
-                        postprocess_fn(completion, prompt_name == "full")
-                    )
+                    for choice in response.choices:
+                        prompt_predictions.append(
+                            postprocess_fn(choice.message.content, True)
+                        )
                     with cost_lock:
                         state["total_cost"] += cost
                         if max_cost is not None and state["total_cost"] >= max_cost:
@@ -385,6 +398,30 @@ def openai_inference(
                 except Exception as e:
                     print(f"Error: {e}")
                     failed = True
+            else:
+                for _ in range(num_samples):
+                    try:
+                        response, cost = call_chat(
+                            model_name_or_path,
+                            prompt_text,
+                            temperature,
+                            top_p,
+                            512,
+                            system_message,
+                            no_system_message=no_system_message,
+                        )
+                        completion = response.choices[0].message.content
+                        prompt_predictions.append(
+                            postprocess_fn(completion, False)
+                        )
+                        with cost_lock:
+                            state["total_cost"] += cost
+                            if max_cost is not None and state["total_cost"] >= max_cost:
+                                print(f"Reached max cost {max_cost}, exiting")
+                                state["cost_exceeded"] = True
+                    except Exception as e:
+                        print(f"Error: {e}")
+                        failed = True
             output_dict["preds"][prompt_name] = prompt_predictions
         if failed:
             print("Failed, skipping...")
