@@ -1,6 +1,6 @@
 # Experiment Plan: `instruct` vs `kg_only` on TestGenEval
 
-Sole copy as of 2026-08-24 — a duplicate previously lived in the
+Sole copy as of 2026-08-24. A duplicate previously lived in the
 `repo-kg-construction`/`pycodekg` repo but had drifted badly out of sync
 (missing RQ1/RQ4, the locked model shortlist, the statistical analysis
 plan, and other since-decided content) and was deleted rather than kept
@@ -31,11 +31,11 @@ Current direction is `full`-only as the primary and, likely, only result.
 
 ## Research questions
 
-Locked 2026-08-23 as a full four-RQ set — RQ1 and RQ4 previously had no
+Locked 2026-08-23 as a full four-RQ set. RQ1 and RQ4 previously had no
 dedicated evaluation methodology in this document. The four RQs
 themselves stand; the specific procedures now attached to them ("RQ1
 validation design" and "RQ4 instrumentation" below) are proposals only,
-not yet signed off by the team — see "Open decisions requiring
+not yet signed off by the team, see "Open decisions requiring
 sign-off."
 
 > **RQ1 (KG Construction Quality):** How accurately does the
@@ -64,7 +64,7 @@ function(s) within it that changed, and how well does KG traversal from
 that point recover genuinely relevant structural context (callers, callees,
 class relationships) versus missing it.
 
-RQ2 is answered as **retrieval characterization, not "relevance"** —
+RQ2 is answered as **retrieval characterization, not "relevance"**:
 patch-to-seed localization success rate, nodes/edges retrieved, cross-file
 node proportion, and caller/callee/sibling/class distribution, alongside
 token count. Whether that retrieved context is actually *useful* is left
@@ -75,11 +75,11 @@ RQ3 is the direct behavioural question: does the structured context
 the file directly. Both function-scoped and whole-file
 correctness/coverage/mutation-score numbers are reported (see Stage 5);
 treating the function-scoped figures as primary is a proposal, not yet
-signed off by the team — see "Open decisions requiring sign-off."
+signed off by the team, see "Open decisions requiring sign-off."
 
 **Framing note:** this experiment evaluates patch-aware KG retrieval as a
 combined context-selection approach against a retrieval-free, focal-file
-baseline — a system-level comparison, not a causal isolation of graph
+baseline. It is a system-level comparison, not a causal isolation of graph
 structure from cross-file access or structured presentation. Because
 `kg_only`'s context can include cross-file code the `instruct` baseline
 has no way to see, an observed difference cannot by itself be attributed
@@ -155,6 +155,63 @@ that distinguishes a KG-based approach from `instruct` in the first place.
 
 ## Stage 4: Inference
 
+**Revised 2026-08-28, supersedes the 2026-08-22 shortlist/sweep below.**
+The team confirmed a new model shortlist and sampling config for the main
+results. Main results use **temperature 0.2 with BFS depth 2 for a pass@1
+number, and temperature 0.8 with depth 2 for pass@k where k equals 5** (5
+independent samples per instance, at least one passing counts as a pass),
+not the 0/0.5/1.0 sweep described below, which is now specific to the
+BFS-depth ablation only (see that section). Quantization is acceptable
+for models that need it to fit M3's GPUs; see the quantization note at
+the end of this section for what that trades off.
+
+**Revised shortlist** (2026-08-28), replacing the 2026-08-22 locked
+shortlist immediately below:
+
+| Model | Tier | Notes |
+|---|---|---|
+| GPT-5 | XL | OpenAI API, not self-hosted on M3. Following TestGenEval appendix D.1 (arxiv.org/html/2410.00752v2). |
+| Llama-3.1-8B-Instruct | Small | FP16, 1x H100 on M3 (or Groq API) |
+| Qwen2.5-Coder-7B-Instruct | Small | No smaller Qwen3-Coder exists; also in ULT |
+| gpt-oss-20B | Medium | Native MXFP4 (see quantization note below), 1x H100 (or Groq API) |
+| Qwen3-Coder-30B-A3B-Instruct | Medium | Successor to Qwen2.5-Coder, self-hostable, 2x H100 |
+| gpt-oss-120B | Large | Native MXFP4 (see quantization note below), 2x H100 (or Groq API) |
+| Llama-4-Scout-17B-16E-Instruct | Large | Meta's current-gen model (Apr 2025), cheaper than the 3.1 model it supplements. Also the current candidate for the BFS-depth/temperature sensitivity ablation, pending confirmation once real pass@1/pass@k numbers are in across this shortlist (see BFS-depth ablation section). |
+
+Every model needs a fresh `instruct` and `kg_only` run at both temp=0.2
+(pass@1) and temp=0.8 (pass@k=5): 4 runs per model, 28 runs total across
+the 7 models above. None of the runs completed so far in `results/RUN_LOG.md`
+use either of these temperatures, so none of them count toward this
+revised plan.
+
+**pass@k=5 is currently blocked**, not just unimplemented cheaply.
+`run_api.py` hardcodes `num_samples` to 1 for this fork's `full` setting
+regardless of `--num_samples` (see the "Samples per configuration" note
+below, which already flagged this same root cause for the older sweep).
+Tracked in [testgeneval#32](https://github.com/miggle711/testgeneval/issues/32).
+Evaluation's own container-side code (`evaluate_instance.py`'s
+`full_processing`) already loops over a list of samples correctly, so the
+fix is confined to the inference side. Needs to land before any pass@5
+run can be submitted.
+
+**Quantization note:** not one uniform scheme across the shortlist.
+gpt-oss-20B/120B are only released in MXFP4 (OpenAI's native 4-bit
+format for these models; there's no fp16 version of the open weights to
+quantize differently). The remaining self-hosted models (Llama-3.1-8B,
+Qwen2.5-Coder-7B, Qwen3-Coder-30B, Llama-4-Scout) do ship at fp16/bf16
+and could share one chosen scheme (e.g. AWQ or GPTQ int4) consistently
+within that group. GPT-5 is API-only, so serving precision is entirely
+OpenAI's choice, unknown and uncontrolled from this side. Quantization is
+lossy (some model/scheme-dependent quality trade for memory headroom and
+usually inference speed), so this three-way split (MXFP4, a chosen
+uniform scheme, and an uncontrolled API) needs to be reported explicitly
+alongside results, not glossed over as one blanket policy. Otherwise
+cross-model comparisons would be confounded by differing precision
+regimes on top of whatever the models' own capability differences are.
+
+**Older shortlist and sweep, for the record (locked 2026-08-22, superseded
+2026-08-28 above):**
+
 Both arms' prompts are sent to each model under evaluation across a
 temperature sweep of **0, 0.5, and 1.0**, to check sensitivity to sampling
 temperature as well as model choice. Generated test files are stored for
@@ -190,7 +247,7 @@ same-tier substitute.
 **Locked shortlist** (2026-08-22, set for the funding/budget request):
 
 - **Small:** Qwen2.5-Coder-7B-Instruct, DeepSeek-Coder-6.7B-Instruct
-- **Medium:** Qwen2.5-Coder-32B-Instruct, Codestral-22B-v0.1 — both likely
+- **Medium:** Qwen2.5-Coder-32B-Instruct, Codestral-22B-v0.1. Both likely
   need `TENSOR_PARALLEL_SIZE=2` (2x L40S), Qwen2.5-Coder-32B is ~64GB at
   float16, over one 48GB card, and Codestral-22B at ~44GB is too tight
   once KV cache is added.
@@ -209,17 +266,17 @@ for a known chat-template rejection, see the M3 guide). DeepSeek-Coder-V2-Lite-I
 is a possible optional 5th medium-tier model if a cheap extra data point
 is wanted later.
 
-**Samples per configuration:** 1 sample at T=0 (deterministic — repeats
+**Samples per configuration:** 1 sample at T=0 (deterministic, so repeats
 add no signal there), 5 samples at T=0.5 and T=1.0 (genuinely
 non-deterministic, so repeats are needed to estimate real variance
-rather than report a single noisy draw), both arms — 11 samples/arm ×
-2 arms = 22 full passes per model, matching `docs/funding-proposal.md`'s
+rather than report a single noisy draw), both arms. That's 11 samples/arm
+times 2 arms, 22 full passes per model, matching `docs/funding-proposal.md`'s
 priced run matrix. (This corrects an earlier version of this section
-that said 3 samples at the non-deterministic temperatures instead of 5
-— 5 is the figure actually priced and locked in the funding proposal.)
+that said 3 samples at the non-deterministic temperatures instead of 5;
+5 is the figure actually priced and locked in the funding proposal.)
 Implementing real repeats needs either a small code change or a
 separate output path per repeat, since `run_api.py` currently hardcodes
-1 sample for the `full` setting regardless of what's requested — not
+1 sample for the `full` setting regardless of what's requested, not
 just resubmitting the same job multiple times.
 
 Inference is planned to run on Monash's M3 HPC cluster. M3 does not
@@ -228,36 +285,67 @@ run in a separate environment.
 
 ## BFS-depth ablation
 
-**Status: proposed, pending team sign-off** — whether this ablation runs
+**Status: proposed, pending team sign-off.** Whether this ablation runs
 at all, and the specific depths/subset/models below, have not been
 confirmed by the team; see "Open decisions requiring sign-off."
+
+**Depth 3 is now excluded from the depth sweep** (confirmed 2026-08-27,
+see [pycodekg#140](https://github.com/miggle711/pycodekg/issues/140)):
+BFS depth beyond 2 hops never reaches the rendered `kg_only` prompt at
+all. `LLMSerializer._build_context_section` filters every output category
+(`callers`, `callees`, `related`, `sibling_methods`) to content within
+1-2 hops of the seed, regardless of how far BFS actually explored.
+Confirmed empirically across 258 real seeds spanning 7 repos: 0/258
+showed any difference between depth-2 and depth-3 rendered output, while
+the raw BFS-visited node count kept growing sharply at depth 3 in every
+case. Depth **{1, 2}** is therefore the only range where depth has a
+measurable effect on what the model actually sees. A depth-3 arm would
+be a guaranteed no-op, real compute spent to reproduce depth-2's exact
+prompt content.
+
+**Ablation model: not yet confirmed** (as of 2026-08-28). The team's
+current intent is to run this ablation on whichever model from the
+revised Stage 4 shortlist turns out most performant, once real pass@1/
+pass@k numbers exist across that shortlist, not decided in advance.
+Llama-4-Scout-17B-16E-Instruct is the current leading candidate (see
+Stage 4), but this is not locked. A 6-job temp/depth matrix (temp
+0/0.5/1 by depth 1/2) was submitted for Llama-4-Scout on 2026-08-27 as a
+pipeline test, then cancelled before consuming real H100 time once it
+was confirmed the model choice isn't locked in yet. Revisit once the
+Stage 4 main-results batch produces comparable numbers across models.
 
 An additive experiment answering a question more central to this
 paper's actual contribution than temperature sensitivity: why depth 2,
 specifically, for the bounded BFS subgraph expansion in Stage 2? Runs
-`kg_only` only — BFS depth has no meaning for `instruct`, which does no
-graph retrieval — at depths **{1, 2, 3}**, on three models spanning the
-shortlist's size tiers rather than the full shortlist, on a
-**150-instance representative subset** (~12.4% of the 1210-instance
-dataset) rather than the full dataset, since this supports a secondary,
-design-justifying claim rather than the paper's primary result.
+`kg_only` only, since BFS depth has no meaning for `instruct`, which does
+no graph retrieval, at depths **{1, 2}** (previously {1, 2, 3}, see the
+depth-3 exclusion above), on three models spanning the shortlist's size
+tiers rather than the full shortlist, on a **150-instance representative
+subset** (~12.4% of the 1210-instance dataset) rather than the full
+dataset, since this supports a secondary, design-justifying claim rather
+than the paper's primary result. (The three-model framing here predates
+the 2026-08-28 single-best-performing-model framing described just
+above; whether the ablation covers three models or one is itself part
+of what's still pending team confirmation.)
 
-**Temperature for the ablation itself: T=0, 1 sample per instance** —
-chosen independently of the primary run's sweep, since this experiment
+**Temperature for the ablation itself: T=0, 1 sample per instance.**
+Chosen independently of the primary run's sweep, since this experiment
 is characterizing depth's effect, not temperature's; holding temperature
 fixed and deterministic keeps that comparison clean rather than adding
 a second varying dimension to a supplementary result. Revisit this if a
 depth-by-temperature interaction turns out to matter.
 
 Cost derivation is in `docs/funding-proposal.md`'s "BFS-depth ablation"
-section — negligible (~$3.54 AUD) relative to the rest of the budget,
-since it scales with a small subset × three models × one temperature
-rather than the full shortlist × full dataset × sweep.
+section: negligible (~$3.54 AUD) relative to the rest of the budget,
+since it scales with a small subset times three models times one
+temperature rather than the full shortlist times the full dataset times
+the sweep.
 
 Measured per depth: retrieved node/edge count, prompt token count,
 target-function coverage, and target-function mutation score. Reported
-descriptively as a trend across depths 1/2/3 (see "Statistical analysis
-plan" below) — not treated as a significance-testing exercise, since
+descriptively as a trend across depths 1 and 2 (previously 1/2/3, see
+the depth-3 exclusion above; see "Statistical analysis plan" below), not
+treated as a significance-testing exercise, since
 the goal is characterizing a design choice, not establishing an effect.
 
 ## Stage 5: Evaluation
@@ -283,13 +371,13 @@ primary comparison numbers for RQ2/RQ3 has been proposed, since `kg_only`
 is structurally only able to generate tests for the function it was given,
 while `instruct` has the whole file available and could pick up incidental
 coverage or mutation kills elsewhere in the file unrelated to the function
-actually under test — but this is not yet a team-confirmed decision.
+actually under test, but this is not yet a team-confirmed decision.
 Whole-file figures would be kept as secondary/contextual numbers rather
 than dropped either way, since they remain informative about overall
 generated test quality on the file as a whole.
 
 **Proposed, pending team sign-off:** the write-up would report both, as
-two named, distinct comparisons — function-scoped coverage/mutation score
+two named, distinct comparisons: function-scoped coverage/mutation score
 as the primary outcomes for RQ2/RQ3, whole-file figures alongside as
 secondary/contextual numbers, not dropped. See "Open decisions requiring
 sign-off."
@@ -319,13 +407,13 @@ one real instance has been run through this path so far.
 
 ## Statistical analysis plan
 
-**Status: proposed, pending team sign-off** — the analysis choices below
+**Status: proposed, pending team sign-off.** The analysis choices below
 (paired bootstrap CIs, McNemar's test, per-model reporting, etc.) have not
 been confirmed by the team; see "Open decisions requiring sign-off."
 
 Predefined 2026-08-23, before the primary run, to avoid choosing an
 analysis after seeing results. **Experimental unit: the TestGenEval
-instance, paired across `instruct` and `kg_only`** — this governs every
+instance, paired across `instruct` and `kg_only`.** This governs every
 row below, since a paired design (same instance, both arms) supports
 paired-difference methods that an unpaired design wouldn't.
 
@@ -336,7 +424,7 @@ paired-difference methods that an unpaired design wouldn't.
 | Binary (Any Pass / All Pass) | McNemar's test + report discordant pair counts (KG-wins / baseline-wins), not just a p-value |
 | Efficiency (token count, latency) | Primarily descriptive, paired, CIs where meaningful |
 | RQ1 (edge precision) | Overall + per-relationship-type precision with binomial 95% CIs; separately report the exact/ambiguous/dropped resolution distribution |
-| BFS ablation | Descriptive trend across depths 1/2/3 (context size, token cost, quality) — not a significance-testing exercise |
+| BFS ablation | Descriptive trend across depths 1 and 2 (context size, token cost, quality); not a significance-testing exercise |
 
 **Multi-model / multi-sample handling:** report per-model, not pooled,
 unless an aggregation method is explicitly justified in the write-up.
@@ -346,37 +434,37 @@ also 1 sample per instance at T=0, so the same applies.
 
 ## RQ1 validation design
 
-**Status: proposed, pending team sign-off** — the sample size,
+**Status: proposed, pending team sign-off.** The sample size,
 relationship-type split, and validation method below have not been
 confirmed by the team; see "Open decisions requiring sign-off."
 
 RQ1 is answered by **stratified manual validation**, not the resolver's
-own confidence tags alone (those — exact/ambiguous/dropped — are useful
+own confidence tags alone (those, exact/ambiguous/dropped, are useful
 as a cheap, automatic first-order signal, reported as a distribution
 across the dataset, but "the resolver believes this match is exact" is
 not the same claim as "this match is correct").
 
 - **80 manually validated relationships**, stratified across
-  relationship type — suggested split ~50 function calls / 40
+  relationship type. Suggested split ~50 function calls / 40
   attribute-access / 30 inheritance / 30 instantiation / remainder
   other, adjusted proportionally to what the constructed KG actually
   contains once real counts are available.
 - Reported as a **stratified validation sample**, not a definitive
   ground truth: precision is reported with binomial 95% CIs (see
   Statistical analysis plan above), not as a bare percentage.
-- **Why 80, not a larger sample (e.g. 170):** at ~2–3 minutes per
-  annotation, 80 is ~3–4 hours including setup and reconciliation; 170
-  approaches a full working day for diminishing marginal CI-width
+- **Why 80, not a larger sample (e.g. 170):** at ~2 to 3 minutes per
+  annotation, 80 is ~3 to 4 hours including setup and reconciliation;
+  170 approaches a full working day for diminishing marginal CI-width
   improvement. That time is better spent on the BFS ablation, pipeline
   integrity work, or writing.
 
 ## RQ4 instrumentation
 
-**Status: proposed, pending team sign-off** — what "efficiency" means for
+**Status: proposed, pending team sign-off.** What "efficiency" means for
 RQ4 and which metrics below actually get collected have not been
 confirmed by the team; see "Open decisions requiring sign-off."
 
-Cheap to collect alongside inference — no separate experimental pass
+Cheap to collect alongside inference, no separate experimental pass
 needed, just logging that isn't currently in place:
 
 - **KG build time**, measured separately for AST parsing vs. edge
@@ -388,7 +476,7 @@ needed, just logging that isn't currently in place:
   shared across every instance that references that commit) from
   **per-instance retrieval + inference cost** (paid every time, not
   amortized).
-- Compare `kg_only` vs `instruct` prompt token counts directly — the
+- Compare `kg_only` vs `instruct` prompt token counts directly. The
   funding proposal's existing token-cost measurements are the starting
   point for this comparison.
 
@@ -435,7 +523,7 @@ needed, just logging that isn't currently in place:
 1. ~~Whether the completion settings (`first`/`last`/`extra`) are dropped
    from the codebase entirely, or retained as an available secondary
    comparison.~~ Resolved 2026-08-23: dropped from primary scope, listed
-   under "Explicitly out of scope" above — `first`/`last`/`extra` hand the
+   under "Explicitly out of scope" above. `first`/`last`/`extra` hand the
    model part of an existing test file, which is structurally incompatible
    with the "no existing test content shown to either arm" principle the
    whole experiment is built around (see Scope).
@@ -444,41 +532,41 @@ needed, just logging that isn't currently in place:
    Stage 4 above). Large tier: both Llama-3.1-70B-Instruct and
    Qwen2.5-72B-Instruct are in fact already complete (1210/1210 each,
    verified 2026-08-22, `TENSOR_PARALLEL_SIZE=4` confirmed working in
-   practice) — the multi-GPU risk this item used to flag no longer
+   practice); the multi-GPU risk this item used to flag no longer
    applies, this is sunk, already-spent compute.
 3. ~~Whether Stage 5 evaluation runs on a local workstation or a shared,
    Docker-capable cluster.~~ Resolved 2026-08-22: evaluation runs on M3
    itself via the Apptainer backend (see Stage 5 above), validated on a
    real instance. The MacBook Pro (M2 Max, Apple Silicon) Docker/Rosetta
-   path is no longer the default plan — kept only as a fallback for
+   path is no longer the default plan, kept only as a fallback for
    repos whose `.sif` image isn't built in time.
 4. Whether Stage 5's function-scoped coverage/mutation numbers are
    reported as the sole primary metric, or alongside whole-file numbers
    as two named comparisons. Proposed (not team-signed-off): function-
-   scoped primary, whole-file secondary and reported alongside — see the
+   scoped primary, whole-file secondary and reported alongside, see the
    Research questions section's RQ3 note above. Reopened 2026-08-24
    pending team confirmation.
 5. ~~This document was mirrored from the `repo-kg-construction`/`pycodekg`
    repo; changes made here needed porting to that repo's canonical
    copy.~~ Resolved 2026-08-24: the `pycodekg` copy had drifted badly out
-   of sync and was deleted rather than kept in sync going forward — this
+   of sync and was deleted rather than kept in sync going forward. This
    is now the sole copy of the experiment plan (see the note at the top
    of this file).
 6. Whether to drop Stage 4's temperature sweep (0/0.5/1.0) down to a
    single setting, redirecting the freed compute/budget elsewhere (e.g.
    the BFS-depth ablation). Sweep stays as the current default pending
-   this decision — to be decided by the team.
+   this decision, to be decided by the team.
 7. The RQ1 validation procedure (sample size, relationship-type split,
-   validation method) — see "RQ1 validation design" above. Drafted as a
+   validation method), see "RQ1 validation design" above. Drafted as a
    proposal 2026-08-23, not yet signed off by the team.
 8. What "efficiency" means for RQ4 and which metrics actually get
-   collected — see "RQ4 instrumentation" above. Drafted as a proposal
+   collected, see "RQ4 instrumentation" above. Drafted as a proposal
    2026-08-23, not yet signed off by the team.
 9. Whether the BFS-depth ablation runs at all, and if so, its depths/
-   subset size/selection procedure/models — see "BFS-depth ablation"
+   subset size/selection procedure/models, see "BFS-depth ablation"
    above. Drafted as a proposal 2026-08-23, not yet signed off by the
    team.
 10. The statistical analysis plan in full (paired bootstrap CIs,
-    McNemar's test, per-model reporting, multi-sample handling) — see
+    McNemar's test, per-model reporting, multi-sample handling), see
     "Statistical analysis plan" above. Drafted as a proposal 2026-08-23,
     not yet signed off by the team.
