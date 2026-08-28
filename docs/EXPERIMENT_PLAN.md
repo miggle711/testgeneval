@@ -171,12 +171,12 @@ shortlist immediately below:
 | Model | Tier | Notes |
 |---|---|---|
 | GPT-5 | XL | OpenAI API, not self-hosted on M3. Following TestGenEval appendix D.1 (arxiv.org/html/2410.00752v2). |
-| Llama-3.1-8B-Instruct | Small | FP16, 1x H100 on M3 (or Groq API) |
-| Qwen2.5-Coder-7B-Instruct | Small | No smaller Qwen3-Coder exists; also in ULT |
-| gpt-oss-20B | Medium | Native MXFP4 (see quantization note below), 1x H100 (or Groq API) |
-| Qwen3-Coder-30B-A3B-Instruct | Medium | Successor to Qwen2.5-Coder, self-hostable, 2x H100 |
-| gpt-oss-120B | Large | Native MXFP4 (see quantization note below), 2x H100 (or Groq API) |
-| Llama-4-Scout-17B-16E-Instruct | Large | Meta's current-gen model (Apr 2025), cheaper than the 3.1 model it supplements. Also the current candidate for the BFS-depth/temperature sensitivity ablation, pending confirmation once real pass@1/pass@k numbers are in across this shortlist (see BFS-depth ablation section). |
+| Llama-3.1-8B-Instruct | Small | FP16. Confirmed real 2026-08-29: runs on 1x L40S, not H100 (corrects an earlier speculative "1x H100" written before any real testing happened). MAX_NUM_SEQS=24 confirmed safe on one L40S; MAX_NUM_SEQS=32 spiked to 97.3% GPU KV cache usage in testing, real near-OOM risk, don't use 32 for this model. |
+| Qwen2.5-Coder-7B-Instruct | Small | No smaller Qwen3-Coder exists; also in ULT. Confirmed real 2026-08-29: runs on 1x L40S, MAX_NUM_SEQS=32 confirmed safe (stable 20-25% GPU KV cache usage, real headroom left even at that value). |
+| gpt-oss-20B | Medium | Native MXFP4 (see quantization note below). Real model id `openai/gpt-oss-20b`, 21B total/3.6B active params (MoE), model card states it runs within ~16GB of memory via MXFP4, corrects an earlier speculative "1x H100" written before checking the real model card: 1x L40S (48GB) has real headroom for this, no H100 needed. |
+| Qwen3-Coder-30B-A3B-Instruct | Medium | Successor to Qwen2.5-Coder, self-hostable. Confirmed real 2026-08-29: runs on 2x L40S with TENSOR_PARALLEL_SIZE=2, not H100 (corrects an earlier speculative "2x H100"). MAX_NUM_SEQS=32 confirmed safe but close to this model's real ceiling (41-60% GPU KV cache usage under sustained load), don't assume much headroom above 32 without retesting. |
+| gpt-oss-120B | Large | Native MXFP4 (see quantization note below). Real model id `openai/gpt-oss-120b`, 117B total/5.1B active params (MoE), model card states it fits on a single 80GB GPU, corrects an earlier speculative "2x H100": 1x H100 should be enough, not 2x. Not yet run or verified on M3. |
+| Llama-4-Scout-17B-16E-Instruct | Large | Meta's current-gen model (Apr 2025), cheaper than the 3.1 model it supplements. Also the current candidate for the BFS-depth/temperature sensitivity ablation, pending confirmation once real pass@1/pass@k numbers are in across this shortlist (see BFS-depth ablation section). Already confirmed real 2026-08-25 (see results/RUN_LOG.md): needs 4x H100 (~218GB at float16, doesn't fit the account's normal 4x L40S 192GB quota), TENSOR_PARALLEL_SIZE=4. |
 
 Every model needs a fresh `instruct` and `kg_only` run at both temp=0.2
 (pass@1) and temp=0.8 (pass@k=5): 4 runs per model, 28 runs total across
