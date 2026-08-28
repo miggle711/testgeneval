@@ -68,6 +68,76 @@ clean (1210/1210, no context-overflow losses), giving a matched head-to-head
 comparison once this finishes. Update this row with the real completed
 count once the job finishes.
 
+This run, and every other `kg_only` result in this document so far, used a
+`kg_prompts.json` built before four real determinism/correctness fixes on
+the pycodekg side (miggle711/pycodekg#144, #145, #146, and
+miggle711/testgeneval#31's target-range fix on this repo's own evaluation
+code). A rebuilt, fixed `kg_prompts_depth1.json`/`kg_prompts_depth2.json`
+pair now exists (built on M3 directly, see pycodekg's `m3_build_kgs.slurm`/
+`m3_build_kg_prompts.slurm`, full 1210-instance dataset, all four fixes
+included), superseding the old file. Confirmed via a direct diff that
+`target_functions`/`target_classes` (the only fields `instruct` reads from
+this file) are identical between old and new for all 1210 instances, so
+existing `instruct` runs' target-function naming is still valid and does
+not need to be rerun on that basis alone. `kg_only` results do need
+rerunning against the new file, since the fixes changed the actual
+structural context content, not just target-function naming.
+
+## Main results plan (temp=0.2/d=2 pass@1, temp=0.8/d=2 pass@k=5)
+
+The team's model shortlist was revised (2026-08-28) to add three new
+candidates (GPT-5, gpt-oss-20B, gpt-oss-120B, all suggested by Aaron) and
+lock in a sampling config for the actual main results, separate from any
+sensitivity ablation: temperature 0.2 with BFS depth 2 for a pass@1 number,
+and temperature 0.8 with depth 2 for pass@k where k=5 (5 independent
+samples per instance, at least one passing counts as a pass). Quantization
+is acceptable for models that need it to fit M3's GPUs.
+
+None of the `instruct`/`kg_only` runs completed so far in this document
+use either of these temperatures (mostly temperature 0), so none of them
+count toward this plan. Every model below needs a fresh `instruct` and
+`kg_only` run at both temp=0.2 (pass@1) and temp=0.8 (pass@k=5), 4 runs
+per model, 28 runs total across the 7 models.
+
+**pass@k=5 is currently blocked**, not just unimplemented cheaply:
+`run_api.py` hardcodes `num_samples` to 1 for this fork's `full` setting
+regardless of `--num_samples`. Filed as
+[testgeneval#32](https://github.com/miggle711/testgeneval/issues/32).
+Evaluation's own container-side code (`evaluate_instance.py`'s
+`full_processing`) already loops over a list of samples correctly, so the
+fix is confined to the inference side, not a pipeline-wide change. Needs
+to land before any pass@5 run can be submitted.
+
+### Model shortlist (2026-08-28 revision)
+
+| Model | Tier | Notes | Status |
+|---|---|---|---|
+| GPT-5 | XL | OpenAI API, not self-hosted on M3. New, suggested by Aaron. Following TestGenEval appendix D.1 (arxiv.org/html/2410.00752v2). | Not yet run |
+| Llama-3.1-8B-Instruct | Small | FP16, 1x H100 on M3 (or Groq API) | `instruct` complete at temp=0, not yet at temp=0.2/0.8 |
+| Qwen2.5-Coder-7B-Instruct | Small | No smaller Qwen3-Coder exists; also in ULT | `instruct` complete at temp=0, not yet at temp=0.2/0.8; one stale `kg_only` run exists (pre-determinism-fix `kg_prompts.json`, needs rerun regardless) |
+| gpt-oss-20B | Medium | Native MXFP4, 1x H100 (or Groq API). New, suggested by Aaron. | Not yet run |
+| Qwen3-Coder-30B-A3B-Instruct | Medium | Successor to Qwen2.5-Coder, self-hostable, 2x H100 | `instruct` complete at temp=0, not yet at temp=0.2/0.8 |
+| gpt-oss-120B | Large | Native MXFP4, 2x H100 (or Groq API). New, suggested by Aaron. | Not yet run |
+| Llama-4-Scout-17B-16E-Instruct | Large | Meta's current-gen model, cheaper than the 3.1 model it supplements. Candidate for the temp x depth sensitivity ablation, pending confirmation once real pass@1/pass@k numbers are in across models. | `instruct` complete at temp=0, not yet at temp=0.2/0.8. 6-job temp/depth ablation matrix submitted then cancelled 2026-08-27 (still pending, premature until the ablation model is confirmed) |
+
+### Sensitivity ablation, still pending model selection
+
+The team wants the BFS-depth x temperature sensitivity study to run on
+whichever model turns out most performant once real pass@1/pass@k numbers
+exist across the full shortlist above, not decided in advance. A 6-job
+matrix (temp 0/0.5/1 x depth 1/2) was submitted for Llama-4-Scout on
+2026-08-27 as a placeholder/test of the submission pipeline, but cancelled
+before consuming real H100 time once it was confirmed the model choice
+isn't locked in yet. Revisit once the main-results batch above produces
+real comparable numbers.
+
+Depth 3 is excluded from any depth sweep going forward: confirmed via
+[pycodekg#140](https://github.com/miggle711/pycodekg/issues/140) that BFS
+depth beyond 2 hops never reaches the rendered `kg_only` prompt at all
+(0/258 real seeds tested showed any difference between depth 2 and depth
+3 output), so a depth-3 arm would be a guaranteed no-op costing real
+compute for zero signal.
+
 ## Why context-overflow losses happen
 
 The `instruct` arm's prompt shows the model the whole source file as flat
