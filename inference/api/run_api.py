@@ -336,6 +336,16 @@ def openai_inference(
     temperature = model_args.pop("temperature", 0.2)
     top_p = model_args.pop("top_p", 0.95 if temperature > 0 else 1)
     print(f"Using temperature={temperature}, top_p={top_p}")
+    if num_samples > 1 and temperature == 0:
+        print(
+            f"Warning: num_samples={num_samples} requested at temperature=0. "
+            "Greedy decoding makes every sample the same (or nearly the "
+            "same, modulo GPU/serving nondeterminism), so this pays "
+            f"{num_samples}x the cost/compute for little to no real sample "
+            "diversity. Set a real temperature (e.g. 0.8) for a genuine "
+            "pass@k run, or drop --num_samples to 1 if pass@1 is what's "
+            "actually wanted."
+        )
     recorded_name = model_nickname if model_nickname else model_name_or_path
     basic_args = {
         "model_name_or_path": recorded_name + f"_t={temperature}",
