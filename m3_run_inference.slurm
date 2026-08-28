@@ -184,7 +184,7 @@ trap 'kill "$VLLM_PID" 2>/dev/null || true' EXIT
 # but the old fixed sleep 60 had no way to notice and run_api.py
 # silently "processed" the whole dataset against nothing, tenacity
 # retrying and giving up per instance -- see testgeneval#20).
-VLLM_STARTUP_TIMEOUT="${VLLM_STARTUP_TIMEOUT:-300}"
+VLLM_STARTUP_TIMEOUT="${VLLM_STARTUP_TIMEOUT:-900}"
 elapsed=0
 until curl -s -f "http://127.0.0.1:${VLLM_PORT}/v1/models" > /dev/null 2>&1; do
     if ! kill -0 "$VLLM_PID" 2>/dev/null; then
