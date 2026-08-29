@@ -166,22 +166,41 @@ for models that need it to fit M3's GPUs; see the quantization note at
 the end of this section for what that trades off.
 
 **Open question needing team input, not yet resolved (2026-08-29):**
-temperature 0.2 (close to greedy decoding) is a real, externally
-documented trigger for Meta-Llama-3.1-8B-Instruct getting stuck in
-infinite repetition loops, confirmed both in this project's own real
-production data (59.5% of one `instruct` t=0.2 run's completions were
-genuine repeated-token garbage, not legitimate long content) and in
-Meta's own model discussion page plus independent research, see
-testgeneval#43 for the full investigation. Three real options on the
-table, none yet chosen: add a `frequency_penalty` (fixes it directly but
-changes actual sampling behavior for every model, needs disclosure and
-calibration), raise pass@1's temperature above 0.2 (changes this plan's
-own defined config), or accept it as a real, disclosed Llama-3.1-8B
-limitation at this sampling config rather than something to route
-around. Not yet known whether other shortlist models share this at
-temperature 0.2, early real data suggests Qwen3-4B-Instruct-2507 may not
-(0/14 cap hits in an early sample) but this needs more data before
-treating it as model-specific rather than temperature-specific.
+temperature 0.2 (close to greedy decoding) turns out to be a real
+problem for this shortlist, not a Llama-3.1-8B-specific one. Confirmed
+in real production data for all three models tested so far: Llama at
+temperature 0.2 loses about 60% of its instruct completions to genuine
+repetition-loop garbage, Qwen3-4B-Instruct-2507 loses 40 to 45% across
+both arms, Qwen3-Coder-30B-A3B-Instruct loses around 11%. Every one
+manually checked is real repeated text, not truncation, and none of
+this shows up at temperature 0.8, every sample checked there has been
+clean. See testgeneval#43 for the full investigation and the per-model
+numbers.
+
+This is also already documented by the model providers themselves, not
+just discovered here. Meta's own community discussion for Llama 3.1 8B
+reports the same failure independently. Qwen's own model card is more
+direct still: it explicitly says not to use greedy decoding since it
+can cause endless repetitions, and recommends temperature 0.6 (thinking
+mode) or 0.7 (non-thinking mode) instead, both well above this plan's
+current 0.2 for pass@1.
+
+Three real options on the table, none yet chosen: add a
+`frequency_penalty` (fixes it directly but changes actual sampling
+behavior for every model, needs disclosure and calibration, and one
+source found while researching this warns a repetition penalty can make
+Llama's looping worse rather than better, so this would need real
+testing before trusting it), raise pass@1's temperature toward what the
+model providers themselves recommend (changes this plan's own defined
+config, but is now backed by real, primary-source guidance rather than
+a guess), or accept the current per-model rates as a disclosed
+limitation of running these models at 0.2. Given the severity seems to
+scale inversely with model capability (smallest, plainest model worst
+affected, largest, most capable model least affected), this also looks
+like a real, generic property of low-temperature decoding rather than
+anything specific to one model or family. All temperature 0.2 jobs
+across all three tested models have been paused pending this decision;
+temperature 0.8 jobs are continuing as normal.
 
 **Revised shortlist** (2026-08-28), replacing the 2026-08-22 locked
 shortlist immediately below:

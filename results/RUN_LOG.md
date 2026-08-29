@@ -319,12 +319,44 @@ submission (`--time=12:00:00` for pass@1, `36:00:00` for pass@5, up from
 throughput than the stale calibration assumed, plus buffer given the
 earlier real pass@5 timeout crisis this project already hit once before
 (see the "PostprocessingError" / timeout sections elsewhere in this
-document). As of this writing, all 12 are freshly submitted and queued,
-none started yet. Update this section with real completion counts, the
-real job IDs each completion maps to, and a fresh near-cap rate check
-(same measurement method as the gpt-oss rows above) once they do, per
-the standing rule that a completed-count alone is not enough to trust a
-model's data clean.
+document).
+
+**A second, real problem showed up once these actually started running,
+this time not an infrastructure bug but a real limitation of the
+sampling config itself.** All three models hit the same thing at
+temperature 0.2 (pass@1): a meaningful chunk of real completions land
+near the 8000 token cap again, but this time it is genuine repetition
+loop garbage, the model getting stuck repeating the same text over and
+over, not legitimate content that needed more room. Checked by hand
+across all three models and confirmed real: Llama at 59.5 percent of
+its instruct completions (job 59573898, cancelled once found), Qwen3-4B
+at 40 to 45 percent across both arms (jobs 59573906/59573908, cancelled),
+Qwen3-Coder-30B at around 11 percent (job 59573902, cancelled). Every
+one manually checked was real repeated text, not truncation, confirmed
+via the same repetition heuristic used elsewhere in this document.
+Notably this does not show up at temperature 0.8 at all, every real
+sample checked there across all three models has been clean.
+
+This turns out to be a real, already documented problem with running
+these models close to greedy decoding, not something specific to this
+pipeline. Meta's own community discussion for Llama 3.1 8B reports the
+same failure independently. Qwen's own model card is even more direct
+about it, they explicitly say not to use greedy decoding since it can
+cause endless repetitions, and recommend temperature 0.6 to 0.7 instead
+of anything close to 0.2. Full writeup, including the external sources
+and the real per model data, is in testgeneval#43.
+
+Given this now shows up in every model actually tested, cancelled every
+temperature 0.2 job across all three models (Llama's four, Qwen3-4B's
+two, Qwen3-Coder-30B's two) rather than keep producing more data known
+to be affected. Left the temperature 0.8 jobs running for Qwen3-4B and
+Qwen3-Coder-30B (59573907, 59573909, 59573903, 59573905) since those
+have been clean every time checked. This needs a real decision from the
+team before any temperature 0.2 job gets resubmitted, whether that
+means raising the temperature, adding a penalty, or accepting the
+current rate as a disclosed limitation, see testgeneval#43 for the
+three options laid out. Update this section with real completion
+counts once that decision is made and pass@1 jobs resume.
 
 **Llama-4-Scout-17B-16E-Instruct**, the one shortlist model with no
 coverage at all in this batch until now (its only existing data,
