@@ -96,6 +96,178 @@ description at the top of this file for what belongs here instead (real
 completion counts and failure causes for runs that have actually
 happened).
 
+## Current batch: temperature 0.2/0.8, depth 2, real OUTPUT_LIMITS (2026-08-29)
+
+Everything below is a distinct phase from every row above: those used
+temperature 0 (pass@1 only) and, for `instruct`/some earlier `kg_only`
+rows, predate the `OUTPUT_LIMITS` fix (testgeneval#41) entirely, so
+their completion counts are not directly comparable to this batch. This
+batch follows `EXPERIMENT_PLAN.md`'s revised Stage 4 config: temperature
+0.2/depth 2 for pass@1, temperature 0.8/depth 2 (`NUM_SAMPLES=5`) for
+pass@k=5, `KG_PROMPTS_PATH=kg_prompts_depth2.json`.
+
+**Real, large-scale truncation bug discovered before this batch started
+running clean.** `OUTPUT_LIMITS` (`inference/api/run_api.py`) had no real
+entries for any shortlist model, so every model fell back to the default
+4096 output tokens. Measured on real completed `instruct`/`kg_only` pass@1
+data at the time (since discarded, see below): Meta-Llama-3.1-8B-Instruct
+55-63% of completions near/at the cap, Qwen3-Coder-30B-A3B-Instruct
+24-33%. Confirmed real via AST-parse plus manual inspection, not just a
+char-length proxy: some near-cap completions were outright syntax errors
+from mid-token cutoff, others parsed as valid Python but were degenerate
+repetition-loop garbage the model fell into near the length ceiling.
+Filed as testgeneval#41 (broader than testgeneval#40's gpt-oss-specific
+finding, same root cause and fix location). All affected data
+(`Meta-Llama-3.1-8B-Instruct`/`Qwen3-Coder-30B-A3B-Instruct` `instruct`
+and `kg_only`, both temperatures) moved to
+`results/instruct/_corrupted_output_limit_20260829/` and
+`results/kg_only/_corrupted_output_limit_20260829/` rather than deleted,
+and is being regenerated under the fix.
+
+Fixed 2026-08-29 (`51b2370`, `e1fc573`, `1c1d003` on `main`): real
+`OUTPUT_LIMITS`/`MODEL_LIMITS` entries per model, keyed by real
+`model_name_or_path`. 8000 tokens for Meta-Llama-3.1-8B-Instruct,
+Qwen3-Coder-30B-A3B-Instruct, Llama-4-Scout-17B-16E-Instruct
+(directly measured: real max legitimate, non-truncated completion length
+across those three models' pre-fix data was 5828/5042/3582 tokens
+respectively, 8000 leaves real margin above all three) and, by
+extrapolation only (no completed data yet), Qwen3-4B-Instruct-2507.
+gpt-oss-20B/120B needed a much larger, separately-calibrated budget, see
+their own rows below. Also added a guard against `response.choices[i]
+.message.content` coming back `None` (confirmed real for gpt-oss, see
+testgeneval#40) before it reaches `postprocess_fn`, so one bad sample in
+an `n>1` batch no longer discards the whole instance's other, real
+completions.
+
+`Qwen2.5-Coder-7B-Instruct` dropped from this batch: its real native
+context (32768, no YaRN, confirmed via the model's own `config.json`) is
+below this dataset's real max prompt size (~43K tokens, measured across
+the full `testgeneval` dataset for both arms). Filed as testgeneval#42.
+`Qwen3-4B-Instruct-2507` (native 262144 context, confirmed via
+`config.json`) takes its place in the shortlist instead, chosen after
+checking every smaller Qwen2.5-Coder variant (1.5B/3B/7B/AWQ) and
+sharing the same 32768 ceiling regardless of size, and `CodeQwen1.5-7B-
+Chat` only reaching 65536, still short of the real max. Not yet
+independently calibrated for `MAX_NUM_SEQS`; running conservatively at
+the script's own default (8) for its first real production run.
+
+**Real per-instance test:** hit one real config bug resubmitting this
+batch, worth flagging so it isn't repeated -- `KG_PROMPTS_PATH` defaults
+to the relative filename `kg_prompts.json`, which does not exist in this
+checkout (only `kg_prompts_depth1.json`/`kg_prompts_depth2.json` do,
+from the earlier M3 KG build). Two `kg_only` jobs failed in under 90
+seconds with `FileNotFoundError: [Errno 2] No such file or directory:
+'kg_prompts.json'` before this was caught. Pass `KG_PROMPTS_PATH`
+explicitly on every submission, including `instruct` (which reads it
+more loosely for target-function naming, so it will not hard-crash the
+same way, but should still get the right file for a valid comparison).
+
+**gpt-oss-20B output budget calibration**, real data, `kjain14/testgenevallite`
+(84 real instances). First attempt (job 59565919, `MAX_CONCURRENCY=1`,
+the script's default) was too slow to be worth waiting on; cancelled and
+resubmitted at `MAX_NUM_SEQS=32`/`MAX_CONCURRENCY=32` (job 59565984,
+untested before this, chosen as a moderate starting point, confirmed
+safe: GPU KV cache usage stayed under ~12% throughout, real headroom
+left). Job 59565984's real data, first pass at the still-unmeasured
+32000 placeholder from testgeneval#41's initial fix: real completions
+distribution (48 fresh instances, `existing_ids` skipped the rest as
+already done from an earlier smoke test) min=2022, median=8871,
+p90=22852, max=30763 tokens, but 10/48 (21%) still hit the
+`None`-content guard, all `finish_reason=length`, confirming 32000 was
+genuinely too low, not just untested. Raised to 48000 (`e1fc573`),
+old output moved aside to `results/instruct/_pre_48k_calibration_20260829/`,
+rerun clean on the full 84 instances (job 59566179): max observed
+dropped to 31651 (real margin under 48000 now), but 5/160 requests
+(3.1%, `finish_reason=length`) still hit the guard, concentrated in
+sympy (4/5). Added `completion_tokens` directly to the guard's warning
+log (`1c1d003`) to diagnose these without relying on log-line-adjacency
+correlation (unreliable under `MAX_CONCURRENCY>1`, confirmed: all 5
+warnings from job 59566179 printed consecutively at the very end of the
+log, not spread through it live). Old pre-diagnostic-logging output
+moved aside to `results/instruct/_pre_diagnostic_run_20260829/`. Real
+per-instance comparison against `Meta-Llama-3.1-8B-Instruct`/
+`Qwen3-Coder-30B-A3B-Instruct`'s pre-fix data for the same 5 instance ids:
+3/5 (`sympy__sympy-13471`, `sympy__sympy-14024`, `astropy__astropy-7746`)
+were solved cleanly by both other models well under 8000 tokens, so
+gpt-oss's failure there looks like its own reasoning-budget cost, not
+genuine task difficulty. The other 2/5 (`sympy__sympy-21171`,
+`sympy__sympy-22714`) failed for the other two models as well (one a
+real repetition-loop failure, the other an unexplained syntax error,
+neither near their own 4096-token pre-fix cap), suggesting a real,
+cross-model hard tail unrelated to output budget. A second diagnostic
+run (job 59566582 under mvar0010) is queued on the `m3h` H100 partition
+to get real `completion_tokens` values for these specific failures
+before deciding whether to raise the cap again; real queue estimate at
+submission time was ~18-25 hours out due to `m3h` priority contention,
+not something fixable from this side.
+
+**gpt-oss-120B calibration**, same real methodology, real code, on a
+teammate's (`jliu0290`) own M3 account/GPU quota rather than mvar0010's,
+to run in parallel rather than compete for the same account's H100
+priority slot. First submission (job 59570494) predated `jliu0290`
+pulling `main` in the shared clone; caught before it started (still
+queued, ~24-25hr real scheduler estimate at the time) and cancelled,
+though a check afterward found the shared clone already had the real
+fix present (`git log` confirmed `HEAD` at `1c1d003`), so this was
+precautionary rather than a real bug avoided. Hit git's "dubious
+ownership" safety check running `git status`/`git pull` as a non-owner
+in `mvar0010`'s clone; resolved per-teammate via `git config --global
+--add safe.directory <path>`, one-time, does not affect the clone
+owner or other teammates. Resubmission (job 59570693) was accidentally
+submitted from `mvar0010`'s own login session instead of `jliu0290`'s,
+landing it under the wrong account/quota and defeating the point of
+running it in parallel; cancelled once caught. Real, correctly-attributed
+job is 59570724, submitted by `jliu0290` under their own account,
+`VLLM_PORT=8005` (distinct from the 20B diagnostic's 8003, avoiding a
+repeat of the earlier port-collision incident), same 48000 starting
+budget and `MAX_NUM_SEQS=16` (more conservative than 20B's 32, since
+120B has not been tested at all and has roughly double the active
+params). Not yet started as of this writing (also queued behind `m3h`
+priority contention). No completed data yet for this model in the
+current batch.
+
+Shared clone (`/fs04/scratch2/al49/kg-testing/testgeneval_mvar0010_main`)
+used for teammate submissions rather than separate clones, since this is
+submit-only (no one but mvar0010 commits into it) -- confirmed safe,
+different from the commit-conflict gotcha in `CLAUDE.md`. Directory-level
+ACL grants added for `jliu0290`, `wlee0060`, `wtho0016` (`rwx`, plus
+`default:` entries for inherited access on new files). Teammates need
+`git config --global --add safe.directory <path>` once in their own
+global git config to clear git's "dubious ownership" check on a
+directory they do not own; this is a one-time, per-teammate, local
+config change, not a repo-wide setting.
+
+**L40S production batch status** (12 jobs, `mvar0010`'s account, matches
+the confirmed-safe `MAX_NUM_SEQS` values from the concurrency calibration
+rows above where available). First submission attempt (jobs 59566758
+through 59566770) had two real problems: the `kg_only` jobs hit the
+`KG_PROMPTS_PATH` default bug described above (jobs 59566760/59566761,
+both `Meta-Llama-3.1-8B-Instruct kg_only`, `FAILED` in ~75-80s each,
+confirmed via `sacct`), and cancelling/resubmitting individual jobs
+left the batch in an inconsistent state (some jobs correctly fixed,
+others still carrying the broken default, one Qwen3-4B `kg_only` pair
+never resubmitted at all). Cancelled the entire batch (`scancel
+59566758 59566759 59566760 59566761 59566762 59566763 59566764
+59566765 59566767 59566768 59566769 59566770`) and resubmitted clean,
+with `KG_PROMPTS_PATH=kg_prompts_depth2.json` passed explicitly on every
+job this time: jobs 59566867 through 59566878. Meta-Llama-3.1-8B-Instruct
+(59566867 `instruct` t=0.2, 59566868 `instruct` t=0.8, 59566869
+`kg_only` t=0.2, 59566870 `kg_only` t=0.8, `MAX_NUM_SEQS=24`),
+Qwen3-Coder-30B-A3B-Instruct (59566871-59566874, same
+`instruct`/`kg_only` x t=0.2/t=0.8 order, `MAX_NUM_SEQS=32`,
+`TENSOR_PARALLEL_SIZE=2`), Qwen3-4B-Instruct-2507 (59566875-59566878,
+same order, `MAX_NUM_SEQS=8`, uncalibrated). As of this writing, the 4
+Meta-Llama-3.1-8B-Instruct jobs (59566867-59566870) are running, the
+remaining 8 are queued on `QOSMaxGRESPerUser` (the account's own GPU
+quota, not `m3h` priority contention -- these are on the regular `gpu`
+partition/L40S, expected to clear as the running jobs finish rather than
+needing external intervention). None of these have completed yet;
+update this section with real completion counts, the real job IDs each
+completion maps to, and a fresh near-cap rate check (same measurement
+method as the gpt-oss rows above) once they do, per the standing rule
+that a completed-count alone is not enough to trust a model's data
+clean.
+
 ## Why context-overflow losses happen
 
 The `instruct` arm's prompt shows the model the whole source file as flat
