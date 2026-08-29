@@ -248,7 +248,12 @@ left the batch in an inconsistent state (some jobs correctly fixed,
 others still carrying the broken default, one Qwen3-4B `kg_only` pair
 never resubmitted at all). Cancelled the entire batch (`scancel
 59566758 59566759 59566760 59566761 59566762 59566763 59566764
-59566765 59566767 59566768 59566769 59566770`) and resubmitted clean,
+59566765 59566767 59566768 59566769 59566770`, 12 real job IDs; note
+the sequence skips 59566766, which was never one of ours -- SLURM
+assigned it to an unrelated job from someone else on the shared
+cluster in the gap between this batch's two separate submission
+commands, not a missing or forgotten job on our end) and resubmitted
+clean,
 with `KG_PROMPTS_PATH=kg_prompts_depth2.json` passed explicitly on every
 job this time: jobs 59566867 through 59566878. Meta-Llama-3.1-8B-Instruct
 (59566867 `instruct` t=0.2, 59566868 `instruct` t=0.8, 59566869
@@ -256,17 +261,51 @@ job this time: jobs 59566867 through 59566878. Meta-Llama-3.1-8B-Instruct
 Qwen3-Coder-30B-A3B-Instruct (59566871-59566874, same
 `instruct`/`kg_only` x t=0.2/t=0.8 order, `MAX_NUM_SEQS=32`,
 `TENSOR_PARALLEL_SIZE=2`), Qwen3-4B-Instruct-2507 (59566875-59566878,
-same order, `MAX_NUM_SEQS=8`, uncalibrated). As of this writing, the 4
-Meta-Llama-3.1-8B-Instruct jobs (59566867-59566870) are running, the
-remaining 8 are queued on `QOSMaxGRESPerUser` (the account's own GPU
-quota, not `m3h` priority contention -- these are on the regular `gpu`
-partition/L40S, expected to clear as the running jobs finish rather than
-needing external intervention). None of these have completed yet;
-update this section with real completion counts, the real job IDs each
-completion maps to, and a fresh near-cap rate check (same measurement
-method as the gpt-oss rows above) once they do, per the standing rule
-that a completed-count alone is not enough to trust a model's data
-clean.
+same order, `MAX_NUM_SEQS=8`, uncalibrated). As of this writing (~3h35m
+after submission), the 4 Meta-Llama-3.1-8B-Instruct jobs
+(59566867-59566870) are still running, none finished yet. No real
+elapsed-time baseline exists to compare against for this model at this
+batch's config -- the earlier `instruct` row above (1210/1210, temp 0)
+does not record a completion duration the way most other rows do, so
+this is not yet flagged as unexpectedly slow, just not yet confirmed
+normal either. The remaining 8 are still queued on `QOSMaxGRESPerUser`
+(the account's own
+GPU quota, not `m3h` priority contention -- these are on the regular
+`gpu` partition/L40S, expected to clear as the running jobs finish
+rather than needing external intervention). None of these have
+completed yet; update this section with real completion counts, the
+real job IDs each completion maps to, and a fresh near-cap rate check
+(same measurement method as the gpt-oss rows above) once they do, per
+the standing rule that a completed-count alone is not enough to trust a
+model's data clean.
+
+**Llama-4-Scout-17B-16E-Instruct**, the one shortlist model with no
+coverage at all in this batch until now (its only existing data,
+documented in the Large tier table above, is from an earlier `t=0`
+pass@1-only run, not this batch's `t=0.2`/`t=0.8` scheme). A third
+teammate, `wtho0016`, submitted its 4 jobs (59571014-59571017,
+`instruct`/`kg_only` x t=0.2/t=0.8) on their own M3 account/GPU quota,
+using the shared clone. `TENSOR_PARALLEL_SIZE=4`, `--gres=gpu:H100:4`,
+`MAX_NUM_SEQS=8`/`MAX_CONCURRENCY=8` (uncalibrated for this model at
+this batch's temperatures, chosen conservative same as Qwen3-4B), 4
+distinct `VLLM_PORT` values (8006-8009) to avoid any repeat of the
+earlier port-collision incident. All 4 landed on different `m3h` nodes
+per `squeue`'s scheduled-node output, so no collision risk between them
+regardless. None have started yet as of this writing; real scheduler
+estimates at submission time ranged ~50-56 hours out (`--start`),
+similar order of magnitude to the other `m3h` jobs' waits, real
+priority contention on that partition, not something fixable from this
+side.
+
+**Real per-account H100 queue estimates** (via `squeue --start`, useful
+context for anyone deciding whether to wait or route more submissions
+elsewhere): gpt-oss-20B (59566582, mvar0010) ~17 hours out as of this
+writing, notably shorter than gpt-oss-120B (59570724, jliu0290) at ~48
+hours and Llama-4-Scout (59571014-59571017, wtho0016) at ~50-56 hours,
+despite the latter two being submitted later in absolute time --
+`m3h` queue position depends on each account's own priority/fairshare,
+not submission order or job count, so do not assume a later submitter
+will simply queue behind an earlier one from a different account.
 
 ## Why context-overflow losses happen
 
