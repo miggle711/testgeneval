@@ -131,18 +131,36 @@ MODEL_COST_PER_OUTPUT = {
 }
 
 # M3 shortlist entries below (added 2026-08-29, testgeneval#41): sized
-# generously against each model's real MODEL_LIMITS headroom above, since
-# this dataset's real prompts (measured across the full testgeneval
-# dataset) top out around 43K tokens, leaving ample room on every one of
-# these models without needing to trade off input truncation for output
-# room. gpt-oss-20b and gpt-oss-120b get the largest budget of the group
-# (32_000, not just "more than 4096"): their harmony response format
-# spends real, substantial token budget on a separate reasoning channel
-# before ever writing the final answer, and the default 4096 was
-# confirmed losing 61% of real completions to an empty or None response
-# for exactly this reason (testgeneval#40). The others get 16_000,
-# generous headroom over this dataset's real observed completion lengths
-# without being needlessly oversized.
+# against each model's real MODEL_LIMITS headroom above, since this
+# dataset's real prompts (measured across the full testgeneval dataset)
+# top out around 43K tokens, leaving ample room on every one of these
+# models without needing to trade off input truncation for output room.
+#
+# The 8_000 figure for the non gpt-oss models is a real measured value,
+# not a guess: pulled real completions from the corrupted (pre-fix)
+# Llama-3.1-8B and Qwen3-Coder-30B instruct runs, separated genuinely
+# complete and valid ones from truncated or repetition-loop garbage via
+# ast.parse plus a repetition heuristic, then measured the valid ones.
+# Real max legitimate completion length was about 5_828 tokens (Llama)
+# and 5_042 tokens (Qwen3), 8_000 leaves real margin above both.
+#
+# The 32_000 figure for gpt-oss-20b/120b is NOT measured the same way,
+# flagging that honestly rather than presenting it as equally solid.
+# Their harmony response format spends real token budget on a separate
+# reasoning channel before ever writing the final answer, and the
+# default 4096 was confirmed losing 61% of real completions to an empty
+# or None response for exactly this reason (testgeneval#40). 48_000 is
+# a real, measured value for gpt-oss-20b, not a guess: a calibration run
+# on kjain14/testgenevallite (48 fresh instances, MAX_NUM_SEQS=32) at an
+# earlier 32_000 cap showed a long tail, median 8_871 tokens, p90
+# 22_852, max 30_763 among completions that finished, plus 10/48 (21%)
+# still hit the None-content failure mode even at that cap
+# (finish_reason=length, confirmed real via the guard's own warning
+# log). 48_000 gives real margin above the observed 30_763 max.
+# gpt-oss-120b has not been separately calibrated yet, same value used
+# as a starting point since it shares the same architecture and harmony
+# format, not confirmed identical, worth its own real calibration run
+# before trusting this number for it specifically.
 OUTPUT_LIMITS = {
     "gpt-3.5-turbo-0125": 4_096,
     "gpt-4-turbo-2024-04-09": 8_192,
@@ -151,12 +169,12 @@ OUTPUT_LIMITS = {
     "Meta-Llama-3.1-405B-Instruct": 4_096,
     "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit": 4_096,
     "llama-3.1-8b-instant": 8_192,
-    "meta-llama/Meta-Llama-3.1-8B-Instruct": 16_000,
-    "Qwen/Qwen3-Coder-30B-A3B-Instruct": 16_000,
-    "Qwen/Qwen3-4B-Instruct-2507": 16_000,
-    "openai/gpt-oss-20b": 32_000,
-    "openai/gpt-oss-120b": 32_000,
-    "meta-llama/Llama-4-Scout-17B-16E-Instruct": 16_000,
+    "meta-llama/Meta-Llama-3.1-8B-Instruct": 8_000,
+    "Qwen/Qwen3-Coder-30B-A3B-Instruct": 8_000,
+    "Qwen/Qwen3-4B-Instruct-2507": 8_000,
+    "openai/gpt-oss-20b": 48_000,
+    "openai/gpt-oss-120b": 48_000,
+    "meta-llama/Llama-4-Scout-17B-16E-Instruct": 8_000,
 }
 
 EPSILON = 1000
