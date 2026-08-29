@@ -471,7 +471,9 @@ def openai_inference(
                             print(
                                 f"Warning: choice.message.content is None for "
                                 f"{curr_id} (finish_reason="
-                                f"{choice.finish_reason}), skipping this sample"
+                                f"{choice.finish_reason}, "
+                                f"completion_tokens={response.usage.completion_tokens}"
+                                f"), skipping this sample"
                             )
                             continue
                         prompt_predictions.append(
@@ -501,7 +503,9 @@ def openai_inference(
                         if completion is None:
                             print(
                                 f"Warning: choice.message.content is None for "
-                                f"{curr_id} ({prompt_name}), skipping this sample"
+                                f"{curr_id} ({prompt_name}, completion_tokens="
+                                f"{response.usage.completion_tokens}), "
+                                f"skipping this sample"
                             )
                             continue
                         prompt_predictions.append(
