@@ -165,6 +165,24 @@ BFS-depth ablation only (see that section). Quantization is acceptable
 for models that need it to fit M3's GPUs; see the quantization note at
 the end of this section for what that trades off.
 
+**Open question needing team input, not yet resolved (2026-08-29):**
+temperature 0.2 (close to greedy decoding) is a real, externally
+documented trigger for Meta-Llama-3.1-8B-Instruct getting stuck in
+infinite repetition loops, confirmed both in this project's own real
+production data (59.5% of one `instruct` t=0.2 run's completions were
+genuine repeated-token garbage, not legitimate long content) and in
+Meta's own model discussion page plus independent research, see
+testgeneval#43 for the full investigation. Three real options on the
+table, none yet chosen: add a `frequency_penalty` (fixes it directly but
+changes actual sampling behavior for every model, needs disclosure and
+calibration), raise pass@1's temperature above 0.2 (changes this plan's
+own defined config), or accept it as a real, disclosed Llama-3.1-8B
+limitation at this sampling config rather than something to route
+around. Not yet known whether other shortlist models share this at
+temperature 0.2, early real data suggests Qwen3-4B-Instruct-2507 may not
+(0/14 cap hits in an early sample) but this needs more data before
+treating it as model-specific rather than temperature-specific.
+
 **Revised shortlist** (2026-08-28), replacing the 2026-08-22 locked
 shortlist immediately below:
 
