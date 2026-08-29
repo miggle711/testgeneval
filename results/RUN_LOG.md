@@ -255,25 +255,72 @@ cluster in the gap between this batch's two separate submission
 commands, not a missing or forgotten job on our end) and resubmitted
 clean,
 with `KG_PROMPTS_PATH=kg_prompts_depth2.json` passed explicitly on every
-job this time: jobs 59566867 through 59566878. Meta-Llama-3.1-8B-Instruct
-(59566867 `instruct` t=0.2, 59566868 `instruct` t=0.8, 59566869
-`kg_only` t=0.2, 59566870 `kg_only` t=0.8, `MAX_NUM_SEQS=24`),
-Qwen3-Coder-30B-A3B-Instruct (59566871-59566874, same
-`instruct`/`kg_only` x t=0.2/t=0.8 order, `MAX_NUM_SEQS=32`,
-`TENSOR_PARALLEL_SIZE=2`), Qwen3-4B-Instruct-2507 (59566875-59566878,
-same order, `MAX_NUM_SEQS=8`, uncalibrated). As of this writing (~3h35m
-after submission), the 4 Meta-Llama-3.1-8B-Instruct jobs
-(59566867-59566870) are still running, none finished yet. No real
-elapsed-time baseline exists to compare against for this model at this
-batch's config -- the earlier `instruct` row above (1210/1210, temp 0)
-does not record a completion duration the way most other rows do, so
-this is not yet flagged as unexpectedly slow, just not yet confirmed
-normal either. The remaining 8 are still queued on `QOSMaxGRESPerUser`
-(the account's own
-GPU quota, not `m3h` priority contention -- these are on the regular
-`gpu` partition/L40S, expected to clear as the running jobs finish
-rather than needing external intervention). None of these have
-completed yet; update this section with real completion counts, the
+job this time: jobs 59566867 through 59566878, at the same
+`MAX_NUM_SEQS` values used in the earlier concurrency calibration rows
+above (24 for Llama, 32 for Qwen3-Coder-30B, 8 for Qwen3-4B). **These
+values turned out to be stale and genuinely unsafe**, discovered real,
+not suspected: after ~4 hours, `Meta-Llama-3.1-8B-Instruct instruct`
+t=0.2 (59566867) showed sustained 92-99.5% GPU KV cache usage with
+frequent `Retrying request to /chat/completions` lines (vLLM preemption
+under memory pressure), and its own tqdm progress bar reported a real
+extrapolated ETA of `64:12:42` against an `8:00:00` time limit -- 396/1190
+instances done at that point, mathematically certain to be killed by
+the time limit rather than complete. The denominator (1190, not the
+full 1210) was noticed at the time but not investigated until after the
+crisis response; confirmed benign once checked: job 59566758 (the first,
+earlier-cancelled `Meta-Llama-3.1-8B-Instruct instruct` t=0.2 attempt,
+cancelled during the `KG_PROMPTS_PATH` batch cleanup above) had already
+written exactly 20 real completions to the shared output file before
+being cancelled (`grep -c "output_tokens=" slurm-59566758.out` returned
+20), and `existing_ids` correctly picked those up and filtered them out
+of 59566867's working set, 1210 minus 20 equals 1190. Confirmed real
+resume behavior working as designed, not a bug -- but a reminder that a
+cancelled job's partial output is not automatically discarded, later
+resubmissions against the same output file inherit whatever it already
+wrote, which is exactly the intended behavior for a genuine resume but
+worth being aware of when reasoning about a fresh run's real progress
+numbers. Root cause: the
+earlier calibration
+for these three models was done under the old, broken 4096-token
+`OUTPUT_LIMITS` default; the real fix raises that to 8000 tokens (see
+above), roughly doubling the KV cache each in-flight sequence holds for
+its full duration, so a `MAX_NUM_SEQS` value safe at 4096 is not safe at
+8000 without retesting. Cancelled all 12 jobs (`scancel 59566867
+59566868 59566869 59566870 59566871 59566872 59566873 59566874 59566875
+59566876 59566877 59566878`) including the 8 that had not started yet,
+on the reasoning that the same root cause applied to them too even
+without direct evidence, since restarting them cost nothing (they had
+not consumed GPU time).
+
+Recalibrated properly with real `testgenevallite` calibration runs at
+the new 8000-token cap, same discipline as the gpt-oss rows above,
+before trusting any new value for production: Llama at `MAX_NUM_SEQS=12`
+(job 59572150, ran ~48 minutes, n=273 samples, min=33.4% median=68.2%
+p90=80.0% max=93.0%, only 1.5% of samples at/above 90%, zero retries),
+Qwen3-Coder-30B at `MAX_NUM_SEQS=16` (job 59572810, `COMPLETED` cleanly
+in 28:38, n=143 samples, max=94.0%, 2.1% at/above 90%, zero retries),
+Qwen3-4B at `MAX_NUM_SEQS=8` unchanged (job 59572811, n=196 samples,
+max=46.7%, 0% at/above 90%, clearly safe, this model was never the
+problem). Real danger-zone fraction for Llama and Qwen3-Coder-30B
+*decreased* as more samples accumulated over time (2.7%→1.5% and
+6.1%→2.1% respectively between two checks roughly 20 minutes apart),
+the opposite of the climbing-toward-crash pattern seen in the original
+crisis, and max values stayed flat rather than climbing -- real evidence
+these are stable, bounded values, not a spike that just had not
+happened yet.
+
+Resubmitted the full 12-job production batch at the recalibrated values
+(jobs 59573898-59573909, same `instruct`/`kg_only` x t=0.2(pass@1)/
+t=0.8(pass@5, NUM_SAMPLES=5) x model order as before): Llama at
+`MAX_NUM_SEQS=12`/`MAX_CONCURRENCY=12`, Qwen3-Coder-30B at 16/16,
+Qwen3-4B at 8/8 (unchanged). Time limits also raised over the original
+submission (`--time=12:00:00` for pass@1, `36:00:00` for pass@5, up from
+8/24 hours), since lower concurrency likely means slower real wall-clock
+throughput than the stale calibration assumed, plus buffer given the
+earlier real pass@5 timeout crisis this project already hit once before
+(see the "PostprocessingError" / timeout sections elsewhere in this
+document). As of this writing, all 12 are freshly submitted and queued,
+none started yet. Update this section with real completion counts, the
 real job IDs each completion maps to, and a fresh near-cap rate check
 (same measurement method as the gpt-oss rows above) once they do, per
 the standing rule that a completed-count alone is not enough to trust a
