@@ -75,6 +75,23 @@ if os.environ.get("LOCAL_MODEL_KEY_PREFIX"):
 # matters. Context window/output limit are Groq's documented values for
 # this model as of when this was added -- worth double-checking against
 # Groq's docs if this starts erroring on token limits.
+#
+# M3 shortlist entries below (added 2026-08-29, testgeneval#41): real
+# max_position_embeddings pulled from each model's published config.json,
+# not guessed. None of these were previously registered here, so every
+# M3 run so far served under the 32_000 MODEL_LIMITS / 4_096 OUTPUT_LIMITS
+# fallback, confirmed materially truncating real completions for at
+# least Meta Llama 3.1 8B Instruct (55 to 63% of pass@1 completions) and
+# Qwen3 Coder 30B A3B Instruct (24 to 33%), see testgeneval#41 for the
+# full investigation. Qwen2.5 Coder 7B Instruct's real native context
+# (32_768) is itself below this dataset's real max prompt size (roughly
+# 43K tokens measured across the full testgeneval dataset), a separate
+# problem from output truncation, tracked in testgeneval#42, not fixed
+# by this dict alone (would need vLLM's --rope-scaling to enable YaRN,
+# see that issue for the caveat about YaRN's quality tradeoff on the
+# extended portion of the context; kept out of the shortlist for now in
+# favor of Qwen3 4B Instruct 2507, which has native 262_144 context and
+# needs no such workaround).
 MODEL_LIMITS = {
     "gpt-3.5-turbo-0125": 16_385,
     "gpt-4-turbo-2024-04-09": 128_000,
@@ -83,6 +100,12 @@ MODEL_LIMITS = {
     "Meta-Llama-3.1-405B-Instruct": 128_000,
     "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit": 128_000,
     "llama-3.1-8b-instant": 128_000,
+    "meta-llama/Meta-Llama-3.1-8B-Instruct": 128_000,
+    "Qwen/Qwen3-Coder-30B-A3B-Instruct": 262_144,
+    "Qwen/Qwen3-4B-Instruct-2507": 262_144,
+    "openai/gpt-oss-20b": 131_072,
+    "openai/gpt-oss-120b": 131_072,
+    "meta-llama/Llama-4-Scout-17B-16E-Instruct": 128_000,
 }
 
 # The cost per token for each model input.
@@ -107,6 +130,19 @@ MODEL_COST_PER_OUTPUT = {
     "llama-3.1-8b-instant": 0,
 }
 
+# M3 shortlist entries below (added 2026-08-29, testgeneval#41): sized
+# generously against each model's real MODEL_LIMITS headroom above, since
+# this dataset's real prompts (measured across the full testgeneval
+# dataset) top out around 43K tokens, leaving ample room on every one of
+# these models without needing to trade off input truncation for output
+# room. gpt-oss-20b and gpt-oss-120b get the largest budget of the group
+# (32_000, not just "more than 4096"): their harmony response format
+# spends real, substantial token budget on a separate reasoning channel
+# before ever writing the final answer, and the default 4096 was
+# confirmed losing 61% of real completions to an empty or None response
+# for exactly this reason (testgeneval#40). The others get 16_000,
+# generous headroom over this dataset's real observed completion lengths
+# without being needlessly oversized.
 OUTPUT_LIMITS = {
     "gpt-3.5-turbo-0125": 4_096,
     "gpt-4-turbo-2024-04-09": 8_192,
@@ -115,6 +151,12 @@ OUTPUT_LIMITS = {
     "Meta-Llama-3.1-405B-Instruct": 4_096,
     "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit": 4_096,
     "llama-3.1-8b-instant": 8_192,
+    "meta-llama/Meta-Llama-3.1-8B-Instruct": 16_000,
+    "Qwen/Qwen3-Coder-30B-A3B-Instruct": 16_000,
+    "Qwen/Qwen3-4B-Instruct-2507": 16_000,
+    "openai/gpt-oss-20b": 32_000,
+    "openai/gpt-oss-120b": 32_000,
+    "meta-llama/Llama-4-Scout-17B-16E-Instruct": 16_000,
 }
 
 EPSILON = 1000
@@ -397,6 +439,23 @@ def openai_inference(
                         n=num_samples,
                     )
                     for choice in response.choices:
+                        # message.content can come back None rather than
+                        # an empty string, confirmed real for gpt-oss
+                        # under a too-low output token budget (its harmony
+                        # response format can exhaust max_tokens on a
+                        # separate reasoning channel before ever writing
+                        # the final answer, see testgeneval#40). Guard
+                        # here instead of letting postprocess_fn crash on
+                        # None.replace(...), so one bad sample in an n>1
+                        # batch does not throw away the other, real
+                        # completions for this instance.
+                        if choice.message.content is None:
+                            print(
+                                f"Warning: choice.message.content is None for "
+                                f"{curr_id} (finish_reason="
+                                f"{choice.finish_reason}), skipping this sample"
+                            )
+                            continue
                         prompt_predictions.append(
                             postprocess_fn(choice.message.content, True)
                         )
@@ -421,6 +480,12 @@ def openai_inference(
                             no_system_message=no_system_message,
                         )
                         completion = response.choices[0].message.content
+                        if completion is None:
+                            print(
+                                f"Warning: choice.message.content is None for "
+                                f"{curr_id} ({prompt_name}), skipping this sample"
+                            )
+                            continue
                         prompt_predictions.append(
                             postprocess_fn(completion, False)
                         )
