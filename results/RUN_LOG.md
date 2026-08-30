@@ -98,7 +98,36 @@ happened).
 
 ## Current batch: temperature 0.2/0.8, depth 2, real OUTPUT_LIMITS (2026-08-29)
 
-Everything below is a distinct phase from every row above: those used
+**Real status snapshot as of 2026-08-30, not a history, just what is
+actually usable right now.** Everything below this table has the full
+story of how each row got here, real job IDs and real causes; this is
+just the current state, updated as jobs progress. `t=0.2` means
+temperature 0.2 (pass@1), `t=0.8` means temperature 0.8 (pass@k=5,
+`NUM_SAMPLES=5`).
+
+| Model | Arm | Temp | Status | Real note |
+|---|---|---|---|---|
+| Meta-Llama-3.1-8B-Instruct | instruct | 0.2 | Paused | Blocked on testgeneval#43 (repetition loops), not resubmitted |
+| Meta-Llama-3.1-8B-Instruct | kg_only | 0.2 | Paused | Same as above |
+| Meta-Llama-3.1-8B-Instruct | instruct | 0.8 | Running (59597541) | Just resubmitted, real data on testgeneval#44's context question not in yet |
+| Meta-Llama-3.1-8B-Instruct | kg_only | 0.8 | Running (59597542) | Same as above |
+| Qwen3-Coder-30B-A3B-Instruct | instruct | 0.2 | Paused | Blocked on testgeneval#43 |
+| Qwen3-Coder-30B-A3B-Instruct | kg_only | 0.2 | Paused | Blocked on testgeneval#43 |
+| Qwen3-Coder-30B-A3B-Instruct | instruct | 0.8 | Running (59597322) | Real fix from testgeneval#44 applied (`MAX_MODEL_LEN=65536`), zero context errors so far in a real sample |
+| Qwen3-Coder-30B-A3B-Instruct | kg_only | 0.8 | Queued (59597323) | Same fix, not started yet |
+| Qwen3-4B-Instruct-2507 | instruct | 0.2 | Paused | Blocked on testgeneval#43 |
+| Qwen3-4B-Instruct-2507 | kg_only | 0.2 | Paused | Blocked on testgeneval#43 |
+| Qwen3-4B-Instruct-2507 | instruct | 0.8 | Running (59573907) | Real ETA around 48 hours against a 36 hour limit, expected to time out and need a resubmit, real `MAX_MODEL_LEN` fix not yet applied here |
+| Qwen3-4B-Instruct-2507 | kg_only | 0.8 | **Real data exists but corrupted** | Job 59573909 COMPLETED but lost 45/1210 real instances to testgeneval#44's context bug, needs regenerating once a real `MAX_MODEL_LEN` fix is calibrated for this model (attempt at 49152 failed on an unrelated `KG_PROMPTS_PATH`/dataset mismatch, needs retrying) |
+| gpt-oss-20B | instruct | 0.2 | Real `testgenevallite`-scale data only | Job 59566582 COMPLETED, real fix confirmed (0 requests near the 48000 cap), but a real, separate, external vLLM/harmony quirk still loses 16/160 (10%) instances regardless of budget, see testgeneval#40. No full `testgeneval`-scale run yet |
+| gpt-oss-120B | any | any | Blocked | jliu0290's account blocked on real, team-wide `/fs04` disk space at 100% (0 available), unrelated to this project's own code, no real data yet |
+| Llama-4-Scout-17B-16E-Instruct | instruct | 0.8 | Queued (wtho0016, 59591470) | Not started yet, no real data on testgeneval#43 or #44 for this model yet |
+| Llama-4-Scout-17B-16E-Instruct | kg_only | 0.8 | Queued (wtho0016, 59591471) | Same |
+| Llama-4-Scout-17B-16E-Instruct | any | 0.2 | Paused | Blocked on testgeneval#43, its 2 earlier `t=0.2` attempts were cancelled before running (wtho0016 lacked real HuggingFace access at the time, since resolved) |
+
+The rest of this section has the full real story behind the table above,
+job IDs and real causes for each row's status. This whole batch is a
+distinct phase from every table earlier in this document: those used
 temperature 0 (pass@1 only) and, for `instruct`/some earlier `kg_only`
 rows, predate the `OUTPUT_LIMITS` fix (testgeneval#41) entirely, so
 their completion counts are not directly comparable to this batch. This
