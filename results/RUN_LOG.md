@@ -386,6 +386,54 @@ despite the latter two being submitted later in absolute time --
 not submission order or job count, so do not assume a later submitter
 will simply queue behind an earlier one from a different account.
 
+**A real config mismatch cost Qwen3-Coder-30B-A3B-Instruct 117 real
+instances on its first completed production job.** Job 59573903
+(instruct, temperature 0.8) finished cleanly, exit code 0, in a real
+16 hour run, but only wrote 1093 of 1210 instances. 261 real
+`BadRequestError`s in the log, all the same real cause: this model's
+`MODEL_LIMITS` entry (added in testgeneval#41's fix) says 262144
+tokens, its real published native context, but `m3_run_inference.slurm`
+launches vLLM with `--max-model-len "$MAX_MODEL_LEN"`, which defaults
+to 32768 and was never overridden on any of this project's real
+Qwen3-Coder-30B submissions. So `run_api.py`'s own client-side prompt
+truncation logic thought it had room it never actually had, sent
+oversized prompts straight to the server, and the server rejected them
+outright, `process_instance` discards a whole instance on any
+exception, so these 117 instances got nothing written at all, not
+partial data.
+
+The `MAX_MODEL_LEN=32768` default itself is not a bug, it is a real,
+deliberate choice, the script's own comment explains it exists because
+Qwen3-4B-Instruct-2507 genuinely needed 36 GiB at its native 262144
+context when only 31.62 GiB was available, a real earlier OOM. The bug
+is that `MODEL_LIMITS`'s per-model claims and this script's own safety
+default were never checked against each other. Confirmed real via
+direct log checks, not assumed: Qwen3-Coder-30B is affected (261 real
+errors), Qwen3-4B-Instruct-2507, Meta-Llama-3.1-8B-Instruct, and
+gpt-oss-20B all show zero hits of this error across real, substantial
+samples, even though the dataset's own real max prompt (about 43000
+tokens for `kg_only`, measured earlier) exceeds 32768 for all of them
+too, likely because different models' own tokenizers count the same
+text differently, not because Qwen3-Coder-30B's real needs are uniquely
+large. gpt-oss-120B and Llama-4-Scout have not run at real scale yet,
+so absence of the error in their logs so far is not yet evidence either
+way for them. Full writeup in testgeneval#44.
+
+Real GPU memory is tight on this model's 2x L40S setup: vLLM's own
+startup log shows about 28.8 GiB of each 44.39 GiB GPU already used for
+weights, leaving roughly 11.5 to 14.4 GiB for KV cache at the current
+`MAX_MODEL_LEN=32768`/`MAX_NUM_SEQS=16`. A rough proportional estimate
+puts the real KV cache need at `MAX_MODEL_LEN=65536` around 23.6 GiB,
+over that real headroom at the current concurrency, a genuine risk of
+reintroducing the same class of OOM the current default protects
+against, just for this model. Real calibration test running (job
+59590979, `MAX_MODEL_LEN=65536` with `MAX_NUM_SEQS` lowered to 8 to
+compensate for the larger real per-sequence KV cache need) before
+trusting a higher value for production. The already-completed job's 117
+lost instances still need a real decision, regenerate them specifically
+once the fix is confirmed, or accept the loss as a disclosed gap in
+that run.
+
 ## Why context-overflow losses happen
 
 The `instruct` arm's prompt shows the model the whole source file as flat
