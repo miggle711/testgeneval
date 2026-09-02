@@ -98,32 +98,45 @@ happened).
 
 ## Current batch: temperature 0.2/0.8, depth 2, real OUTPUT_LIMITS (2026-08-29)
 
-**Real status snapshot as of 2026-08-30, not a history, just what is
+**Real status snapshot as of 2026-09-02, not a history, just what is
 actually usable right now.** Everything below this table has the full
 story of how each row got here, real job IDs and real causes; this is
 just the current state, updated as jobs progress. `t=0.2` means
 temperature 0.2 (pass@1), `t=0.8` means temperature 0.8 (pass@k=5,
 `NUM_SAMPLES=5`).
 
+**Real, team-wide infrastructure incident, 2026-09-01/02, worth flagging
+here since it took down real production jobs, not this project's own
+bug:** `/fs04` genuinely hit 100% capacity (`lfs quota -g al49 /fs04`
+showed `3.0T`/`3.0T`, 0 available), and two real, otherwise-healthy
+production jobs (59597322, 59597542, both real `t=0.8` runs with 15 to
+19 real hours of progress) crashed hard with
+`OSError: [Errno 122] Disk quota exceeded` then
+`OSError: [Errno 5] Input/output error` trying to write a completed
+result, a real crash, not the retry-and-skip path `process_instance`
+already handles cleanly for a bad API response. Confirmed resolved as
+of 2026-09-02, the real allocation is now `5.1T` total with `1.6T`
+free.
+
 | Model | Arm | Temp | Status | Real note |
 |---|---|---|---|---|
 | Meta-Llama-3.1-8B-Instruct | instruct | 0.2 | Paused | Blocked on testgeneval#43 (repetition loops), not resubmitted |
 | Meta-Llama-3.1-8B-Instruct | kg_only | 0.2 | Paused | Same as above |
-| Meta-Llama-3.1-8B-Instruct | instruct | 0.8 | Running (59597541) | Just resubmitted, real data on testgeneval#44's context question not in yet |
-| Meta-Llama-3.1-8B-Instruct | kg_only | 0.8 | Running (59597542) | Same as above |
+| Meta-Llama-3.1-8B-Instruct | instruct | 0.8 | TIMEOUT (59597541), needs resubmit | Real 36 hour limit hit, real `MAX_MODEL_LEN` fix still needed before resubmitting, confirmed affected (see kg_only row) |
+| Meta-Llama-3.1-8B-Instruct | kg_only | 0.8 | FAILED, real disk crash (59597542) | Confirmed affected by testgeneval#44 before the crash, a real 24769 input token prompt hit the default 32768 wall, needs a real `MAX_MODEL_LEN` fix, never calibrated for this model |
 | Qwen3-Coder-30B-A3B-Instruct | instruct | 0.2 | Paused | Blocked on testgeneval#43 |
 | Qwen3-Coder-30B-A3B-Instruct | kg_only | 0.2 | Paused | Blocked on testgeneval#43 |
-| Qwen3-Coder-30B-A3B-Instruct | instruct | 0.8 | Running (59597322) | Real fix from testgeneval#44 applied (`MAX_MODEL_LEN=65536`), zero context errors so far in a real sample |
-| Qwen3-Coder-30B-A3B-Instruct | kg_only | 0.8 | Queued (59597323) | Same fix, not started yet |
+| Qwen3-Coder-30B-A3B-Instruct | instruct | 0.8 | Resubmitted at `MAX_MODEL_LEN=98304` | The `65536` fix genuinely was not enough, a real 57537 input token prompt hit that wall too before the disk crash, real max seen since (from the completed kg_only file) is around 68389 estimated tokens, resubmitted with real margin above both, `MAX_NUM_SEQS` lowered to 6 to compensate for the larger real KV cache reservation |
+| Qwen3-Coder-30B-A3B-Instruct | kg_only | 0.8 | **COMPLETED, real, mostly clean (59597323)** | 1208/1210 real instances, 6 real context length errors, both from prompts exceeding even 65536, a real, large improvement over the pre-fix 25 lost, not perfectly clean |
 | Qwen3-4B-Instruct-2507 | instruct | 0.2 | Paused | Blocked on testgeneval#43 |
 | Qwen3-4B-Instruct-2507 | kg_only | 0.2 | Paused | Blocked on testgeneval#43 |
-| Qwen3-4B-Instruct-2507 | instruct | 0.8 | Running (59573907) | Real ETA around 48 hours against a 36 hour limit, expected to time out and need a resubmit, real `MAX_MODEL_LEN` fix not yet applied here |
-| Qwen3-4B-Instruct-2507 | kg_only | 0.8 | **Real data exists but corrupted** | Job 59573909 COMPLETED but lost 45/1210 real instances to testgeneval#44's context bug, needs regenerating once a real `MAX_MODEL_LEN` fix is calibrated for this model (attempt at 49152 failed on an unrelated `KG_PROMPTS_PATH`/dataset mismatch, needs retrying) |
-| gpt-oss-20B | instruct | 0.2 | Real `testgenevallite`-scale data only | Job 59566582 COMPLETED, real fix confirmed (0 requests near the 48000 cap), but a real, separate, external vLLM/harmony quirk still loses 16/160 (10%) instances regardless of budget, see testgeneval#40. No full `testgeneval`-scale run yet |
-| gpt-oss-120B | any | any | Blocked | jliu0290's account blocked on real, team-wide `/fs04` disk space at 100% (0 available), unrelated to this project's own code, no real data yet |
-| Llama-4-Scout-17B-16E-Instruct | instruct | 0.8 | Queued (wtho0016, 59591470) | Not started yet, no real data on testgeneval#43 or #44 for this model yet |
-| Llama-4-Scout-17B-16E-Instruct | kg_only | 0.8 | Queued (wtho0016, 59591471) | Same |
-| Llama-4-Scout-17B-16E-Instruct | any | 0.2 | Paused | Blocked on testgeneval#43, its 2 earlier `t=0.2` attempts were cancelled before running (wtho0016 lacked real HuggingFace access at the time, since resolved) |
+| Qwen3-4B-Instruct-2507 | instruct | 0.8 | TIMEOUT (59573907), needs resubmit | Real 36 hour limit hit as predicted, real `MAX_MODEL_LEN` fix still needed (the one calibration attempt at 49152 failed on an unrelated `KG_PROMPTS_PATH`/dataset mismatch, not yet retried), real unused concurrency headroom also found (`MAX_NUM_SEQS=8` leaving KV cache at 12 to 25%), worth raising on resubmit too |
+| Qwen3-4B-Instruct-2507 | kg_only | 0.8 | **Real data exists but corrupted** | Job 59573909 COMPLETED but lost 45/1210 real instances to testgeneval#44's context bug, needs regenerating once a real `MAX_MODEL_LEN` fix is calibrated for this model |
+| gpt-oss-20B | instruct | 0.2 | Real `testgenevallite`-scale data only, final | Job 59566582 COMPLETED, real truncation fix confirmed (0 requests near the 48000 cap), but a real, separate, external vLLM/harmony quirk still loses 16/160 (10%) instances regardless of budget, confirmed final via real `completion_tokens` values (2682 to 29948, nowhere near the cap), see testgeneval#40. No full `testgeneval`-scale run yet |
+| gpt-oss-120B | any | any | Blocked, real attempts failed | jliu0290's account blocked first by a real `DTYPE=bfloat16` gap on one attempt, then by the real team-wide disk space issue above (job 59594023, real 9m54s runtime, got past model loading, failed on a real, tiny dataset download). Disk space is now clear, not yet retried |
+| Llama-4-Scout-17B-16E-Instruct | instruct | 0.8 | FAILED, real startup timeout (59621719) | Real `vllm server did not become ready within 900s`, this model's real 4 GPU tensor-parallel load (weight loading alone took 447.56 real seconds, plus real torch.compile overhead) genuinely needs more than the script's 900s `VLLM_STARTUP_TIMEOUT` default. Resubmitted at `VLLM_STARTUP_TIMEOUT=1800` |
+| Llama-4-Scout-17B-16E-Instruct | kg_only | 0.8 | FAILED, same real cause (59621720) | Same fix, resubmitted at `VLLM_STARTUP_TIMEOUT=1800` |
+| Llama-4-Scout-17B-16E-Instruct | any | 0.2 | Paused | Blocked on testgeneval#43 |
 
 The rest of this section has the full real story behind the table above,
 job IDs and real causes for each row's status. This whole batch is a
