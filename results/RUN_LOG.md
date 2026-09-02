@@ -133,7 +133,10 @@ free.
 | Qwen3-4B-Instruct-2507 | instruct | 0.8 | Running (59669630) | Real fix applied (`MAX_MODEL_LEN=65536`, `MAX_NUM_SEQS` raised to 20 given the real unused concurrency headroom found earlier, KV cache was only 12 to 25% at the old `MAX_NUM_SEQS=8`), running under jliu0290's account |
 | Qwen3-4B-Instruct-2507 | kg_only | 0.8 | Running (59669631) | Same real fix, running under jliu0290's account. The earlier corrupted file (job 59573909, 45/1210 real losses) was moved aside to `results/kg_only/_context_mismatch_20260902/` first so this resubmit does not inherit it via `existing_ids` |
 | gpt-oss-20B | instruct | 0.2 | Real `testgenevallite`-scale data only, final | Job 59566582 COMPLETED, real truncation fix confirmed (0 requests near the 48000 cap), but a real, separate, external vLLM/harmony quirk still loses 16/160 (10%) instances regardless of budget, confirmed final via real `completion_tokens` values (2682 to 29948, nowhere near the cap), see testgeneval#40. No full `testgeneval`-scale run yet |
-| gpt-oss-120B | any | any | Blocked, real attempts failed, retry ready | mvar0010 taking this over directly from jliu0290 (real `DTYPE=bfloat16` fix ready to submit under mvar0010's own account instead), given jliu0290 is now focused on the Llama-3.1-8B/Qwen3-4B batch above. Real team-wide disk space issue that blocked the last attempt (job 59594023) is now resolved |
+| gpt-oss-20B | instruct | 0.8 | Running (wlee0060, 59674750) | Real first full `testgeneval`-scale run for this model, submitted by wlee0060 under their own account |
+| gpt-oss-20B | kg_only | 0.8 | Running (wlee0060, 59674751) | Same, real first full-scale run |
+| gpt-oss-120B | any | 0.2 | Real recalibration in progress (mvar0010, 59674937) | A real calibration job (59668605) looked COMPLETED but turned out to have resumed from a stale, pre-fix output file (job 59562655, predates `OUTPUT_LIMITS=48000`, real max output_tokens exactly 4096, 28/160 near that old cap), `existing_ids` correctly skipped every instance since the file already covered all 160 ids, so the real current fix (`DTYPE=bfloat16`, `MAX_NUM_SEQS=16`, `OUTPUT_LIMITS=48000`) has never actually been tested against this model despite appearing done. Stale file moved aside, real fresh calibration now running, see testgeneval#40 |
+| gpt-oss-120B | any | 0.8 | Not started | No real production data yet, needs the recalibration above to confirm first |
 | Llama-4-Scout-17B-16E-Instruct | instruct | 0.8 | Queued (59670222) | First real attempt (59621719) failed on a real `vllm server did not become ready within 900s`, this model's real 4 GPU tensor-parallel load (weight loading alone took 447.56 real seconds, plus real torch.compile overhead) genuinely needs more than the script's 900s `VLLM_STARTUP_TIMEOUT` default. Resubmitted by wtho0016 with `VLLM_STARTUP_TIMEOUT=1800`, not yet confirmed sufficient |
 | Llama-4-Scout-17B-16E-Instruct | kg_only | 0.8 | Queued (59670226) | Same real cause as instruct above (first attempt 59621720), same fix, resubmitted by wtho0016 |
 | Llama-4-Scout-17B-16E-Instruct | any | 0.2 | Paused | Blocked on testgeneval#43 |
@@ -150,12 +153,14 @@ Meta-Llama-3.1-8B-Instruct `t=0.8` jobs too, reassigned from jliu0290 after
 their own HuggingFace account turned out not to have real access to this
 gated model approved yet. jliu0290 is running the 2 real Qwen3-4B-Instruct-2507
 `t=0.8` jobs under their own account (59669630 instruct, 59669631 kg_only),
-both started cleanly. wtho0016 is assigned Llama-4-Scout's 2 real `t=0.8`
-resubmits with the longer startup
-timeout, not yet resubmitted as of this writing. A real command from
-jliu0290 at `t=0.2` for Meta-Llama-3.1-8B-Instruct was caught and held before
-submission, since real `t=0.2` production data stays paused for every model
-pending testgeneval#43's team decision, regardless of which account would
+both started cleanly. wtho0016 resubmitted Llama-4-Scout's 2 real `t=0.8`
+jobs (59670222/59670226) with the longer startup timeout, both queued as of
+this writing, not yet confirmed to have actually fixed the real startup
+timeout issue. wlee0060 joined as a fourth real account, running gpt-oss-20B's
+first full `testgeneval`-scale `t=0.8` jobs (59674750/59674751). A real
+command from jliu0290 at `t=0.2` for Meta-Llama-3.1-8B-Instruct was caught and
+held before submission, since real `t=0.2` production data stays paused for
+every model pending testgeneval#43's team decision, regardless of which account would
 run it.
 
 The rest of this section has the full real story behind the table above,
