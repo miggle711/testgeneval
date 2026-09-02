@@ -122,36 +122,41 @@ free.
 |---|---|---|---|---|
 | Meta-Llama-3.1-8B-Instruct | instruct | 0.2 | Paused | Blocked on testgeneval#43 (repetition loops), not resubmitted |
 | Meta-Llama-3.1-8B-Instruct | kg_only | 0.2 | Paused | Same as above |
-| Meta-Llama-3.1-8B-Instruct | instruct | 0.8 | TIMEOUT (59597541), resubmit ready | Real 36 hour limit hit, real fix ready (`MAX_MODEL_LEN=65536`), confirmed affected (see kg_only row), assigned to jliu0290 to submit under their own account |
-| Meta-Llama-3.1-8B-Instruct | kg_only | 0.8 | FAILED, real disk crash (59597542), resubmit ready | Confirmed affected by testgeneval#44 before the crash, a real 24769 input token prompt hit the default 32768 wall, real fix ready (`MAX_MODEL_LEN=65536`), assigned to jliu0290 |
+| Meta-Llama-3.1-8B-Instruct | instruct | 0.8 | Running (59670063) | Real fix applied (`MAX_MODEL_LEN=65536`), submitted by mvar0010 directly rather than jliu0290, since jliu0290's own HuggingFace account did not yet have real access to this gated model approved (two real attempts, 59669230/59669298, both failed on a 401 gated repo error in under 40 seconds each) |
+| Meta-Llama-3.1-8B-Instruct | kg_only | 0.8 | Running (59670064) | Same real fix and same reassignment reason as instruct above |
 | Qwen3-Coder-30B-A3B-Instruct | instruct | 0.2 | Paused | Blocked on testgeneval#43 |
 | Qwen3-Coder-30B-A3B-Instruct | kg_only | 0.2 | Paused | Blocked on testgeneval#43 |
 | Qwen3-Coder-30B-A3B-Instruct | instruct | 0.8 | Resubmit ready at `MAX_MODEL_LEN=98304` | The `65536` fix genuinely was not enough, a real 57537 input token prompt hit that wall too before the disk crash, real max seen since (from the completed kg_only file) is around 68389 estimated tokens, resubmitting with real margin above both, `MAX_NUM_SEQS` lowered to 6 to compensate for the larger real KV cache reservation, mvar0010 running this one directly given the real risk of a third underestimate |
 | Qwen3-Coder-30B-A3B-Instruct | kg_only | 0.8 | **COMPLETED, real, mostly clean (59597323)** | 1208/1210 real instances, 6 real context length errors, both from prompts exceeding even 65536, a real, large improvement over the pre-fix 25 lost, not perfectly clean, accepted as a real, small, disclosed residual rather than re-run |
 | Qwen3-4B-Instruct-2507 | instruct | 0.2 | Paused | Blocked on testgeneval#43 |
 | Qwen3-4B-Instruct-2507 | kg_only | 0.2 | Paused | Blocked on testgeneval#43 |
-| Qwen3-4B-Instruct-2507 | instruct | 0.8 | TIMEOUT (59573907), resubmit ready | Real 36 hour limit hit as predicted, real fix ready (`MAX_MODEL_LEN=65536`, `MAX_NUM_SEQS` raised to 20 given the real unused concurrency headroom found earlier, KV cache was only 12 to 25% at the old `MAX_NUM_SEQS=8`), assigned to jliu0290 |
-| Qwen3-4B-Instruct-2507 | kg_only | 0.8 | **Real data exists but corrupted, resubmit ready** | Job 59573909 COMPLETED but lost 45/1210 real instances to testgeneval#44's context bug, real corrupted file moved aside to `results/kg_only/_context_mismatch_20260902/` so a resubmit does not inherit it via `existing_ids`, real fix ready, assigned to jliu0290 |
+| Qwen3-4B-Instruct-2507 | instruct | 0.8 | Running (59669630) | Real fix applied (`MAX_MODEL_LEN=65536`, `MAX_NUM_SEQS` raised to 20 given the real unused concurrency headroom found earlier, KV cache was only 12 to 25% at the old `MAX_NUM_SEQS=8`), running under jliu0290's account |
+| Qwen3-4B-Instruct-2507 | kg_only | 0.8 | Running (59669631) | Same real fix, running under jliu0290's account. The earlier corrupted file (job 59573909, 45/1210 real losses) was moved aside to `results/kg_only/_context_mismatch_20260902/` first so this resubmit does not inherit it via `existing_ids` |
 | gpt-oss-20B | instruct | 0.2 | Real `testgenevallite`-scale data only, final | Job 59566582 COMPLETED, real truncation fix confirmed (0 requests near the 48000 cap), but a real, separate, external vLLM/harmony quirk still loses 16/160 (10%) instances regardless of budget, confirmed final via real `completion_tokens` values (2682 to 29948, nowhere near the cap), see testgeneval#40. No full `testgeneval`-scale run yet |
 | gpt-oss-120B | any | any | Blocked, real attempts failed, retry ready | mvar0010 taking this over directly from jliu0290 (real `DTYPE=bfloat16` fix ready to submit under mvar0010's own account instead), given jliu0290 is now focused on the Llama-3.1-8B/Qwen3-4B batch above. Real team-wide disk space issue that blocked the last attempt (job 59594023) is now resolved |
-| Llama-4-Scout-17B-16E-Instruct | instruct | 0.8 | FAILED, real startup timeout (59621719), resubmit ready | Real `vllm server did not become ready within 900s`, this model's real 4 GPU tensor-parallel load (weight loading alone took 447.56 real seconds, plus real torch.compile overhead) genuinely needs more than the script's 900s `VLLM_STARTUP_TIMEOUT` default. Real fix ready (`VLLM_STARTUP_TIMEOUT=1800`), assigned to wtho0016 |
-| Llama-4-Scout-17B-16E-Instruct | kg_only | 0.8 | FAILED, same real cause (59621720), resubmit ready | Same fix, assigned to wtho0016 |
+| Llama-4-Scout-17B-16E-Instruct | instruct | 0.8 | Queued (59670222) | First real attempt (59621719) failed on a real `vllm server did not become ready within 900s`, this model's real 4 GPU tensor-parallel load (weight loading alone took 447.56 real seconds, plus real torch.compile overhead) genuinely needs more than the script's 900s `VLLM_STARTUP_TIMEOUT` default. Resubmitted by wtho0016 with `VLLM_STARTUP_TIMEOUT=1800`, not yet confirmed sufficient |
+| Llama-4-Scout-17B-16E-Instruct | kg_only | 0.8 | Queued (59670226) | Same real cause as instruct above (first attempt 59621720), same fix, resubmitted by wtho0016 |
 | Llama-4-Scout-17B-16E-Instruct | any | 0.2 | Paused | Blocked on testgeneval#43 |
 
 **Real division of labor as of 2026-09-02**, since three real M3 accounts are now
-running different parts of this batch in parallel: mvar0010 is running the
+running different parts of this batch in parallel, updated as the real, actual
+assignments shifted through the day: mvar0010 is running the
 Qwen3-Coder-30B-A3B-Instruct `instruct` resubmit directly (the higher-risk
-`MAX_MODEL_LEN=98304` value, not yet confirmed sufficient) and taking over
-gpt-oss-120B from jliu0290 (a real `t=0.2` calibration/smoke test on
-`testgenevallite`, not counted toward the paused `t=0.2` production batch,
-since it exists only to verify the `DTYPE`/`MAX_NUM_SEQS` fix works, the same
-purpose every other model's own calibration runs served). jliu0290 is running
-the 4 real "already-fixed" Llama-3.1-8B/Qwen3-4B `t=0.8` jobs under their own
-account. wtho0016 is running Llama-4-Scout's 2 real `t=0.8` resubmits with the
-longer startup timeout. A real command from jliu0290 at `t=0.2` for
-Meta-Llama-3.1-8B-Instruct was caught and held before submission, since real
-`t=0.2` production data stays paused for every model pending testgeneval#43's
-team decision, regardless of which account would run it.
+`MAX_MODEL_LEN=98304` value), gpt-oss-120B (taken over from jliu0290, a real
+`t=0.2` calibration/smoke test on `testgenevallite`, not counted toward the
+paused `t=0.2` production batch, since it exists only to verify the
+`DTYPE`/`MAX_NUM_SEQS` fix works), and, as of later in the day, both
+Meta-Llama-3.1-8B-Instruct `t=0.8` jobs too, reassigned from jliu0290 after
+their own HuggingFace account turned out not to have real access to this
+gated model approved yet. jliu0290 is running the 2 real Qwen3-4B-Instruct-2507
+`t=0.8` jobs under their own account (59669630 instruct, 59669631 kg_only),
+both started cleanly. wtho0016 is assigned Llama-4-Scout's 2 real `t=0.8`
+resubmits with the longer startup
+timeout, not yet resubmitted as of this writing. A real command from
+jliu0290 at `t=0.2` for Meta-Llama-3.1-8B-Instruct was caught and held before
+submission, since real `t=0.2` production data stays paused for every model
+pending testgeneval#43's team decision, regardless of which account would
+run it.
 
 The rest of this section has the full real story behind the table above,
 job IDs and real causes for each row's status. This whole batch is a
