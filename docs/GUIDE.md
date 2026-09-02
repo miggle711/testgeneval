@@ -248,39 +248,82 @@ paths do. Configure it through environment variables rather than editing
 the script:
 
 ```bash
-MODEL="Qwen/Qwen2.5-Coder-7B-Instruct" \
+MODEL="Qwen/Qwen3-4B-Instruct-2507" \
 DATASET_PATH="kjain14/testgenevallite" \
 PROMPT_CONFIG="instruct" \
-TEMPERATURE="0" \
-sbatch m3_run_inference.slurm
+TEMPERATURE="0.2" \
+sbatch --gres=gpu:L40S:1 --time=8:00:00 m3_run_inference.slurm
 ```
 
-`MODEL` needs to be a real HuggingFace model id, and should be one of
-the actual shortlisted models (see pycodekg's `docs/EXPERIMENT_PLAN.md`).
+`MODEL` needs to be a real HuggingFace model id, and should be one of the
+actual shortlisted models, see pycodekg's `docs/EXPERIMENT_PLAN.md` for
+the current list and their real, confirmed GPU requirements.
 `DATASET_PATH` can be a HuggingFace dataset name, which vLLM downloads
 directly, or a local path to a dataset saved to disk and transferred
-over. `PROMPT_CONFIG` is `instruct` or `kg_only`; `kg_only` also needs
-`KG_PROMPTS_PATH` pointing at a real `kg_prompts.json`, built separately
-in the pycodekg repo. `TEMPERATURE` is whatever's being tested in the
-sensitivity sweep (0, 0.5, 1).
+over. `PROMPT_CONFIG` is `instruct` or `kg_only`. Both arms read
+`KG_PROMPTS_PATH`, pointing at a real `kg_prompts_depth2.json` file
+built separately in the pycodekg repo, `instruct` only reads it for
+target function naming, `kg_only` needs it for the real structural
+context too, and will fail outright without it. `TEMPERATURE` is
+`0.2` for the real pass@1 main results, `0.8` (with `NUM_SAMPLES="5"`)
+for pass@k where k equals 5.
 
-By default requests go to vLLM one at a time, `MAX_CONCURRENCY` (default
+By default requests go to vLLM one at a time. `MAX_CONCURRENCY` (default
 1) raises that, so vLLM's continuous batching actually has multiple
-requests to work with instead of sitting mostly idle between them. Keep
-it at or below the script's own `--max-num-seqs 8` passed to `vllm
-serve` -- that's vLLM's hard ceiling on concurrent sequences regardless
-of what's requested. Watch vLLM's own `GPU KV cache usage` log line
-after raising it; that's the real signal for how much headroom is left,
-not a fixed safe number for every model/GPU combination.
+requests to work with instead of sitting mostly idle between them. This
+needs to stay at or below `MAX_NUM_SEQS`, which is vLLM's own real
+ceiling on concurrent sequences and defaults to 8, but is not a fixed
+number for every model the way it might look, it is a real, separate
+env var you can and should raise once you have checked a given model's
+real headroom. Watch vLLM's own `GPU KV cache usage` log line after
+raising either value, that is the real signal for how much room is
+actually left, not something to guess at or assume transfers from one
+model to a similarly sized one, confirmed real more than once that two
+models of the same size class needed genuinely different safe values.
 
 ```bash
-MODEL="Qwen/Qwen2.5-Coder-7B-Instruct" \
+MODEL="Qwen/Qwen3-4B-Instruct-2507" \
 DATASET_PATH="kjain14/testgenevallite" \
 PROMPT_CONFIG="instruct" \
-TEMPERATURE="0" \
-MAX_CONCURRENCY="8" \
-sbatch m3_run_inference.slurm
+TEMPERATURE="0.2" \
+MAX_NUM_SEQS="16" \
+MAX_CONCURRENCY="16" \
+sbatch --gres=gpu:L40S:1 --time=8:00:00 m3_run_inference.slurm
 ```
+
+`MAX_MODEL_LEN` is a separate, real setting worth understanding before
+running a full dataset job, not just the testgenevallite smoke test.
+It defaults to 32768, a real, deliberate safety cap (some models default
+to a much larger native context than a single GPU has KV cache room
+for), but this project's real prompts can run well past that on the
+full `kjain14/testgeneval` dataset, some over 65000 tokens depending on
+the model's own tokenizer. If you see an API error mentioning a
+"maximum context length", that is this setting being too low for the
+real prompt you just sent, not a bug in the pipeline. Fixing it needs a
+real, model specific value, checked against real GPU memory headroom
+(vLLM's own startup log reports this, look for a line mentioning "Free
+memory on device" and "Actual usage is"), raising `MAX_MODEL_LEN`
+without checking that first risks a real out of memory crash instead,
+since a larger context means vLLM reserves more KV cache room per
+sequence even before any real request uses it. Ask in the team channel
+or check `results/RUN_LOG.md` for whatever value has already been
+confirmed safe for the model you are running before guessing.
+
+A large model spread across several GPUs can genuinely need more than
+900 seconds just to start up, real weight loading and compilation time
+across every GPU, not a hang or a crash. If a job's log shows repeated
+lines about a "shared memory broadcast block" not being found, followed
+by "vllm server did not become ready", raise
+`VLLM_STARTUP_TIMEOUT` (seconds, defaults to 900) rather than assuming
+something is broken.
+
+If two of your own jobs might land on the same M3 node at the same
+time, set `VLLM_PORT` explicitly and differently on each (for example
+`VLLM_PORT="8003"` on one and `VLLM_PORT="8004"` on the other). Left at
+its default, two jobs on the same node can silently end up talking to
+each other's model server instead of their own, producing confusing
+"model does not exist" errors that look like a typo rather than a real
+port collision.
 
 Both scripts default `HF_HOME` to project scratch space rather than your
 M3 home directory. Specifically, each user gets their own subfolder
@@ -288,12 +331,20 @@ under the shared `al49_scratch`, since that directory is shared across
 the whole project, not private to you, and another teammate's cache
 might already exist there without write access for you.
 
-Watch the job the same way as setup. It takes roughly 45 seconds per
-instance at a typical pace, so the full 160 instance testgenevallite
-dataset is a couple of hours in one job. When it's done you'll see
+Watch the job the same way as setup. When it's done you'll see
 `Done. Predictions written under ...`, and the output lands in
 `results/instruct/` (or `results/kg_only/`), named something like
-`Qwen2.5-Coder-7B-Instruct__testgenevallite__0__test.jsonl`.
+`Qwen3-4B-Instruct-2507__testgenevallite__0.2__test.jsonl`.
+
+If a job dies partway through with an `OSError` mentioning disk quota
+or an input/output error, that is a real, team-wide `/fs04` filesystem
+issue, not something wrong with your own command. Check
+`df -h ~/al49_scratch`, if it shows `100%` used with `0` available,
+that confirms it, and the fix needs someone who administers the shared
+`al49` storage allocation, not something you can resolve from your own
+account alone. Cleaning your own `~/al49_scratch/<username>/hf-cache/`
+of any dropped models' weights is worth doing but will not fully
+resolve pressure at this scale by itself.
 
 ### Running inference sharded, across multiple parallel jobs
 
@@ -310,16 +361,20 @@ Submit the same command several times, changing only `SHARD_ID` each
 time and keeping `NUM_SHARDS` the same across all of them:
 
 ```bash
-MODEL="Qwen/Qwen2.5-Coder-7B-Instruct" DATASET_PATH="kjain14/testgenevallite" PROMPT_CONFIG="instruct" TEMPERATURE="0" NUM_SHARDS="4" SHARD_ID="0" sbatch m3_run_inference.slurm
-MODEL="Qwen/Qwen2.5-Coder-7B-Instruct" DATASET_PATH="kjain14/testgenevallite" PROMPT_CONFIG="instruct" TEMPERATURE="0" NUM_SHARDS="4" SHARD_ID="1" sbatch m3_run_inference.slurm
-MODEL="Qwen/Qwen2.5-Coder-7B-Instruct" DATASET_PATH="kjain14/testgenevallite" PROMPT_CONFIG="instruct" TEMPERATURE="0" NUM_SHARDS="4" SHARD_ID="2" sbatch m3_run_inference.slurm
-MODEL="Qwen/Qwen2.5-Coder-7B-Instruct" DATASET_PATH="kjain14/testgenevallite" PROMPT_CONFIG="instruct" TEMPERATURE="0" NUM_SHARDS="4" SHARD_ID="3" sbatch m3_run_inference.slurm
+MODEL="Qwen/Qwen3-4B-Instruct-2507" DATASET_PATH="kjain14/testgenevallite" PROMPT_CONFIG="instruct" TEMPERATURE="0.2" NUM_SHARDS="4" SHARD_ID="0" sbatch --gres=gpu:L40S:1 --time=8:00:00 m3_run_inference.slurm
+MODEL="Qwen/Qwen3-4B-Instruct-2507" DATASET_PATH="kjain14/testgenevallite" PROMPT_CONFIG="instruct" TEMPERATURE="0.2" NUM_SHARDS="4" SHARD_ID="1" sbatch --gres=gpu:L40S:1 --time=8:00:00 m3_run_inference.slurm
+MODEL="Qwen/Qwen3-4B-Instruct-2507" DATASET_PATH="kjain14/testgenevallite" PROMPT_CONFIG="instruct" TEMPERATURE="0.2" NUM_SHARDS="4" SHARD_ID="2" sbatch --gres=gpu:L40S:1 --time=8:00:00 m3_run_inference.slurm
+MODEL="Qwen/Qwen3-4B-Instruct-2507" DATASET_PATH="kjain14/testgenevallite" PROMPT_CONFIG="instruct" TEMPERATURE="0.2" NUM_SHARDS="4" SHARD_ID="3" sbatch --gres=gpu:L40S:1 --time=8:00:00 m3_run_inference.slurm
 ```
 
 Each shard processes only its own slice (with 4 shards on the 160
 instance lite dataset, that's 40 instances each) and writes its own
 output file with a suffix showing which shard it is, something like
-`Qwen2.5-Coder-7B-Instruct__testgenevallite__0__test__shard-0__num_shards-4.jsonl`.
+`Qwen3-4B-Instruct-2507__testgenevallite__0.2__test__shard-0__num_shards-4.jsonl`.
+In practice, a single unsharded job on the real, current per-model
+concurrency values finishes in a few hours even on the full dataset,
+so sharding is now mostly useful for extra resilience against a
+mid-run crash rather than a real speed necessity.
 
 Check `squeue -u <your-username>` and confirm several rows actually show
 `R` on different nodes at once, not queued up behind each other.
@@ -330,9 +385,9 @@ instead of a manual `cat`:
 ```bash
 python3 scripts/merge_and_validate.py \
   --output_dir results/instruct \
-  --model_nickname Qwen2.5-Coder-7B-Instruct \
+  --model_nickname Qwen3-4B-Instruct-2507 \
   --dataset testgenevallite \
-  --temperature 0 \
+  --temperature 0.2 \
   --num_shards 4 \
   --expected_total 160
 ```
@@ -356,7 +411,7 @@ Pull the predictions file down with `scp` from your own machine, not
 from inside an M3 SSH session:
 
 ```bash
-scp <username>@m3.massive.org.au:/home/<username>/al49_scratch/kg-testing/testgeneval/results/instruct/Qwen2.5-Coder-7B-Instruct__testgenevallite__0__test.jsonl .
+scp <username>@m3.massive.org.au:/home/<username>/al49_scratch/kg-testing/testgeneval/results/instruct/Qwen3-4B-Instruct-2507__testgenevallite__0.2__test.jsonl .
 ```
 
 The dedicated transfer node (`m3-dtn.massive.org.au`) is meant for this
