@@ -135,11 +135,43 @@ free.
 | gpt-oss-20B | instruct | 0.2 | Real `testgenevallite`-scale data only, final | Job 59566582 COMPLETED, real truncation fix confirmed (0 requests near the 48000 cap), but a real, separate, external vLLM/harmony quirk still loses 16/160 (10%) instances regardless of budget, confirmed final via real `completion_tokens` values (2682 to 29948, nowhere near the cap), see testgeneval#40. No full `testgeneval`-scale run yet |
 | gpt-oss-20B | instruct | 0.8 | Running (wlee0060, 59674750) | Real first full `testgeneval`-scale run for this model, submitted by wlee0060 under their own account |
 | gpt-oss-20B | kg_only | 0.8 | Running (wlee0060, 59674751) | Same, real first full-scale run |
-| gpt-oss-120B | any | 0.2 | Real recalibration in progress (mvar0010, 59674937) | A real calibration job (59668605) looked COMPLETED but turned out to have resumed from a stale, pre-fix output file (job 59562655, predates `OUTPUT_LIMITS=48000`, real max output_tokens exactly 4096, 28/160 near that old cap), `existing_ids` correctly skipped every instance since the file already covered all 160 ids, so the real current fix (`DTYPE=bfloat16`, `MAX_NUM_SEQS=16`, `OUTPUT_LIMITS=48000`) has never actually been tested against this model despite appearing done. Stale file moved aside, real fresh calibration now running, see testgeneval#40 |
-| gpt-oss-120B | any | 0.8 | Not started | No real production data yet, needs the recalibration above to confirm first |
+| gpt-oss-120B | instruct | 0.2 | **Recalibration COMPLETED, real, clean (59674937)** | A real calibration job (59668605) looked COMPLETED but turned out to have resumed from a stale, pre-fix output file (job 59562655, predates `OUTPUT_LIMITS=48000`, real max output_tokens exactly 4096, 28/160 near that old cap), `existing_ids` correctly skipped every instance since the file already covered all 160 ids, so the real current fix (`DTYPE=bfloat16`, `MAX_NUM_SEQS=16`, `OUTPUT_LIMITS=48000`) had never actually been tested against this model despite appearing done. Stale file moved aside, real fresh calibration run (0 already-completed ids read at start) came back genuinely clean: 160/160 real instances, 0 empty/None `preds`, real completion lengths from 4055 to 153906 characters (roughly 1000 to 38000 tokens), comfortably under the 48000 cap with no near-cap clipping. Confirms the fix genuinely works for 120B, not just 20B, see testgeneval#40 |
+| gpt-oss-120B | instruct | 0.8 | Running (mvar0010, 59675942) | Real first full `testgeneval`-scale run for this model, submitted following the clean calibration above. Two earlier submission attempts had real, separate bugs before this one, see the submission gotchas below |
+| gpt-oss-120B | kg_only | 0.8 | Running (mvar0010, 59675879) | Same, real first full-scale run |
 | Llama-4-Scout-17B-16E-Instruct | instruct | 0.8 | Queued (59670222) | First real attempt (59621719) failed on a real `vllm server did not become ready within 900s`, this model's real 4 GPU tensor-parallel load (weight loading alone took 447.56 real seconds, plus real torch.compile overhead) genuinely needs more than the script's 900s `VLLM_STARTUP_TIMEOUT` default. Resubmitted by wtho0016 with `VLLM_STARTUP_TIMEOUT=1800`, not yet confirmed sufficient |
 | Llama-4-Scout-17B-16E-Instruct | kg_only | 0.8 | Queued (59670226) | Same real cause as instruct above (first attempt 59621720), same fix, resubmitted by wtho0016 |
 | Llama-4-Scout-17B-16E-Instruct | any | 0.2 | Paused | Blocked on testgeneval#43 |
+
+**gpt-oss-120B needs an explicit H100 request, plain `sbatch m3_run_inference.slurm`
+silently lands it on the wrong GPU type.** The script's own `#SBATCH --partition=gpu`
+and `#SBATCH --gres=gpu:1` defaults request one unqualified GPU on the `gpu`
+partition, which on real M3 only has L40S/A100/A40/T4 nodes (`sinfo` confirms
+`gpu` maps to `gres/gpu:L40S:1` etc, no H100 anywhere in it). gpt-oss-120B's
+MXFP4 quantization needs GPU compute capability >= 9.0, which only the `m3h`
+partition's H100 nodes provide. The first two submission attempts for the real
+full-scale run (59675792/59675793) landed on `gpu`/L40S and sat pending on
+`QOSMaxGRESPerUser` without ever actually reaching the model. Fixed by passing
+`--partition=m3h --qos=m3h --gres=gpu:H100:1` directly on the `sbatch` command
+line (these need to be sbatch flags, not `#SBATCH` directives, since the script
+can't read env vars into those, same limitation already documented for
+`TENSOR_PARALLEL_SIZE`), matching the pattern used successfully for the earlier
+`testgenevallite`-scale calibration.
+
+**`--prompt_config instruct` also reads `KG_PROMPTS_PATH`, it is not
+`kg_only`-exclusive.** `run_api.py`'s `InstructPrompt` reads `kg_prompts_path`
+too, for target function/class info, not just `KGOnlyPrompt`. Leaving
+`KG_PROMPTS_PATH` unset on an `instruct` job falls back to the script's default
+`kg_prompts.json` (a relative path, and a different, wrong file from the real
+`kg_prompts_depth2.json` this project actually uses). Caught before it ran:
+the first real full-scale `instruct` submission (59675792, then resubmitted on
+the correct partition as 59675878) omitted `KG_PROMPTS_PATH`. Since
+`kg_prompts.json` doesn't exist in this project's directory, `run_api.py`'s own
+`os.path.exists` check would have caught it and fallen back to `None` rather
+than silently reading wrong data, but that still means the `instruct` arm would
+have silently run with no KG-derived target enrichment at all, different from
+every other `instruct` job in this batch. Fixed by resubmitting with
+`KG_PROMPTS_PATH=kg_prompts_depth2.json` explicitly set (final job 59675942).
+Every future `instruct` submission needs this flag set too, not just `kg_only`.
 
 **Real division of labor as of 2026-09-02**, since three real M3 accounts are now
 running different parts of this batch in parallel, updated as the real, actual
