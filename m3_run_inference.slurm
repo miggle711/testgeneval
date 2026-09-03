@@ -109,6 +109,15 @@ TENSOR_PARALLEL_SIZE="${TENSOR_PARALLEL_SIZE:-1}"
 # 31.62 GiB was available). This experiment's prompts and generated
 # tests are nowhere near that long, so cap it.
 MAX_MODEL_LEN="${MAX_MODEL_LEN:-32768}"
+# Real, confirmed finding (testgeneval#46): vLLM does not honor the
+# per-request max_tokens this project sends via run_api.py's own
+# OUTPUT_LIMITS-driven call, real completions have been observed running
+# 3.5x to 5x past their configured cap with no error. --override-generation-config's
+# max_new_tokens is a separate, server-side enforcement layer
+# (vllm-project/vllm#12242), which vLLM applies as a real hard floor
+# under whatever max_tokens the client sends, unset by default until
+# confirmed to actually work against this bug in a real test.
+MAX_NEW_TOKENS="${MAX_NEW_TOKENS:-}"
 # Some models' chat templates reject a system role entirely (confirmed
 # real on M3: bigcode/starcoder2-15b-instruct-v0.1 400s on every single
 # request with "System messages are not allowed in this template").
@@ -168,13 +177,20 @@ export HF_TOKEN
 # own view starting at 0 regardless of the physical device numbers on
 # the node), so vLLM's tensor parallelism has all of them to split the
 # model across.
+VLLM_SERVE_ARGS=(
+    --trust-remote-code
+    --dtype "$DTYPE"
+    --max-num-seqs "$MAX_NUM_SEQS"
+    --max-model-len "$MAX_MODEL_LEN"
+    --tensor-parallel-size "$TENSOR_PARALLEL_SIZE"
+    --port "$VLLM_PORT"
+)
+if [ -n "$MAX_NEW_TOKENS" ]; then
+    VLLM_SERVE_ARGS+=(--override-generation-config "{\"max_new_tokens\": $MAX_NEW_TOKENS}")
+fi
+
 CUDA_VISIBLE_DEVICES=$(seq 0 $((TENSOR_PARALLEL_SIZE - 1)) | paste -sd, -) vllm serve "$MODEL" \
-    --trust-remote-code \
-    --dtype "$DTYPE" \
-    --max-num-seqs "$MAX_NUM_SEQS" \
-    --max-model-len "$MAX_MODEL_LEN" \
-    --tensor-parallel-size "$TENSOR_PARALLEL_SIZE" \
-    --port "$VLLM_PORT" &
+    "${VLLM_SERVE_ARGS[@]}" &
 VLLM_PID=$!
 trap 'kill "$VLLM_PID" 2>/dev/null || true' EXIT
 
