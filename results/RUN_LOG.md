@@ -122,25 +122,65 @@ free.
 |---|---|---|---|---|
 | Meta-Llama-3.1-8B-Instruct | instruct | 0.2 | Paused | Blocked on testgeneval#43 (repetition loops), not resubmitted |
 | Meta-Llama-3.1-8B-Instruct | kg_only | 0.2 | Paused | Same as above |
-| Meta-Llama-3.1-8B-Instruct | instruct | 0.8 | Running (59670063) | Real fix applied (`MAX_MODEL_LEN=65536`), submitted by mvar0010 directly rather than jliu0290, since jliu0290's own HuggingFace account did not yet have real access to this gated model approved (two real attempts, 59669230/59669298, both failed on a 401 gated repo error in under 40 seconds each) |
-| Meta-Llama-3.1-8B-Instruct | kg_only | 0.8 | Running (59670064) | Same real fix and same reassignment reason as instruct above |
+| Meta-Llama-3.1-8B-Instruct | instruct | 0.8 | **Redoing (mvar0010, 59751058)** | First real attempt (59670063) genuinely TIMEOUT'd after 1 day 12h at only 44% (538/1210), a real casualty of the vLLM `max_tokens` enforcement bug, see testgeneval#46. Resubmitted with the real `MAX_NEW_TOKENS=48000` fix (server-side generation-config enforcement, see below) |
+| Meta-Llama-3.1-8B-Instruct | kg_only | 0.8 | **Redoing (mvar0010, 59751060)** | First real attempt (59670064) completed but only wrote 1137/1210 (94%), 67 of the missing 73 real instances lost to the same request-timeout mechanism, not context length. Redone alongside instruct above for real within-model consistency, both arms on equally-fixed data |
 | Qwen3-Coder-30B-A3B-Instruct | instruct | 0.2 | Paused | Blocked on testgeneval#43 |
 | Qwen3-Coder-30B-A3B-Instruct | kg_only | 0.2 | Paused | Blocked on testgeneval#43 |
-| Qwen3-Coder-30B-A3B-Instruct | instruct | 0.8 | Resubmit ready at `MAX_MODEL_LEN=98304` | The `65536` fix genuinely was not enough, a real 57537 input token prompt hit that wall too before the disk crash, real max seen since (from the completed kg_only file) is around 68389 estimated tokens, resubmitting with real margin above both, `MAX_NUM_SEQS` lowered to 6 to compensate for the larger real KV cache reservation, mvar0010 running this one directly given the real risk of a third underestimate |
-| Qwen3-Coder-30B-A3B-Instruct | kg_only | 0.8 | **COMPLETED, real, mostly clean (59597323)** | 1208/1210 real instances, 6 real context length errors, both from prompts exceeding even 65536, a real, large improvement over the pre-fix 25 lost, not perfectly clean, accepted as a real, small, disclosed residual rather than re-run |
+| Qwen3-Coder-30B-A3B-Instruct | instruct | 0.8 | **COMPLETED, real (59668606)** | 1210/1210 real instances at `MAX_MODEL_LEN=98304`. Real, disclosed caveat: 606/653 sampled completions exceeded the model's 8000-token `OUTPUT_LIMITS` cap (vLLM does not enforce `max_tokens` server-side, testgeneval#46), and a real syntax-validity check found 76/1210 (6.3%) completions fail to parse, mostly the "stops clean but structurally unbalanced" pattern from testgeneval#47, not truncation. Kept as-is rather than re-run, real GPU cost vs a small, disclosed residual |
+| Qwen3-Coder-30B-A3B-Instruct | kg_only | 0.8 | **COMPLETED, real, mostly clean (59597323)** | 1208/1210 real instances, 6 real context length errors, both from prompts exceeding even 65536, a real, large improvement over the pre-fix 25 lost, not perfectly clean, accepted as a real, small, disclosed residual rather than re-run. Real syntax check: 34/1208 (2.8%) fail to parse, same testgeneval#47 pattern |
 | Qwen3-4B-Instruct-2507 | instruct | 0.2 | Paused | Blocked on testgeneval#43 |
 | Qwen3-4B-Instruct-2507 | kg_only | 0.2 | Paused | Blocked on testgeneval#43 |
-| Qwen3-4B-Instruct-2507 | instruct | 0.8 | Running (59669630) | Real fix applied (`MAX_MODEL_LEN=65536`, `MAX_NUM_SEQS` raised to 20 given the real unused concurrency headroom found earlier, KV cache was only 12 to 25% at the old `MAX_NUM_SEQS=8`), running under jliu0290's account |
-| Qwen3-4B-Instruct-2507 | kg_only | 0.8 | Running (59669631) | Same real fix, running under jliu0290's account. The earlier corrupted file (job 59573909, 45/1210 real losses) was moved aside to `results/kg_only/_context_mismatch_20260902/` first so this resubmit does not inherit it via `existing_ids` |
+| Qwen3-4B-Instruct-2507 | instruct | 0.8 | **Redoing (mvar0010, 59751057)** | First real attempt (59669630) genuinely TIMEOUT'd after 1 day 12h at only 34%, same real cause as Llama-3.1-8B instruct above. Resubmitted with `MAX_NEW_TOKENS=48000` |
+| Qwen3-4B-Instruct-2507 | kg_only | 0.8 | **Redoing (mvar0010, 59751059)** | First real attempt (59669631) completed but only wrote 1185/1210 (97.9%), 82 of the 25 missing real instances lost to the same request-timeout mechanism. Redone alongside instruct for real within-model consistency |
 | gpt-oss-20B | instruct | 0.2 | Real `testgenevallite`-scale data only, final | Job 59566582 COMPLETED, real truncation fix confirmed (0 requests near the 48000 cap), but a real, separate, external vLLM/harmony quirk still loses 16/160 (10%) instances regardless of budget, confirmed final via real `completion_tokens` values (2682 to 29948, nowhere near the cap), see testgeneval#40. No full `testgeneval`-scale run yet |
-| gpt-oss-20B | instruct | 0.8 | Running (wlee0060, 59674750) | Real first full `testgeneval`-scale run for this model, submitted by wlee0060 under their own account |
-| gpt-oss-20B | kg_only | 0.8 | Running (wlee0060, 59674751) | Same, real first full-scale run |
+| gpt-oss-20B | instruct | 0.8 | **Redoing (wlee0060, 59749639)** | First real attempt (59674750) hit a real torch inductor compile bug (`InductorError: AttributeError`, testgeneval#45), fixed by clearing the stale torch.compile cache. Second real attempt (59702752) completed but landed on the same node and same default port (8003) as its kg_only sibling with no explicit `VLLM_PORT` set, real port collision, both output files near-empty despite clean exit codes (14 and 0 real lines). Resubmitted a third time with explicit distinct ports |
+| gpt-oss-20B | kg_only | 0.8 | **Redoing (wlee0060, 59749640)** | Same real port-collision cause and fix as instruct above |
 | gpt-oss-120B | instruct | 0.2 | **Recalibration COMPLETED, real, clean (59674937)** | A real calibration job (59668605) looked COMPLETED but turned out to have resumed from a stale, pre-fix output file (job 59562655, predates `OUTPUT_LIMITS=48000`, real max output_tokens exactly 4096, 28/160 near that old cap), `existing_ids` correctly skipped every instance since the file already covered all 160 ids, so the real current fix (`DTYPE=bfloat16`, `MAX_NUM_SEQS=16`, `OUTPUT_LIMITS=48000`) had never actually been tested against this model despite appearing done. Stale file moved aside, real fresh calibration run (0 already-completed ids read at start) came back genuinely clean: 160/160 real instances, 0 empty/None `preds`, real completion lengths from 4055 to 153906 characters (roughly 1000 to 38000 tokens), comfortably under the 48000 cap with no near-cap clipping. Confirms the fix genuinely works for 120B, not just 20B, see testgeneval#40 |
-| gpt-oss-120B | instruct | 0.8 | Running (mvar0010, 59675942) | Real first full `testgeneval`-scale run for this model, submitted following the clean calibration above. Two earlier submission attempts had real, separate bugs before this one, see the submission gotchas below |
-| gpt-oss-120B | kg_only | 0.8 | Running (mvar0010, 59675879) | Same, real first full-scale run |
-| Llama-4-Scout-17B-16E-Instruct | instruct | 0.8 | Queued (59670222) | First real attempt (59621719) failed on a real `vllm server did not become ready within 900s`, this model's real 4 GPU tensor-parallel load (weight loading alone took 447.56 real seconds, plus real torch.compile overhead) genuinely needs more than the script's 900s `VLLM_STARTUP_TIMEOUT` default. Resubmitted by wtho0016 with `VLLM_STARTUP_TIMEOUT=1800`, not yet confirmed sufficient |
-| Llama-4-Scout-17B-16E-Instruct | kg_only | 0.8 | Queued (59670226) | Same real cause as instruct above (first attempt 59621720), same fix, resubmitted by wtho0016 |
+| gpt-oss-120B | instruct | 0.8 | **COMPLETED, real (59675942)** | 1179/1210 real instances (97.4%), real context-length losses only (93 real errors against 31 missing instances, most recovered on retry). Real completions never approach the 48000 cap (max seen 29693 tokens), so the `max_tokens` enforcement gap does not materially affect this model. Real syntax check: 28/1176 (2.4%) fail to parse, same testgeneval#47 pattern, not re-run given the real, small scale |
+| gpt-oss-120B | kg_only | 0.8 | **COMPLETED, real (59675879)** | 1201/1210 real instances (99.3%), same real cause and same reasoning as instruct above. Real syntax check: 25/1201 (2.1%) fail to parse |
+| Llama-4-Scout-17B-16E-Instruct | instruct | 0.8 | **COMPLETED, real (59670222)** | 1123/1210 real instances (92.8%), real context-length losses only (261 real errors against 87 missing, most recovered on retry). Real, disclosed caveat: 447/1123 (39.8%) sampled completions exceeded the model's 8000-token cap, same testgeneval#46 pattern as Qwen. Real syntax check: 45/1123 (4.0%) fail to parse, testgeneval#47 pattern. Kept as-is rather than re-run |
+| Llama-4-Scout-17B-16E-Instruct | kg_only | 0.8 | **COMPLETED, real (59670226)** | 1186/1210 real instances (98.0%), same real cause as instruct above. Real syntax check: 20/1186 (1.7%) fail to parse |
 | Llama-4-Scout-17B-16E-Instruct | any | 0.2 | Paused | Blocked on testgeneval#43 |
+
+**vLLM does not enforce `max_tokens` server-side, a real, batch-wide bug (testgeneval#46).**
+Every real model checked shows completions running past their configured `OUTPUT_LIMITS`
+cap with no error: Qwen3-4B and Qwen3-Coder-30B both hit real completions up to 40000
+tokens against an 8000 cap, Llama-4-Scout hit the same pattern (447/1123, 39.8%, real
+violations). gpt-oss-120B's real completions never approach its 48000 cap, so it looks
+unaffected, but that is coincidence, not evidence the enforcement actually works there
+too. Real, confirmed consequences beyond just longer runtimes: two real `instruct` jobs
+(Qwen3-4B, Llama-3.1-8B) TIMEOUT'd outright after 1 day 12h each, and even completed
+`kg_only` jobs lost real instances to individual per-request timeouts (this fork sets no
+explicit request timeout, so it falls back to the OpenAI SDK's default, and an
+uncapped-length completion can legitimately exceed it). Checked whether this is just a
+runtime problem or an actual fairness issue: `instruct` writes about 69% more real test
+functions than `kg_only` on the same model (Qwen3-Coder-30B, 32.47 vs 19.25 mean `def
+test_` count), driven by `instruct` seeing the entire real source file (a mean of 64.57
+real function/class definitions) versus `kg_only`'s curated, narrower KG subgraph (19.57
+mean), not by the length bug itself, since the same gap shows up even in gpt-oss-120B's
+pair, which never hits its cap. Real fix tested: vLLM's `--override-generation-config
+'{"max_new_tokens": N}'` is a separate, server-side enforcement layer, confirmed genuinely
+working at `N=48000` (0 real violations across two real calibration runs on
+`testgenevallite`, ~150 real completions each, for both Qwen3-4B and Llama-3.1-8B). Wired
+into `m3_run_inference.slurm` behind a new `MAX_NEW_TOKENS` env var on the
+`fix/vllm-generation-config-max-tokens` branch (not yet merged to `main`). The two real
+TIMEOUT'd `instruct` jobs and their `kg_only` siblings (redone for within-model
+consistency) are resubmitted with this fix as of this writing.
+
+**A separate, real syntax-validity bug, independent of the above (testgeneval#47).**
+While calibrating the `MAX_NEW_TOKENS` fix, found that a real fraction of completions are
+syntactically invalid Python even when generation stops cleanly, well under any real
+token cap (confirmed 0 real cap violations in the same calibration run that also showed
+15-19% of completions failing `ast.parse`). Splitting the real broken completions by
+whether they end mid-token (genuine truncation) or on a clean-looking final line revealed
+most are the latter: something earlier in the file (an unclosed bracket, string, or
+indented block) was left unbalanced even though the model emitted a real stop token.
+Checked across the three already-completed model pairs and found the same real pattern
+everywhere, at a lower but still real rate (1.7% to 6.3%), with `instruct` consistently
+showing a higher broken rate than its `kg_only` sibling in every pair checked, the same
+direction as the length/test-count asymmetry above. Not yet root-caused; likely present
+in every real production run this project has done, not something introduced by the
+`MAX_NEW_TOKENS` fix.
 
 **gpt-oss-120B needs an explicit H100 request, plain `sbatch m3_run_inference.slurm`
 silently lands it on the wrong GPU type.** The script's own `#SBATCH --partition=gpu`
