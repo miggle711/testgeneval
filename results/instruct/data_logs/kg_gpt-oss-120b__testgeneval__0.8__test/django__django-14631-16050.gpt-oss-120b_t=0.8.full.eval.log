@@ -1,0 +1,368 @@
+[django__django__4.0] [django__django-14631] Task Metadata:
+	- Instance ID: django__django-14631
+	- Testbed: django__django__4.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.8.19
+ 
+[django__django__4.0] [django__django-14631] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__4.0] [django__django-14631] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14631] Std. Output:
+ 
+[django__django__4.0] [django__django-14631] Return Code: 0 
+[django__django__4.0] [django__django-14631] Command: git -c advice.detachedHead=false checkout 84400d2e9db7c51fee4e9bb04c028f665b8e7624 
+[django__django__4.0] [django__django-14631] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14631] Std. Output:
+Previous HEAD position was 475cffd1d6 Fixed typo in docs/intro/reusable-apps.txt.
+HEAD is now at 84400d2e9d Fixed #32905 -- Added CSS class for non-form errors of formsets.
+ 
+[django__django__4.0] [django__django-14631] Return Code: 0 
+[django__django__4.0] [django__django-14631] Command: git diff > /opt/temp_django__django-14631_gold_init.patch 
+[django__django__4.0] [django__django-14631] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14631] Std. Output:
+ 
+[django__django__4.0] [django__django-14631] Return Code: 0 
+[django__django__4.0] [django__django-14631] Command: git apply -v /opt/temp_django__django-14631_gold.patch 
+[django__django__4.0] [django__django-14631] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14631] Std. Output:
+Checking patch django/forms/boundfield.py...
+Checking patch django/forms/forms.py...
+Applied patch django/forms/boundfield.py cleanly.
+Applied patch django/forms/forms.py cleanly.
+ 
+[django__django__4.0] [django__django-14631] Return Code: 0 
+[django__django__4.0] [django__django-14631] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__4.0] [django__django-14631] Command: git diff > /opt/temp_django__django-14631_test_init.patch 
+[django__django__4.0] [django__django-14631] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14631] Std. Output:
+ 
+[django__django__4.0] [django__django-14631] Return Code: 0 
+[django__django__4.0] [django__django-14631] Command: git restore tests/forms_tests/tests/test_forms.py 
+[django__django__4.0] [django__django-14631] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14631] Std. Output:
+ 
+[django__django__4.0] [django__django-14631] Return Code: 0 
+[django__django__4.0] [django__django-14631] Command: git apply -v /opt/temp_django__django-14631_test.patch 
+[django__django__4.0] [django__django-14631] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14631] Std. Output:
+Checking patch tests/forms_tests/tests/test_forms.py...
+Applied patch tests/forms_tests/tests/test_forms.py cleanly.
+ 
+[django__django__4.0] [django__django-14631] Return Code: 0 
+[django__django__4.0] [django__django-14631] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__4.0] [django__django-14631] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__4.0] [django__django-14631] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14631] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 12, in <module>
+    from django.forms import Form, CharField, IntegerField, HiddenInput, ErrorList
+ImportError: cannot import name 'ErrorList' from 'django.forms' (/opt/django__django/django/forms/__init__.py)
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14631] Return Code: 1 
+[django__django__4.0] [django__django-14631] TestsTime: 1.5610742568969727 
+[django__django__4.0] [django__django-14631] Test script run successful 
+[django__django__4.0] [django__django-14631] Removing coverage 
+[django__django__4.0] [django__django-14631] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__4.0] [django__django-14631] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14631] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 12, in <module>
+    from django.forms import Form, CharField, IntegerField, HiddenInput, ErrorList
+ImportError: cannot import name 'ErrorList' from 'django.forms' (/opt/django__django/django/forms/__init__.py)
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14631] Return Code: 1 
+[django__django__4.0] [django__django-14631] TestsTime: 0.8143095970153809 
+[django__django__4.0] [django__django-14631] Test script run successful 
+[django__django__4.0] [django__django-14631] Removing coverage 
+[django__django__4.0] [django__django-14631] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__4.0] [django__django-14631] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14631] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 12, in <module>
+    from django.forms import Form, CharField, IntegerField, HiddenInput, ErrorList
+ImportError: cannot import name 'ErrorList' from 'django.forms' (/opt/django__django/django/forms/__init__.py)
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14631] Return Code: 1 
+[django__django__4.0] [django__django-14631] TestsTime: 0.6867079734802246 
+[django__django__4.0] [django__django-14631] Test script run successful 
+[django__django__4.0] [django__django-14631] Removing coverage 
+[django__django__4.0] [django__django-14631] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__4.0] [django__django-14631] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14631] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 12, in <module>
+    from django.forms import Form, CharField, IntegerField, HiddenInput, ErrorList
+ImportError: cannot import name 'ErrorList' from 'django.forms' (/opt/django__django/django/forms/__init__.py)
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14631] Return Code: 1 
+[django__django__4.0] [django__django-14631] TestsTime: 0.6764912605285645 
+[django__django__4.0] [django__django-14631] Test script run successful 
+[django__django__4.0] [django__django-14631] Removing coverage 
+[django__django__4.0] [django__django-14631] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__4.0] [django__django-14631] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14631] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 12, in <module>
+    from django.forms import Form, CharField, IntegerField, HiddenInput, ErrorList
+ImportError: cannot import name 'ErrorList' from 'django.forms' (/opt/django__django/django/forms/__init__.py)
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14631] Return Code: 1 
+[django__django__4.0] [django__django-14631] TestsTime: 0.5790443420410156 
+[django__django__4.0] [django__django-14631] Test script run successful 
+[django__django__4.0] [django__django-14631] Removing coverage 
+[django__django__4.0] [django__django-14631] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__4.0] [django__django-14631] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14631] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 12, in <module>
+    from django.forms import Form, CharField, IntegerField, HiddenInput, ErrorList
+ImportError: cannot import name 'ErrorList' from 'django.forms' (/opt/django__django/django/forms/__init__.py)
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14631] Return Code: 1 
+[django__django__4.0] [django__django-14631] TestsTime: 0.46300220489501953 
+[django__django__4.0] [django__django-14631] Test script run successful 
+[django__django__4.0] [django__django-14631] Removing coverage 
+[django__django__4.0] [django__django-14631] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__4.0] [django__django-14631] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14631] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 12, in <module>
+    from django.forms import Form, CharField, IntegerField, HiddenInput, ErrorList
+ImportError: cannot import name 'ErrorList' from 'django.forms' (/opt/django__django/django/forms/__init__.py)
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14631] Return Code: 1 
+[django__django__4.0] [django__django-14631] TestsTime: 0.672374963760376 
+[django__django__4.0] [django__django-14631] Test script run successful 
+[django__django__4.0] [django__django-14631] Removing coverage 
+[django__django__4.0] [django__django-14631] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__4.0] [django__django-14631] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14631] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 12, in <module>
+    from django.forms import Form, CharField, IntegerField, HiddenInput, ErrorList
+ImportError: cannot import name 'ErrorList' from 'django.forms' (/opt/django__django/django/forms/__init__.py)
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14631] Return Code: 1 
+[django__django__4.0] [django__django-14631] TestsTime: 0.7676854133605957 
+[django__django__4.0] [django__django-14631] Test script run successful 
+[django__django__4.0] [django__django-14631] Removing coverage 
+[django__django__4.0] [django__django-14631] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__4.0] [django__django-14631] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14631] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 12, in <module>
+    from django.forms import Form, CharField, IntegerField, HiddenInput, ErrorList
+ImportError: cannot import name 'ErrorList' from 'django.forms' (/opt/django__django/django/forms/__init__.py)
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14631] Return Code: 1 
+[django__django__4.0] [django__django-14631] TestsTime: 0.8528461456298828 
+[django__django__4.0] [django__django-14631] Test script run successful 
+[django__django__4.0] [django__django-14631] Removing coverage 
+[django__django__4.0] [django__django-14631] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__4.0] [django__django-14631] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14631] Std. Output:
+test_forms (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_forms (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_forms
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 12, in <module>
+    from django.forms import Form, CharField, IntegerField, HiddenInput, ErrorList
+ImportError: cannot import name 'ErrorList' from 'django.forms' (/opt/django__django/django/forms/__init__.py)
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14631] Return Code: 1 
+[django__django__4.0] [django__django-14631] TestsTime: 0.5773038864135742 
+[django__django__4.0] [django__django-14631] Test script run successful 
+[django__django__4.0] [django__django-14631] Removing coverage 
+[django__django__4.0] [django__django-14631] >>>>> Tests configfull pred
+ 
+[django__django__4.0] [django__django-14631] TestsTime: 0.0 
+[django__django__4.0] [django__django-14631] >>>>> Some Tests Failed 
+[django__django__4.0] [django__django-14631] >>>>> Unfiltered Tests Failed 

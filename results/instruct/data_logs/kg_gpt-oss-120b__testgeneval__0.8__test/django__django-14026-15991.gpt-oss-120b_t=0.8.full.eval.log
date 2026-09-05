@@ -1,0 +1,1322 @@
+[django__django__4.0] [django__django-14026] Task Metadata:
+	- Instance ID: django__django-14026
+	- Testbed: django__django__4.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.8.19
+ 
+[django__django__4.0] [django__django-14026] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__4.0] [django__django-14026] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14026] Std. Output:
+ 
+[django__django__4.0] [django__django-14026] Return Code: 0 
+[django__django__4.0] [django__django-14026] Command: git -c advice.detachedHead=false checkout 59942a66ceb79868cb91844df3a72a24c63e39fa 
+[django__django__4.0] [django__django-14026] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14026] Std. Output:
+Previous HEAD position was 475cffd1d6 Fixed typo in docs/intro/reusable-apps.txt.
+HEAD is now at 59942a66ce Fixed #32941 -- Removed get_format_modules()'s unused reverse argument.
+ 
+[django__django__4.0] [django__django-14026] Return Code: 0 
+[django__django__4.0] [django__django-14026] Command: git diff > /opt/temp_django__django-14026_gold_init.patch 
+[django__django__4.0] [django__django-14026] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14026] Std. Output:
+ 
+[django__django__4.0] [django__django-14026] Return Code: 0 
+[django__django__4.0] [django__django-14026] Command: git apply -v /opt/temp_django__django-14026_gold.patch 
+[django__django__4.0] [django__django-14026] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14026] Std. Output:
+Checking patch django/contrib/postgres/aggregates/general.py...
+Checking patch django/contrib/postgres/aggregates/statistics.py...
+Checking patch django/db/backends/mysql/features.py...
+Checking patch django/db/models/aggregates.py...
+Applied patch django/contrib/postgres/aggregates/general.py cleanly.
+Applied patch django/contrib/postgres/aggregates/statistics.py cleanly.
+Applied patch django/db/backends/mysql/features.py cleanly.
+Applied patch django/db/models/aggregates.py cleanly.
+ 
+[django__django__4.0] [django__django-14026] Return Code: 0 
+[django__django__4.0] [django__django-14026] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__4.0] [django__django-14026] Command: git diff > /opt/temp_django__django-14026_test_init.patch 
+[django__django__4.0] [django__django-14026] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14026] Std. Output:
+ 
+[django__django__4.0] [django__django-14026] Return Code: 0 
+[django__django__4.0] [django__django-14026] Command: git restore tests/aggregation/tests.py 
+[django__django__4.0] [django__django-14026] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14026] Std. Output:
+ 
+[django__django__4.0] [django__django-14026] Return Code: 0 
+[django__django__4.0] [django__django-14026] Command: git restore tests/postgres_tests/test_aggregates.py 
+[django__django__4.0] [django__django-14026] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14026] Std. Output:
+ 
+[django__django__4.0] [django__django-14026] Return Code: 0 
+[django__django__4.0] [django__django-14026] Command: git apply -v /opt/temp_django__django-14026_test.patch 
+[django__django__4.0] [django__django-14026] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14026] Std. Output:
+Checking patch tests/aggregation/tests.py...
+Checking patch tests/postgres_tests/test_aggregates.py...
+Applied patch tests/aggregation/tests.py cleanly.
+Applied patch tests/postgres_tests/test_aggregates.py cleanly.
+ 
+[django__django__4.0] [django__django-14026] Return Code: 0 
+[django__django__4.0] [django__django-14026] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__4.0] [django__django-14026] Command: coverage run ./tests/runtests.py --verbosity 2 aggregation.tests postgres_tests.test_aggregates 
+[django__django__4.0] [django__django-14026] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14026] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application aggregation
+Importing application postgres_tests
+Found 65 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: aggregation, auth, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table aggregation_author
+    Creating table aggregation_publisher
+    Creating table aggregation_book
+    Creating table aggregation_store
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_array_agg_booleanfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_booleanfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_charfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_filter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_integerfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_integerfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_jsonfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_lookups (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_on_only_false_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_on_only_true_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_on_only_false_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_on_only_true_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_and_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_and_q_object (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_or_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_or_q_object (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_convert_value_deprecation (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_default_argument (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_empty_result_set (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_booleanfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_integerfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_orderable_agg_alternative_fields (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_ordering_isnt_cleared_for_array_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_array_agg_filter_in_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_array_agg_ordering_in_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_charfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_delimiter_escaping (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_filter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_filter_in_subquery_with_exclude (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_requires_delimiter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+tests (unittest.loader._FailedTest) ... ERROR
+test_alias_is_required (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_corr_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_correct_source_expressions (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_covar_pop_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_covar_pop_sample (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_default_argument (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_empty_result_set (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_missing_arguments_raises_exception (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_avgx_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_avgx_with_related_obj_and_number_as_argument (postgres_tests.test_aggregates.TestStatisticsAggregate)
+This is more complex test to check if JOIN on field and ... skipped 'PostgreSQL specific tests'
+test_regr_avgy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_count_default (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_count_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_intercept_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_r2_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_slope_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_sxx_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_sxy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_syy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_array_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_string_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_string_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 60, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 676, in run
+    self._callTestMethod(testMethod)
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 633, in _callTestMethod
+    method()
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/aggregation/tests.py", line 15, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 65 tests in 0.075s
+
+FAILED (errors=1, skipped=64)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14026] Return Code: 1 
+[django__django__4.0] [django__django-14026] TestsTime: 2.0160176753997803 
+[django__django__4.0] [django__django-14026] Test script run successful 
+[django__django__4.0] [django__django-14026] Removing coverage 
+[django__django__4.0] [django__django-14026] Command: coverage run ./tests/runtests.py --verbosity 2 aggregation.tests postgres_tests.test_aggregates 
+[django__django__4.0] [django__django-14026] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14026] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application aggregation
+Importing application postgres_tests
+Found 65 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: aggregation, auth, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table aggregation_author
+    Creating table aggregation_publisher
+    Creating table aggregation_book
+    Creating table aggregation_store
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_array_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_array_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_string_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_string_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+tests (unittest.loader._FailedTest) ... ERROR
+test_alias_is_required (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_corr_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_correct_source_expressions (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_covar_pop_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_covar_pop_sample (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_default_argument (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_empty_result_set (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_missing_arguments_raises_exception (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_avgx_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_avgx_with_related_obj_and_number_as_argument (postgres_tests.test_aggregates.TestStatisticsAggregate)
+This is more complex test to check if JOIN on field and ... skipped 'PostgreSQL specific tests'
+test_regr_avgy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_count_default (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_count_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_intercept_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_r2_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_slope_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_sxx_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_sxy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_syy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_booleanfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_booleanfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_charfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_filter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_integerfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_integerfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_jsonfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_lookups (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_on_only_false_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_on_only_true_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_on_only_false_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_on_only_true_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_and_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_and_q_object (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_or_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_or_q_object (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_convert_value_deprecation (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_default_argument (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_empty_result_set (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_booleanfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_integerfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_orderable_agg_alternative_fields (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_ordering_isnt_cleared_for_array_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_array_agg_filter_in_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_array_agg_ordering_in_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_charfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_delimiter_escaping (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_filter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_filter_in_subquery_with_exclude (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_requires_delimiter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 60, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 676, in run
+    self._callTestMethod(testMethod)
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 633, in _callTestMethod
+    method()
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/aggregation/tests.py", line 15, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 65 tests in 0.017s
+
+FAILED (errors=1, skipped=64)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14026] Return Code: 1 
+[django__django__4.0] [django__django-14026] TestsTime: 0.892850399017334 
+[django__django__4.0] [django__django-14026] Test script run successful 
+[django__django__4.0] [django__django-14026] Removing coverage 
+[django__django__4.0] [django__django-14026] Command: coverage run ./tests/runtests.py --verbosity 2 aggregation.tests postgres_tests.test_aggregates 
+[django__django__4.0] [django__django-14026] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14026] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application aggregation
+Importing application postgres_tests
+Found 65 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: aggregation, auth, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table aggregation_author
+    Creating table aggregation_publisher
+    Creating table aggregation_book
+    Creating table aggregation_store
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+tests (unittest.loader._FailedTest) ... ERROR
+test_array_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_array_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_string_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_string_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_alias_is_required (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_corr_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_correct_source_expressions (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_covar_pop_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_covar_pop_sample (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_default_argument (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_empty_result_set (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_missing_arguments_raises_exception (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_avgx_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_avgx_with_related_obj_and_number_as_argument (postgres_tests.test_aggregates.TestStatisticsAggregate)
+This is more complex test to check if JOIN on field and ... skipped 'PostgreSQL specific tests'
+test_regr_avgy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_count_default (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_count_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_intercept_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_r2_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_slope_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_sxx_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_sxy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_syy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_booleanfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_booleanfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_charfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_filter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_integerfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_integerfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_jsonfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_lookups (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_on_only_false_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_on_only_true_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_on_only_false_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_on_only_true_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_and_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_and_q_object (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_or_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_or_q_object (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_convert_value_deprecation (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_default_argument (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_empty_result_set (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_booleanfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_integerfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_orderable_agg_alternative_fields (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_ordering_isnt_cleared_for_array_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_array_agg_filter_in_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_array_agg_ordering_in_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_charfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_delimiter_escaping (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_filter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_filter_in_subquery_with_exclude (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_requires_delimiter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 60, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 676, in run
+    self._callTestMethod(testMethod)
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 633, in _callTestMethod
+    method()
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/aggregation/tests.py", line 15, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 65 tests in 0.022s
+
+FAILED (errors=1, skipped=64)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14026] Return Code: 1 
+[django__django__4.0] [django__django-14026] TestsTime: 0.7958102226257324 
+[django__django__4.0] [django__django-14026] Test script run successful 
+[django__django__4.0] [django__django-14026] Removing coverage 
+[django__django__4.0] [django__django-14026] Command: coverage run ./tests/runtests.py --verbosity 2 aggregation.tests postgres_tests.test_aggregates 
+[django__django__4.0] [django__django-14026] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14026] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application aggregation
+Importing application postgres_tests
+Found 65 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: aggregation, auth, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table aggregation_author
+    Creating table aggregation_publisher
+    Creating table aggregation_book
+    Creating table aggregation_store
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_array_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_array_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_string_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_string_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+tests (unittest.loader._FailedTest) ... ERROR
+test_alias_is_required (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_corr_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_correct_source_expressions (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_covar_pop_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_covar_pop_sample (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_default_argument (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_empty_result_set (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_missing_arguments_raises_exception (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_avgx_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_avgx_with_related_obj_and_number_as_argument (postgres_tests.test_aggregates.TestStatisticsAggregate)
+This is more complex test to check if JOIN on field and ... skipped 'PostgreSQL specific tests'
+test_regr_avgy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_count_default (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_count_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_intercept_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_r2_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_slope_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_sxx_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_sxy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_syy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_booleanfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_booleanfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_charfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_filter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_integerfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_integerfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_jsonfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_lookups (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_on_only_false_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_on_only_true_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_on_only_false_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_on_only_true_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_and_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_and_q_object (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_or_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_or_q_object (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_convert_value_deprecation (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_default_argument (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_empty_result_set (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_booleanfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_integerfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_orderable_agg_alternative_fields (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_ordering_isnt_cleared_for_array_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_array_agg_filter_in_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_array_agg_ordering_in_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_charfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_delimiter_escaping (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_filter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_filter_in_subquery_with_exclude (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_requires_delimiter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 60, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 676, in run
+    self._callTestMethod(testMethod)
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 633, in _callTestMethod
+    method()
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/aggregation/tests.py", line 15, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 65 tests in 0.031s
+
+FAILED (errors=1, skipped=64)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14026] Return Code: 1 
+[django__django__4.0] [django__django-14026] TestsTime: 1.1227452754974365 
+[django__django__4.0] [django__django-14026] Test script run successful 
+[django__django__4.0] [django__django-14026] Removing coverage 
+[django__django__4.0] [django__django-14026] Command: coverage run ./tests/runtests.py --verbosity 2 aggregation.tests postgres_tests.test_aggregates 
+[django__django__4.0] [django__django-14026] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14026] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application aggregation
+Importing application postgres_tests
+Found 65 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: aggregation, auth, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table aggregation_author
+    Creating table aggregation_publisher
+    Creating table aggregation_book
+    Creating table aggregation_store
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_array_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_array_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_string_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_string_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+tests (unittest.loader._FailedTest) ... ERROR
+test_array_agg_booleanfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_booleanfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_charfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_filter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_integerfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_integerfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_jsonfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_lookups (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_on_only_false_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_on_only_true_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_on_only_false_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_on_only_true_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_and_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_and_q_object (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_or_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_or_q_object (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_convert_value_deprecation (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_default_argument (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_empty_result_set (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_booleanfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_integerfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_orderable_agg_alternative_fields (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_ordering_isnt_cleared_for_array_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_array_agg_filter_in_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_array_agg_ordering_in_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_charfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_delimiter_escaping (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_filter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_filter_in_subquery_with_exclude (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_requires_delimiter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_alias_is_required (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_corr_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_correct_source_expressions (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_covar_pop_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_covar_pop_sample (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_default_argument (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_empty_result_set (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_missing_arguments_raises_exception (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_avgx_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_avgx_with_related_obj_and_number_as_argument (postgres_tests.test_aggregates.TestStatisticsAggregate)
+This is more complex test to check if JOIN on field and ... skipped 'PostgreSQL specific tests'
+test_regr_avgy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_count_default (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_count_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_intercept_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_r2_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_slope_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_sxx_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_sxy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_syy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 60, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 676, in run
+    self._callTestMethod(testMethod)
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 633, in _callTestMethod
+    method()
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/aggregation/tests.py", line 15, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 65 tests in 0.022s
+
+FAILED (errors=1, skipped=64)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14026] Return Code: 1 
+[django__django__4.0] [django__django-14026] TestsTime: 0.8706157207489014 
+[django__django__4.0] [django__django-14026] Test script run successful 
+[django__django__4.0] [django__django-14026] Removing coverage 
+[django__django__4.0] [django__django-14026] Command: coverage run ./tests/runtests.py --verbosity 2 aggregation.tests postgres_tests.test_aggregates 
+[django__django__4.0] [django__django-14026] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14026] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application aggregation
+Importing application postgres_tests
+Found 65 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: aggregation, auth, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table aggregation_author
+    Creating table aggregation_publisher
+    Creating table aggregation_book
+    Creating table aggregation_store
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_array_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_array_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_string_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_string_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_alias_is_required (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_corr_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_correct_source_expressions (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_covar_pop_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_covar_pop_sample (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_default_argument (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_empty_result_set (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_missing_arguments_raises_exception (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_avgx_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_avgx_with_related_obj_and_number_as_argument (postgres_tests.test_aggregates.TestStatisticsAggregate)
+This is more complex test to check if JOIN on field and ... skipped 'PostgreSQL specific tests'
+test_regr_avgy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_count_default (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_count_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_intercept_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_r2_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_slope_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_sxx_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_sxy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_syy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+tests (unittest.loader._FailedTest) ... ERROR
+test_array_agg_booleanfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_booleanfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_charfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_filter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_integerfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_integerfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_jsonfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_lookups (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_on_only_false_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_on_only_true_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_on_only_false_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_on_only_true_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_and_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_and_q_object (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_or_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_or_q_object (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_convert_value_deprecation (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_default_argument (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_empty_result_set (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_booleanfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_integerfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_orderable_agg_alternative_fields (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_ordering_isnt_cleared_for_array_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_array_agg_filter_in_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_array_agg_ordering_in_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_charfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_delimiter_escaping (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_filter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_filter_in_subquery_with_exclude (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_requires_delimiter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 60, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 676, in run
+    self._callTestMethod(testMethod)
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 633, in _callTestMethod
+    method()
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/aggregation/tests.py", line 15, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 65 tests in 0.028s
+
+FAILED (errors=1, skipped=64)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14026] Return Code: 1 
+[django__django__4.0] [django__django-14026] TestsTime: 1.001828908920288 
+[django__django__4.0] [django__django-14026] Test script run successful 
+[django__django__4.0] [django__django-14026] Removing coverage 
+[django__django__4.0] [django__django-14026] Command: coverage run ./tests/runtests.py --verbosity 2 aggregation.tests postgres_tests.test_aggregates 
+[django__django__4.0] [django__django-14026] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14026] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application aggregation
+Importing application postgres_tests
+Found 65 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: aggregation, auth, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table aggregation_author
+    Creating table aggregation_publisher
+    Creating table aggregation_book
+    Creating table aggregation_store
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_array_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_array_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_string_agg_distinct_false (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_string_agg_distinct_true (postgres_tests.test_aggregates.TestAggregateDistinct) ... skipped 'PostgreSQL specific tests'
+test_alias_is_required (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_corr_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_correct_source_expressions (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_covar_pop_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_covar_pop_sample (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_default_argument (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_empty_result_set (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_missing_arguments_raises_exception (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_avgx_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_avgx_with_related_obj_and_number_as_argument (postgres_tests.test_aggregates.TestStatisticsAggregate)
+This is more complex test to check if JOIN on field and ... skipped 'PostgreSQL specific tests'
+test_regr_avgy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_count_default (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_count_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_intercept_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_r2_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_slope_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_sxx_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_sxy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_regr_syy_general (postgres_tests.test_aggregates.TestStatisticsAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_booleanfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_booleanfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_charfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_filter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_integerfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_integerfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_jsonfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_array_agg_lookups (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_on_only_false_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_and_on_only_true_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_on_only_false_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bit_or_on_only_true_values (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_and_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_and_q_object (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_or_general (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_bool_or_q_object (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_convert_value_deprecation (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_default_argument (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_empty_result_set (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_booleanfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_integerfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_jsonb_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_orderable_agg_alternative_fields (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_ordering_isnt_cleared_for_array_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_array_agg_filter_in_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_array_agg_ordering_in_subquery (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_charfield (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_charfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_delimiter_escaping (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_filter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_filter_in_subquery_with_exclude (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_jsonfield_ordering (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+test_string_agg_requires_delimiter (postgres_tests.test_aggregates.TestGeneralAggregate) ... skipped 'PostgreSQL specific tests'
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 60, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 676, in run
+    self._callTestMethod(testMethod)
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 633, in _callTestMethod
+    method()
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/aggregation/tests.py", line 15, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 65 tests in 0.015s
+
+FAILED (errors=1, skipped=64)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14026] Return Code: 1 
+[django__django__4.0] [django__django-14026] TestsTime: 0.7296288013458252 
+[django__django__4.0] [django__django-14026] Test script run successful 
+[django__django__4.0] [django__django-14026] Removing coverage 
+[django__django__4.0] [django__django-14026] >>>>> Tests configfull pred
+ 
+[django__django__4.0] [django__django-14026] TestsTime: 0.0 
+[django__django__4.0] [django__django-14026] >>>>> Some Tests Failed 
+[django__django__4.0] [django__django-14026] >>>>> Unfiltered Tests Failed 

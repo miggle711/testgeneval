@@ -1,0 +1,578 @@
+[django__django__4.1] [django__django-15252] Task Metadata:
+	- Instance ID: django__django-15252
+	- Testbed: django__django__4.1
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.9.19
+ 
+[django__django__4.1] [django__django-15252] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__4.1] [django__django-15252] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15252] Std. Output:
+ 
+[django__django__4.1] [django__django-15252] Return Code: 0 
+[django__django__4.1] [django__django-15252] Command: git -c advice.detachedHead=false checkout 361bb8f786f112ee275be136795c0b1ecefff928 
+[django__django__4.1] [django__django-15252] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15252] Std. Output:
+Previous HEAD position was 647480166b Refs #33685 -- Doc'd that using PostgreSQL's service names for testing purposes is not supported.
+HEAD is now at 361bb8f786 Refs #26872 -- Fixed wrapping of long choices in ModelAdmin.list_filter.
+ 
+[django__django__4.1] [django__django-15252] Return Code: 0 
+[django__django__4.1] [django__django-15252] Command: git diff > /opt/temp_django__django-15252_gold_init.patch 
+[django__django__4.1] [django__django-15252] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15252] Std. Output:
+ 
+[django__django__4.1] [django__django-15252] Return Code: 0 
+[django__django__4.1] [django__django-15252] Command: git apply -v /opt/temp_django__django-15252_gold.patch 
+[django__django__4.1] [django__django-15252] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15252] Std. Output:
+Checking patch django/db/migrations/executor.py...
+Applied patch django/db/migrations/executor.py cleanly.
+ 
+[django__django__4.1] [django__django-15252] Return Code: 0 
+[django__django__4.1] [django__django-15252] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__4.1] [django__django-15252] Command: git diff > /opt/temp_django__django-15252_test_init.patch 
+[django__django__4.1] [django__django-15252] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15252] Std. Output:
+ 
+[django__django__4.1] [django__django-15252] Return Code: 0 
+[django__django__4.1] [django__django-15252] Command: git restore tests/backends/base/test_creation.py 
+[django__django__4.1] [django__django-15252] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15252] Std. Output:
+ 
+[django__django__4.1] [django__django-15252] Return Code: 0 
+[django__django__4.1] [django__django-15252] Command: git restore tests/migrations/test_executor.py 
+[django__django__4.1] [django__django-15252] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15252] Std. Output:
+ 
+[django__django__4.1] [django__django-15252] Return Code: 0 
+[django__django__4.1] [django__django-15252] Command: git apply -v /opt/temp_django__django-15252_test.patch 
+[django__django__4.1] [django__django-15252] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15252] Std. Output:
+Checking patch tests/backends/base/test_creation.py...
+Checking patch tests/migrations/test_executor.py...
+Applied patch tests/backends/base/test_creation.py cleanly.
+Applied patch tests/migrations/test_executor.py cleanly.
+ 
+[django__django__4.1] [django__django-15252] Return Code: 0 
+[django__django__4.1] [django__django-15252] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__4.1] [django__django-15252] Command: coverage run ./tests/runtests.py --verbosity 2 backends.base.test_creation migrations.test_executor 
+[django__django__4.1] [django__django-15252] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15252] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Importing application backends
+Found 13 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, backends, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Creating table backends_square
+    Creating table backends_person
+    Creating table backends_schoolclass
+    Creating table backends_verylongmodelnamezzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+    Creating table backends_tag
+    Creating table CaseSensitive_Post
+    Creating table backends_reporter
+    Creating table backends_article
+    Creating table backends_item
+    Creating table backends_object
+    Creating table backends_objectreference
+    Creating table backends_objectselfreference
+    Creating table backends_circulara
+    Creating table backends_circularb
+    Creating table backends_rawdata
+    Creating table backends_author
+    Creating table backends_book
+    Creating table order
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_executor (unittest.loader._FailedTest) ... ERROR
+test_mark_expected_failures_and_skips (backends.base.test_creation.TestMarkTests) ... ok
+test_custom_test_name (backends.base.test_creation.TestDbSignatureTests) ... ok
+test_custom_test_name_with_test_prefix (backends.base.test_creation.TestDbSignatureTests) ... ok
+test_default_name (backends.base.test_creation.TestDbSignatureTests) ... ok
+test_mark_expected_failures_and_skips_call (backends.base.test_creation.TestDbCreationTests)
+mark_expected_failures_and_skips() isn't called unless ... ok
+test_migrate_test_setting_false (backends.base.test_creation.TestDbCreationTests) ... ok
+test_migrate_test_setting_false_ensure_schema (backends.base.test_creation.TestDbCreationTests) ... ok
+test_migrate_test_setting_true (backends.base.test_creation.TestDbCreationTests) ... ok
+test_circular_reference (backends.base.test_creation.TestDeserializeDbFromString) ... ok
+test_circular_reference_with_natural_key (backends.base.test_creation.TestDeserializeDbFromString) ... ok
+test_self_reference (backends.base.test_creation.TestDeserializeDbFromString) ... ok
+test_serialize_db_to_string_base_manager (backends.base.test_creation.TestDeserializeDbFromString) ... ok
+
+======================================================================
+ERROR: test_executor (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/case.py", line 59, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/case.py", line 592, in run
+    self._callTestMethod(testMethod)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/case.py", line 550, in _callTestMethod
+    method()
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: test_executor
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/migrations/test_executor.py", line 14, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 13 tests in 2.400s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.1] [django__django-15252] Return Code: 1 
+[django__django__4.1] [django__django-15252] TestsTime: 4.572941303253174 
+[django__django__4.1] [django__django-15252] Test script run successful 
+[django__django__4.1] [django__django-15252] Removing coverage 
+[django__django__4.1] [django__django-15252] Command: coverage run ./tests/runtests.py --verbosity 2 backends.base.test_creation migrations.test_executor 
+[django__django__4.1] [django__django-15252] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15252] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Importing application backends
+Found 13 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, backends, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Creating table backends_square
+    Creating table backends_person
+    Creating table backends_schoolclass
+    Creating table backends_verylongmodelnamezzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+    Creating table backends_tag
+    Creating table CaseSensitive_Post
+    Creating table backends_reporter
+    Creating table backends_article
+    Creating table backends_item
+    Creating table backends_object
+    Creating table backends_objectreference
+    Creating table backends_objectselfreference
+    Creating table backends_circulara
+    Creating table backends_circularb
+    Creating table backends_rawdata
+    Creating table backends_author
+    Creating table backends_book
+    Creating table order
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_custom_test_name (backends.base.test_creation.TestDbSignatureTests) ... ok
+test_custom_test_name_with_test_prefix (backends.base.test_creation.TestDbSignatureTests) ... ok
+test_default_name (backends.base.test_creation.TestDbSignatureTests) ... ok
+test_executor (unittest.loader._FailedTest) ... ERROR
+test_mark_expected_failures_and_skips (backends.base.test_creation.TestMarkTests) ... ok
+test_mark_expected_failures_and_skips_call (backends.base.test_creation.TestDbCreationTests)
+mark_expected_failures_and_skips() isn't called unless ... ok
+test_migrate_test_setting_false (backends.base.test_creation.TestDbCreationTests) ... ok
+test_migrate_test_setting_false_ensure_schema (backends.base.test_creation.TestDbCreationTests) ... ok
+test_migrate_test_setting_true (backends.base.test_creation.TestDbCreationTests) ... ok
+test_circular_reference (backends.base.test_creation.TestDeserializeDbFromString) ... ok
+test_circular_reference_with_natural_key (backends.base.test_creation.TestDeserializeDbFromString) ... ok
+test_self_reference (backends.base.test_creation.TestDeserializeDbFromString) ... ok
+test_serialize_db_to_string_base_manager (backends.base.test_creation.TestDeserializeDbFromString) ... ok
+
+======================================================================
+ERROR: test_executor (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/case.py", line 59, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/case.py", line 592, in run
+    self._callTestMethod(testMethod)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/case.py", line 550, in _callTestMethod
+    method()
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: test_executor
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/migrations/test_executor.py", line 14, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.105s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.1] [django__django-15252] Return Code: 1 
+[django__django__4.1] [django__django-15252] TestsTime: 1.0127267837524414 
+[django__django__4.1] [django__django-15252] Test script run successful 
+[django__django__4.1] [django__django-15252] Removing coverage 
+[django__django__4.1] [django__django-15252] Command: coverage run ./tests/runtests.py --verbosity 2 backends.base.test_creation migrations.test_executor 
+[django__django__4.1] [django__django-15252] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15252] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Importing application backends
+Found 13 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, backends, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Creating table backends_square
+    Creating table backends_person
+    Creating table backends_schoolclass
+    Creating table backends_verylongmodelnamezzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+    Creating table backends_tag
+    Creating table CaseSensitive_Post
+    Creating table backends_reporter
+    Creating table backends_article
+    Creating table backends_item
+    Creating table backends_object
+    Creating table backends_objectreference
+    Creating table backends_objectselfreference
+    Creating table backends_circulara
+    Creating table backends_circularb
+    Creating table backends_rawdata
+    Creating table backends_author
+    Creating table backends_book
+    Creating table order
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_executor (unittest.loader._FailedTest) ... ERROR
+test_custom_test_name (backends.base.test_creation.TestDbSignatureTests) ... ok
+test_custom_test_name_with_test_prefix (backends.base.test_creation.TestDbSignatureTests) ... ok
+test_default_name (backends.base.test_creation.TestDbSignatureTests) ... ok
+test_mark_expected_failures_and_skips (backends.base.test_creation.TestMarkTests) ... ok
+test_mark_expected_failures_and_skips_call (backends.base.test_creation.TestDbCreationTests)
+mark_expected_failures_and_skips() isn't called unless ... ok
+test_migrate_test_setting_false (backends.base.test_creation.TestDbCreationTests) ... ok
+test_migrate_test_setting_false_ensure_schema (backends.base.test_creation.TestDbCreationTests) ... ok
+test_migrate_test_setting_true (backends.base.test_creation.TestDbCreationTests) ... ok
+test_circular_reference (backends.base.test_creation.TestDeserializeDbFromString) ... ok
+test_circular_reference_with_natural_key (backends.base.test_creation.TestDeserializeDbFromString) ... ok
+test_self_reference (backends.base.test_creation.TestDeserializeDbFromString) ... ok
+test_serialize_db_to_string_base_manager (backends.base.test_creation.TestDeserializeDbFromString) ... ok
+
+======================================================================
+ERROR: test_executor (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/case.py", line 59, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/case.py", line 592, in run
+    self._callTestMethod(testMethod)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/case.py", line 550, in _callTestMethod
+    method()
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: test_executor
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/migrations/test_executor.py", line 14, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.122s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.1] [django__django-15252] Return Code: 1 
+[django__django__4.1] [django__django-15252] TestsTime: 0.9414470195770264 
+[django__django__4.1] [django__django-15252] Test script run successful 
+[django__django__4.1] [django__django-15252] Removing coverage 
+[django__django__4.1] [django__django-15252] Command: coverage run ./tests/runtests.py --verbosity 2 backends.base.test_creation migrations.test_executor 
+[django__django__4.1] [django__django-15252] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15252] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Importing application backends
+Found 13 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, backends, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Creating table backends_square
+    Creating table backends_person
+    Creating table backends_schoolclass
+    Creating table backends_verylongmodelnamezzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+    Creating table backends_tag
+    Creating table CaseSensitive_Post
+    Creating table backends_reporter
+    Creating table backends_article
+    Creating table backends_item
+    Creating table backends_object
+    Creating table backends_objectreference
+    Creating table backends_objectselfreference
+    Creating table backends_circulara
+    Creating table backends_circularb
+    Creating table backends_rawdata
+    Creating table backends_author
+    Creating table backends_book
+    Creating table order
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_executor (unittest.loader._FailedTest) ... ERROR
+test_mark_expected_failures_and_skips (backends.base.test_creation.TestMarkTests) ... ok
+test_custom_test_name (backends.base.test_creation.TestDbSignatureTests) ... ok
+test_custom_test_name_with_test_prefix (backends.base.test_creation.TestDbSignatureTests) ... ok
+test_default_name (backends.base.test_creation.TestDbSignatureTests) ... ok
+test_mark_expected_failures_and_skips_call (backends.base.test_creation.TestDbCreationTests)
+mark_expected_failures_and_skips() isn't called unless ... ok
+test_migrate_test_setting_false (backends.base.test_creation.TestDbCreationTests) ... ok
+test_migrate_test_setting_false_ensure_schema (backends.base.test_creation.TestDbCreationTests) ... ok
+test_migrate_test_setting_true (backends.base.test_creation.TestDbCreationTests) ... ok
+test_circular_reference (backends.base.test_creation.TestDeserializeDbFromString) ... ok
+test_circular_reference_with_natural_key (backends.base.test_creation.TestDeserializeDbFromString) ... ok
+test_self_reference (backends.base.test_creation.TestDeserializeDbFromString) ... ok
+test_serialize_db_to_string_base_manager (backends.base.test_creation.TestDeserializeDbFromString) ... ok
+
+======================================================================
+ERROR: test_executor (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/case.py", line 59, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/case.py", line 592, in run
+    self._callTestMethod(testMethod)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/case.py", line 550, in _callTestMethod
+    method()
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: test_executor
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/migrations/test_executor.py", line 14, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.252s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.1] [django__django-15252] Return Code: 1 
+[django__django__4.1] [django__django-15252] TestsTime: 1.4406230449676514 
+[django__django__4.1] [django__django-15252] Test script run successful 
+[django__django__4.1] [django__django-15252] Removing coverage 
+[django__django__4.1] [django__django-15252] Command: coverage run ./tests/runtests.py --verbosity 2 backends.base.test_creation migrations.test_executor 
+[django__django__4.1] [django__django-15252] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15252] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Importing application backends
+Found 13 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, backends, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Creating table backends_square
+    Creating table backends_person
+    Creating table backends_schoolclass
+    Creating table backends_verylongmodelnamezzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+    Creating table backends_tag
+    Creating table CaseSensitive_Post
+    Creating table backends_reporter
+    Creating table backends_article
+    Creating table backends_item
+    Creating table backends_object
+    Creating table backends_objectreference
+    Creating table backends_objectselfreference
+    Creating table backends_circulara
+    Creating table backends_circularb
+    Creating table backends_rawdata
+    Creating table backends_author
+    Creating table backends_book
+    Creating table order
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_custom_test_name (backends.base.test_creation.TestDbSignatureTests) ... ok
+test_custom_test_name_with_test_prefix (backends.base.test_creation.TestDbSignatureTests) ... ok
+test_default_name (backends.base.test_creation.TestDbSignatureTests) ... ok
+test_executor (unittest.loader._FailedTest) ... ERROR
+test_mark_expected_failures_and_skips (backends.base.test_creation.TestMarkTests) ... ok
+test_mark_expected_failures_and_skips_call (backends.base.test_creation.TestDbCreationTests)
+mark_expected_failures_and_skips() isn't called unless ... ok
+test_migrate_test_setting_false (backends.base.test_creation.TestDbCreationTests) ... ok
+test_migrate_test_setting_false_ensure_schema (backends.base.test_creation.TestDbCreationTests) ... ok
+test_migrate_test_setting_true (backends.base.test_creation.TestDbCreationTests) ... ok
+test_circular_reference (backends.base.test_creation.TestDeserializeDbFromString) ... ok
+test_circular_reference_with_natural_key (backends.base.test_creation.TestDeserializeDbFromString) ... ok
+test_self_reference (backends.base.test_creation.TestDeserializeDbFromString) ... ok
+test_serialize_db_to_string_base_manager (backends.base.test_creation.TestDeserializeDbFromString) ... ok
+
+======================================================================
+ERROR: test_executor (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/case.py", line 59, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/case.py", line 592, in run
+    self._callTestMethod(testMethod)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/case.py", line 550, in _callTestMethod
+    method()
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: test_executor
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/migrations/test_executor.py", line 14, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.208s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.1] [django__django-15252] Return Code: 1 
+[django__django__4.1] [django__django-15252] TestsTime: 1.3754527568817139 
+[django__django__4.1] [django__django-15252] Test script run successful 
+[django__django__4.1] [django__django-15252] Removing coverage 
+[django__django__4.1] [django__django-15252] >>>>> Tests configfull pred
+ 
+[django__django__4.1] [django__django-15252] TestsTime: 0.0 
+[django__django__4.1] [django__django-15252] >>>>> Some Tests Failed 
+[django__django__4.1] [django__django-15252] >>>>> Unfiltered Tests Failed 

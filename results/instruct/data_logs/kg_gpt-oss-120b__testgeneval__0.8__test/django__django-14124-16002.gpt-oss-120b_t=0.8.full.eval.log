@@ -1,0 +1,795 @@
+[django__django__4.0] [django__django-14124] Task Metadata:
+	- Instance ID: django__django-14124
+	- Testbed: django__django__4.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.8.19
+ 
+[django__django__4.0] [django__django-14124] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14124] Std. Output:
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] Command: git -c advice.detachedHead=false checkout 4a80d0f22021bb0af842f038eba45958e9576bec 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14124] Std. Output:
+Previous HEAD position was 475cffd1d6 Fixed typo in docs/intro/reusable-apps.txt.
+HEAD is now at 4a80d0f220 Removed dead link in docs/topics/http/sessions.txt.
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] Command: git diff > /opt/temp_django__django-14124_gold_init.patch 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14124] Std. Output:
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] Command: git apply -v /opt/temp_django__django-14124_gold.patch 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14124] Std. Output:
+Checking patch django/contrib/admindocs/utils.py...
+Checking patch django/urls/resolvers.py...
+Checking patch django/views/debug.py...
+Checking patch django/views/generic/base.py...
+Applied patch django/contrib/admindocs/utils.py cleanly.
+Applied patch django/urls/resolvers.py cleanly.
+Applied patch django/views/debug.py cleanly.
+Applied patch django/views/generic/base.py cleanly.
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__4.0] [django__django-14124] Command: git diff > /opt/temp_django__django-14124_test_init.patch 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14124] Std. Output:
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] Command: git restore tests/check_framework/test_urls.py 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14124] Std. Output:
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] Command: git restore tests/generic_views/test_base.py 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14124] Std. Output:
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] Command: git apply -v /opt/temp_django__django-14124_test.patch 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14124] Std. Output:
+Checking patch tests/check_framework/test_urls.py...
+Checking patch tests/check_framework/urls/bad_class_based_error_handlers.py...
+Checking patch tests/check_framework/urls/bad_error_handlers.py => tests/check_framework/urls/bad_function_based_error_handlers.py...
+Checking patch tests/check_framework/urls/good_class_based_error_handlers.py...
+Checking patch tests/check_framework/urls/good_error_handlers.py => tests/check_framework/urls/good_function_based_error_handlers.py...
+Checking patch tests/generic_views/test_base.py...
+Applied patch tests/check_framework/test_urls.py cleanly.
+Applied patch tests/check_framework/urls/bad_class_based_error_handlers.py cleanly.
+Applied patch tests/check_framework/urls/bad_error_handlers.py => tests/check_framework/urls/bad_function_based_error_handlers.py cleanly.
+Applied patch tests/check_framework/urls/good_class_based_error_handlers.py cleanly.
+Applied patch tests/check_framework/urls/good_error_handlers.py => tests/check_framework/urls/good_function_based_error_handlers.py cleanly.
+Applied patch tests/generic_views/test_base.py cleanly.
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__4.0] [django__django-14124] Command: coverage run ./tests/runtests.py --verbosity 2 check_framework.test_urls check_framework.urls.bad_class_based_error_handlers check_framework.urls.bad_function_based_error_handlers check_framework.urls.good_class_based_error_handlers check_framework.urls.good_function_based_error_handlers generic_views.test_base 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14124] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application generic_views
+Importing application check_framework
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_as_view_returns_callable_with_correct_attributes (generic_views.test_base.AsViewTests)
+``as_view`` should return a callable that: ... ok
+test_empty_string_no_errors (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_media_url_no_slash (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_slash_no_errors (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_static_url_double_slash_allowed (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_static_url_no_slash (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_bad_class_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_bad_function_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_bad_handlers_invalid_path (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_good_class_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_good_function_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_beginning_with_caret (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_contains_re_named_group (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_ending_with_dollar (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_beginning_with_slash (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_beginning_with_slash_append_slash (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_non_unique_namespaces (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_resolver_recursive (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_unique_namespaces (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_contains_included_tuple (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_contains_tuple_not_url_instance (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_other (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_string (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_tuple (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_include_with_dollar (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_name_with_colon (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_root_urlconf_in_settings (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_warnings (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_warnings_i18n (check_framework.test_urls.CheckUrlConfigTests) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 0.317s
+
+OK
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] TestsTime: 1.341139554977417 
+[django__django__4.0] [django__django-14124] Test script run successful 
+[django__django__4.0] [django__django-14124] Removing coverage 
+[django__django__4.0] [django__django-14124] Command: coverage run ./tests/runtests.py --verbosity 2 check_framework.test_urls check_framework.urls.bad_class_based_error_handlers check_framework.urls.bad_function_based_error_handlers check_framework.urls.good_class_based_error_handlers check_framework.urls.good_function_based_error_handlers generic_views.test_base 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14124] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application generic_views
+Importing application check_framework
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_as_view_rejects_http_method_name_as_initkwarg (generic_views.test_base.AsViewTests)
+Passing a key that matches one of ``http_method_names`` must raise ... ok
+test_beginning_with_caret (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_contains_re_named_group (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_ending_with_dollar (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_empty_string_no_errors (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_media_url_no_slash (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_slash_no_errors (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_static_url_double_slash_allowed (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_static_url_no_slash (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_bad_class_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_bad_function_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_bad_handlers_invalid_path (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_good_class_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_good_function_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_beginning_with_slash (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_beginning_with_slash_append_slash (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_non_unique_namespaces (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_resolver_recursive (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_unique_namespaces (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_contains_included_tuple (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_contains_tuple_not_url_instance (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_other (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_string (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_tuple (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_include_with_dollar (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_name_with_colon (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_root_urlconf_in_settings (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_warnings (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_warnings_i18n (check_framework.test_urls.CheckUrlConfigTests) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 0.041s
+
+OK
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] TestsTime: 0.4618408679962158 
+[django__django__4.0] [django__django-14124] Test script run successful 
+[django__django__4.0] [django__django-14124] Removing coverage 
+[django__django__4.0] [django__django-14124] Command: coverage run ./tests/runtests.py --verbosity 2 check_framework.test_urls check_framework.urls.bad_class_based_error_handlers check_framework.urls.bad_function_based_error_handlers check_framework.urls.good_class_based_error_handlers check_framework.urls.good_function_based_error_handlers generic_views.test_base 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14124] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application generic_views
+Importing application check_framework
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_as_view_rejects_unknown_attribute_as_initkwarg (generic_views.test_base.AsViewTests)
+Passing a key that is not an attribute of the view class must raise ... ok
+test_bad_class_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_bad_function_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_bad_handlers_invalid_path (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_good_class_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_good_function_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_beginning_with_slash (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_beginning_with_slash_append_slash (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_non_unique_namespaces (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_resolver_recursive (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_unique_namespaces (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_contains_included_tuple (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_contains_tuple_not_url_instance (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_other (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_string (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_tuple (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_include_with_dollar (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_name_with_colon (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_root_urlconf_in_settings (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_warnings (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_warnings_i18n (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_beginning_with_caret (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_contains_re_named_group (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_ending_with_dollar (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_empty_string_no_errors (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_media_url_no_slash (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_slash_no_errors (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_static_url_double_slash_allowed (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_static_url_no_slash (check_framework.test_urls.CheckURLSettingsTests) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 0.096s
+
+OK
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] TestsTime: 0.7022905349731445 
+[django__django__4.0] [django__django-14124] Test script run successful 
+[django__django__4.0] [django__django-14124] Removing coverage 
+[django__django__4.0] [django__django-14124] Command: coverage run ./tests/runtests.py --verbosity 2 check_framework.test_urls check_framework.urls.bad_class_based_error_handlers check_framework.urls.bad_function_based_error_handlers check_framework.urls.good_class_based_error_handlers check_framework.urls.good_function_based_error_handlers generic_views.test_base 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14124] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application generic_views
+Importing application check_framework
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_as_view_raises_attribute_error_when_setup_missing_request (generic_views.test_base.AsViewTests)
+If a subclass overrides ``setup`` and forgets to call ``super()``, ... ok
+test_bad_class_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_bad_function_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_bad_handlers_invalid_path (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_good_class_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_good_function_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_empty_string_no_errors (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_media_url_no_slash (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_slash_no_errors (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_static_url_double_slash_allowed (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_static_url_no_slash (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_beginning_with_caret (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_contains_re_named_group (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_ending_with_dollar (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_beginning_with_slash (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_beginning_with_slash_append_slash (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_non_unique_namespaces (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_resolver_recursive (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_unique_namespaces (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_contains_included_tuple (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_contains_tuple_not_url_instance (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_other (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_string (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_tuple (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_include_with_dollar (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_name_with_colon (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_root_urlconf_in_settings (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_warnings (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_warnings_i18n (check_framework.test_urls.CheckUrlConfigTests) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 0.067s
+
+OK
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] TestsTime: 0.5789377689361572 
+[django__django__4.0] [django__django-14124] Test script run successful 
+[django__django__4.0] [django__django-14124] Removing coverage 
+[django__django__4.0] [django__django-14124] Command: coverage run ./tests/runtests.py --verbosity 2 check_framework.test_urls check_framework.urls.bad_class_based_error_handlers check_framework.urls.bad_function_based_error_handlers check_framework.urls.good_class_based_error_handlers check_framework.urls.good_function_based_error_handlers generic_views.test_base 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14124] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application generic_views
+Importing application check_framework
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_view_name_unchanged (generic_views.test_base.AsViewTests)
+``as_view`` intentionally leaves ``__name__`` and ``__qualname__`` ... ok
+test_empty_string_no_errors (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_media_url_no_slash (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_slash_no_errors (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_static_url_double_slash_allowed (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_static_url_no_slash (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_bad_class_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_bad_function_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_bad_handlers_invalid_path (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_good_class_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_good_function_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_beginning_with_caret (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_contains_re_named_group (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_ending_with_dollar (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_beginning_with_slash (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_beginning_with_slash_append_slash (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_non_unique_namespaces (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_resolver_recursive (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_unique_namespaces (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_contains_included_tuple (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_contains_tuple_not_url_instance (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_other (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_string (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_tuple (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_include_with_dollar (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_name_with_colon (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_root_urlconf_in_settings (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_warnings (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_warnings_i18n (check_framework.test_urls.CheckUrlConfigTests) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 0.041s
+
+OK
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] TestsTime: 0.572716236114502 
+[django__django__4.0] [django__django-14124] Test script run successful 
+[django__django__4.0] [django__django-14124] Removing coverage 
+[django__django__4.0] [django__django-14124] Command: coverage run ./tests/runtests.py --verbosity 2 check_framework.test_urls check_framework.urls.bad_class_based_error_handlers check_framework.urls.bad_function_based_error_handlers check_framework.urls.good_class_based_error_handlers check_framework.urls.good_function_based_error_handlers generic_views.test_base 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14124] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application generic_views
+Importing application check_framework
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_bad_class_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_bad_function_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_bad_handlers_invalid_path (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_good_class_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_good_function_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_empty_string_no_errors (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_media_url_no_slash (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_slash_no_errors (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_static_url_double_slash_allowed (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_static_url_no_slash (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_setup_populates_args_and_kwargs (generic_views.test_base.AsViewTests)
+The default ``setup`` implementation should store positional and keyword ... ok
+test_beginning_with_slash (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_beginning_with_slash_append_slash (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_non_unique_namespaces (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_resolver_recursive (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_unique_namespaces (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_contains_included_tuple (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_contains_tuple_not_url_instance (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_other (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_string (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_tuple (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_include_with_dollar (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_name_with_colon (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_root_urlconf_in_settings (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_warnings (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_warnings_i18n (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_beginning_with_caret (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_contains_re_named_group (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_ending_with_dollar (check_framework.test_urls.UpdatedToPathTests) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 0.081s
+
+OK
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] TestsTime: 0.7760875225067139 
+[django__django__4.0] [django__django-14124] Test script run successful 
+[django__django__4.0] [django__django-14124] Removing coverage 
+[django__django__4.0] [django__django-14124] Command: coverage run ./tests/runtests.py --verbosity 2 check_framework.test_urls check_framework.urls.bad_class_based_error_handlers check_framework.urls.bad_function_based_error_handlers check_framework.urls.good_class_based_error_handlers check_framework.urls.good_function_based_error_handlers generic_views.test_base 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14124] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application generic_views
+Importing application check_framework
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_dispatch_method_not_allowed (generic_views.test_base.AsViewTests)
+When an HTTP method is not implemented on the view, ``dispatch`` should ... ok
+test_bad_class_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_bad_function_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_bad_handlers_invalid_path (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_good_class_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_good_function_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_empty_string_no_errors (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_media_url_no_slash (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_slash_no_errors (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_static_url_double_slash_allowed (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_static_url_no_slash (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_beginning_with_caret (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_contains_re_named_group (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_ending_with_dollar (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_beginning_with_slash (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_beginning_with_slash_append_slash (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_non_unique_namespaces (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_resolver_recursive (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_unique_namespaces (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_contains_included_tuple (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_contains_tuple_not_url_instance (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_other (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_string (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_tuple (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_include_with_dollar (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_name_with_colon (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_root_urlconf_in_settings (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_warnings (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_warnings_i18n (check_framework.test_urls.CheckUrlConfigTests) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 0.038s
+
+OK
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] TestsTime: 0.4627048969268799 
+[django__django__4.0] [django__django-14124] Test script run successful 
+[django__django__4.0] [django__django-14124] Removing coverage 
+[django__django__4.0] [django__django-14124] >>>>> Tests configfull pred
+ 
+[django__django__4.0] [django__django-14124] Test Script:  coverage run ./tests/runtests.py --verbosity 2 check_framework.test_urls check_framework.urls.bad_class_based_error_handlers check_framework.urls.bad_function_based_error_handlers check_framework.urls.good_class_based_error_handlers check_framework.urls.good_function_based_error_handlers generic_views.test_base;
+ 
+[django__django__4.0] [django__django-14124] Command: coverage run ./tests/runtests.py --verbosity 2 check_framework.test_urls check_framework.urls.bad_class_based_error_handlers check_framework.urls.bad_function_based_error_handlers check_framework.urls.good_class_based_error_handlers check_framework.urls.good_function_based_error_handlers generic_views.test_base 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14124] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application generic_views
+Importing application check_framework
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_as_view_raises_attribute_error_when_setup_missing_request (generic_views.test_base.AsViewTests)
+If a subclass overrides ``setup`` and forgets to call ``super()``, ... ok
+test_as_view_rejects_http_method_name_as_initkwarg (generic_views.test_base.AsViewTests)
+Passing a key that matches one of ``http_method_names`` must raise ... ok
+test_as_view_rejects_unknown_attribute_as_initkwarg (generic_views.test_base.AsViewTests)
+Passing a key that is not an attribute of the view class must raise ... ok
+test_as_view_returns_callable_with_correct_attributes (generic_views.test_base.AsViewTests)
+``as_view`` should return a callable that: ... ok
+test_dispatch_method_not_allowed (generic_views.test_base.AsViewTests)
+When an HTTP method is not implemented on the view, ``dispatch`` should ... ok
+test_setup_populates_args_and_kwargs (generic_views.test_base.AsViewTests)
+The default ``setup`` implementation should store positional and keyword ... ok
+test_view_name_unchanged (generic_views.test_base.AsViewTests)
+``as_view`` intentionally leaves ``__name__`` and ``__qualname__`` ... ok
+test_empty_string_no_errors (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_media_url_no_slash (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_slash_no_errors (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_static_url_double_slash_allowed (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_static_url_no_slash (check_framework.test_urls.CheckURLSettingsTests) ... ok
+test_bad_class_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_bad_function_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_bad_handlers_invalid_path (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_good_class_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_good_function_based_handlers (check_framework.test_urls.CheckCustomErrorHandlersTests) ... ok
+test_beginning_with_caret (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_contains_re_named_group (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_ending_with_dollar (check_framework.test_urls.UpdatedToPathTests) ... ok
+test_beginning_with_slash (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_beginning_with_slash_append_slash (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_non_unique_namespaces (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_resolver_recursive (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_check_unique_namespaces (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_contains_included_tuple (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_contains_tuple_not_url_instance (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_other (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_string (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_get_warning_for_invalid_pattern_tuple (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_include_with_dollar (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_name_with_colon (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_root_urlconf_in_settings (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_warnings (check_framework.test_urls.CheckUrlConfigTests) ... ok
+test_no_warnings_i18n (check_framework.test_urls.CheckUrlConfigTests) ... ok
+
+----------------------------------------------------------------------
+Ran 35 tests in 0.033s
+
+OK
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] TestsTime: 0.6747493743896484 
+[django__django__4.0] [django__django-14124] 
+>>>>> All Tests Passed
+ 
+[django__django__4.0] [django__django-14124] Current Working Directory: /opt/django__django 
+[django__django__4.0] [django__django-14124] Command: coverage json -o coverage.json 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14124] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] 
+CoverageLOG: 45.945945945945944%
+ 
+[django__django__4.0] [django__django-14124] 
+FunctionCoverageLOG: 55.00000000000001%
+ 
+[django__django__4.0] [django__django-14124] Running mutation testing 
+[django__django__4.0] [django__django-14124] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14124] Std. Output:
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__4.0] [django__django-14124] Std. Output:
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14124] Std. Output:
+46.34 46.34 46.34
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] Command: cr-report mutation.sqlite 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14124] Std. Output:
+[job-id] 6d3965386e2241b7a07a8213c7cec03d
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] 4cac4f17e343407a84fab6006e0615fd
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Add 1
+worker outcome: normal, test outcome: killed
+[job-id] 9df708b42b3843b8a5b1639c39d1515d
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Add 2
+worker outcome: normal, test outcome: killed
+[job-id] b3a20e9ce5494ab083bab347cf939818
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Add 3
+worker outcome: normal, test outcome: survived
+[job-id] 38e3267482e046e48ac2346614cc9d52
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Add 4
+worker outcome: normal, test outcome: survived
+[job-id] 7680f67105ef45659708fe763ccbfb63
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 004e2cb168f44dd1a66991b9dfca5a2f
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Sub 1
+worker outcome: normal, test outcome: killed
+[job-id] b98de08c51534ec5a832d605315ed1bd
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Sub 2
+worker outcome: normal, test outcome: killed
+[job-id] 38c4ba12d317440194b83a0cee5f0c29
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Sub 3
+worker outcome: normal, test outcome: survived
+[job-id] 43183f067c9e4888b67cbfa2bce6e71b
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Sub 4
+worker outcome: normal, test outcome: survived
+[job-id] 692aa48df8f441f19661a2d35ffa3365
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] db509a0f598f4c70af8351b71e0e6e0f
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Mul 1
+worker outcome: normal, test outcome: killed
+[job-id] a0afd2103a614ef599047ec41c702cc4
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Mul 2
+worker outcome: normal, test outcome: killed
+[job-id] ac976744861b411d8b1e732893e3bd28
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Mul 3
+worker outcome: normal, test outcome: survived
+[job-id] 96dbcef5443441618ee5ced0daf3e9b0
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Mul 4
+worker outcome: normal, test outcome: survived
+[job-id] 5d2d645fd74c4a5f820a1cb6fe0cbf0f
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] c247b8e028624dc989b2037577350aa5
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Div 1
+worker outcome: normal, test outcome: killed
+[job-id] 67d435af2b0d479cb2405a0a6108db4d
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Div 2
+worker outcome: normal, test outcome: killed
+[job-id] a7189a2536ec41aa997ef8562eb60f6f
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Div 3
+worker outcome: normal, test outcome: survived
+[job-id] 6182c9d3986344ec82425a1036561592
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Div 4
+worker outcome: normal, test outcome: survived
+[job-id] 2d526543850d4b6b86345c36c4606106
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] 5475d7a9316b40a68ca593b22c33226c
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_FloorDiv 1
+worker outcome: normal, test outcome: killed
+[job-id] 682415e63965462e8fab0bf88f15d726
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_FloorDiv 2
+worker outcome: normal, test outcome: killed
+[job-id] 9722572a2f714b9e9caca26499947a54
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_FloorDiv 3
+worker outcome: normal, test outcome: survived
+[job-id] 201ae4a738b94b9c83edbfadd9f22cf3
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_FloorDiv 4
+worker outcome: normal, test outcome: survived
+[job-id] 0301c7b4187f457aac932851ab40b015
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] 9457295dc2ec4b9ab762e5aa6f5f2423
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Pow 1
+worker outcome: normal, test outcome: killed
+[job-id] 86b0e475bab54cfbb00ae6a0d39dd5ee
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Pow 2
+worker outcome: normal, test outcome: killed
+[job-id] 4153ef8e7ac94bb0bb5f5c0e04c11eec
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Pow 3
+worker outcome: normal, test outcome: survived
+[job-id] 86247b231c9c4026866eaf83ff7ce0ac
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_Pow 4
+worker outcome: normal, test outcome: survived
+[job-id] 2bc77778265c497d9353ee6e2d51fdf9
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] b0f379878933489ab48a014b6c3773ce
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_RShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 4cddf550baf148c48078709e0ea7ce9b
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_RShift 2
+worker outcome: normal, test outcome: killed
+[job-id] 875253caaa2f467faf542baded0b7df1
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_RShift 3
+worker outcome: normal, test outcome: survived
+[job-id] 7545cca2c001416f8fbba555ab0e9edd
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_RShift 4
+worker outcome: normal, test outcome: survived
+[job-id] 767e00706ac14bcfad1992b33ec6ac48
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] d5f10bd0423f430ba53a7036a54a86fb
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_LShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 5326ba65098b41e592095a2bc4d549ca
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_LShift 2
+worker outcome: normal, test outcome: killed
+[job-id] dd7e06e8cbc6488db9c6861da7411d68
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_LShift 3
+worker outcome: normal, test outcome: survived
+[job-id] 4c12b8e0b738413ea55b71a5b9c9bf3c
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_LShift 4
+worker outcome: normal, test outcome: survived
+[job-id] 6fc32fe1241c412397de1e650001a67c
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 3046f20bf933402882be78901fa0f32a
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_BitOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 15080c95416845108383a9c5a64bc525
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_BitOr 2
+worker outcome: normal, test outcome: killed
+[job-id] 3d86618f10e14e45bedcd5765920126e
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_BitOr 3
+worker outcome: normal, test outcome: survived
+[job-id] f161e8ef58d940ea8c43c23036f929eb
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_BitOr 4
+worker outcome: normal, test outcome: survived
+[job-id] 426ff1ac68c34af7b19f876e1507f16e
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 2cff6eb0b39545f18140efa35b32a3ee
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_BitAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] 0fb28b294f7647b99cdfc6e69c03f935
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_BitAnd 2
+worker outcome: normal, test outcome: killed
+[job-id] 95a12e656e534288aafa2cdfb4a6bd3e
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_BitAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] 6028fadcb709469fa3708dcc45eeba1a
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_BitAnd 4
+worker outcome: normal, test outcome: survived
+[job-id] 5cac5079a2234ee983abe1a9524ba175
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] 107c7b23270c4b9b802b699afce5c5bb
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_BitXor 1
+worker outcome: normal, test outcome: killed
+[job-id] db82cbc7b963479b8e1e8362e0058572
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_BitXor 2
+worker outcome: normal, test outcome: killed
+[job-id] 51fc9934d1454f69b6a4d849ceb3c989
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_BitXor 3
+worker outcome: normal, test outcome: survived
+[job-id] 80a291fd02334f1c9a44869bb7f3be83
+django/views/generic/base.py core/ReplaceBinaryOperator_Mod_BitXor 4
+worker outcome: normal, test outcome: survived
+[job-id] 1384ba03fc904ce6add037dfcc0d3928
+django/views/generic/base.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] a0d9d59644894cdc891f6145f23a08ad
+django/views/generic/base.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 5d4449f1d9bd44938796009b296633f2
+django/views/generic/base.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: killed
+[job-id] 9f40eb7ed1b448368bd8b646c5e6c26b
+django/views/generic/base.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: killed
+[job-id] 6df1f369551e45adbfd11cc480ffdc29
+django/views/generic/base.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: normal, test outcome: killed
+[job-id] a3b4c808234b402d83fd37b0b2def532
+django/views/generic/base.py core/AddNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 2482427775024558aa7be9fd69d7bdcb
+django/views/generic/base.py core/AddNot 1
+worker outcome: normal, test outcome: killed
+[job-id] 352c84ac46ca4844800e8dfa112a4a92
+django/views/generic/base.py core/AddNot 2
+worker outcome: normal, test outcome: killed
+[job-id] 480de5c171ca462eafadde010fd0ddcc
+django/views/generic/base.py core/AddNot 3
+worker outcome: normal, test outcome: killed
+[job-id] b27dc718aa3f441685589b7d0016e457
+django/views/generic/base.py core/AddNot 4
+worker outcome: normal, test outcome: killed
+[job-id] 22c3a8b4ab9241c8afaad0aa52699582
+django/views/generic/base.py core/AddNot 5
+worker outcome: normal, test outcome: killed
+[job-id] f6de0032adb440b5baace5e1e0fc13d7
+django/views/generic/base.py core/AddNot 6
+worker outcome: normal, test outcome: survived
+[job-id] 7de6cfcacf3743648babb717d2ad2b10
+django/views/generic/base.py core/AddNot 7
+worker outcome: normal, test outcome: survived
+[job-id] e85ca009985d485cb323e4782a60e319
+django/views/generic/base.py core/AddNot 8
+worker outcome: normal, test outcome: survived
+[job-id] 34de91c364644756afadb815b971d8e5
+django/views/generic/base.py core/AddNot 9
+worker outcome: normal, test outcome: survived
+[job-id] 4127c9ea9f2f459e8d88aa7c03794dd9
+django/views/generic/base.py core/AddNot 10
+worker outcome: normal, test outcome: survived
+[job-id] f2a632cb95054ad7abedeccf020db146
+django/views/generic/base.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: survived
+[job-id] 1d4853d6e4fb44f3881d607c588ec888
+django/views/generic/base.py core/ReplaceFalseWithTrue 1
+worker outcome: normal, test outcome: survived
+[job-id] f30926bf12154afaba40b9255b9267fe
+django/views/generic/base.py core/ReplaceAndWithOr 0
+worker outcome: normal, test outcome: survived
+[job-id] d693e0c1d31a4cf19e5576a42657ce62
+django/views/generic/base.py core/ReplaceAndWithOr 1
+worker outcome: normal, test outcome: survived
+[job-id] ce9504a2aee04b0eba2db9184d4841b7
+django/views/generic/base.py core/NumberReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] 7995098ac4c3482288c905104a789cdb
+django/views/generic/base.py core/NumberReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] 6f757ce297fe44e4932ef34c625658ab
+django/views/generic/base.py core/NumberReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] 97c3307a36fb455ca00bc81a458247ad
+django/views/generic/base.py core/NumberReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] a3424c67b2a048e6978d64c0c9be8254
+django/views/generic/base.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: killed
+[job-id] 3f37ee0a81f741e786ca4136b3936cc0
+django/views/generic/base.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: killed
+[job-id] 4f473633f6154555be4be782a2f0a3bc
+django/views/generic/base.py core/ZeroIterationForLoop 1
+worker outcome: normal, test outcome: killed
+total jobs: 82
+complete: 82 (100.00%)
+surviving mutants: 38 (46.34%)
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] 
+MutationNum: 82 
+[django__django__4.0] [django__django-14124] 
+MutationLOG: 53.66% 
+[django__django__4.0] [django__django-14124] 
+MutationUncertainty: 0.0 
+[django__django__4.0] [django__django-14124] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/views/generic/base.py'
+        and ((47 <= spec.start_pos[0] <= 83))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__4.0] [django__django-14124] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14124] Std. Output:
+FUNC_MUTATION_RESULT 100.0 40
+ 
+[django__django__4.0] [django__django-14124] Return Code: 0 
+[django__django__4.0] [django__django-14124] 
+FunctionMutationLOG: 100.0% 
+[django__django__4.0] [django__django-14124] 
+FunctionMutationNum: 40 
+[django__django__4.0] [django__django-14124] Test script run successful 
+[django__django__4.0] [django__django-14124] Removing coverage 
+[django__django__4.0] [django__django-14124] >>>>> Unfiltered Tests Passed 

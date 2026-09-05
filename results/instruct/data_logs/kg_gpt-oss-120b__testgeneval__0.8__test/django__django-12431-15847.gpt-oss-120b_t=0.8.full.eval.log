@@ -1,0 +1,365 @@
+[django__django__3.1] [django__django-12431] Task Metadata:
+	- Instance ID: django__django-12431
+	- Testbed: django__django__3.1
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.1] [django__django-12431] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.1] [django__django-12431] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12431] Std. Output:
+ 
+[django__django__3.1] [django__django-12431] Return Code: 0 
+[django__django__3.1] [django__django-12431] Command: git -c advice.detachedHead=false checkout e3f6e18513224c8ad081e5a19da641f49b0b43da 
+[django__django__3.1] [django__django-12431] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12431] Std. Output:
+Previous HEAD position was 0668164b4a Fixed E128, E741 flake8 warnings.
+HEAD is now at e3f6e18513 Fixed #31253 -- Fixed data loss possibility when using caching from async code.
+ 
+[django__django__3.1] [django__django-12431] Return Code: 0 
+[django__django__3.1] [django__django-12431] Command: git diff > /opt/temp_django__django-12431_gold_init.patch 
+[django__django__3.1] [django__django-12431] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12431] Std. Output:
+ 
+[django__django__3.1] [django__django-12431] Return Code: 0 
+[django__django__3.1] [django__django-12431] Command: git apply -v /opt/temp_django__django-12431_gold.patch 
+[django__django__3.1] [django__django-12431] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12431] Std. Output:
+Checking patch django/core/handlers/base.py...
+Checking patch django/core/handlers/wsgi.py...
+Checking patch django/http/response.py...
+Applied patch django/core/handlers/base.py cleanly.
+Applied patch django/core/handlers/wsgi.py cleanly.
+Applied patch django/http/response.py cleanly.
+ 
+[django__django__3.1] [django__django-12431] Return Code: 0 
+[django__django__3.1] [django__django-12431] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.1] [django__django-12431] Command: git diff > /opt/temp_django__django-12431_test_init.patch 
+[django__django__3.1] [django__django-12431] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12431] Std. Output:
+ 
+[django__django__3.1] [django__django-12431] Return Code: 0 
+[django__django__3.1] [django__django-12431] Command: git restore tests/builtin_server/tests.py 
+[django__django__3.1] [django__django-12431] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12431] Std. Output:
+ 
+[django__django__3.1] [django__django-12431] Return Code: 0 
+[django__django__3.1] [django__django-12431] Command: git restore tests/responses/test_fileresponse.py 
+[django__django__3.1] [django__django-12431] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12431] Std. Output:
+ 
+[django__django__3.1] [django__django-12431] Return Code: 0 
+[django__django__3.1] [django__django-12431] Command: git apply -v /opt/temp_django__django-12431_test.patch 
+[django__django__3.1] [django__django-12431] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12431] Std. Output:
+Checking patch tests/builtin_server/tests.py...
+Checking patch tests/builtin_server/urls.py...
+Checking patch tests/builtin_server/views.py...
+Checking patch tests/responses/test_fileresponse.py...
+Applied patch tests/builtin_server/tests.py cleanly.
+Applied patch tests/builtin_server/urls.py cleanly.
+Applied patch tests/builtin_server/views.py cleanly.
+Applied patch tests/responses/test_fileresponse.py cleanly.
+ 
+[django__django__3.1] [django__django-12431] Return Code: 0 
+[django__django__3.1] [django__django-12431] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.1] [django__django-12431] Command: coverage run ./tests/runtests.py --verbosity 2 builtin_server.tests builtin_server.urls builtin_server.views responses.test_fileresponse 
+[django__django__3.1] [django__django-12431] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12431] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application builtin_server
+Importing application responses
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_fileresponse (unittest.loader._FailedTest) ... ERROR
+test_file_response_closing (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_file_wrapper_no_sendfile (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_file_wrapper_uses_sendfile (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_chunked_data (builtin_server.tests.ServerHandlerChunksProperly) ... ok
+
+======================================================================
+ERROR: test_fileresponse (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 59, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 605, in run
+    testMethod()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: test_fileresponse
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/responses/test_fileresponse.py", line 13, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.322s
+
+FAILED (errors=1)
+ 
+[django__django__3.1] [django__django-12431] Return Code: 1 
+[django__django__3.1] [django__django-12431] TestsTime: 1.6949641704559326 
+[django__django__3.1] [django__django-12431] Test script run successful 
+[django__django__3.1] [django__django-12431] Removing coverage 
+[django__django__3.1] [django__django-12431] Command: coverage run ./tests/runtests.py --verbosity 2 builtin_server.tests builtin_server.urls builtin_server.views responses.test_fileresponse 
+[django__django__3.1] [django__django-12431] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12431] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application builtin_server
+Importing application responses
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_fileresponse (unittest.loader._FailedTest) ... ERROR
+test_file_response_closing (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_file_wrapper_no_sendfile (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_file_wrapper_uses_sendfile (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_chunked_data (builtin_server.tests.ServerHandlerChunksProperly) ... ok
+
+======================================================================
+ERROR: test_fileresponse (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 59, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 605, in run
+    testMethod()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: test_fileresponse
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/responses/test_fileresponse.py", line 13, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.255s
+
+FAILED (errors=1)
+ 
+[django__django__3.1] [django__django-12431] Return Code: 1 
+[django__django__3.1] [django__django-12431] TestsTime: 1.0374963283538818 
+[django__django__3.1] [django__django-12431] Test script run successful 
+[django__django__3.1] [django__django-12431] Removing coverage 
+[django__django__3.1] [django__django-12431] Command: coverage run ./tests/runtests.py --verbosity 2 builtin_server.tests builtin_server.urls builtin_server.views responses.test_fileresponse 
+[django__django__3.1] [django__django-12431] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12431] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application builtin_server
+Importing application responses
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_fileresponse (unittest.loader._FailedTest) ... ERROR
+test_file_response_closing (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_file_wrapper_no_sendfile (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_file_wrapper_uses_sendfile (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_chunked_data (builtin_server.tests.ServerHandlerChunksProperly) ... ok
+
+======================================================================
+ERROR: test_fileresponse (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 59, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 605, in run
+    testMethod()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: test_fileresponse
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/responses/test_fileresponse.py", line 13, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.144s
+
+FAILED (errors=1)
+ 
+[django__django__3.1] [django__django-12431] Return Code: 1 
+[django__django__3.1] [django__django-12431] TestsTime: 0.6987531185150146 
+[django__django__3.1] [django__django-12431] Test script run successful 
+[django__django__3.1] [django__django-12431] Removing coverage 
+[django__django__3.1] [django__django-12431] Command: coverage run ./tests/runtests.py --verbosity 2 builtin_server.tests builtin_server.urls builtin_server.views responses.test_fileresponse 
+[django__django__3.1] [django__django-12431] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12431] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application builtin_server
+Importing application responses
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_fileresponse (unittest.loader._FailedTest) ... ERROR
+test_file_response_closing (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_file_wrapper_no_sendfile (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_file_wrapper_uses_sendfile (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_chunked_data (builtin_server.tests.ServerHandlerChunksProperly) ... ok
+
+======================================================================
+ERROR: test_fileresponse (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 59, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 605, in run
+    testMethod()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: test_fileresponse
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/responses/test_fileresponse.py", line 13, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.156s
+
+FAILED (errors=1)
+ 
+[django__django__3.1] [django__django-12431] Return Code: 1 
+[django__django__3.1] [django__django-12431] TestsTime: 0.7150986194610596 
+[django__django__3.1] [django__django-12431] Test script run successful 
+[django__django__3.1] [django__django-12431] Removing coverage 
+[django__django__3.1] [django__django-12431] Command: coverage run ./tests/runtests.py --verbosity 2 builtin_server.tests builtin_server.urls builtin_server.views responses.test_fileresponse 
+[django__django__3.1] [django__django-12431] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12431] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application builtin_server
+Importing application responses
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_fileresponse (unittest.loader._FailedTest) ... ERROR
+test_file_response_closing (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_file_wrapper_no_sendfile (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_file_wrapper_uses_sendfile (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_chunked_data (builtin_server.tests.ServerHandlerChunksProperly) ... ok
+
+======================================================================
+ERROR: test_fileresponse (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 59, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 605, in run
+    testMethod()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: test_fileresponse
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/responses/test_fileresponse.py", line 13, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.175s
+
+FAILED (errors=1)
+ 
+[django__django__3.1] [django__django-12431] Return Code: 1 
+[django__django__3.1] [django__django-12431] TestsTime: 0.9097995758056641 
+[django__django__3.1] [django__django-12431] Test script run successful 
+[django__django__3.1] [django__django-12431] Removing coverage 
+[django__django__3.1] [django__django-12431] Command: coverage run ./tests/runtests.py --verbosity 2 builtin_server.tests builtin_server.urls builtin_server.views responses.test_fileresponse 
+[django__django__3.1] [django__django-12431] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12431] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application builtin_server
+Importing application responses
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_fileresponse (unittest.loader._FailedTest) ... ERROR
+test_file_response_closing (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_file_wrapper_no_sendfile (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_file_wrapper_uses_sendfile (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_chunked_data (builtin_server.tests.ServerHandlerChunksProperly) ... ok
+
+======================================================================
+ERROR: test_fileresponse (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 59, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 605, in run
+    testMethod()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: test_fileresponse
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/responses/test_fileresponse.py", line 13, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.249s
+
+FAILED (errors=1)
+ 
+[django__django__3.1] [django__django-12431] Return Code: 1 
+[django__django__3.1] [django__django-12431] TestsTime: 0.8248739242553711 
+[django__django__3.1] [django__django-12431] Test script run successful 
+[django__django__3.1] [django__django-12431] Removing coverage 
+[django__django__3.1] [django__django-12431] Command: coverage run ./tests/runtests.py --verbosity 2 builtin_server.tests builtin_server.urls builtin_server.views responses.test_fileresponse 
+[django__django__3.1] [django__django-12431] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12431] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application builtin_server
+Importing application responses
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_fileresponse (unittest.loader._FailedTest) ... ERROR
+test_file_response_closing (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_file_wrapper_no_sendfile (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_file_wrapper_uses_sendfile (builtin_server.tests.WSGIFileWrapperTests) ... ok
+test_chunked_data (builtin_server.tests.ServerHandlerChunksProperly) ... ok
+
+======================================================================
+ERROR: test_fileresponse (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 59, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 605, in run
+    testMethod()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: test_fileresponse
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/responses/test_fileresponse.py", line 13, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.147s
+
+FAILED (errors=1)
+ 
+[django__django__3.1] [django__django-12431] Return Code: 1 
+[django__django__3.1] [django__django-12431] TestsTime: 0.7637615203857422 
+[django__django__3.1] [django__django-12431] Test script run successful 
+[django__django__3.1] [django__django-12431] Removing coverage 
+[django__django__3.1] [django__django-12431] >>>>> Tests configfull pred
+ 
+[django__django__3.1] [django__django-12431] TestsTime: 0.0 
+[django__django__3.1] [django__django-12431] >>>>> Some Tests Failed 
+[django__django__3.1] [django__django-12431] >>>>> Unfiltered Tests Failed 

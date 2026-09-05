@@ -1,0 +1,416 @@
+[django__django__4.1] [django__django-14725] Task Metadata:
+	- Instance ID: django__django-14725
+	- Testbed: django__django__4.1
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.9.19
+ 
+[django__django__4.1] [django__django-14725] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__4.1] [django__django-14725] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-14725] Std. Output:
+ 
+[django__django__4.1] [django__django-14725] Return Code: 0 
+[django__django__4.1] [django__django-14725] Command: git -c advice.detachedHead=false checkout 0af9a5fc7d765aa05ea784e2c3237675f3bb4b49 
+[django__django__4.1] [django__django-14725] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-14725] Std. Output:
+Previous HEAD position was 647480166b Refs #33685 -- Doc'd that using PostgreSQL's service names for testing purposes is not supported.
+HEAD is now at 0af9a5fc7d Fixed #33463 -- Fixed QuerySet.bulk_update() with F() expressions.
+ 
+[django__django__4.1] [django__django-14725] Return Code: 0 
+[django__django__4.1] [django__django-14725] Command: git diff > /opt/temp_django__django-14725_gold_init.patch 
+[django__django__4.1] [django__django-14725] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-14725] Std. Output:
+ 
+[django__django__4.1] [django__django-14725] Return Code: 0 
+[django__django__4.1] [django__django-14725] Command: git apply -v /opt/temp_django__django-14725_gold.patch 
+[django__django__4.1] [django__django-14725] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-14725] Std. Output:
+Checking patch django/forms/models.py...
+Applied patch django/forms/models.py cleanly.
+ 
+[django__django__4.1] [django__django-14725] Return Code: 0 
+[django__django__4.1] [django__django-14725] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__4.1] [django__django-14725] Command: git diff > /opt/temp_django__django-14725_test_init.patch 
+[django__django__4.1] [django__django-14725] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-14725] Std. Output:
+ 
+[django__django__4.1] [django__django-14725] Return Code: 0 
+[django__django__4.1] [django__django-14725] Command: git restore tests/model_formsets/tests.py 
+[django__django__4.1] [django__django-14725] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-14725] Std. Output:
+ 
+[django__django__4.1] [django__django-14725] Return Code: 0 
+[django__django__4.1] [django__django-14725] Command: git apply -v /opt/temp_django__django-14725_test.patch 
+[django__django__4.1] [django__django-14725] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-14725] Std. Output:
+Checking patch tests/model_formsets/tests.py...
+Applied patch tests/model_formsets/tests.py cleanly.
+ 
+[django__django__4.1] [django__django-14725] Return Code: 0 
+[django__django__4.1] [django__django-14725] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__4.1] [django__django-14725] Command: coverage run ./tests/runtests.py --verbosity 2 model_formsets.tests 
+[django__django__4.1] [django__django-14725] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-14725] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 662, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 382, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 920, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 781, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 732, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_formsets/tests.py", line 36, in <module>
+    class Poet(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 321, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 228, in register_model
+    raise RuntimeError(
+RuntimeError: Conflicting 'poet' models in application 'model_formsets': <class 'model_formsets.models.Poet'> and <class 'model_formsets.tests.Poet'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_formsets
+ 
+[django__django__4.1] [django__django-14725] Return Code: 1 
+[django__django__4.1] [django__django-14725] TestsTime: 1.417651891708374 
+[django__django__4.1] [django__django-14725] Test script run successful 
+[django__django__4.1] [django__django-14725] Removing coverage 
+[django__django__4.1] [django__django-14725] Command: coverage run ./tests/runtests.py --verbosity 2 model_formsets.tests 
+[django__django__4.1] [django__django-14725] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-14725] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 662, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 382, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 920, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 781, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 732, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_formsets/tests.py", line 36, in <module>
+    class Poet(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 321, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 228, in register_model
+    raise RuntimeError(
+RuntimeError: Conflicting 'poet' models in application 'model_formsets': <class 'model_formsets.models.Poet'> and <class 'model_formsets.tests.Poet'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_formsets
+ 
+[django__django__4.1] [django__django-14725] Return Code: 1 
+[django__django__4.1] [django__django-14725] TestsTime: 0.5725960731506348 
+[django__django__4.1] [django__django-14725] Test script run successful 
+[django__django__4.1] [django__django-14725] Removing coverage 
+[django__django__4.1] [django__django-14725] Command: coverage run ./tests/runtests.py --verbosity 2 model_formsets.tests 
+[django__django__4.1] [django__django-14725] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-14725] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 662, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 382, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 920, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 781, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 732, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_formsets/tests.py", line 36, in <module>
+    class Poet(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 321, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 228, in register_model
+    raise RuntimeError(
+RuntimeError: Conflicting 'poet' models in application 'model_formsets': <class 'model_formsets.models.Poet'> and <class 'model_formsets.tests.Poet'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_formsets
+ 
+[django__django__4.1] [django__django-14725] Return Code: 1 
+[django__django__4.1] [django__django-14725] TestsTime: 0.5347695350646973 
+[django__django__4.1] [django__django-14725] Test script run successful 
+[django__django__4.1] [django__django-14725] Removing coverage 
+[django__django__4.1] [django__django-14725] Command: coverage run ./tests/runtests.py --verbosity 2 model_formsets.tests 
+[django__django__4.1] [django__django-14725] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-14725] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 662, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 382, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 920, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 781, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 732, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_formsets/tests.py", line 36, in <module>
+    class Poet(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 321, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 228, in register_model
+    raise RuntimeError(
+RuntimeError: Conflicting 'poet' models in application 'model_formsets': <class 'model_formsets.models.Poet'> and <class 'model_formsets.tests.Poet'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_formsets
+ 
+[django__django__4.1] [django__django-14725] Return Code: 1 
+[django__django__4.1] [django__django-14725] TestsTime: 0.656834602355957 
+[django__django__4.1] [django__django-14725] Test script run successful 
+[django__django__4.1] [django__django-14725] Removing coverage 
+[django__django__4.1] [django__django-14725] Command: coverage run ./tests/runtests.py --verbosity 2 model_formsets.tests 
+[django__django__4.1] [django__django-14725] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-14725] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 662, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 382, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 920, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 781, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 732, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_formsets/tests.py", line 36, in <module>
+    class Poet(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 321, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 228, in register_model
+    raise RuntimeError(
+RuntimeError: Conflicting 'poet' models in application 'model_formsets': <class 'model_formsets.models.Poet'> and <class 'model_formsets.tests.Poet'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_formsets
+ 
+[django__django__4.1] [django__django-14725] Return Code: 1 
+[django__django__4.1] [django__django-14725] TestsTime: 0.6945993900299072 
+[django__django__4.1] [django__django-14725] Test script run successful 
+[django__django__4.1] [django__django-14725] Removing coverage 
+[django__django__4.1] [django__django-14725] Command: coverage run ./tests/runtests.py --verbosity 2 model_formsets.tests 
+[django__django__4.1] [django__django-14725] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-14725] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 662, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 382, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 920, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 781, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 732, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_formsets/tests.py", line 36, in <module>
+    class Poet(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 321, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 228, in register_model
+    raise RuntimeError(
+RuntimeError: Conflicting 'poet' models in application 'model_formsets': <class 'model_formsets.models.Poet'> and <class 'model_formsets.tests.Poet'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_formsets
+ 
+[django__django__4.1] [django__django-14725] Return Code: 1 
+[django__django__4.1] [django__django-14725] TestsTime: 0.623199462890625 
+[django__django__4.1] [django__django-14725] Test script run successful 
+[django__django__4.1] [django__django-14725] Removing coverage 
+[django__django__4.1] [django__django-14725] Command: coverage run ./tests/runtests.py --verbosity 2 model_formsets.tests 
+[django__django__4.1] [django__django-14725] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-14725] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 662, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 382, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 920, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 781, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 732, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_formsets/tests.py", line 36, in <module>
+    class Poet(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 321, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 228, in register_model
+    raise RuntimeError(
+RuntimeError: Conflicting 'poet' models in application 'model_formsets': <class 'model_formsets.models.Poet'> and <class 'model_formsets.tests.Poet'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_formsets
+ 
+[django__django__4.1] [django__django-14725] Return Code: 1 
+[django__django__4.1] [django__django-14725] TestsTime: 0.6809375286102295 
+[django__django__4.1] [django__django-14725] Test script run successful 
+[django__django__4.1] [django__django-14725] Removing coverage 
+[django__django__4.1] [django__django-14725] Command: coverage run ./tests/runtests.py --verbosity 2 model_formsets.tests 
+[django__django__4.1] [django__django-14725] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-14725] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 662, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 382, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 920, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 781, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 732, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_formsets/tests.py", line 36, in <module>
+    class Poet(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 321, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 228, in register_model
+    raise RuntimeError(
+RuntimeError: Conflicting 'poet' models in application 'model_formsets': <class 'model_formsets.models.Poet'> and <class 'model_formsets.tests.Poet'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_formsets
+ 
+[django__django__4.1] [django__django-14725] Return Code: 1 
+[django__django__4.1] [django__django-14725] TestsTime: 0.6388330459594727 
+[django__django__4.1] [django__django-14725] Test script run successful 
+[django__django__4.1] [django__django-14725] Removing coverage 
+[django__django__4.1] [django__django-14725] Command: coverage run ./tests/runtests.py --verbosity 2 model_formsets.tests 
+[django__django__4.1] [django__django-14725] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-14725] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 662, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 382, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 920, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 781, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 732, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_formsets/tests.py", line 36, in <module>
+    class Poet(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 321, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 228, in register_model
+    raise RuntimeError(
+RuntimeError: Conflicting 'poet' models in application 'model_formsets': <class 'model_formsets.models.Poet'> and <class 'model_formsets.tests.Poet'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_formsets
+ 
+[django__django__4.1] [django__django-14725] Return Code: 1 
+[django__django__4.1] [django__django-14725] TestsTime: 0.7786979675292969 
+[django__django__4.1] [django__django-14725] Test script run successful 
+[django__django__4.1] [django__django-14725] Removing coverage 
+[django__django__4.1] [django__django-14725] Command: coverage run ./tests/runtests.py --verbosity 2 model_formsets.tests 
+[django__django__4.1] [django__django-14725] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-14725] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 662, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 382, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 920, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 781, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 732, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_formsets/tests.py", line 36, in <module>
+    class Poet(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 321, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 228, in register_model
+    raise RuntimeError(
+RuntimeError: Conflicting 'poet' models in application 'model_formsets': <class 'model_formsets.models.Poet'> and <class 'model_formsets.tests.Poet'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_formsets
+ 
+[django__django__4.1] [django__django-14725] Return Code: 1 
+[django__django__4.1] [django__django-14725] TestsTime: 0.768113374710083 
+[django__django__4.1] [django__django-14725] Test script run successful 
+[django__django__4.1] [django__django-14725] Removing coverage 
+[django__django__4.1] [django__django-14725] Command: coverage run ./tests/runtests.py --verbosity 2 model_formsets.tests 
+[django__django__4.1] [django__django-14725] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-14725] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 662, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 382, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 920, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 781, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 732, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_formsets/tests.py", line 36, in <module>
+    class Poet(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 321, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 228, in register_model
+    raise RuntimeError(
+RuntimeError: Conflicting 'poet' models in application 'model_formsets': <class 'model_formsets.models.Poet'> and <class 'model_formsets.tests.Poet'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_formsets
+ 
+[django__django__4.1] [django__django-14725] Return Code: 1 
+[django__django__4.1] [django__django-14725] TestsTime: 0.9434924125671387 
+[django__django__4.1] [django__django-14725] Test script run successful 
+[django__django__4.1] [django__django-14725] Removing coverage 
+[django__django__4.1] [django__django-14725] Command: coverage run ./tests/runtests.py --verbosity 2 model_formsets.tests 
+[django__django__4.1] [django__django-14725] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-14725] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 662, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 382, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 920, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 781, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 732, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_formsets/tests.py", line 36, in <module>
+    class Poet(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 321, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 228, in register_model
+    raise RuntimeError(
+RuntimeError: Conflicting 'poet' models in application 'model_formsets': <class 'model_formsets.models.Poet'> and <class 'model_formsets.tests.Poet'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_formsets
+ 
+[django__django__4.1] [django__django-14725] Return Code: 1 
+[django__django__4.1] [django__django-14725] TestsTime: 0.8614292144775391 
+[django__django__4.1] [django__django-14725] Test script run successful 
+[django__django__4.1] [django__django-14725] Removing coverage 
+[django__django__4.1] [django__django-14725] >>>>> Tests configfull pred
+ 
+[django__django__4.1] [django__django-14725] TestsTime: 0.0 
+[django__django__4.1] [django__django-14725] >>>>> Some Tests Failed 
+[django__django__4.1] [django__django-14725] >>>>> Unfiltered Tests Failed 

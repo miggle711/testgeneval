@@ -1,0 +1,221 @@
+[django__django__4.1] [django__django-14999] Task Metadata:
+	- Instance ID: django__django-14999
+	- Testbed: django__django__4.1
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.9.19
+ 
+[django__django__4.1] [django__django-14999] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__4.1] [django__django-14999] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-14999] Std. Output:
+ 
+[django__django__4.1] [django__django-14999] Return Code: 0 
+[django__django__4.1] [django__django-14999] Command: git -c advice.detachedHead=false checkout a754b82dac511475b6276039471ccd17cc64aeb8 
+[django__django__4.1] [django__django-14999] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-14999] Std. Output:
+Previous HEAD position was 647480166b Refs #33685 -- Doc'd that using PostgreSQL's service names for testing purposes is not supported.
+HEAD is now at a754b82dac Refs #33182 -- Adjusted custom admin theming example to use correct template block.
+ 
+[django__django__4.1] [django__django-14999] Return Code: 0 
+[django__django__4.1] [django__django-14999] Command: git diff > /opt/temp_django__django-14999_gold_init.patch 
+[django__django__4.1] [django__django-14999] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-14999] Std. Output:
+ 
+[django__django__4.1] [django__django-14999] Return Code: 0 
+[django__django__4.1] [django__django-14999] Command: git apply -v /opt/temp_django__django-14999_gold.patch 
+[django__django__4.1] [django__django-14999] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-14999] Std. Output:
+Checking patch django/db/migrations/operations/models.py...
+Applied patch django/db/migrations/operations/models.py cleanly.
+ 
+[django__django__4.1] [django__django-14999] Return Code: 0 
+[django__django__4.1] [django__django-14999] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__4.1] [django__django-14999] Command: git diff > /opt/temp_django__django-14999_test_init.patch 
+[django__django__4.1] [django__django-14999] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-14999] Std. Output:
+ 
+[django__django__4.1] [django__django-14999] Return Code: 0 
+[django__django__4.1] [django__django-14999] Command: git restore tests/migrations/test_operations.py 
+[django__django__4.1] [django__django-14999] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-14999] Std. Output:
+ 
+[django__django__4.1] [django__django-14999] Return Code: 0 
+[django__django__4.1] [django__django-14999] Command: git apply -v /opt/temp_django__django-14999_test.patch 
+[django__django__4.1] [django__django-14999] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-14999] Std. Output:
+Checking patch tests/migrations/test_operations.py...
+Applied patch tests/migrations/test_operations.py cleanly.
+ 
+[django__django__4.1] [django__django-14999] Return Code: 0 
+[django__django__4.1] [django__django-14999] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__4.1] [django__django-14999] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_operations 
+[django__django__4.1] [django__django-14999] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-14999] Std. Output:
+test_no_table_rename_early_exit (migrations.test_operations.RenameModelDatabaseForwardsTests)
+If the old and new db_table names are equal, nothing should happen. ... ERROR
+
+======================================================================
+ERROR: test_no_table_rename_early_exit (migrations.test_operations.RenameModelDatabaseForwardsTests)
+If the old and new db_table names are equal, nothing should happen.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_operations.py", line 187, in test_no_table_rename_early_exit
+    self.operation.database_forwards("testapp", editor, from_state, to_state)
+  File "/opt/django__django/django/db/migrations/operations/models.py", line 320, in database_forwards
+    new_model = to_state.apps.get_model(app_label, self.new_name)
+  File "/opt/django__django/tests/migrations/test_operations.py", line 94, in get_model
+    return self._model_map[(app_label, model_name)]
+KeyError: ('testapp', 'NewModel')
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-14999] Return Code: 1 
+[django__django__4.1] [django__django-14999] TestsTime: 1.7841756343841553 
+[django__django__4.1] [django__django-14999] Test script run successful 
+[django__django__4.1] [django__django-14999] Removing coverage 
+[django__django__4.1] [django__django-14999] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_operations 
+[django__django__4.1] [django__django-14999] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-14999] Std. Output:
+test_allow_migrate_model_false (migrations.test_operations.RenameModelDatabaseForwardsTests)
+When ``allow_migrate_model`` returns False the operation is a no‑op. ... ERROR
+
+======================================================================
+ERROR: test_allow_migrate_model_false (migrations.test_operations.RenameModelDatabaseForwardsTests)
+When ``allow_migrate_model`` returns False the operation is a no‑op.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_operations.py", line 195, in test_allow_migrate_model_false
+    operation.database_forwards("testapp", editor, from_state, to_state)
+  File "/opt/django__django/django/db/migrations/operations/models.py", line 320, in database_forwards
+    new_model = to_state.apps.get_model(app_label, self.new_name)
+  File "/opt/django__django/tests/migrations/test_operations.py", line 94, in get_model
+    return self._model_map[(app_label, model_name)]
+KeyError: ('testapp', 'NewModel')
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-14999] Return Code: 1 
+[django__django__4.1] [django__django-14999] TestsTime: 0.5905992984771729 
+[django__django__4.1] [django__django-14999] Test script run successful 
+[django__django__4.1] [django__django-14999] Removing coverage 
+[django__django__4.1] [django__django-14999] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_operations 
+[django__django__4.1] [django__django-14999] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-14999] Std. Output:
+test_related_objects_renamed (migrations.test_operations.RenameModelDatabaseForwardsTests)
+Both self‑referential and external related objects should be handled. ... ERROR
+
+======================================================================
+ERROR: test_related_objects_renamed (migrations.test_operations.RenameModelDatabaseForwardsTests)
+Both self‑referential and external related objects should be handled.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_operations.py", line 222, in test_related_objects_renamed
+    self.operation.database_forwards(app_label, editor, from_state, to_state)
+  File "/opt/django__django/django/db/migrations/operations/models.py", line 320, in database_forwards
+    new_model = to_state.apps.get_model(app_label, self.new_name)
+  File "/opt/django__django/tests/migrations/test_operations.py", line 94, in get_model
+    return self._model_map[(app_label, model_name)]
+KeyError: ('testapp', 'NewModel')
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-14999] Return Code: 1 
+[django__django__4.1] [django__django-14999] TestsTime: 0.6697475910186768 
+[django__django__4.1] [django__django-14999] Test script run successful 
+[django__django__4.1] [django__django-14999] Removing coverage 
+[django__django__4.1] [django__django-14999] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_operations 
+[django__django__4.1] [django__django-14999] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-14999] Std. Output:
+test_many_to_many_renamed (migrations.test_operations.RenameModelDatabaseForwardsTests)
+Auto‑created M2M through tables should be renamed along with columns. ... ERROR
+
+======================================================================
+ERROR: test_many_to_many_renamed (migrations.test_operations.RenameModelDatabaseForwardsTests)
+Auto‑created M2M through tables should be renamed along with columns.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_operations.py", line 235, in test_many_to_many_renamed
+    self.operation.database_forwards(app_label, editor, from_state, to_state)
+  File "/opt/django__django/django/db/migrations/operations/models.py", line 320, in database_forwards
+    new_model = to_state.apps.get_model(app_label, self.new_name)
+  File "/opt/django__django/tests/migrations/test_operations.py", line 94, in get_model
+    return self._model_map[(app_label, model_name)]
+KeyError: ('testapp', 'NewModel')
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-14999] Return Code: 1 
+[django__django__4.1] [django__django-14999] TestsTime: 0.7201132774353027 
+[django__django__4.1] [django__django-14999] Test script run successful 
+[django__django__4.1] [django__django-14999] Removing coverage 
+[django__django__4.1] [django__django-14999] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_operations 
+[django__django__4.1] [django__django-14999] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-14999] Std. Output:
+test_related_object_points_to_other_model (migrations.test_operations.RenameModelDatabaseForwardsTests)
+A related object that does not point back to the renamed model. ... ERROR
+
+======================================================================
+ERROR: test_related_object_points_to_other_model (migrations.test_operations.RenameModelDatabaseForwardsTests)
+A related object that does not point back to the renamed model.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_operations.py", line 218, in test_related_object_points_to_other_model
+    self.operation.database_forwards(app_label, editor, from_state, to_state)
+  File "/opt/django__django/django/db/migrations/operations/models.py", line 320, in database_forwards
+    new_model = to_state.apps.get_model(app_label, self.new_name)
+  File "/opt/django__django/tests/migrations/test_operations.py", line 94, in get_model
+    return self._model_map[(app_label, model_name)]
+KeyError: ('testapp', 'NewModel')
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-14999] Return Code: 1 
+[django__django__4.1] [django__django-14999] TestsTime: 1.5171399116516113 
+[django__django__4.1] [django__django-14999] Test script run successful 
+[django__django__4.1] [django__django-14999] Removing coverage 
+[django__django__4.1] [django__django-14999] >>>>> Tests configfull pred
+ 
+[django__django__4.1] [django__django-14999] TestsTime: 0.0 
+[django__django__4.1] [django__django-14999] >>>>> Some Tests Failed 
+[django__django__4.1] [django__django-14999] >>>>> Unfiltered Tests Failed 

@@ -1,0 +1,1108 @@
+[django__django__3.1] [django__django-12062] Task Metadata:
+	- Instance ID: django__django-12062
+	- Testbed: django__django__3.1
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.1] [django__django-12062] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.1] [django__django-12062] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12062] Std. Output:
+ 
+[django__django__3.1] [django__django-12062] Return Code: 0 
+[django__django__3.1] [django__django-12062] Command: git -c advice.detachedHead=false checkout 3e5b349535f011a51dc308898924786143000631 
+[django__django__3.1] [django__django-12062] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12062] Std. Output:
+Previous HEAD position was 0668164b4a Fixed E128, E741 flake8 warnings.
+HEAD is now at 3e5b349535 Fixed #31008 -- Fixed typos in docs/topics/logging.txt.
+ 
+[django__django__3.1] [django__django-12062] Return Code: 0 
+[django__django__3.1] [django__django-12062] Command: git diff > /opt/temp_django__django-12062_gold_init.patch 
+[django__django__3.1] [django__django-12062] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12062] Std. Output:
+ 
+[django__django__3.1] [django__django-12062] Return Code: 0 
+[django__django__3.1] [django__django-12062] Command: git apply -v /opt/temp_django__django-12062_gold.patch 
+[django__django__3.1] [django__django-12062] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12062] Std. Output:
+Checking patch django/db/backends/base/creation.py...
+Checking patch django/db/utils.py...
+Applied patch django/db/backends/base/creation.py cleanly.
+Applied patch django/db/utils.py cleanly.
+ 
+[django__django__3.1] [django__django-12062] Return Code: 0 
+[django__django__3.1] [django__django-12062] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.1] [django__django-12062] Command: git diff > /opt/temp_django__django-12062_test_init.patch 
+[django__django__3.1] [django__django-12062] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12062] Std. Output:
+ 
+[django__django__3.1] [django__django-12062] Return Code: 0 
+[django__django__3.1] [django__django-12062] Command: git restore tests/backends/base/test_creation.py 
+[django__django__3.1] [django__django-12062] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12062] Std. Output:
+ 
+[django__django__3.1] [django__django-12062] Return Code: 0 
+[django__django__3.1] [django__django-12062] Command: git apply -v /opt/temp_django__django-12062_test.patch 
+[django__django__3.1] [django__django-12062] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12062] Std. Output:
+Checking patch tests/backends/base/test_creation.py...
+Applied patch tests/backends/base/test_creation.py cleanly.
+ 
+[django__django__3.1] [django__django-12062] Return Code: 0 
+[django__django__3.1] [django__django-12062] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.1] [django__django-12062] Command: coverage run ./tests/runtests.py --verbosity 2 backends.base.test_creation 
+[django__django__3.1] [django__django-12062] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12062] Std. Output:
+test_normal_flow_with_migrate_and_serialize (backends.base.test_creation.TestCreateTestDb)
+Typical path: migrate is run, serialization happens, cache table is created. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application backends
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12062] Return Code: 0 
+[django__django__3.1] [django__django-12062] TestsTime: 0.6413342952728271 
+[django__django__3.1] [django__django-12062] Test script run successful 
+[django__django__3.1] [django__django-12062] Removing coverage 
+[django__django__3.1] [django__django-12062] Command: coverage run ./tests/runtests.py --verbosity 2 backends.base.test_creation 
+[django__django__3.1] [django__django-12062] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12062] Std. Output:
+test_keepdb_uses_existing_action_message (backends.base.test_creation.TestCreateTestDb)
+When ``keepdb=True`` the log message should indicate the DB is reused. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application backends
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12062] Return Code: 0 
+[django__django__3.1] [django__django-12062] TestsTime: 0.5739929676055908 
+[django__django__3.1] [django__django-12062] Test script run successful 
+[django__django__3.1] [django__django-12062] Removing coverage 
+[django__django__3.1] [django__django-12062] Command: coverage run ./tests/runtests.py --verbosity 2 backends.base.test_creation 
+[django__django__3.1] [django__django-12062] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12062] Std. Output:
+test_migrate_skipped_when_test_migrate_false (backends.base.test_creation.TestCreateTestDb)
+If ``TEST['MIGRATE']`` is False the migrate command must be omitted. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application backends
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12062] Return Code: 0 
+[django__django__3.1] [django__django-12062] TestsTime: 0.8449156284332275 
+[django__django__3.1] [django__django-12062] Test script run successful 
+[django__django__3.1] [django__django-12062] Removing coverage 
+[django__django__3.1] [django__django-12062] Command: coverage run ./tests/runtests.py --verbosity 2 backends.base.test_creation 
+[django__django__3.1] [django__django-12062] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12062] Std. Output:
+test_verbosity_affects_action_message (backends.base.test_creation.TestCreateTestDb)
+Verbosity 2 adds the database name to the log output. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application backends
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12062] Return Code: 0 
+[django__django__3.1] [django__django-12062] TestsTime: 0.5746774673461914 
+[django__django__3.1] [django__django-12062] Test script run successful 
+[django__django__3.1] [django__django-12062] Removing coverage 
+[django__django__3.1] [django__django-12062] Command: coverage run ./tests/runtests.py --verbosity 2 backends.base.test_creation 
+[django__django__3.1] [django__django-12062] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12062] Std. Output:
+test_create_test_db_propagates_exceptions_from_create (backends.base.test_creation.TestCreateTestDb)
+If the underlying ``_create_test_db`` raises, the exception bubbles up. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application backends
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12062] Return Code: 0 
+[django__django__3.1] [django__django-12062] TestsTime: 1.585045337677002 
+[django__django__3.1] [django__django-12062] Test script run successful 
+[django__django__3.1] [django__django-12062] Removing coverage 
+[django__django__3.1] [django__django-12062] Command: coverage run ./tests/runtests.py --verbosity 2 backends.base.test_creation 
+[django__django__3.1] [django__django-12062] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12062] Std. Output:
+test_serialize_flag_controls_serialization (backends.base.test_creation.TestCreateTestDb)
+When ``serialize=False`` the connection must not receive serialized contents. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application backends
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12062] Return Code: 0 
+[django__django__3.1] [django__django-12062] TestsTime: 0.504230260848999 
+[django__django__3.1] [django__django-12062] Test script run successful 
+[django__django__3.1] [django__django-12062] Removing coverage 
+[django__django__3.1] [django__django-12062] >>>>> Tests configfull pred
+ 
+[django__django__3.1] [django__django-12062] Test Script:  coverage run ./tests/runtests.py --verbosity 2 backends.base.test_creation;
+ 
+[django__django__3.1] [django__django-12062] Command: coverage run ./tests/runtests.py --verbosity 2 backends.base.test_creation 
+[django__django__3.1] [django__django-12062] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12062] Std. Output:
+test_create_test_db_propagates_exceptions_from_create (backends.base.test_creation.TestCreateTestDb)
+If the underlying ``_create_test_db`` raises, the exception bubbles up. ... ok
+test_keepdb_uses_existing_action_message (backends.base.test_creation.TestCreateTestDb)
+When ``keepdb=True`` the log message should indicate the DB is reused. ... ok
+test_migrate_skipped_when_test_migrate_false (backends.base.test_creation.TestCreateTestDb)
+If ``TEST['MIGRATE']`` is False the migrate command must be omitted. ... ok
+test_normal_flow_with_migrate_and_serialize (backends.base.test_creation.TestCreateTestDb)
+Typical path: migrate is run, serialization happens, cache table is created. ... ok
+test_serialize_flag_controls_serialization (backends.base.test_creation.TestCreateTestDb)
+When ``serialize=False`` the connection must not receive serialized contents. ... ok
+test_verbosity_affects_action_message (backends.base.test_creation.TestCreateTestDb)
+Verbosity 2 adds the database name to the log output. ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.006s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application backends
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12062] Return Code: 0 
+[django__django__3.1] [django__django-12062] TestsTime: 0.34682798385620117 
+[django__django__3.1] [django__django-12062] 
+>>>>> All Tests Passed
+ 
+[django__django__3.1] [django__django-12062] Current Working Directory: /opt/django__django 
+[django__django__3.1] [django__django-12062] Command: coverage json -o coverage.json 
+[django__django__3.1] [django__django-12062] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12062] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.1] [django__django-12062] Return Code: 0 
+[django__django__3.1] [django__django-12062] 
+CoverageLOG: 38.21138211382114%
+ 
+[django__django__3.1] [django__django-12062] 
+FunctionCoverageLOG: 100.0%
+ 
+[django__django__3.1] [django__django-12062] Running mutation testing 
+[django__django__3.1] [django__django-12062] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.1] [django__django-12062] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12062] Std. Output:
+ 
+[django__django__3.1] [django__django-12062] Return Code: 0 
+[django__django__3.1] [django__django-12062] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.1] [django__django-12062] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.1] [django__django-12062] Std. Output:
+ 
+[django__django__3.1] [django__django-12062] Return Code: 0 
+[django__django__3.1] [django__django-12062] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.1] [django__django-12062] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12062] Std. Output:
+73.29 73.29 73.29
+ 
+[django__django__3.1] [django__django-12062] Return Code: 0 
+[django__django__3.1] [django__django-12062] Command: cr-report mutation.sqlite 
+[django__django__3.1] [django__django-12062] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12062] Std. Output:
+[job-id] 19c7b5425b4a4705867eab6ed5bb7c94
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] 25ec909ff8fa41b1943c39b6bbcdced5
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] 8c9de01e25d645e18ce73e829ffb0cec
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] 470ed95609b943a5903f73d7517a524f
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] ebf0cdba5c764a6e89723c429d094fae
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 147deeb82f0443cda2fb960f1a3dc873
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] 126958085c824cc1a8d7a50cf5d526de
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 283c96cb06594d0989eb7e2941d63311
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] 37c507a5e4d2488dbd7db915b442f5c5
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] 7037c789b8714fbe8d88d09b0c3e3a1c
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_Mod 1
+worker outcome: normal, test outcome: survived
+[job-id] 3fcda16b3b824f9fa258400c8cbb15b9
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] c414abeaeb174377b33e7a9b71bcc1e6
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] c1c8e8b4a788408f996f5906806011e4
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] cb8b2aabe1a14a3d842b41b64d102c7a
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] f4fa8db7df724906865318d301db894d
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] a87c42eaea8941138bb1276e4468c287
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 12a3e07754f64bfe9e08660a7dd5bd3e
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] ad11f87472634c3c8f83d1f2cf1aeaef
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] e758911b95454499a485ec4823536de6
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 7ab962d3176548169da97ac1ac36aef8
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 517c54ad3f2041dd90d005ec7341a16b
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] 010d9febd8e94b4e8e6d35db9c3a604e
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Add_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] 10e206e1986a4c8bb4eba145a3c6f3a9
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Sub_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] 8ecdde6d158c4ebeb0b871e6481e6fca
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Sub_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] 6c2462295c994fd5b172d65271ca6025
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Sub_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] 3ecef293de1348efb96e4b298151bbce
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Sub_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] 2e5e0f0e63ad4c9b9b3e81a1d472fefc
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Sub_Mod 0
+worker outcome: normal, test outcome: killed
+[job-id] 6ee4599076434a40bf1fc7e4c73c9a7b
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Sub_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] 7391069271d746378e3769737e056504
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Sub_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 33567dd5407d46cca6b5bb4dd0a8ce47
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Sub_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 511a05e72a224ddc841bef24d49aa6f4
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Sub_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 0dc2ecf973604e4da307970e5ec7cee8
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Sub_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 92be9b92828b443e89fea96135a23240
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Sub_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] d3ad0694d51140ebb204a1b39f2257f5
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] fe08a2cfa3b6479d94fd839686ca90dc
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Add 1
+worker outcome: normal, test outcome: killed
+[job-id] 185a887d01be4d0b9685002687256c9b
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Add 2
+worker outcome: normal, test outcome: killed
+[job-id] f55f8ff4346a408c98d5927da86e47d4
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Add 3
+worker outcome: normal, test outcome: survived
+[job-id] ad1f3b01d62d4bbbbdb6a1c21a25aca7
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Add 4
+worker outcome: normal, test outcome: survived
+[job-id] 40523711207e4a538d7ee8430570ad69
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Add 5
+worker outcome: normal, test outcome: survived
+[job-id] 9930f2e4c2e242adb04a8087694bc5a7
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Add 6
+worker outcome: normal, test outcome: survived
+[job-id] 8c0af5994a55423c8e18e9acb08b0c21
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Add 7
+worker outcome: normal, test outcome: survived
+[job-id] 192d16962fdf4e4fa6d512bb76a2288a
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Add 8
+worker outcome: normal, test outcome: survived
+[job-id] 5976d8c120b04a56b81f434bcd9ae7f2
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Add 9
+worker outcome: normal, test outcome: survived
+[job-id] 58cafd77dfc343ec996a6b72a3c93e7b
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Add 10
+worker outcome: normal, test outcome: survived
+[job-id] b8aa1dd46d07471dae6d67b88063f55e
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Add 11
+worker outcome: normal, test outcome: survived
+[job-id] 56006b259c60436f93f1eeb7b7dc318c
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 13b7fa1e88d34161a11847933509d61f
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Sub 1
+worker outcome: normal, test outcome: killed
+[job-id] 0e3e5109fca040758f05c19e67a9a3dc
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Sub 2
+worker outcome: normal, test outcome: killed
+[job-id] 1d05b11d167144188a709ed4366679cf
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Sub 3
+worker outcome: normal, test outcome: survived
+[job-id] 7df251c110f6497eaad8e1fc1d8ac9b8
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Sub 4
+worker outcome: normal, test outcome: survived
+[job-id] 9fb6472614f94bf5b23c0c5f68348a23
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Sub 5
+worker outcome: normal, test outcome: survived
+[job-id] 26671bc57adc4114ac72ca4a3101b60b
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Sub 6
+worker outcome: normal, test outcome: survived
+[job-id] d3c2c05429a14b31ab5760cd02c54a86
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Sub 7
+worker outcome: normal, test outcome: survived
+[job-id] 1f600a89ff5d431ea21b525c2a8aac7f
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Sub 8
+worker outcome: normal, test outcome: survived
+[job-id] bf8ddcbb51f345538d771b04a1220d35
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Sub 9
+worker outcome: normal, test outcome: survived
+[job-id] 51f27ffdac91487ea993a719b33ddaca
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Sub 10
+worker outcome: normal, test outcome: survived
+[job-id] 78bef4e113f748089fe94e1a4ca0ec6a
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Sub 11
+worker outcome: normal, test outcome: survived
+[job-id] 602bf91b7d7d42bc8c7a2986abf84068
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] 9d5ddc69621342609dcda19ada1afed1
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Mul 1
+worker outcome: normal, test outcome: killed
+[job-id] 0d8b614ee3d843abba3f2c3aef975dbe
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Mul 2
+worker outcome: normal, test outcome: killed
+[job-id] 6a17e3d53304479295c777fc9dfbc576
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Mul 3
+worker outcome: normal, test outcome: survived
+[job-id] e4b139e9d1cd4d9289d202543c4104ae
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Mul 4
+worker outcome: normal, test outcome: survived
+[job-id] ea47205ffa81452eafd023a8ca7b5a85
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Mul 5
+worker outcome: normal, test outcome: survived
+[job-id] f440954cf7b84b58add4db20d82fe135
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Mul 6
+worker outcome: normal, test outcome: survived
+[job-id] cd7537a58cd74820a32106b242d5229a
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Mul 7
+worker outcome: normal, test outcome: survived
+[job-id] 0a347bdb10134dc7ba6722949e71b946
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Mul 8
+worker outcome: normal, test outcome: survived
+[job-id] 3b716b3f0f3c43a89811688a14afc5ad
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Mul 9
+worker outcome: normal, test outcome: survived
+[job-id] 3a4edd3d0179416e80e2da668eac5d65
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Mul 10
+worker outcome: normal, test outcome: survived
+[job-id] 160a808b26484b3fb71e1a69a443abee
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Mul 11
+worker outcome: normal, test outcome: survived
+[job-id] e8442763b39a4ebc8db7fcd5b0ddad69
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] 55d3ab1285dc4dcf8c08cec6a552a93f
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Div 1
+worker outcome: normal, test outcome: killed
+[job-id] ed46553ac055472593807fa17ffe6ffe
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Div 2
+worker outcome: normal, test outcome: killed
+[job-id] 287806cbddda4e9887a4c6fe02919251
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Div 3
+worker outcome: normal, test outcome: survived
+[job-id] ebdaf4d33c594bbdb344126038b6e252
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Div 4
+worker outcome: normal, test outcome: survived
+[job-id] 9ef67652c129459b86adbac5a8979524
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Div 5
+worker outcome: normal, test outcome: survived
+[job-id] b6cb67b72d754110a1999cc68c4442d8
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Div 6
+worker outcome: normal, test outcome: survived
+[job-id] 7b2da3bca4f24d429fe9ebc1cf6f24b3
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Div 7
+worker outcome: normal, test outcome: survived
+[job-id] 0793a83c43a942c4b9ab147bb6f703ff
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Div 8
+worker outcome: normal, test outcome: survived
+[job-id] cbb4f28043cb48d2b45ca600e27e1812
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Div 9
+worker outcome: normal, test outcome: survived
+[job-id] 72881ab2b0a648ffa162b5790479190e
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Div 10
+worker outcome: normal, test outcome: survived
+[job-id] 61ef277f2c754097884c958da0f7fcd3
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Div 11
+worker outcome: normal, test outcome: survived
+[job-id] 3eaad747ae454f238394e6f1d5c056f3
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] 450cb74928c243ebbd0bbcd2335dac87
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_FloorDiv 1
+worker outcome: normal, test outcome: killed
+[job-id] 55f181fe49f84e64b23cce88d25eb2df
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_FloorDiv 2
+worker outcome: normal, test outcome: killed
+[job-id] b4ebd7a73c7046348a2a8cd1fe56c380
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_FloorDiv 3
+worker outcome: normal, test outcome: survived
+[job-id] aa2e88768ef547e98095043156cdc9fa
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_FloorDiv 4
+worker outcome: normal, test outcome: survived
+[job-id] ad339d8ccfe745aabc8aaf0d0fd2382e
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_FloorDiv 5
+worker outcome: normal, test outcome: survived
+[job-id] b5b8dbcc17c349a39edcf432f242d44e
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_FloorDiv 6
+worker outcome: normal, test outcome: survived
+[job-id] 3790147143514fa8a3b19a86ebec31ca
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_FloorDiv 7
+worker outcome: normal, test outcome: survived
+[job-id] 05f39d6ce197477da5e98f3cc38399af
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_FloorDiv 8
+worker outcome: normal, test outcome: survived
+[job-id] 1e532f546beb49cfb42c0ad9aaceccb8
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_FloorDiv 9
+worker outcome: normal, test outcome: survived
+[job-id] 357359966e82401bbcd0762cfcb348da
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_FloorDiv 10
+worker outcome: normal, test outcome: survived
+[job-id] d4a22c90a59c4cd085f9164e85733e27
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_FloorDiv 11
+worker outcome: normal, test outcome: survived
+[job-id] 45f8a25862074517a21e11f6eaa03a39
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] 949130822f2046dfa7f688590f414024
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Pow 1
+worker outcome: normal, test outcome: killed
+[job-id] a4d87dbb4b934c33982a2d8a6f4bb2a9
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Pow 2
+worker outcome: normal, test outcome: killed
+[job-id] b6bac497becf4958b77aebde8f6e0221
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Pow 3
+worker outcome: normal, test outcome: survived
+[job-id] de51daa6c39b4e02b5988cc9f70234a2
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Pow 4
+worker outcome: normal, test outcome: survived
+[job-id] 34b913a8abcd4600b47823bbe04fa0ab
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Pow 5
+worker outcome: normal, test outcome: survived
+[job-id] 5b6c7f21dc034f2e871d7b1cd9599d4f
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Pow 6
+worker outcome: normal, test outcome: survived
+[job-id] c14f7e4ea3134a8b8edd8e38e971abaf
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Pow 7
+worker outcome: normal, test outcome: survived
+[job-id] 30f04acda2914833859a38053d95224f
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Pow 8
+worker outcome: normal, test outcome: survived
+[job-id] 20ba1073aab04c69a8112ea99d6f129f
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Pow 9
+worker outcome: normal, test outcome: survived
+[job-id] 953a1691bc9f424fbae72bfbfee9df75
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Pow 10
+worker outcome: normal, test outcome: survived
+[job-id] f7f68a0a10374d098a4ef23769aef4f6
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_Pow 11
+worker outcome: normal, test outcome: survived
+[job-id] bccd4a288e404b638803d4c26700bbe5
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] cc9aa3c02cf7490dbe3d1159f6dd681e
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_RShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 7ce76fb6a5624fd9ae7b8fdde712e44a
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_RShift 2
+worker outcome: normal, test outcome: killed
+[job-id] 4cf392b08b6c42bd99fbd019f7bd9038
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_RShift 3
+worker outcome: normal, test outcome: survived
+[job-id] d125d913ceae441898d8c1b3d4101eaf
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_RShift 4
+worker outcome: normal, test outcome: survived
+[job-id] 2d9be3eaadac43a3852de2e53ebedb75
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_RShift 5
+worker outcome: normal, test outcome: survived
+[job-id] 64f4b448d41345e7906371427e3a118e
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_RShift 6
+worker outcome: normal, test outcome: survived
+[job-id] aa466ad009744ae2bd2e5af9370754f8
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_RShift 7
+worker outcome: normal, test outcome: survived
+[job-id] 04b973e368a8488a85f5da818bab2309
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_RShift 8
+worker outcome: normal, test outcome: survived
+[job-id] a68f6d44b90c42b6ac01f6cb0566da3d
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_RShift 9
+worker outcome: normal, test outcome: survived
+[job-id] 19a92ee1f08a40cca3a4875604c29503
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_RShift 10
+worker outcome: normal, test outcome: survived
+[job-id] 3dd6e49064e0450298c1bddac6515e87
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_RShift 11
+worker outcome: normal, test outcome: survived
+[job-id] 55aa15bca5f34c57ac12568e3a2b2a6a
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] a87618bc16c14ea1baf516d31e9ca200
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_LShift 1
+worker outcome: normal, test outcome: killed
+[job-id] da145b6cd6d84e929b16d7e0d99f6780
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_LShift 2
+worker outcome: normal, test outcome: killed
+[job-id] f5936aed3a864fe887391b698868319e
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_LShift 3
+worker outcome: normal, test outcome: survived
+[job-id] cce408194f6f45159af71105cd06815d
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_LShift 4
+worker outcome: normal, test outcome: survived
+[job-id] 5a8068b600284fc7bef789096dbafdb5
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_LShift 5
+worker outcome: normal, test outcome: survived
+[job-id] f9060b9c32244626aab7e3d71dfa0b6d
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_LShift 6
+worker outcome: normal, test outcome: survived
+[job-id] 18c36aa2e1c04a4e966e7746c2c091f9
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_LShift 7
+worker outcome: normal, test outcome: survived
+[job-id] 13fc39cb77db4baca80c4f658309ef9a
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_LShift 8
+worker outcome: normal, test outcome: survived
+[job-id] f3322b7c18ed4f5c92e24a18768cd2d7
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_LShift 9
+worker outcome: normal, test outcome: survived
+[job-id] 800f67f96b6d4d95ab42f021214f8039
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_LShift 10
+worker outcome: normal, test outcome: survived
+[job-id] 835b3d151dd04a7b9ba4d1202ec53d51
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_LShift 11
+worker outcome: normal, test outcome: survived
+[job-id] e5899145d7f74633a910e2531bf878e2
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 3522b29eb58a49bfb3467e787fbeda54
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 7b9cc1e46e20493790ccce55fd6e64be
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitOr 2
+worker outcome: normal, test outcome: killed
+[job-id] 310f35feef37423195eab86657201f1b
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitOr 3
+worker outcome: normal, test outcome: survived
+[job-id] f4fd99e26c204164a60524963673e391
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitOr 4
+worker outcome: normal, test outcome: survived
+[job-id] 7264112bad764283967380b62e3965f0
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitOr 5
+worker outcome: normal, test outcome: survived
+[job-id] c69d339773a74ba4b94d7e563def3841
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitOr 6
+worker outcome: normal, test outcome: survived
+[job-id] 96e5054e22394ba883b69d4e8c363a3b
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitOr 7
+worker outcome: normal, test outcome: survived
+[job-id] fee75a94acde4fd78527aba315bb5789
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitOr 8
+worker outcome: normal, test outcome: survived
+[job-id] 09cb4b9db84c4b39b88d573542a4f3ce
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitOr 9
+worker outcome: normal, test outcome: survived
+[job-id] 10f95bb2991140ec852ecac2a859ac97
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitOr 10
+worker outcome: normal, test outcome: survived
+[job-id] 4a5787c39efe412f92f0c50343b7f37d
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitOr 11
+worker outcome: normal, test outcome: survived
+[job-id] a2c8196af8e74751beb473e2842bb049
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 223cf75ea3a346ec9163b5bc966741ee
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] f74b6ddf712b4dd08e9e7b9f8de43110
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitAnd 2
+worker outcome: normal, test outcome: killed
+[job-id] 8f3411d31fcf4f05ae25079751a77871
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] c25d055c7314486589906692fe8456be
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitAnd 4
+worker outcome: normal, test outcome: survived
+[job-id] 517144eabc374ca7a401bf9b3844062e
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitAnd 5
+worker outcome: normal, test outcome: survived
+[job-id] ede42c683b9f41a987c38abecc56cca6
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitAnd 6
+worker outcome: normal, test outcome: survived
+[job-id] a157028065fd4a3aa1a103de124f19cb
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitAnd 7
+worker outcome: normal, test outcome: survived
+[job-id] 909a90135c07472f8a68c4c0e846af01
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitAnd 8
+worker outcome: normal, test outcome: survived
+[job-id] 541cebfb3fc945fa9df2a780f467fe43
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitAnd 9
+worker outcome: normal, test outcome: survived
+[job-id] 4512161c01fe4d99bd764001a4df968a
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitAnd 10
+worker outcome: normal, test outcome: survived
+[job-id] ff2879b9566444dd9e3b1e07134d75a1
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitAnd 11
+worker outcome: normal, test outcome: survived
+[job-id] a1f841fcc5a34d089e0b1577d3bb2d70
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] 0c4b3a55b20b42908284e453689b5bf2
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitXor 1
+worker outcome: normal, test outcome: killed
+[job-id] ab8daf0c7a6f44b986556905f8cda1cd
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitXor 2
+worker outcome: normal, test outcome: killed
+[job-id] 3df45c5cfa1b4995b3581480d7a0d366
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitXor 3
+worker outcome: normal, test outcome: survived
+[job-id] 5878f9c4dffa4e2c843d501dc72b4886
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitXor 4
+worker outcome: normal, test outcome: survived
+[job-id] 107855ce77a54881b7227e62ad1a9365
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitXor 5
+worker outcome: normal, test outcome: survived
+[job-id] 748b4e780872417393f518f5c9aafe08
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitXor 6
+worker outcome: normal, test outcome: survived
+[job-id] bec14be1c1b64ddaa45057d49c0b5b54
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitXor 7
+worker outcome: normal, test outcome: survived
+[job-id] ee64075fb2214a61b1816b6c184eeebf
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitXor 8
+worker outcome: normal, test outcome: survived
+[job-id] 856d8ad5466146d2badae1e07f05c82d
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitXor 9
+worker outcome: normal, test outcome: survived
+[job-id] 4d75e01b938a4d859f4e1c9cecd270d6
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitXor 10
+worker outcome: normal, test outcome: survived
+[job-id] 78934e2f958449f5b98fa3e575a5d231
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Mod_BitXor 11
+worker outcome: normal, test outcome: survived
+[job-id] 7a8cdf376ee648359782431a6b24fb27
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Pow_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] f6d920c4b93a4c969117d5c163f7803b
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Pow_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 0721e58cef75476e9b8b475cfd2b795f
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Pow_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] ef820a30110f407193a6c26bde824810
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Pow_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] 5ea67a64d99147638a7f78f3d8742c33
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Pow_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] bf059f8a74e1477d976ac2630494e187
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Pow_Mod 0
+worker outcome: normal, test outcome: killed
+[job-id] d79a4955401a4dd8a36c918b36d2c9fb
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Pow_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 7f2cc1b345e0458a925d01168de74a12
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Pow_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 322778535b134a7bbf6245c901182677
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Pow_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] f55db4fbd14d4e5daf128436315be7bd
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Pow_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 0aaeebf37ccc40bf9e941ab7fb85d3ce
+django/db/backends/base/creation.py core/ReplaceBinaryOperator_Pow_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] 7b1e465ad424432d8f19531590557152
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 2709cfde3107425fb29a3dffafd53604
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 492e9e14d96e4e69a458552a04e95a00
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 5910312dee49449e827ddc5cabe63e3a
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 6c8a748c39774e6080f03749a3ff6502
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 0a5105680b7a43caac83ee10c9a7a358
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_Eq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 2026a151aa2b4171af621a60d98806f3
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_Eq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] dd6190a92e614fe2972e86a12c531dc2
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_Eq 0
+worker outcome: normal, test outcome: killed
+[job-id] 55c2e15dd29d444289724f62e0542cf0
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_Eq 1
+worker outcome: normal, test outcome: survived
+[job-id] 7bcaeae154dd4ef2a8dd36b1fe504cbe
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_Eq 2
+worker outcome: normal, test outcome: survived
+[job-id] a3d5a79c52df424caadb51503ca7b0f6
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_Eq 3
+worker outcome: normal, test outcome: survived
+[job-id] 07d94a026d664cb997e53e6b49a788ea
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_Eq 4
+worker outcome: normal, test outcome: survived
+[job-id] e91254f85c1344ac92f3822da3054d50
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_NotEq 0
+worker outcome: normal, test outcome: killed
+[job-id] 2c378d78f37d462699c0d2ea52df0b94
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_NotEq 1
+worker outcome: normal, test outcome: killed
+[job-id] 2d067448bbe24ab1bf2127272c23aa64
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_NotEq 2
+worker outcome: normal, test outcome: survived
+[job-id] 6254a83249844b97adde17beaf243d4f
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_NotEq 3
+worker outcome: normal, test outcome: survived
+[job-id] 785832cab6254762a070e89949945ae8
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_NotEq 4
+worker outcome: normal, test outcome: survived
+[job-id] aa7e4bd04b69422193ce893ec7965868
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_Lt 0
+worker outcome: normal, test outcome: killed
+[job-id] 06ead09260ea4d0294c7dfd5e5c3a444
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_Lt 1
+worker outcome: normal, test outcome: killed
+[job-id] 99c638a8cb314ae388da23710e320311
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_Lt 2
+worker outcome: normal, test outcome: survived
+[job-id] f0ef43c34c5f4a2aa1ac58c79fb73546
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_Lt 3
+worker outcome: normal, test outcome: survived
+[job-id] 59adbef5efbc4253be76d3fe440c3293
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_Lt 4
+worker outcome: normal, test outcome: survived
+[job-id] ab5124614b804ffe8c7cac3506ddb9cb
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_LtE 0
+worker outcome: normal, test outcome: killed
+[job-id] 1477723423094a5a929de3b60af6ce08
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 9239ed01e1e647e5a3a105536d371e1e
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_LtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 0610183659064ff3b4bea6f1b43ad9e7
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_LtE 3
+worker outcome: normal, test outcome: survived
+[job-id] 916877cd0a9542659996fe54c5952046
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_LtE 4
+worker outcome: normal, test outcome: survived
+[job-id] b32b68704e374c5182e0e11bc499de5e
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_Gt 0
+worker outcome: normal, test outcome: killed
+[job-id] 16638c13fd674618b39f0ccfeeb41d89
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_Gt 1
+worker outcome: normal, test outcome: killed
+[job-id] b5f147b535cb474c81d22b1952d73c04
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_Gt 2
+worker outcome: normal, test outcome: survived
+[job-id] f2a29134259046e9a3681948a9309a84
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_Gt 3
+worker outcome: normal, test outcome: survived
+[job-id] d569fd8910924405b96c3b6f1cc07ed3
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_GtE_Gt 4
+worker outcome: normal, test outcome: survived
+[job-id] 3bff2d3f9e084767ae47991e725e2843
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] c20b02a457624d369f84927fcf9524c0
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 65ede11477b546afb8e1fd0e529cc58c
+django/db/backends/base/creation.py core/ReplaceComparisonOperator_IsNot_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 8539472e16404955a051664f46f11414
+django/db/backends/base/creation.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] e9001a88ff7140c49f50107eb12469fe
+django/db/backends/base/creation.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] 39eb5b584f00411fbe11f8f90510873f
+django/db/backends/base/creation.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] 9059bc4c54814a4c9154191cb830335c
+django/db/backends/base/creation.py core/AddNot 1
+worker outcome: normal, test outcome: killed
+[job-id] 41146bfc5ef449e481ed8da85f59d90a
+django/db/backends/base/creation.py core/AddNot 2
+worker outcome: normal, test outcome: killed
+[job-id] ca19450ca9ca470e81a988473593ca93
+django/db/backends/base/creation.py core/AddNot 3
+worker outcome: normal, test outcome: killed
+[job-id] d141538b375446c2958beb7139d12689
+django/db/backends/base/creation.py core/AddNot 4
+worker outcome: normal, test outcome: survived
+[job-id] 32f45b99f4794b6cac0954a1d0e3babe
+django/db/backends/base/creation.py core/AddNot 5
+worker outcome: normal, test outcome: survived
+[job-id] 0bc29aa0c7d64f089df4fa3381b27a9e
+django/db/backends/base/creation.py core/AddNot 6
+worker outcome: normal, test outcome: killed
+[job-id] 072dd6378f80484fbded115d587f3e05
+django/db/backends/base/creation.py core/AddNot 7
+worker outcome: normal, test outcome: survived
+[job-id] e5abe1ce005c4129be46a6b60665b20a
+django/db/backends/base/creation.py core/AddNot 8
+worker outcome: normal, test outcome: survived
+[job-id] 0d5debb4c14e4546812c9cde8988a7b4
+django/db/backends/base/creation.py core/AddNot 9
+worker outcome: normal, test outcome: survived
+[job-id] 0988b1a6fec44174b8876dda80a4d3a1
+django/db/backends/base/creation.py core/AddNot 10
+worker outcome: normal, test outcome: survived
+[job-id] ef166186e9344465bb50ff6db29ca422
+django/db/backends/base/creation.py core/AddNot 11
+worker outcome: normal, test outcome: survived
+[job-id] 89b9bf6c02d44173b41341e8fd3fcd46
+django/db/backends/base/creation.py core/AddNot 12
+worker outcome: normal, test outcome: survived
+[job-id] 9a2749e80e2e4de289eed56ae55dddd4
+django/db/backends/base/creation.py core/AddNot 13
+worker outcome: normal, test outcome: survived
+[job-id] 96c29b41b4454d6ba764f5d374e414a3
+django/db/backends/base/creation.py core/AddNot 14
+worker outcome: normal, test outcome: survived
+[job-id] ba80d0de8bcf4acbbe558e5f7bbdd7c1
+django/db/backends/base/creation.py core/AddNot 15
+worker outcome: normal, test outcome: survived
+[job-id] 6681b80a525243dabd4b9afa1b29b8f0
+django/db/backends/base/creation.py core/AddNot 16
+worker outcome: normal, test outcome: survived
+[job-id] 2be57818ff0c4e93a2ec741c8a6609f8
+django/db/backends/base/creation.py core/AddNot 17
+worker outcome: normal, test outcome: survived
+[job-id] e37d58eb29df49fe8a97b5e0b6b531f6
+django/db/backends/base/creation.py core/AddNot 18
+worker outcome: normal, test outcome: survived
+[job-id] feeb23153d654f8a89c09af1cf53ffd1
+django/db/backends/base/creation.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: survived
+[job-id] 1aa521c1773b415d9304d53053a8801c
+django/db/backends/base/creation.py core/ReplaceTrueWithFalse 1
+worker outcome: normal, test outcome: killed
+[job-id] 3f91356ee4e541758aa2a53bba456c27
+django/db/backends/base/creation.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: survived
+[job-id] 7ac04ade6fd84a5aab47b1601f9a5f4c
+django/db/backends/base/creation.py core/ReplaceFalseWithTrue 1
+worker outcome: normal, test outcome: survived
+[job-id] f5ad774768e34f1eb3597dc034d3da40
+django/db/backends/base/creation.py core/ReplaceFalseWithTrue 2
+worker outcome: normal, test outcome: killed
+[job-id] 8e7e381bb8d84840a3873ea486ee092a
+django/db/backends/base/creation.py core/ReplaceFalseWithTrue 3
+worker outcome: normal, test outcome: survived
+[job-id] 1b32bf454bd847b9bb66c02cb82c12ad
+django/db/backends/base/creation.py core/ReplaceFalseWithTrue 4
+worker outcome: normal, test outcome: survived
+[job-id] f6afb3e56d8d49ff9d7bdd403e9428ec
+django/db/backends/base/creation.py core/ReplaceFalseWithTrue 5
+worker outcome: normal, test outcome: survived
+[job-id] ab6e241d03dd4a1dad2d6824b29aa1cf
+django/db/backends/base/creation.py core/ReplaceFalseWithTrue 6
+worker outcome: normal, test outcome: survived
+[job-id] 0251d0e902ea4a4189ff6acc41b022ae
+django/db/backends/base/creation.py core/ReplaceFalseWithTrue 7
+worker outcome: normal, test outcome: survived
+[job-id] d785973ab76449dda097822aba6538f6
+django/db/backends/base/creation.py core/ReplaceFalseWithTrue 8
+worker outcome: normal, test outcome: survived
+[job-id] 3217b47e1b564fe9a4034ea7ce6393c1
+django/db/backends/base/creation.py core/ReplaceAndWithOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 1523d46ff7804fd893a66c467debe609
+django/db/backends/base/creation.py core/ReplaceAndWithOr 1
+worker outcome: normal, test outcome: survived
+[job-id] ad79a38ce834434cbb08768c80d5512b
+django/db/backends/base/creation.py core/ReplaceAndWithOr 2
+worker outcome: normal, test outcome: survived
+[job-id] f8ff4a6508044e09bdaec05cc33a56ad
+django/db/backends/base/creation.py core/ReplaceOrWithAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 91ce9cd4230c49e484f532bcc5c4af7e
+django/db/backends/base/creation.py core/ExceptionReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] 4922fb8753fe42458595b51c1c39a9aa
+django/db/backends/base/creation.py core/ExceptionReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] 37e5e48fe0c44a2f9e2628d2d1631369
+django/db/backends/base/creation.py core/NumberReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] f2dc137177a64e76b5e1dafd834fbfa3
+django/db/backends/base/creation.py core/NumberReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] da0ce3eb3d634412983c726dc875c5e4
+django/db/backends/base/creation.py core/NumberReplacer 2
+worker outcome: normal, test outcome: killed
+[job-id] 4c64b09eb9ad46b4b9e12402c22ddc06
+django/db/backends/base/creation.py core/NumberReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] 21beee0a37f24ffe903c22a2cb4c9c03
+django/db/backends/base/creation.py core/NumberReplacer 4
+worker outcome: normal, test outcome: killed
+[job-id] 20b0973901a845389d4a9e122dc4c494
+django/db/backends/base/creation.py core/NumberReplacer 5
+worker outcome: normal, test outcome: killed
+[job-id] b0a2ae1dd86a4e5bb0a498eb01f47b8b
+django/db/backends/base/creation.py core/NumberReplacer 6
+worker outcome: normal, test outcome: killed
+[job-id] e2c598a0215645a3a09656f88411ecd7
+django/db/backends/base/creation.py core/NumberReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] 55bf1ae7b8a24362a73ab45abcbf45f2
+django/db/backends/base/creation.py core/NumberReplacer 8
+worker outcome: normal, test outcome: killed
+[job-id] a64bd7b944ae43d4bfd42cff1294ac1d
+django/db/backends/base/creation.py core/NumberReplacer 9
+worker outcome: normal, test outcome: survived
+[job-id] c8b7a02d88f444edba6fe38603fb3e13
+django/db/backends/base/creation.py core/NumberReplacer 10
+worker outcome: normal, test outcome: survived
+[job-id] 65b7c3fa8cc8465a97825d118b80cabd
+django/db/backends/base/creation.py core/NumberReplacer 11
+worker outcome: normal, test outcome: survived
+[job-id] c76bef56be72413a990e4b4c97a552ed
+django/db/backends/base/creation.py core/NumberReplacer 12
+worker outcome: normal, test outcome: survived
+[job-id] 76bba43560a444179f60c93969b1dcd0
+django/db/backends/base/creation.py core/NumberReplacer 13
+worker outcome: normal, test outcome: survived
+[job-id] 7a6112ce324543c5bbd02a9fead232e8
+django/db/backends/base/creation.py core/NumberReplacer 14
+worker outcome: normal, test outcome: survived
+[job-id] f8058cbe85774604be9c8ca64a127fd7
+django/db/backends/base/creation.py core/NumberReplacer 15
+worker outcome: normal, test outcome: survived
+[job-id] 540389deea7c435aafd723acc81d07b7
+django/db/backends/base/creation.py core/NumberReplacer 16
+worker outcome: normal, test outcome: survived
+[job-id] 1963e12fb302472680da9f46821c7b4b
+django/db/backends/base/creation.py core/NumberReplacer 17
+worker outcome: normal, test outcome: survived
+[job-id] 8f4a765931564709a9a017fd8f264ad4
+django/db/backends/base/creation.py core/NumberReplacer 18
+worker outcome: normal, test outcome: survived
+[job-id] 96023148d81447c1988dd54afe401192
+django/db/backends/base/creation.py core/NumberReplacer 19
+worker outcome: normal, test outcome: survived
+[job-id] 0670f251204148fca4bb8dc84ef12695
+django/db/backends/base/creation.py core/NumberReplacer 20
+worker outcome: normal, test outcome: survived
+[job-id] 8b8f97d6678c49aeb23994cf56e8d7bf
+django/db/backends/base/creation.py core/NumberReplacer 21
+worker outcome: normal, test outcome: survived
+[job-id] 06088b338e444958838bd827ada291fe
+django/db/backends/base/creation.py core/NumberReplacer 22
+worker outcome: normal, test outcome: survived
+[job-id] 1dc6ca54f7df46f29a89deaef7886292
+django/db/backends/base/creation.py core/NumberReplacer 23
+worker outcome: normal, test outcome: survived
+[job-id] 6c099fd5ea464c5cb323dd181388387f
+django/db/backends/base/creation.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: survived
+[job-id] d9874c244d8a4723a6902cef21510b46
+django/db/backends/base/creation.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: survived
+[job-id] eb61ba1810f14016a355b8ff09c1f0a6
+django/db/backends/base/creation.py core/ZeroIterationForLoop 1
+worker outcome: normal, test outcome: survived
+[job-id] 53a7b97741f04efe952013b882627950
+django/db/backends/base/creation.py core/ZeroIterationForLoop 2
+worker outcome: normal, test outcome: survived
+total jobs: 277
+complete: 277 (100.00%)
+surviving mutants: 203 (73.29%)
+ 
+[django__django__3.1] [django__django-12062] Return Code: 0 
+[django__django__3.1] [django__django-12062] 
+MutationNum: 277 
+[django__django__3.1] [django__django-12062] 
+MutationLOG: 26.709999999999994% 
+[django__django__3.1] [django__django-12062] 
+MutationUncertainty: 0.0 
+[django__django__3.1] [django__django-12062] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/db/backends/base/creation.py'
+        and ((33 <= spec.start_pos[0] <= 88))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__3.1] [django__django-12062] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12062] Std. Output:
+FUNC_MUTATION_RESULT 81.81818181818183 44
+ 
+[django__django__3.1] [django__django-12062] Return Code: 0 
+[django__django__3.1] [django__django-12062] 
+FunctionMutationLOG: 81.81818181818183% 
+[django__django__3.1] [django__django-12062] 
+FunctionMutationNum: 44 
+[django__django__3.1] [django__django-12062] Test script run successful 
+[django__django__3.1] [django__django-12062] Removing coverage 
+[django__django__3.1] [django__django-12062] >>>>> Unfiltered Tests Passed 

@@ -1,0 +1,1556 @@
+[django__django__3.0] [django__django-11070] Task Metadata:
+	- Instance ID: django__django-11070
+	- Testbed: django__django__3.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-11070] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11070] Std. Output:
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] Command: git -c advice.detachedHead=false checkout c498f088c584ec3aff97409fdc11b39b28240de9 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at c498f088c5 Fixed #30521 -- Fixed invalid HTML in default error pages.
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] Command: git diff > /opt/temp_django__django-11070_gold_init.patch 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11070] Std. Output:
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] Command: git apply -v /opt/temp_django__django-11070_gold.patch 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Checking patch django/contrib/auth/forms.py...
+Applied patch django/contrib/auth/forms.py cleanly.
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-11070] Command: git diff > /opt/temp_django__django-11070_test_init.patch 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11070] Std. Output:
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] Command: git restore tests/auth_tests/test_forms.py 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11070] Std. Output:
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] Command: git apply -v /opt/temp_django__django-11070_test.patch 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Checking patch tests/auth_tests/test_forms.py...
+Applied patch tests/auth_tests/test_forms.py cleanly.
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_usercreationform_init_adds_attrs (auth_tests.test_forms.AuthFormsTests)
+The username field should receive autocomplete and autofocus attrs. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] TestsTime: 1.561722993850708 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_usercreationform_clean_password2_mismatch (auth_tests.test_forms.AuthFormsTests)
+Mismatching passwords raise a ValidationError. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.005s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] TestsTime: 1.0610322952270508 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_usercreationform_clean_password2_match (auth_tests.test_forms.AuthFormsTests)
+Matching passwords pass validation. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] TestsTime: 0.5931427478790283 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_usercreationform_post_clean_password_validation (auth_tests.test_forms.AuthFormsTests)
+Password validators are applied in _post_clean. ... FAIL
+
+======================================================================
+FAIL: test_usercreationform_post_clean_password_validation (auth_tests.test_forms.AuthFormsTests)
+Password validators are applied in _post_clean.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 79, in test_usercreationform_post_clean_password_validation
+    self.assertTrue(form.is_valid())  # clean_password2 passes
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 0.005s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 1 
+[django__django__3.0] [django__django-11070] TestsTime: 0.7548680305480957 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_usercreationform_save_creates_user_with_hashed_password (auth_tests.test_forms.AuthFormsTests)
+save() should create a user with the password set via set_password. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] TestsTime: 1.1506106853485107 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_setpasswordform_init_stores_user (auth_tests.test_forms.AuthFormsTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] TestsTime: 0.6598608493804932 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_setpasswordform_clean_new_password2_mismatch (auth_tests.test_forms.AuthFormsTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] TestsTime: 0.9579770565032959 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_setpasswordform_clean_new_password2_validation (auth_tests.test_forms.AuthFormsTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] TestsTime: 0.8019747734069824 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_setpasswordform_save_updates_user_password (auth_tests.test_forms.AuthFormsTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] TestsTime: 0.553572416305542 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_passwordchangeform_clean_old_password_success (auth_tests.test_forms.AuthFormsTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] TestsTime: 0.7237594127655029 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_passwordchangeform_clean_old_password_failure (auth_tests.test_forms.AuthFormsTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] TestsTime: 1.0911478996276855 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_adminpasswordchangeform_init_widget_attrs (auth_tests.test_forms.AuthFormsTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] TestsTime: 0.6837804317474365 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_adminpasswordchangeform_clean_password2_mismatch (auth_tests.test_forms.AuthFormsTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] TestsTime: 1.076838731765747 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_adminpasswordchangeform_whitespace_not_stripped (auth_tests.test_forms.AuthFormsTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] TestsTime: 0.8243837356567383 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_adminpasswordchangeform_missing_passwords (auth_tests.test_forms.AuthFormsTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] TestsTime: 0.538280725479126 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_adminpasswordchangeform_one_password_missing (auth_tests.test_forms.AuthFormsTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] TestsTime: 0.6538171768188477 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_adminpasswordchangeform_save_commit_flag (auth_tests.test_forms.AuthFormsTests)
+Commit=False should not persist the password change. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] TestsTime: 0.6788837909698486 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_adminpasswordchangeform_changed_data_property (auth_tests.test_forms.AuthFormsTests)
+changed_data should return ['password'] when both fields are present. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] TestsTime: 0.5920546054840088 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_authenticationform_init_sets_max_length_and_label (auth_tests.test_forms.AuthFormsTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] TestsTime: 1.0234894752502441 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_authenticationform_invalid_login (auth_tests.test_forms.AuthFormsTests) ... ERROR
+
+======================================================================
+ERROR: test_authenticationform_invalid_login (auth_tests.test_forms.AuthFormsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 75, in test_authenticationform_invalid_login
+    self.assertIn(form.error_messages["invalid_login"], form.non_field_errors()[0])
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 1086, in assertIn
+    if member not in container:
+TypeError: 'in <string>' requires string as left operand, not __proxy__
+
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 1 
+[django__django__3.0] [django__django-11070] TestsTime: 0.7976887226104736 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_authenticationform_inactive_user (auth_tests.test_forms.AuthFormsTests) ... FAIL
+
+======================================================================
+FAIL: test_authenticationform_inactive_user (auth_tests.test_forms.AuthFormsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 75, in test_authenticationform_inactive_user
+    self.assertIn(str(form.error_messages["inactive"]), form.non_field_errors())
+AssertionError: 'This account is inactive.' not found in ['Please enter a correct username and password. Note that both fields may be case-sensitive.']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 1 
+[django__django__3.0] [django__django-11070] TestsTime: 0.7333259582519531 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_authenticationform_inactive_user_incorrect_password (auth_tests.test_forms.AuthFormsTests)
+Login failure should not reveal that the user exists but is inactive. ... ERROR
+
+======================================================================
+ERROR: test_authenticationform_inactive_user_incorrect_password (auth_tests.test_forms.AuthFormsTests)
+Login failure should not reveal that the user exists but is inactive.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 76, in test_authenticationform_inactive_user_incorrect_password
+    self.assertIn(form.error_messages["invalid_login"], form.non_field_errors()[0])
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/case.py", line 1086, in assertIn
+    if member not in container:
+TypeError: 'in <string>' requires string as left operand, not __proxy__
+
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 1 
+[django__django__3.0] [django__django-11070] TestsTime: 0.9776830673217773 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_authenticationform_login_failed_signal (auth_tests.test_forms.AuthFormsTests)
+The user_login_failed signal should be sent with the request. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] TestsTime: 1.0140626430511475 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_authenticationform_inactive_user_i18n (auth_tests.test_forms.AuthFormsTests)
+Error messages should be correctly translated when i18n is active. ... FAIL
+
+======================================================================
+FAIL: test_authenticationform_inactive_user_i18n (auth_tests.test_forms.AuthFormsTests)
+Error messages should be correctly translated when i18n is active.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 78, in test_authenticationform_inactive_user_i18n
+    self.assertIn(str(form.error_messages["inactive"]), form.non_field_errors())
+AssertionError: 'Esta conta está inativa.' not found in ['Por favor, entre com um usuário  e senha corretos. Note que ambos os campos diferenciam maiúsculas e minúsculas.']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 1 
+[django__django__3.0] [django__django-11070] TestsTime: 0.6665349006652832 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_passwordresetform_get_users_filters_correctly (auth_tests.test_forms.AuthFormsTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 0 
+[django__django__3.0] [django__django-11070] TestsTime: 0.8246350288391113 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_passwordresetform_save_sends_email (auth_tests.test_forms.AuthFormsTests)
+save() should send an email to each active user with a usable password. ... FAIL
+test_passwordresetform_send_mail (auth_tests.test_forms.AuthFormsTests)
+send_mail should render templates, build EmailMultiAlternatives and send. ... FAIL
+
+======================================================================
+FAIL: test_passwordresetform_save_sends_email (auth_tests.test_forms.AuthFormsTests)
+save() should send an email to each active user with a usable password.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 370, in inner
+    return func(*args, **kwargs)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 138, in test_passwordresetform_save_sends_email
+    self.assertIn("example.com", email.body)
+AssertionError: 'example.com' not found in 'rendered:registration/password_reset_email.html'
+
+======================================================================
+FAIL: test_passwordresetform_send_mail (auth_tests.test_forms.AuthFormsTests)
+send_mail should render templates, build EmailMultiAlternatives and send.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 98, in test_passwordresetform_send_mail
+    ["to@example.com"],
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 824, in assert_called_once_with
+    raise AssertionError(msg)
+AssertionError: Expected 'EmailMultiAlternatives' to be called once. Called 0 times.
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.017s
+
+FAILED (failures=2)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 1 
+[django__django__3.0] [django__django-11070] TestsTime: 0.9788942337036133 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11070] Test Script:  coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms;
+ 
+[django__django__3.0] [django__django-11070] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__3.0] [django__django-11070] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11070] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_adminpasswordchangeform_changed_data_property (auth_tests.test_forms.AuthFormsTests)
+changed_data should return ['password'] when both fields are present. ... ok
+test_adminpasswordchangeform_clean_password2_mismatch (auth_tests.test_forms.AuthFormsTests) ... ok
+test_adminpasswordchangeform_init_widget_attrs (auth_tests.test_forms.AuthFormsTests) ... ok
+test_adminpasswordchangeform_missing_passwords (auth_tests.test_forms.AuthFormsTests) ... ok
+test_adminpasswordchangeform_one_password_missing (auth_tests.test_forms.AuthFormsTests) ... ok
+test_adminpasswordchangeform_save_commit_flag (auth_tests.test_forms.AuthFormsTests)
+Commit=False should not persist the password change. ... ok
+test_adminpasswordchangeform_whitespace_not_stripped (auth_tests.test_forms.AuthFormsTests) ... ok
+test_authenticationform_init_sets_max_length_and_label (auth_tests.test_forms.AuthFormsTests) ... ok
+test_authenticationform_login_failed_signal (auth_tests.test_forms.AuthFormsTests)
+The user_login_failed signal should be sent with the request. ... ok
+test_passwordchangeform_clean_old_password_failure (auth_tests.test_forms.AuthFormsTests) ... ok
+test_passwordchangeform_clean_old_password_success (auth_tests.test_forms.AuthFormsTests) ... FAIL
+test_passwordresetform_get_users_filters_correctly (auth_tests.test_forms.AuthFormsTests) ... ok
+test_setpasswordform_clean_new_password2_mismatch (auth_tests.test_forms.AuthFormsTests) ... ok
+test_setpasswordform_clean_new_password2_validation (auth_tests.test_forms.AuthFormsTests) ... ok
+test_setpasswordform_init_stores_user (auth_tests.test_forms.AuthFormsTests) ... ok
+test_setpasswordform_save_updates_user_password (auth_tests.test_forms.AuthFormsTests) ... ok
+test_usercreationform_clean_password2_match (auth_tests.test_forms.AuthFormsTests)
+Matching passwords pass validation. ... ok
+test_usercreationform_clean_password2_mismatch (auth_tests.test_forms.AuthFormsTests)
+Mismatching passwords raise a ValidationError. ... ok
+test_usercreationform_init_adds_attrs (auth_tests.test_forms.AuthFormsTests)
+The username field should receive autocomplete and autofocus attrs. ... ok
+test_usercreationform_save_creates_user_with_hashed_password (auth_tests.test_forms.AuthFormsTests)
+save() should create a user with the password set via set_password. ... ok
+
+======================================================================
+FAIL: test_passwordchangeform_clean_old_password_success (auth_tests.test_forms.AuthFormsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 163, in test_passwordchangeform_clean_old_password_success
+    self.assertTrue(form.is_valid())
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.015s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11070] Return Code: 1 
+[django__django__3.0] [django__django-11070] TestsTime: 0.5933454036712646 
+[django__django__3.0] [django__django-11070] 
+>>>>> Some Tests Failed
+ 
+[django__django__3.0] [django__django-11070] Test script run successful 
+[django__django__3.0] [django__django-11070] Removing coverage 
+[django__django__3.0] [django__django-11070] >>>>> Unfiltered Tests Failed 

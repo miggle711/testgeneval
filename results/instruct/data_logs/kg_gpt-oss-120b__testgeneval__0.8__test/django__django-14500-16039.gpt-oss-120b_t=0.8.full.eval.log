@@ -1,0 +1,302 @@
+[django__django__4.0] [django__django-14500] Task Metadata:
+	- Instance ID: django__django-14500
+	- Testbed: django__django__4.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.8.19
+ 
+[django__django__4.0] [django__django-14500] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14500] Std. Output:
+ 
+[django__django__4.0] [django__django-14500] Return Code: 0 
+[django__django__4.0] [django__django-14500] Command: git -c advice.detachedHead=false checkout 8c3bd0b708b488a1f6e8bd8cc6b96569904605be 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14500] Std. Output:
+Previous HEAD position was 475cffd1d6 Fixed typo in docs/intro/reusable-apps.txt.
+HEAD is now at 8c3bd0b708 Fixed #31653 -- Added AddConstraintNotValid()/ValidateConstraint() operations for PostgreSQL.
+ 
+[django__django__4.0] [django__django-14500] Return Code: 0 
+[django__django__4.0] [django__django-14500] Command: git diff > /opt/temp_django__django-14500_gold_init.patch 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14500] Std. Output:
+ 
+[django__django__4.0] [django__django-14500] Return Code: 0 
+[django__django__4.0] [django__django-14500] Command: git apply -v /opt/temp_django__django-14500_gold.patch 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14500] Std. Output:
+Checking patch django/db/migrations/executor.py...
+Applied patch django/db/migrations/executor.py cleanly.
+ 
+[django__django__4.0] [django__django-14500] Return Code: 0 
+[django__django__4.0] [django__django-14500] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__4.0] [django__django-14500] Command: git diff > /opt/temp_django__django-14500_test_init.patch 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14500] Std. Output:
+ 
+[django__django__4.0] [django__django-14500] Return Code: 0 
+[django__django__4.0] [django__django-14500] Command: git restore tests/migrations/test_executor.py 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14500] Std. Output:
+ 
+[django__django__4.0] [django__django-14500] Return Code: 0 
+[django__django__4.0] [django__django-14500] Command: git apply -v /opt/temp_django__django-14500_test.patch 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14500] Std. Output:
+Checking patch tests/migrations/test_executor.py...
+Applied patch tests/migrations/test_executor.py cleanly.
+ 
+[django__django__4.0] [django__django-14500] Return Code: 0 
+[django__django__4.0] [django__django-14500] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__4.0] [django__django-14500] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_executor 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14500] Std. Output:
+test_unapply_calls_unapply_and_records (migrations.test_executor.TestMigrationExecutorUnapplyMigration)
+The migration is unapplied, recorder is called and callbacks fire. ... ERROR
+
+======================================================================
+ERROR: test_unapply_calls_unapply_and_records (migrations.test_executor.TestMigrationExecutorUnapplyMigration)
+The migration is unapplied, recorder is called and callbacks fire.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_executor.py", line 50, in test_unapply_calls_unapply_and_records
+    executor, connection, recorder, _, schema_editor = _make_executor(progress)
+  File "/opt/django__django/tests/migrations/test_executor.py", line 35, in _make_executor
+    executor = MigrationExecutor(connection, progress_callback=progress_callback)
+  File "/opt/django__django/django/db/migrations/executor.py", line 18, in __init__
+    self.loader = MigrationLoader(self.connection)
+  File "/opt/django__django/django/db/migrations/loader.py", line 53, in __init__
+    self.build_graph()
+  File "/opt/django__django/django/db/migrations/loader.py", line 220, in build_graph
+    self.applied_migrations = recorder.applied_migrations()
+  File "/opt/django__django/django/db/migrations/recorder.py", line 77, in applied_migrations
+    if self.has_table():
+  File "/opt/django__django/django/db/migrations/recorder.py", line 55, in has_table
+    with self.connection.cursor() as cursor:
+AttributeError: __enter__
+
+----------------------------------------------------------------------
+Ran 1 test in 0.005s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14500] Return Code: 1 
+[django__django__4.0] [django__django-14500] TestsTime: 0.8701856136322021 
+[django__django__4.0] [django__django-14500] Test script run successful 
+[django__django__4.0] [django__django-14500] Removing coverage 
+[django__django__4.0] [django__django-14500] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_executor 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14500] Std. Output:
+test_unapply_fake_does_not_touch_schema_editor_or_migration (migrations.test_executor.TestMigrationExecutorUnapplyMigration)
+When ``fake=True`` no DB work is performed, but recording still happens. ... ERROR
+
+======================================================================
+ERROR: test_unapply_fake_does_not_touch_schema_editor_or_migration (migrations.test_executor.TestMigrationExecutorUnapplyMigration)
+When ``fake=True`` no DB work is performed, but recording still happens.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_executor.py", line 50, in test_unapply_fake_does_not_touch_schema_editor_or_migration
+    executor, connection, recorder, _, schema_editor = _make_executor(progress)
+  File "/opt/django__django/tests/migrations/test_executor.py", line 35, in _make_executor
+    executor = MigrationExecutor(connection, progress_callback=progress_callback)
+  File "/opt/django__django/django/db/migrations/executor.py", line 18, in __init__
+    self.loader = MigrationLoader(self.connection)
+  File "/opt/django__django/django/db/migrations/loader.py", line 53, in __init__
+    self.build_graph()
+  File "/opt/django__django/django/db/migrations/loader.py", line 220, in build_graph
+    self.applied_migrations = recorder.applied_migrations()
+  File "/opt/django__django/django/db/migrations/recorder.py", line 77, in applied_migrations
+    if self.has_table():
+  File "/opt/django__django/django/db/migrations/recorder.py", line 55, in has_table
+    with self.connection.cursor() as cursor:
+AttributeError: __enter__
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14500] Return Code: 1 
+[django__django__4.0] [django__django-14500] TestsTime: 0.43755602836608887 
+[django__django__4.0] [django__django-14500] Test script run successful 
+[django__django__4.0] [django__django-14500] Removing coverage 
+[django__django__4.0] [django__django-14500] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_executor 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14500] Std. Output:
+test_unapply_records_replaced_migrations (migrations.test_executor.TestMigrationExecutorUnapplyMigration)
+When a migration replaces others, each is recorded as unapplied. ... ERROR
+
+======================================================================
+ERROR: test_unapply_records_replaced_migrations (migrations.test_executor.TestMigrationExecutorUnapplyMigration)
+When a migration replaces others, each is recorded as unapplied.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_executor.py", line 50, in test_unapply_records_replaced_migrations
+    executor, connection, recorder, _, schema_editor = _make_executor(progress)
+  File "/opt/django__django/tests/migrations/test_executor.py", line 35, in _make_executor
+    executor = MigrationExecutor(connection, progress_callback=progress_callback)
+  File "/opt/django__django/django/db/migrations/executor.py", line 18, in __init__
+    self.loader = MigrationLoader(self.connection)
+  File "/opt/django__django/django/db/migrations/loader.py", line 53, in __init__
+    self.build_graph()
+  File "/opt/django__django/django/db/migrations/loader.py", line 220, in build_graph
+    self.applied_migrations = recorder.applied_migrations()
+  File "/opt/django__django/django/db/migrations/recorder.py", line 77, in applied_migrations
+    if self.has_table():
+  File "/opt/django__django/django/db/migrations/recorder.py", line 55, in has_table
+    with self.connection.cursor() as cursor:
+AttributeError: __enter__
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14500] Return Code: 1 
+[django__django__4.0] [django__django-14500] TestsTime: 0.48595499992370605 
+[django__django__4.0] [django__django-14500] Test script run successful 
+[django__django__4.0] [django__django-14500] Removing coverage 
+[django__django__4.0] [django__django-14500] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_executor 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14500] Std. Output:
+test_unapply_propagates_exception_from_migration (migrations.test_executor.TestMigrationExecutorUnapplyMigration)
+Any exception raised by ``migration.unapply`` bubbles up. ... ERROR
+
+======================================================================
+ERROR: test_unapply_propagates_exception_from_migration (migrations.test_executor.TestMigrationExecutorUnapplyMigration)
+Any exception raised by ``migration.unapply`` bubbles up.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_executor.py", line 49, in test_unapply_propagates_exception_from_migration
+    executor, connection, recorder, _, _ = _make_executor()
+  File "/opt/django__django/tests/migrations/test_executor.py", line 35, in _make_executor
+    executor = MigrationExecutor(connection, progress_callback=progress_callback)
+  File "/opt/django__django/django/db/migrations/executor.py", line 18, in __init__
+    self.loader = MigrationLoader(self.connection)
+  File "/opt/django__django/django/db/migrations/loader.py", line 53, in __init__
+    self.build_graph()
+  File "/opt/django__django/django/db/migrations/loader.py", line 220, in build_graph
+    self.applied_migrations = recorder.applied_migrations()
+  File "/opt/django__django/django/db/migrations/recorder.py", line 77, in applied_migrations
+    if self.has_table():
+  File "/opt/django__django/django/db/migrations/recorder.py", line 55, in has_table
+    with self.connection.cursor() as cursor:
+AttributeError: __enter__
+
+----------------------------------------------------------------------
+Ran 1 test in 0.005s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14500] Return Code: 1 
+[django__django__4.0] [django__django-14500] TestsTime: 0.4210655689239502 
+[django__django__4.0] [django__django-14500] Test script run successful 
+[django__django__4.0] [django__django-14500] Removing coverage 
+[django__django__4.0] [django__django-14500] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_executor 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14500] Std. Output:
+test_unapply_without_progress_callback (migrations.test_executor.TestMigrationExecutorUnapplyMigration)
+The method works correctly when no progress callback is supplied. ... ERROR
+
+======================================================================
+ERROR: test_unapply_without_progress_callback (migrations.test_executor.TestMigrationExecutorUnapplyMigration)
+The method works correctly when no progress callback is supplied.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_executor.py", line 49, in test_unapply_without_progress_callback
+    executor, connection, recorder, _, schema_editor = _make_executor(progress_callback=None)
+  File "/opt/django__django/tests/migrations/test_executor.py", line 35, in _make_executor
+    executor = MigrationExecutor(connection, progress_callback=progress_callback)
+  File "/opt/django__django/django/db/migrations/executor.py", line 18, in __init__
+    self.loader = MigrationLoader(self.connection)
+  File "/opt/django__django/django/db/migrations/loader.py", line 53, in __init__
+    self.build_graph()
+  File "/opt/django__django/django/db/migrations/loader.py", line 220, in build_graph
+    self.applied_migrations = recorder.applied_migrations()
+  File "/opt/django__django/django/db/migrations/recorder.py", line 77, in applied_migrations
+    if self.has_table():
+  File "/opt/django__django/django/db/migrations/recorder.py", line 55, in has_table
+    with self.connection.cursor() as cursor:
+AttributeError: __enter__
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14500] Return Code: 1 
+[django__django__4.0] [django__django-14500] TestsTime: 0.35396647453308105 
+[django__django__4.0] [django__django-14500] Test script run successful 
+[django__django__4.0] [django__django-14500] Removing coverage 
+[django__django__4.0] [django__django-14500] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_executor 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14500] Std. Output:
+test_unapply_passes_atomic_flag_to_schema_editor (migrations.test_executor.TestMigrationExecutorUnapplyMigration)
+The ``atomic`` attribute of the migration is forwarded to ``schema_editor``. ... ERROR
+
+======================================================================
+ERROR: test_unapply_passes_atomic_flag_to_schema_editor (migrations.test_executor.TestMigrationExecutorUnapplyMigration)
+The ``atomic`` attribute of the migration is forwarded to ``schema_editor``.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_executor.py", line 49, in test_unapply_passes_atomic_flag_to_schema_editor
+    executor, connection, recorder, _, schema_editor = _make_executor()
+  File "/opt/django__django/tests/migrations/test_executor.py", line 35, in _make_executor
+    executor = MigrationExecutor(connection, progress_callback=progress_callback)
+  File "/opt/django__django/django/db/migrations/executor.py", line 18, in __init__
+    self.loader = MigrationLoader(self.connection)
+  File "/opt/django__django/django/db/migrations/loader.py", line 53, in __init__
+    self.build_graph()
+  File "/opt/django__django/django/db/migrations/loader.py", line 220, in build_graph
+    self.applied_migrations = recorder.applied_migrations()
+  File "/opt/django__django/django/db/migrations/recorder.py", line 77, in applied_migrations
+    if self.has_table():
+  File "/opt/django__django/django/db/migrations/recorder.py", line 55, in has_table
+    with self.connection.cursor() as cursor:
+AttributeError: __enter__
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14500] Return Code: 1 
+[django__django__4.0] [django__django-14500] TestsTime: 0.4116854667663574 
+[django__django__4.0] [django__django-14500] Test script run successful 
+[django__django__4.0] [django__django-14500] Removing coverage 
+[django__django__4.0] [django__django-14500] >>>>> Tests configfull pred
+ 
+[django__django__4.0] [django__django-14500] TestsTime: 0.0 
+[django__django__4.0] [django__django-14500] >>>>> Some Tests Failed 
+[django__django__4.0] [django__django-14500] >>>>> Unfiltered Tests Failed 

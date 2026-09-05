@@ -1,0 +1,149 @@
+[django__django__3.2] [django__django-13250] Task Metadata:
+	- Instance ID: django__django-13250
+	- Testbed: django__django__3.2
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.2] [django__django-13250] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.2] [django__django-13250] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.2] [django__django-13250] Std. Output:
+ 
+[django__django__3.2] [django__django-13250] Return Code: 0 
+[django__django__3.2] [django__django-13250] Command: git -c advice.detachedHead=false checkout bac5777bff8e8d8189193438b5af52f158a3f2a4 
+[django__django__3.2] [django__django-13250] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.2] [django__django-13250] Std. Output:
+Previous HEAD position was 65dfb06a1a [3.2.x] Fixed #32648 -- Fixed VariableDoesNotExist rendering sitemaps template.
+HEAD is now at bac5777bff Refs #30165 -- Removed leftover 'u' prefix.
+ 
+[django__django__3.2] [django__django-13250] Return Code: 0 
+[django__django__3.2] [django__django-13250] Command: git diff > /opt/temp_django__django-13250_gold_init.patch 
+[django__django__3.2] [django__django-13250] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.2] [django__django-13250] Std. Output:
+ 
+[django__django__3.2] [django__django-13250] Return Code: 0 
+[django__django__3.2] [django__django-13250] Command: git apply -v /opt/temp_django__django-13250_gold.patch 
+[django__django__3.2] [django__django-13250] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.2] [django__django-13250] Std. Output:
+Checking patch django/db/backends/base/features.py...
+Checking patch django/db/backends/oracle/features.py...
+Checking patch django/db/backends/sqlite3/base.py...
+Checking patch django/db/backends/sqlite3/features.py...
+Checking patch django/db/models/fields/json.py...
+Applied patch django/db/backends/base/features.py cleanly.
+Applied patch django/db/backends/oracle/features.py cleanly.
+Applied patch django/db/backends/sqlite3/base.py cleanly.
+Applied patch django/db/backends/sqlite3/features.py cleanly.
+Applied patch django/db/models/fields/json.py cleanly.
+ 
+[django__django__3.2] [django__django-13250] Return Code: 0 
+[django__django__3.2] [django__django-13250] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.2] [django__django-13250] Command: git diff > /opt/temp_django__django-13250_test_init.patch 
+[django__django__3.2] [django__django-13250] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.2] [django__django-13250] Std. Output:
+ 
+[django__django__3.2] [django__django-13250] Return Code: 0 
+[django__django__3.2] [django__django-13250] Command: git restore tests/model_fields/test_jsonfield.py 
+[django__django__3.2] [django__django-13250] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.2] [django__django-13250] Std. Output:
+ 
+[django__django__3.2] [django__django-13250] Return Code: 0 
+[django__django__3.2] [django__django-13250] Command: git apply -v /opt/temp_django__django-13250_test.patch 
+[django__django__3.2] [django__django-13250] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.2] [django__django-13250] Std. Output:
+Checking patch tests/model_fields/test_jsonfield.py...
+Applied patch tests/model_fields/test_jsonfield.py cleanly.
+ 
+[django__django__3.2] [django__django-13250] Return Code: 0 
+[django__django__3.2] [django__django-13250] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.2] [django__django-13250] Command: coverage run ./tests/runtests.py --verbosity 2 model_fields.test_jsonfield 
+[django__django__3.2] [django__django-13250] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.2] [django__django-13250] Std. Output:
+test_jsonfield (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_jsonfield (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_jsonfield
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_fields/test_jsonfield.py", line 14, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_fields
+Skipping setup of unused database(s): default, other.
+System check identified no issues (3 silenced).
+ 
+[django__django__3.2] [django__django-13250] Return Code: 1 
+[django__django__3.2] [django__django-13250] TestsTime: 0.9089035987854004 
+[django__django__3.2] [django__django-13250] Test script run successful 
+[django__django__3.2] [django__django-13250] Removing coverage 
+[django__django__3.2] [django__django-13250] Command: coverage run ./tests/runtests.py --verbosity 2 model_fields.test_jsonfield 
+[django__django__3.2] [django__django-13250] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.2] [django__django-13250] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 577, in <module>
+    options.start_at, options.start_after, options.pdb, options.buffer,
+  File "./tests/runtests.py", line 315, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 705, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 562, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_fields/test_jsonfield.py", line 163
+    )
+    ^
+SyntaxError: unexpected EOF while parsing
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_fields
+ 
+[django__django__3.2] [django__django-13250] Return Code: 1 
+[django__django__3.2] [django__django-13250] TestsTime: 0.6271815299987793 
+[django__django__3.2] [django__django-13250] Test script run successful 
+[django__django__3.2] [django__django-13250] Removing coverage 
+[django__django__3.2] [django__django-13250] Command: coverage run ./tests/runtests.py --verbosity 2 model_fields.test_jsonfield 
+[django__django__3.2] [django__django-13250] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.2] [django__django-13250] Std. Output:
+test_jsonfield (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_jsonfield (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_jsonfield
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_fields/test_jsonfield.py", line 14, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_fields
+Skipping setup of unused database(s): default, other.
+System check identified no issues (3 silenced).
+ 
+[django__django__3.2] [django__django-13250] Return Code: 1 
+[django__django__3.2] [django__django-13250] TestsTime: 0.651078462600708 
+[django__django__3.2] [django__django-13250] Test script run successful 
+[django__django__3.2] [django__django-13250] Removing coverage 
+[django__django__3.2] [django__django-13250] >>>>> Tests configfull pred
+ 
+[django__django__3.2] [django__django-13250] TestsTime: 0.0 
+[django__django__3.2] [django__django-13250] >>>>> Some Tests Failed 
+[django__django__3.2] [django__django-13250] >>>>> Unfiltered Tests Failed 

@@ -1,0 +1,188 @@
+[django__django__3.1] [django__django-11669] Task Metadata:
+	- Instance ID: django__django-11669
+	- Testbed: django__django__3.1
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.1] [django__django-11669] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.1] [django__django-11669] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11669] Std. Output:
+ 
+[django__django__3.1] [django__django-11669] Return Code: 0 
+[django__django__3.1] [django__django-11669] Command: git -c advice.detachedHead=false checkout f982f0bdb8317e75af416595c616943d5025da1e 
+[django__django__3.1] [django__django-11669] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11669] Std. Output:
+Previous HEAD position was 0668164b4a Fixed E128, E741 flake8 warnings.
+HEAD is now at f982f0bdb8 Refs #31032 -- Removed unsupported browsers workarounds and comments in admin's JavaScript.
+ 
+[django__django__3.1] [django__django-11669] Return Code: 0 
+[django__django__3.1] [django__django-11669] Command: git diff > /opt/temp_django__django-11669_gold_init.patch 
+[django__django__3.1] [django__django-11669] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11669] Std. Output:
+ 
+[django__django__3.1] [django__django-11669] Return Code: 0 
+[django__django__3.1] [django__django-11669] Command: git apply -v /opt/temp_django__django-11669_gold.patch 
+[django__django__3.1] [django__django-11669] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11669] Std. Output:
+Checking patch django/views/generic/base.py...
+Applied patch django/views/generic/base.py cleanly.
+ 
+[django__django__3.1] [django__django-11669] Return Code: 0 
+[django__django__3.1] [django__django-11669] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.1] [django__django-11669] Command: git diff > /opt/temp_django__django-11669_test_init.patch 
+[django__django__3.1] [django__django-11669] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11669] Std. Output:
+ 
+[django__django__3.1] [django__django-11669] Return Code: 0 
+[django__django__3.1] [django__django-11669] Command: git restore tests/generic_views/test_base.py 
+[django__django__3.1] [django__django-11669] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11669] Std. Output:
+ 
+[django__django__3.1] [django__django-11669] Return Code: 0 
+[django__django__3.1] [django__django-11669] Command: git restore tests/generic_views/urls.py 
+[django__django__3.1] [django__django-11669] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11669] Std. Output:
+ 
+[django__django__3.1] [django__django-11669] Return Code: 0 
+[django__django__3.1] [django__django-11669] Command: git apply -v /opt/temp_django__django-11669_test.patch 
+[django__django__3.1] [django__django-11669] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11669] Std. Output:
+Checking patch tests/generic_views/test_base.py...
+Checking patch tests/generic_views/urls.py...
+Applied patch tests/generic_views/test_base.py cleanly.
+Applied patch tests/generic_views/urls.py cleanly.
+ 
+[django__django__3.1] [django__django-11669] Return Code: 0 
+[django__django__3.1] [django__django-11669] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.1] [django__django-11669] Command: coverage run ./tests/runtests.py --verbosity 2 generic_views.test_base generic_views.urls 
+[django__django__3.1] [django__django-11669] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11669] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 573, in <module>
+    options.start_at, options.start_after, options.pdb, options.buffer,
+  File "./tests/runtests.py", line 311, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 693, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 550, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/generic_views/test_base.py", line 12
+    from __future__ import annotations
+    ^
+SyntaxError: from __future__ imports must occur at the beginning of the file
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application generic_views
+ 
+[django__django__3.1] [django__django-11669] Return Code: 1 
+[django__django__3.1] [django__django-11669] TestsTime: 0.9198746681213379 
+[django__django__3.1] [django__django-11669] Test script run successful 
+[django__django__3.1] [django__django-11669] Removing coverage 
+[django__django__3.1] [django__django-11669] Command: coverage run ./tests/runtests.py --verbosity 2 generic_views.test_base generic_views.urls 
+[django__django__3.1] [django__django-11669] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11669] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 573, in <module>
+    options.start_at, options.start_after, options.pdb, options.buffer,
+  File "./tests/runtests.py", line 311, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 693, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 550, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/generic_views/test_base.py", line 12
+    from __future__ import annotations
+    ^
+SyntaxError: from __future__ imports must occur at the beginning of the file
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application generic_views
+ 
+[django__django__3.1] [django__django-11669] Return Code: 1 
+[django__django__3.1] [django__django-11669] TestsTime: 0.44765329360961914 
+[django__django__3.1] [django__django-11669] Test script run successful 
+[django__django__3.1] [django__django-11669] Removing coverage 
+[django__django__3.1] [django__django-11669] Command: coverage run ./tests/runtests.py --verbosity 2 generic_views.test_base generic_views.urls 
+[django__django__3.1] [django__django-11669] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11669] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 573, in <module>
+    options.start_at, options.start_after, options.pdb, options.buffer,
+  File "./tests/runtests.py", line 311, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 693, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 550, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/generic_views/test_base.py", line 12
+    from __future__ import annotations
+    ^
+SyntaxError: from __future__ imports must occur at the beginning of the file
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application generic_views
+ 
+[django__django__3.1] [django__django-11669] Return Code: 1 
+[django__django__3.1] [django__django-11669] TestsTime: 0.6237998008728027 
+[django__django__3.1] [django__django-11669] Test script run successful 
+[django__django__3.1] [django__django-11669] Removing coverage 
+[django__django__3.1] [django__django-11669] Command: coverage run ./tests/runtests.py --verbosity 2 generic_views.test_base generic_views.urls 
+[django__django__3.1] [django__django-11669] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11669] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 573, in <module>
+    options.start_at, options.start_after, options.pdb, options.buffer,
+  File "./tests/runtests.py", line 311, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 693, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 550, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/generic_views/test_base.py", line 12
+    from __future__ import annotations
+    ^
+SyntaxError: from __future__ imports must occur at the beginning of the file
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application generic_views
+ 
+[django__django__3.1] [django__django-11669] Return Code: 1 
+[django__django__3.1] [django__django-11669] TestsTime: 0.4345717430114746 
+[django__django__3.1] [django__django-11669] Test script run successful 
+[django__django__3.1] [django__django-11669] Removing coverage 
+[django__django__3.1] [django__django-11669] Command: coverage run ./tests/runtests.py --verbosity 2 generic_views.test_base generic_views.urls 
+[django__django__3.1] [django__django-11669] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11669] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 573, in <module>
+    options.start_at, options.start_after, options.pdb, options.buffer,
+  File "./tests/runtests.py", line 311, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 693, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 550, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/generic_views/test_base.py", line 12
+    from __future__ import annotations
+    ^
+SyntaxError: from __future__ imports must occur at the beginning of the file
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application generic_views
+ 
+[django__django__3.1] [django__django-11669] Return Code: 1 
+[django__django__3.1] [django__django-11669] TestsTime: 0.4665975570678711 
+[django__django__3.1] [django__django-11669] Test script run successful 
+[django__django__3.1] [django__django-11669] Removing coverage 
+[django__django__3.1] [django__django-11669] >>>>> Tests configfull pred
+ 
+[django__django__3.1] [django__django-11669] TestsTime: 0.0 
+[django__django__3.1] [django__django-11669] >>>>> Some Tests Failed 
+[django__django__3.1] [django__django-11669] >>>>> Unfiltered Tests Failed 

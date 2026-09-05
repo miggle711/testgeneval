@@ -1,0 +1,1091 @@
+[django__django__3.0] [django__django-11206] Task Metadata:
+	- Instance ID: django__django-11206
+	- Testbed: django__django__3.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-11206] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11206] Std. Output:
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] Command: git -c advice.detachedHead=false checkout 571ab44e8a8936014c22e7eebe4948d9611fd7ce 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11206] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at 571ab44e8a Fixed #30321 -- Added example of changed_data to forms docs.
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] Command: git diff > /opt/temp_django__django-11206_gold_init.patch 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11206] Std. Output:
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] Command: git apply -v /opt/temp_django__django-11206_gold.patch 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11206] Std. Output:
+Checking patch django/utils/numberformat.py...
+Applied patch django/utils/numberformat.py cleanly.
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-11206] Command: git diff > /opt/temp_django__django-11206_test_init.patch 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11206] Std. Output:
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] Command: git restore tests/utils_tests/test_numberformat.py 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11206] Std. Output:
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] Command: git apply -v /opt/temp_django__django-11206_test.patch 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11206] Std. Output:
+Checking patch tests/utils_tests/test_numberformat.py...
+Applied patch tests/utils_tests/test_numberformat.py cleanly.
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-11206] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_numberformat 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11206] Std. Output:
+test_fast_path_int_without_grouping_or_decimal (utils_tests.test_numberformat.NumberFormatTests)
+When ``number`` is an int and no grouping/decimal_pos is required, ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] TestsTime: 0.9317615032196045 
+[django__django__3.0] [django__django-11206] Test script run successful 
+[django__django__3.0] [django__django-11206] Removing coverage 
+[django__django__3.0] [django__django-11206] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_numberformat 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11206] Std. Output:
+test_fast_path_int_with_grouping_forced (utils_tests.test_numberformat.NumberFormatTests)
+Even for ints, forcing grouping should bypass the fast‑path. ... FAIL
+
+======================================================================
+FAIL: test_fast_path_int_with_grouping_forced (utils_tests.test_numberformat.NumberFormatTests)
+Even for ints, forcing grouping should bypass the fast‑path.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_numberformat.py", line 52, in test_fast_path_int_with_grouping_forced
+    self.assertEqual(result, "12,34,5")  # groups of 2 from the right
+AssertionError: '1,23,45' != '12,34,5'
+- 1,23,45
+?   -  -
++ 12,34,5
+?  +  +
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11206] Return Code: 1 
+[django__django__3.0] [django__django-11206] TestsTime: 0.6796128749847412 
+[django__django__3.0] [django__django-11206] Test script run successful 
+[django__django__3.0] [django__django-11206] Removing coverage 
+[django__django__3.0] [django__django-11206] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_numberformat 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11206] Std. Output:
+test_negative_number_sign_is_preserved (utils_tests.test_numberformat.NumberFormatTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] TestsTime: 0.5503106117248535 
+[django__django__3.0] [django__django-11206] Test script run successful 
+[django__django__3.0] [django__django-11206] Removing coverage 
+[django__django__3.0] [django__django-11206] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_numberformat 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11206] Std. Output:
+test_decimal_truncation_and_padding (utils_tests.test_numberformat.NumberFormatTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] TestsTime: 0.49848318099975586 
+[django__django__3.0] [django__django-11206] Test script run successful 
+[django__django__3.0] [django__django-11206] Removing coverage 
+[django__django__3.0] [django__django-11206] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_numberformat 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11206] Std. Output:
+test_simple_grouping (utils_tests.test_numberformat.NumberFormatTests) ... FAIL
+
+======================================================================
+FAIL: test_simple_grouping (utils_tests.test_numberformat.NumberFormatTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_numberformat.py", line 50, in test_simple_grouping
+    "1,234,567",
+AssertionError: '1234567' != '1,234,567'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11206] Return Code: 1 
+[django__django__3.0] [django__django-11206] TestsTime: 0.45390915870666504 
+[django__django__3.0] [django__django-11206] Test script run successful 
+[django__django__3.0] [django__django-11206] Removing coverage 
+[django__django__3.0] [django__django-11206] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_numberformat 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11206] Std. Output:
+test_non_uniform_grouping_sequence (utils_tests.test_numberformat.NumberFormatTests) ... FAIL
+
+======================================================================
+FAIL: test_non_uniform_grouping_sequence (utils_tests.test_numberformat.NumberFormatTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_numberformat.py", line 52, in test_non_uniform_grouping_sequence
+    "12,34,56,789",
+AssertionError: '123456789' != '12,34,56,789'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11206] Return Code: 1 
+[django__django__3.0] [django__django-11206] TestsTime: 0.48803138732910156 
+[django__django__3.0] [django__django-11206] Test script run successful 
+[django__django__3.0] [django__django-11206] Removing coverage 
+[django__django__3.0] [django__django-11206] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_numberformat 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11206] Std. Output:
+test_use_l10n_overrides_global_setting (utils_tests.test_numberformat.NumberFormatTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] TestsTime: 0.5313620567321777 
+[django__django__3.0] [django__django-11206] Test script run successful 
+[django__django__3.0] [django__django-11206] Removing coverage 
+[django__django__3.0] [django__django-11206] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_numberformat 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11206] Std. Output:
+test_use_l10n_true_enables_grouping_when_global_disabled (utils_tests.test_numberformat.NumberFormatTests) ... FAIL
+
+======================================================================
+FAIL: test_use_l10n_true_enables_grouping_when_global_disabled (utils_tests.test_numberformat.NumberFormatTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 371, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/utils_tests/test_numberformat.py", line 53, in test_use_l10n_true_enables_grouping_when_global_disabled
+    "1,234",
+AssertionError: '1234' != '1,234'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11206] Return Code: 1 
+[django__django__3.0] [django__django-11206] TestsTime: 0.6590273380279541 
+[django__django__3.0] [django__django-11206] Test script run successful 
+[django__django__3.0] [django__django-11206] Removing coverage 
+[django__django__3.0] [django__django-11206] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_numberformat 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11206] Std. Output:
+test_decimal_cutoff_to_zero (utils_tests.test_numberformat.NumberFormatTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] TestsTime: 0.5100760459899902 
+[django__django__3.0] [django__django-11206] Test script run successful 
+[django__django__3.0] [django__django-11206] Removing coverage 
+[django__django__3.0] [django__django-11206] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_numberformat 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11206] Std. Output:
+test_decimal_scientific_notation_large_exponent (utils_tests.test_numberformat.NumberFormatTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] TestsTime: 0.3588399887084961 
+[django__django__3.0] [django__django-11206] Test script run successful 
+[django__django__3.0] [django__django-11206] Removing coverage 
+[django__django__3.0] [django__django-11206] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_numberformat 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11206] Std. Output:
+test_decimal_scientific_notation_small_exponent (utils_tests.test_numberformat.NumberFormatTests) ... FAIL
+
+======================================================================
+FAIL: test_decimal_scientific_notation_small_exponent (utils_tests.test_numberformat.NumberFormatTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_numberformat.py", line 55, in test_decimal_scientific_notation_small_exponent
+    self.assertEqual(result, "1.00e-1000")
+AssertionError: '0.00' != '1.00e-1000'
+- 0.00
++ 1.00e-1000
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11206] Return Code: 1 
+[django__django__3.0] [django__django-11206] TestsTime: 0.6961734294891357 
+[django__django__3.0] [django__django-11206] Test script run successful 
+[django__django__3.0] [django__django-11206] Removing coverage 
+[django__django__3.0] [django__django-11206] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_numberformat 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11206] Std. Output:
+test_decimal_subclass_custom_format (utils_tests.test_numberformat.NumberFormatTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] TestsTime: 0.6918613910675049 
+[django__django__3.0] [django__django-11206] Test script run successful 
+[django__django__3.0] [django__django-11206] Removing coverage 
+[django__django__3.0] [django__django-11206] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_numberformat 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11206] Std. Output:
+test_string_input_behaviour (utils_tests.test_numberformat.NumberFormatTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] TestsTime: 0.5448126792907715 
+[django__django__3.0] [django__django-11206] Test script run successful 
+[django__django__3.0] [django__django-11206] Removing coverage 
+[django__django__3.0] [django__django-11206] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_numberformat 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11206] Std. Output:
+test_large_integer_without_grouping (utils_tests.test_numberformat.NumberFormatTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] TestsTime: 0.6078228950500488 
+[django__django__3.0] [django__django-11206] Test script run successful 
+[django__django__3.0] [django__django-11206] Removing coverage 
+[django__django__3.0] [django__django-11206] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_numberformat 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11206] Std. Output:
+test_zero_grouping_and_force_grouping (utils_tests.test_numberformat.NumberFormatTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] TestsTime: 0.36725497245788574 
+[django__django__3.0] [django__django-11206] Test script run successful 
+[django__django__3.0] [django__django-11206] Removing coverage 
+[django__django__3.0] [django__django-11206] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_numberformat 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11206] Std. Output:
+test_decimal_exceeds_200_digit_cutoff (utils_tests.test_numberformat.NumberFormatTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] TestsTime: 0.3169260025024414 
+[django__django__3.0] [django__django-11206] Test script run successful 
+[django__django__3.0] [django__django-11206] Removing coverage 
+[django__django__3.0] [django__django-11206] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_numberformat 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11206] Std. Output:
+test_float_without_fractional_part (utils_tests.test_numberformat.NumberFormatTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] TestsTime: 0.5777492523193359 
+[django__django__3.0] [django__django-11206] Test script run successful 
+[django__django__3.0] [django__django-11206] Removing coverage 
+[django__django__3.0] [django__django-11206] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11206] Test Script:  coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_numberformat;
+ 
+[django__django__3.0] [django__django-11206] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_numberformat 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11206] Std. Output:
+test_decimal_cutoff_to_zero (utils_tests.test_numberformat.NumberFormatTests) ... ok
+test_decimal_exceeds_200_digit_cutoff (utils_tests.test_numberformat.NumberFormatTests) ... ok
+test_decimal_scientific_notation_large_exponent (utils_tests.test_numberformat.NumberFormatTests) ... ok
+test_decimal_subclass_custom_format (utils_tests.test_numberformat.NumberFormatTests) ... ok
+test_decimal_truncation_and_padding (utils_tests.test_numberformat.NumberFormatTests) ... ok
+test_fast_path_int_without_grouping_or_decimal (utils_tests.test_numberformat.NumberFormatTests)
+When ``number`` is an int and no grouping/decimal_pos is required, ... ok
+test_float_without_fractional_part (utils_tests.test_numberformat.NumberFormatTests) ... ok
+test_large_integer_without_grouping (utils_tests.test_numberformat.NumberFormatTests) ... ok
+test_negative_number_sign_is_preserved (utils_tests.test_numberformat.NumberFormatTests) ... ok
+test_string_input_behaviour (utils_tests.test_numberformat.NumberFormatTests) ... ok
+test_use_l10n_overrides_global_setting (utils_tests.test_numberformat.NumberFormatTests) ... ok
+test_zero_grouping_and_force_grouping (utils_tests.test_numberformat.NumberFormatTests) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.002s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] TestsTime: 0.6060283184051514 
+[django__django__3.0] [django__django-11206] 
+>>>>> All Tests Passed
+ 
+[django__django__3.0] [django__django-11206] Current Working Directory: /opt/django__django 
+[django__django__3.0] [django__django-11206] Command: coverage json -o coverage.json 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11206] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] 
+CoverageLOG: 100.0%
+ 
+[django__django__3.0] [django__django-11206] 
+FunctionCoverageLOG: 100.0%
+ 
+[django__django__3.0] [django__django-11206] Running mutation testing 
+[django__django__3.0] [django__django-11206] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11206] Std. Output:
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.0] [django__django-11206] Std. Output:
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11206] Std. Output:
+13.16 13.16 13.16
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] Command: cr-report mutation.sqlite 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11206] Std. Output:
+[job-id] 9efd0468c2d745ed93b77ba0b3aedd02
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] dac362ffad3d4fffa61bd5f06a0e4df7
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Sub 1
+worker outcome: normal, test outcome: killed
+[job-id] 848dd00ac0e54e3b9e1bc81096e6685d
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Sub 2
+worker outcome: normal, test outcome: killed
+[job-id] f3fbc0094def4e0283df9483e373fcc0
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Sub 3
+worker outcome: normal, test outcome: killed
+[job-id] 309407a4cbdf47ac9d227d2bd18e15a6
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Sub 4
+worker outcome: normal, test outcome: killed
+[job-id] 6323034853a0471e8633916bd90b9d0f
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Sub 5
+worker outcome: normal, test outcome: killed
+[job-id] 3dbf8a781d6349ea99bc628d94b63e4d
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] 819274028d884515a8e666564276ee3e
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Mul 1
+worker outcome: normal, test outcome: killed
+[job-id] 49e3080d874c472687f48d5d98366706
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Mul 2
+worker outcome: normal, test outcome: killed
+[job-id] 761182ab66ea40f09add094e6ed1628a
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Mul 3
+worker outcome: normal, test outcome: killed
+[job-id] f966aec0fa0046668fe9d32473105dcb
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Mul 4
+worker outcome: normal, test outcome: killed
+[job-id] 3e07e1d921494210b73662c68a1bdd7c
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Mul 5
+worker outcome: normal, test outcome: killed
+[job-id] f82865b5bd064849935f158147b7e6db
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] 86a9c2652fe148ca90f5dcca04b085f2
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Div 1
+worker outcome: normal, test outcome: killed
+[job-id] 8ef88d8faae542f28799d5c85bd871ae
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Div 2
+worker outcome: normal, test outcome: killed
+[job-id] 9fc1fece4f594a40866f8cce20752bf1
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Div 3
+worker outcome: normal, test outcome: killed
+[job-id] 9093e231034048aa834c0bc5bb8de1a6
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Div 4
+worker outcome: normal, test outcome: killed
+[job-id] 98bc6bdc3e6944ddb316def4a5fdc5a7
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Div 5
+worker outcome: normal, test outcome: killed
+[job-id] f6a7d94aa85f4c41ab1d45d341b1c5e0
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] 63cd27a909c747b8b0d51d067fd21baa
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_FloorDiv 1
+worker outcome: normal, test outcome: killed
+[job-id] f40a9910ba6f4ec0b3974b37078d3593
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_FloorDiv 2
+worker outcome: normal, test outcome: killed
+[job-id] 02ef145bdc4d4e18b202acf09b9950f1
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_FloorDiv 3
+worker outcome: normal, test outcome: killed
+[job-id] 88ca8480be0b480fbe251b85c0dbf260
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_FloorDiv 4
+worker outcome: normal, test outcome: killed
+[job-id] e2d17916980e4327a377dde5d0897342
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_FloorDiv 5
+worker outcome: normal, test outcome: killed
+[job-id] 71e400c39f6245dfbafa57b88ee95c4a
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Mod 0
+worker outcome: normal, test outcome: killed
+[job-id] 84e31cbd61d140648212594629642b0e
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Mod 1
+worker outcome: normal, test outcome: killed
+[job-id] 7d70a82a44b54c2ba2be9bad6de527a3
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Mod 2
+worker outcome: normal, test outcome: killed
+[job-id] 87e4894a83e749488997d45afb8f68ba
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Mod 3
+worker outcome: normal, test outcome: killed
+[job-id] e278a0601576489d9d3c5a0566dcea1e
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Mod 4
+worker outcome: normal, test outcome: killed
+[job-id] de25dab37404405c8ce90c3e7f9b1172
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Mod 5
+worker outcome: normal, test outcome: killed
+[job-id] 72813c4a640e472687f354df089ee0b2
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] 0cbcd8fa3c2241cbb33322f8a28a7647
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Pow 1
+worker outcome: normal, test outcome: killed
+[job-id] b79a9fe4858544f09f9617ae2fe6eff7
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Pow 2
+worker outcome: normal, test outcome: killed
+[job-id] 6d515f59c66349e1a9087dcfcdbd2daa
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Pow 3
+worker outcome: normal, test outcome: killed
+[job-id] 86173da1334a4aacb660f1a81bbc342d
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Pow 4
+worker outcome: normal, test outcome: killed
+[job-id] c926228ad7f8432887ff34fffe94c8bf
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_Pow 5
+worker outcome: normal, test outcome: killed
+[job-id] 022c54b97a1c4130a0d4cad564b9fbbb
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 4061c9d7209c4d4d86301807812ceb04
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_RShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 1c0e45d017094a9f923c5e2106b3d320
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_RShift 2
+worker outcome: normal, test outcome: killed
+[job-id] cca831ef94224cb5820fc2338042a3d8
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_RShift 3
+worker outcome: normal, test outcome: killed
+[job-id] 7ec8e727960c4c6cb5504502620a4ca5
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_RShift 4
+worker outcome: normal, test outcome: killed
+[job-id] 10f1321c62ee4750935b14310ef8087e
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_RShift 5
+worker outcome: normal, test outcome: killed
+[job-id] 95ee8a8116b34a3ab19a34208dd13479
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] dad22eb8e3964728ac68b6906f672b72
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_LShift 1
+worker outcome: normal, test outcome: killed
+[job-id] e4e96f3d47db43019cd00b73f0a5fa2d
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_LShift 2
+worker outcome: normal, test outcome: killed
+[job-id] 4fdfaf52da3445b3a0b1d692d190c4a8
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_LShift 3
+worker outcome: normal, test outcome: killed
+[job-id] cadc4fcf271540fd8002f22b176b656e
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_LShift 4
+worker outcome: normal, test outcome: killed
+[job-id] 2f8096deb9a44d72b740ae476701f8fb
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_LShift 5
+worker outcome: normal, test outcome: killed
+[job-id] 007fe06abe434d66abc82aa17ec2cb96
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 0a6bf43b82cd4d22a88960fa20b90690
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_BitOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 28b80c1db7ed4a1f98a0321bd6904f7c
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_BitOr 2
+worker outcome: normal, test outcome: killed
+[job-id] d42aeb40b0194547bcb6042119e6826f
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_BitOr 3
+worker outcome: normal, test outcome: killed
+[job-id] 2f1f52630fa4468c84c0cd7840f681c6
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_BitOr 4
+worker outcome: normal, test outcome: killed
+[job-id] 52fc7b0e295e4ad1b448b2d904529e01
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_BitOr 5
+worker outcome: normal, test outcome: killed
+[job-id] 3c14d80f725942edb3cef8fc9c8ec802
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 0311dbc5c4ca4d94a14e3c3b3de982d5
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_BitAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] 9c84c7f26b39422eb1aef0abef05ce7a
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_BitAnd 2
+worker outcome: normal, test outcome: killed
+[job-id] 0ad0fe6b7d2643a7be6eb8f7d13eb28d
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_BitAnd 3
+worker outcome: normal, test outcome: killed
+[job-id] f4886886ae57485f934ed03179cefdb4
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_BitAnd 4
+worker outcome: normal, test outcome: killed
+[job-id] 4c6a0848829e4db691e79fdd9124cd9d
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_BitAnd 5
+worker outcome: normal, test outcome: killed
+[job-id] de4becf674a64f1e9dfee78fb072e26e
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] 2e508b1dcbfd403e9e41783ecdb2b7a3
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_BitXor 1
+worker outcome: normal, test outcome: killed
+[job-id] f1c370fcbc9a4eac85fc136202754b58
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_BitXor 2
+worker outcome: normal, test outcome: killed
+[job-id] 5fe88ede2787417c9c0ddb97323f9bef
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_BitXor 3
+worker outcome: normal, test outcome: killed
+[job-id] c889758d64ad468a8a76112344ce6d9a
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_BitXor 4
+worker outcome: normal, test outcome: killed
+[job-id] fcbe251ab98b40239d8fcd710b4e8b3b
+django/utils/numberformat.py core/ReplaceBinaryOperator_Add_BitXor 5
+worker outcome: normal, test outcome: killed
+[job-id] 9dcbd735961c4196871941aea9fce857
+django/utils/numberformat.py core/ReplaceBinaryOperator_Sub_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] 59e3838050a944a8b0d829a30b79d4d7
+django/utils/numberformat.py core/ReplaceBinaryOperator_Sub_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] a24fa5ecb20f4b2d91d8131aeb031b07
+django/utils/numberformat.py core/ReplaceBinaryOperator_Sub_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] 9577a07fa5974a429db9aefd188459a3
+django/utils/numberformat.py core/ReplaceBinaryOperator_Sub_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] dc0d997e389b4ae3a8dea53220c0c1f5
+django/utils/numberformat.py core/ReplaceBinaryOperator_Sub_Mod 0
+worker outcome: normal, test outcome: killed
+[job-id] 9489a5b98d224d53b193a58f6285dfb3
+django/utils/numberformat.py core/ReplaceBinaryOperator_Sub_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] b571e93f6e524e64ad9cfa6b54079397
+django/utils/numberformat.py core/ReplaceBinaryOperator_Sub_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] eb12647bd67e4313ba306f4e7cb74a42
+django/utils/numberformat.py core/ReplaceBinaryOperator_Sub_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] e65abc678ee1423cb353a4d632f4c230
+django/utils/numberformat.py core/ReplaceBinaryOperator_Sub_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 482eeb658c514df2885e4a315ce07a30
+django/utils/numberformat.py core/ReplaceBinaryOperator_Sub_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 2587e565848f4ecb9fc916566eacd15f
+django/utils/numberformat.py core/ReplaceBinaryOperator_Sub_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] 8cd14ef96e5c423b8cc378ce81b27859
+django/utils/numberformat.py core/ReplaceBinaryOperator_Mul_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] 66e9756e517b4b5faab07a630cc8ab8b
+django/utils/numberformat.py core/ReplaceBinaryOperator_Mul_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 6911e910e4cb43978ab130a678c5eb94
+django/utils/numberformat.py core/ReplaceBinaryOperator_Mul_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] cc343cdf709c4708b8935fa515d2061b
+django/utils/numberformat.py core/ReplaceBinaryOperator_Mul_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] c227b40e3fe141f38ed08d8e4583bc8a
+django/utils/numberformat.py core/ReplaceBinaryOperator_Mul_Mod 0
+worker outcome: normal, test outcome: killed
+[job-id] b3ecb03aadbc4d1f92b771eefcb5fdb2
+django/utils/numberformat.py core/ReplaceBinaryOperator_Mul_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] ec92ee83acf046a981e10df9bc7ef13a
+django/utils/numberformat.py core/ReplaceBinaryOperator_Mul_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] c1e04470708143d6b294553053dd18e4
+django/utils/numberformat.py core/ReplaceBinaryOperator_Mul_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] ba9fde9f09eb44418d7a21ad583d335d
+django/utils/numberformat.py core/ReplaceBinaryOperator_Mul_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 551444aa0cd24742ad6d3d7ae376cd0a
+django/utils/numberformat.py core/ReplaceBinaryOperator_Mul_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 1fa129d1865b4b5aa682fa53ede1a9bb
+django/utils/numberformat.py core/ReplaceBinaryOperator_Mul_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] 54cddf03802c45179d2271614fabec10
+django/utils/numberformat.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: normal, test outcome: killed
+[job-id] 2efa35d50ece49c2b4d90e042fa3acc0
+django/utils/numberformat.py core/ReplaceComparisonOperator_Eq_NotEq 1
+worker outcome: normal, test outcome: killed
+[job-id] aff5625c48054674b3abc4a46457cee6
+django/utils/numberformat.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 1f101b44e2794f89be07ff3bf4a16544
+django/utils/numberformat.py core/ReplaceComparisonOperator_Eq_Lt 1
+worker outcome: normal, test outcome: killed
+[job-id] 59d9cc7244d342b0a6fb204871bf645b
+django/utils/numberformat.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] e16f487fbed7480da47ae8cc3b11105e
+django/utils/numberformat.py core/ReplaceComparisonOperator_Eq_LtE 1
+worker outcome: normal, test outcome: killed
+[job-id] 03c9d16cfb084451ac3f500fc83712f5
+django/utils/numberformat.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: normal, test outcome: killed
+[job-id] d93f9e043fcb454f964f782af8e8c98c
+django/utils/numberformat.py core/ReplaceComparisonOperator_Eq_Gt 1
+worker outcome: normal, test outcome: killed
+[job-id] fe4837c533cd4da486d8432dbbce4b0d
+django/utils/numberformat.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: normal, test outcome: killed
+[job-id] bf581565256c44988ee4ce9fe1e277a1
+django/utils/numberformat.py core/ReplaceComparisonOperator_Eq_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 6cd43d2118584df8843373ab553cc717
+django/utils/numberformat.py core/ReplaceComparisonOperator_Eq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 2a1ac261a4464077ac2e2fa8e5e6c5db
+django/utils/numberformat.py core/ReplaceComparisonOperator_Eq_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 1ad67b67aac84ef6b303bc870c97dabe
+django/utils/numberformat.py core/ReplaceComparisonOperator_Eq_IsNot 0
+worker outcome: normal, test outcome: killed
+[job-id] b5b9b577444745b383fca1b837df1963
+django/utils/numberformat.py core/ReplaceComparisonOperator_Eq_IsNot 1
+worker outcome: normal, test outcome: killed
+[job-id] 2cb1e6266d4547308fb2ff18108b3065
+django/utils/numberformat.py core/ReplaceComparisonOperator_NotEq_Eq 0
+worker outcome: normal, test outcome: killed
+[job-id] 50fca0fb69804c6fb62385e9a80a0752
+django/utils/numberformat.py core/ReplaceComparisonOperator_NotEq_Lt 0
+worker outcome: normal, test outcome: killed
+[job-id] f220543b6b72460fa5245a70c35882f1
+django/utils/numberformat.py core/ReplaceComparisonOperator_NotEq_LtE 0
+worker outcome: normal, test outcome: killed
+[job-id] 3ba6aafb45c5463f8233a8300f8517e7
+django/utils/numberformat.py core/ReplaceComparisonOperator_NotEq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 38162ec50e1f41a4ad62bf893fe7912c
+django/utils/numberformat.py core/ReplaceComparisonOperator_NotEq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 6a054b8307484881903198548ec2a03b
+django/utils/numberformat.py core/ReplaceComparisonOperator_Lt_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] 5e494baebeab43b3afb57e2bfc369672
+django/utils/numberformat.py core/ReplaceComparisonOperator_Lt_NotEq 0
+worker outcome: normal, test outcome: killed
+[job-id] 7781eb9a46824d4d9d8692326f9ee380
+django/utils/numberformat.py core/ReplaceComparisonOperator_Lt_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 1eec38c6a49349438ed55defc556a3dc
+django/utils/numberformat.py core/ReplaceComparisonOperator_Lt_Gt 0
+worker outcome: normal, test outcome: killed
+[job-id] f20dbffdd8024376be61f1d413d9aeb0
+django/utils/numberformat.py core/ReplaceComparisonOperator_Lt_GtE 0
+worker outcome: normal, test outcome: killed
+[job-id] eb0f2bd81acd4860ad11e9d9bd2afb96
+django/utils/numberformat.py core/ReplaceComparisonOperator_Lt_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 6422dcee7cc44fe89a9e78e3f8f8a6f1
+django/utils/numberformat.py core/ReplaceComparisonOperator_Lt_IsNot 0
+worker outcome: normal, test outcome: killed
+[job-id] 4f108a900b2f490180a334a7c09e5bac
+django/utils/numberformat.py core/ReplaceComparisonOperator_Gt_Eq 0
+worker outcome: normal, test outcome: killed
+[job-id] f2eabc6e6c3e4092a6a7102ef0a53d7a
+django/utils/numberformat.py core/ReplaceComparisonOperator_Gt_NotEq 0
+worker outcome: normal, test outcome: killed
+[job-id] 38e2bb6f17354748826024d970a77408
+django/utils/numberformat.py core/ReplaceComparisonOperator_Gt_Lt 0
+worker outcome: normal, test outcome: killed
+[job-id] ed75769c46e246c2b00e15f236121700
+django/utils/numberformat.py core/ReplaceComparisonOperator_Gt_LtE 0
+worker outcome: normal, test outcome: killed
+[job-id] 2c084c8827724a63b4028a31aab212b8
+django/utils/numberformat.py core/ReplaceComparisonOperator_Gt_GtE 0
+worker outcome: normal, test outcome: killed
+[job-id] abc7982e2edd42b49acd4bd476324e51
+django/utils/numberformat.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 8c8f41fdf82042959374e6c608308304
+django/utils/numberformat.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] a490fe8d63c7409eb444c532d8202c18
+django/utils/numberformat.py core/ReplaceComparisonOperator_IsNot_Is 1
+worker outcome: normal, test outcome: killed
+[job-id] 9f379c7dbfcc4eff89196ace47ccf8ce
+django/utils/numberformat.py core/ReplaceComparisonOperator_IsNot_Is 2
+worker outcome: normal, test outcome: killed
+[job-id] 55c6378b26814e618e5349cdffddcf7f
+django/utils/numberformat.py core/ReplaceUnaryOperator_USub_UAdd 0
+worker outcome: normal, test outcome: killed
+[job-id] 546a67b0cbb04c90b12ad6f8d41bf3f5
+django/utils/numberformat.py core/ReplaceUnaryOperator_USub_UAdd 1
+worker outcome: normal, test outcome: survived
+[job-id] edcf17a7354340b0954b5e65b3255495
+django/utils/numberformat.py core/ReplaceUnaryOperator_USub_UAdd 2
+worker outcome: normal, test outcome: killed
+[job-id] cdee2986993c4c96acd87ed009a0fd6d
+django/utils/numberformat.py core/ReplaceUnaryOperator_USub_Invert 0
+worker outcome: normal, test outcome: killed
+[job-id] 26efce76aad84a6d87cddc4c98f09823
+django/utils/numberformat.py core/ReplaceUnaryOperator_USub_Invert 1
+worker outcome: normal, test outcome: survived
+[job-id] e1a3639673ee4c7fa3ea299dc2f10896
+django/utils/numberformat.py core/ReplaceUnaryOperator_USub_Invert 2
+worker outcome: normal, test outcome: killed
+[job-id] 05642b14ec814302909352c9f923b1b9
+django/utils/numberformat.py core/ReplaceUnaryOperator_USub_Not 0
+worker outcome: normal, test outcome: killed
+[job-id] b711c6994a374456b22e9ae20214d51a
+django/utils/numberformat.py core/ReplaceUnaryOperator_USub_Not 1
+worker outcome: normal, test outcome: killed
+[job-id] a1cab2f448f64410be856b076abd9fb1
+django/utils/numberformat.py core/ReplaceUnaryOperator_USub_Not 2
+worker outcome: normal, test outcome: killed
+[job-id] aaefa7c8904741a8a4ea32135028ea6a
+django/utils/numberformat.py core/ReplaceUnaryOperator_Delete_USub 0
+worker outcome: normal, test outcome: killed
+[job-id] 381f7f34e19347378b0500af320acd21
+django/utils/numberformat.py core/ReplaceUnaryOperator_Delete_USub 1
+worker outcome: normal, test outcome: survived
+[job-id] c8cf9c9d4e5a4689bac96a5901abb68b
+django/utils/numberformat.py core/ReplaceUnaryOperator_Delete_USub 2
+worker outcome: normal, test outcome: killed
+[job-id] a818d0746245475183da93997719ae2d
+django/utils/numberformat.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: killed
+[job-id] 7e4f3cc74d2c445d807d22f686e333aa
+django/utils/numberformat.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: killed
+[job-id] 1355667b3a704e1b8f8a292cf9de4f64
+django/utils/numberformat.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] f6b7d95b50244d699f5fd3a5e01e87ad
+django/utils/numberformat.py core/AddNot 1
+worker outcome: normal, test outcome: killed
+[job-id] 25bcf8257be44f5484af5fe9c6b93fae
+django/utils/numberformat.py core/AddNot 2
+worker outcome: normal, test outcome: killed
+[job-id] 9c1e1af784e64806ba5c18365203c408
+django/utils/numberformat.py core/AddNot 3
+worker outcome: normal, test outcome: killed
+[job-id] f0702451c7ec4c13acdd8f121349319d
+django/utils/numberformat.py core/AddNot 4
+worker outcome: normal, test outcome: killed
+[job-id] a1a86c045d7a40728946c1d13fc037d7
+django/utils/numberformat.py core/AddNot 5
+worker outcome: normal, test outcome: killed
+[job-id] fb6952510f73448b93b24462ebaee81c
+django/utils/numberformat.py core/AddNot 6
+worker outcome: normal, test outcome: killed
+[job-id] 854c761fb4db4f11ba0080b94ca82816
+django/utils/numberformat.py core/AddNot 7
+worker outcome: normal, test outcome: killed
+[job-id] d12f9d14cd1f42059c73f7f1ac0cb075
+django/utils/numberformat.py core/AddNot 8
+worker outcome: normal, test outcome: killed
+[job-id] 81303bd2c1ac4df5bff359e9ead6c711
+django/utils/numberformat.py core/AddNot 9
+worker outcome: normal, test outcome: killed
+[job-id] 2fcb3eb5611e4e21944b8e2e8346ed64
+django/utils/numberformat.py core/AddNot 10
+worker outcome: normal, test outcome: killed
+[job-id] a10807baad1c47d4988392079efb04e0
+django/utils/numberformat.py core/AddNot 11
+worker outcome: normal, test outcome: survived
+[job-id] f6b46699f7484ce0af6691cce515be31
+django/utils/numberformat.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: survived
+[job-id] e7763969627d429aa2034b753535a220
+django/utils/numberformat.py core/ReplaceAndWithOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 486c959a602e4a51aa5b8c62c1345fb3
+django/utils/numberformat.py core/ReplaceAndWithOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 7b2bbd134a9f4e23a6403c8194e77bee
+django/utils/numberformat.py core/ReplaceAndWithOr 2
+worker outcome: normal, test outcome: killed
+[job-id] d707d1828fe94a7c878488fbad34a9c7
+django/utils/numberformat.py core/ReplaceAndWithOr 3
+worker outcome: normal, test outcome: killed
+[job-id] 22fd618ae7384a788f3b31d88abddc36
+django/utils/numberformat.py core/ReplaceAndWithOr 4
+worker outcome: normal, test outcome: killed
+[job-id] b18b31aeee084de09b0642b11d82f940
+django/utils/numberformat.py core/ReplaceAndWithOr 5
+worker outcome: normal, test outcome: killed
+[job-id] 6073e78c67854b8188d5a231a677268e
+django/utils/numberformat.py core/ReplaceAndWithOr 6
+worker outcome: normal, test outcome: killed
+[job-id] 44c5f73a61ab4642868a60e942779478
+django/utils/numberformat.py core/ReplaceOrWithAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] e10c9c5842bc4f53aaca6761c26cc4fe
+django/utils/numberformat.py core/ReplaceOrWithAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] 32b22bcfcd304739bd3bc5845c185cc6
+django/utils/numberformat.py core/ReplaceOrWithAnd 2
+worker outcome: normal, test outcome: killed
+[job-id] 1bd973cb7a9e41c7814cf5785e54242c
+django/utils/numberformat.py core/ExceptionReplacer 0
+worker outcome: normal, test outcome: killed
+[job-id] 5d9702e61ee14aa7ae47d8fa491caec2
+django/utils/numberformat.py core/NumberReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] c9cce7f6edf842e9afe5451a486504a6
+django/utils/numberformat.py core/NumberReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] e6e7ea49d18d467fa37f6ae4a6b0a04d
+django/utils/numberformat.py core/NumberReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] 0c6f3e69af6d43a3b0e765134e0c87d2
+django/utils/numberformat.py core/NumberReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] addf7a24770e45aa83d0887f679cb520
+django/utils/numberformat.py core/NumberReplacer 4
+worker outcome: normal, test outcome: killed
+[job-id] ca034c34c0024852a9e02ac9d476ec7f
+django/utils/numberformat.py core/NumberReplacer 5
+worker outcome: normal, test outcome: killed
+[job-id] eb5fec9dffca4c4f918afd881180b255
+django/utils/numberformat.py core/NumberReplacer 6
+worker outcome: normal, test outcome: killed
+[job-id] 7b38a6b207df47d49cca11c75f0b0a45
+django/utils/numberformat.py core/NumberReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] 4a111b9b219d46ceb2733c239d60f496
+django/utils/numberformat.py core/NumberReplacer 8
+worker outcome: normal, test outcome: killed
+[job-id] 7599497934a9436a9937d8130ece78f5
+django/utils/numberformat.py core/NumberReplacer 9
+worker outcome: normal, test outcome: killed
+[job-id] 2debfc0ea4534480b9bb4f6c68f3cbc0
+django/utils/numberformat.py core/NumberReplacer 10
+worker outcome: normal, test outcome: killed
+[job-id] a15664542a93474e96f4a69ef75078c9
+django/utils/numberformat.py core/NumberReplacer 11
+worker outcome: normal, test outcome: killed
+[job-id] b96db215f94a47cab9a33d1af46e3719
+django/utils/numberformat.py core/NumberReplacer 12
+worker outcome: normal, test outcome: killed
+[job-id] be932feef03c4f5284e627a2dde20b79
+django/utils/numberformat.py core/NumberReplacer 13
+worker outcome: normal, test outcome: killed
+[job-id] c343f0a844d7459aa9d745fce6e4e7c3
+django/utils/numberformat.py core/NumberReplacer 14
+worker outcome: normal, test outcome: killed
+[job-id] 905a7386daf34b46b123f30517c3cc0d
+django/utils/numberformat.py core/NumberReplacer 15
+worker outcome: normal, test outcome: killed
+[job-id] 73cd201e723746a0814ebb60972d5015
+django/utils/numberformat.py core/NumberReplacer 16
+worker outcome: normal, test outcome: killed
+[job-id] 9ed01e1c89184b4095d278d57bff84da
+django/utils/numberformat.py core/NumberReplacer 17
+worker outcome: normal, test outcome: killed
+[job-id] 6e09b9c6bdee44afa21282f5c2df9099
+django/utils/numberformat.py core/NumberReplacer 18
+worker outcome: normal, test outcome: killed
+[job-id] 3825b456136a465292be3e11f3c6bfae
+django/utils/numberformat.py core/NumberReplacer 19
+worker outcome: normal, test outcome: survived
+[job-id] c5cb75612b05441b9bcdc2c28b1db0cf
+django/utils/numberformat.py core/NumberReplacer 20
+worker outcome: normal, test outcome: survived
+[job-id] bf01b47622fc4d05905fa899924e0122
+django/utils/numberformat.py core/NumberReplacer 21
+worker outcome: normal, test outcome: killed
+[job-id] cce7308d02774ccd907b1e8626513e04
+django/utils/numberformat.py core/NumberReplacer 22
+worker outcome: normal, test outcome: killed
+[job-id] 1831301056f44be7877f94dd7263baf8
+django/utils/numberformat.py core/NumberReplacer 23
+worker outcome: normal, test outcome: killed
+[job-id] f00793a52cce4f568fb098beef775101
+django/utils/numberformat.py core/NumberReplacer 24
+worker outcome: normal, test outcome: killed
+[job-id] 757d699f60aa4f81bf47b7eb17c6ee67
+django/utils/numberformat.py core/NumberReplacer 25
+worker outcome: normal, test outcome: killed
+[job-id] 16348c2762c04b43a756936c29375d28
+django/utils/numberformat.py core/NumberReplacer 26
+worker outcome: normal, test outcome: killed
+[job-id] 8d11f628fcb3439b8cdb4dd8c24ee62b
+django/utils/numberformat.py core/NumberReplacer 27
+worker outcome: normal, test outcome: killed
+[job-id] b80bccaf45f04f7aa9afe7127426fd54
+django/utils/numberformat.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: killed
+total jobs: 190
+complete: 190 (100.00%)
+surviving mutants: 25 (13.16%)
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] 
+MutationNum: 190 
+[django__django__3.0] [django__django-11206] 
+MutationLOG: 86.84% 
+[django__django__3.0] [django__django-11206] 
+MutationUncertainty: 0.0 
+[django__django__3.0] [django__django-11206] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/utils/numberformat.py'
+        and ((7 <= spec.start_pos[0] <= 87))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__3.0] [django__django-11206] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11206] Std. Output:
+FUNC_MUTATION_RESULT 86.8421052631579 190
+ 
+[django__django__3.0] [django__django-11206] Return Code: 0 
+[django__django__3.0] [django__django-11206] 
+FunctionMutationLOG: 86.8421052631579% 
+[django__django__3.0] [django__django-11206] 
+FunctionMutationNum: 190 
+[django__django__3.0] [django__django-11206] Test script run successful 
+[django__django__3.0] [django__django-11206] Removing coverage 
+[django__django__3.0] [django__django-11206] >>>>> Unfiltered Tests Failed 

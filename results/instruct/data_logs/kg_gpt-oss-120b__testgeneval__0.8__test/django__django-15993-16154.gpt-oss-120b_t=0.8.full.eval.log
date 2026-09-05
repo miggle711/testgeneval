@@ -1,0 +1,2630 @@
+[django__django__4.2] [django__django-15993] Task Metadata:
+	- Instance ID: django__django-15993
+	- Testbed: django__django__4.2
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.9.19
+ 
+[django__django__4.2] [django__django-15993] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__4.2] [django__django-15993] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15993] Std. Output:
+ 
+[django__django__4.2] [django__django-15993] Return Code: 0 
+[django__django__4.2] [django__django-15993] Command: git -c advice.detachedHead=false checkout 71902e0d9f93670c4f93ff9d66095b0e571be74b 
+[django__django__4.2] [django__django-15993] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15993] Std. Output:
+Previous HEAD position was 0fbdb9784d Fixed #23718 -- Doc'd that test mirrors require TransactionTestCase.
+HEAD is now at 71902e0d9f Fixed #33938 -- Fixed migration crash for m2m with a through model in another app.
+ 
+[django__django__4.2] [django__django-15993] Return Code: 0 
+[django__django__4.2] [django__django-15993] Command: git diff > /opt/temp_django__django-15993_gold_init.patch 
+[django__django__4.2] [django__django-15993] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15993] Std. Output:
+ 
+[django__django__4.2] [django__django-15993] Return Code: 0 
+[django__django__4.2] [django__django-15993] Command: git apply -v /opt/temp_django__django-15993_gold.patch 
+[django__django__4.2] [django__django-15993] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15993] Std. Output:
+Checking patch django/db/migrations/operations/models.py...
+Applied patch django/db/migrations/operations/models.py cleanly.
+ 
+[django__django__4.2] [django__django-15993] Return Code: 0 
+[django__django__4.2] [django__django-15993] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__4.2] [django__django-15993] Command: git diff > /opt/temp_django__django-15993_test_init.patch 
+[django__django__4.2] [django__django-15993] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15993] Std. Output:
+ 
+[django__django__4.2] [django__django-15993] Return Code: 0 
+[django__django__4.2] [django__django-15993] Command: git restore tests/migrations/test_operations.py 
+[django__django__4.2] [django__django-15993] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15993] Std. Output:
+ 
+[django__django__4.2] [django__django-15993] Return Code: 0 
+[django__django__4.2] [django__django-15993] Command: git apply -v /opt/temp_django__django-15993_test.patch 
+[django__django__4.2] [django__django-15993] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15993] Std. Output:
+Checking patch tests/migrations/test_operations.py...
+Applied patch tests/migrations/test_operations.py cleanly.
+ 
+[django__django__4.2] [django__django-15993] Return Code: 0 
+[django__django__4.2] [django__django-15993] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__4.2] [django__django-15993] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_operations 
+[django__django__4.2] [django__django-15993] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.2] [django__django-15993] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+test_rename_model_with_auto_created_m2m (migrations.test_operations.RenameModelDatabaseForwardsTests)
+Renaming a model that participates in an auto‑created many‑to‑many ... FAIL
+
+======================================================================
+FAIL: test_rename_model_with_auto_created_m2m (migrations.test_operations.RenameModelDatabaseForwardsTests)
+Renaming a model that participates in an auto‑created many‑to‑many
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_operations.py", line 85, in test_rename_model_with_auto_created_m2m
+    self.assertTrue(_table_exists(old_author_table))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.2] [django__django-15993] Return Code: 1 
+[django__django__4.2] [django__django-15993] TestsTime: 1.3679759502410889 
+[django__django__4.2] [django__django-15993] Test script run successful 
+[django__django__4.2] [django__django-15993] Removing coverage 
+[django__django__4.2] [django__django-15993] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_operations 
+[django__django__4.2] [django__django-15993] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.2] [django__django-15993] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+test_rename_model_with_custom_through_m2m (migrations.test_operations.RenameModelDatabaseForwardsTests)
+When a many‑to‑many field uses an explicit ``through`` model, ... FAIL
+
+======================================================================
+FAIL: test_rename_model_with_custom_through_m2m (migrations.test_operations.RenameModelDatabaseForwardsTests)
+When a many‑to‑many field uses an explicit ``through`` model,
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_operations.py", line 96, in test_rename_model_with_custom_through_m2m
+    self.assertTrue(_table_exists(old_author_table))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.2] [django__django-15993] Return Code: 1 
+[django__django__4.2] [django__django-15993] TestsTime: 0.74993896484375 
+[django__django__4.2] [django__django-15993] Test script run successful 
+[django__django__4.2] [django__django-15993] Removing coverage 
+[django__django__4.2] [django__django-15993] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_operations 
+[django__django__4.2] [django__django-15993] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.2] [django__django-15993] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+test_allow_migrate_model_blocks_database_operations (migrations.test_operations.RenameModelDatabaseForwardsTests)
+``RenameModel.database_forwards`` should respect ``allow_migrate_model``. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.2] [django__django-15993] Return Code: 0 
+[django__django__4.2] [django__django-15993] TestsTime: 0.7238893508911133 
+[django__django__4.2] [django__django-15993] Test script run successful 
+[django__django__4.2] [django__django-15993] Removing coverage 
+[django__django__4.2] [django__django-15993] >>>>> Tests configfull pred
+ 
+[django__django__4.2] [django__django-15993] Test Script:  coverage run ./tests/runtests.py --verbosity 2 migrations.test_operations;
+ 
+[django__django__4.2] [django__django-15993] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_operations 
+[django__django__4.2] [django__django-15993] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.2] [django__django-15993] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+test_allow_migrate_model_blocks_database_operations (migrations.test_operations.RenameModelDatabaseForwardsTests)
+``RenameModel.database_forwards`` should respect ``allow_migrate_model``. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.2] [django__django-15993] Return Code: 0 
+[django__django__4.2] [django__django-15993] TestsTime: 0.46126580238342285 
+[django__django__4.2] [django__django-15993] 
+>>>>> All Tests Passed
+ 
+[django__django__4.2] [django__django-15993] Current Working Directory: /opt/django__django 
+[django__django__4.2] [django__django-15993] Command: coverage json -o coverage.json 
+[django__django__4.2] [django__django-15993] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15993] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__4.2] [django__django-15993] Return Code: 0 
+[django__django__4.2] [django__django-15993] 
+CoverageLOG: 38.4%
+ 
+[django__django__4.2] [django__django-15993] 
+FunctionCoverageLOG: 14.285714285714285%
+ 
+[django__django__4.2] [django__django-15993] Running mutation testing 
+[django__django__4.2] [django__django-15993] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__4.2] [django__django-15993] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.2] [django__django-15993] Std. Output:
+ 
+[django__django__4.2] [django__django-15993] Return Code: 0 
+[django__django__4.2] [django__django-15993] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__4.2] [django__django-15993] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__4.2] [django__django-15993] Std. Output:
+ 
+[django__django__4.2] [django__django-15993] Return Code: 0 
+[django__django__4.2] [django__django-15993] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__4.2] [django__django-15993] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15993] Std. Output:
+91.84 91.84 91.84
+ 
+[django__django__4.2] [django__django-15993] Return Code: 0 
+[django__django__4.2] [django__django-15993] Command: cr-report mutation.sqlite 
+[django__django__4.2] [django__django-15993] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15993] Std. Output:
+[job-id] eda6262455b54db49f499e817d60c4cd
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Add_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] 15ac5920b5e443efa974dfd1633e0d23
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Add_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] c3c33a0c3108427bbfaefe650cfe18c2
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Add_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 152334a74ebf446f8245d9e737e371fb
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Add_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 8118f5fe12254b7197a7fcea9ed1c640
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Add_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] f1dbf8ce2b8e4f38b2409f5413c52f7d
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Add_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 48324df8b11c4c5ca9baa94942106be3
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Add_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 033251823776419c9de3abdbfd96cd9d
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Add_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 619a935f9efc42aa88aa2a5508008dc7
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Add_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] deff6f2afe8840b58449c8d71bdc2fda
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Add_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 942254eccd1d47029bdc5afaf96f3881
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Add_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] 9fc2e79b738a4b3dbe80dd3169d01db6
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] 6bc5b8b4b47e41cbb541a7cce4d4356f
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 1
+worker outcome: normal, test outcome: survived
+[job-id] 68c3421f4f78484e919221bf9866818c
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 2
+worker outcome: normal, test outcome: survived
+[job-id] 5d21f13f751c4a03a0fffb42a5131515
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 3
+worker outcome: normal, test outcome: survived
+[job-id] a2018de0675a4bdba66654c002e74c59
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 4
+worker outcome: normal, test outcome: survived
+[job-id] db6db7be67b04df7be150f0f607b5b94
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 5
+worker outcome: normal, test outcome: survived
+[job-id] 0b364af72738428498393dfa4fd748eb
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 6
+worker outcome: normal, test outcome: survived
+[job-id] 2d7c733693b14526a63b871bd96139bf
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 7
+worker outcome: normal, test outcome: survived
+[job-id] 46098943a339457f8f4c25b5b8781fc3
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 8
+worker outcome: normal, test outcome: survived
+[job-id] 2c8dc9644725437baf0317b775e28600
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 9
+worker outcome: normal, test outcome: survived
+[job-id] aced09a6a7184d74a2758138b5ad12b9
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 10
+worker outcome: normal, test outcome: survived
+[job-id] 42d4097c801a4a819f8732f62e7e1edc
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 11
+worker outcome: normal, test outcome: survived
+[job-id] 964a466e1bf44cec9c64862d361964d2
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 12
+worker outcome: normal, test outcome: survived
+[job-id] ef9b428c2fb34319954877914f29cc73
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 13
+worker outcome: normal, test outcome: survived
+[job-id] b847485c3ea64721958028fb752db63d
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 14
+worker outcome: normal, test outcome: survived
+[job-id] 1482da5c37a549d1bed15814eaf0bf42
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 15
+worker outcome: normal, test outcome: survived
+[job-id] 1390e6e21718473e8aaea490fed6e714
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 16
+worker outcome: normal, test outcome: survived
+[job-id] ea36b28cbec44affb03149eb59691453
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 17
+worker outcome: normal, test outcome: survived
+[job-id] 57d2cce224fc48ce983130c868a89eca
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 18
+worker outcome: normal, test outcome: survived
+[job-id] 49fe155a5bea4deb89242aad54e66b82
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 19
+worker outcome: normal, test outcome: survived
+[job-id] 00bf80d5b18d49a8b517d5aa62ef8c17
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 20
+worker outcome: normal, test outcome: survived
+[job-id] c5aebe5ee91842b6a4db64ffa3a24f9d
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 21
+worker outcome: normal, test outcome: survived
+[job-id] ccd7021db2e04dc18db224ab1b01f7f2
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 22
+worker outcome: normal, test outcome: survived
+[job-id] 88fa4079c75d4720abb143a932394acd
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 23
+worker outcome: normal, test outcome: survived
+[job-id] 66e00a493a7143929f87dca9de119637
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 24
+worker outcome: normal, test outcome: survived
+[job-id] b39caf94039f48a9883c252bcdfbe281
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 25
+worker outcome: normal, test outcome: survived
+[job-id] ba76f3a0659740deb73feae3d064e2be
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 26
+worker outcome: normal, test outcome: survived
+[job-id] 6e687820b57f424bb470cb17d688bbe3
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 27
+worker outcome: normal, test outcome: survived
+[job-id] 750581c653ab451583b177cb55bbdaa1
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 28
+worker outcome: normal, test outcome: survived
+[job-id] 7b8389f4dcf0466baad0d04c43b8a8f1
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Add 29
+worker outcome: normal, test outcome: survived
+[job-id] 325fb2aee92849a0b727936ff20a3d8f
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] f4c578f243b24518855af73054ac0dd2
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] 05f6bf7e7aff44318f42a0f4e196bbf9
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 2
+worker outcome: normal, test outcome: survived
+[job-id] e89e8f85bad64d2e856308fd9d9c4b10
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 3
+worker outcome: normal, test outcome: survived
+[job-id] be341805d2fd4473bee1a7b0c63123cb
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 4
+worker outcome: normal, test outcome: survived
+[job-id] 753a53eb419c4d9eab7f305dea6473fa
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 5
+worker outcome: normal, test outcome: survived
+[job-id] 3df5c98db99440a7b4afb34f0097f454
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 6
+worker outcome: normal, test outcome: survived
+[job-id] 7d237f85a96646b5a438985dbf242ae2
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 7
+worker outcome: normal, test outcome: survived
+[job-id] 8f18b3a670d5400f813551f0a256691b
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 8
+worker outcome: normal, test outcome: survived
+[job-id] bcc5fa959deb4a2bb7984ebbc22e90d5
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 9
+worker outcome: normal, test outcome: survived
+[job-id] 0b25bd71429645da9fc2975ba42d8839
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 10
+worker outcome: normal, test outcome: survived
+[job-id] 9ad0e762edcc4166afd7d5489e98a99a
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 11
+worker outcome: normal, test outcome: survived
+[job-id] 1745a21663d64b3c94e9c4687b3ba46e
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 12
+worker outcome: normal, test outcome: survived
+[job-id] 0c07fd25ca154fc8a6ef4c51d39ac43f
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 13
+worker outcome: normal, test outcome: survived
+[job-id] 82a9f46d9d164ccca508996b31b395af
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 14
+worker outcome: normal, test outcome: survived
+[job-id] 9379f744b2044f308b0d008760394820
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 15
+worker outcome: normal, test outcome: survived
+[job-id] 2c71cc3b417a4d559a5b8b486a5fae6c
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 16
+worker outcome: normal, test outcome: survived
+[job-id] db4205a0f1d54988acbd127760537d1d
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 17
+worker outcome: normal, test outcome: survived
+[job-id] 2fb85d679f97412bb362a0877bb12bb3
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 18
+worker outcome: normal, test outcome: survived
+[job-id] f804287088d745bf954b7e50c27bb30a
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 19
+worker outcome: normal, test outcome: survived
+[job-id] 8f007e1f973946b3910fa2980492f172
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 20
+worker outcome: normal, test outcome: survived
+[job-id] a635980c2fc44142b39a6551dd6df373
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 21
+worker outcome: normal, test outcome: survived
+[job-id] 876c58b4a3cb49a393d400e3bded5f0c
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 22
+worker outcome: normal, test outcome: survived
+[job-id] 4e884d02bb4c46e18ae87e8de7de1ff5
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 23
+worker outcome: normal, test outcome: survived
+[job-id] c79de47d03ea4523b317ae6b82f7fd55
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 24
+worker outcome: normal, test outcome: survived
+[job-id] ce3851c8b5bd4472859aada9e1d5ddb5
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 25
+worker outcome: normal, test outcome: survived
+[job-id] 10291518b10d4576ac0b8cb8b7eab1ac
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 26
+worker outcome: normal, test outcome: survived
+[job-id] 6f27c2e74f814f33b4d969d2db3a8618
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 27
+worker outcome: normal, test outcome: survived
+[job-id] 1abf8985087e4ff2a9529e7a326c0599
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 28
+worker outcome: normal, test outcome: survived
+[job-id] 219f828c6b3a4153bf06c7808bf453e0
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Sub 29
+worker outcome: normal, test outcome: survived
+[job-id] d67b8f8542844a5b81d8a121a0475641
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] 29d050c213a04ab4810d11b65d1d34db
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] eb6ebfea052a40c4a9a4bc394ad7cf63
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] 15c265688aa9497aa0fa05fd619e35fc
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 3
+worker outcome: normal, test outcome: survived
+[job-id] 24ceeb0ae9a34f47a684bb7caf145a49
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 4
+worker outcome: normal, test outcome: survived
+[job-id] 9c1e4b48c6bc4fcf8f7f45c16886ebde
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 5
+worker outcome: normal, test outcome: survived
+[job-id] 0c66ad5d279f467ea711b7ae9ec4e29f
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 6
+worker outcome: normal, test outcome: survived
+[job-id] f3bfdd37c9454c5d84b0247dda858bb6
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 7
+worker outcome: normal, test outcome: survived
+[job-id] 4ae5a5f7f46f4737b3710e7246bfa475
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 8
+worker outcome: normal, test outcome: survived
+[job-id] 2658181cc10842318f891dd68b51d044
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 9
+worker outcome: normal, test outcome: survived
+[job-id] e785db95fefd48f69d82ace2b6eea250
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 10
+worker outcome: normal, test outcome: survived
+[job-id] aa9b2bfbe55f41ec9aa587f5a1ebadb4
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 11
+worker outcome: normal, test outcome: survived
+[job-id] ad0ff16b1ddc4d798ede52a690184bce
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 12
+worker outcome: normal, test outcome: survived
+[job-id] de8d77f2d0cb48f9b964e1e2e0bb4c2e
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 13
+worker outcome: normal, test outcome: survived
+[job-id] 0fb0ab90c0cb416398f5b5f1fc680f20
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 14
+worker outcome: normal, test outcome: survived
+[job-id] 2182eec73c1c417581632ac02240889d
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 15
+worker outcome: normal, test outcome: survived
+[job-id] c8801a0c2cc54b47afa5a8777a3c99d8
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 16
+worker outcome: normal, test outcome: survived
+[job-id] 64eb12fbf7c24614a0240ad92a03acdb
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 17
+worker outcome: normal, test outcome: survived
+[job-id] d8ae18fe0cf54177bd619aa6306d9fa8
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 18
+worker outcome: normal, test outcome: survived
+[job-id] 2cfdb071ca364f1497458c86c7828c52
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 19
+worker outcome: normal, test outcome: survived
+[job-id] 251c56dc46884574aa98dab5341dec0a
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 20
+worker outcome: normal, test outcome: survived
+[job-id] b8eb50687b3341a780da068555549283
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 21
+worker outcome: normal, test outcome: survived
+[job-id] c324b7894e344a3dae9858df12091bcc
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 22
+worker outcome: normal, test outcome: survived
+[job-id] a29a4a37ac0846889620436c9bfc66df
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 23
+worker outcome: normal, test outcome: survived
+[job-id] e4c2216e136c4e0d940b72e5400b84f2
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 24
+worker outcome: normal, test outcome: survived
+[job-id] 6a64ab2f650342dfa0261981af87b211
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 25
+worker outcome: normal, test outcome: survived
+[job-id] 6aafa0696d864d0a9bce628bcebbda8a
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 26
+worker outcome: normal, test outcome: survived
+[job-id] 3a6c6cdb345e4a379aece6e48ea3b8b8
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 27
+worker outcome: normal, test outcome: survived
+[job-id] 3e4224fe186c421d8af665cb48e9f81a
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 28
+worker outcome: normal, test outcome: survived
+[job-id] 0c2a8b3046034066a28278c9f4c272c3
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Mul 29
+worker outcome: normal, test outcome: survived
+[job-id] 283e3cb0561f4ce4aee215290230fddb
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 78cbb8ec170d473a8df84d972d5f411b
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] a21a4cdc66ee4e44a615b26e541c6409
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] a164b8cb1d3c45be83e26e454783e0c6
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 3
+worker outcome: normal, test outcome: survived
+[job-id] 624d3365afa34390893206ab20a58d70
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 4
+worker outcome: normal, test outcome: survived
+[job-id] 42384944cff44fb9a4d09cb3fc4f4ea0
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 5
+worker outcome: normal, test outcome: survived
+[job-id] 7fdb482e689540359aed84da7026a1eb
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 6
+worker outcome: normal, test outcome: survived
+[job-id] cd8b50aa39b249b0ac15f5db52848d7d
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 7
+worker outcome: normal, test outcome: survived
+[job-id] bf1a43011600429089d6611f774ce1f8
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 8
+worker outcome: normal, test outcome: survived
+[job-id] 39ff630ea2d44d7c97b98b5358fda3de
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 9
+worker outcome: normal, test outcome: survived
+[job-id] 8ef1fcc94cc34988971501106932642a
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 10
+worker outcome: normal, test outcome: survived
+[job-id] 4ce2d2e3c7fe4388a9637da0da0e4aee
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 11
+worker outcome: normal, test outcome: survived
+[job-id] c6066096f21f4e4ca26a9b17dadd3332
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 12
+worker outcome: normal, test outcome: survived
+[job-id] ab76da83a08545c7ab57f6973af5b0ef
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 13
+worker outcome: normal, test outcome: survived
+[job-id] 293abc9b01754867a17af582d807a272
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 14
+worker outcome: normal, test outcome: survived
+[job-id] c0f50fc8e9eb45dc9ab4bb6fd81c0b9a
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 15
+worker outcome: normal, test outcome: survived
+[job-id] 2249b5f9b32b469f97674a431b6eda5b
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 16
+worker outcome: normal, test outcome: survived
+[job-id] e16b26a3f00d44b891b12f51d4d8b923
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 17
+worker outcome: normal, test outcome: survived
+[job-id] d5a77ac1b84e42c4bbcedbd634a914c2
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 18
+worker outcome: normal, test outcome: survived
+[job-id] 742bde9839ec40ef99a830fb3974363e
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 19
+worker outcome: normal, test outcome: survived
+[job-id] f0b9e8b92fe44da5bccfb787bfdf393c
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 20
+worker outcome: normal, test outcome: survived
+[job-id] 41b9ed8bba924f8aa12f902ed6328a94
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 21
+worker outcome: normal, test outcome: survived
+[job-id] 19aba72282a041caaf8fbb64a1bca0ce
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 22
+worker outcome: normal, test outcome: survived
+[job-id] a4320d420c9945aab118378d980e2d22
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 23
+worker outcome: normal, test outcome: survived
+[job-id] bad951b368504729b2ef30254ebd94f7
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 24
+worker outcome: normal, test outcome: survived
+[job-id] 08bdd24d04db44188cfab8c16dc7b764
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 25
+worker outcome: normal, test outcome: survived
+[job-id] d2c2af05248f44f6a8af7f8370f4e478
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 26
+worker outcome: normal, test outcome: survived
+[job-id] fe1cfc4216b5443ebb7386a781ef1e5e
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 27
+worker outcome: normal, test outcome: survived
+[job-id] 91466aa7fc72423cae97ffd4fefb4ec5
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 28
+worker outcome: normal, test outcome: survived
+[job-id] 177c3b2c97574938b72993543179394c
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Div 29
+worker outcome: normal, test outcome: survived
+[job-id] 03e3be42a9044c18a5bf0781e1fee9bc
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 46edbe2bdcbb4071b6de4dfb605d4ca2
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] d8e5033ac76243b19d268c1955ebba4e
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] e7d282875c544b0cb829b34b2b16e55b
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 3
+worker outcome: normal, test outcome: survived
+[job-id] 5eb6b361c8674b7fb73e1b5755fe4044
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 4
+worker outcome: normal, test outcome: survived
+[job-id] 19118be697bb43faad2bbbf46539c5f4
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 5
+worker outcome: normal, test outcome: survived
+[job-id] 3d32937780484ca49fe7582e255acad3
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 6
+worker outcome: normal, test outcome: survived
+[job-id] c3498e5055164cc0a7a24f36f203a806
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 7
+worker outcome: normal, test outcome: survived
+[job-id] c9bc318b8ebd41efbe071c25068bbbfc
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 8
+worker outcome: normal, test outcome: survived
+[job-id] b7e8bdbfec8b4dac96e657251c88f126
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 9
+worker outcome: normal, test outcome: survived
+[job-id] 131d3640db684273a92a9314b7e4a00b
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 10
+worker outcome: normal, test outcome: survived
+[job-id] 5fa2307816664f13a24516577aabe732
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 11
+worker outcome: normal, test outcome: survived
+[job-id] 1b2c846490f7447db82b30efa7f0baf7
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 12
+worker outcome: normal, test outcome: survived
+[job-id] b227e1d375054e77a4ffbea09180eead
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 13
+worker outcome: normal, test outcome: survived
+[job-id] a187a232856749eb9b927c16e1a5f2a4
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 14
+worker outcome: normal, test outcome: survived
+[job-id] 166fc4d12b944c9886b57f6f07a2b620
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 15
+worker outcome: normal, test outcome: survived
+[job-id] 16424d0acf5b4102a1e702a9bb35c0c8
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 16
+worker outcome: normal, test outcome: survived
+[job-id] d6af917e55e24ba1bc32d35fc66dbac9
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 17
+worker outcome: normal, test outcome: survived
+[job-id] 63cc22e658f54c70ae5a9cc86021ce29
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 18
+worker outcome: normal, test outcome: survived
+[job-id] 1f03a12540f5464da8f483ad22f73b81
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 19
+worker outcome: normal, test outcome: survived
+[job-id] a3615078a11043288910438600b68005
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 20
+worker outcome: normal, test outcome: survived
+[job-id] 4f441648d2364a6a80bcb04dd1a5f017
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 21
+worker outcome: normal, test outcome: survived
+[job-id] 036b530504a54002b5774fe03f7360d2
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 22
+worker outcome: normal, test outcome: survived
+[job-id] a4617b5038fd4bed8317d8f6a14c1714
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 23
+worker outcome: normal, test outcome: survived
+[job-id] 8514f4a89c0a466f87088bd5f27c1adc
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 24
+worker outcome: normal, test outcome: survived
+[job-id] bb27ab3ddbdf4ca793043a0c13d4cfb1
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 25
+worker outcome: normal, test outcome: survived
+[job-id] 00c912f5ce0f416f8d6b73551afa3f5b
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 26
+worker outcome: normal, test outcome: survived
+[job-id] b6e7055971ea488cab76df4f74474e4d
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 27
+worker outcome: normal, test outcome: survived
+[job-id] b0f3bf1b471b48d9a7e5be58f09a6676
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 28
+worker outcome: normal, test outcome: survived
+[job-id] 682e17145bc54080afdcb2c9e1d45e45
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_FloorDiv 29
+worker outcome: normal, test outcome: survived
+[job-id] 3a34278259d743b3bc5583b539441fb5
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] c99f8ab4d61c4a17b151c6d5d447be26
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 3ee97380032d4054bef3bee6e7d683b0
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] 639379a7e63247eeb3e09b1943cb0328
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 3
+worker outcome: normal, test outcome: survived
+[job-id] 0a1617b982ae416fb4f1fcad0a07374a
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 4
+worker outcome: normal, test outcome: survived
+[job-id] eeac0c55002f49e497bea11f2669b70a
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 5
+worker outcome: normal, test outcome: survived
+[job-id] 36a4467c604a4c1abe068a503d84b38f
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 6
+worker outcome: normal, test outcome: survived
+[job-id] 21d556fed90d4730a4a96e9646c668ac
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 7
+worker outcome: normal, test outcome: survived
+[job-id] 776035abf120411184ee5a41a446db59
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 8
+worker outcome: normal, test outcome: survived
+[job-id] 28097026b31443fd9903455b2c1e618a
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 9
+worker outcome: normal, test outcome: survived
+[job-id] e3950740a0644749998ae198d52c3923
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 10
+worker outcome: normal, test outcome: survived
+[job-id] e27c70f634774831b3ec4229e2bf661c
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 11
+worker outcome: normal, test outcome: survived
+[job-id] fc82308ca97942eeb5be0210bbae5e8a
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 12
+worker outcome: normal, test outcome: survived
+[job-id] 4b11de23c6b648d097d3a70d0359faab
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 13
+worker outcome: normal, test outcome: survived
+[job-id] 62a192e25e1747c6b947cdbe7ab8a8d3
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 14
+worker outcome: normal, test outcome: survived
+[job-id] 94e90d5906814e798056f686c8c4944b
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 15
+worker outcome: normal, test outcome: survived
+[job-id] 652f06437a344a0bbebd10093fb8b709
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 16
+worker outcome: normal, test outcome: survived
+[job-id] bc13570b7f324889ad1149144f1352d0
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 17
+worker outcome: normal, test outcome: survived
+[job-id] 3bef66e269cc4ae9ba31a0b55e213bfd
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 18
+worker outcome: normal, test outcome: survived
+[job-id] c202e151036a42e7ba1086dc3f1c88e6
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 19
+worker outcome: normal, test outcome: survived
+[job-id] fb905a1aa6a041c0bcd84a27445e227e
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 20
+worker outcome: normal, test outcome: survived
+[job-id] 7e2a545840b74bdd90d66d3ece30996c
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 21
+worker outcome: normal, test outcome: survived
+[job-id] 96402ba677eb44f6b3641604755f5864
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 22
+worker outcome: normal, test outcome: survived
+[job-id] e22348c76f5b41b59a606baa64dcebbb
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 23
+worker outcome: normal, test outcome: survived
+[job-id] f2902c6748904e6ba09872f1c230bdfd
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 24
+worker outcome: normal, test outcome: survived
+[job-id] 11e399f9e6374085bdc81a71ecab59c6
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 25
+worker outcome: normal, test outcome: survived
+[job-id] 5690c258fce44cb0bbf5a4ffb62b09be
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 26
+worker outcome: normal, test outcome: survived
+[job-id] 13ff067e37b144b096331ad3d9d6da07
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 27
+worker outcome: normal, test outcome: survived
+[job-id] 78e39b8b49334bfd8284183ef487f911
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 28
+worker outcome: normal, test outcome: survived
+[job-id] 962e855ec0c44068b396143e1267ab01
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_Pow 29
+worker outcome: normal, test outcome: survived
+[job-id] c782bfdfb51a45bda8ab7e18dba158c2
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] b5964a96b0c54e809e07e7568f122d5b
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 74c68b0d565145b3848a06aa10d0f5e4
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] a7e8efb507c54defa315dd3b4574a062
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 3
+worker outcome: normal, test outcome: survived
+[job-id] 4793f3d1935b4028bb67aa12a58d4e89
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 4
+worker outcome: normal, test outcome: survived
+[job-id] 66f03786c9174161baf02a65a7c2401c
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 5
+worker outcome: normal, test outcome: survived
+[job-id] b04715210cbf439f87efc0a8ea315dee
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 6
+worker outcome: normal, test outcome: survived
+[job-id] a0857a2dc461468b826d6e5e4d379b67
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 7
+worker outcome: normal, test outcome: survived
+[job-id] b11d092478ff48839ddb966b65e1b15d
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 8
+worker outcome: normal, test outcome: survived
+[job-id] 30daf909029f4270ba0da74c6c297735
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 9
+worker outcome: normal, test outcome: survived
+[job-id] f42b2b511bec46c4a2a66407a43d5043
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 10
+worker outcome: normal, test outcome: survived
+[job-id] 5accbe78b8084d8b992534324deed4c2
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 11
+worker outcome: normal, test outcome: survived
+[job-id] 19b09810226844d5aa8c0944cd954b8b
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 12
+worker outcome: normal, test outcome: survived
+[job-id] d9a90089dca04df087d0422c36aaa0bc
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 13
+worker outcome: normal, test outcome: survived
+[job-id] b83659740657439697336861e2f0dcef
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 14
+worker outcome: normal, test outcome: survived
+[job-id] c3b8f79af9c54fe187457f19f643b60f
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 15
+worker outcome: normal, test outcome: survived
+[job-id] c60df6d905c641639246ed69c017a35d
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 16
+worker outcome: normal, test outcome: survived
+[job-id] 9b08850a8e9345298966a47b43648f83
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 17
+worker outcome: normal, test outcome: survived
+[job-id] 0646a0a5a9c7440e93178f68a7b73167
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 18
+worker outcome: normal, test outcome: survived
+[job-id] e777c1acfca448f7b296d0706fceada1
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 19
+worker outcome: normal, test outcome: survived
+[job-id] ca71a82602ec4ebb9eff8a9f2b748c56
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 20
+worker outcome: normal, test outcome: survived
+[job-id] 4b78a22b7a024104a08050795e8fd17a
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 21
+worker outcome: normal, test outcome: survived
+[job-id] 435cf9f094f94a18b562703778aff9c6
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 22
+worker outcome: normal, test outcome: survived
+[job-id] 5529ef1e8ac44f24bd3c32144a3d0c60
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 23
+worker outcome: normal, test outcome: survived
+[job-id] c17d44179081458188f2c11e4c4726b8
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 24
+worker outcome: normal, test outcome: survived
+[job-id] 52b9dfaddc1e46628be5258a85c4a679
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 25
+worker outcome: normal, test outcome: survived
+[job-id] 922bafe4163d440785575136771c552a
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 26
+worker outcome: normal, test outcome: survived
+[job-id] dc3c6539691342058d0fd58385ddad77
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 27
+worker outcome: normal, test outcome: survived
+[job-id] dcb760a77a4945368a554499e01f8def
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 28
+worker outcome: normal, test outcome: survived
+[job-id] b144155f889e442a8a64c9bb65c23fb9
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_RShift 29
+worker outcome: normal, test outcome: survived
+[job-id] d5a9b692f21444b5aef98b1c309621af
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 00e51dac2f3d4bd8b165b5186d032f63
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 9b2da02441964229be744ec630258921
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] c5c8edccfdb3476d90f8a9fc41041a0a
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 3
+worker outcome: normal, test outcome: survived
+[job-id] 342a20119bda4c548e3f607cb72c80c6
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 4
+worker outcome: normal, test outcome: survived
+[job-id] 725baa9808124d1791c3acbb3dc5c49a
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 5
+worker outcome: normal, test outcome: survived
+[job-id] e8e0eff9942c461f83976ae2c84e1a3e
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 6
+worker outcome: normal, test outcome: survived
+[job-id] db0b286b80b44a279255c538724808b6
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 7
+worker outcome: normal, test outcome: survived
+[job-id] 5044930c7f6d4f84b51c19c32f10def8
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 8
+worker outcome: normal, test outcome: survived
+[job-id] 7c8b709a743d4a76af35a5ca120cfffc
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 9
+worker outcome: normal, test outcome: survived
+[job-id] 61ce9b09fda14f2eb2e5ce91483224fd
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 10
+worker outcome: normal, test outcome: survived
+[job-id] eaa4f6d1d7ff47c58d47d1487c4b7186
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 11
+worker outcome: normal, test outcome: survived
+[job-id] 74a430fdeb1349b999023576c08a402c
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 12
+worker outcome: normal, test outcome: survived
+[job-id] ac0a7f4616624f39865ab8c834f3b3dd
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 13
+worker outcome: normal, test outcome: survived
+[job-id] 22a400a58c804a55809ec7d50786ed49
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 14
+worker outcome: normal, test outcome: survived
+[job-id] ba34c6afe19a491fa1019e6b26b1b2c3
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 15
+worker outcome: normal, test outcome: survived
+[job-id] bc2d4cd2a5a84989bf9ab7829c268f63
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 16
+worker outcome: normal, test outcome: survived
+[job-id] 0180944fb8254d5cad0bacf24ebfe139
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 17
+worker outcome: normal, test outcome: survived
+[job-id] a2cef697becc45c586c8365b946ae233
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 18
+worker outcome: normal, test outcome: survived
+[job-id] 3523c7204fae4491a05fb1aa8d3411d6
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 19
+worker outcome: normal, test outcome: survived
+[job-id] 35aa4cf84f454c5fb84aa770470b7b2f
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 20
+worker outcome: normal, test outcome: survived
+[job-id] 63835d10cf4a4a36be361c7895103c46
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 21
+worker outcome: normal, test outcome: survived
+[job-id] e91e07abe28e400e886a1787518bab23
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 22
+worker outcome: normal, test outcome: survived
+[job-id] 6f0d91c09eaa485e8cecc593c028a8bd
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 23
+worker outcome: normal, test outcome: survived
+[job-id] 7317cd45298a4a80b773bae31ea16833
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 24
+worker outcome: normal, test outcome: survived
+[job-id] b34cb47bdacd4c4a9e185aae298c0428
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 25
+worker outcome: normal, test outcome: survived
+[job-id] 50fa3dbc872c4cd3bec00f8c1667f96b
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 26
+worker outcome: normal, test outcome: survived
+[job-id] ac2c6bb0300c4c8b82352e62be5653f4
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 27
+worker outcome: normal, test outcome: survived
+[job-id] 555160c040134224b4b8570419a11c79
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 28
+worker outcome: normal, test outcome: survived
+[job-id] 7b34ad1244184f1794072a4bc3750e91
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_LShift 29
+worker outcome: normal, test outcome: survived
+[job-id] 5c1596554ab04c9dac8a9f0b4ce5021a
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 6d239c018c9b40099d8bd724edfa8650
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 764ad458dcf143d0aa2da78f837890aa
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] d4c51cc0cdde4de49a42fa0e7e5ce1be
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 3
+worker outcome: normal, test outcome: survived
+[job-id] 65bff1dd25ec4dd6a0a454f58d742954
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 4
+worker outcome: normal, test outcome: survived
+[job-id] a01090f8f6d14c4384b6e82f1ab8d507
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 5
+worker outcome: normal, test outcome: survived
+[job-id] eac92564ee1646d78fece994539b8d7e
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 6
+worker outcome: normal, test outcome: survived
+[job-id] b93e6cc388314b23860864aec91152db
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 7
+worker outcome: normal, test outcome: survived
+[job-id] bdaedbf930414b2cbe1cd42a05ebc15c
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 8
+worker outcome: normal, test outcome: survived
+[job-id] f9d44e2d35784e70b6f9a7ed49648324
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 9
+worker outcome: normal, test outcome: survived
+[job-id] d0af129eee704238be5f614767f47822
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 10
+worker outcome: normal, test outcome: survived
+[job-id] 2a21443da47f445cb03387750fc841c1
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 11
+worker outcome: normal, test outcome: survived
+[job-id] 97fbe649f1a74f4ab2e4c426847829be
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 12
+worker outcome: normal, test outcome: survived
+[job-id] 684abe2a1d0a4eb682b804af8685c093
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 13
+worker outcome: normal, test outcome: survived
+[job-id] 54941d10fd5d442c93f828a45d563fc2
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 14
+worker outcome: normal, test outcome: survived
+[job-id] 2d18969966fc4983b79f3396219ebce8
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 15
+worker outcome: normal, test outcome: survived
+[job-id] dae81852e21c4f57a69b4f23fe701217
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 16
+worker outcome: normal, test outcome: survived
+[job-id] bf17715772944bac9e84ff1e1a72664c
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 17
+worker outcome: normal, test outcome: survived
+[job-id] 38a9dc3495644855b89c46c15f4b681c
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 18
+worker outcome: normal, test outcome: survived
+[job-id] bf77650b6fa840fba4143ba023c8b529
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 19
+worker outcome: normal, test outcome: survived
+[job-id] 9252d6db824e41099cc223c424da2c92
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 20
+worker outcome: normal, test outcome: survived
+[job-id] 23af3741b1de4f238568619aa8138579
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 21
+worker outcome: normal, test outcome: survived
+[job-id] e4ce99d61cd74f37bfe64a3d5c8a6de0
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 22
+worker outcome: normal, test outcome: survived
+[job-id] 6c3e48a4525045098203dbe162d37bb1
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 23
+worker outcome: normal, test outcome: survived
+[job-id] f8b37153e25f4219ae712049793897cd
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 24
+worker outcome: normal, test outcome: survived
+[job-id] ba6fca3451474729bc883baac59d89f6
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 25
+worker outcome: normal, test outcome: survived
+[job-id] 482dfd68da49442891d628690c976e3b
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 26
+worker outcome: normal, test outcome: survived
+[job-id] 212a4e90f697445fb5c5cd1b0f709071
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 27
+worker outcome: normal, test outcome: survived
+[job-id] 3e8a9714af8441fa9786a2a5d44028aa
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 28
+worker outcome: normal, test outcome: survived
+[job-id] be78d649c95b45c5a329e75f647a95ba
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitOr 29
+worker outcome: normal, test outcome: survived
+[job-id] d65a7ce5558a4b75b5c0a652d00099c1
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] f6988aee1434498a97f989338f9f95dd
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 204304e2e12444818b0a5e2a7a071932
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] 06cb35b9d65c409082effdddf8204f20
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] 69c9d301122649b3a33ebff0304c5e4f
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 4
+worker outcome: normal, test outcome: survived
+[job-id] 670f07750aaa470bad3e6160d3f7415d
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 5
+worker outcome: normal, test outcome: survived
+[job-id] b561121e6b4549ceb2b959bdf1015ef4
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 6
+worker outcome: normal, test outcome: survived
+[job-id] 2ed065c438dc4e1bb715de863113976f
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 7
+worker outcome: normal, test outcome: survived
+[job-id] 7a5904a3897646e9b618f85baa6aba72
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 8
+worker outcome: normal, test outcome: survived
+[job-id] fc8755b2cbfe470b956cadd744e66c28
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 9
+worker outcome: normal, test outcome: survived
+[job-id] 68c200c88faf4efea3ba663028b188a0
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 10
+worker outcome: normal, test outcome: survived
+[job-id] f9512f9555894c79910f1c6d6515f425
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 11
+worker outcome: normal, test outcome: survived
+[job-id] 6c287a532717419e88098cdf2666e9a1
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 12
+worker outcome: normal, test outcome: survived
+[job-id] eba84a1724474fd9aee8d89c752af415
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 13
+worker outcome: normal, test outcome: survived
+[job-id] 9fed8b37249748128bbdfefab584cee5
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 14
+worker outcome: normal, test outcome: survived
+[job-id] b0796bcfd64e4dc7a0e6e5e3eefe395f
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 15
+worker outcome: normal, test outcome: survived
+[job-id] 7c7017c4277e49be84a6decdb77fcaaa
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 16
+worker outcome: normal, test outcome: survived
+[job-id] 674e31e9439e4c2788806911a549da81
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 17
+worker outcome: normal, test outcome: survived
+[job-id] 2bb18c1fa694434aac4f7ef310e3d6f6
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 18
+worker outcome: normal, test outcome: survived
+[job-id] eafa845945b84841a361e2674e6398b7
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 19
+worker outcome: normal, test outcome: survived
+[job-id] 16e4a34a2a2747a3b1cff58547d58e80
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 20
+worker outcome: normal, test outcome: survived
+[job-id] e80fba422f2a4a3faf793f5f823de8c2
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 21
+worker outcome: normal, test outcome: survived
+[job-id] 718fba5b1d7e45538818cf26f39ef9c2
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 22
+worker outcome: normal, test outcome: survived
+[job-id] 64718c4832ac459ba23a36920a46ba7f
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 23
+worker outcome: normal, test outcome: survived
+[job-id] 214b0282f5044f7d92d9154c9dc53276
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 24
+worker outcome: normal, test outcome: survived
+[job-id] 3758362e87e44e359a5e9fbd5559e474
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 25
+worker outcome: normal, test outcome: survived
+[job-id] 502a9e17dfd94053ae188d93c8b22c72
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 26
+worker outcome: normal, test outcome: survived
+[job-id] 8de1a332f8a645a08561acf03931ce46
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 27
+worker outcome: normal, test outcome: survived
+[job-id] c8373959b2e2455a8d071aeae330a173
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 28
+worker outcome: normal, test outcome: survived
+[job-id] 82ee6c7c5b974e51be9b119733103b03
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitAnd 29
+worker outcome: normal, test outcome: survived
+[job-id] 8a29690326b74cc8a30e7a6b7e9da12b
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] 0b90fdc29a31459681e535d350353206
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] c1614e684cfa42829672362f73910b62
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] 0cc83c247a9f4fc5a8b286e75826f402
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 3
+worker outcome: normal, test outcome: survived
+[job-id] 7a9390f2cf3a4ce3a6eff98dcfd0f1a0
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 4
+worker outcome: normal, test outcome: survived
+[job-id] 2263a28a03e249bc82e0211647fe0abe
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 5
+worker outcome: normal, test outcome: survived
+[job-id] 6e6a841c237e41c988b3254f8cce111b
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 6
+worker outcome: normal, test outcome: survived
+[job-id] 289be35d5d7f41a5b9727e1f79fb3b3b
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 7
+worker outcome: normal, test outcome: survived
+[job-id] 81369aaeec80492eb48b7e1d04e73281
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 8
+worker outcome: normal, test outcome: survived
+[job-id] f58ce7f368e64e438d10ebb53365a5f7
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 9
+worker outcome: normal, test outcome: survived
+[job-id] c82ce12d80944700aded9f262ad206f9
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 10
+worker outcome: normal, test outcome: survived
+[job-id] 0a3eaf21495548a282b1d51bcec3b979
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 11
+worker outcome: normal, test outcome: survived
+[job-id] d079bbd0a43741e395bc1224bf3c8b69
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 12
+worker outcome: normal, test outcome: survived
+[job-id] 68a9dd36c6944fb48197f0ab16a5ab06
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 13
+worker outcome: normal, test outcome: survived
+[job-id] 03fc78e983e845bfbb1193aae0690301
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 14
+worker outcome: normal, test outcome: survived
+[job-id] 2acf3cd62d0341b9843e1f6d31eaa199
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 15
+worker outcome: normal, test outcome: survived
+[job-id] 85b0a5fede0949d8b65d4968e0d782ce
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 16
+worker outcome: normal, test outcome: survived
+[job-id] 515855a3e7d5468dbab9cacec09ae250
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 17
+worker outcome: normal, test outcome: survived
+[job-id] 149f5fa717ed4b85abd4a62f8166acdc
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 18
+worker outcome: normal, test outcome: survived
+[job-id] 41178758806e49b5a349ebd4e43ca3dc
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 19
+worker outcome: normal, test outcome: survived
+[job-id] 00f0e8b84f3047c69e3f32a2efacdf81
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 20
+worker outcome: normal, test outcome: survived
+[job-id] 3cabc4e6c3bb49fd97b8dbea74228e47
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 21
+worker outcome: normal, test outcome: survived
+[job-id] 65c800ced454400582bda908d8150b02
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 22
+worker outcome: normal, test outcome: survived
+[job-id] a31024e0d3d940d09b5764089a240cf0
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 23
+worker outcome: normal, test outcome: survived
+[job-id] b5d5bb3b3f17419fb8c53ca96c8c320f
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 24
+worker outcome: normal, test outcome: survived
+[job-id] 8199b864c32d44949e914c7dccbc2039
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 25
+worker outcome: normal, test outcome: survived
+[job-id] 486b33c7cb4c4d4395504fee032eba0c
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 26
+worker outcome: normal, test outcome: survived
+[job-id] acd7be6acc8944f5bcb8867b1253643b
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 27
+worker outcome: normal, test outcome: survived
+[job-id] 665574a9982a4cc7bd5571220c76a7a5
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 28
+worker outcome: normal, test outcome: survived
+[job-id] 2fcec249672a4e5482c311552daab6dc
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Mod_BitXor 29
+worker outcome: normal, test outcome: survived
+[job-id] c20430c8e4784e7faa7a5ae21a658e08
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] 028e2f6ddfdf42c29f6633a32cca3a99
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Add 1
+worker outcome: normal, test outcome: killed
+[job-id] 112a62e865ed4de7a0a9d0fa6324a5f3
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Add 2
+worker outcome: normal, test outcome: killed
+[job-id] c4377c92283749d785f2bc4ec379f33e
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Add 3
+worker outcome: normal, test outcome: killed
+[job-id] db10c01bdb1c47498a479b81560bdf26
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Add 4
+worker outcome: normal, test outcome: killed
+[job-id] 9d1ac0ebdb2645528145362118665e7b
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 34af5e7ac94b493b95b60d4b918df465
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Sub 1
+worker outcome: normal, test outcome: killed
+[job-id] 4b87dc7f32f54740a42e9b088c00f1ce
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Sub 2
+worker outcome: normal, test outcome: killed
+[job-id] eeaa30c30a3b4e17bf5410f469c4d071
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Sub 3
+worker outcome: normal, test outcome: killed
+[job-id] 0762706191b7477793d969127df5fe2d
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Sub 4
+worker outcome: normal, test outcome: killed
+[job-id] 3fc9931de1b74365a5bc76b18b3c940e
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] 1e9a6ca202a842e4a435556452b93c22
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Mul 1
+worker outcome: normal, test outcome: killed
+[job-id] b5c5753aa6ae4889a2b2a6732748f7e9
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Mul 2
+worker outcome: normal, test outcome: killed
+[job-id] 3c31e7faa8f04d91bea54d37503d4c70
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Mul 3
+worker outcome: normal, test outcome: killed
+[job-id] f85312edadc84d719e309d0962f53b98
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Mul 4
+worker outcome: normal, test outcome: killed
+[job-id] 1473665a01db42a3a4ec4b169c513e5a
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] 142b4f2187994928b1dee29a84de896f
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Div 1
+worker outcome: normal, test outcome: killed
+[job-id] 798427d08ec94bdebc7cc6250ba431ec
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Div 2
+worker outcome: normal, test outcome: killed
+[job-id] f2aff9883fe8492f9bafd5d35f4c7457
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Div 3
+worker outcome: normal, test outcome: killed
+[job-id] 613cee359bf14ffca45f90e7491cc5e6
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Div 4
+worker outcome: normal, test outcome: killed
+[job-id] 28797f6798d948f1ba9219e3f2f81642
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] 8f07dbac53844c6ebcbc1b8bb78ce52e
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_FloorDiv 1
+worker outcome: normal, test outcome: killed
+[job-id] 360e8a0d8f334e3abcad49206b02eb98
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_FloorDiv 2
+worker outcome: normal, test outcome: killed
+[job-id] 490bed5e3e8e425296fb653ad155ffc8
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_FloorDiv 3
+worker outcome: normal, test outcome: killed
+[job-id] e7c1735be55844528217063db1ae8922
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_FloorDiv 4
+worker outcome: normal, test outcome: killed
+[job-id] 1a3b1612d7ea4da78de06fccf1c4dd69
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Mod 0
+worker outcome: normal, test outcome: killed
+[job-id] 926710370e1340d3b901684fb4c48a11
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Mod 1
+worker outcome: normal, test outcome: killed
+[job-id] b268ed767cf34f6cba8c8dfd2cc170a5
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Mod 2
+worker outcome: normal, test outcome: killed
+[job-id] b9ed67eaaa00418381e98bdabc9f02fa
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Mod 3
+worker outcome: normal, test outcome: killed
+[job-id] 194819a6c3c74425bf01c83e9b7e99da
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_Mod 4
+worker outcome: normal, test outcome: killed
+[job-id] 2f267d5a201443e7a22940462097d131
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 9f0c75dafe26423cb3a9d1ac79b929e5
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_RShift 1
+worker outcome: normal, test outcome: killed
+[job-id] d5a4b5fb37564a7487166e250efc2c4b
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_RShift 2
+worker outcome: normal, test outcome: killed
+[job-id] f825de15f2374a498ca69eb51843a98d
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_RShift 3
+worker outcome: normal, test outcome: killed
+[job-id] f32651227a1b41f9b6a0de927aa6a01d
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_RShift 4
+worker outcome: normal, test outcome: killed
+[job-id] 08477a4a3a8f434197ab1239f70509f4
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] eaa806e2a7f244b8b839dcc14384eeb8
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_LShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 8a837af60dba4c3ba47c3f15d6990d07
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_LShift 2
+worker outcome: normal, test outcome: killed
+[job-id] 67301ac3cfb44256a3decf7e2e9b177b
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_LShift 3
+worker outcome: normal, test outcome: killed
+[job-id] 7e56720874f54d6189cedb0d5c9b62a1
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_LShift 4
+worker outcome: normal, test outcome: killed
+[job-id] 87ade087248f4a35833d7e9143728b2d
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 040eef37176e4e8e8d37443a4f4d4c42
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_BitOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 1eb325c657e34bc08eee39af9094e241
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_BitOr 2
+worker outcome: normal, test outcome: killed
+[job-id] bebae9386be142788ed93999b5e98b0d
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_BitOr 3
+worker outcome: normal, test outcome: killed
+[job-id] a5b37f769cae4639a81ca595816b5bfa
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_BitOr 4
+worker outcome: normal, test outcome: killed
+[job-id] 2260e565831e46aa87957a88b3a8afa5
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] bf08ba5e83394cf8804d3ff864fc5f8e
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_BitAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] 2c22ac46a5db41869487ab6f513bb640
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_BitAnd 2
+worker outcome: normal, test outcome: killed
+[job-id] 1745bb43a2da499c8aab82a7124339fd
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_BitAnd 3
+worker outcome: normal, test outcome: killed
+[job-id] 58dfe21e810a438d8e79a1fde6b6aad9
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_BitAnd 4
+worker outcome: normal, test outcome: killed
+[job-id] 006aa3219c89436aaa57849ad4efa57c
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] 95a0760816324dd3a84f4f1faa116659
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_BitXor 1
+worker outcome: normal, test outcome: killed
+[job-id] dc74bbbeeb7645b184ba3bc04c4543f5
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_BitXor 2
+worker outcome: normal, test outcome: killed
+[job-id] 4598a1d156314474835a0df539852bdd
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_BitXor 3
+worker outcome: normal, test outcome: killed
+[job-id] 5cbfdb1d6d734abebbe14857d559c447
+django/db/migrations/operations/models.py core/ReplaceBinaryOperator_Pow_BitXor 4
+worker outcome: normal, test outcome: killed
+[job-id] c27d9400370648878d677c03b7c02860
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 31be97af8d5c4e679bdc5f0dad2f77b0
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 1
+worker outcome: normal, test outcome: survived
+[job-id] c26c3d4700724ccea8b9502379f79707
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 2
+worker outcome: normal, test outcome: survived
+[job-id] a5b9db862f8a45d3b7ad1f568e193e68
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 3
+worker outcome: normal, test outcome: survived
+[job-id] 1d4359d151c74358aeb734e086b10853
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 4
+worker outcome: normal, test outcome: survived
+[job-id] 71e59e598a5545b7baa1c1cac714bb16
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 5
+worker outcome: normal, test outcome: survived
+[job-id] 2b3969031c2c4a9f9e4d565debcc952a
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 6
+worker outcome: normal, test outcome: survived
+[job-id] b9703e20843a44998aa12fa124236921
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 7
+worker outcome: normal, test outcome: survived
+[job-id] 171f7523e2524fbbb58e58bc2122e216
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 8
+worker outcome: normal, test outcome: survived
+[job-id] 537d5ac22d174a8f90ff3603c2456c4b
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 9
+worker outcome: normal, test outcome: survived
+[job-id] 08c49e3ef0f246cb8eb1f4a392201edd
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 10
+worker outcome: normal, test outcome: survived
+[job-id] 9577c19c7adc4caaac8150a8f2a3aaf9
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 11
+worker outcome: normal, test outcome: survived
+[job-id] 11a4eb19a05945858ac41e5d2cc1b153
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 12
+worker outcome: normal, test outcome: survived
+[job-id] 8f0c8915856d4fcf827ce615a4e7174a
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 13
+worker outcome: normal, test outcome: survived
+[job-id] df926d3e94e840768fed1df98f13bd70
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 14
+worker outcome: normal, test outcome: survived
+[job-id] e01cfa0adff144cf94b3de8ebd0fd973
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 15
+worker outcome: normal, test outcome: survived
+[job-id] 6b6dd437f7b7421cbeb741f1aa2e2bea
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 16
+worker outcome: normal, test outcome: survived
+[job-id] 424e8681f6444240a07d84f5b044b38b
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 17
+worker outcome: normal, test outcome: survived
+[job-id] 4ab946e46eda4fffb81dfa87efa4dc64
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 18
+worker outcome: normal, test outcome: survived
+[job-id] bccb31fef7044a06acd218c29b1fdc64
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 19
+worker outcome: normal, test outcome: survived
+[job-id] f817bf9f5eef4d39a9890e36ca253c40
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 20
+worker outcome: normal, test outcome: survived
+[job-id] b448ef69424f43ae80bbd5080c10fd17
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 21
+worker outcome: normal, test outcome: survived
+[job-id] 477a220a6b56410b8ef52924d1546d4c
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 22
+worker outcome: normal, test outcome: survived
+[job-id] ea3774d34abb40ed9f10b581d324cd46
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 23
+worker outcome: normal, test outcome: survived
+[job-id] 1e4dae2495624f60b8e088e6d8cb7115
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_NotEq 24
+worker outcome: normal, test outcome: survived
+[job-id] 42b57515e16941bbada0dcaf9b25622c
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] bc5b556fb4334d7781897d70d314bbe1
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] d8140de25d054da8bd1e47e81953f7a8
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 2
+worker outcome: normal, test outcome: survived
+[job-id] 4e9847ebc4fa4416a08714b60ad5354c
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 3
+worker outcome: normal, test outcome: survived
+[job-id] 40b0eb606144433b872a7d3a67876ca7
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 4
+worker outcome: normal, test outcome: survived
+[job-id] f91dc26f8fc343c8bcfdee15445806b8
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 5
+worker outcome: normal, test outcome: survived
+[job-id] 277c63c0af204efdb6a6ea225674eec5
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 6
+worker outcome: normal, test outcome: survived
+[job-id] 6513cba776664912b41954379998754e
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 7
+worker outcome: normal, test outcome: survived
+[job-id] 0e815abe929b4a868e12f3ec1ea611d1
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 8
+worker outcome: normal, test outcome: survived
+[job-id] 92e764993cde4ca7bb3b9a632af12d6e
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 9
+worker outcome: normal, test outcome: survived
+[job-id] 7800d2c366124579b246cc60b3e523cc
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 10
+worker outcome: normal, test outcome: survived
+[job-id] 4a197fcebc33421b99d16056d2ff24bc
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 11
+worker outcome: normal, test outcome: survived
+[job-id] 8d0643c2c7124e7680b94b294bd5ec08
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 12
+worker outcome: normal, test outcome: survived
+[job-id] 490f807c8164483098000d0094001368
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 13
+worker outcome: normal, test outcome: survived
+[job-id] 5647be95b81c4f23b22092bcaf71c284
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 14
+worker outcome: normal, test outcome: survived
+[job-id] 3ca3bf6db4ff4db995f0f7f9d633096e
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 15
+worker outcome: normal, test outcome: survived
+[job-id] 1fc28b2c13b5407ea9851fcae8e54f46
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 16
+worker outcome: normal, test outcome: survived
+[job-id] 8a05306e9187444e8efdbb411ae3d020
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 17
+worker outcome: normal, test outcome: survived
+[job-id] 0c86365cf86b404e998532f96a9d1519
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 18
+worker outcome: normal, test outcome: survived
+[job-id] 6d3954c36b564425adf653b314c7acd9
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 19
+worker outcome: normal, test outcome: survived
+[job-id] 8b7c0da7df454b4199e181ae94be3866
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 20
+worker outcome: normal, test outcome: survived
+[job-id] 8aae92cb4d64419c995d63c971022683
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 21
+worker outcome: normal, test outcome: survived
+[job-id] bedb7718d82a44bba1890792eea1a8ff
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 22
+worker outcome: normal, test outcome: survived
+[job-id] 2595cf0a413a4bdda1dba96ee2f1a916
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 23
+worker outcome: normal, test outcome: survived
+[job-id] bb4aed22915d4f0dbedd24009f9e957c
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Lt 24
+worker outcome: normal, test outcome: survived
+[job-id] 95883f040f0b405487d47e20af552962
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] b52e3bb3d34e4cfe90275183d6d62fbf
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 52bdd807e3b94eedb930ece134ffa550
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 9cdd182b98a8469d936ef24d9d6e8f0e
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 3
+worker outcome: normal, test outcome: survived
+[job-id] 90c52a85af5844fc8ecdfa7468389317
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 4
+worker outcome: normal, test outcome: survived
+[job-id] 21f5695983c2452fae82b908ef3a71c6
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 5
+worker outcome: normal, test outcome: survived
+[job-id] 1f0ea13b21de40f7a14a658a954fd8ac
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 6
+worker outcome: normal, test outcome: survived
+[job-id] c77c8b97a96745c3bfc8ebb6af38d7e1
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 7
+worker outcome: normal, test outcome: survived
+[job-id] 84c97ff53d204e0e87f1f7521ee4772e
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 8
+worker outcome: normal, test outcome: survived
+[job-id] 558593f83ccc419d96f7e99911460a7c
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 9
+worker outcome: normal, test outcome: survived
+[job-id] f3e7551c09d848f7881ddc4c104742f9
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 10
+worker outcome: normal, test outcome: survived
+[job-id] 2192eab013df460a96cac4fd704027d4
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 11
+worker outcome: normal, test outcome: survived
+[job-id] 2a3f7a716305424d90e87970e23fc015
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 12
+worker outcome: normal, test outcome: survived
+[job-id] c4d46d7f145c48739e208daad7a5634c
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 13
+worker outcome: normal, test outcome: survived
+[job-id] 3d2dadb2df854260981e3eaa6dcd31c8
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 14
+worker outcome: normal, test outcome: survived
+[job-id] bc4bdadf393542c48534a00ca59f934b
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 15
+worker outcome: normal, test outcome: survived
+[job-id] e3c3baaa133c42ec9e7078dda76ce424
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 16
+worker outcome: normal, test outcome: survived
+[job-id] bc6bab8fc91246bfaa2e039925fb654c
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 17
+worker outcome: normal, test outcome: survived
+[job-id] b6c92de9fd2e405a8435593203a35e93
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 18
+worker outcome: normal, test outcome: survived
+[job-id] 8593c6ec7f7b4933aa1b8996cac048e5
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 19
+worker outcome: normal, test outcome: survived
+[job-id] cdf7b581b9fa45dc850e9befd714499b
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 20
+worker outcome: normal, test outcome: survived
+[job-id] cd0667b89a7f43a3bcce80a8e9b7e5b4
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 21
+worker outcome: normal, test outcome: survived
+[job-id] b0a75a4d5a71401990f140452c43ecd3
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 22
+worker outcome: normal, test outcome: survived
+[job-id] 8299a61704e94a18992f25cad941de68
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 23
+worker outcome: normal, test outcome: survived
+[job-id] 2b5d5a90ddb0449db7c47b5978ce8722
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_LtE 24
+worker outcome: normal, test outcome: survived
+[job-id] bc0700cb5ee84a18a39bcc1d34c72aff
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 1ded88a72d7146ea924a55c6aab62423
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] b487b6f49d0946078a6481ce169616c7
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 2
+worker outcome: normal, test outcome: survived
+[job-id] 8bc508b203dd429ca9caef3b20bf7d53
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 3
+worker outcome: normal, test outcome: survived
+[job-id] 0691ec86002f44ba94120cd29096a2b1
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 4
+worker outcome: normal, test outcome: survived
+[job-id] 07477867218d49838240850f1c84cfe3
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 5
+worker outcome: normal, test outcome: survived
+[job-id] ac505e212ad844e88f88fcbb5cab7e27
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 6
+worker outcome: normal, test outcome: survived
+[job-id] ba2451fd541d4f4086410751a1cebc24
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 7
+worker outcome: normal, test outcome: survived
+[job-id] 612b855ea6334c5e9a20466f013f695f
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 8
+worker outcome: normal, test outcome: survived
+[job-id] ac69c5af42bd41a199ffff28cce36ab1
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 9
+worker outcome: normal, test outcome: survived
+[job-id] 4e0de9b1bce24674bde080d11f2fe8ca
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 10
+worker outcome: normal, test outcome: survived
+[job-id] 23cbc164b4cb4b408687641aa25f9a72
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 11
+worker outcome: normal, test outcome: survived
+[job-id] b1f81dd7a97144179c01610b309e161a
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 12
+worker outcome: normal, test outcome: survived
+[job-id] b46a4d90dedc485bab3a4fa6f0650268
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 13
+worker outcome: normal, test outcome: survived
+[job-id] 6425c6ba8e85421bad13dd7145c9a97a
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 14
+worker outcome: normal, test outcome: survived
+[job-id] b2d0e0420fa44136bf86182280e3557d
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 15
+worker outcome: normal, test outcome: survived
+[job-id] 152c826e305c49949faabf28989131ec
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 16
+worker outcome: normal, test outcome: survived
+[job-id] 4224a7c1ce4c41e9ac8702c1ed1b23aa
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 17
+worker outcome: normal, test outcome: survived
+[job-id] 0a14c3beffcc48419325663adf8c9f20
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 18
+worker outcome: normal, test outcome: survived
+[job-id] e8f3740b38af4863893e08a7d9f862af
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 19
+worker outcome: normal, test outcome: survived
+[job-id] 9da256dbfdf146ef921a117ef392d83c
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 20
+worker outcome: normal, test outcome: survived
+[job-id] 0af8272a6a4942ddab4f536e18581df9
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 21
+worker outcome: normal, test outcome: survived
+[job-id] a8de81cbaa7f433ca72d6e51753882de
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 22
+worker outcome: normal, test outcome: survived
+[job-id] fe5100be076f4c78a94b478ed3a5da8e
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 23
+worker outcome: normal, test outcome: survived
+[job-id] d9e9b51e0b614cdc9a46d8e6c271a3ee
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Gt 24
+worker outcome: normal, test outcome: survived
+[job-id] 66312950f019493492cd38e26f751f69
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 334c2d57ab8d493bbd7061865bd4ff0c
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] b808e3a72503471d8f5c69fe4b07328c
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 67f7c657e9b24e5c8e3a5ef968c6ba70
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 3
+worker outcome: normal, test outcome: survived
+[job-id] 9605375c48334dc6a5bad8dd86efc3cf
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 4
+worker outcome: normal, test outcome: survived
+[job-id] 288c2246e99346c58e7b9775cf5b31c6
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 5
+worker outcome: normal, test outcome: survived
+[job-id] cdd5f77a315049329eecdb0fce537c37
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 6
+worker outcome: normal, test outcome: survived
+[job-id] e4c4f68b259c43ca980a6ea248819117
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 7
+worker outcome: normal, test outcome: survived
+[job-id] e3aeaa1528bf4405ac29f44e96bbfcac
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 8
+worker outcome: normal, test outcome: survived
+[job-id] 6c9bb46c7a6b4cf9baac35e3ca3182f2
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 9
+worker outcome: normal, test outcome: survived
+[job-id] 093f4204e950487f93bd0e7b4e88d8e2
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 10
+worker outcome: normal, test outcome: survived
+[job-id] 64c2d8d5049641dfa84a213063c4732f
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 11
+worker outcome: normal, test outcome: survived
+[job-id] 5128e4d6b2dc4b59ace92a0751378e62
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 12
+worker outcome: normal, test outcome: survived
+[job-id] 615c4817a877463e9accf77ff87b1c73
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 13
+worker outcome: normal, test outcome: survived
+[job-id] 1003a4a9b5bb41c8beea91c8ffbf4b43
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 14
+worker outcome: normal, test outcome: survived
+[job-id] ff389abf9cb841c8828c5f9b51ec0747
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 15
+worker outcome: normal, test outcome: survived
+[job-id] 1e59b4ff4f334c44ad32a2df580b26b3
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 16
+worker outcome: normal, test outcome: survived
+[job-id] b2c494635e3440a58c733263b7d56e01
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 17
+worker outcome: normal, test outcome: survived
+[job-id] 48b3c65b93fe4627ba8d62c4e0684908
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 18
+worker outcome: normal, test outcome: survived
+[job-id] 13ac7dcfedbb4c5d8585b1d33b264f3b
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 19
+worker outcome: normal, test outcome: survived
+[job-id] e101f799743443df9fec526277506136
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 20
+worker outcome: normal, test outcome: survived
+[job-id] f1c2ed9364004d3a81372828d372b158
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 21
+worker outcome: normal, test outcome: survived
+[job-id] 9dcc53442e9048769e6cd38504988832
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 22
+worker outcome: normal, test outcome: survived
+[job-id] 0debb8f377fe44658900cd7f271e84a7
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 23
+worker outcome: normal, test outcome: survived
+[job-id] be4b50ded45c4671baf4f13ccbf41b0f
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_GtE 24
+worker outcome: normal, test outcome: survived
+[job-id] 17b7fec7bb1542cf9f0bea25a2c8231a
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] bc6aba5f4ea04258985f1bbc5903eacb
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] bf8e0a418af846f4b416070045aff25e
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] 6ea5b4a1cc8c438ebcfe9f4c92372d80
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 3
+worker outcome: normal, test outcome: survived
+[job-id] 22fe641149a44336ba7575b62424bc3c
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 4
+worker outcome: normal, test outcome: survived
+[job-id] 1657f6ab313546e1b8039bbb5ffddc40
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 5
+worker outcome: normal, test outcome: survived
+[job-id] 97f26d3333704cf988f9dc68a3da380e
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 6
+worker outcome: normal, test outcome: survived
+[job-id] 9eefd024ee7e4392a78922b2464bcb29
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 7
+worker outcome: normal, test outcome: survived
+[job-id] 13580386e1a64bae8068eb9807a1f8ab
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 8
+worker outcome: normal, test outcome: survived
+[job-id] 6965b855c9b84e9ab2e6bffc11ed5c8a
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 9
+worker outcome: normal, test outcome: survived
+[job-id] bd2a7d47d6874553808784b02e0b9bc2
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 10
+worker outcome: normal, test outcome: survived
+[job-id] ada3eea43a95439ea37ffd81a2046187
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 11
+worker outcome: normal, test outcome: survived
+[job-id] 60cb5f7ce682463190a69111876a82af
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 12
+worker outcome: normal, test outcome: survived
+[job-id] 066cbbeb66d74d73a36aefeec9f68fb1
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 13
+worker outcome: normal, test outcome: survived
+[job-id] 02e18dc1bd0d4d1e85d41bef16e11e4f
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 14
+worker outcome: normal, test outcome: survived
+[job-id] 6c592339b1564dbab49c567c4f758465
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 15
+worker outcome: normal, test outcome: survived
+[job-id] 02337bebe76d45169efe55aab9cbed4a
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 16
+worker outcome: normal, test outcome: survived
+[job-id] c183bf45314041d9b2eb079fb7a82536
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 17
+worker outcome: normal, test outcome: survived
+[job-id] b172794d74b44242914159e7da916483
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 18
+worker outcome: normal, test outcome: survived
+[job-id] 5bd5fdad9f864dc687144613cd81c928
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 19
+worker outcome: normal, test outcome: survived
+[job-id] 42ce22d219e74c2fb99363d17802e9b5
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 20
+worker outcome: normal, test outcome: survived
+[job-id] 0d43acfbee294a338ca681d5f19192b1
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 21
+worker outcome: normal, test outcome: survived
+[job-id] 9472b80c5838446186f8f80f5600e35c
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 22
+worker outcome: normal, test outcome: survived
+[job-id] ff035e9e710f4d189ca917b6c902c3f9
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 23
+worker outcome: normal, test outcome: survived
+[job-id] aec20401d6224d2b9ad1b7a8c3f0594e
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_Is 24
+worker outcome: normal, test outcome: survived
+[job-id] 89e732d4e83042418d1ccd917a7158a4
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 78a1058d662c4898b49617c2944a33b6
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] b7a8481121584868ac0aca1077c83865
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 0dab8391cd6f4288a4d1588e102344b8
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 3
+worker outcome: normal, test outcome: survived
+[job-id] a16520f4d02e4cbb90755f7b251d7bbc
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 4
+worker outcome: normal, test outcome: survived
+[job-id] e6dda905148f49dc8cb8a2b86b0d46d9
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 5
+worker outcome: normal, test outcome: survived
+[job-id] d95a90350ae14f5bb2b46912b09484a3
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 6
+worker outcome: normal, test outcome: survived
+[job-id] 024ee06b7c1a4baaa8c94641feeac732
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 7
+worker outcome: normal, test outcome: survived
+[job-id] 061950e8959c4d639688dbde4958fb39
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 8
+worker outcome: normal, test outcome: survived
+[job-id] cb60bcbac2784012a5b7f10f0a3fc8e2
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 9
+worker outcome: normal, test outcome: survived
+[job-id] 4b2ea1a172184e4aa2d39f06b48a989d
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 10
+worker outcome: normal, test outcome: survived
+[job-id] cc2d82b5c0fa4f62bd9d2bb1dfcd9025
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 11
+worker outcome: normal, test outcome: survived
+[job-id] 96d160e7e0d741b1947e5ddb8af1de22
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 12
+worker outcome: normal, test outcome: survived
+[job-id] 24e07c02765a436a96932ba801289475
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 13
+worker outcome: normal, test outcome: survived
+[job-id] 7f8328bac96a412c8515d0dbe1994b50
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 14
+worker outcome: normal, test outcome: survived
+[job-id] 0bb38f93d8b54353a12cf42ea97cc252
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 15
+worker outcome: normal, test outcome: survived
+[job-id] 327a953781ec4813ba11da276a01072b
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 16
+worker outcome: normal, test outcome: survived
+[job-id] 0e333572384a4144aa360d7c299d6099
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 17
+worker outcome: normal, test outcome: survived
+[job-id] dad0eec5e9364d0791803884a47d4744
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 18
+worker outcome: normal, test outcome: survived
+[job-id] 477f7ff4ab6c45838a88c545bfea40fd
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 19
+worker outcome: normal, test outcome: survived
+[job-id] 630fb34b318945829c5240423f0ac098
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 20
+worker outcome: normal, test outcome: survived
+[job-id] 438429d29acc476ea9ccb999f734d16e
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 21
+worker outcome: normal, test outcome: survived
+[job-id] 4ac81e3e893c4493b05eda7339280756
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 22
+worker outcome: normal, test outcome: survived
+[job-id] 10636edf608640ac895bf9d562c63b7f
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 23
+worker outcome: normal, test outcome: survived
+[job-id] 2d52395994fc4cd7aeee061ccf65dd48
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Eq_IsNot 24
+worker outcome: normal, test outcome: survived
+[job-id] c0293a3c5e4b4dcc8735978489bd0894
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] dd0a2af7a0614f779bf3faa02183a512
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_Eq 1
+worker outcome: normal, test outcome: survived
+[job-id] 652debd0719b400d939fb895fff76b42
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_Eq 2
+worker outcome: normal, test outcome: survived
+[job-id] 8edeaaf334a441b69e01337f4e637652
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_Eq 3
+worker outcome: normal, test outcome: survived
+[job-id] 9367d29ac1144414b6c185ca0b7a2d8d
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_Eq 4
+worker outcome: normal, test outcome: survived
+[job-id] ec5264c3e46d462894c6affe308ab845
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] a6f769ed74814475bc9b0f38f0873a52
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] d5b2a0da52ea45abbc390d741d517fde
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_Lt 2
+worker outcome: normal, test outcome: survived
+[job-id] b1b9c91d3b3e4378a8fd9396a185b06c
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_Lt 3
+worker outcome: normal, test outcome: survived
+[job-id] 50dc1de752d242dea8346ea037c74493
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_Lt 4
+worker outcome: normal, test outcome: survived
+[job-id] 16cbab8e75334880b32d1e1baa32101f
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 7ec098694b254f65ac3bff8b8cce478b
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 031ab35aae2444a985481ca869566559
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_LtE 2
+worker outcome: normal, test outcome: survived
+[job-id] a879f6d11c5445f9b6fd83ffc4e51e0f
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_LtE 3
+worker outcome: normal, test outcome: survived
+[job-id] 6ba2b1021b3b4dfca495cb651ffc9b38
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_LtE 4
+worker outcome: normal, test outcome: survived
+[job-id] 83f75b4de49b418cbf2cc670f1e66589
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 9ab61e0ca52a4fea8584b8b5e00c075c
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] a325c7c951994b369687e7ab26be33ea
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_Gt 2
+worker outcome: normal, test outcome: survived
+[job-id] 1949da0cf46d49629024270deda92a01
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_Gt 3
+worker outcome: normal, test outcome: survived
+[job-id] 10fe1a3f1f504c508d6f6a0bcc364939
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_Gt 4
+worker outcome: normal, test outcome: survived
+[job-id] 7f6f0e0f111c4840b5b06218f40089a1
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] bd67e34b2e8b4d10a5f5553b09cc307b
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 8f2cf15bee0a4c288812055a7a09cd77
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_GtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 1f392426c40b4e5abaa3bdbc05e85700
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_GtE 3
+worker outcome: normal, test outcome: survived
+[job-id] 5feaafa6e9554fa98c0a08a75dd11976
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_GtE 4
+worker outcome: normal, test outcome: survived
+[job-id] dc9b495269e04126a579c20b040ec3a9
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 20a0aaa1bcb448d6b918e3f6bb7317b8
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 303200f6ace04b80aed8aa71ba2b6087
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] 1c5b5aa4874447bfa6de07a9370c4aad
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_Is 3
+worker outcome: normal, test outcome: survived
+[job-id] d3c7aff9f3f7436198570d87d422351f
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 22791870a257493091d40cdd8369c10f
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] c90f84ed4c6948a4b065013d08c39006
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] fd38cb433fe04f1d809cbf44ed4287c0
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_NotEq_IsNot 3
+worker outcome: normal, test outcome: survived
+[job-id] 0b3bf29d673249eaab99b79d3cc7aa16
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 0c73ccf9042543a183548d1a7319d356
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_IsNot_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] 2d227987ce01475181a89b3967c673d9
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_IsNot_Eq 1
+worker outcome: normal, test outcome: survived
+[job-id] 0a2fe1ff56f64995b15f9648f8b04683
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_IsNot_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 5b2f298079e94c249b59192157592dd9
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_IsNot_NotEq 1
+worker outcome: normal, test outcome: survived
+[job-id] 97b83014ff064e2186dc862cedafec73
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_IsNot_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 2c6eab47c46e423eb2e5a626c0833abd
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_IsNot_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] 95fecbb76a8949acacd89aed6217ae27
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_IsNot_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 040b4d5cec1d468a9315556f637fe4a6
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_IsNot_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 1bb4492d3d0346abb6b0616af7d155db
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_IsNot_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 5875fd3eb6d44baf8490a4f8127bba51
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_IsNot_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] e13b316064ca4d2893a31b5e16d86791
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_IsNot_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 8a6a3bd0bc524de5976d3488beeb0e91
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_IsNot_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] a3b6160ff30947bcb8e6b005c3270eb3
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 8b233ab3792749028ac9c6cc86a44d44
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_IsNot_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 322c046fdad8426b93375ee21f0713c2
+django/db/migrations/operations/models.py core/ReplaceComparisonOperator_IsNot_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] cd7c91e72bbb497a8fbf8f9fcb255ca3
+django/db/migrations/operations/models.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] de6f7a61d045427e9871fd6c2f66d111
+django/db/migrations/operations/models.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] b1e3ff200b4a42c7a058add96c6dd7fb
+django/db/migrations/operations/models.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: normal, test outcome: survived
+[job-id] fe93108442fd427b9f33971c006c748f
+django/db/migrations/operations/models.py core/ReplaceUnaryOperator_Delete_Not 3
+worker outcome: normal, test outcome: survived
+[job-id] fb1f989649184ed08320525a8b8e518a
+django/db/migrations/operations/models.py core/ReplaceUnaryOperator_Delete_Not 4
+worker outcome: normal, test outcome: survived
+[job-id] 17e691453e8449de9262d71ecc7d47b0
+django/db/migrations/operations/models.py core/ReplaceUnaryOperator_Delete_Not 5
+worker outcome: normal, test outcome: survived
+[job-id] f4a82887079e406f88f072dc041b19e2
+django/db/migrations/operations/models.py core/ReplaceUnaryOperator_Delete_Not 6
+worker outcome: normal, test outcome: survived
+[job-id] e02b148ca55943d9b3865c81ddbbb407
+django/db/migrations/operations/models.py core/ReplaceUnaryOperator_Delete_Not 7
+worker outcome: normal, test outcome: survived
+[job-id] d89ad65d9fc84b88b9a29a4a9201cdde
+django/db/migrations/operations/models.py core/ReplaceUnaryOperator_Delete_Not 8
+worker outcome: normal, test outcome: survived
+[job-id] a28d8c77ee4d4cecabb1300895fc3064
+django/db/migrations/operations/models.py core/ReplaceUnaryOperator_Delete_Not 9
+worker outcome: normal, test outcome: survived
+[job-id] c7e9645c20204687977ea047b51e995f
+django/db/migrations/operations/models.py core/ReplaceUnaryOperator_Delete_Not 10
+worker outcome: normal, test outcome: survived
+[job-id] f1bc76702b09467c892cffa801554842
+django/db/migrations/operations/models.py core/ReplaceUnaryOperator_Delete_Not 11
+worker outcome: normal, test outcome: survived
+[job-id] 077197a2027e44448386c02326401117
+django/db/migrations/operations/models.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] 4a0252e8fd0a432f9d6e476daaaf9121
+django/db/migrations/operations/models.py core/AddNot 1
+worker outcome: normal, test outcome: killed
+[job-id] 527705cac4ba4e9f984834fc53699a49
+django/db/migrations/operations/models.py core/AddNot 2
+worker outcome: normal, test outcome: killed
+[job-id] aeacabdf8bda44cb839997ad9f1e052d
+django/db/migrations/operations/models.py core/AddNot 3
+worker outcome: normal, test outcome: survived
+[job-id] 0c9ffe17e5d24a4c93a737cdf77ee480
+django/db/migrations/operations/models.py core/AddNot 4
+worker outcome: normal, test outcome: survived
+[job-id] b9bbf13f4bc8455a8b7cb0f91df35ccc
+django/db/migrations/operations/models.py core/AddNot 5
+worker outcome: normal, test outcome: survived
+[job-id] a044fb5aa2d749c1bd73466841f5cf80
+django/db/migrations/operations/models.py core/AddNot 6
+worker outcome: normal, test outcome: killed
+[job-id] 9b5e5b89ad224853bc794f92eeb415e8
+django/db/migrations/operations/models.py core/AddNot 7
+worker outcome: normal, test outcome: survived
+[job-id] ce68801025e746d3a4c2753062264830
+django/db/migrations/operations/models.py core/AddNot 8
+worker outcome: normal, test outcome: survived
+[job-id] 4c8e6a31a17c4352a183f12d9899c6fe
+django/db/migrations/operations/models.py core/AddNot 9
+worker outcome: normal, test outcome: survived
+[job-id] 3f4c604d1bf545a29af5b015a53c2a58
+django/db/migrations/operations/models.py core/AddNot 10
+worker outcome: normal, test outcome: survived
+[job-id] edea19b1f1c94d519fe1470558784a5a
+django/db/migrations/operations/models.py core/AddNot 11
+worker outcome: normal, test outcome: survived
+[job-id] 43e229a66cc44b94bff03eece2298d48
+django/db/migrations/operations/models.py core/AddNot 12
+worker outcome: normal, test outcome: survived
+[job-id] fa9bd3808c0f448baf7752550168c8c9
+django/db/migrations/operations/models.py core/AddNot 13
+worker outcome: normal, test outcome: survived
+[job-id] ce69880d17ad4979a71d9d4baa011847
+django/db/migrations/operations/models.py core/AddNot 14
+worker outcome: normal, test outcome: survived
+[job-id] 86eebeaa76754ba3b73f93f312562c80
+django/db/migrations/operations/models.py core/AddNot 15
+worker outcome: normal, test outcome: survived
+[job-id] 2aa19803d34c4e11a085a29ee25ee969
+django/db/migrations/operations/models.py core/AddNot 16
+worker outcome: normal, test outcome: survived
+[job-id] 4e48fb8cafba4b6c8eac8e1ef377fb90
+django/db/migrations/operations/models.py core/AddNot 17
+worker outcome: normal, test outcome: survived
+[job-id] 05a9bdd3f8e4493e900acf634acd4010
+django/db/migrations/operations/models.py core/AddNot 18
+worker outcome: normal, test outcome: survived
+[job-id] 69e75a8b86eb4687a663533e22409185
+django/db/migrations/operations/models.py core/AddNot 19
+worker outcome: normal, test outcome: survived
+[job-id] c4cdfb68a9cb4fc4aa1455b930fbe962
+django/db/migrations/operations/models.py core/AddNot 20
+worker outcome: normal, test outcome: survived
+[job-id] 926b808376ae46f19c8f7a5f663b1798
+django/db/migrations/operations/models.py core/AddNot 21
+worker outcome: normal, test outcome: survived
+[job-id] 5cf59f69518941ed9d9b251e66bc727b
+django/db/migrations/operations/models.py core/AddNot 22
+worker outcome: normal, test outcome: survived
+[job-id] 1399be15298f4a7d8242d79cfbf7fbda
+django/db/migrations/operations/models.py core/AddNot 23
+worker outcome: normal, test outcome: survived
+[job-id] a71f301f3977402090d6e3f4d3af79c7
+django/db/migrations/operations/models.py core/AddNot 24
+worker outcome: normal, test outcome: survived
+[job-id] 7e8438f9ba3a43c9a7895243162f350a
+django/db/migrations/operations/models.py core/AddNot 25
+worker outcome: normal, test outcome: killed
+[job-id] 0b722e46a7644d01a650e17a912ca83e
+django/db/migrations/operations/models.py core/AddNot 26
+worker outcome: normal, test outcome: survived
+[job-id] 9dd8e7134d1844949e7bfdd2c183b146
+django/db/migrations/operations/models.py core/AddNot 27
+worker outcome: normal, test outcome: survived
+[job-id] 5e898ee4bef94a6e806ea9018fa6d903
+django/db/migrations/operations/models.py core/AddNot 28
+worker outcome: normal, test outcome: survived
+[job-id] b77194883c06470d8fc0b80ee1a04901
+django/db/migrations/operations/models.py core/AddNot 29
+worker outcome: normal, test outcome: survived
+[job-id] ea69c0f022d44eb19a0359d5021cf85c
+django/db/migrations/operations/models.py core/AddNot 30
+worker outcome: normal, test outcome: survived
+[job-id] c3309d8a8d3d4774803999d8695d22aa
+django/db/migrations/operations/models.py core/AddNot 31
+worker outcome: normal, test outcome: survived
+[job-id] 42a4d1a1140b414994aa33516b91ddc0
+django/db/migrations/operations/models.py core/AddNot 32
+worker outcome: normal, test outcome: survived
+[job-id] 1e6ebb968c394420865b2533bee8ce97
+django/db/migrations/operations/models.py core/AddNot 33
+worker outcome: normal, test outcome: survived
+[job-id] fc65eca58f9e44ec981de06ba995f175
+django/db/migrations/operations/models.py core/AddNot 34
+worker outcome: normal, test outcome: survived
+[job-id] 81fba5ea56c44aaa83dea2b352aa4927
+django/db/migrations/operations/models.py core/AddNot 35
+worker outcome: normal, test outcome: survived
+[job-id] 0b03e3b1d15447f9ac7608340a7ea6d6
+django/db/migrations/operations/models.py core/AddNot 36
+worker outcome: normal, test outcome: survived
+[job-id] e84f563475824e2db1ac242ebaef6ee7
+django/db/migrations/operations/models.py core/AddNot 37
+worker outcome: normal, test outcome: survived
+[job-id] 2d48875a5ae442cbbd8af5276d362916
+django/db/migrations/operations/models.py core/AddNot 38
+worker outcome: normal, test outcome: survived
+[job-id] 73d31dbbef9a484e8233524636077233
+django/db/migrations/operations/models.py core/AddNot 39
+worker outcome: normal, test outcome: survived
+[job-id] 80d6c75f0be84ac2a771ce02c1181688
+django/db/migrations/operations/models.py core/AddNot 40
+worker outcome: normal, test outcome: survived
+[job-id] d7dee21da516423e9a80d3c095d0276c
+django/db/migrations/operations/models.py core/AddNot 41
+worker outcome: normal, test outcome: survived
+[job-id] ea0a9486ea2d41e6aa581f23136cd032
+django/db/migrations/operations/models.py core/AddNot 42
+worker outcome: normal, test outcome: survived
+[job-id] 92be222bdfda4f3a9ba292c02de00539
+django/db/migrations/operations/models.py core/AddNot 43
+worker outcome: normal, test outcome: survived
+[job-id] 2d529dd2358344b09d02921b716d2817
+django/db/migrations/operations/models.py core/AddNot 44
+worker outcome: normal, test outcome: survived
+[job-id] 21c73beaa0db443d8040cfcc52ac2e95
+django/db/migrations/operations/models.py core/AddNot 45
+worker outcome: normal, test outcome: survived
+[job-id] d9b37e201ce145a884abdb8aee8562b1
+django/db/migrations/operations/models.py core/AddNot 46
+worker outcome: normal, test outcome: survived
+[job-id] 1b99f7e577584781a0db92a6a5ab87ac
+django/db/migrations/operations/models.py core/AddNot 47
+worker outcome: normal, test outcome: survived
+[job-id] b10014d5ebad402182b8a9f4ab5c9530
+django/db/migrations/operations/models.py core/AddNot 48
+worker outcome: normal, test outcome: survived
+[job-id] b13a81ee1a1c474b81cbaba2103e5397
+django/db/migrations/operations/models.py core/AddNot 49
+worker outcome: normal, test outcome: survived
+[job-id] 1574eebdc4c84bd1ae567f3423289632
+django/db/migrations/operations/models.py core/AddNot 50
+worker outcome: normal, test outcome: survived
+[job-id] f0fc5874f34a4c9e80f43128b01d6108
+django/db/migrations/operations/models.py core/AddNot 51
+worker outcome: normal, test outcome: survived
+[job-id] d74d129bacb943eaa77de1459192fab6
+django/db/migrations/operations/models.py core/AddNot 52
+worker outcome: normal, test outcome: survived
+[job-id] 97e750b4d9eb4255ab03e6168e2ad27d
+django/db/migrations/operations/models.py core/AddNot 53
+worker outcome: normal, test outcome: survived
+[job-id] 6de6eac75af94103bfd4f52c8c8818b0
+django/db/migrations/operations/models.py core/AddNot 54
+worker outcome: normal, test outcome: survived
+[job-id] cfd0f21d6b0f4d819c36b8fcd4faa483
+django/db/migrations/operations/models.py core/AddNot 55
+worker outcome: normal, test outcome: survived
+[job-id] c3fd84f96da74631835d9b6276f0272d
+django/db/migrations/operations/models.py core/AddNot 56
+worker outcome: normal, test outcome: survived
+[job-id] 43744d0b5e3647a8b95517af10c50504
+django/db/migrations/operations/models.py core/AddNot 57
+worker outcome: normal, test outcome: survived
+[job-id] 46b2e8920376498eb6bbad72dc2e7720
+django/db/migrations/operations/models.py core/AddNot 58
+worker outcome: normal, test outcome: survived
+[job-id] 8047561e89e14c6cb90bd5cd69241258
+django/db/migrations/operations/models.py core/AddNot 59
+worker outcome: normal, test outcome: survived
+[job-id] 5d6dcd079fe64f62b93da03415b071cb
+django/db/migrations/operations/models.py core/AddNot 60
+worker outcome: normal, test outcome: survived
+[job-id] 72f1320093d74975aa677ff81a3f4237
+django/db/migrations/operations/models.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: survived
+[job-id] bf4bfd62f417484a9e53487bd0e44ae2
+django/db/migrations/operations/models.py core/ReplaceTrueWithFalse 1
+worker outcome: normal, test outcome: survived
+[job-id] 1e04c6f80b5d409caebebc1062fb6400
+django/db/migrations/operations/models.py core/ReplaceTrueWithFalse 2
+worker outcome: normal, test outcome: survived
+[job-id] 903fa6ba534c4b44be0c7e43153d7dc9
+django/db/migrations/operations/models.py core/ReplaceTrueWithFalse 3
+worker outcome: normal, test outcome: survived
+[job-id] 33cdbf44ebdc41cc9984f181b5cd9402
+django/db/migrations/operations/models.py core/ReplaceTrueWithFalse 4
+worker outcome: normal, test outcome: survived
+[job-id] 75877ef35fb54e9b94e329e0db648bcc
+django/db/migrations/operations/models.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: survived
+[job-id] ad02e05c13e44c63974ac48abf2199ed
+django/db/migrations/operations/models.py core/ReplaceFalseWithTrue 1
+worker outcome: normal, test outcome: survived
+[job-id] a762a813dbbf49468e49e94a322795bc
+django/db/migrations/operations/models.py core/ReplaceFalseWithTrue 2
+worker outcome: normal, test outcome: survived
+[job-id] fb731931d74f4aeaae82acfc43127197
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 9de9074e2d2a4a3abc6ea9f6f28e47fa
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 1
+worker outcome: normal, test outcome: survived
+[job-id] bd65213e8c23455bac67bd484e4ce60e
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 2
+worker outcome: normal, test outcome: survived
+[job-id] 0090495d3c484c678acfaa50a3792b3f
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 3
+worker outcome: normal, test outcome: survived
+[job-id] c1a7c51444fb48c287a8408a5f547e81
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 4
+worker outcome: normal, test outcome: survived
+[job-id] 38fd15db70f34c3ebb993989b468f63e
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 5
+worker outcome: normal, test outcome: survived
+[job-id] a2f53effc1e9472dab1fcaa49f99846b
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 6
+worker outcome: normal, test outcome: survived
+[job-id] dcafbaa6bc664bf78ee751ff955c761c
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 7
+worker outcome: normal, test outcome: survived
+[job-id] d1e38ed54b5d466184467bb888ed2562
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 8
+worker outcome: normal, test outcome: survived
+[job-id] 3bbda2b611e742668d054208af3123e2
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 9
+worker outcome: normal, test outcome: survived
+[job-id] e926f9d19cee480dad7a84a2cf560ce2
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 10
+worker outcome: normal, test outcome: survived
+[job-id] 433c93c3800f47d1913a9507d2da8548
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 11
+worker outcome: normal, test outcome: survived
+[job-id] 3fa848dd4fd144bca9aab82d35c3db5d
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 12
+worker outcome: normal, test outcome: survived
+[job-id] 7e5c1aafc7ee4d7facdcc73f3c195434
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 13
+worker outcome: normal, test outcome: survived
+[job-id] 8b323ff532db4142a6f9d0253610137b
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 14
+worker outcome: normal, test outcome: survived
+[job-id] 8479b39c9bd54e778e001d55190731d5
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 15
+worker outcome: normal, test outcome: survived
+[job-id] 126ea8b51d884e7d912bd97a9e5831bc
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 16
+worker outcome: normal, test outcome: survived
+[job-id] d9aeb29bc6194c86be36f4927c41f278
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 17
+worker outcome: normal, test outcome: survived
+[job-id] 39fd351f021c4e6f90ea3cf15a751216
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 18
+worker outcome: normal, test outcome: survived
+[job-id] a7aa677246db46da929b7267f9fb1555
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 19
+worker outcome: normal, test outcome: survived
+[job-id] 820387935b054a4d89982d34f169402e
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 20
+worker outcome: normal, test outcome: survived
+[job-id] 8d86e998c1dc48f89315106dd24290fd
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 21
+worker outcome: normal, test outcome: survived
+[job-id] e21a2501b07b4330bfe4e22b108019c9
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 22
+worker outcome: normal, test outcome: survived
+[job-id] ad138f784719407a87d4b80a2f63b711
+django/db/migrations/operations/models.py core/ReplaceAndWithOr 23
+worker outcome: normal, test outcome: survived
+[job-id] 1c7b66f18cee47ef8c371aef1f71479b
+django/db/migrations/operations/models.py core/ReplaceOrWithAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 596091dc8c5a41c48758c442b30bb176
+django/db/migrations/operations/models.py core/ReplaceOrWithAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] 80f8485ceb3543f4958340bb844b928e
+django/db/migrations/operations/models.py core/ReplaceOrWithAnd 2
+worker outcome: normal, test outcome: killed
+[job-id] b89c02870004411a9e95c2c4a5e8353e
+django/db/migrations/operations/models.py core/ReplaceOrWithAnd 3
+worker outcome: normal, test outcome: killed
+[job-id] 872ee1acec0544bc9b4196d8f30c6a72
+django/db/migrations/operations/models.py core/ReplaceOrWithAnd 4
+worker outcome: normal, test outcome: survived
+[job-id] 399a5df9fd29471493c182a90bb27066
+django/db/migrations/operations/models.py core/ReplaceOrWithAnd 5
+worker outcome: normal, test outcome: survived
+[job-id] f489f04cef064327839e06f97710084e
+django/db/migrations/operations/models.py core/ReplaceOrWithAnd 6
+worker outcome: normal, test outcome: survived
+[job-id] 77644c00aa7547e28546c081b34bb795
+django/db/migrations/operations/models.py core/ReplaceOrWithAnd 7
+worker outcome: normal, test outcome: survived
+[job-id] 0c7bb358f0794b9a8400b309e67737c8
+django/db/migrations/operations/models.py core/ReplaceOrWithAnd 8
+worker outcome: normal, test outcome: survived
+[job-id] 61da1c32fcf141028a056a4a016658b8
+django/db/migrations/operations/models.py core/ReplaceOrWithAnd 9
+worker outcome: normal, test outcome: survived
+[job-id] 52ab1fbfac6c4264935a6fd7de20c931
+django/db/migrations/operations/models.py core/ReplaceOrWithAnd 10
+worker outcome: normal, test outcome: survived
+[job-id] 5c459520b2e3457ea7b2194984960483
+django/db/migrations/operations/models.py core/ReplaceContinueWithBreak 0
+worker outcome: normal, test outcome: survived
+[job-id] b9dc78b166c14d8b89f435d9b7e66fab
+django/db/migrations/operations/models.py core/NumberReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] 1757cb3f47e04f60ae98294230988da0
+django/db/migrations/operations/models.py core/NumberReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] 41ac1191c30340d3ba925b4370a7e265
+django/db/migrations/operations/models.py core/NumberReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] bbdb9cba341a4ab0904aae2e87f9d543
+django/db/migrations/operations/models.py core/NumberReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] 40dc41a24f124250aa6ce215d9201cbc
+django/db/migrations/operations/models.py core/NumberReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] 96a2ae22a494497287069b63a119a0b2
+django/db/migrations/operations/models.py core/NumberReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] 65993c4c84b648f6bf089e8d51324240
+django/db/migrations/operations/models.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: survived
+[job-id] 73194ad1bd0e4aed93e46d75c56bedf5
+django/db/migrations/operations/models.py core/RemoveDecorator 1
+worker outcome: normal, test outcome: survived
+[job-id] a24f1f7650f14b7aacc32987c89d19c8
+django/db/migrations/operations/models.py core/RemoveDecorator 2
+worker outcome: normal, test outcome: survived
+[job-id] ffd690f02e95494d83027d9d327748c0
+django/db/migrations/operations/models.py core/RemoveDecorator 3
+worker outcome: normal, test outcome: survived
+[job-id] 900123e4d59046e7957a01b8c329b045
+django/db/migrations/operations/models.py core/RemoveDecorator 4
+worker outcome: normal, test outcome: survived
+[job-id] abd6a08093be4bc1b8f03ef9ebb850da
+django/db/migrations/operations/models.py core/RemoveDecorator 5
+worker outcome: normal, test outcome: survived
+[job-id] 848b98a344c74e54b899e51c29d5b12f
+django/db/migrations/operations/models.py core/RemoveDecorator 6
+worker outcome: normal, test outcome: survived
+[job-id] 4e426fef1ace45508cd91d0a8afa0ff9
+django/db/migrations/operations/models.py core/RemoveDecorator 7
+worker outcome: normal, test outcome: survived
+[job-id] 18d62821beed4f489d5c8fcaea1a83d4
+django/db/migrations/operations/models.py core/RemoveDecorator 8
+worker outcome: normal, test outcome: survived
+[job-id] 8f558a76987b4588ad140df648a74513
+django/db/migrations/operations/models.py core/RemoveDecorator 9
+worker outcome: normal, test outcome: survived
+[job-id] a6d28d42c7844e129478b8b918ff42e2
+django/db/migrations/operations/models.py core/RemoveDecorator 10
+worker outcome: normal, test outcome: survived
+[job-id] e98d59e994dc4a599f86c6e8cfb27511
+django/db/migrations/operations/models.py core/RemoveDecorator 11
+worker outcome: normal, test outcome: survived
+[job-id] f5f0966a6424435e931dc026ebd582b0
+django/db/migrations/operations/models.py core/RemoveDecorator 12
+worker outcome: normal, test outcome: survived
+[job-id] 37af9ebff0f74aa1ac4b0ccd7633525e
+django/db/migrations/operations/models.py core/RemoveDecorator 13
+worker outcome: normal, test outcome: survived
+[job-id] 384daf857909425aa95a5e07d35289f7
+django/db/migrations/operations/models.py core/RemoveDecorator 14
+worker outcome: normal, test outcome: survived
+[job-id] 9c5132e50afd4a84af4d8300892f5788
+django/db/migrations/operations/models.py core/RemoveDecorator 15
+worker outcome: normal, test outcome: survived
+[job-id] 3062cba7a28043459851ffb922db34ac
+django/db/migrations/operations/models.py core/RemoveDecorator 16
+worker outcome: normal, test outcome: survived
+[job-id] a13f06ef18af44d5bdf5d78e375245a6
+django/db/migrations/operations/models.py core/RemoveDecorator 17
+worker outcome: normal, test outcome: survived
+[job-id] a2cb30b0029a4993b911122e815e6cc3
+django/db/migrations/operations/models.py core/RemoveDecorator 18
+worker outcome: normal, test outcome: survived
+[job-id] e0f13cbbf763450b947233620ef186e0
+django/db/migrations/operations/models.py core/RemoveDecorator 19
+worker outcome: normal, test outcome: survived
+[job-id] 7e96efef16d74d53a18dfaac2c4cc04c
+django/db/migrations/operations/models.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: survived
+[job-id] b6e80931f0e24da3bd4c6af7f8a045e3
+django/db/migrations/operations/models.py core/ZeroIterationForLoop 1
+worker outcome: normal, test outcome: survived
+[job-id] 9d56a440ef204387b8781992f470dec9
+django/db/migrations/operations/models.py core/ZeroIterationForLoop 2
+worker outcome: normal, test outcome: survived
+[job-id] 508df3ee5349495ca19e728bb214a78c
+django/db/migrations/operations/models.py core/ZeroIterationForLoop 3
+worker outcome: normal, test outcome: survived
+[job-id] f3e4799b5ed4435da0c9a14eefaed8cc
+django/db/migrations/operations/models.py core/ZeroIterationForLoop 4
+worker outcome: normal, test outcome: survived
+[job-id] 0f9f66190bda455f832d302d5ed06f89
+django/db/migrations/operations/models.py core/ZeroIterationForLoop 5
+worker outcome: normal, test outcome: survived
+[job-id] 9eb29396eea547f4bca2422b9deac499
+django/db/migrations/operations/models.py core/ZeroIterationForLoop 6
+worker outcome: normal, test outcome: survived
+[job-id] 7d890e614d784cec892ef4ebd0f0000e
+django/db/migrations/operations/models.py core/ZeroIterationForLoop 7
+worker outcome: normal, test outcome: survived
+[job-id] 63980ef968d048eb9ff3108bb27561aa
+django/db/migrations/operations/models.py core/ZeroIterationForLoop 8
+worker outcome: normal, test outcome: survived
+total jobs: 772
+complete: 772 (100.00%)
+surviving mutants: 709 (91.84%)
+ 
+[django__django__4.2] [django__django-15993] Return Code: 0 
+[django__django__4.2] [django__django-15993] 
+MutationNum: 772 
+[django__django__4.2] [django__django-15993] 
+MutationLOG: 8.159999999999997% 
+[django__django__4.2] [django__django-15993] 
+MutationUncertainty: 0.0 
+[django__django__4.2] [django__django-15993] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/db/migrations/operations/models.py'
+        and ((370 <= spec.start_pos[0] <= 424))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__4.2] [django__django-15993] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15993] Std. Output:
+FUNC_MUTATION_RESULT 4.545454545454546 22
+ 
+[django__django__4.2] [django__django-15993] Return Code: 0 
+[django__django__4.2] [django__django-15993] 
+FunctionMutationLOG: 4.545454545454546% 
+[django__django__4.2] [django__django-15993] 
+FunctionMutationNum: 22 
+[django__django__4.2] [django__django-15993] Test script run successful 
+[django__django__4.2] [django__django-15993] Removing coverage 
+[django__django__4.2] [django__django-15993] >>>>> Unfiltered Tests Failed 

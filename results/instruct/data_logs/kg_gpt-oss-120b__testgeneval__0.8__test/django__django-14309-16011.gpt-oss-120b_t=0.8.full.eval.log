@@ -1,0 +1,442 @@
+[django__django__4.0] [django__django-14309] Task Metadata:
+	- Instance ID: django__django-14309
+	- Testbed: django__django__4.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.8.19
+ 
+[django__django__4.0] [django__django-14309] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__4.0] [django__django-14309] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14309] Std. Output:
+ 
+[django__django__4.0] [django__django-14309] Return Code: 0 
+[django__django__4.0] [django__django-14309] Command: git -c advice.detachedHead=false checkout 6e742dabc95b00ba896434293556adeb4dbaee8a 
+[django__django__4.0] [django__django-14309] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14309] Std. Output:
+Previous HEAD position was 475cffd1d6 Fixed typo in docs/intro/reusable-apps.txt.
+HEAD is now at 6e742dabc9 Fixed #32687 -- Restored passing process’ environment to underlying tool in dbshell on PostgreSQL.
+ 
+[django__django__4.0] [django__django-14309] Return Code: 0 
+[django__django__4.0] [django__django-14309] Command: git diff > /opt/temp_django__django-14309_gold_init.patch 
+[django__django__4.0] [django__django-14309] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14309] Std. Output:
+ 
+[django__django__4.0] [django__django-14309] Return Code: 0 
+[django__django__4.0] [django__django-14309] Command: git apply -v /opt/temp_django__django-14309_gold.patch 
+[django__django__4.0] [django__django-14309] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14309] Std. Output:
+Checking patch django/db/models/expressions.py...
+Checking patch django/db/models/query_utils.py...
+Checking patch django/db/models/sql/query.py...
+Applied patch django/db/models/expressions.py cleanly.
+Applied patch django/db/models/query_utils.py cleanly.
+Applied patch django/db/models/sql/query.py cleanly.
+ 
+[django__django__4.0] [django__django-14309] Return Code: 0 
+[django__django__4.0] [django__django-14309] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__4.0] [django__django-14309] Command: git diff > /opt/temp_django__django-14309_test_init.patch 
+[django__django__4.0] [django__django-14309] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14309] Std. Output:
+ 
+[django__django__4.0] [django__django-14309] Return Code: 0 
+[django__django__4.0] [django__django-14309] Command: git restore tests/queries/test_q.py 
+[django__django__4.0] [django__django-14309] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14309] Std. Output:
+ 
+[django__django__4.0] [django__django-14309] Return Code: 0 
+[django__django__4.0] [django__django-14309] Command: git restore tests/queries/test_query.py 
+[django__django__4.0] [django__django-14309] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14309] Std. Output:
+ 
+[django__django__4.0] [django__django-14309] Return Code: 0 
+[django__django__4.0] [django__django-14309] Command: git apply -v /opt/temp_django__django-14309_test.patch 
+[django__django__4.0] [django__django-14309] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14309] Std. Output:
+Checking patch tests/queries/test_q.py...
+Checking patch tests/queries/test_query.py...
+Applied patch tests/queries/test_q.py cleanly.
+Applied patch tests/queries/test_query.py cleanly.
+ 
+[django__django__4.0] [django__django-14309] Return Code: 0 
+[django__django__4.0] [django__django-14309] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__4.0] [django__django-14309] Command: coverage run ./tests/runtests.py --verbosity 2 queries.test_q queries.test_query 
+[django__django__4.0] [django__django-14309] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14309] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application queries
+Found 19 tests.
+Skipping setup of unused database(s): default, other.
+System check identified no issues (1 silenced).
+test_query (unittest.loader._FailedTest) ... ERROR
+test_combine_and_both_empty (queries.test_q.QTests) ... ok
+test_combine_and_empty (queries.test_q.QTests) ... ok
+test_combine_empty_copy (queries.test_q.QTests) ... ok
+test_combine_negated_boolean_expression (queries.test_q.QTests) ... ok
+test_combine_not_q_object (queries.test_q.QTests) ... ok
+test_combine_or_both_empty (queries.test_q.QTests) ... ok
+test_combine_or_empty (queries.test_q.QTests) ... ok
+test_deconstruct (queries.test_q.QTests) ... ok
+test_deconstruct_and (queries.test_q.QTests) ... ok
+test_deconstruct_boolean_expression (queries.test_q.QTests) ... ok
+test_deconstruct_multiple_kwargs (queries.test_q.QTests) ... ok
+test_deconstruct_negated (queries.test_q.QTests) ... ok
+test_deconstruct_nested (queries.test_q.QTests) ... ok
+test_deconstruct_or (queries.test_q.QTests) ... ok
+test_reconstruct (queries.test_q.QTests) ... ok
+test_reconstruct_and (queries.test_q.QTests) ... ok
+test_reconstruct_negated (queries.test_q.QTests) ... ok
+test_reconstruct_or (queries.test_q.QTests) ... ok
+
+======================================================================
+ERROR: test_query (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 60, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 676, in run
+    self._callTestMethod(testMethod)
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 633, in _callTestMethod
+    method()
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: test_query
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/queries/test_query.py", line 10, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.081s
+
+FAILED (errors=1)
+ 
+[django__django__4.0] [django__django-14309] Return Code: 1 
+[django__django__4.0] [django__django-14309] TestsTime: 1.5597033500671387 
+[django__django__4.0] [django__django-14309] Test script run successful 
+[django__django__4.0] [django__django-14309] Removing coverage 
+[django__django__4.0] [django__django-14309] Command: coverage run ./tests/runtests.py --verbosity 2 queries.test_q queries.test_query 
+[django__django__4.0] [django__django-14309] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14309] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application queries
+Found 19 tests.
+Skipping setup of unused database(s): default, other.
+System check identified no issues (1 silenced).
+test_query (unittest.loader._FailedTest) ... ERROR
+test_combine_and_both_empty (queries.test_q.QTests) ... ok
+test_combine_and_empty (queries.test_q.QTests) ... ok
+test_combine_empty_copy (queries.test_q.QTests) ... ok
+test_combine_negated_boolean_expression (queries.test_q.QTests) ... ok
+test_combine_not_q_object (queries.test_q.QTests) ... ok
+test_combine_or_both_empty (queries.test_q.QTests) ... ok
+test_combine_or_empty (queries.test_q.QTests) ... ok
+test_deconstruct (queries.test_q.QTests) ... ok
+test_deconstruct_and (queries.test_q.QTests) ... ok
+test_deconstruct_boolean_expression (queries.test_q.QTests) ... ok
+test_deconstruct_multiple_kwargs (queries.test_q.QTests) ... ok
+test_deconstruct_negated (queries.test_q.QTests) ... ok
+test_deconstruct_nested (queries.test_q.QTests) ... ok
+test_deconstruct_or (queries.test_q.QTests) ... ok
+test_reconstruct (queries.test_q.QTests) ... ok
+test_reconstruct_and (queries.test_q.QTests) ... ok
+test_reconstruct_negated (queries.test_q.QTests) ... ok
+test_reconstruct_or (queries.test_q.QTests) ... ok
+
+======================================================================
+ERROR: test_query (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 60, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 676, in run
+    self._callTestMethod(testMethod)
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 633, in _callTestMethod
+    method()
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: test_query
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/queries/test_query.py", line 10, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.070s
+
+FAILED (errors=1)
+ 
+[django__django__4.0] [django__django-14309] Return Code: 1 
+[django__django__4.0] [django__django-14309] TestsTime: 0.8401706218719482 
+[django__django__4.0] [django__django-14309] Test script run successful 
+[django__django__4.0] [django__django-14309] Removing coverage 
+[django__django__4.0] [django__django-14309] Command: coverage run ./tests/runtests.py --verbosity 2 queries.test_q queries.test_query 
+[django__django__4.0] [django__django-14309] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14309] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 596, in <module>
+    failures = django_tests(
+  File "./tests/runtests.py", line 332, in django_tests
+    failures = test_runner.run_tests(test_labels or get_installed())
+  File "/opt/django__django/django/test/runner.py", line 758, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 636, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 594, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/queries/test_query.py", line 103
+    )
+    ^
+SyntaxError: unexpected EOF while parsing
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application queries
+ 
+[django__django__4.0] [django__django-14309] Return Code: 1 
+[django__django__4.0] [django__django-14309] TestsTime: 0.5892407894134521 
+[django__django__4.0] [django__django-14309] Test script run successful 
+[django__django__4.0] [django__django-14309] Removing coverage 
+[django__django__4.0] [django__django-14309] Command: coverage run ./tests/runtests.py --verbosity 2 queries.test_q queries.test_query 
+[django__django__4.0] [django__django-14309] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14309] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application queries
+Found 19 tests.
+Skipping setup of unused database(s): default, other.
+System check identified no issues (1 silenced).
+test_query (unittest.loader._FailedTest) ... ERROR
+test_combine_and_both_empty (queries.test_q.QTests) ... ok
+test_combine_and_empty (queries.test_q.QTests) ... ok
+test_combine_empty_copy (queries.test_q.QTests) ... ok
+test_combine_negated_boolean_expression (queries.test_q.QTests) ... ok
+test_combine_not_q_object (queries.test_q.QTests) ... ok
+test_combine_or_both_empty (queries.test_q.QTests) ... ok
+test_combine_or_empty (queries.test_q.QTests) ... ok
+test_deconstruct (queries.test_q.QTests) ... ok
+test_deconstruct_and (queries.test_q.QTests) ... ok
+test_deconstruct_boolean_expression (queries.test_q.QTests) ... ok
+test_deconstruct_multiple_kwargs (queries.test_q.QTests) ... ok
+test_deconstruct_negated (queries.test_q.QTests) ... ok
+test_deconstruct_nested (queries.test_q.QTests) ... ok
+test_deconstruct_or (queries.test_q.QTests) ... ok
+test_reconstruct (queries.test_q.QTests) ... ok
+test_reconstruct_and (queries.test_q.QTests) ... ok
+test_reconstruct_negated (queries.test_q.QTests) ... ok
+test_reconstruct_or (queries.test_q.QTests) ... ok
+
+======================================================================
+ERROR: test_query (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 60, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 676, in run
+    self._callTestMethod(testMethod)
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 633, in _callTestMethod
+    method()
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: test_query
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/queries/test_query.py", line 10, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.053s
+
+FAILED (errors=1)
+ 
+[django__django__4.0] [django__django-14309] Return Code: 1 
+[django__django__4.0] [django__django-14309] TestsTime: 0.6499404907226562 
+[django__django__4.0] [django__django-14309] Test script run successful 
+[django__django__4.0] [django__django-14309] Removing coverage 
+[django__django__4.0] [django__django-14309] Command: coverage run ./tests/runtests.py --verbosity 2 queries.test_q queries.test_query 
+[django__django__4.0] [django__django-14309] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14309] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application queries
+Found 19 tests.
+Skipping setup of unused database(s): default, other.
+System check identified no issues (1 silenced).
+test_query (unittest.loader._FailedTest) ... ERROR
+test_combine_and_both_empty (queries.test_q.QTests) ... ok
+test_combine_and_empty (queries.test_q.QTests) ... ok
+test_combine_empty_copy (queries.test_q.QTests) ... ok
+test_combine_negated_boolean_expression (queries.test_q.QTests) ... ok
+test_combine_not_q_object (queries.test_q.QTests) ... ok
+test_combine_or_both_empty (queries.test_q.QTests) ... ok
+test_combine_or_empty (queries.test_q.QTests) ... ok
+test_deconstruct (queries.test_q.QTests) ... ok
+test_deconstruct_and (queries.test_q.QTests) ... ok
+test_deconstruct_boolean_expression (queries.test_q.QTests) ... ok
+test_deconstruct_multiple_kwargs (queries.test_q.QTests) ... ok
+test_deconstruct_negated (queries.test_q.QTests) ... ok
+test_deconstruct_nested (queries.test_q.QTests) ... ok
+test_deconstruct_or (queries.test_q.QTests) ... ok
+test_reconstruct (queries.test_q.QTests) ... ok
+test_reconstruct_and (queries.test_q.QTests) ... ok
+test_reconstruct_negated (queries.test_q.QTests) ... ok
+test_reconstruct_or (queries.test_q.QTests) ... ok
+
+======================================================================
+ERROR: test_query (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 60, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 676, in run
+    self._callTestMethod(testMethod)
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 633, in _callTestMethod
+    method()
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: test_query
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/queries/test_query.py", line 10, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.077s
+
+FAILED (errors=1)
+ 
+[django__django__4.0] [django__django-14309] Return Code: 1 
+[django__django__4.0] [django__django-14309] TestsTime: 0.5841832160949707 
+[django__django__4.0] [django__django-14309] Test script run successful 
+[django__django__4.0] [django__django-14309] Removing coverage 
+[django__django__4.0] [django__django-14309] Command: coverage run ./tests/runtests.py --verbosity 2 queries.test_q queries.test_query 
+[django__django__4.0] [django__django-14309] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14309] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application queries
+Found 19 tests.
+Skipping setup of unused database(s): default, other.
+System check identified no issues (1 silenced).
+test_query (unittest.loader._FailedTest) ... ERROR
+test_combine_and_both_empty (queries.test_q.QTests) ... ok
+test_combine_and_empty (queries.test_q.QTests) ... ok
+test_combine_empty_copy (queries.test_q.QTests) ... ok
+test_combine_negated_boolean_expression (queries.test_q.QTests) ... ok
+test_combine_not_q_object (queries.test_q.QTests) ... ok
+test_combine_or_both_empty (queries.test_q.QTests) ... ok
+test_combine_or_empty (queries.test_q.QTests) ... ok
+test_deconstruct (queries.test_q.QTests) ... ok
+test_deconstruct_and (queries.test_q.QTests) ... ok
+test_deconstruct_boolean_expression (queries.test_q.QTests) ... ok
+test_deconstruct_multiple_kwargs (queries.test_q.QTests) ... ok
+test_deconstruct_negated (queries.test_q.QTests) ... ok
+test_deconstruct_nested (queries.test_q.QTests) ... ok
+test_deconstruct_or (queries.test_q.QTests) ... ok
+test_reconstruct (queries.test_q.QTests) ... ok
+test_reconstruct_and (queries.test_q.QTests) ... ok
+test_reconstruct_negated (queries.test_q.QTests) ... ok
+test_reconstruct_or (queries.test_q.QTests) ... ok
+
+======================================================================
+ERROR: test_query (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 60, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 676, in run
+    self._callTestMethod(testMethod)
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 633, in _callTestMethod
+    method()
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: test_query
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/queries/test_query.py", line 10, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.030s
+
+FAILED (errors=1)
+ 
+[django__django__4.0] [django__django-14309] Return Code: 1 
+[django__django__4.0] [django__django-14309] TestsTime: 0.6387543678283691 
+[django__django__4.0] [django__django-14309] Test script run successful 
+[django__django__4.0] [django__django-14309] Removing coverage 
+[django__django__4.0] [django__django-14309] Command: coverage run ./tests/runtests.py --verbosity 2 queries.test_q queries.test_query 
+[django__django__4.0] [django__django-14309] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14309] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application queries
+Found 19 tests.
+Skipping setup of unused database(s): default, other.
+System check identified no issues (1 silenced).
+test_query (unittest.loader._FailedTest) ... ERROR
+test_combine_and_both_empty (queries.test_q.QTests) ... ok
+test_combine_and_empty (queries.test_q.QTests) ... ok
+test_combine_empty_copy (queries.test_q.QTests) ... ok
+test_combine_negated_boolean_expression (queries.test_q.QTests) ... ok
+test_combine_not_q_object (queries.test_q.QTests) ... ok
+test_combine_or_both_empty (queries.test_q.QTests) ... ok
+test_combine_or_empty (queries.test_q.QTests) ... ok
+test_deconstruct (queries.test_q.QTests) ... ok
+test_deconstruct_and (queries.test_q.QTests) ... ok
+test_deconstruct_boolean_expression (queries.test_q.QTests) ... ok
+test_deconstruct_multiple_kwargs (queries.test_q.QTests) ... ok
+test_deconstruct_negated (queries.test_q.QTests) ... ok
+test_deconstruct_nested (queries.test_q.QTests) ... ok
+test_deconstruct_or (queries.test_q.QTests) ... ok
+test_reconstruct (queries.test_q.QTests) ... ok
+test_reconstruct_and (queries.test_q.QTests) ... ok
+test_reconstruct_negated (queries.test_q.QTests) ... ok
+test_reconstruct_or (queries.test_q.QTests) ... ok
+
+======================================================================
+ERROR: test_query (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 60, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 676, in run
+    self._callTestMethod(testMethod)
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/case.py", line 633, in _callTestMethod
+    method()
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+ImportError: Failed to import test module: test_query
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/queries/test_query.py", line 10, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.027s
+
+FAILED (errors=1)
+ 
+[django__django__4.0] [django__django-14309] Return Code: 1 
+[django__django__4.0] [django__django-14309] TestsTime: 0.5372393131256104 
+[django__django__4.0] [django__django-14309] Test script run successful 
+[django__django__4.0] [django__django-14309] Removing coverage 
+[django__django__4.0] [django__django-14309] >>>>> Tests configfull pred
+ 
+[django__django__4.0] [django__django-14309] TestsTime: 0.0 
+[django__django__4.0] [django__django-14309] >>>>> Some Tests Failed 
+[django__django__4.0] [django__django-14309] >>>>> Unfiltered Tests Failed 

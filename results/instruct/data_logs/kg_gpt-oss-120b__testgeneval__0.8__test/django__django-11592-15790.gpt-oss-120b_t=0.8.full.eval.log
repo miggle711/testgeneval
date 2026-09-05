@@ -1,0 +1,176 @@
+[django__django__3.0] [django__django-11592] Task Metadata:
+	- Instance ID: django__django-11592
+	- Testbed: django__django__3.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-11592] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11592] Std. Output:
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] Command: git -c advice.detachedHead=false checkout 806ba19bbff311b7d567857ae61db6ff84af4a2c 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11592] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at 806ba19bbf Added Query.is_sliced property.
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] Command: git diff > /opt/temp_django__django-11592_gold_init.patch 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11592] Std. Output:
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] Command: git apply -v /opt/temp_django__django-11592_gold.patch 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11592] Std. Output:
+Checking patch django/core/handlers/wsgi.py...
+Applied patch django/core/handlers/wsgi.py cleanly.
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-11592] Command: git diff > /opt/temp_django__django-11592_test_init.patch 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11592] Std. Output:
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] Command: git restore tests/wsgi/tests.py 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11592] Std. Output:
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] Command: git apply -v /opt/temp_django__django-11592_test.patch 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11592] Std. Output:
+Checking patch tests/wsgi/tests.py...
+Applied patch tests/wsgi/tests.py cleanly.
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/wsgi/tests.py", line 9, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.7652733325958252 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/wsgi/tests.py", line 9, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.652775764465332 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/wsgi/tests.py", line 9, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.6739287376403809 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/wsgi/tests.py", line 9, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.6461491584777832 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11592] TestsTime: 0.0 
+[django__django__3.0] [django__django-11592] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11592] >>>>> Unfiltered Tests Failed 

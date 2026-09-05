@@ -1,0 +1,118 @@
+[django__django__4.0] [django__django-14752] Task Metadata:
+	- Instance ID: django__django-14752
+	- Testbed: django__django__4.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.8.19
+ 
+[django__django__4.0] [django__django-14752] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__4.0] [django__django-14752] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14752] Std. Output:
+ 
+[django__django__4.0] [django__django-14752] Return Code: 0 
+[django__django__4.0] [django__django-14752] Command: git -c advice.detachedHead=false checkout b64db05b9cedd96905d637a2d824cbbf428e40e7 
+[django__django__4.0] [django__django-14752] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14752] Std. Output:
+Previous HEAD position was 475cffd1d6 Fixed typo in docs/intro/reusable-apps.txt.
+HEAD is now at b64db05b9c Removed unnecessary WhereNode.is_summary.
+ 
+[django__django__4.0] [django__django-14752] Return Code: 0 
+[django__django__4.0] [django__django-14752] Command: git diff > /opt/temp_django__django-14752_gold_init.patch 
+[django__django__4.0] [django__django-14752] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14752] Std. Output:
+ 
+[django__django__4.0] [django__django-14752] Return Code: 0 
+[django__django__4.0] [django__django-14752] Command: git apply -v /opt/temp_django__django-14752_gold.patch 
+[django__django__4.0] [django__django-14752] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14752] Std. Output:
+Checking patch django/contrib/admin/views/autocomplete.py...
+Applied patch django/contrib/admin/views/autocomplete.py cleanly.
+ 
+[django__django__4.0] [django__django-14752] Return Code: 0 
+[django__django__4.0] [django__django-14752] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__4.0] [django__django-14752] Command: git diff > /opt/temp_django__django-14752_test_init.patch 
+[django__django__4.0] [django__django-14752] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14752] Std. Output:
+ 
+[django__django__4.0] [django__django-14752] Return Code: 0 
+[django__django__4.0] [django__django-14752] Command: git restore tests/admin_views/test_autocomplete_view.py 
+[django__django__4.0] [django__django-14752] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14752] Std. Output:
+ 
+[django__django__4.0] [django__django-14752] Return Code: 0 
+[django__django__4.0] [django__django-14752] Command: git apply -v /opt/temp_django__django-14752_test.patch 
+[django__django__4.0] [django__django-14752] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14752] Std. Output:
+Checking patch tests/admin_views/test_autocomplete_view.py...
+Applied patch tests/admin_views/test_autocomplete_view.py cleanly.
+ 
+[django__django__4.0] [django__django-14752] Return Code: 0 
+[django__django__4.0] [django__django-14752] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__4.0] [django__django-14752] Command: coverage run ./tests/runtests.py --verbosity 2 admin_views.test_autocomplete_view 
+[django__django__4.0] [django__django-14752] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14752] Std. Output:
+test_autocomplete_view (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_autocomplete_view (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_autocomplete_view
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_views/test_autocomplete_view.py", line 10, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_views
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (1 silenced).
+ 
+[django__django__4.0] [django__django-14752] Return Code: 1 
+[django__django__4.0] [django__django-14752] TestsTime: 1.5975804328918457 
+[django__django__4.0] [django__django-14752] Test script run successful 
+[django__django__4.0] [django__django-14752] Removing coverage 
+[django__django__4.0] [django__django-14752] Command: coverage run ./tests/runtests.py --verbosity 2 admin_views.test_autocomplete_view 
+[django__django__4.0] [django__django-14752] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14752] Std. Output:
+test_autocomplete_view (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_autocomplete_view (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_autocomplete_view
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_views/test_autocomplete_view.py", line 10, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_views
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (1 silenced).
+ 
+[django__django__4.0] [django__django-14752] Return Code: 1 
+[django__django__4.0] [django__django-14752] TestsTime: 0.8129439353942871 
+[django__django__4.0] [django__django-14752] Test script run successful 
+[django__django__4.0] [django__django-14752] Removing coverage 
+[django__django__4.0] [django__django-14752] >>>>> Tests configfull pred
+ 
+[django__django__4.0] [django__django-14752] TestsTime: 0.0 
+[django__django__4.0] [django__django-14752] >>>>> Some Tests Failed 
+[django__django__4.0] [django__django-14752] >>>>> Unfiltered Tests Failed 

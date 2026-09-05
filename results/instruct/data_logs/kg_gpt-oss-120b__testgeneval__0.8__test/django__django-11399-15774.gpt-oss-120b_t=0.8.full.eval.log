@@ -1,0 +1,206 @@
+[django__django__3.0] [django__django-11399] Task Metadata:
+	- Instance ID: django__django-11399
+	- Testbed: django__django__3.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-11399] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-11399] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11399] Std. Output:
+ 
+[django__django__3.0] [django__django-11399] Return Code: 0 
+[django__django__3.0] [django__django-11399] Command: git -c advice.detachedHead=false checkout b711eafd2aabdf22e1d529bfb76dd8d3356d7000 
+[django__django__3.0] [django__django-11399] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11399] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at b711eafd2a Refs #30116 -- Removed unnecessary str() calls in CommonPasswordValidator.
+ 
+[django__django__3.0] [django__django-11399] Return Code: 0 
+[django__django__3.0] [django__django-11399] Command: git diff > /opt/temp_django__django-11399_gold_init.patch 
+[django__django__3.0] [django__django-11399] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11399] Std. Output:
+ 
+[django__django__3.0] [django__django-11399] Return Code: 0 
+[django__django__3.0] [django__django-11399] Command: git apply -v /opt/temp_django__django-11399_gold.patch 
+[django__django__3.0] [django__django-11399] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11399] Std. Output:
+Checking patch django/utils/functional.py...
+Applied patch django/utils/functional.py cleanly.
+ 
+[django__django__3.0] [django__django-11399] Return Code: 0 
+[django__django__3.0] [django__django-11399] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-11399] Command: git diff > /opt/temp_django__django-11399_test_init.patch 
+[django__django__3.0] [django__django-11399] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11399] Std. Output:
+ 
+[django__django__3.0] [django__django-11399] Return Code: 0 
+[django__django__3.0] [django__django-11399] Command: git restore tests/utils_tests/test_functional.py 
+[django__django__3.0] [django__django-11399] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11399] Std. Output:
+ 
+[django__django__3.0] [django__django-11399] Return Code: 0 
+[django__django__3.0] [django__django-11399] Command: git apply -v /opt/temp_django__django-11399_test.patch 
+[django__django__3.0] [django__django-11399] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11399] Std. Output:
+Checking patch tests/utils_tests/test_functional.py...
+Applied patch tests/utils_tests/test_functional.py cleanly.
+ 
+[django__django__3.0] [django__django-11399] Return Code: 0 
+[django__django__3.0] [django__django-11399] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-11399] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_functional 
+[django__django__3.0] [django__django-11399] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11399] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 526, in <module>
+    getattr(options, 'test_name_patterns', None),
+  File "./tests/runtests.py", line 299, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_functional.py", line 24
+    from __future__ import annotations
+    ^
+SyntaxError: from __future__ imports must occur at the beginning of the file
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+ 
+[django__django__3.0] [django__django-11399] Return Code: 1 
+[django__django__3.0] [django__django-11399] TestsTime: 1.0813353061676025 
+[django__django__3.0] [django__django-11399] Test script run successful 
+[django__django__3.0] [django__django-11399] Removing coverage 
+[django__django__3.0] [django__django-11399] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_functional 
+[django__django__3.0] [django__django-11399] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11399] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 526, in <module>
+    getattr(options, 'test_name_patterns', None),
+  File "./tests/runtests.py", line 299, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_functional.py", line 24
+    from __future__ import annotations
+    ^
+SyntaxError: from __future__ imports must occur at the beginning of the file
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+ 
+[django__django__3.0] [django__django-11399] Return Code: 1 
+[django__django__3.0] [django__django-11399] TestsTime: 0.6416268348693848 
+[django__django__3.0] [django__django-11399] Test script run successful 
+[django__django__3.0] [django__django-11399] Removing coverage 
+[django__django__3.0] [django__django-11399] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_functional 
+[django__django__3.0] [django__django-11399] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11399] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 526, in <module>
+    getattr(options, 'test_name_patterns', None),
+  File "./tests/runtests.py", line 299, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_functional.py", line 24
+    from __future__ import annotations
+    ^
+SyntaxError: from __future__ imports must occur at the beginning of the file
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+ 
+[django__django__3.0] [django__django-11399] Return Code: 1 
+[django__django__3.0] [django__django-11399] TestsTime: 0.5865485668182373 
+[django__django__3.0] [django__django-11399] Test script run successful 
+[django__django__3.0] [django__django-11399] Removing coverage 
+[django__django__3.0] [django__django-11399] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_functional 
+[django__django__3.0] [django__django-11399] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11399] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 526, in <module>
+    getattr(options, 'test_name_patterns', None),
+  File "./tests/runtests.py", line 299, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_functional.py", line 24
+    from __future__ import annotations
+    ^
+SyntaxError: from __future__ imports must occur at the beginning of the file
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+ 
+[django__django__3.0] [django__django-11399] Return Code: 1 
+[django__django__3.0] [django__django-11399] TestsTime: 0.43263983726501465 
+[django__django__3.0] [django__django-11399] Test script run successful 
+[django__django__3.0] [django__django-11399] Removing coverage 
+[django__django__3.0] [django__django-11399] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_functional 
+[django__django__3.0] [django__django-11399] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11399] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 526, in <module>
+    getattr(options, 'test_name_patterns', None),
+  File "./tests/runtests.py", line 299, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_functional.py", line 24
+    from __future__ import annotations
+    ^
+SyntaxError: from __future__ imports must occur at the beginning of the file
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+ 
+[django__django__3.0] [django__django-11399] Return Code: 1 
+[django__django__3.0] [django__django-11399] TestsTime: 0.4831254482269287 
+[django__django__3.0] [django__django-11399] Test script run successful 
+[django__django__3.0] [django__django-11399] Removing coverage 
+[django__django__3.0] [django__django-11399] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_functional 
+[django__django__3.0] [django__django-11399] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11399] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 526, in <module>
+    getattr(options, 'test_name_patterns', None),
+  File "./tests/runtests.py", line 299, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_functional.py", line 24
+    from __future__ import annotations
+    ^
+SyntaxError: from __future__ imports must occur at the beginning of the file
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+ 
+[django__django__3.0] [django__django-11399] Return Code: 1 
+[django__django__3.0] [django__django-11399] TestsTime: 0.5795342922210693 
+[django__django__3.0] [django__django-11399] Test script run successful 
+[django__django__3.0] [django__django-11399] Removing coverage 
+[django__django__3.0] [django__django-11399] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11399] TestsTime: 0.0 
+[django__django__3.0] [django__django-11399] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11399] >>>>> Unfiltered Tests Failed 

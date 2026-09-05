@@ -1,0 +1,330 @@
+[django__django__3.1] [django__django-12556] Task Metadata:
+	- Instance ID: django__django-12556
+	- Testbed: django__django__3.1
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.1] [django__django-12556] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.1] [django__django-12556] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12556] Std. Output:
+ 
+[django__django__3.1] [django__django-12556] Return Code: 0 
+[django__django__3.1] [django__django-12556] Command: git -c advice.detachedHead=false checkout 5cc2c63f902412cdd9a8ebbabbd953aa8e2180c0 
+[django__django__3.1] [django__django-12556] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12556] Std. Output:
+Previous HEAD position was 0668164b4a Fixed E128, E741 flake8 warnings.
+HEAD is now at 5cc2c63f90 Fixed typo in tests/forms_tests/widget_tests/test_clearablefileinput.py docstring.
+ 
+[django__django__3.1] [django__django-12556] Return Code: 0 
+[django__django__3.1] [django__django-12556] Command: git diff > /opt/temp_django__django-12556_gold_init.patch 
+[django__django__3.1] [django__django-12556] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12556] Std. Output:
+ 
+[django__django__3.1] [django__django-12556] Return Code: 0 
+[django__django__3.1] [django__django-12556] Command: git apply -v /opt/temp_django__django-12556_gold.patch 
+[django__django__3.1] [django__django-12556] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12556] Std. Output:
+Checking patch django/contrib/auth/hashers.py...
+Checking patch django/db/backends/oracle/creation.py...
+Checking patch django/utils/crypto.py...
+Applied patch django/contrib/auth/hashers.py cleanly.
+Applied patch django/db/backends/oracle/creation.py cleanly.
+Applied patch django/utils/crypto.py cleanly.
+ 
+[django__django__3.1] [django__django-12556] Return Code: 0 
+[django__django__3.1] [django__django-12556] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.1] [django__django-12556] Command: git diff > /opt/temp_django__django-12556_test_init.patch 
+[django__django__3.1] [django__django-12556] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12556] Std. Output:
+ 
+[django__django__3.1] [django__django-12556] Return Code: 0 
+[django__django__3.1] [django__django-12556] Command: git restore tests/utils_tests/test_crypto.py 
+[django__django__3.1] [django__django-12556] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12556] Std. Output:
+ 
+[django__django__3.1] [django__django-12556] Return Code: 0 
+[django__django__3.1] [django__django-12556] Command: git apply -v /opt/temp_django__django-12556_test.patch 
+[django__django__3.1] [django__django-12556] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12556] Std. Output:
+Checking patch tests/utils_tests/test_crypto.py...
+Applied patch tests/utils_tests/test_crypto.py cleanly.
+ 
+[django__django__3.1] [django__django-12556] Return Code: 0 
+[django__django__3.1] [django__django-12556] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.1] [django__django-12556] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_crypto 
+[django__django__3.1] [django__django-12556] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12556] Std. Output:
+test_crypto (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_crypto (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_crypto
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_crypto.py", line 14, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12556] Return Code: 1 
+[django__django__3.1] [django__django-12556] TestsTime: 1.427384376525879 
+[django__django__3.1] [django__django-12556] Test script run successful 
+[django__django__3.1] [django__django-12556] Removing coverage 
+[django__django__3.1] [django__django-12556] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_crypto 
+[django__django__3.1] [django__django-12556] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12556] Std. Output:
+test_crypto (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_crypto (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_crypto
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_crypto.py", line 14, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12556] Return Code: 1 
+[django__django__3.1] [django__django-12556] TestsTime: 0.7513611316680908 
+[django__django__3.1] [django__django-12556] Test script run successful 
+[django__django__3.1] [django__django-12556] Removing coverage 
+[django__django__3.1] [django__django-12556] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_crypto 
+[django__django__3.1] [django__django-12556] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12556] Std. Output:
+test_crypto (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_crypto (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_crypto
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_crypto.py", line 14, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12556] Return Code: 1 
+[django__django__3.1] [django__django-12556] TestsTime: 0.7246770858764648 
+[django__django__3.1] [django__django-12556] Test script run successful 
+[django__django__3.1] [django__django-12556] Removing coverage 
+[django__django__3.1] [django__django-12556] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_crypto 
+[django__django__3.1] [django__django-12556] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12556] Std. Output:
+test_crypto (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_crypto (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_crypto
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_crypto.py", line 14, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12556] Return Code: 1 
+[django__django__3.1] [django__django-12556] TestsTime: 0.8372151851654053 
+[django__django__3.1] [django__django-12556] Test script run successful 
+[django__django__3.1] [django__django-12556] Removing coverage 
+[django__django__3.1] [django__django-12556] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_crypto 
+[django__django__3.1] [django__django-12556] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12556] Std. Output:
+test_crypto (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_crypto (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_crypto
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_crypto.py", line 14, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12556] Return Code: 1 
+[django__django__3.1] [django__django-12556] TestsTime: 0.7025620937347412 
+[django__django__3.1] [django__django-12556] Test script run successful 
+[django__django__3.1] [django__django-12556] Removing coverage 
+[django__django__3.1] [django__django-12556] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_crypto 
+[django__django__3.1] [django__django-12556] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12556] Std. Output:
+test_crypto (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_crypto (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_crypto
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_crypto.py", line 14, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12556] Return Code: 1 
+[django__django__3.1] [django__django-12556] TestsTime: 0.625910758972168 
+[django__django__3.1] [django__django-12556] Test script run successful 
+[django__django__3.1] [django__django-12556] Removing coverage 
+[django__django__3.1] [django__django-12556] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_crypto 
+[django__django__3.1] [django__django-12556] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12556] Std. Output:
+test_crypto (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_crypto (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_crypto
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_crypto.py", line 14, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12556] Return Code: 1 
+[django__django__3.1] [django__django-12556] TestsTime: 0.662583589553833 
+[django__django__3.1] [django__django-12556] Test script run successful 
+[django__django__3.1] [django__django-12556] Removing coverage 
+[django__django__3.1] [django__django-12556] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_crypto 
+[django__django__3.1] [django__django-12556] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12556] Std. Output:
+test_crypto (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_crypto (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_crypto
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_crypto.py", line 14, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12556] Return Code: 1 
+[django__django__3.1] [django__django-12556] TestsTime: 0.7260267734527588 
+[django__django__3.1] [django__django-12556] Test script run successful 
+[django__django__3.1] [django__django-12556] Removing coverage 
+[django__django__3.1] [django__django-12556] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_crypto 
+[django__django__3.1] [django__django-12556] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12556] Std. Output:
+test_crypto (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_crypto (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_crypto
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_crypto.py", line 14, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12556] Return Code: 1 
+[django__django__3.1] [django__django-12556] TestsTime: 0.7459535598754883 
+[django__django__3.1] [django__django-12556] Test script run successful 
+[django__django__3.1] [django__django-12556] Removing coverage 
+[django__django__3.1] [django__django-12556] >>>>> Tests configfull pred
+ 
+[django__django__3.1] [django__django-12556] TestsTime: 0.0 
+[django__django__3.1] [django__django-12556] >>>>> Some Tests Failed 
+[django__django__3.1] [django__django-12556] >>>>> Unfiltered Tests Failed 

@@ -1,0 +1,340 @@
+[django__django__4.0] [django__django-14077] Task Metadata:
+	- Instance ID: django__django-14077
+	- Testbed: django__django__4.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.8.19
+ 
+[django__django__4.0] [django__django-14077] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__4.0] [django__django-14077] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14077] Std. Output:
+ 
+[django__django__4.0] [django__django-14077] Return Code: 0 
+[django__django__4.0] [django__django-14077] Command: git -c advice.detachedHead=false checkout 562898034f65e17bcdd2d951ac5236a1ec8ea690 
+[django__django__4.0] [django__django-14077] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14077] Std. Output:
+Previous HEAD position was 475cffd1d6 Fixed typo in docs/intro/reusable-apps.txt.
+HEAD is now at 562898034f Refs #31732 -- Fixed django.utils.inspect caching for bound methods.
+ 
+[django__django__4.0] [django__django-14077] Return Code: 0 
+[django__django__4.0] [django__django-14077] Command: git diff > /opt/temp_django__django-14077_gold_init.patch 
+[django__django__4.0] [django__django-14077] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14077] Std. Output:
+ 
+[django__django__4.0] [django__django-14077] Return Code: 0 
+[django__django__4.0] [django__django-14077] Command: git apply -v /opt/temp_django__django-14077_gold.patch 
+[django__django__4.0] [django__django-14077] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14077] Std. Output:
+Checking patch django/db/backends/sqlite3/operations.py...
+Checking patch django/db/models/fields/json.py...
+Applied patch django/db/backends/sqlite3/operations.py cleanly.
+Applied patch django/db/models/fields/json.py cleanly.
+ 
+[django__django__4.0] [django__django-14077] Return Code: 0 
+[django__django__4.0] [django__django-14077] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__4.0] [django__django-14077] Command: git diff > /opt/temp_django__django-14077_test_init.patch 
+[django__django__4.0] [django__django-14077] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14077] Std. Output:
+ 
+[django__django__4.0] [django__django-14077] Return Code: 0 
+[django__django__4.0] [django__django-14077] Command: git restore tests/model_fields/test_jsonfield.py 
+[django__django__4.0] [django__django-14077] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14077] Std. Output:
+ 
+[django__django__4.0] [django__django-14077] Return Code: 0 
+[django__django__4.0] [django__django-14077] Command: git apply -v /opt/temp_django__django-14077_test.patch 
+[django__django__4.0] [django__django-14077] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14077] Std. Output:
+Checking patch tests/model_fields/test_jsonfield.py...
+Applied patch tests/model_fields/test_jsonfield.py cleanly.
+ 
+[django__django__4.0] [django__django-14077] Return Code: 0 
+[django__django__4.0] [django__django-14077] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__4.0] [django__django-14077] Command: coverage run ./tests/runtests.py --verbosity 2 model_fields.test_jsonfield 
+[django__django__4.0] [django__django-14077] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14077] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_fields
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_process_rhs_delegates_when_rhs_is_key_transform (model_fields.test_jsonfield.TestKeyTransformExact)
+If ``rhs`` is a ``KeyTransform`` the method should delegate to ``Exact``. ... ERROR
+
+======================================================================
+ERROR: test_process_rhs_delegates_when_rhs_is_key_transform (model_fields.test_jsonfield.TestKeyTransformExact)
+If ``rhs`` is a ``KeyTransform`` the method should delegate to ``Exact``.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/mock.py", line 1325, in patched
+    return func(*newargs, **newkeywargs)
+  File "/opt/django__django/tests/model_fields/test_jsonfield.py", line 88, in test_process_rhs_delegates_when_rhs_is_key_transform
+    instance = self._make_instance(rhs=KeyTransform("dummy"))
+  File "/opt/django__django/django/db/models/fields/json.py", line 292, in __init__
+    super().__init__(*args, **kwargs)
+  File "/opt/django__django/django/db/models/expressions.py", line 645, in __init__
+    raise TypeError(
+TypeError: 'KeyTransform' takes exactly 1 argument (0 given)
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+ 
+[django__django__4.0] [django__django-14077] Return Code: 1 
+[django__django__4.0] [django__django-14077] TestsTime: 1.1738345623016357 
+[django__django__4.0] [django__django-14077] Test script run successful 
+[django__django__4.0] [django__django-14077] Removing coverage 
+[django__django__4.0] [django__django-14077] Command: coverage run ./tests/runtests.py --verbosity 2 model_fields.test_jsonfield 
+[django__django__4.0] [django__django-14077] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14077] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_fields
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_process_rhs_oracle_handling (model_fields.test_jsonfield.TestKeyTransformExact)
+Oracle branch should wrap JSON values in JSON_QUERY / JSON_VALUE. ... ERROR
+
+======================================================================
+ERROR: test_process_rhs_oracle_handling (model_fields.test_jsonfield.TestKeyTransformExact)
+Oracle branch should wrap JSON values in JSON_QUERY / JSON_VALUE.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/mock.py", line 1325, in patched
+    return func(*newargs, **newkeywargs)
+  File "/opt/django__django/tests/model_fields/test_jsonfield.py", line 89, in test_process_rhs_oracle_handling
+    instance = self._make_instance()
+  File "/opt/django__django/tests/model_fields/test_jsonfield.py", line 81, in _make_instance
+    return KeyTransformExact(lhs=lhs, rhs=rhs)
+  File "/opt/django__django/django/db/models/lookups.py", line 23, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/opt/django__django/django/db/models/lookups.py", line 74, in get_prep_lookup
+    if self.prepare_rhs and hasattr(self.lhs.output_field, 'get_prep_value'):
+AttributeError: 'DummyLHS' object has no attribute 'output_field'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+ 
+[django__django__4.0] [django__django-14077] Return Code: 1 
+[django__django__4.0] [django__django-14077] TestsTime: 0.754364013671875 
+[django__django__4.0] [django__django-14077] Test script run successful 
+[django__django__4.0] [django__django-14077] Removing coverage 
+[django__django__4.0] [django__django-14077] Command: coverage run ./tests/runtests.py --verbosity 2 model_fields.test_jsonfield 
+[django__django__4.0] [django__django-14077] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14077] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_fields
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_process_rhs_sqlite_handling (model_fields.test_jsonfield.TestKeyTransformExact)
+SQLite branch should use ``JSON_EXTRACT`` unless the value is a known datatype. ... ERROR
+
+======================================================================
+ERROR: test_process_rhs_sqlite_handling (model_fields.test_jsonfield.TestKeyTransformExact)
+SQLite branch should use ``JSON_EXTRACT`` unless the value is a known datatype.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/mock.py", line 1325, in patched
+    return func(*newargs, **newkeywargs)
+  File "/opt/django__django/tests/model_fields/test_jsonfield.py", line 88, in test_process_rhs_sqlite_handling
+    instance = self._make_instance()
+  File "/opt/django__django/tests/model_fields/test_jsonfield.py", line 81, in _make_instance
+    return KeyTransformExact(lhs=lhs, rhs=rhs)
+  File "/opt/django__django/django/db/models/lookups.py", line 23, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/opt/django__django/django/db/models/lookups.py", line 74, in get_prep_lookup
+    if self.prepare_rhs and hasattr(self.lhs.output_field, 'get_prep_value'):
+AttributeError: 'DummyLHS' object has no attribute 'output_field'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+ 
+[django__django__4.0] [django__django-14077] Return Code: 1 
+[django__django__4.0] [django__django-14077] TestsTime: 1.016911506652832 
+[django__django__4.0] [django__django-14077] Test script run successful 
+[django__django__4.0] [django__django-14077] Removing coverage 
+[django__django__4.0] [django__django-14077] Command: coverage run ./tests/runtests.py --verbosity 2 model_fields.test_jsonfield 
+[django__django__4.0] [django__django-14077] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14077] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_fields
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_process_lhs_sqlite_null_special_case (model_fields.test_jsonfield.TestKeyTransformExact)
+When SQLite RHS resolves to ``['null']`` the LHS should be rewritten. ... ERROR
+
+======================================================================
+ERROR: test_process_lhs_sqlite_null_special_case (model_fields.test_jsonfield.TestKeyTransformExact)
+When SQLite RHS resolves to ``['null']`` the LHS should be rewritten.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/mock.py", line 1325, in patched
+    return func(*newargs, **newkeywargs)
+  File "/opt/django__django/tests/model_fields/test_jsonfield.py", line 94, in test_process_lhs_sqlite_null_special_case
+    instance = self._make_instance(lhs=lhs_expr)
+  File "/opt/django__django/tests/model_fields/test_jsonfield.py", line 81, in _make_instance
+    return KeyTransformExact(lhs=lhs, rhs=rhs)
+  File "/opt/django__django/django/db/models/lookups.py", line 23, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/opt/django__django/django/db/models/lookups.py", line 74, in get_prep_lookup
+    if self.prepare_rhs and hasattr(self.lhs.output_field, 'get_prep_value'):
+AttributeError: 'DummyLHS' object has no attribute 'output_field'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+ 
+[django__django__4.0] [django__django-14077] Return Code: 1 
+[django__django__4.0] [django__django-14077] TestsTime: 0.7335031032562256 
+[django__django__4.0] [django__django-14077] Test script run successful 
+[django__django__4.0] [django__django-14077] Removing coverage 
+[django__django__4.0] [django__django-14077] Command: coverage run ./tests/runtests.py --verbosity 2 model_fields.test_jsonfield 
+[django__django__4.0] [django__django-14077] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14077] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_fields
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_as_oracle_null_rhs_combines_has_key_and_isnull (model_fields.test_jsonfield.TestKeyTransformExact)
+When RHS params are ``['null']`` the Oracle version should combine two expressions. ... ERROR
+
+======================================================================
+ERROR: test_as_oracle_null_rhs_combines_has_key_and_isnull (model_fields.test_jsonfield.TestKeyTransformExact)
+When RHS params are ``['null']`` the Oracle version should combine two expressions.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/mock.py", line 1325, in patched
+    return func(*newargs, **newkeywargs)
+  File "/opt/django__django/tests/model_fields/test_jsonfield.py", line 106, in test_as_oracle_null_rhs_combines_has_key_and_isnull
+    instance = self._make_instance(lhs=lhs)
+  File "/opt/django__django/tests/model_fields/test_jsonfield.py", line 81, in _make_instance
+    return KeyTransformExact(lhs=lhs, rhs=rhs)
+  File "/opt/django__django/django/db/models/lookups.py", line 23, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/opt/django__django/django/db/models/lookups.py", line 74, in get_prep_lookup
+    if self.prepare_rhs and hasattr(self.lhs.output_field, 'get_prep_value'):
+AttributeError: 'DummyLHSWithKey' object has no attribute 'output_field'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+ 
+[django__django__4.0] [django__django-14077] Return Code: 1 
+[django__django__4.0] [django__django-14077] TestsTime: 2.0706939697265625 
+[django__django__4.0] [django__django-14077] Test script run successful 
+[django__django__4.0] [django__django-14077] Removing coverage 
+[django__django__4.0] [django__django-14077] Command: coverage run ./tests/runtests.py --verbosity 2 model_fields.test_jsonfield 
+[django__django__4.0] [django__django-14077] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14077] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_fields
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_as_oracle_non_null_rhs_delegates_to_parent (model_fields.test_jsonfield.TestKeyTransformExact)
+When RHS params are not ``['null']`` the method should fall back to ``as_sql``. ... ERROR
+
+======================================================================
+ERROR: test_as_oracle_non_null_rhs_delegates_to_parent (model_fields.test_jsonfield.TestKeyTransformExact)
+When RHS params are not ``['null']`` the method should fall back to ``as_sql``.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/mock.py", line 1325, in patched
+    return func(*newargs, **newkeywargs)
+  File "/opt/django__django/tests/model_fields/test_jsonfield.py", line 89, in test_as_oracle_non_null_rhs_delegates_to_parent
+    instance = self._make_instance(lhs=lhs)
+  File "/opt/django__django/tests/model_fields/test_jsonfield.py", line 81, in _make_instance
+    return KeyTransformExact(lhs=lhs, rhs=rhs)
+  File "/opt/django__django/django/db/models/lookups.py", line 23, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/opt/django__django/django/db/models/lookups.py", line 74, in get_prep_lookup
+    if self.prepare_rhs and hasattr(self.lhs.output_field, 'get_prep_value'):
+AttributeError: 'DummyLHS' object has no attribute 'output_field'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+ 
+[django__django__4.0] [django__django-14077] Return Code: 1 
+[django__django__4.0] [django__django-14077] TestsTime: 1.5712032318115234 
+[django__django__4.0] [django__django-14077] Test script run successful 
+[django__django__4.0] [django__django-14077] Removing coverage 
+[django__django__4.0] [django__django-14077] Command: coverage run ./tests/runtests.py --verbosity 2 model_fields.test_jsonfield 
+[django__django__4.0] [django__django-14077] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14077] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_fields
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_process_rhs_none_is_converted_to_null (model_fields.test_jsonfield.TestJSONExact)
+When RHS is ``None`` it should be turned into the string ``'null'``. ... ERROR
+
+======================================================================
+ERROR: test_process_rhs_none_is_converted_to_null (model_fields.test_jsonfield.TestJSONExact)
+When RHS is ``None`` it should be turned into the string ``'null'``.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/mock.py", line 1325, in patched
+    return func(*newargs, **newkeywargs)
+  File "/opt/django__django/tests/model_fields/test_jsonfield.py", line 79, in test_process_rhs_none_is_converted_to_null
+    instance = JSONExact(lhs=DummyLHS(), rhs=None)
+  File "/opt/django__django/django/db/models/lookups.py", line 23, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/opt/django__django/django/db/models/lookups.py", line 74, in get_prep_lookup
+    if self.prepare_rhs and hasattr(self.lhs.output_field, 'get_prep_value'):
+AttributeError: 'DummyLHS' object has no attribute 'output_field'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+ 
+[django__django__4.0] [django__django-14077] Return Code: 1 
+[django__django__4.0] [django__django-14077] TestsTime: 0.5477597713470459 
+[django__django__4.0] [django__django-14077] Test script run successful 
+[django__django__4.0] [django__django-14077] Removing coverage 
+[django__django__4.0] [django__django-14077] Command: coverage run ./tests/runtests.py --verbosity 2 model_fields.test_jsonfield 
+[django__django__4.0] [django__django-14077] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14077] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_fields
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_process_rhs_mysql_wraps_with_json_extract (model_fields.test_jsonfield.TestJSONExact)
+MySQL backend should wrap each RHS placeholder with ``JSON_EXTRACT``. ... ERROR
+
+======================================================================
+ERROR: test_process_rhs_mysql_wraps_with_json_extract (model_fields.test_jsonfield.TestJSONExact)
+MySQL backend should wrap each RHS placeholder with ``JSON_EXTRACT``.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/mock.py", line 1325, in patched
+    return func(*newargs, **newkeywargs)
+  File "/opt/django__django/tests/model_fields/test_jsonfield.py", line 79, in test_process_rhs_mysql_wraps_with_json_extract
+    instance = JSONExact(lhs=DummyLHS(), rhs=None)
+  File "/opt/django__django/django/db/models/lookups.py", line 23, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/opt/django__django/django/db/models/lookups.py", line 74, in get_prep_lookup
+    if self.prepare_rhs and hasattr(self.lhs.output_field, 'get_prep_value'):
+AttributeError: 'DummyLHS' object has no attribute 'output_field'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+ 
+[django__django__4.0] [django__django-14077] Return Code: 1 
+[django__django__4.0] [django__django-14077] TestsTime: 0.49774718284606934 
+[django__django__4.0] [django__django-14077] Test script run successful 
+[django__django__4.0] [django__django-14077] Removing coverage 
+[django__django__4.0] [django__django-14077] >>>>> Tests configfull pred
+ 
+[django__django__4.0] [django__django-14077] TestsTime: 0.0 
+[django__django__4.0] [django__django-14077] >>>>> Some Tests Failed 
+[django__django__4.0] [django__django-14077] >>>>> Unfiltered Tests Failed 

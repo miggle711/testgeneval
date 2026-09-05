@@ -1,0 +1,1398 @@
+[django__django__3.0] [django__django-10730] Task Metadata:
+	- Instance ID: django__django-10730
+	- Testbed: django__django__3.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-10730] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-10730] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10730] Std. Output:
+ 
+[django__django__3.0] [django__django-10730] Return Code: 0 
+[django__django__3.0] [django__django-10730] Command: git -c advice.detachedHead=false checkout 199025fa8816dde6c611193adbce1ba6c5a72c6b 
+[django__django__3.0] [django__django-10730] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10730] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at 199025fa88 Removed unused words from docs/spelling_wordlist.
+ 
+[django__django__3.0] [django__django-10730] Return Code: 0 
+[django__django__3.0] [django__django-10730] Command: git diff > /opt/temp_django__django-10730_gold_init.patch 
+[django__django__3.0] [django__django-10730] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10730] Std. Output:
+ 
+[django__django__3.0] [django__django-10730] Return Code: 0 
+[django__django__3.0] [django__django-10730] Command: git apply -v /opt/temp_django__django-10730_gold.patch 
+[django__django__3.0] [django__django-10730] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10730] Std. Output:
+Checking patch django/views/debug.py...
+Applied patch django/views/debug.py cleanly.
+ 
+[django__django__3.0] [django__django-10730] Return Code: 0 
+[django__django__3.0] [django__django-10730] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-10730] Command: git diff > /opt/temp_django__django-10730_test_init.patch 
+[django__django__3.0] [django__django-10730] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10730] Std. Output:
+ 
+[django__django__3.0] [django__django-10730] Return Code: 0 
+[django__django__3.0] [django__django-10730] Command: git restore tests/view_tests/tests/test_debug.py 
+[django__django__3.0] [django__django-10730] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10730] Std. Output:
+ 
+[django__django__3.0] [django__django-10730] Return Code: 0 
+[django__django__3.0] [django__django-10730] Command: git apply -v /opt/temp_django__django-10730_test.patch 
+[django__django__3.0] [django__django-10730] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10730] Std. Output:
+Checking patch tests/view_tests/tests/test_debug.py...
+Applied patch tests/view_tests/tests/test_debug.py cleanly.
+ 
+[django__django__3.0] [django__django-10730] Return Code: 0 
+[django__django__3.0] [django__django-10730] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-10730] Command: coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_debug 
+[django__django__3.0] [django__django-10730] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10730] Std. Output:
+test_no_exceptions (view_tests.tests.test_debug.GetTracebackFramesTests)
+When ``exc_value`` is ``None`` the method should return an empty list. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application view_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10730] Return Code: 0 
+[django__django__3.0] [django__django-10730] TestsTime: 1.2165577411651611 
+[django__django__3.0] [django__django-10730] Test script run successful 
+[django__django__3.0] [django__django-10730] Removing coverage 
+[django__django__3.0] [django__django-10730] Command: coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_debug 
+[django__django__3.0] [django__django-10730] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10730] Std. Output:
+test_single_exception_with_source (view_tests.tests.test_debug.GetTracebackFramesTests)
+A normal exception should produce a frame with correct metadata. ... FAIL
+
+======================================================================
+FAIL: test_single_exception_with_source (view_tests.tests.test_debug.GetTracebackFramesTests)
+A normal exception should produce a frame with correct metadata.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/view_tests/tests/test_debug.py", line 76, in test_single_exception_with_source
+    self.assertEqual(len(frames), 1)
+AssertionError: 2 != 1
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application view_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10730] Return Code: 1 
+[django__django__3.0] [django__django-10730] TestsTime: 1.0272326469421387 
+[django__django__3.0] [django__django-10730] Test script run successful 
+[django__django__3.0] [django__django-10730] Removing coverage 
+[django__django__3.0] [django__django-10730] Command: coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_debug 
+[django__django__3.0] [django__django-10730] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10730] Std. Output:
+test_chained_exceptions (view_tests.tests.test_debug.GetTracebackFramesTests)
+Frames for a chained exception should expose the cause correctly. ... FAIL
+
+======================================================================
+FAIL: test_chained_exceptions (view_tests.tests.test_debug.GetTracebackFramesTests)
+Frames for a chained exception should expose the cause correctly.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/view_tests/tests/test_debug.py", line 74, in test_chained_exceptions
+    self.assertIs(first_frame["exc_cause"], exc_value)  # outer exception
+AssertionError: None is not TypeError('outer',)
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application view_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10730] Return Code: 1 
+[django__django__3.0] [django__django-10730] TestsTime: 0.3079218864440918 
+[django__django__3.0] [django__django-10730] Test script run successful 
+[django__django__3.0] [django__django-10730] Removing coverage 
+[django__django__3.0] [django__django-10730] Command: coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_debug 
+[django__django__3.0] [django__django-10730] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10730] Std. Output:
+test_traceback_hide_frame_is_skipped (view_tests.tests.test_debug.GetTracebackFramesTests)
+Frames that set ``__traceback_hide__`` in locals must be omitted. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application view_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10730] Return Code: 0 
+[django__django__3.0] [django__django-10730] TestsTime: 0.40230679512023926 
+[django__django__3.0] [django__django-10730] Test script run successful 
+[django__django__3.0] [django__django-10730] Removing coverage 
+[django__django__3.0] [django__django-10730] Command: coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_debug 
+[django__django__3.0] [django__django-10730] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10730] Std. Output:
+test_source_unavailable_fallback (view_tests.tests.test_debug.GetTracebackFramesTests)
+When source cannot be read, a placeholder line is used. ... ERROR
+
+======================================================================
+ERROR: test_source_unavailable_fallback (view_tests.tests.test_debug.GetTracebackFramesTests)
+When source cannot be read, a placeholder line is used.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/view_tests/tests/test_debug.py", line 74, in test_source_unavailable_fallback
+    html = reporter.get_traceback_html()
+  File "/opt/django__django/django/views/debug.py", line 333, in get_traceback_html
+    c = Context(self.get_traceback_data(), use_l10n=False)
+  File "/opt/django__django/django/views/debug.py", line 305, in get_traceback_data
+    'filtered_POST_items': list(self.filter.get_post_parameters(self.request).items()),
+TypeError: 'Mock' object is not iterable
+
+----------------------------------------------------------------------
+Ran 1 test in 0.012s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application view_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10730] Return Code: 1 
+[django__django__3.0] [django__django-10730] TestsTime: 0.6183075904846191 
+[django__django__3.0] [django__django-10730] Test script run successful 
+[django__django__3.0] [django__django-10730] Removing coverage 
+[django__django__3.0] [django__django-10730] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-10730] Test Script:  coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_debug;
+ 
+[django__django__3.0] [django__django-10730] Command: coverage run ./tests/runtests.py --verbosity 2 view_tests.tests.test_debug 
+[django__django__3.0] [django__django-10730] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10730] Std. Output:
+test_no_exceptions (view_tests.tests.test_debug.GetTracebackFramesTests)
+When ``exc_value`` is ``None`` the method should return an empty list. ... ok
+test_traceback_hide_frame_is_skipped (view_tests.tests.test_debug.GetTracebackFramesTests)
+Frames that set ``__traceback_hide__`` in locals must be omitted. ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application view_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10730] Return Code: 0 
+[django__django__3.0] [django__django-10730] TestsTime: 0.8746936321258545 
+[django__django__3.0] [django__django-10730] 
+>>>>> All Tests Passed
+ 
+[django__django__3.0] [django__django-10730] Current Working Directory: /opt/django__django 
+[django__django__3.0] [django__django-10730] Command: coverage json -o coverage.json 
+[django__django__3.0] [django__django-10730] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10730] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.0] [django__django-10730] Return Code: 0 
+[django__django__3.0] [django__django-10730] 
+CoverageLOG: 29.26829268292683%
+ 
+[django__django__3.0] [django__django-10730] 
+FunctionCoverageLOG: 81.57894736842105%
+ 
+[django__django__3.0] [django__django-10730] Running mutation testing 
+[django__django__3.0] [django__django-10730] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-10730] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10730] Std. Output:
+ 
+[django__django__3.0] [django__django-10730] Return Code: 0 
+[django__django__3.0] [django__django-10730] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-10730] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.0] [django__django-10730] Std. Output:
+ 
+[django__django__3.0] [django__django-10730] Return Code: 0 
+[django__django__3.0] [django__django-10730] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.0] [django__django-10730] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10730] Std. Output:
+98.39 98.39 98.39
+ 
+[django__django__3.0] [django__django-10730] Return Code: 0 
+[django__django__3.0] [django__django-10730] Command: cr-report mutation.sqlite 
+[django__django__3.0] [django__django-10730] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10730] Std. Output:
+[job-id] debc6c3e7f7c462db1084561365b0f05
+django/views/debug.py core/ReplaceBinaryOperator_Add_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] 980836a8022d44c8a927f40320227d15
+django/views/debug.py core/ReplaceBinaryOperator_Add_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] 45f1ab28be254115b9ae55649c54b586
+django/views/debug.py core/ReplaceBinaryOperator_Add_Sub 2
+worker outcome: normal, test outcome: survived
+[job-id] 6fde2da713194a089bd580956b7c5150
+django/views/debug.py core/ReplaceBinaryOperator_Add_Sub 3
+worker outcome: normal, test outcome: survived
+[job-id] df546a398cf446aeb6a159e945e91b68
+django/views/debug.py core/ReplaceBinaryOperator_Add_Sub 4
+worker outcome: normal, test outcome: survived
+[job-id] 023617f38d84411283f36675c22961b3
+django/views/debug.py core/ReplaceBinaryOperator_Add_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] 2712dc8bab08469b9a733bf62eb4805b
+django/views/debug.py core/ReplaceBinaryOperator_Add_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] d7f554d3f8d9439f928ec41e4a2df42f
+django/views/debug.py core/ReplaceBinaryOperator_Add_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] f4fa38b421fa457298b2da66f1e294c9
+django/views/debug.py core/ReplaceBinaryOperator_Add_Mul 3
+worker outcome: normal, test outcome: survived
+[job-id] b4668eccb7e9481dbc4386d1eee810bd
+django/views/debug.py core/ReplaceBinaryOperator_Add_Mul 4
+worker outcome: normal, test outcome: survived
+[job-id] 173d6c981a72429581768e9a85e7416a
+django/views/debug.py core/ReplaceBinaryOperator_Add_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] abf3dbdec3cd45b8a1c37b3535d2b632
+django/views/debug.py core/ReplaceBinaryOperator_Add_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] a7bbd9898a6943f6a1d35ec3ca49714d
+django/views/debug.py core/ReplaceBinaryOperator_Add_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] 571e85af847c4213a689618fbb65d612
+django/views/debug.py core/ReplaceBinaryOperator_Add_Div 3
+worker outcome: normal, test outcome: survived
+[job-id] 907a4883140f47aaa8ad80dcaa2ff28d
+django/views/debug.py core/ReplaceBinaryOperator_Add_Div 4
+worker outcome: normal, test outcome: survived
+[job-id] 6af02fc3ec07480d91d5669c7503f3bd
+django/views/debug.py core/ReplaceBinaryOperator_Add_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] f1e7bcfcb05c4fa0be860884a5a35f75
+django/views/debug.py core/ReplaceBinaryOperator_Add_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] 283aaf734e974cb284206e98b0893eb7
+django/views/debug.py core/ReplaceBinaryOperator_Add_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] b1e8a68aed9e40298d100adc977cafb1
+django/views/debug.py core/ReplaceBinaryOperator_Add_FloorDiv 3
+worker outcome: normal, test outcome: survived
+[job-id] 0052e61d73e040598644a3db1e91fb22
+django/views/debug.py core/ReplaceBinaryOperator_Add_FloorDiv 4
+worker outcome: normal, test outcome: survived
+[job-id] ab6c7ea8947b4351bd12d6e72a93f006
+django/views/debug.py core/ReplaceBinaryOperator_Add_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] af035bf59e374c28a8403e86e716e39d
+django/views/debug.py core/ReplaceBinaryOperator_Add_Mod 1
+worker outcome: normal, test outcome: survived
+[job-id] 26f28c3cc64f4effaac02935e73a1c7c
+django/views/debug.py core/ReplaceBinaryOperator_Add_Mod 2
+worker outcome: normal, test outcome: survived
+[job-id] ca2ea0fff4604935a9516212a2bccdf3
+django/views/debug.py core/ReplaceBinaryOperator_Add_Mod 3
+worker outcome: normal, test outcome: survived
+[job-id] 2e2ae57f0c204f1d93d2bd2885d1b162
+django/views/debug.py core/ReplaceBinaryOperator_Add_Mod 4
+worker outcome: normal, test outcome: survived
+[job-id] 56479fee29364bebbb8045839c0af06c
+django/views/debug.py core/ReplaceBinaryOperator_Add_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 85ce4f1383554d8da9c9e8ff3576fbef
+django/views/debug.py core/ReplaceBinaryOperator_Add_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 6daa9e9ef5a647d88bc6de4d30dad3b6
+django/views/debug.py core/ReplaceBinaryOperator_Add_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] 97805b7971244f03a06683dabcee8a6c
+django/views/debug.py core/ReplaceBinaryOperator_Add_Pow 3
+worker outcome: normal, test outcome: survived
+[job-id] 5913d650ed3641ceb0380b70c77fa71c
+django/views/debug.py core/ReplaceBinaryOperator_Add_Pow 4
+worker outcome: normal, test outcome: survived
+[job-id] be5aa4f3389d4d19b786c848d0b955dd
+django/views/debug.py core/ReplaceBinaryOperator_Add_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] ac728e7f151d411eadd8b983f9f8dba0
+django/views/debug.py core/ReplaceBinaryOperator_Add_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 1c60f801c0364e1a9983cdaa67d14b24
+django/views/debug.py core/ReplaceBinaryOperator_Add_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] 797df01a63e34a46884276e77663b813
+django/views/debug.py core/ReplaceBinaryOperator_Add_RShift 3
+worker outcome: normal, test outcome: survived
+[job-id] bab2eec2140249398438684c2b4b7f44
+django/views/debug.py core/ReplaceBinaryOperator_Add_RShift 4
+worker outcome: normal, test outcome: survived
+[job-id] 60ab225b128c45f688d475af305f4e3d
+django/views/debug.py core/ReplaceBinaryOperator_Add_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 7b153c78c02b43b59b01ecda7b7bf29d
+django/views/debug.py core/ReplaceBinaryOperator_Add_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] c0e52f061c734e959fc143e0f5751e5c
+django/views/debug.py core/ReplaceBinaryOperator_Add_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] 9b619a4b9a474f5987b15639d2036ea9
+django/views/debug.py core/ReplaceBinaryOperator_Add_LShift 3
+worker outcome: normal, test outcome: survived
+[job-id] aa1a2a4a52844b9fbf6e4c20a6e8255e
+django/views/debug.py core/ReplaceBinaryOperator_Add_LShift 4
+worker outcome: normal, test outcome: survived
+[job-id] b280c012f5b74175a5656fcc9a2e2ec2
+django/views/debug.py core/ReplaceBinaryOperator_Add_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 08b695efaada4bd0afac17144921b980
+django/views/debug.py core/ReplaceBinaryOperator_Add_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 5cf016904c3a4024b8a82890b61c742b
+django/views/debug.py core/ReplaceBinaryOperator_Add_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] f97b68c5b65f475f85d815bd5e79bd0f
+django/views/debug.py core/ReplaceBinaryOperator_Add_BitOr 3
+worker outcome: normal, test outcome: survived
+[job-id] 0edd559201cd4c388ace202e8a2e4da4
+django/views/debug.py core/ReplaceBinaryOperator_Add_BitOr 4
+worker outcome: normal, test outcome: survived
+[job-id] e6cb73bd9ef14c5d92c3707bac7548a1
+django/views/debug.py core/ReplaceBinaryOperator_Add_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 40f302e41ffb4d0695e0b8580acfee10
+django/views/debug.py core/ReplaceBinaryOperator_Add_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 8d3cc07891614255be852ab1b01f3806
+django/views/debug.py core/ReplaceBinaryOperator_Add_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] b791c877a73c4893868089eb1b5b215e
+django/views/debug.py core/ReplaceBinaryOperator_Add_BitAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] f96db42bfe7747adab4ee9679b475ac1
+django/views/debug.py core/ReplaceBinaryOperator_Add_BitAnd 4
+worker outcome: normal, test outcome: survived
+[job-id] 2030681fca89448ea16350a31320193e
+django/views/debug.py core/ReplaceBinaryOperator_Add_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] b759f901ed694702b4298bef3a60020f
+django/views/debug.py core/ReplaceBinaryOperator_Add_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] 6b17949550cd4dafa17dc33c8c92da38
+django/views/debug.py core/ReplaceBinaryOperator_Add_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] 7235ff25aa0f4a4290ad430a1c7592c5
+django/views/debug.py core/ReplaceBinaryOperator_Add_BitXor 3
+worker outcome: normal, test outcome: survived
+[job-id] d5d80856ee36434ea39e3ebde73fe165
+django/views/debug.py core/ReplaceBinaryOperator_Add_BitXor 4
+worker outcome: normal, test outcome: survived
+[job-id] 0a0a91b48277407d977c03be58c9e82a
+django/views/debug.py core/ReplaceBinaryOperator_Sub_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] bf66eceee17d46d88900bdabc0db0f9a
+django/views/debug.py core/ReplaceBinaryOperator_Sub_Add 1
+worker outcome: normal, test outcome: survived
+[job-id] 51c8c81da932434eaaa64e4d5bbceb64
+django/views/debug.py core/ReplaceBinaryOperator_Sub_Add 2
+worker outcome: normal, test outcome: survived
+[job-id] 3df477ca0ebf4d7fa4ead7fde33e55b1
+django/views/debug.py core/ReplaceBinaryOperator_Sub_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] 86d03ea6f9d14ebeadb818da406f3a09
+django/views/debug.py core/ReplaceBinaryOperator_Sub_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] 9ffd4f812b8844bb9ae79ae35e0b23d1
+django/views/debug.py core/ReplaceBinaryOperator_Sub_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] 6374bc5d4a3048888d49c55f1b609bb9
+django/views/debug.py core/ReplaceBinaryOperator_Sub_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 0c3ac13b72bf4280bfa677b7370ce66d
+django/views/debug.py core/ReplaceBinaryOperator_Sub_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] 5982cbcf510c44e5b22fb0e014bf03fb
+django/views/debug.py core/ReplaceBinaryOperator_Sub_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] 61f066e6766c4b8ea1c4b59d5774b8b6
+django/views/debug.py core/ReplaceBinaryOperator_Sub_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] aa982b9705f544b9a00a8c1ffab0ad80
+django/views/debug.py core/ReplaceBinaryOperator_Sub_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] adaeacb365684c48933cd99a22f016b0
+django/views/debug.py core/ReplaceBinaryOperator_Sub_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] 18ada08c3b144194b8260e0b7abc830c
+django/views/debug.py core/ReplaceBinaryOperator_Sub_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] 19e11be1cf02425396b4c6b45baa1abe
+django/views/debug.py core/ReplaceBinaryOperator_Sub_Mod 1
+worker outcome: normal, test outcome: survived
+[job-id] fd827d1b1d864a1aa8ac84890b07a158
+django/views/debug.py core/ReplaceBinaryOperator_Sub_Mod 2
+worker outcome: normal, test outcome: survived
+[job-id] a5810d9a734e48d086d67f2cd47329e9
+django/views/debug.py core/ReplaceBinaryOperator_Sub_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 100a07a3f56442ebbc0ab015b58ad684
+django/views/debug.py core/ReplaceBinaryOperator_Sub_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 2d6318055c2249e98390046011f43690
+django/views/debug.py core/ReplaceBinaryOperator_Sub_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] 8d48ee468f5448a09fa6ecaf5975ea3a
+django/views/debug.py core/ReplaceBinaryOperator_Sub_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 2b7fd3ff16684bce87ac90cbf9344ea0
+django/views/debug.py core/ReplaceBinaryOperator_Sub_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] ef1a7a1a338b445e9588bf38006d541f
+django/views/debug.py core/ReplaceBinaryOperator_Sub_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] 63dc26a340fc4710a9efd1b241c27a0c
+django/views/debug.py core/ReplaceBinaryOperator_Sub_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 52168deecb3d4f25bc628111ffe592a8
+django/views/debug.py core/ReplaceBinaryOperator_Sub_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] ec748d46d4194f6ab32a2e812bc8fff2
+django/views/debug.py core/ReplaceBinaryOperator_Sub_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] 5b6bc525286545fc9a295113d38845d6
+django/views/debug.py core/ReplaceBinaryOperator_Sub_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 345148dc19f04b58a556ff7560a77cf1
+django/views/debug.py core/ReplaceBinaryOperator_Sub_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] a06563f23a7a474c8f598ec4d762a91f
+django/views/debug.py core/ReplaceBinaryOperator_Sub_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] 496984d55ab54d70bb351a6cc5164ca4
+django/views/debug.py core/ReplaceBinaryOperator_Sub_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] aa6fdd5aab834aea87c365fa132db6d6
+django/views/debug.py core/ReplaceBinaryOperator_Sub_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 7ae19191fea34aee81397f482eaeca2e
+django/views/debug.py core/ReplaceBinaryOperator_Sub_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] 79f3905a9a7c413da4a2413e0e2c9b52
+django/views/debug.py core/ReplaceBinaryOperator_Sub_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] 27297357a58248708fc5d32e778c6be8
+django/views/debug.py core/ReplaceBinaryOperator_Sub_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] 79370c6cd90842268f94f59c24f2ef4c
+django/views/debug.py core/ReplaceBinaryOperator_Sub_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] d217b42d2ef14c9db71bddaa92d1e766
+django/views/debug.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] 7009fa7a9ff94fe698b3578d74e06c75
+django/views/debug.py core/ReplaceBinaryOperator_Mod_Add 1
+worker outcome: normal, test outcome: survived
+[job-id] 28935a2c83ce43f5917b7dd9b0c65a47
+django/views/debug.py core/ReplaceBinaryOperator_Mod_Add 2
+worker outcome: normal, test outcome: survived
+[job-id] 0e5f2a3704db4b2c86ecff344ebd057d
+django/views/debug.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] 0c376bc2cb524d20a968100eb6195cfb
+django/views/debug.py core/ReplaceBinaryOperator_Mod_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] f566499f20274e41ad823565311eaea3
+django/views/debug.py core/ReplaceBinaryOperator_Mod_Sub 2
+worker outcome: normal, test outcome: survived
+[job-id] e4f0ef6c999d49be82d0314270543cf9
+django/views/debug.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] 0222f8c419d3415495435177dba808ee
+django/views/debug.py core/ReplaceBinaryOperator_Mod_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] 028b2aa8564741dcae2974884c19fe46
+django/views/debug.py core/ReplaceBinaryOperator_Mod_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] c06924ba9b004244814718f6ae500f98
+django/views/debug.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 844af4743e7949cf9bb060c7e37b8f5e
+django/views/debug.py core/ReplaceBinaryOperator_Mod_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] e3ac26c9924c4300bf8857e7bac4eada
+django/views/debug.py core/ReplaceBinaryOperator_Mod_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] f6d6a2a6ed3f4ce8a1b6286a847eaa4a
+django/views/debug.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 95f2f1e9d58a4d678afe1b36e12a7b3a
+django/views/debug.py core/ReplaceBinaryOperator_Mod_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] d043fb4159cf4f87876355f378fccdf5
+django/views/debug.py core/ReplaceBinaryOperator_Mod_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] 2f9d9cd14b624eccbd68220477c8df61
+django/views/debug.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 0991f302ff7a4adeaf4f0dc80798ed3d
+django/views/debug.py core/ReplaceBinaryOperator_Mod_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] fe0e7bab848d49f0a9b76582dd5c48fc
+django/views/debug.py core/ReplaceBinaryOperator_Mod_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] f353864b415a4674a620187f8ab5b646
+django/views/debug.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] cea1789a60674264a2a304455a069ff2
+django/views/debug.py core/ReplaceBinaryOperator_Mod_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] d931f06724d9436c9823913a1284ee62
+django/views/debug.py core/ReplaceBinaryOperator_Mod_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] f46ec34609184477a14e9cdce199225e
+django/views/debug.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] c93bb9d7535a4b588a7829f9ee7ae4b2
+django/views/debug.py core/ReplaceBinaryOperator_Mod_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 4ab04d702c204451b83a819453b5df7b
+django/views/debug.py core/ReplaceBinaryOperator_Mod_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] a17b32f3ced447c9985e461e150143de
+django/views/debug.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] cc626f2097e14065a18f1ae30ed595fd
+django/views/debug.py core/ReplaceBinaryOperator_Mod_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 0fa6036553534d50a1d4113f4c0cc210
+django/views/debug.py core/ReplaceBinaryOperator_Mod_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] de20eb628f5d41079892b057fa56476c
+django/views/debug.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 6a013c8f11dc400da0321e9456167ab8
+django/views/debug.py core/ReplaceBinaryOperator_Mod_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 88dd5ef70a8947c1af3b5e3e270468c5
+django/views/debug.py core/ReplaceBinaryOperator_Mod_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] eaf68b5cc9844900800f6d3b421af924
+django/views/debug.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] e8b1b61c63c747bab282070c138853e3
+django/views/debug.py core/ReplaceBinaryOperator_Mod_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] d0322e91824b40c8b0be9c9bc0ffe90a
+django/views/debug.py core/ReplaceBinaryOperator_Mod_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] 989e990db54b4f2fb32ef2f6640aa4a6
+django/views/debug.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 90d3bd377d05484489b82ae1417691c0
+django/views/debug.py core/ReplaceComparisonOperator_Eq_NotEq 1
+worker outcome: normal, test outcome: survived
+[job-id] 24a5d2f62c9c411996e7fc05c7600fc6
+django/views/debug.py core/ReplaceComparisonOperator_Eq_NotEq 2
+worker outcome: normal, test outcome: survived
+[job-id] 82b5d78b7c554dd38407fdb6c0468477
+django/views/debug.py core/ReplaceComparisonOperator_Eq_NotEq 3
+worker outcome: normal, test outcome: survived
+[job-id] 1f7ac1e73e124437bfce7deb98cbd09f
+django/views/debug.py core/ReplaceComparisonOperator_Eq_NotEq 4
+worker outcome: normal, test outcome: survived
+[job-id] 3692f00987b643e982699c4aa4920f6e
+django/views/debug.py core/ReplaceComparisonOperator_Eq_NotEq 5
+worker outcome: normal, test outcome: survived
+[job-id] 2386e5b0b88b482b895f11488a8ab098
+django/views/debug.py core/ReplaceComparisonOperator_Eq_NotEq 6
+worker outcome: normal, test outcome: survived
+[job-id] 7e3b7b01ee484cc296290c750639ec51
+django/views/debug.py core/ReplaceComparisonOperator_Eq_NotEq 7
+worker outcome: normal, test outcome: survived
+[job-id] 39d015e4a7bc4aac83d125c69fe385a7
+django/views/debug.py core/ReplaceComparisonOperator_Eq_NotEq 8
+worker outcome: normal, test outcome: survived
+[job-id] ef7afe5f78684164b4789f3484fa3348
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 60577b9a67c3403d9b7b1b8117c7ba2b
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] f58326118c3e42dcb6ffa5b116772e98
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Lt 2
+worker outcome: normal, test outcome: survived
+[job-id] 477dc5f4cfd140cd9d3e86cbb7a610c0
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Lt 3
+worker outcome: normal, test outcome: survived
+[job-id] fed197cf207c45c5a75b0456dfc530fa
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Lt 4
+worker outcome: normal, test outcome: survived
+[job-id] 6cdfad09c7044927bba49c2e5493bda1
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Lt 5
+worker outcome: normal, test outcome: survived
+[job-id] 86f4b440b95b4b8b916cb23510c328c8
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Lt 6
+worker outcome: normal, test outcome: survived
+[job-id] 1a9c87f98e9b4cf2b387ad24c99cc8fa
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Lt 7
+worker outcome: normal, test outcome: survived
+[job-id] 3d29847d82e24456ad4eeac33878171d
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Lt 8
+worker outcome: normal, test outcome: survived
+[job-id] 8964728c251546888c624275242f8fd3
+django/views/debug.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] f6ee8d2a23b14a1ca58787293cb79d60
+django/views/debug.py core/ReplaceComparisonOperator_Eq_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] b0e718e7932142d8b4361445f508289d
+django/views/debug.py core/ReplaceComparisonOperator_Eq_LtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 333c0b291bae4f6a82c75227daae5b0b
+django/views/debug.py core/ReplaceComparisonOperator_Eq_LtE 3
+worker outcome: normal, test outcome: survived
+[job-id] 4881e94fd9ed4ba8bb4736c6dd1a4649
+django/views/debug.py core/ReplaceComparisonOperator_Eq_LtE 4
+worker outcome: normal, test outcome: survived
+[job-id] 25bb9c9237a64b7186e174d78679204a
+django/views/debug.py core/ReplaceComparisonOperator_Eq_LtE 5
+worker outcome: normal, test outcome: survived
+[job-id] 81bfe3dc8c104935b3c337648d354631
+django/views/debug.py core/ReplaceComparisonOperator_Eq_LtE 6
+worker outcome: normal, test outcome: survived
+[job-id] 87453b599a874d0c9db4dd5f644a2da3
+django/views/debug.py core/ReplaceComparisonOperator_Eq_LtE 7
+worker outcome: normal, test outcome: survived
+[job-id] 7114ca39af3e47818d51bd08f5798d6c
+django/views/debug.py core/ReplaceComparisonOperator_Eq_LtE 8
+worker outcome: normal, test outcome: survived
+[job-id] 111daacda82047b48a499248ca2844e4
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 8cf95fa931214ab6ad9793102cf2502c
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] 08c38fe74d314c93aefe86e71da9e85e
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Gt 2
+worker outcome: normal, test outcome: survived
+[job-id] 7d7d8e5b88de42bb94b6c00e24ab4979
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Gt 3
+worker outcome: normal, test outcome: survived
+[job-id] e4d1d7bd691449beb663d4de58789a94
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Gt 4
+worker outcome: normal, test outcome: survived
+[job-id] ef806a1a57b445c4a5633c95c0b8b97d
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Gt 5
+worker outcome: normal, test outcome: survived
+[job-id] 56155023a55545ea8ad8bbaf6e507b15
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Gt 6
+worker outcome: normal, test outcome: survived
+[job-id] b087db9f5bc8444da8e2d33f804e85c1
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Gt 7
+worker outcome: normal, test outcome: survived
+[job-id] 5f661ec9491c461cb0a61ed225d9ea57
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Gt 8
+worker outcome: normal, test outcome: survived
+[job-id] 4fcbd244ef2c4074bdac49999c4c3038
+django/views/debug.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 90c5a68310524180adfddb027e33f644
+django/views/debug.py core/ReplaceComparisonOperator_Eq_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] e9baa412469f45b790692dd2d093c2bb
+django/views/debug.py core/ReplaceComparisonOperator_Eq_GtE 2
+worker outcome: normal, test outcome: survived
+[job-id] bba0d317c25f4f738a0b2c5958587938
+django/views/debug.py core/ReplaceComparisonOperator_Eq_GtE 3
+worker outcome: normal, test outcome: survived
+[job-id] 0602e629029d4be49d5606ff19e71611
+django/views/debug.py core/ReplaceComparisonOperator_Eq_GtE 4
+worker outcome: normal, test outcome: survived
+[job-id] 357541d8759a48cfb5eacc77ff4911d4
+django/views/debug.py core/ReplaceComparisonOperator_Eq_GtE 5
+worker outcome: normal, test outcome: survived
+[job-id] a72520fd174f4d9a86eb0da0aeb04c18
+django/views/debug.py core/ReplaceComparisonOperator_Eq_GtE 6
+worker outcome: normal, test outcome: survived
+[job-id] 1a48806461194b6e93b22bb054c4d802
+django/views/debug.py core/ReplaceComparisonOperator_Eq_GtE 7
+worker outcome: normal, test outcome: survived
+[job-id] a5289cef68aa4d72917d10646c9ccf75
+django/views/debug.py core/ReplaceComparisonOperator_Eq_GtE 8
+worker outcome: normal, test outcome: survived
+[job-id] c408f492383643e997ca14a5d848df5f
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 96aaad8094f64867b75ac57d1eac432f
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 5d89de538d2a4c058799a575aa38e103
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] 2ea590d7ee6a412cb4c0af944bd2877a
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Is 3
+worker outcome: normal, test outcome: survived
+[job-id] a89d8d2fa0f343af996d8b34bff06ec0
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Is 4
+worker outcome: normal, test outcome: survived
+[job-id] c170175742314dd8bfa2002d24a3eaf1
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Is 5
+worker outcome: normal, test outcome: survived
+[job-id] 0deb3401384846c487df0ae6b20a2d03
+django/views/debug.py core/ReplaceComparisonOperator_Eq_Is 6
+worker outcome: normal, test outcome: survived
+[job-id] 9f6cfcc67a4d43ec99674b1def6c6d69
+django/views/debug.py core/ReplaceComparisonOperator_Eq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 8daa2f7efbb249bb95df83190ff85bc4
+django/views/debug.py core/ReplaceComparisonOperator_Eq_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] ff60bb79cc594f89b1e68e8a560b8177
+django/views/debug.py core/ReplaceComparisonOperator_Eq_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] ca888e563a6641679c493d9080088034
+django/views/debug.py core/ReplaceComparisonOperator_Eq_IsNot 3
+worker outcome: normal, test outcome: survived
+[job-id] 9cc23aeabb474a19ae0d59b309ce505a
+django/views/debug.py core/ReplaceComparisonOperator_Eq_IsNot 4
+worker outcome: normal, test outcome: survived
+[job-id] 74ad7990382f4b40851e993398f091d7
+django/views/debug.py core/ReplaceComparisonOperator_Eq_IsNot 5
+worker outcome: normal, test outcome: survived
+[job-id] e9d0c57a46d643f3ac62a6acbad41e6b
+django/views/debug.py core/ReplaceComparisonOperator_Eq_IsNot 6
+worker outcome: normal, test outcome: survived
+[job-id] 002a5db08b374fc88ad54a1766aa54cb
+django/views/debug.py core/ReplaceComparisonOperator_Gt_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] 8a6e1c006a724930b50eb9ac838b59ff
+django/views/debug.py core/ReplaceComparisonOperator_Gt_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 141671ef9c504753a0c42eb046a1326b
+django/views/debug.py core/ReplaceComparisonOperator_Gt_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 7f225e7bdab6475d852c99e169a13fc5
+django/views/debug.py core/ReplaceComparisonOperator_Gt_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] e672bfd2e908498599ab8ec92877ecdb
+django/views/debug.py core/ReplaceComparisonOperator_Gt_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] af73568838cc4a9396b2cceec4748be5
+django/views/debug.py core/ReplaceComparisonOperator_Is_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] a49df986b81c4b66af5ab70d352cb23a
+django/views/debug.py core/ReplaceComparisonOperator_Is_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 8852bb4fa5d34f79879c07e3c095d67c
+django/views/debug.py core/ReplaceComparisonOperator_Is_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] cded1d98adfd4f5ea2535336a16af4ae
+django/views/debug.py core/ReplaceComparisonOperator_Is_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 66a54c36fccf45768e684390248cb393
+django/views/debug.py core/ReplaceComparisonOperator_Is_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] ee2c87fde6be4ef080dcc59475bfff54
+django/views/debug.py core/ReplaceComparisonOperator_Is_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 7d2774f7da414520986a54249396fee6
+django/views/debug.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 0fb275842a544cbe91a651f6c9c5ba3e
+django/views/debug.py core/ReplaceComparisonOperator_Is_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] db4481f8b98d417aa0ca424e15609eb1
+django/views/debug.py core/ReplaceComparisonOperator_Is_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] da38b0c0aa30429ea3fd2922b684f577
+django/views/debug.py core/ReplaceComparisonOperator_Is_IsNot 3
+worker outcome: normal, test outcome: survived
+[job-id] 386c94462f654da68138d3d43ecfa4eb
+django/views/debug.py core/ReplaceComparisonOperator_Is_IsNot 4
+worker outcome: normal, test outcome: survived
+[job-id] a3df941268dc421abf31dcd55092a775
+django/views/debug.py core/ReplaceComparisonOperator_Is_IsNot 5
+worker outcome: normal, test outcome: survived
+[job-id] 5c695605cb604efba2c309172e0bd247
+django/views/debug.py core/ReplaceComparisonOperator_Is_IsNot 6
+worker outcome: normal, test outcome: survived
+[job-id] 06d06caabd7b41cf99b971cf0ca56e12
+django/views/debug.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 7ef160db100d4d1d8a386f8da038dc30
+django/views/debug.py core/ReplaceComparisonOperator_IsNot_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 3b9ebc0fef6141359993c142453f1ea6
+django/views/debug.py core/ReplaceComparisonOperator_IsNot_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] 56fd1ec6d205484782ce0a8e30af86be
+django/views/debug.py core/ReplaceComparisonOperator_IsNot_Is 3
+worker outcome: normal, test outcome: survived
+[job-id] e6373a1eb20c4948982194f3dda28575
+django/views/debug.py core/ReplaceComparisonOperator_IsNot_Is 4
+worker outcome: normal, test outcome: survived
+[job-id] 321dc1540f904f51a271dbfe72411b7a
+django/views/debug.py core/ReplaceComparisonOperator_IsNot_Is 5
+worker outcome: normal, test outcome: killed
+[job-id] d9beca8b75094a0f82567bb9d720d974
+django/views/debug.py core/ReplaceUnaryOperator_USub_UAdd 0
+worker outcome: normal, test outcome: survived
+[job-id] 5c0defbe4183403cafbf964e95e317e2
+django/views/debug.py core/ReplaceUnaryOperator_USub_Invert 0
+worker outcome: normal, test outcome: survived
+[job-id] 9f26c9fc3d5a47e2896b3153b36cb7c0
+django/views/debug.py core/ReplaceUnaryOperator_USub_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] 6ff978cc62444885b952254bf0df4c02
+django/views/debug.py core/ReplaceUnaryOperator_Delete_USub 0
+worker outcome: normal, test outcome: survived
+[job-id] 102ce53eadd149f18c830dfb510e5239
+django/views/debug.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: killed
+[job-id] d21c3af404834a06bd635bbe6a01ba64
+django/views/debug.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] d47937e90e0a4d3ea876789b26765f6a
+django/views/debug.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: normal, test outcome: survived
+[job-id] fba396bc2d194e75a7efb60eb4523f3f
+django/views/debug.py core/ReplaceUnaryOperator_Delete_Not 3
+worker outcome: normal, test outcome: survived
+[job-id] adc4d1157fb3440981aa0e46250ef7ec
+django/views/debug.py core/AddNot 0
+worker outcome: normal, test outcome: survived
+[job-id] d75d07385ea34054bbf0bbf32b89100f
+django/views/debug.py core/AddNot 1
+worker outcome: normal, test outcome: survived
+[job-id] b65eeab1ab374b2fb429913aead28e1a
+django/views/debug.py core/AddNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 125747456939435b94e872ffa8d6a5cf
+django/views/debug.py core/AddNot 3
+worker outcome: normal, test outcome: survived
+[job-id] 6aabb586f66144b38c3b16a158b8d413
+django/views/debug.py core/AddNot 4
+worker outcome: normal, test outcome: survived
+[job-id] 43c05b22e10442958d304eb3d57d9ff1
+django/views/debug.py core/AddNot 5
+worker outcome: normal, test outcome: survived
+[job-id] 984282f549d248b5a3662f8201f861a2
+django/views/debug.py core/AddNot 6
+worker outcome: normal, test outcome: survived
+[job-id] b453a8a9c20e4f60bf156b8ad058f8fd
+django/views/debug.py core/AddNot 7
+worker outcome: normal, test outcome: survived
+[job-id] dcb7f3d732c04fb99eecbf2a6a0c18aa
+django/views/debug.py core/AddNot 8
+worker outcome: normal, test outcome: survived
+[job-id] 41a35a8f7b14455b963092ac15126628
+django/views/debug.py core/AddNot 9
+worker outcome: normal, test outcome: survived
+[job-id] 46ed675480594deab766b736370521f4
+django/views/debug.py core/AddNot 10
+worker outcome: normal, test outcome: survived
+[job-id] a1a56825298c4f0380e39110a47b8dbd
+django/views/debug.py core/AddNot 11
+worker outcome: normal, test outcome: survived
+[job-id] 5b55a2ed049948a4ba874160204da11f
+django/views/debug.py core/AddNot 12
+worker outcome: normal, test outcome: survived
+[job-id] 97f866650985471fb5323429533e9961
+django/views/debug.py core/AddNot 13
+worker outcome: normal, test outcome: survived
+[job-id] 622e38bc0d0a46afa91b6c96d01b4338
+django/views/debug.py core/AddNot 14
+worker outcome: normal, test outcome: survived
+[job-id] b38bec2c599e4aa6a8831b6046e6b044
+django/views/debug.py core/AddNot 15
+worker outcome: normal, test outcome: survived
+[job-id] e5d5ba3ebef34058b976181450eba02f
+django/views/debug.py core/AddNot 16
+worker outcome: normal, test outcome: survived
+[job-id] a6bb40cf7bfa4c0f9e23fd936bc6a830
+django/views/debug.py core/AddNot 17
+worker outcome: normal, test outcome: survived
+[job-id] f362ed2066fd4ad190b9687ae3397a1c
+django/views/debug.py core/AddNot 18
+worker outcome: normal, test outcome: survived
+[job-id] 965e8193c53c43b7835f2cc5e8cdd29d
+django/views/debug.py core/AddNot 19
+worker outcome: normal, test outcome: survived
+[job-id] a49b6700d0154fe7849b915679b3ae2a
+django/views/debug.py core/AddNot 20
+worker outcome: normal, test outcome: survived
+[job-id] bb768950ba1a459b97c4dcde400834b8
+django/views/debug.py core/AddNot 21
+worker outcome: normal, test outcome: survived
+[job-id] 927fb765dc8e4c568f4e8cd2c3e52a5c
+django/views/debug.py core/AddNot 22
+worker outcome: normal, test outcome: survived
+[job-id] 6b026eb61bd646ccbbf5094d72d156eb
+django/views/debug.py core/AddNot 23
+worker outcome: normal, test outcome: survived
+[job-id] a44fb2e329fc4b10b1c2a5b499aff9f5
+django/views/debug.py core/AddNot 24
+worker outcome: normal, test outcome: survived
+[job-id] edd2a02ed2eb42639e491c9390a7d56f
+django/views/debug.py core/AddNot 25
+worker outcome: normal, test outcome: survived
+[job-id] 55d1afaa9d494dc9be07f8521e79e446
+django/views/debug.py core/AddNot 26
+worker outcome: normal, test outcome: survived
+[job-id] 36837ab20f654ec7a42f61b4fd243770
+django/views/debug.py core/AddNot 27
+worker outcome: normal, test outcome: survived
+[job-id] e8cb87c5c1fe426182de444d0b511355
+django/views/debug.py core/AddNot 28
+worker outcome: normal, test outcome: survived
+[job-id] 27fec157a7404dc9804e803922468954
+django/views/debug.py core/AddNot 29
+worker outcome: normal, test outcome: survived
+[job-id] dd18a48e18884c24b1db7f7499f9db17
+django/views/debug.py core/AddNot 30
+worker outcome: normal, test outcome: survived
+[job-id] 2d967823cfed40598a3ec784d23a3005
+django/views/debug.py core/AddNot 31
+worker outcome: normal, test outcome: survived
+[job-id] 279ba744b8b7436ebb20315de7640c91
+django/views/debug.py core/AddNot 32
+worker outcome: normal, test outcome: survived
+[job-id] 9dae5889460e4df5951f29a89818090f
+django/views/debug.py core/AddNot 33
+worker outcome: normal, test outcome: survived
+[job-id] 4b899071e4c74c0baf9c3e33038f88d4
+django/views/debug.py core/AddNot 34
+worker outcome: normal, test outcome: survived
+[job-id] 960bf74913ac475396063537855be37c
+django/views/debug.py core/AddNot 35
+worker outcome: normal, test outcome: killed
+[job-id] 2af58bd9d339407991b87072f176cd6d
+django/views/debug.py core/AddNot 36
+worker outcome: normal, test outcome: survived
+[job-id] 98b7b85fc2394781b250205f4d5a6c6f
+django/views/debug.py core/AddNot 37
+worker outcome: normal, test outcome: killed
+[job-id] 8c8904706c414a04bb2c345fd662f218
+django/views/debug.py core/AddNot 38
+worker outcome: normal, test outcome: survived
+[job-id] b5126a615ee644c6b91f47db3a1cb7d0
+django/views/debug.py core/AddNot 39
+worker outcome: normal, test outcome: killed
+[job-id] 37d480b2666e47fdb1698889f2b69f05
+django/views/debug.py core/AddNot 40
+worker outcome: normal, test outcome: killed
+[job-id] d66b6a1fd31447bd934968c7a130f179
+django/views/debug.py core/AddNot 41
+worker outcome: normal, test outcome: survived
+[job-id] bb2f832acbe94f7dbb9716302640874f
+django/views/debug.py core/AddNot 42
+worker outcome: normal, test outcome: survived
+[job-id] 79121d6bbfe14e5f8782ff6f0898b35c
+django/views/debug.py core/AddNot 43
+worker outcome: normal, test outcome: survived
+[job-id] d60bb15287fa43a7b61232b750a64905
+django/views/debug.py core/AddNot 44
+worker outcome: normal, test outcome: survived
+[job-id] ba433aaaaf2f4a5c916f4ce0a52bc44c
+django/views/debug.py core/AddNot 45
+worker outcome: normal, test outcome: survived
+[job-id] 81d4e8a1277b446f881429998927f815
+django/views/debug.py core/AddNot 46
+worker outcome: normal, test outcome: survived
+[job-id] b24f3e069c364661a973d2a44141adeb
+django/views/debug.py core/AddNot 47
+worker outcome: normal, test outcome: survived
+[job-id] e7476ea57ed34e29b3ce11423bae40cf
+django/views/debug.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: survived
+[job-id] 3ba30a0047c04fd198dc9ef9b1d57395
+django/views/debug.py core/ReplaceTrueWithFalse 1
+worker outcome: normal, test outcome: survived
+[job-id] 24a0a7e403134dec816289258c00cd34
+django/views/debug.py core/ReplaceTrueWithFalse 2
+worker outcome: normal, test outcome: survived
+[job-id] 67f8feed524e460e8ea51ebe5909e058
+django/views/debug.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: survived
+[job-id] f3bbf433316c445a908cebb8a45d01a7
+django/views/debug.py core/ReplaceFalseWithTrue 1
+worker outcome: normal, test outcome: survived
+[job-id] b42dff0435e7407faaa858bcfbe3b631
+django/views/debug.py core/ReplaceFalseWithTrue 2
+worker outcome: normal, test outcome: survived
+[job-id] 1a2962774177489cbdbae14894d14996
+django/views/debug.py core/ReplaceFalseWithTrue 3
+worker outcome: normal, test outcome: survived
+[job-id] 4dd865d18405448fa607e33fcd6f3f71
+django/views/debug.py core/ReplaceFalseWithTrue 4
+worker outcome: normal, test outcome: survived
+[job-id] bf08683ed0bc4e759c1fcd6f2e686935
+django/views/debug.py core/ReplaceFalseWithTrue 5
+worker outcome: normal, test outcome: survived
+[job-id] c32a5c578ccd465289a5695e0e61df09
+django/views/debug.py core/ReplaceAndWithOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 7b55d303cc0a4bffacf4f61fc41cf586
+django/views/debug.py core/ReplaceAndWithOr 1
+worker outcome: normal, test outcome: survived
+[job-id] b5aa9be9cee64a0abc4653028371cfc7
+django/views/debug.py core/ReplaceAndWithOr 2
+worker outcome: normal, test outcome: survived
+[job-id] f63fae3e31d84ad6ab79b3cdf3154b4f
+django/views/debug.py core/ReplaceAndWithOr 3
+worker outcome: normal, test outcome: survived
+[job-id] 170e99f14b774953bd9eb9ad8676ff0a
+django/views/debug.py core/ReplaceAndWithOr 4
+worker outcome: normal, test outcome: survived
+[job-id] edffdadc8d21427e88ca155e97c09188
+django/views/debug.py core/ReplaceAndWithOr 5
+worker outcome: normal, test outcome: survived
+[job-id] 65f6f02239b54ceab367bff6c3d1b0ee
+django/views/debug.py core/ReplaceAndWithOr 6
+worker outcome: normal, test outcome: survived
+[job-id] 99fe61d32fb74e06b775733824577cb1
+django/views/debug.py core/ReplaceAndWithOr 7
+worker outcome: normal, test outcome: survived
+[job-id] 1f1d8c1e09174141819eff6b6c0fa8a2
+django/views/debug.py core/ReplaceAndWithOr 8
+worker outcome: normal, test outcome: survived
+[job-id] c7b6505cbcbb4132a1dc07ad2bbc9a64
+django/views/debug.py core/ReplaceAndWithOr 9
+worker outcome: normal, test outcome: survived
+[job-id] d2c444c5952844f39920602bc297d39c
+django/views/debug.py core/ReplaceAndWithOr 10
+worker outcome: normal, test outcome: survived
+[job-id] b10377f0f68d4d028a71d3f8043b61e9
+django/views/debug.py core/ReplaceAndWithOr 11
+worker outcome: normal, test outcome: survived
+[job-id] 1951f7c58cc24dc6b11f0bb4ac341f2e
+django/views/debug.py core/ReplaceAndWithOr 12
+worker outcome: normal, test outcome: survived
+[job-id] 411009ca44ae49168e89f601add34312
+django/views/debug.py core/ReplaceOrWithAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 74873364bbba4e988ce943506f5d6bde
+django/views/debug.py core/ReplaceOrWithAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 1a7d2fc7e8424309a7c98a54b8cf18e3
+django/views/debug.py core/ReplaceOrWithAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] 0d5188660d1645749c69dc3f31dbf423
+django/views/debug.py core/ReplaceOrWithAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] 4c9efd24f47e4feb925efa60c16bc981
+django/views/debug.py core/ReplaceBreakWithContinue 0
+worker outcome: normal, test outcome: survived
+[job-id] ad807b1fd5f0469d8b28b69a8538a26a
+django/views/debug.py core/ReplaceBreakWithContinue 1
+worker outcome: normal, test outcome: survived
+[job-id] b08ea8c818794878a9c5a990ace11ea8
+django/views/debug.py core/ReplaceBreakWithContinue 2
+worker outcome: normal, test outcome: survived
+[job-id] 21fdb1a66303496f94e616f6f7d0d9e3
+django/views/debug.py core/ReplaceContinueWithBreak 0
+worker outcome: normal, test outcome: survived
+[job-id] 186b1a595acc479788a4d0b5f2c07ca0
+django/views/debug.py core/ExceptionReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] ab235aab9ad44089ae5e6e822b476da9
+django/views/debug.py core/ExceptionReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] 11fa6378a4334660aae9bb9e055446c4
+django/views/debug.py core/ExceptionReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] 0d5fbe2f394149bd8aac5671417b44c2
+django/views/debug.py core/ExceptionReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] f8e28ff7cae0408390d0a972ccb2c59f
+django/views/debug.py core/ExceptionReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] 71a08e6277e0451595435752900071f6
+django/views/debug.py core/ExceptionReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] e39c6790e68e4933b52069edafdc0ed4
+django/views/debug.py core/ExceptionReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] a239e139c5f840178a7e68c13e55675a
+django/views/debug.py core/ExceptionReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] b3f7006c2c964687a0c596022fd8c1d1
+django/views/debug.py core/ExceptionReplacer 8
+worker outcome: normal, test outcome: survived
+[job-id] d40fcaec49ba4a728cd5771ba1c6e146
+django/views/debug.py core/ExceptionReplacer 9
+worker outcome: normal, test outcome: survived
+[job-id] 43ab6537be3f459aa977f2d63e6203b8
+django/views/debug.py core/ExceptionReplacer 10
+worker outcome: normal, test outcome: survived
+[job-id] 290d1c3069b44e8ea632a84f1aaa75ef
+django/views/debug.py core/ExceptionReplacer 11
+worker outcome: normal, test outcome: survived
+[job-id] 9fabd4d1375e4362ae369e4588363708
+django/views/debug.py core/NumberReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] dbed53bf65794f7da84c1487a5ae8263
+django/views/debug.py core/NumberReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] 293aec4c81574f09bb8cf435041ddbef
+django/views/debug.py core/NumberReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] 4e79d5e4bc1a437e83ba0171986051ea
+django/views/debug.py core/NumberReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] 74e1a01fa17b474ca3eb743b221151bf
+django/views/debug.py core/NumberReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] 65d5f72e969c42f48dcf5f435454dd80
+django/views/debug.py core/NumberReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] 2c4cb796379a47679813d892692b93e5
+django/views/debug.py core/NumberReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] be2fb350f45048c2b24e3b870aab3cb2
+django/views/debug.py core/NumberReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] 50ead650760d4769b3b13a4c0d0949de
+django/views/debug.py core/NumberReplacer 8
+worker outcome: normal, test outcome: survived
+[job-id] f2538bff868341bf8d4de2083791cd55
+django/views/debug.py core/NumberReplacer 9
+worker outcome: normal, test outcome: survived
+[job-id] d835b6783efc43f4b43224df23f4f8cf
+django/views/debug.py core/NumberReplacer 10
+worker outcome: normal, test outcome: survived
+[job-id] fad1e98a727a4b268463343b3eddabe1
+django/views/debug.py core/NumberReplacer 11
+worker outcome: normal, test outcome: survived
+[job-id] 355c2f70a0664af284ab41476175a920
+django/views/debug.py core/NumberReplacer 12
+worker outcome: normal, test outcome: survived
+[job-id] 73cb6cd39d4746bdb1bc774c73e383e0
+django/views/debug.py core/NumberReplacer 13
+worker outcome: normal, test outcome: survived
+[job-id] a58ebd8c572a4c1caa5386739c4189be
+django/views/debug.py core/NumberReplacer 14
+worker outcome: normal, test outcome: survived
+[job-id] f96f0174ad1443729c28ed00aa172a8c
+django/views/debug.py core/NumberReplacer 15
+worker outcome: normal, test outcome: survived
+[job-id] f9d7bddba4924ee5af7b89de87fda06f
+django/views/debug.py core/NumberReplacer 16
+worker outcome: normal, test outcome: survived
+[job-id] ca6ef90b15e7400db431a3ebce162a95
+django/views/debug.py core/NumberReplacer 17
+worker outcome: normal, test outcome: survived
+[job-id] 76b0ed6c6fa845ec942c8353b517529b
+django/views/debug.py core/NumberReplacer 18
+worker outcome: normal, test outcome: survived
+[job-id] 5e3ebe54837a43199b92b7bb479ad923
+django/views/debug.py core/NumberReplacer 19
+worker outcome: normal, test outcome: survived
+[job-id] b76007ac2ff7464993666f580394acbc
+django/views/debug.py core/NumberReplacer 20
+worker outcome: normal, test outcome: survived
+[job-id] b1c79c59e4b44ae0820449d12cc6914e
+django/views/debug.py core/NumberReplacer 21
+worker outcome: normal, test outcome: survived
+[job-id] 2e846411c359470bb1608bb4951564c4
+django/views/debug.py core/NumberReplacer 22
+worker outcome: normal, test outcome: survived
+[job-id] 0244e201bc3f41c89095d68afd350f99
+django/views/debug.py core/NumberReplacer 23
+worker outcome: normal, test outcome: survived
+[job-id] 80deef8a78c446999021c8a321626513
+django/views/debug.py core/NumberReplacer 24
+worker outcome: normal, test outcome: survived
+[job-id] e193b668c0034d40b4234edcf29db5fd
+django/views/debug.py core/NumberReplacer 25
+worker outcome: normal, test outcome: survived
+[job-id] 6f6290e09c694d92ab12c15d261fb7dd
+django/views/debug.py core/NumberReplacer 26
+worker outcome: normal, test outcome: survived
+[job-id] b388a049a3fa4d6fbe6e45c78025db55
+django/views/debug.py core/NumberReplacer 27
+worker outcome: normal, test outcome: survived
+[job-id] 401fa8b5a2a54008816869cd946a2e05
+django/views/debug.py core/NumberReplacer 28
+worker outcome: normal, test outcome: survived
+[job-id] e494527d9e9249abaab5a380f8318bf1
+django/views/debug.py core/NumberReplacer 29
+worker outcome: normal, test outcome: survived
+[job-id] 225b63f539c3460a91d57f148db96a4d
+django/views/debug.py core/NumberReplacer 30
+worker outcome: normal, test outcome: survived
+[job-id] 77de6e30903644cd829df16604f9a088
+django/views/debug.py core/NumberReplacer 31
+worker outcome: normal, test outcome: survived
+[job-id] bdbaac6a8ef24c6488e18ad697be80a1
+django/views/debug.py core/NumberReplacer 32
+worker outcome: normal, test outcome: survived
+[job-id] d27c7b6d24c04feaa30d5d4b3132abc8
+django/views/debug.py core/NumberReplacer 33
+worker outcome: normal, test outcome: survived
+[job-id] ea4b805abd7a43aca92424d2d730b28d
+django/views/debug.py core/NumberReplacer 34
+worker outcome: normal, test outcome: survived
+[job-id] 55cb7c4b06bb4e66a5a62d57047a3288
+django/views/debug.py core/NumberReplacer 35
+worker outcome: normal, test outcome: survived
+[job-id] 9443580e35744ba4b342097ea6343a7a
+django/views/debug.py core/NumberReplacer 36
+worker outcome: normal, test outcome: survived
+[job-id] 54f1fc1e9152427a9daa5db672fa368d
+django/views/debug.py core/NumberReplacer 37
+worker outcome: normal, test outcome: survived
+[job-id] 3b9a463e30d94b609c1af0f8fc717985
+django/views/debug.py core/NumberReplacer 38
+worker outcome: normal, test outcome: survived
+[job-id] 16f8863be8a64abcb42bfc186d6920da
+django/views/debug.py core/NumberReplacer 39
+worker outcome: normal, test outcome: survived
+[job-id] 22401e75f1ba4e3883d10a7b9c0638f0
+django/views/debug.py core/NumberReplacer 40
+worker outcome: normal, test outcome: survived
+[job-id] 13a83f8979b8498d95fa547a661a04d0
+django/views/debug.py core/NumberReplacer 41
+worker outcome: normal, test outcome: survived
+[job-id] 4cd98bc92f354354a4752d0a82463858
+django/views/debug.py core/NumberReplacer 42
+worker outcome: normal, test outcome: survived
+[job-id] 936eabc151834038b2e32a0423610a0a
+django/views/debug.py core/NumberReplacer 43
+worker outcome: normal, test outcome: survived
+[job-id] dc2a7ec4564047a9a66210cff2a81384
+django/views/debug.py core/NumberReplacer 44
+worker outcome: normal, test outcome: survived
+[job-id] 197e6796c72948bcbc1fa913c4fda3e4
+django/views/debug.py core/NumberReplacer 45
+worker outcome: normal, test outcome: survived
+[job-id] b5a2eb98792b4749bfba89b3b9b59110
+django/views/debug.py core/NumberReplacer 46
+worker outcome: normal, test outcome: survived
+[job-id] abc7331f9e414587982ec932151811b7
+django/views/debug.py core/NumberReplacer 47
+worker outcome: normal, test outcome: survived
+[job-id] 5d0c8936341840958b38ca08838159a3
+django/views/debug.py core/NumberReplacer 48
+worker outcome: normal, test outcome: survived
+[job-id] cdd30f28740d485bad4df2fc4ba5fce9
+django/views/debug.py core/NumberReplacer 49
+worker outcome: normal, test outcome: survived
+[job-id] a576c95b186b44fd88ea6b7935fc744e
+django/views/debug.py core/NumberReplacer 50
+worker outcome: normal, test outcome: survived
+[job-id] 1b067bbf2d1a4a1daccaf61284583e40
+django/views/debug.py core/NumberReplacer 51
+worker outcome: normal, test outcome: survived
+[job-id] e611ff43037e4672a09f9d86fa4571e2
+django/views/debug.py core/NumberReplacer 52
+worker outcome: normal, test outcome: survived
+[job-id] 33152765a93248c0b79da80bcdf3d599
+django/views/debug.py core/NumberReplacer 53
+worker outcome: normal, test outcome: survived
+[job-id] ded6812f83cf49dca8cad4477ce59a5c
+django/views/debug.py core/NumberReplacer 54
+worker outcome: normal, test outcome: survived
+[job-id] eaad7298e411499ca26a2e05772f4996
+django/views/debug.py core/NumberReplacer 55
+worker outcome: normal, test outcome: survived
+[job-id] f92486b182754ab7ac9679eab42e4a16
+django/views/debug.py core/NumberReplacer 56
+worker outcome: normal, test outcome: survived
+[job-id] 308a90db52b8407488b93fb7e7605bcb
+django/views/debug.py core/NumberReplacer 57
+worker outcome: normal, test outcome: survived
+[job-id] 0006b1abce5c4b7bbb9910a4e7fb5aef
+django/views/debug.py core/NumberReplacer 58
+worker outcome: normal, test outcome: survived
+[job-id] 0215d7427b7a4dd8a7b3105e1dd0d5a3
+django/views/debug.py core/NumberReplacer 59
+worker outcome: normal, test outcome: survived
+[job-id] 9c1287700fe6432587cc52c8d421fd5c
+django/views/debug.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: survived
+[job-id] c27bc015af44429cad94b26ca98ea577
+django/views/debug.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: survived
+[job-id] fa097dd846054cc397f1dd4e0022f59d
+django/views/debug.py core/ZeroIterationForLoop 1
+worker outcome: normal, test outcome: survived
+[job-id] 93d9ee88a1374e5896d4b8472fc65a05
+django/views/debug.py core/ZeroIterationForLoop 2
+worker outcome: normal, test outcome: survived
+[job-id] 21b206e778f74575b63b67a4dc4aed92
+django/views/debug.py core/ZeroIterationForLoop 3
+worker outcome: normal, test outcome: survived
+[job-id] c958bbdfacd245e99b1812d01413f6a5
+django/views/debug.py core/ZeroIterationForLoop 4
+worker outcome: normal, test outcome: survived
+[job-id] 82d55cfbdcaf49a0be26666c6736ec88
+django/views/debug.py core/ZeroIterationForLoop 5
+worker outcome: normal, test outcome: survived
+[job-id] a419d48c20c140fdacdb67207433ca91
+django/views/debug.py core/ZeroIterationForLoop 6
+worker outcome: normal, test outcome: survived
+[job-id] 625524be280a459fbe2e13b6082d59fc
+django/views/debug.py core/ZeroIterationForLoop 7
+worker outcome: normal, test outcome: survived
+[job-id] 9df4d1005ce042e1a49eb5a6efb911e6
+django/views/debug.py core/ZeroIterationForLoop 8
+worker outcome: normal, test outcome: survived
+[job-id] 119e14b9303446c4a6af7ea6b8420f28
+django/views/debug.py core/ZeroIterationForLoop 9
+worker outcome: normal, test outcome: survived
+total jobs: 373
+complete: 373 (100.00%)
+surviving mutants: 367 (98.39%)
+ 
+[django__django__3.0] [django__django-10730] Return Code: 0 
+[django__django__3.0] [django__django-10730] 
+MutationNum: 373 
+[django__django__3.0] [django__django-10730] 
+MutationLOG: 1.6099999999999994% 
+[django__django__3.0] [django__django-10730] 
+MutationUncertainty: 0.0 
+[django__django__3.0] [django__django-10730] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/views/debug.py'
+        and ((388 <= spec.start_pos[0] <= 456))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__3.0] [django__django-10730] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10730] Std. Output:
+FUNC_MUTATION_RESULT 9.836065573770492 61
+ 
+[django__django__3.0] [django__django-10730] Return Code: 0 
+[django__django__3.0] [django__django-10730] 
+FunctionMutationLOG: 9.836065573770492% 
+[django__django__3.0] [django__django-10730] 
+FunctionMutationNum: 61 
+[django__django__3.0] [django__django-10730] Test script run successful 
+[django__django__3.0] [django__django-10730] Removing coverage 
+[django__django__3.0] [django__django-10730] >>>>> Unfiltered Tests Failed 

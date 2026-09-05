@@ -1,0 +1,992 @@
+[django__django__4.1] [django__django-15044] Task Metadata:
+	- Instance ID: django__django-15044
+	- Testbed: django__django__4.1
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.9.19
+ 
+[django__django__4.1] [django__django-15044] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15044] Std. Output:
+ 
+[django__django__4.1] [django__django-15044] Return Code: 0 
+[django__django__4.1] [django__django-15044] Command: git -c advice.detachedHead=false checkout 1f9874d4ca3e7376036646aedf6ac3060f22fd69 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15044] Std. Output:
+Previous HEAD position was 647480166b Refs #33685 -- Doc'd that using PostgreSQL's service names for testing purposes is not supported.
+HEAD is now at 1f9874d4ca Refs #33245 -- Minor edits to django.utils.html.urlize() changes.
+ 
+[django__django__4.1] [django__django-15044] Return Code: 0 
+[django__django__4.1] [django__django-15044] Command: git diff > /opt/temp_django__django-15044_gold_init.patch 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15044] Std. Output:
+ 
+[django__django__4.1] [django__django-15044] Return Code: 0 
+[django__django__4.1] [django__django-15044] Command: git apply -v /opt/temp_django__django-15044_gold.patch 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15044] Std. Output:
+Checking patch django/middleware/cache.py...
+Applied patch django/middleware/cache.py cleanly.
+ 
+[django__django__4.1] [django__django-15044] Return Code: 0 
+[django__django__4.1] [django__django-15044] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__4.1] [django__django-15044] Command: git diff > /opt/temp_django__django-15044_test_init.patch 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15044] Std. Output:
+ 
+[django__django__4.1] [django__django-15044] Return Code: 0 
+[django__django__4.1] [django__django-15044] Command: git restore tests/cache/tests.py 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15044] Std. Output:
+ 
+[django__django__4.1] [django__django-15044] Return Code: 0 
+[django__django__4.1] [django__django-15044] Command: git apply -v /opt/temp_django__django-15044_test.patch 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15044] Std. Output:
+Checking patch tests/cache/tests.py...
+Applied patch tests/cache/tests.py cleanly.
+ 
+[django__django__4.1] [django__django-15044] Return Code: 0 
+[django__django__4.1] [django__django-15044] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_kwargs_provided_and_none (cache.tests.CacheMiddlewareInitTests)
+When ``key_prefix`` or ``cache_alias`` are provided as ``None`` they are ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 0 
+[django__django__4.1] [django__django-15044] TestsTime: 1.514702558517456 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_kwargs_missing (cache.tests.CacheMiddlewareInitTests)
+When the optional kwargs are omitted the attributes are simply not set. ... FAIL
+
+======================================================================
+FAIL: test_kwargs_missing (cache.tests.CacheMiddlewareInitTests)
+When the optional kwargs are omitted the attributes are simply not set.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 46, in test_kwargs_missing
+    self.assertFalse(hasattr(cm, "key_prefix"))
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 1 
+[django__django__4.1] [django__django-15044] TestsTime: 0.8895013332366943 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 657, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 377, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 920, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 781, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 732, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/cache/tests.py", line 60
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+ 
+[django__django__4.1] [django__django-15044] Return Code: 1 
+[django__django__4.1] [django__django-15044] TestsTime: 0.5524160861968994 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_initialisation_uses_settings (cache.tests.CacheMiddlewareInitTests) ... FAIL
+
+======================================================================
+FAIL: test_initialisation_uses_settings (cache.tests.CacheMiddlewareInitTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 43, in test_initialisation_uses_settings
+    self.assertEqual(middleware.key_prefix, "testprefix")
+AssertionError: '' != 'testprefix'
++ testprefix
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 1 
+[django__django__4.1] [django__django-15044] TestsTime: 0.630155086517334 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_initialisation_uses_settings (cache.tests.UpdateCacheMiddlewareInitTests) ... ERROR
+
+======================================================================
+ERROR: test_initialisation_uses_settings (cache.tests.UpdateCacheMiddlewareInitTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 437, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/cache/tests.py", line 39, in test_initialisation_uses_settings
+    with mock.patch.object(caches, "___getitem__", wraps=caches.__getitem__) as mock_get:
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/mock.py", line 1404, in __enter__
+    original, local = self.get_original()
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/mock.py", line 1377, in get_original
+    raise AttributeError(
+AttributeError: <django.core.cache.CacheHandler object at 0x7a32ecdbd2e0> does not have the attribute '___getitem__'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 1 
+[django__django__4.1] [django__django-15044] TestsTime: 0.7853434085845947 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_no_update_flag_returns_original_response (cache.tests.UpdateCacheMiddlewareInitTests) ... ERROR
+
+======================================================================
+ERROR: test_no_update_flag_returns_original_response (cache.tests.UpdateCacheMiddlewareInitTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 437, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/cache/tests.py", line 34, in test_no_update_flag_returns_original_response
+    request = self.factory.get("/")
+AttributeError: 'UpdateCacheMiddlewareInitTests' object has no attribute 'factory'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 1 
+[django__django__4.1] [django__django-15044] TestsTime: 1.4911386966705322 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_streaming_response_is_not_cached (cache.tests.UpdateCacheMiddlewareInitTests) ... ERROR
+
+======================================================================
+ERROR: test_streaming_response_is_not_cached (cache.tests.UpdateCacheMiddlewareInitTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 437, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/cache/tests.py", line 34, in test_streaming_response_is_not_cached
+    request = self.factory.get("/")
+AttributeError: 'UpdateCacheMiddlewareInitTests' object has no attribute 'factory'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 1 
+[django__django__4.1] [django__django-15044] TestsTime: 0.6995944976806641 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_non_200_status_is_not_cached (cache.tests.UpdateCacheMiddlewareInitTests) ... ERROR
+
+======================================================================
+ERROR: test_non_200_status_is_not_cached (cache.tests.UpdateCacheMiddlewareInitTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 437, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/cache/tests.py", line 34, in test_non_200_status_is_not_cached
+    request = self.factory.get("/")
+AttributeError: 'UpdateCacheMiddlewareInitTests' object has no attribute 'factory'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 1 
+[django__django__4.1] [django__django-15044] TestsTime: 1.5325853824615479 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_private_cache_control_prevents_caching (cache.tests.UpdateCacheMiddlewareInitTests) ... ERROR
+
+======================================================================
+ERROR: test_private_cache_control_prevents_caching (cache.tests.UpdateCacheMiddlewareInitTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 437, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/cache/tests.py", line 34, in test_private_cache_control_prevents_caching
+    request = self.factory.get("/")
+AttributeError: 'UpdateCacheMiddlewareInitTests' object has no attribute 'factory'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 1 
+[django__django__4.1] [django__django-15044] TestsTime: 0.3033456802368164 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_vary_cookie_without_request_cookies_prevents_caching (cache.tests.UpdateCacheMiddlewareInitTests) ... ERROR
+
+======================================================================
+ERROR: test_vary_cookie_without_request_cookies_prevents_caching (cache.tests.UpdateCacheMiddlewareInitTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 437, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/cache/tests.py", line 34, in test_vary_cookie_without_request_cookies_prevents_caching
+    request = self.factory.get("/")
+AttributeError: 'UpdateCacheMiddlewareInitTests' object has no attribute 'factory'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 1 
+[django__django__4.1] [django__django-15044] TestsTime: 1.7062911987304688 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_max_age_zero_prevents_caching (cache.tests.UpdateCacheMiddlewareInitTests) ... ERROR
+
+======================================================================
+ERROR: test_max_age_zero_prevents_caching (cache.tests.UpdateCacheMiddlewareInitTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 437, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/cache/tests.py", line 34, in test_max_age_zero_prevents_caching
+    request = self.factory.get("/")
+AttributeError: 'UpdateCacheMiddlewareInitTests' object has no attribute 'factory'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 1 
+[django__django__4.1] [django__django-15044] TestsTime: 2.026637554168701 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_max_age_positive_uses_it_as_timeout (cache.tests.UpdateCacheMiddlewareInitTests) ... ERROR
+
+======================================================================
+ERROR: test_max_age_positive_uses_it_as_timeout (cache.tests.UpdateCacheMiddlewareInitTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 437, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/cache/tests.py", line 34, in test_max_age_positive_uses_it_as_timeout
+    request = self.factory.get("/")
+AttributeError: 'UpdateCacheMiddlewareInitTests' object has no attribute 'factory'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 1 
+[django__django__4.1] [django__django-15044] TestsTime: 2.470331907272339 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_fallback_to_default_timeout_when_no_max_age (cache.tests.UpdateCacheMiddlewareInitTests) ... ERROR
+
+======================================================================
+ERROR: test_fallback_to_default_timeout_when_no_max_age (cache.tests.UpdateCacheMiddlewareInitTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 437, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/cache/tests.py", line 34, in test_fallback_to_default_timeout_when_no_max_age
+    request = self.factory.get("/")
+AttributeError: 'UpdateCacheMiddlewareInitTests' object has no attribute 'factory'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 1 
+[django__django__4.1] [django__django-15044] TestsTime: 0.8816583156585693 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_response_with_render_callback_is_cached_lazily (cache.tests.UpdateCacheMiddlewareInitTests)
+If the response has a ``render`` method, ``add_post_render_callback`` should be used. ... ERROR
+
+======================================================================
+ERROR: test_response_with_render_callback_is_cached_lazily (cache.tests.UpdateCacheMiddlewareInitTests)
+If the response has a ``render`` method, ``add_post_render_callback`` should be used.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 437, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/cache/tests.py", line 35, in test_response_with_render_callback_is_cached_lazily
+    request = self.factory.get("/")
+AttributeError: 'UpdateCacheMiddlewareInitTests' object has no attribute 'factory'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 1 
+[django__django__4.1] [django__django-15044] TestsTime: 1.6435596942901611 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_process_response_returns_response_even_when_not_cached (cache.tests.UpdateCacheMiddlewareInitTests)
+Even if caching is skipped, the original response must be returned unchanged. ... ERROR
+
+======================================================================
+ERROR: test_process_response_returns_response_even_when_not_cached (cache.tests.UpdateCacheMiddlewareInitTests)
+Even if caching is skipped, the original response must be returned unchanged.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 437, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/cache/tests.py", line 35, in test_process_response_returns_response_even_when_not_cached
+    request = self.factory.get("/")
+AttributeError: 'UpdateCacheMiddlewareInitTests' object has no attribute 'factory'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 1 
+[django__django__4.1] [django__django-15044] TestsTime: 0.3631103038787842 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_non_get_head_requests_are_not_cached (cache.tests.UpdateCacheMiddlewareInitTests) ... ERROR
+
+======================================================================
+ERROR: test_non_get_head_requests_are_not_cached (cache.tests.UpdateCacheMiddlewareInitTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 437, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/cache/tests.py", line 34, in test_non_get_head_requests_are_not_cached
+    request = self.factory.post("/")
+AttributeError: 'UpdateCacheMiddlewareInitTests' object has no attribute 'factory'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 1 
+[django__django__4.1] [django__django-15044] TestsTime: 0.5696935653686523 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_cache_miss_sets_update_flag (cache.tests.UpdateCacheMiddlewareInitTests) ... ERROR
+
+======================================================================
+ERROR: test_cache_miss_sets_update_flag (cache.tests.UpdateCacheMiddlewareInitTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 437, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/cache/tests.py", line 34, in test_cache_miss_sets_update_flag
+    request = self.factory.get("/miss")
+AttributeError: 'UpdateCacheMiddlewareInitTests' object has no attribute 'factory'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 1 
+[django__django__4.1] [django__django-15044] TestsTime: 0.6815831661224365 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_cache_hit_returns_response_and_unsets_update_flag (cache.tests.UpdateCacheMiddlewareInitTests) ... ERROR
+
+======================================================================
+ERROR: test_cache_hit_returns_response_and_unsets_update_flag (cache.tests.UpdateCacheMiddlewareInitTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 437, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/cache/tests.py", line 34, in test_cache_hit_returns_response_and_unsets_update_flag
+    request = self.factory.get("/hit")
+AttributeError: 'UpdateCacheMiddlewareInitTests' object has no attribute 'factory'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 1 
+[django__django__4.1] [django__django-15044] TestsTime: 0.9499921798706055 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_head_request_falls_back_to_head_key_if_get_missing (cache.tests.UpdateCacheMiddlewareInitTests) ... ERROR
+
+======================================================================
+ERROR: test_head_request_falls_back_to_head_key_if_get_missing (cache.tests.UpdateCacheMiddlewareInitTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 437, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/cache/tests.py", line 34, in test_head_request_falls_back_to_head_key_if_get_missing
+    request = self.factory.head("/head")
+AttributeError: 'UpdateCacheMiddlewareInitTests' object has no attribute 'factory'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 1 
+[django__django__4.1] [django__django-15044] TestsTime: 0.7426791191101074 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_head_request_falls_back_to_get_key_when_present (cache.tests.UpdateCacheMiddlewareInitTests) ... ERROR
+
+======================================================================
+ERROR: test_head_request_falls_back_to_get_key_when_present (cache.tests.UpdateCacheMiddlewareInitTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 437, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/cache/tests.py", line 34, in test_head_request_falls_back_to_get_key_when_present
+    request = self.factory.head("/both")
+AttributeError: 'UpdateCacheMiddlewareInitTests' object has no attribute 'factory'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 1 
+[django__django__4.1] [django__django-15044] TestsTime: 0.6112079620361328 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_key_prefix_provided_non_none (cache.tests.UpdateCacheMiddlewareInitTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 0 
+[django__django__4.1] [django__django-15044] TestsTime: 0.81626296043396 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_cache_alias_provided_non_none (cache.tests.UpdateCacheMiddlewareInitTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 0 
+[django__django__4.1] [django__django-15044] TestsTime: 0.8506865501403809 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+test_no_kwargs_and_no_cache_timeout (cache.tests.UpdateCacheMiddlewareInitTests) ... FAIL
+
+======================================================================
+FAIL: test_no_kwargs_and_no_cache_timeout (cache.tests.UpdateCacheMiddlewareInitTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 437, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/cache/tests.py", line 36, in test_no_kwargs_and_no_cache_timeout
+    self.assertFalse(hasattr(cm, "cache_timeout"))
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.1] [django__django-15044] Return Code: 1 
+[django__django__4.1] [django__django-15044] TestsTime: 0.49605298042297363 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] >>>>> Tests configfull pred
+ 
+[django__django__4.1] [django__django-15044] Test Script:  coverage run ./tests/runtests.py --verbosity 2 cache.tests;
+ 
+[django__django__4.1] [django__django-15044] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Found 3 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_kwargs_provided_and_none (cache.tests.CacheMiddlewareInitTests)
+When ``key_prefix`` or ``cache_alias`` are provided as ``None`` they are ... ok
+test_cache_alias_provided_non_none (cache.tests.UpdateCacheMiddlewareInitTests) ... ok
+test_key_prefix_provided_non_none (cache.tests.UpdateCacheMiddlewareInitTests) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.022s
+
+OK
+ 
+[django__django__4.1] [django__django-15044] Return Code: 0 
+[django__django__4.1] [django__django-15044] TestsTime: 0.6741533279418945 
+[django__django__4.1] [django__django-15044] 
+>>>>> All Tests Passed
+ 
+[django__django__4.1] [django__django-15044] Current Working Directory: /opt/django__django 
+[django__django__4.1] [django__django-15044] Command: coverage json -o coverage.json 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15044] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__4.1] [django__django-15044] Return Code: 0 
+[django__django__4.1] [django__django-15044] 
+CoverageLOG: 20.238095238095237%
+ 
+[django__django__4.1] [django__django-15044] 
+FunctionCoverageLOG: 20.0%
+ 
+[django__django__4.1] [django__django-15044] Running mutation testing 
+[django__django__4.1] [django__django-15044] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15044] Std. Output:
+ 
+[django__django__4.1] [django__django-15044] Return Code: 0 
+[django__django__4.1] [django__django-15044] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__4.1] [django__django-15044] Std. Output:
+ 
+[django__django__4.1] [django__django-15044] Return Code: 0 
+[django__django__4.1] [django__django-15044] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15044] Std. Output:
+90.77 90.77 90.77
+ 
+[django__django__4.1] [django__django-15044] Return Code: 0 
+[django__django__4.1] [django__django-15044] Command: cr-report mutation.sqlite 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15044] Std. Output:
+[job-id] d8813eea08524c68b1ea2c6b185c0ba3
+django/middleware/cache.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] f9a2e56fa7eb461fb2c50af246e7e8c9
+django/middleware/cache.py core/ReplaceComparisonOperator_Eq_NotEq 1
+worker outcome: normal, test outcome: survived
+[job-id] bc6325fa8cdc4146928d673907f7be2c
+django/middleware/cache.py core/ReplaceComparisonOperator_Eq_NotEq 2
+worker outcome: normal, test outcome: survived
+[job-id] a01c077df2be40d9b61b0acc55d3bb19
+django/middleware/cache.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 472e76e5e09b4060a18f52523dd6b44b
+django/middleware/cache.py core/ReplaceComparisonOperator_Eq_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] eb653d4b2c844585b0aebe1b440253e9
+django/middleware/cache.py core/ReplaceComparisonOperator_Eq_Lt 2
+worker outcome: normal, test outcome: survived
+[job-id] dcbadecbc1b742099086506036b6c399
+django/middleware/cache.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 20e33840e0b242fda1d96db573343a07
+django/middleware/cache.py core/ReplaceComparisonOperator_Eq_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] aef18fb393b540d384ea49e60b220e86
+django/middleware/cache.py core/ReplaceComparisonOperator_Eq_LtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 1305728afcb04eeeaf7af7057ef2f141
+django/middleware/cache.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 7565cc25905c4fbaae2b96b9c391880d
+django/middleware/cache.py core/ReplaceComparisonOperator_Eq_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] 77d537fb4a1a42cb8115c6cc620aa673
+django/middleware/cache.py core/ReplaceComparisonOperator_Eq_Gt 2
+worker outcome: normal, test outcome: survived
+[job-id] 66d44a1d257e49abb55977fc0b17e55e
+django/middleware/cache.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 225e193bcf6a4231b4c01f97c0629d6d
+django/middleware/cache.py core/ReplaceComparisonOperator_Eq_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 058405bf199d487fa6b06481862d0660
+django/middleware/cache.py core/ReplaceComparisonOperator_Eq_GtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 949ba5ea9b1c46358d98269a77ae6eda
+django/middleware/cache.py core/ReplaceComparisonOperator_Eq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] a46d97a601eb41dd8d8c453da76f3b5c
+django/middleware/cache.py core/ReplaceComparisonOperator_Eq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 2a85f206d219436587b0a2dd88dc8581
+django/middleware/cache.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] b1ced152955340deb5912865c57fc9dd
+django/middleware/cache.py core/ReplaceComparisonOperator_Is_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 51b0ce890dcb48c68512f2ced91fba91
+django/middleware/cache.py core/ReplaceComparisonOperator_Is_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] d7e6ea7f0f994e44a177ac6765544712
+django/middleware/cache.py core/ReplaceComparisonOperator_Is_IsNot 3
+worker outcome: normal, test outcome: survived
+[job-id] 026f579759a24809a6e03e68d641222f
+django/middleware/cache.py core/ReplaceComparisonOperator_Is_IsNot 4
+worker outcome: normal, test outcome: survived
+[job-id] c13e265152a24183ab846bc5362b203d
+django/middleware/cache.py core/ReplaceComparisonOperator_Is_IsNot 5
+worker outcome: normal, test outcome: killed
+[job-id] 160b76d16338406e8f2f55b300e70623
+django/middleware/cache.py core/ReplaceComparisonOperator_Is_IsNot 6
+worker outcome: normal, test outcome: killed
+[job-id] dc0eb5f7dcf74237bb8c513e5d7fb42c
+django/middleware/cache.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 610b086dad7b42369adf448207a272f1
+django/middleware/cache.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] 5e08a92304e14f5194bea288f0889b86
+django/middleware/cache.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] c6a44958b0354ff7a32cb20cf8218ad1
+django/middleware/cache.py core/AddNot 0
+worker outcome: normal, test outcome: survived
+[job-id] faf64637fca64187b61b3bafd34c2c84
+django/middleware/cache.py core/AddNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 8f0ab763feb249d291d3f3df909c89b9
+django/middleware/cache.py core/AddNot 2
+worker outcome: normal, test outcome: survived
+[job-id] cb9bb2a1a2714025ac460e228aefdee1
+django/middleware/cache.py core/AddNot 3
+worker outcome: normal, test outcome: survived
+[job-id] 57fdcacef5cd4fc39f3cc61617a2a12a
+django/middleware/cache.py core/AddNot 4
+worker outcome: normal, test outcome: survived
+[job-id] 7036862f4b204caa99ea3540aec1a600
+django/middleware/cache.py core/AddNot 5
+worker outcome: normal, test outcome: survived
+[job-id] dea6fb1a82d146c4a1358d7c5ac37588
+django/middleware/cache.py core/AddNot 6
+worker outcome: normal, test outcome: survived
+[job-id] 4495412fd96f4097bc063b98783ccfef
+django/middleware/cache.py core/AddNot 7
+worker outcome: normal, test outcome: survived
+[job-id] fcbbd01683b84fea92fd415652c50881
+django/middleware/cache.py core/AddNot 8
+worker outcome: normal, test outcome: survived
+[job-id] d4ffae2aa6064438aa1fa53c28301502
+django/middleware/cache.py core/AddNot 9
+worker outcome: normal, test outcome: survived
+[job-id] fd5d5e1ccf23403cb6a3bb2edffef642
+django/middleware/cache.py core/AddNot 10
+worker outcome: normal, test outcome: survived
+[job-id] 56b0c234d9594716806733a952a17f90
+django/middleware/cache.py core/AddNot 11
+worker outcome: normal, test outcome: survived
+[job-id] 2bfd594f5c3640af854ea8d546889eca
+django/middleware/cache.py core/AddNot 12
+worker outcome: normal, test outcome: killed
+[job-id] 66fcfbcfd2dc48fa83a4c46235ee0690
+django/middleware/cache.py core/AddNot 13
+worker outcome: normal, test outcome: killed
+[job-id] 76d262c59017403c9bc6c3ade54f84a6
+django/middleware/cache.py core/AddNot 14
+worker outcome: normal, test outcome: survived
+[job-id] 49768e5bad41467d9f7852ed847c8b7c
+django/middleware/cache.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: survived
+[job-id] 33c2f52b4ada4030ab894e753029ed0a
+django/middleware/cache.py core/ReplaceTrueWithFalse 1
+worker outcome: normal, test outcome: survived
+[job-id] aa3be2d70765448989e3b711a7ca0082
+django/middleware/cache.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: survived
+[job-id] d5f478831866454daa35ed57db9d38d8
+django/middleware/cache.py core/ReplaceFalseWithTrue 1
+worker outcome: normal, test outcome: survived
+[job-id] f860c26d4e9f4eda9a56d35cb2d47b6a
+django/middleware/cache.py core/ReplaceAndWithOr 0
+worker outcome: normal, test outcome: survived
+[job-id] bfa75f7e2fff44af96f5a3a418396445
+django/middleware/cache.py core/ReplaceAndWithOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 33a6515c5ea34f6d87c4ed0a2d2220db
+django/middleware/cache.py core/ReplaceAndWithOr 2
+worker outcome: normal, test outcome: survived
+[job-id] 1e13a7bdf8e7480ca2f0a41d6b6025bf
+django/middleware/cache.py core/ReplaceAndWithOr 3
+worker outcome: normal, test outcome: survived
+[job-id] f826f2269cdd46afbbc6bc53aead7e24
+django/middleware/cache.py core/ReplaceAndWithOr 4
+worker outcome: normal, test outcome: survived
+[job-id] c29e887608fd4ad6879a417abdcc2513
+django/middleware/cache.py core/ReplaceAndWithOr 5
+worker outcome: normal, test outcome: survived
+[job-id] f29ab155d3234e579444135150937370
+django/middleware/cache.py core/ReplaceOrWithAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 59664530c1f34a9baa6c5f1c6f19cbbd
+django/middleware/cache.py core/ExceptionReplacer 0
+worker outcome: normal, test outcome: killed
+[job-id] d8cd0737984e4bbd942b1378aaa42d80
+django/middleware/cache.py core/ExceptionReplacer 1
+worker outcome: normal, test outcome: killed
+[job-id] 5af510d115d74ebd9fd7759edc14a0e4
+django/middleware/cache.py core/NumberReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] 2c7f63e69de94d78a4ee6642c2502bef
+django/middleware/cache.py core/NumberReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] 292162f7afc54802a297129ef73f1d37
+django/middleware/cache.py core/NumberReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] cb14c6ea02b349e8a12d647bf0053698
+django/middleware/cache.py core/NumberReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] 6c838651b2a44108bdd44fe19de9b2b0
+django/middleware/cache.py core/NumberReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] 5eb0fc6cec8a4a688da9b8b763c7fc54
+django/middleware/cache.py core/NumberReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] a57e580117e045f1b88d3f4645ad9149
+django/middleware/cache.py core/NumberReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] 3daf865c7fff4172922c911e236ee06c
+django/middleware/cache.py core/NumberReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] 84298df293c6474fbe5218e674ba82da
+django/middleware/cache.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: survived
+[job-id] 7d20189c63ed41d882541c7200b4667f
+django/middleware/cache.py core/RemoveDecorator 1
+worker outcome: normal, test outcome: survived
+total jobs: 65
+complete: 65 (100.00%)
+surviving mutants: 59 (90.77%)
+ 
+[django__django__4.1] [django__django-15044] Return Code: 0 
+[django__django__4.1] [django__django-15044] 
+MutationNum: 65 
+[django__django__4.1] [django__django-15044] 
+MutationLOG: 9.230000000000004% 
+[django__django__4.1] [django__django-15044] 
+MutationUncertainty: 0.0 
+[django__django__4.1] [django__django-15044] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/middleware/cache.py'
+        and ((71 <= spec.start_pos[0] <= 73) or (133 <= spec.start_pos[0] <= 135) or (173 <= spec.start_pos[0] <= 197))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__4.1] [django__django-15044] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15044] Std. Output:
+FUNC_MUTATION_RESULT 60.0 10
+ 
+[django__django__4.1] [django__django-15044] Return Code: 0 
+[django__django__4.1] [django__django-15044] 
+FunctionMutationLOG: 60.0% 
+[django__django__4.1] [django__django-15044] 
+FunctionMutationNum: 10 
+[django__django__4.1] [django__django-15044] Test script run successful 
+[django__django__4.1] [django__django-15044] Removing coverage 
+[django__django__4.1] [django__django-15044] >>>>> Unfiltered Tests Failed 

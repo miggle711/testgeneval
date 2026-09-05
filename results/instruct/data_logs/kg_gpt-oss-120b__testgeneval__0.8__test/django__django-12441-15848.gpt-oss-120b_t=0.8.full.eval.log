@@ -1,0 +1,1351 @@
+[django__django__3.1] [django__django-12441] Task Metadata:
+	- Instance ID: django__django-12441
+	- Testbed: django__django__3.1
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.1] [django__django-12441] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12441] Std. Output:
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] Command: git -c advice.detachedHead=false checkout da4923ea87124102aae4455e947ce24599c0365b 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12441] Std. Output:
+Previous HEAD position was 0668164b4a Fixed E128, E741 flake8 warnings.
+HEAD is now at da4923ea87 Refs #27468 -- Made PasswordResetTokenGenerator use SHA-256 algorithm.
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] Command: git diff > /opt/temp_django__django-12441_gold_init.patch 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12441] Std. Output:
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] Command: git apply -v /opt/temp_django__django-12441_gold.patch 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12441] Std. Output:
+Checking patch django/forms/forms.py...
+Checking patch django/forms/utils.py...
+Applied patch django/forms/forms.py cleanly.
+Applied patch django/forms/utils.py cleanly.
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.1] [django__django-12441] Command: git diff > /opt/temp_django__django-12441_test_init.patch 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12441] Std. Output:
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] Command: git restore tests/forms_tests/tests/test_forms.py 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12441] Std. Output:
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] Command: git apply -v /opt/temp_django__django-12441_test.patch 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12441] Std. Output:
+Checking patch tests/forms_tests/tests/test_forms.py...
+Applied patch tests/forms_tests/tests/test_forms.py cleanly.
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.1] [django__django-12441] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12441] Std. Output:
+test_as_table_basic_output (forms_tests.tests.test_forms.HtmlOutputTests)
+Default as_table should render a single visible field correctly. ... FAIL
+
+======================================================================
+FAIL: test_as_table_basic_output (forms_tests.tests.test_forms.HtmlOutputTests)
+Default as_table should render a single visible field correctly.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/forms_tests/tests/test_forms.py", line 29, in test_as_table_basic_output
+    self.assertHTMLEqual(form.as_table(), expected)
+  File "/opt/django__django/django/test/testcases.py", line 785, in assertHTMLEqual
+    self.fail(self._formatMessage(msg, standardMsg))
+AssertionError: <tr>
+<th>
+<label for="id_name">
+Your name:
+</label>
+</th><td>
+<input id="id_name [truncated]... != <tr>
+<th>
+<label for="id_name">
+Your name:
+</label>
+</th><td>
+<ul class="errorli [truncated]...
+  <tr>
+  <th>
+  <label for="id_name">
+  Your name:
+  </label>
+  </th><td>
+- <input id="id_name" maxlength="10" name="name" required type="text">
++ <ul class="errorlist"><input id="id_name" maxlength="10" name="name" required type="text">
+? ++++++++++++++++++++++
+
+  </td>
+  </tr>
+
+----------------------------------------------------------------------
+Ran 1 test in 0.012s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12441] Return Code: 1 
+[django__django__3.1] [django__django-12441] TestsTime: 1.4311161041259766 
+[django__django__3.1] [django__django-12441] Test script run successful 
+[django__django__3.1] [django__django-12441] Removing coverage 
+[django__django__3.1] [django__django-12441] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12441] Std. Output:
+test_field_name_placeholder (forms_tests.tests.test_forms.HtmlOutputTests)
+`field_name` placeholder works in a custom template. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] TestsTime: 0.8420553207397461 
+[django__django__3.1] [django__django-12441] Test script run successful 
+[django__django__3.1] [django__django-12441] Removing coverage 
+[django__django__3.1] [django__django-12441] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12441] Std. Output:
+test_css_classes_empty_and_with_required (forms_tests.tests.test_forms.HtmlOutputTests)
+`css_classes` placeholder reflects required_css_class when set. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] TestsTime: 0.6726627349853516 
+[django__django__3.1] [django__django-12441] Test script run successful 
+[django__django__3.1] [django__django-12441] Removing coverage 
+[django__django__3.1] [django__django-12441] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12441] Std. Output:
+test_hidden_fields_are_merged_into_last_row (forms_tests.tests.test_forms.HtmlOutputTests)
+Hidden fields should be concatenated and placed in the final row. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.011s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] TestsTime: 0.7533776760101318 
+[django__django__3.1] [django__django-12441] Test script run successful 
+[django__django__3.1] [django__django-12441] Removing coverage 
+[django__django__3.1] [django__django-12441] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12441] Std. Output:
+test_top_non_field_errors_are_rendered_first (forms_tests.tests.test_forms.HtmlOutputTests)
+Non‑field errors should appear before any field rows. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.010s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] TestsTime: 0.6740353107452393 
+[django__django__3.1] [django__django-12441] Test script run successful 
+[django__django__3.1] [django__django-12441] Removing coverage 
+[django__django__3.1] [django__django-12441] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12441] Std. Output:
+test_errors_on_separate_row (forms_tests.tests.test_forms.HtmlOutputTests)
+When errors_on_separate_row=True, field errors are rendered in their own row. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.010s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] TestsTime: 0.7955734729766846 
+[django__django__3.1] [django__django-12441] Test script run successful 
+[django__django__3.1] [django__django-12441] Removing coverage 
+[django__django__3.1] [django__django-12441] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12441] Std. Output:
+test_hidden_only_form_returns_hidden_fields_without_wrapper (forms_tests.tests.test_forms.HtmlOutputTests)
+If a form contains only hidden fields, output should be just the hidden inputs. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.010s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] TestsTime: 0.8726382255554199 
+[django__django__3.1] [django__django-12441] Test script run successful 
+[django__django__3.1] [django__django-12441] Removing coverage 
+[django__django__3.1] [django__django-12441] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12441] Std. Output:
+test_error_row_insertion_when_top_errors_present (forms_tests.tests.test_forms.HtmlOutputTests)
+When only top errors exist, a dummy row should be inserted before hidden fields. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.009s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] TestsTime: 0.7025868892669678 
+[django__django__3.1] [django__django-12441] Test script run successful 
+[django__django__3.1] [django__django-12441] Removing coverage 
+[django__django__3.1] [django__django-12441] >>>>> Tests configfull pred
+ 
+[django__django__3.1] [django__django-12441] Test Script:  coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms;
+ 
+[django__django__3.1] [django__django-12441] Command: coverage run ./tests/runtests.py --verbosity 2 forms_tests.tests.test_forms 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12441] Std. Output:
+test_css_classes_empty_and_with_required (forms_tests.tests.test_forms.HtmlOutputTests)
+`css_classes` placeholder reflects required_css_class when set. ... ok
+test_error_row_insertion_when_top_errors_present (forms_tests.tests.test_forms.HtmlOutputTests)
+When only top errors exist, a dummy row should be inserted before hidden fields. ... ok
+test_errors_on_separate_row (forms_tests.tests.test_forms.HtmlOutputTests)
+When errors_on_separate_row=True, field errors are rendered in their own row. ... ok
+test_field_name_placeholder (forms_tests.tests.test_forms.HtmlOutputTests)
+`field_name` placeholder works in a custom template. ... ok
+test_hidden_fields_are_merged_into_last_row (forms_tests.tests.test_forms.HtmlOutputTests)
+Hidden fields should be concatenated and placed in the final row. ... ok
+test_hidden_only_form_returns_hidden_fields_without_wrapper (forms_tests.tests.test_forms.HtmlOutputTests)
+If a form contains only hidden fields, output should be just the hidden inputs. ... ok
+test_top_non_field_errors_are_rendered_first (forms_tests.tests.test_forms.HtmlOutputTests)
+Non‑field errors should appear before any field rows. ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.009s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application forms_tests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] TestsTime: 0.4555184841156006 
+[django__django__3.1] [django__django-12441] 
+>>>>> All Tests Passed
+ 
+[django__django__3.1] [django__django-12441] Current Working Directory: /opt/django__django 
+[django__django__3.1] [django__django-12441] Command: coverage json -o coverage.json 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12441] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] 
+CoverageLOG: 70.58823529411765%
+ 
+[django__django__3.1] [django__django-12441] 
+FunctionCoverageLOG: 88.88888888888889%
+ 
+[django__django__3.1] [django__django-12441] Running mutation testing 
+[django__django__3.1] [django__django-12441] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-12441] Std. Output:
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.1] [django__django-12441] Std. Output:
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12441] Std. Output:
+54.35 54.35 54.35
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] Command: cr-report mutation.sqlite 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12441] Std. Output:
+[job-id] 3c05928361d5445684aab190c6c7027c
+django/forms/forms.py core/ReplaceBinaryOperator_Add_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] c5bd41e7ee0640d0905d803a24d74ecd
+django/forms/forms.py core/ReplaceBinaryOperator_Add_Sub 1
+worker outcome: normal, test outcome: killed
+[job-id] 9b77eaa676fb4e078cd3b12d5a5c6e9d
+django/forms/forms.py core/ReplaceBinaryOperator_Add_Sub 2
+worker outcome: normal, test outcome: survived
+[job-id] 39c10047272e404b989250851e19fa20
+django/forms/forms.py core/ReplaceBinaryOperator_Add_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] c41760a36cdb4d24be2488a25ef77088
+django/forms/forms.py core/ReplaceBinaryOperator_Add_Mul 1
+worker outcome: normal, test outcome: killed
+[job-id] f67a24f69cbc47cb879a5be0b353058a
+django/forms/forms.py core/ReplaceBinaryOperator_Add_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] 44739d0cf1b9461e90867538b821b16e
+django/forms/forms.py core/ReplaceBinaryOperator_Add_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] 223dff9c66764b9aa63f84bee6b655c5
+django/forms/forms.py core/ReplaceBinaryOperator_Add_Div 1
+worker outcome: normal, test outcome: killed
+[job-id] 0705b391520b43e8ae9004084d37bd9c
+django/forms/forms.py core/ReplaceBinaryOperator_Add_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] d85f963f8eee4d86a7d6df1ae98ca6f8
+django/forms/forms.py core/ReplaceBinaryOperator_Add_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] cb71de8b8b2749c895677f39d07c7cdc
+django/forms/forms.py core/ReplaceBinaryOperator_Add_FloorDiv 1
+worker outcome: normal, test outcome: killed
+[job-id] 1dbde006c44b4c7a952576668bbc82aa
+django/forms/forms.py core/ReplaceBinaryOperator_Add_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] fe95007e5576444383b2db114da99cdc
+django/forms/forms.py core/ReplaceBinaryOperator_Add_Mod 0
+worker outcome: normal, test outcome: killed
+[job-id] a6fab61c9deb401a8a945dcfa47e2d1e
+django/forms/forms.py core/ReplaceBinaryOperator_Add_Mod 1
+worker outcome: normal, test outcome: killed
+[job-id] e33c9c0886344cb488b4480415e3f87a
+django/forms/forms.py core/ReplaceBinaryOperator_Add_Mod 2
+worker outcome: normal, test outcome: survived
+[job-id] e83efc024c4d416aa933a700b7b8bfef
+django/forms/forms.py core/ReplaceBinaryOperator_Add_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] bad6abd8e90746f9bad6591785df0235
+django/forms/forms.py core/ReplaceBinaryOperator_Add_Pow 1
+worker outcome: normal, test outcome: killed
+[job-id] f68d8a63477f4755b6e6686ec6809696
+django/forms/forms.py core/ReplaceBinaryOperator_Add_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] db16f9223d954dcaa3782257829d6052
+django/forms/forms.py core/ReplaceBinaryOperator_Add_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 6a5ae5b7362c4906843ce7a63192c90c
+django/forms/forms.py core/ReplaceBinaryOperator_Add_RShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 5b14286a028444cc868cdf9e62863982
+django/forms/forms.py core/ReplaceBinaryOperator_Add_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] a02e11b3517648dfbc07ecf29ae2b184
+django/forms/forms.py core/ReplaceBinaryOperator_Add_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 3314db9cb7cd43949666bb836f9e2c3c
+django/forms/forms.py core/ReplaceBinaryOperator_Add_LShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 1f64a4baa98f4845844fa3435157b59b
+django/forms/forms.py core/ReplaceBinaryOperator_Add_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] bf4bda1528c24cafbd361c3732b25d03
+django/forms/forms.py core/ReplaceBinaryOperator_Add_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] c883af66eedb41cb8d8df60819da3abc
+django/forms/forms.py core/ReplaceBinaryOperator_Add_BitOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 4f03c5fe321a4d1f87404f5880769a93
+django/forms/forms.py core/ReplaceBinaryOperator_Add_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] ee8712d7654a42fb811a4e2028661329
+django/forms/forms.py core/ReplaceBinaryOperator_Add_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] a7d534248a9344e9806cfc6058017512
+django/forms/forms.py core/ReplaceBinaryOperator_Add_BitAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] 01deb080b2204345b4efa1485a038ab5
+django/forms/forms.py core/ReplaceBinaryOperator_Add_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] 93ecc0a01d9049d5bdab873db7fc2a0c
+django/forms/forms.py core/ReplaceBinaryOperator_Add_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] 3af5f39d5aad47698aaed25077a8b3f3
+django/forms/forms.py core/ReplaceBinaryOperator_Add_BitXor 1
+worker outcome: normal, test outcome: killed
+[job-id] 941fa98f7f084e93b4dd73167b29f57b
+django/forms/forms.py core/ReplaceBinaryOperator_Add_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] b659c94c226a4a7a91268ec732712959
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] 2545e48cf5b14f31b7eb45e39efd196a
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Add 1
+worker outcome: normal, test outcome: survived
+[job-id] 4a90807ed6654dcb84ccc2954ec2d485
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Add 2
+worker outcome: normal, test outcome: survived
+[job-id] 27c4564d662845788e339d7e7cbda009
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Add 3
+worker outcome: normal, test outcome: survived
+[job-id] 89685c4907244b37be85b0125aabe355
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Add 4
+worker outcome: normal, test outcome: killed
+[job-id] 1f3eb3433c7944059ec15da2fe1272f2
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Add 5
+worker outcome: normal, test outcome: survived
+[job-id] 39340c0efc414b899398b0232eafbcaf
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Add 6
+worker outcome: normal, test outcome: killed
+[job-id] a6f0483dd24b4e558325195784d09222
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Add 7
+worker outcome: normal, test outcome: survived
+[job-id] edcc59254e1f4b2ca2e28b3e216914a9
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Add 8
+worker outcome: normal, test outcome: killed
+[job-id] c5580567e3e0446eaa7d99501f9d430e
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Add 9
+worker outcome: normal, test outcome: killed
+[job-id] 0ed77d37e75940b5b51054fd7e805c8f
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Add 10
+worker outcome: normal, test outcome: survived
+[job-id] b3d19e9b7f024ae8a2434c93d0c21097
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Add 11
+worker outcome: normal, test outcome: survived
+[job-id] b2efca0a3290494d8972aa61f1b972d7
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Add 12
+worker outcome: normal, test outcome: survived
+[job-id] 2881f050784a4d51be697642a90fdc01
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Add 13
+worker outcome: normal, test outcome: survived
+[job-id] f0aa8b013a634f7eaa38a34b5b6af50a
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] 8262687f7d5e4afbbe474c7a1478cc09
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] c99dc8b1b0994f66a806098c00bc351a
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Sub 2
+worker outcome: normal, test outcome: survived
+[job-id] b94f151746e14e7dbc4cd61df26a4214
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Sub 3
+worker outcome: normal, test outcome: killed
+[job-id] c1c4bc90736243daaccf509755f510f5
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Sub 4
+worker outcome: normal, test outcome: killed
+[job-id] 854a008b16e04f878c621bb5245f57e4
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Sub 5
+worker outcome: normal, test outcome: killed
+[job-id] c6375dee5aa84e4890bb61bed3246cf0
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Sub 6
+worker outcome: normal, test outcome: killed
+[job-id] 1479f7636fa14140aa9fd8644c7d1ff3
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Sub 7
+worker outcome: normal, test outcome: survived
+[job-id] c019c22d24984062854d324e86f462f6
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Sub 8
+worker outcome: normal, test outcome: killed
+[job-id] 337f13251f1c4e0d973f34768cc93669
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Sub 9
+worker outcome: normal, test outcome: killed
+[job-id] 3cf8844284b44e63ab85cb32019be55e
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Sub 10
+worker outcome: normal, test outcome: survived
+[job-id] 12200dde08b4421cb6f3d85ed5bfedeb
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Sub 11
+worker outcome: normal, test outcome: survived
+[job-id] ccbb937170024e8d8e7dac55fc82275f
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Sub 12
+worker outcome: normal, test outcome: survived
+[job-id] f0aae538d9d246e5afaf20f173f41806
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Sub 13
+worker outcome: normal, test outcome: survived
+[job-id] a9cf4830e9d749988f3e23dfdbb0e983
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] 128fa4033fa743048bc30cbc54c60585
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] be2116b72c154e07969ee31667b40872
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] a6251d59e65a4610bb8b1a7c6fd31b5e
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Mul 3
+worker outcome: normal, test outcome: killed
+[job-id] 39fc5da1507545558df157071617cf44
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Mul 4
+worker outcome: normal, test outcome: killed
+[job-id] e7aa8045c8aa42bb91371e1005085fd3
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Mul 5
+worker outcome: normal, test outcome: killed
+[job-id] 4663f2d3fabf4722813cb42c7f8159c2
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Mul 6
+worker outcome: normal, test outcome: killed
+[job-id] 3444c80d9c014173a3309e5516bce4c3
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Mul 7
+worker outcome: normal, test outcome: survived
+[job-id] c31f08edc9304d568102c35308cbf17f
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Mul 8
+worker outcome: normal, test outcome: killed
+[job-id] 70670ef4aab04aa1942b7ebe3ffd694c
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Mul 9
+worker outcome: normal, test outcome: killed
+[job-id] b25c83b9abe84bac8031e9dfd932a74e
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Mul 10
+worker outcome: normal, test outcome: survived
+[job-id] 267ae692ad26465d9532a3966dd72b28
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Mul 11
+worker outcome: normal, test outcome: survived
+[job-id] 900a3c7b0f9048fcb6cd85db7cfc9457
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Mul 12
+worker outcome: normal, test outcome: survived
+[job-id] dba90673d29f4940a428c421251e958c
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Mul 13
+worker outcome: normal, test outcome: survived
+[job-id] 87cf689b6bf0402e9488cd14d084ad45
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] d35590cd5fb341da885dad95e82efbdc
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] a03b809c20d8488fa2294566f1508050
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] 318e6c38cc184611b52e914562a7c1ce
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Div 3
+worker outcome: normal, test outcome: killed
+[job-id] ac36ada104d149ef86ecaead2713d1a8
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Div 4
+worker outcome: normal, test outcome: killed
+[job-id] 2642776a38474a2fa6d8f9d5ef73a88e
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Div 5
+worker outcome: normal, test outcome: killed
+[job-id] 9aa08ae318bb428792b65cda064ef975
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Div 6
+worker outcome: normal, test outcome: killed
+[job-id] 6e23a466ee3049ee972045465906ae65
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Div 7
+worker outcome: normal, test outcome: survived
+[job-id] 36eca52c344b46f886a832089de00e99
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Div 8
+worker outcome: normal, test outcome: killed
+[job-id] bfa288530aab419abf25c10e5bfe3ac8
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Div 9
+worker outcome: normal, test outcome: killed
+[job-id] ca243df2eebe4c439953bd1b51a9bd01
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Div 10
+worker outcome: normal, test outcome: survived
+[job-id] 4b9ba7267ed5411f8c5de3c8acd4457b
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Div 11
+worker outcome: normal, test outcome: survived
+[job-id] 047b60c1fed24a5aac73b9c434942c4c
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Div 12
+worker outcome: normal, test outcome: survived
+[job-id] b3fea130134b4882ae3e2017b785427e
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Div 13
+worker outcome: normal, test outcome: survived
+[job-id] 8b61400c3dde4b969c486ba68391ea6b
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] d9e2f25b00d148a080a9331dfda3e7b9
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] c269e926e8ba4817a5c5313c92cbafc7
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] 157506d2d27d45dcb4f4b5c5a590e5bc
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_FloorDiv 3
+worker outcome: normal, test outcome: killed
+[job-id] 584f086cab8643c9b4524afc4ba31e79
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_FloorDiv 4
+worker outcome: normal, test outcome: killed
+[job-id] 4b254b01265f4ae89f4692da3c693a8d
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_FloorDiv 5
+worker outcome: normal, test outcome: killed
+[job-id] ebd3c6719ed54a0aaaab782e9f9509ec
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_FloorDiv 6
+worker outcome: normal, test outcome: killed
+[job-id] f4381a6aafa14342902080647d8468f8
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_FloorDiv 7
+worker outcome: normal, test outcome: survived
+[job-id] e2fa51fa276a4e0e8c9c38020ea28457
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_FloorDiv 8
+worker outcome: normal, test outcome: killed
+[job-id] 58996a84898c4b24936f09dacceaa586
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_FloorDiv 9
+worker outcome: normal, test outcome: killed
+[job-id] ced1356bba6d4f2192c02400ee17da8f
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_FloorDiv 10
+worker outcome: normal, test outcome: survived
+[job-id] 0e09c77fb7d1471989bc8b411b3c1e08
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_FloorDiv 11
+worker outcome: normal, test outcome: survived
+[job-id] e0be942b13d847acb62a1635870a38fc
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_FloorDiv 12
+worker outcome: normal, test outcome: survived
+[job-id] 6f3c5a038d2a488d872ddc24f6c7d2ed
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_FloorDiv 13
+worker outcome: normal, test outcome: survived
+[job-id] 6852db78fe3442cf84e54d9b7bc62fc7
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] eb0c18954a054837b1fe5e176eb93645
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 545fed41481a42adb0e818cdf45d1cf0
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] e5489ba01a8f44c2a1f9cc2b558195d3
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Pow 3
+worker outcome: normal, test outcome: killed
+[job-id] bc69cf488b23483b893425f0ed7b5401
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Pow 4
+worker outcome: normal, test outcome: killed
+[job-id] 6689be0d48be46e9af020fb3d2e18dea
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Pow 5
+worker outcome: normal, test outcome: killed
+[job-id] 69667ac7abbe44af9374519530ec5830
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Pow 6
+worker outcome: normal, test outcome: killed
+[job-id] 2b7d084cd0624cfbb31846b5577eed7c
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Pow 7
+worker outcome: normal, test outcome: survived
+[job-id] bce70d74725f4086ad7203967005533e
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Pow 8
+worker outcome: normal, test outcome: killed
+[job-id] 7a77e381024a4f728b8ea0a969da6e0d
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Pow 9
+worker outcome: normal, test outcome: killed
+[job-id] e1ce3cbe7ed142e3a2e4d40077789181
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Pow 10
+worker outcome: normal, test outcome: survived
+[job-id] 9e19a17c6ac74a65a141da68980d0c29
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Pow 11
+worker outcome: normal, test outcome: survived
+[job-id] 55f845e00eda42fd8401bed4c9c0f988
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Pow 12
+worker outcome: normal, test outcome: survived
+[job-id] d8372dbf6f444d938feb9b192eb6a911
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_Pow 13
+worker outcome: normal, test outcome: survived
+[job-id] bc024a09df8f47a99135b03f75784a4c
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 9064b26d10e044a0ad008ba76c67400a
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] ff6f6d51431a4cbc9018e3226d177598
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] ab1424ebda1c402cba0d0eb62957050e
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_RShift 3
+worker outcome: normal, test outcome: killed
+[job-id] 884543e4af2f41eaa4c3a9a4451c3c38
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_RShift 4
+worker outcome: normal, test outcome: killed
+[job-id] 8f72bcbefbd74923966ce6cc105e60f5
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_RShift 5
+worker outcome: normal, test outcome: killed
+[job-id] f1df6eb8037a4fec90378417ce8af53f
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_RShift 6
+worker outcome: normal, test outcome: killed
+[job-id] bad9483eea484d54885583c35a7e7e56
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_RShift 7
+worker outcome: normal, test outcome: survived
+[job-id] ae6f28ea5ddc4c87b9902055a211a6d9
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_RShift 8
+worker outcome: normal, test outcome: killed
+[job-id] e5386078e9974f35bfb346f55cba4a45
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_RShift 9
+worker outcome: normal, test outcome: killed
+[job-id] 059f88cbe00641a6af97f573166ca3c7
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_RShift 10
+worker outcome: normal, test outcome: survived
+[job-id] c8dd46bcd8084ed38d91c526562fc865
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_RShift 11
+worker outcome: normal, test outcome: survived
+[job-id] 1a2013f492ed4dd1aea866996e44bc0b
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_RShift 12
+worker outcome: normal, test outcome: survived
+[job-id] 597a93dff2f9484a85f5781c3166bc44
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_RShift 13
+worker outcome: normal, test outcome: survived
+[job-id] bfe431183854408485086c8135224af6
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 75ad635d8c35421a91d045b4b2d132b4
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 9ba1a2d72bfc46dca5db23760442b029
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] ae83091323b644709e9d176816fbb643
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_LShift 3
+worker outcome: normal, test outcome: killed
+[job-id] 3747ae7545444541a9acbfa42d632549
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_LShift 4
+worker outcome: normal, test outcome: killed
+[job-id] 37dcfee0034d44e1a8d62674d489b6a9
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_LShift 5
+worker outcome: normal, test outcome: killed
+[job-id] 593bed686d3d4dea9d161b40c3afbea4
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_LShift 6
+worker outcome: normal, test outcome: killed
+[job-id] bb5df0165b744cd8add574afcd36d161
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_LShift 7
+worker outcome: normal, test outcome: survived
+[job-id] 1ce6b49e250c41f3b9e929fcfc6e7425
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_LShift 8
+worker outcome: normal, test outcome: killed
+[job-id] ac2b2ba70ead498f92adf7d0b48451a0
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_LShift 9
+worker outcome: normal, test outcome: killed
+[job-id] 6d0da474d7334b70b0ea2a3140c2d1e0
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_LShift 10
+worker outcome: normal, test outcome: survived
+[job-id] 60bbd8c5528e498ba71604afb81241e0
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_LShift 11
+worker outcome: normal, test outcome: survived
+[job-id] 3dd26acb87d34ea89df326f515ce76a3
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_LShift 12
+worker outcome: normal, test outcome: survived
+[job-id] cd4bc6ec52634598a83cd76ce1944b4d
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_LShift 13
+worker outcome: normal, test outcome: survived
+[job-id] 49ac560e0dda4f039afc79b6944cbdd9
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] c7302fa1c16b428db00cf6e66d858632
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] c3e42984d4bf4ea1856111525517186d
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] a1dbacdc5cba45aa8d02dd3fcde6d38a
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitOr 3
+worker outcome: normal, test outcome: killed
+[job-id] 4e0169e87526417a93fa533b80c4229e
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitOr 4
+worker outcome: normal, test outcome: killed
+[job-id] bb6656a1fe114b33b39ee994647a1a70
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitOr 5
+worker outcome: normal, test outcome: killed
+[job-id] 7acd1dd9fb0d440198b353846d7303b4
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitOr 6
+worker outcome: normal, test outcome: killed
+[job-id] f03746ab45be4926b5fb21a121ce19e0
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitOr 7
+worker outcome: normal, test outcome: survived
+[job-id] ea8dbbdd92e7460588e7e18c1bbc7042
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitOr 8
+worker outcome: normal, test outcome: killed
+[job-id] e2ead9231ab34a6bb305e4d3dbea9037
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitOr 9
+worker outcome: normal, test outcome: killed
+[job-id] 5b841d407afc4ddfb448330448d0d283
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitOr 10
+worker outcome: normal, test outcome: survived
+[job-id] 098535928f6c492ca064c2f393c3bef1
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitOr 11
+worker outcome: normal, test outcome: survived
+[job-id] e331824f55844c078ee15e98964c4e37
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitOr 12
+worker outcome: normal, test outcome: survived
+[job-id] 15ee13f9c37e4fc9b1f6e997ef31490b
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitOr 13
+worker outcome: normal, test outcome: survived
+[job-id] 16072446bd674b428c4044c3300b8a5f
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 0a0139c9624e435e8a2a939719e00cdb
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 54beda8408264abe9c3dd16155693560
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] 1b858d3e5f1b46b6ae1d032ec3e61f46
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitAnd 3
+worker outcome: normal, test outcome: killed
+[job-id] cc47151b745c4cda9aaf6bb15ffdc497
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitAnd 4
+worker outcome: normal, test outcome: killed
+[job-id] c35312ba1cb7436bb8fbd8e321188ccf
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitAnd 5
+worker outcome: normal, test outcome: killed
+[job-id] fe0ea2fbff014f57ad2cc04516d9655f
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitAnd 6
+worker outcome: normal, test outcome: killed
+[job-id] b6f3679245d44bbb812656ede031ecba
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitAnd 7
+worker outcome: normal, test outcome: survived
+[job-id] 841bd9fa46af4edfb9f962d16ae39da0
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitAnd 8
+worker outcome: normal, test outcome: killed
+[job-id] c79441ab3c8644558ad913217cc41b56
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitAnd 9
+worker outcome: normal, test outcome: killed
+[job-id] d8cab7539b1d49049c8215dc12c90da2
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitAnd 10
+worker outcome: normal, test outcome: survived
+[job-id] c1863805213245bea5c8310a5c092fd3
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitAnd 11
+worker outcome: normal, test outcome: survived
+[job-id] 280326b548ed4ee0b5a19fee78876d36
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitAnd 12
+worker outcome: normal, test outcome: survived
+[job-id] e115c64b81b54c66bd4c06ba57523c13
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitAnd 13
+worker outcome: normal, test outcome: survived
+[job-id] a6995fc0d36942ed9525857235f15094
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] 64f5e0cf080540c39ae251b47e9bf41e
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] b9f87395d171465d821b9b321c999c06
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] 054dc2912bd142838ad86dedc3da63b6
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitXor 3
+worker outcome: normal, test outcome: killed
+[job-id] 0183c5600fff4190bbcf2dd2ae7b5b65
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitXor 4
+worker outcome: normal, test outcome: killed
+[job-id] 6d9d981f02ef405fbf4fca64a834b82e
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitXor 5
+worker outcome: normal, test outcome: killed
+[job-id] 5e8d4781dd574835879c9053a2c71752
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitXor 6
+worker outcome: normal, test outcome: killed
+[job-id] 80ae5fa3eae8438096fd459cfcae570e
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitXor 7
+worker outcome: normal, test outcome: survived
+[job-id] 98ad039b3c7e4652b466727377798d1e
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitXor 8
+worker outcome: normal, test outcome: killed
+[job-id] f4cf48082cd44bccaf57514b3cc9ff9b
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitXor 9
+worker outcome: normal, test outcome: killed
+[job-id] f7dd2a9b3af44ee6830a1dffb9836cc6
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitXor 10
+worker outcome: normal, test outcome: survived
+[job-id] cd1ea4a7bd3f4128a71870e33c4fa16f
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitXor 11
+worker outcome: normal, test outcome: survived
+[job-id] a14525d5ba434a0fa13a075887745f21
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitXor 12
+worker outcome: normal, test outcome: survived
+[job-id] 581f6329b6134cd29f3ae147214bd953
+django/forms/forms.py core/ReplaceBinaryOperator_Mod_BitXor 13
+worker outcome: normal, test outcome: survived
+[job-id] 44c065ac258b4190a79a2d94eeefd86e
+django/forms/forms.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 0359bf76130b444ead31d62e3fc3bafb
+django/forms/forms.py core/ReplaceComparisonOperator_Eq_NotEq 1
+worker outcome: normal, test outcome: survived
+[job-id] 11fbc23ecc7f4af8a70ce4f4be207cf9
+django/forms/forms.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 6225f946046f4c1a976a13d13728f78c
+django/forms/forms.py core/ReplaceComparisonOperator_Eq_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] 9f3ded6820f84daaa0c555ab3eb68152
+django/forms/forms.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] c71d7ab4dbae4b3598c7a50e55a55e7e
+django/forms/forms.py core/ReplaceComparisonOperator_Eq_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 0758af24e1684d208275f9fee731b819
+django/forms/forms.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] f97a49f60163405c88e673574d034702
+django/forms/forms.py core/ReplaceComparisonOperator_Eq_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] c6c7e82a6f144700b324d4d930b340a1
+django/forms/forms.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] e1391999da284ca2924e2f1fcd752df2
+django/forms/forms.py core/ReplaceComparisonOperator_Eq_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 11e3e0faeac34cbca5880408a7316cd9
+django/forms/forms.py core/ReplaceComparisonOperator_Eq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] b660212bdfb349d4a61e59681d0516b4
+django/forms/forms.py core/ReplaceComparisonOperator_Eq_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] f981575eea2b4fa280873b1c0d1bd4f4
+django/forms/forms.py core/ReplaceComparisonOperator_Eq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] a5684b59d6ea4737ba1373420632b3a8
+django/forms/forms.py core/ReplaceComparisonOperator_Eq_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 6e3123ed84a64e71890eb338b6621709
+django/forms/forms.py core/ReplaceComparisonOperator_NotEq_Eq 0
+worker outcome: normal, test outcome: killed
+[job-id] a2c7638585db4e719e9e63db17aaf1eb
+django/forms/forms.py core/ReplaceComparisonOperator_NotEq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 488fbbbfbcae49ddbb362efed6e458db
+django/forms/forms.py core/ReplaceComparisonOperator_NotEq_LtE 0
+worker outcome: normal, test outcome: killed
+[job-id] f58e22c088f944c381a0901a17d7f277
+django/forms/forms.py core/ReplaceComparisonOperator_NotEq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] a4fc7df38c82414eacbd8a98159268f7
+django/forms/forms.py core/ReplaceComparisonOperator_NotEq_GtE 0
+worker outcome: normal, test outcome: killed
+[job-id] 26d0d46e3bb241cb80dd98cc224c19f5
+django/forms/forms.py core/ReplaceComparisonOperator_NotEq_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] 86cf145c6e9b481d8416df679cec260d
+django/forms/forms.py core/ReplaceComparisonOperator_NotEq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 528464a36ebe424d89792e5d5f691971
+django/forms/forms.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 427fe7bcc45b4d69a85cb05474350892
+django/forms/forms.py core/ReplaceComparisonOperator_Is_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] eaa7e362222349c39874de46301c5887
+django/forms/forms.py core/ReplaceComparisonOperator_Is_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 5c2b1c0d2ca043fda3aef3c7b087ee33
+django/forms/forms.py core/ReplaceComparisonOperator_Is_IsNot 3
+worker outcome: normal, test outcome: survived
+[job-id] cef1e885f3a74e069237e8d2177841df
+django/forms/forms.py core/ReplaceComparisonOperator_Is_IsNot 4
+worker outcome: normal, test outcome: survived
+[job-id] d235502d9f8e4c77af50eecf332cdd5f
+django/forms/forms.py core/ReplaceComparisonOperator_Is_IsNot 5
+worker outcome: normal, test outcome: survived
+[job-id] 8726077e89aa487bbe64989ae1973b03
+django/forms/forms.py core/ReplaceComparisonOperator_Is_IsNot 6
+worker outcome: normal, test outcome: killed
+[job-id] fb73ed8032ad43e3b9d4d0169973714e
+django/forms/forms.py core/ReplaceComparisonOperator_Is_IsNot 7
+worker outcome: normal, test outcome: survived
+[job-id] 9c57065b0f864011baffb9c396f9620b
+django/forms/forms.py core/ReplaceComparisonOperator_Is_IsNot 8
+worker outcome: normal, test outcome: killed
+[job-id] 89806cc667ea4efdaa6021ec5c526c33
+django/forms/forms.py core/ReplaceComparisonOperator_Is_IsNot 9
+worker outcome: normal, test outcome: survived
+[job-id] f91392ba7f2f49568c9897d4377b3878
+django/forms/forms.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] 4279512f398943288e8f818c66e64027
+django/forms/forms.py core/ReplaceComparisonOperator_IsNot_Is 1
+worker outcome: normal, test outcome: killed
+[job-id] 9dd4ec7fcfb5476fb044e6bfe041a92a
+django/forms/forms.py core/ReplaceComparisonOperator_IsNot_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] 9217f7def6254373a3b3a873acd8b2b9
+django/forms/forms.py core/ReplaceComparisonOperator_IsNot_Is 3
+worker outcome: normal, test outcome: survived
+[job-id] 8a7fa6f6323f46c3b7b4b12bebd0abaf
+django/forms/forms.py core/ReplaceComparisonOperator_IsNot_Is 4
+worker outcome: normal, test outcome: killed
+[job-id] 431dcfb363a144d4a23a339ace1b06cb
+django/forms/forms.py core/ReplaceComparisonOperator_IsNot_Is 5
+worker outcome: normal, test outcome: survived
+[job-id] 0e31c08d995a477eb195e4de621dcdca
+django/forms/forms.py core/ReplaceComparisonOperator_IsNot_Is 6
+worker outcome: normal, test outcome: survived
+[job-id] 6a41612d8ae04374baf2c2a1f29229f3
+django/forms/forms.py core/ReplaceUnaryOperator_USub_UAdd 0
+worker outcome: normal, test outcome: killed
+[job-id] c793fd7ec8f84907847e2f51a7dc9aea
+django/forms/forms.py core/ReplaceUnaryOperator_USub_UAdd 1
+worker outcome: normal, test outcome: killed
+[job-id] 73e5f19201f04a3d88e34f3656e161c8
+django/forms/forms.py core/ReplaceUnaryOperator_USub_UAdd 2
+worker outcome: normal, test outcome: killed
+[job-id] 9434d49e3aca48999ae8049b0fd3266f
+django/forms/forms.py core/ReplaceUnaryOperator_USub_Invert 0
+worker outcome: normal, test outcome: killed
+[job-id] 0fde9a48aaf94db6b1de779859752b2e
+django/forms/forms.py core/ReplaceUnaryOperator_USub_Invert 1
+worker outcome: normal, test outcome: killed
+[job-id] 759edd3774b8475fadc1c3ebfaec2bf1
+django/forms/forms.py core/ReplaceUnaryOperator_USub_Invert 2
+worker outcome: normal, test outcome: killed
+[job-id] a589a89b82854ed881835d86f432ce91
+django/forms/forms.py core/ReplaceUnaryOperator_USub_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] 65a818640b3246e3b4d5e30805e6b91e
+django/forms/forms.py core/ReplaceUnaryOperator_USub_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] d17f937646d1476f902dab80f61cc006
+django/forms/forms.py core/ReplaceUnaryOperator_USub_Not 2
+worker outcome: normal, test outcome: killed
+[job-id] 0b0bfdc641a84df29592e8c91c3dc9cf
+django/forms/forms.py core/ReplaceUnaryOperator_Delete_USub 0
+worker outcome: normal, test outcome: killed
+[job-id] 0f4823b64bd94f6ba768dbe2e5e0564c
+django/forms/forms.py core/ReplaceUnaryOperator_Delete_USub 1
+worker outcome: normal, test outcome: killed
+[job-id] 4a10db7ec7a146fa81e0038e423aca4d
+django/forms/forms.py core/ReplaceUnaryOperator_Delete_USub 2
+worker outcome: normal, test outcome: killed
+[job-id] ca8a9769177f446891ca6caff608db8a
+django/forms/forms.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] 61379a0bbd5944a9a8f4da8de1e778a5
+django/forms/forms.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: killed
+[job-id] 0cc6f3f276d04ef6a4afd7fc06a8d954
+django/forms/forms.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: normal, test outcome: killed
+[job-id] b9d93a1ffc9b44fcb1b789a472cbe7e4
+django/forms/forms.py core/ReplaceUnaryOperator_Delete_Not 3
+worker outcome: normal, test outcome: survived
+[job-id] 90bcf032bc2646e288cf561a49abc9f5
+django/forms/forms.py core/ReplaceUnaryOperator_Delete_Not 4
+worker outcome: normal, test outcome: killed
+[job-id] 4f657291772c4534b80979d8f7e895aa
+django/forms/forms.py core/ReplaceUnaryOperator_Delete_Not 5
+worker outcome: normal, test outcome: survived
+[job-id] 760c57c68abb46ee86b5a4aafddc3e7f
+django/forms/forms.py core/ReplaceUnaryOperator_Delete_Not 6
+worker outcome: normal, test outcome: survived
+[job-id] 2736cf1fbcc74ef5ad4a726e5e18cb32
+django/forms/forms.py core/ReplaceUnaryOperator_Delete_Not 7
+worker outcome: normal, test outcome: survived
+[job-id] a15fce0f2292453f9cab26e0abf12860
+django/forms/forms.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] cb0e953a9f0746b5b353a14af1ea1d9a
+django/forms/forms.py core/AddNot 1
+worker outcome: normal, test outcome: killed
+[job-id] 7d8906f3bf5b411a93a80d7c641e2675
+django/forms/forms.py core/AddNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 7e255d6a0c6243cba25bf6a070f0bc52
+django/forms/forms.py core/AddNot 3
+worker outcome: normal, test outcome: survived
+[job-id] 6f2e152de58447b99bfadd17e78bc691
+django/forms/forms.py core/AddNot 4
+worker outcome: normal, test outcome: survived
+[job-id] 92000199c56c41f9b8876e4a335b4346
+django/forms/forms.py core/AddNot 5
+worker outcome: normal, test outcome: survived
+[job-id] 11ac2c34614e4e37b4afbef44ab8c9d1
+django/forms/forms.py core/AddNot 6
+worker outcome: normal, test outcome: survived
+[job-id] 968a02c028204c8a929122f082ce1914
+django/forms/forms.py core/AddNot 7
+worker outcome: normal, test outcome: survived
+[job-id] 569a65299e71457f9926b8ef22eadee7
+django/forms/forms.py core/AddNot 8
+worker outcome: normal, test outcome: killed
+[job-id] f15e566177544d93a6ce4109a3aab826
+django/forms/forms.py core/AddNot 9
+worker outcome: normal, test outcome: killed
+[job-id] a4a79086d76a40468569d1c54073f483
+django/forms/forms.py core/AddNot 10
+worker outcome: normal, test outcome: survived
+[job-id] a9ae672edff2400cadcd7b97e53e2800
+django/forms/forms.py core/AddNot 11
+worker outcome: normal, test outcome: survived
+[job-id] 5f93934baf884fc4ba1c4faae637d1ef
+django/forms/forms.py core/AddNot 12
+worker outcome: normal, test outcome: survived
+[job-id] 2d84f22478604fd89667b804e669d932
+django/forms/forms.py core/AddNot 13
+worker outcome: normal, test outcome: killed
+[job-id] d6d8bfda0ff04f31988ab7b55cb740a7
+django/forms/forms.py core/AddNot 14
+worker outcome: normal, test outcome: survived
+[job-id] 1cdae423a1b6412da3445fdcf88f7125
+django/forms/forms.py core/AddNot 15
+worker outcome: normal, test outcome: killed
+[job-id] 62d0891a9ecc4c85af68e8fe008ecce5
+django/forms/forms.py core/AddNot 16
+worker outcome: normal, test outcome: killed
+[job-id] 23063c9f30af4712a6f1bd3ba9532af9
+django/forms/forms.py core/AddNot 17
+worker outcome: normal, test outcome: killed
+[job-id] 0bc50a34c3254f998392f78c8029a89c
+django/forms/forms.py core/AddNot 18
+worker outcome: normal, test outcome: killed
+[job-id] 89e0288801de4fe89b88975a9c89bdde
+django/forms/forms.py core/AddNot 19
+worker outcome: normal, test outcome: survived
+[job-id] f1cf31990d954fe9a0b2ebcc70ffa33f
+django/forms/forms.py core/AddNot 20
+worker outcome: normal, test outcome: killed
+[job-id] 57fd2cd47de345018fc9fac5cacc9a15
+django/forms/forms.py core/AddNot 21
+worker outcome: normal, test outcome: killed
+[job-id] a73e02970b4048c99a558412f1deea91
+django/forms/forms.py core/AddNot 22
+worker outcome: normal, test outcome: survived
+[job-id] 02906e4f77a5413cb2a987e08b5ad209
+django/forms/forms.py core/AddNot 23
+worker outcome: normal, test outcome: survived
+[job-id] 7d9844be4d9c4f259f4a4fdd3c9967d6
+django/forms/forms.py core/AddNot 24
+worker outcome: normal, test outcome: killed
+[job-id] da89cce4df534417816205a65e902371
+django/forms/forms.py core/AddNot 25
+worker outcome: normal, test outcome: killed
+[job-id] 4e50e1e74f3f472f854a84f1d1ed9ba0
+django/forms/forms.py core/AddNot 26
+worker outcome: normal, test outcome: killed
+[job-id] 6c7d5fe6871349b4b797e1bfcc563798
+django/forms/forms.py core/AddNot 27
+worker outcome: normal, test outcome: killed
+[job-id] a8e03d95603c41bb96889c8d3339acb9
+django/forms/forms.py core/AddNot 28
+worker outcome: normal, test outcome: survived
+[job-id] 31bb847156dc41209a236fb144097a5c
+django/forms/forms.py core/AddNot 29
+worker outcome: normal, test outcome: killed
+[job-id] 1a2858a68bf14a3daad653deeb4da4f3
+django/forms/forms.py core/AddNot 30
+worker outcome: normal, test outcome: survived
+[job-id] 627a48086bca4909a56884de74c10bd2
+django/forms/forms.py core/AddNot 31
+worker outcome: normal, test outcome: killed
+[job-id] 968a3ed7b7b342acbfd992dfa4486da5
+django/forms/forms.py core/AddNot 32
+worker outcome: normal, test outcome: killed
+[job-id] 0ba9d2ad81a74ebbb6918406d2cf29f9
+django/forms/forms.py core/AddNot 33
+worker outcome: normal, test outcome: survived
+[job-id] 717df693c8c843159d02cd615b4d394f
+django/forms/forms.py core/AddNot 34
+worker outcome: normal, test outcome: killed
+[job-id] 43d9e2f9f4a74b31940555da9337fa8c
+django/forms/forms.py core/AddNot 35
+worker outcome: normal, test outcome: killed
+[job-id] 0fd0cc33912340e199d9c2d985032275
+django/forms/forms.py core/AddNot 36
+worker outcome: normal, test outcome: killed
+[job-id] e292a590c305416692ee5a7e9d3535e3
+django/forms/forms.py core/AddNot 37
+worker outcome: normal, test outcome: survived
+[job-id] a195319c422d476f9241809631866061
+django/forms/forms.py core/AddNot 38
+worker outcome: normal, test outcome: killed
+[job-id] e0a8d1faad3c496983cc1e80eca5919a
+django/forms/forms.py core/AddNot 39
+worker outcome: normal, test outcome: survived
+[job-id] 996988f8a4ce47fd9c6522555b5029e7
+django/forms/forms.py core/AddNot 40
+worker outcome: normal, test outcome: survived
+[job-id] ff66788660e04c0985a4a26ee320e0cb
+django/forms/forms.py core/AddNot 41
+worker outcome: normal, test outcome: survived
+[job-id] 0dc08a53b8134f8a9d45c5b9e1fb4d42
+django/forms/forms.py core/AddNot 42
+worker outcome: normal, test outcome: survived
+[job-id] 897624998d0248b9b1dba2e62dcd3814
+django/forms/forms.py core/AddNot 43
+worker outcome: normal, test outcome: killed
+[job-id] 62845769f67b4841bb2084cd4b613ef9
+django/forms/forms.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: killed
+[job-id] d2ca744aa7c649dd8230cbd6329ff27e
+django/forms/forms.py core/ReplaceTrueWithFalse 1
+worker outcome: normal, test outcome: survived
+[job-id] c9a2cf08a9e14838b514c72d843d7555
+django/forms/forms.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: killed
+[job-id] b7061dcbcdb4401ba02a72be9e8d540f
+django/forms/forms.py core/ReplaceFalseWithTrue 1
+worker outcome: normal, test outcome: survived
+[job-id] 2cce514d18c64d76a9412e975956d2ed
+django/forms/forms.py core/ReplaceFalseWithTrue 2
+worker outcome: normal, test outcome: survived
+[job-id] 74570f9612824fcaaf0524ca39445744
+django/forms/forms.py core/ReplaceAndWithOr 0
+worker outcome: normal, test outcome: killed
+[job-id] d73305b484b6445682488df65871a5ee
+django/forms/forms.py core/ReplaceAndWithOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 0945adfe4989452187d770312df1788d
+django/forms/forms.py core/ReplaceAndWithOr 2
+worker outcome: normal, test outcome: survived
+[job-id] 56f36005499a4861b8a78c3530ba52d2
+django/forms/forms.py core/ReplaceAndWithOr 3
+worker outcome: normal, test outcome: killed
+[job-id] 04f6f83bf56b4422b762448b8021d447
+django/forms/forms.py core/ReplaceAndWithOr 4
+worker outcome: normal, test outcome: survived
+[job-id] 429b1e3efb0643dc8aa8f616477e61bb
+django/forms/forms.py core/ReplaceAndWithOr 5
+worker outcome: normal, test outcome: killed
+[job-id] 0ec024f4fdc4404697b8ed84bf37165a
+django/forms/forms.py core/ReplaceAndWithOr 6
+worker outcome: normal, test outcome: survived
+[job-id] 4ec377b2740046b0a8edf5222dc13114
+django/forms/forms.py core/ReplaceAndWithOr 7
+worker outcome: normal, test outcome: killed
+[job-id] 6c527172d7934bf2bd043a207f18e1a9
+django/forms/forms.py core/ReplaceOrWithAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 98ae4df8af7e443ba1eb120fe38902fa
+django/forms/forms.py core/ReplaceOrWithAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] cff1f1254f3942d4afcdabb9a7ba1671
+django/forms/forms.py core/ReplaceOrWithAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] 702b301bc337462f88bf15ec4d68ddd3
+django/forms/forms.py core/ReplaceOrWithAnd 3
+worker outcome: normal, test outcome: killed
+[job-id] c3dcac07eed54d908050de9f2c82103e
+django/forms/forms.py core/ReplaceOrWithAnd 4
+worker outcome: normal, test outcome: survived
+[job-id] 7c543ce7418c4932a3621348a425cc99
+django/forms/forms.py core/ReplaceContinueWithBreak 0
+worker outcome: normal, test outcome: survived
+[job-id] 711671ca34c0482b82f06deb54872123
+django/forms/forms.py core/ExceptionReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] 2c3cf1e2502c463aacfdee0837834980
+django/forms/forms.py core/ExceptionReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] 9041ba905a724bf7b2330b834e3b3242
+django/forms/forms.py core/ExceptionReplacer 2
+worker outcome: normal, test outcome: killed
+[job-id] 75f725406fca4c90b2ff93fbde75ed52
+django/forms/forms.py core/ExceptionReplacer 3
+worker outcome: normal, test outcome: killed
+[job-id] f0aab41f2ae34eadba9f8d3fcf509c4e
+django/forms/forms.py core/ExceptionReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] c9b7c6d75a374ac09330f2e32378dcee
+django/forms/forms.py core/NumberReplacer 0
+worker outcome: normal, test outcome: killed
+[job-id] 9abf432d48f4468a8518ff227eed0b02
+django/forms/forms.py core/NumberReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] f0b9758a8ccf4bee8c79a5254aec4250
+django/forms/forms.py core/NumberReplacer 2
+worker outcome: normal, test outcome: killed
+[job-id] 60eabe60ff2240bc909f8e383e93a614
+django/forms/forms.py core/NumberReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] 89ce0a24511c4a5ea29bb016f943ba53
+django/forms/forms.py core/NumberReplacer 4
+worker outcome: normal, test outcome: killed
+[job-id] 1eef98fa51c6457c84d6af18eb85de68
+django/forms/forms.py core/NumberReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] ed44e5e37a3a4eed956f222856f0c1a9
+django/forms/forms.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: survived
+[job-id] 7a88a804fa874e63bc3b8a4ca9fbc534
+django/forms/forms.py core/RemoveDecorator 1
+worker outcome: normal, test outcome: killed
+[job-id] f86cf8c65c21450d9eb54074f4e9640f
+django/forms/forms.py core/RemoveDecorator 2
+worker outcome: normal, test outcome: survived
+[job-id] 44e86d7260ba453990cb5435d6ed8cf8
+django/forms/forms.py core/RemoveDecorator 3
+worker outcome: normal, test outcome: survived
+[job-id] 4a9c0e7cae7042188d7371935786c14b
+django/forms/forms.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: killed
+[job-id] 5642a210f20947588f1194bc239b2fc4
+django/forms/forms.py core/ZeroIterationForLoop 1
+worker outcome: normal, test outcome: killed
+[job-id] 5040b89a7ad241a99c2d7baba21dfa5f
+django/forms/forms.py core/ZeroIterationForLoop 2
+worker outcome: normal, test outcome: survived
+[job-id] 6ca8912ff15844ef9691277cca08ee05
+django/forms/forms.py core/ZeroIterationForLoop 3
+worker outcome: normal, test outcome: survived
+[job-id] d0a0386d35b048c8bdf442a9d6f94cd9
+django/forms/forms.py core/ZeroIterationForLoop 4
+worker outcome: normal, test outcome: survived
+[job-id] 7ed26e4273d64220a3d5f15691e42c5b
+django/forms/forms.py core/ZeroIterationForLoop 5
+worker outcome: normal, test outcome: killed
+[job-id] 5fb5ca52ebd147f09bf9d2cc21f75179
+django/forms/forms.py core/ZeroIterationForLoop 6
+worker outcome: normal, test outcome: killed
+[job-id] c6a0937b8f4a46f0913d372ad930e56e
+django/forms/forms.py core/ZeroIterationForLoop 7
+worker outcome: normal, test outcome: killed
+[job-id] 1e30a7bed8f0427baa8115d071d09e4d
+django/forms/forms.py core/ZeroIterationForLoop 8
+worker outcome: normal, test outcome: survived
+[job-id] 4c305d1765b04c51a3c647bd7590eb02
+django/forms/forms.py core/ZeroIterationForLoop 9
+worker outcome: normal, test outcome: survived
+total jobs: 333
+complete: 333 (100.00%)
+surviving mutants: 181 (54.35%)
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] 
+MutationNum: 333 
+[django__django__3.1] [django__django-12441] 
+MutationLOG: 45.65% 
+[django__django__3.1] [django__django-12441] 
+MutationUncertainty: 0.0 
+[django__django__3.1] [django__django-12441] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/forms/forms.py'
+        and ((192 <= spec.start_pos[0] <= 268))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__3.1] [django__django-12441] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-12441] Std. Output:
+FUNC_MUTATION_RESULT 74.80916030534351 131
+ 
+[django__django__3.1] [django__django-12441] Return Code: 0 
+[django__django__3.1] [django__django-12441] 
+FunctionMutationLOG: 74.80916030534351% 
+[django__django__3.1] [django__django-12441] 
+FunctionMutationNum: 131 
+[django__django__3.1] [django__django-12441] Test script run successful 
+[django__django__3.1] [django__django-12441] Removing coverage 
+[django__django__3.1] [django__django-12441] >>>>> Unfiltered Tests Failed 

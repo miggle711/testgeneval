@@ -1,0 +1,1552 @@
+[django__django__5.0] [django__django-16501] Task Metadata:
+	- Instance ID: django__django-16501
+	- Testbed: django__django__5.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.11.9
+ 
+[django__django__5.0] [django__django-16501] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16501] Std. Output:
+ 
+[django__django__5.0] [django__django-16501] Return Code: 0 
+[django__django__5.0] [django__django-16501] Command: git -c advice.detachedHead=false checkout 882f99031e6e447384bfe22044cc980567d2f40d 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16501] Std. Output:
+Previous HEAD position was 4a72da7100 Refs #27471 -- Made admin's filter choice arrows use cursor pointers.
+HEAD is now at 882f99031e Moved release note about the default PBKDF2 iterations into django.contrib.auth section.
+ 
+[django__django__5.0] [django__django-16501] Return Code: 0 
+[django__django__5.0] [django__django-16501] Command: git diff > /opt/temp_django__django-16501_gold_init.patch 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16501] Std. Output:
+ 
+[django__django__5.0] [django__django-16501] Return Code: 0 
+[django__django__5.0] [django__django-16501] Command: git apply -v /opt/temp_django__django-16501_gold.patch 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16501] Std. Output:
+Checking patch django/db/models/constraints.py...
+Applied patch django/db/models/constraints.py cleanly.
+ 
+[django__django__5.0] [django__django-16501] Return Code: 0 
+[django__django__5.0] [django__django-16501] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__5.0] [django__django-16501] Command: git diff > /opt/temp_django__django-16501_test_init.patch 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16501] Std. Output:
+ 
+[django__django__5.0] [django__django-16501] Return Code: 0 
+[django__django__5.0] [django__django-16501] Command: git restore tests/constraints/tests.py 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16501] Std. Output:
+ 
+[django__django__5.0] [django__django-16501] Return Code: 0 
+[django__django__5.0] [django__django-16501] Command: git apply -v /opt/temp_django__django-16501_test.patch 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16501] Std. Output:
+Checking patch tests/constraints/tests.py...
+Applied patch tests/constraints/tests.py cleanly.
+ 
+[django__django__5.0] [django__django-16501] Return Code: 0 
+[django__django__5.0] [django__django-16501] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__5.0] [django__django-16501] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16501] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application constraints
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_validate_fields_violation_raises_unique_error (constraints.tests.UniqueConstraintValidateTests.test_validate_fields_violation_raises_unique_error) ... FAIL
+
+======================================================================
+FAIL: test_validate_fields_violation_raises_unique_error (constraints.tests.UniqueConstraintValidateTests.test_validate_fields_violation_raises_unique_error)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/constraints/tests.py", line 247, in test_validate_fields_violation_raises_unique_error
+    self.assertIn("UniqueConstraintValidateTests", str(cm.exception))
+AssertionError: 'UniqueConstraintValidateTests' not found in '["DummyInstance with fields (\'name\',) already exists."]'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+ 
+[django__django__5.0] [django__django-16501] Return Code: 1 
+[django__django__5.0] [django__django-16501] TestsTime: 1.5786824226379395 
+[django__django__5.0] [django__django-16501] Test script run successful 
+[django__django__5.0] [django__django-16501] Removing coverage 
+[django__django__5.0] [django__django-16501] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16501] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application constraints
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_validate_fields_exclude_early_return (constraints.tests.UniqueConstraintValidateTests.test_validate_fields_exclude_early_return) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+ 
+[django__django__5.0] [django__django-16501] Return Code: 0 
+[django__django__5.0] [django__django-16501] TestsTime: 0.7478518486022949 
+[django__django__5.0] [django__django-16501] Test script run successful 
+[django__django__5.0] [django__django-16501] Removing coverage 
+[django__django__5.0] [django__django-16501] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16501] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application constraints
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_validate_fields_none_value_skips (constraints.tests.UniqueConstraintValidateTests.test_validate_fields_none_value_skips) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+ 
+[django__django__5.0] [django__django-16501] Return Code: 0 
+[django__django__5.0] [django__django-16501] TestsTime: 0.8672511577606201 
+[django__django__5.0] [django__django-16501] Test script run successful 
+[django__django__5.0] [django__django-16501] Removing coverage 
+[django__django__5.0] [django__django-16501] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16501] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application constraints
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_validate_fields_empty_string_interpreted_as_null (constraints.tests.UniqueConstraintValidateTests.test_validate_fields_empty_string_interpreted_as_null) ... ERROR
+
+======================================================================
+ERROR: test_validate_fields_empty_string_interpreted_as_null (constraints.tests.UniqueConstraintValidateTests.test_validate_fields_empty_string_interpreted_as_null)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/constraints/tests.py", line 236, in test_validate_fields_empty_string_interpreted_as_null
+    connections_patch, stop_patch = patch_connections(True)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/constraints/tests.py", line 192, in patch_connections
+    mock_connections.__getitem__.return_value = dummy_conn
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/mock.py", line 655, in __getattr__
+    raise AttributeError(name)
+AttributeError: __getitem__
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+ 
+[django__django__5.0] [django__django-16501] Return Code: 1 
+[django__django__5.0] [django__django-16501] TestsTime: 0.6748497486114502 
+[django__django__5.0] [django__django-16501] Test script run successful 
+[django__django__5.0] [django__django-16501] Removing coverage 
+[django__django__5.0] [django__django-16501] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16501] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application constraints
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_validate_expression_no_violation (constraints.tests.UniqueConstraintValidateTests.test_validate_expression_no_violation) ... ERROR
+
+======================================================================
+ERROR: test_validate_expression_no_violation (constraints.tests.UniqueConstraintValidateTests.test_validate_expression_no_violation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/constraints/tests.py", line 245, in test_validate_expression_no_violation
+    constraint.validate(self.model, instance)  # noqa: S101
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/constraints.py", line 338, in validate
+    for field, value in instance._get_field_value_map(
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/constraints/tests.py", line 124, in _get_field_value_map
+    mapping[field.name] = mock.Mock(value=getattr(self, field.attname))
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DummyInstance' object has no attribute 'color'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+ 
+[django__django__5.0] [django__django-16501] Return Code: 1 
+[django__django__5.0] [django__django-16501] TestsTime: 0.6152079105377197 
+[django__django__5.0] [django__django-16501] Test script run successful 
+[django__django__5.0] [django__django-16501] Removing coverage 
+[django__django__5.0] [django__django-16501] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16501] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application constraints
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_validate_expression_violation_raises_custom_message (constraints.tests.UniqueConstraintValidateTests.test_validate_expression_violation_raises_custom_message) ... ERROR
+
+======================================================================
+ERROR: test_validate_expression_violation_raises_custom_message (constraints.tests.UniqueConstraintValidateTests.test_validate_expression_violation_raises_custom_message)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/constraints/tests.py", line 245, in test_validate_expression_violation_raises_custom_message
+    with self.assertRaisesMessage(
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'UniqueConstraintValidateTests' object has no attribute 'assertRaisesMessage'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+ 
+[django__django__5.0] [django__django-16501] Return Code: 1 
+[django__django__5.0] [django__django-16501] TestsTime: 0.4162750244140625 
+[django__django__5.0] [django__django-16501] Test script run successful 
+[django__django__5.0] [django__django-16501] Removing coverage 
+[django__django__5.0] [django__django-16501] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16501] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application constraints
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_validate_condition_violation_raises (constraints.tests.UniqueConstraintValidateTests.test_validate_condition_violation_raises) ... ERROR
+
+======================================================================
+ERROR: test_validate_condition_violation_raises (constraints.tests.UniqueConstraintValidateTests.test_validate_condition_violation_raises)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/constraints/tests.py", line 237, in test_validate_condition_violation_raises
+    constraint = UniqueConstraint(
+                 ^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/constraints.py", line 153, in __init__
+    raise ValueError("UniqueConstraint.condition must be a Q instance.")
+ValueError: UniqueConstraint.condition must be a Q instance.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+ 
+[django__django__5.0] [django__django-16501] Return Code: 1 
+[django__django__5.0] [django__django-16501] TestsTime: 0.6666295528411865 
+[django__django__5.0] [django__django-16501] Test script run successful 
+[django__django__5.0] [django__django-16501] Removing coverage 
+[django__django__5.0] [django__django-16501] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16501] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application constraints
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_validate_condition_field_error_is_suppressed (constraints.tests.UniqueConstraintValidateTests.test_validate_condition_field_error_is_suppressed) ... ERROR
+
+======================================================================
+ERROR: test_validate_condition_field_error_is_suppressed (constraints.tests.UniqueConstraintValidateTests.test_validate_condition_field_error_is_suppressed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/constraints/tests.py", line 237, in test_validate_condition_field_error_is_suppressed
+    constraint = UniqueConstraint(
+                 ^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/constraints.py", line 153, in __init__
+    raise ValueError("UniqueConstraint.condition must be a Q instance.")
+ValueError: UniqueConstraint.condition must be a Q instance.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+ 
+[django__django__5.0] [django__django-16501] Return Code: 1 
+[django__django__5.0] [django__django-16501] TestsTime: 0.6873137950897217 
+[django__django__5.0] [django__django-16501] Test script run successful 
+[django__django__5.0] [django__django-16501] Removing coverage 
+[django__django__5.0] [django__django-16501] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16501] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application constraints
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_validate_excludes_own_pk_when_updating (constraints.tests.UniqueConstraintValidateTests.test_validate_excludes_own_pk_when_updating) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+ 
+[django__django__5.0] [django__django-16501] Return Code: 0 
+[django__django__5.0] [django__django-16501] TestsTime: 1.1763980388641357 
+[django__django__5.0] [django__django-16501] Test script run successful 
+[django__django__5.0] [django__django-16501] Removing coverage 
+[django__django__5.0] [django__django-16501] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16501] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application constraints
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_validate_expression_excludes_field_early_return (constraints.tests.UniqueConstraintValidateTests.test_validate_expression_excludes_field_early_return) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+ 
+[django__django__5.0] [django__django-16501] Return Code: 0 
+[django__django__5.0] [django__django-16501] TestsTime: 0.7088713645935059 
+[django__django__5.0] [django__django-16501] Test script run successful 
+[django__django__5.0] [django__django-16501] Removing coverage 
+[django__django__5.0] [django__django-16501] >>>>> Tests configfull pred
+ 
+[django__django__5.0] [django__django-16501] Test Script:  coverage run ./tests/runtests.py --verbosity 2 constraints.tests;
+ 
+[django__django__5.0] [django__django-16501] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16501] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application constraints
+Found 4 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_validate_excludes_own_pk_when_updating (constraints.tests.UniqueConstraintValidateTests.test_validate_excludes_own_pk_when_updating) ... ok
+test_validate_expression_excludes_field_early_return (constraints.tests.UniqueConstraintValidateTests.test_validate_expression_excludes_field_early_return) ... ok
+test_validate_fields_exclude_early_return (constraints.tests.UniqueConstraintValidateTests.test_validate_fields_exclude_early_return) ... ok
+test_validate_fields_none_value_skips (constraints.tests.UniqueConstraintValidateTests.test_validate_fields_none_value_skips) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+OK
+ 
+[django__django__5.0] [django__django-16501] Return Code: 0 
+[django__django__5.0] [django__django-16501] TestsTime: 1.2392232418060303 
+[django__django__5.0] [django__django-16501] 
+>>>>> All Tests Passed
+ 
+[django__django__5.0] [django__django-16501] Current Working Directory: /opt/django__django 
+[django__django__5.0] [django__django-16501] Command: coverage json -o coverage.json 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16501] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__5.0] [django__django-16501] Return Code: 0 
+[django__django__5.0] [django__django-16501] 
+CoverageLOG: 55.203619909502265%
+ 
+[django__django__5.0] [django__django-16501] 
+FunctionCoverageLOG: 51.11111111111111%
+ 
+[django__django__5.0] [django__django-16501] Running mutation testing 
+[django__django__5.0] [django__django-16501] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16501] Std. Output:
+ 
+[django__django__5.0] [django__django-16501] Return Code: 0 
+[django__django__5.0] [django__django-16501] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__5.0] [django__django-16501] Std. Output:
+ 
+[django__django__5.0] [django__django-16501] Return Code: 0 
+[django__django__5.0] [django__django-16501] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16501] Std. Output:
+82.37 82.37 82.37
+ 
+[django__django__5.0] [django__django-16501] Return Code: 0 
+[django__django__5.0] [django__django-16501] Command: cr-report mutation.sqlite 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16501] Std. Output:
+[job-id] af019ca60e754d77924315ec79ce727e
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mul_Add 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] d80bf62324814ef0b11dbd8038f00130
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mul_Sub 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 7c2185357dde45feb8309b388e5c5bb0
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mul_Div 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 04e5e2bba1044b33b42a539fd237ca53
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mul_FloorDiv 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] f970c8758cc44927b30a0d226982fbae
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mul_Mod 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] d02ec5194ed04d2d9e5078d9ebf9ce04
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mul_Pow 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] c78407c5e5e642c5ad4e3c9a5d6fd198
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mul_RShift 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 96663792d10545a08f61915b7c220d09
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mul_LShift 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 1571752490734b35b0fe2cd789b67a8e
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mul_BitOr 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 57328d68ea274beeaa9f2ec3eb6344ea
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mul_BitAnd 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] e10a5df5bbd64b708f152e81a7f7643e
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mul_BitXor 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 47f04d91cb5247709d055f880ad26289
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 07f73470aa8a45f0bddb3a7c0839f464
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Add 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 9b0f9beb8448402694b6eb0579df7d4f
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Add 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 7949e03f93f340afbc7363cedc0f9afd
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Add 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] a26586226dea4dc485777c593fb72abc
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Add 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 2ba59b45842045dd92d3848dcd99013e
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Add 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 238bc3833b034cc383a5e53f8e0dc06f
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Add 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 5b9848a513c24eb5aef39bb43569e4f0
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Add 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 45fe047d3803474fa1140db3bd8a286c
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Add 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 11a817c71d0745b8af0ca16668566aae
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Add 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 80d1b73188894e20a6d65994c9dd2c2a
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Add 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b95eafb785ad4639b05f4b6802d88765
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Add 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 800e2502e92443b48a08b80b71da2f70
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Add 12
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 698d784e1f5244658be45d249f4dcc53
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 90a0ff9197784325ac7d8e04b1d64cc7
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Sub 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 6e47a967cf174962bf16e415557ff564
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Sub 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 6e1f28279b584e7babf7839f0557eab6
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Sub 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 103171c3f3cf4fb789ca780449c06665
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Sub 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 62ff6173e73c40bbab6d0a6bc93bc0ee
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Sub 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 16147b257051440e88d772d40129a6a4
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Sub 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] cc2e2d821ed24ec188959f7981a49f13
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Sub 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 2bcfc4399c0d4f71bcb5892bd799ed03
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Sub 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 2064ccfcba5743bcba65a945f95f1563
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Sub 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b7c60c904a0645c5945bdb02b48b1065
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Sub 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 623b7199c8394909a8d25ab55badd748
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Sub 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 26dbb0071f254ea097f4a8218a678dc2
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Sub 12
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 1939223b855e4796aa789bd9959f2923
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 88891d078b844a93ad305831268f19f3
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Mul 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 37bfb33af11e4d5cbaaad0e41d8daf0c
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Mul 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] f9c30ec9bcb54aab9b5c6758742e3557
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Mul 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] c19ba4d7b9fb4711b996f8920a46f16b
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Mul 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 8a4ad6ca1fbe4dedbf8824d38fa956a0
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Mul 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] dca540eddf1d48cf8469832696ddf2cc
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Mul 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] f8232a633326434983faeabd330577d8
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Mul 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] c7942f216dc6496f9d4b52c4289856ba
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Mul 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] f1494c5a939047e888f05266b54ed3e8
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Mul 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 1add7e2fe1094a8090b95eba59cc8168
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Mul 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 6314ed0a3606414bb493a96397e12fda
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Mul 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] fd53d95baee94fd5a96adf6029608e1e
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Mul 12
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 6329fc43b0024d8c982e8f736e79c16a
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] e32392e6bb914f7a965640d4422aa670
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Div 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 790ef9a571b54bba8181ed3a85103b3c
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Div 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] a4244b84a9a1457c8958a903d4cf04cd
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Div 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b79a8a883a434ff4b8042f601b109064
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Div 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] f01e39e60eb44f67b454940cca35ab55
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Div 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] ef283ce17c3c4afe82c4f3a421b7667d
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Div 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 461c45f83f6f4deab30aa39e2155130e
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Div 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 979adafce505406f918831a051c6c4b9
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Div 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 96d947eb6fa4420da087a79232504486
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Div 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] def5a96e8d7c441a84cc5f09b2c379fd
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Div 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 58b42fc82d6b42f9ad60522283d01b57
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Div 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 12f04ae6c5344d8088529156bd5b4af3
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Div 12
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 2af493bb10f641949218a603cd9d403b
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 38b6fea3ccbd498985f1f7a3256b629f
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_FloorDiv 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] b57213a645ae4064a2d0ac25ef78d52e
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_FloorDiv 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 4928426cd47a48e1900f86debc4f3259
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_FloorDiv 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 964e7dac0eb145178cdc9dbe8a3412c7
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_FloorDiv 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 4483435c862a4d6090a75abaf8247798
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_FloorDiv 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] c4d6b940fc25400c87b9bb688414397d
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_FloorDiv 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 10c08f847d6b41d29b18c0367a5e2cb7
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_FloorDiv 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 6cf84c7c08a4449a982501d9fb88bd62
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_FloorDiv 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 7a3571d710cf4e9d99dc3baeca514db5
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_FloorDiv 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] f81f56cbd80b43bd8423e44fb5a85dcf
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_FloorDiv 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 46aa7032a9564ec488eb9172ec8d9ebd
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_FloorDiv 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 7a127bb254f24a13955908d67c253725
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_FloorDiv 12
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] dcda79b85d4540ef823e9c4db9aaeae0
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b86d53467d534b8ba12c1c8b2e21a857
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Pow 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 29b83ae2e64a4e91a060a82692d6e2b7
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Pow 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 8a7dc50320d34f5780da3ce3b32661e1
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Pow 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] ec830acc9f1e4047aa562a6d2ed86760
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Pow 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 2c61ccfb8a58406f8bc159b0f649485a
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Pow 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 6b647b5015c644ec94455309e11e8f46
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Pow 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] e970ee35b1da448ebc92b9233b594264
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Pow 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 17684825994443f38f8f96c614f6ba41
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Pow 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 5db54d6fd3894ff4b3a6163224292ff3
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Pow 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 79e78609ab6d4c6ea29be423dd21677c
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Pow 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] c564a30e4abe400b965cfebdfadf051a
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Pow 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 36d286ccc3fb422495010426d2447a68
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_Pow 12
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 32b3faafaaf54200beb2a3b8df805a95
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] a8e666afac0149d096660486a66a39f7
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_RShift 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 58aa523946074122b0388889e299b02b
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_RShift 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 38521ae732db45a9bb7e809992353ea0
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_RShift 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] fa18fa1de6b1424bb970c40fd77f3e99
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_RShift 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b5f2e3520b274d0696ba4fc045136b1d
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_RShift 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 97f3190a7c164ec7a5cc9c6b8f8bd7a6
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_RShift 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] e8f7944a7a3a4da38002469967d57f16
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_RShift 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 37ea97505fb241c1b01fc4f22f7dc738
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_RShift 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] d71c800629ac46608c679021b2ad2d06
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_RShift 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 2f3b86f8e0aa4c6282831957f3cb3fd3
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_RShift 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 305999840a484f128656324633267666
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_RShift 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 51f7c4a2f9fe4084b4d90b441d2ed956
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_RShift 12
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 73b47daa15894f80b9fcb74f355a0f3a
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 8b4a7ab08b7c4ce4b4101ad131595bec
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_LShift 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 1649cdd160aa4a3c914428c1bcc6fac7
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_LShift 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 9f3fe26768a9468bb8e7242d0fd20049
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_LShift 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 28cb1938f3d84115a672d81d2308f378
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_LShift 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b58906644e134b7d8e8e52c33fe13564
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_LShift 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] a53da52da80e4f3cbb61cc3653b8e4ab
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_LShift 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 82920cee5c6342d9b20fe09facca01c6
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_LShift 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 70f99c9727a74785a4dd764e2ccf39e3
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_LShift 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] edc3ce7afa9c45f3b0719b97f061c2c9
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_LShift 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 315b4825f0454c97a3bafc78d0411dad
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_LShift 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 3e30d68de38644b284b91074c20b5c35
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_LShift 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 78c328eac18e47bca0f40d07b5b40124
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_LShift 12
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] cb2496b6a13a400ba1239d2199f54117
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] dd950bc574534bbaba59840be49dce15
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitOr 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 106e88938563443383217bce759eeb72
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitOr 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 8e2067e0fdf040d9a89fa55fadc6bb89
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitOr 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 47bfab68e22f43deaf7a84098f0154d5
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitOr 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 20560f9eb50e483b9c99c494a219668f
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitOr 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] e4edd1c9d37044b58e55e8870fe3dc23
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitOr 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b1ba9c55ddb640eebe445f14b78a67f2
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitOr 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] f88b407c271e444fa9e1273fbadd2a5d
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitOr 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 9e628406e32b474591eed118bd308630
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitOr 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 00833316e87144e9b6c1d5dbb305d199
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitOr 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 0b8e866b752f4d66a4ea26a58d14eede
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitOr 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 02419ac89417481496f05c660ff3db69
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitOr 12
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 3a5f88ebe23a4eea8d2f0de0d3e035d5
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 4bd71e47b33a4aaaba632252babe6d36
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitAnd 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 731422091b6e4b3fa50c82433f5e056b
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitAnd 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 3cfccf52b64f4212abebf12953175643
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitAnd 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 586416c753ee48edbcaf67d7aba00e96
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitAnd 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 1ac7964bfd4f4568b31e0b8ac31dd164
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitAnd 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 13e884381c4f4a75852a84adc3087a5a
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitAnd 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] e8b8ef5bd07349dab8ae7f06dfd68e4c
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitAnd 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 1413c38d61554ca491a061ee0ae0e968
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitAnd 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 610bed1ed77241acadc61dd8a44ca486
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitAnd 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 1d15382480424d5c893f25992494c640
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitAnd 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 4239c2adb64e46f4bfd59c6856fba70f
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitAnd 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] a3b396bdd24b4d60b07d5731703f54a3
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitAnd 12
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 1c029f2c82cb4026a25257ba47c06358
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] a2aab4666e4243cf8bc048dbb68a9125
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitXor 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 8cc72bbce5a0413daa7c23bd98777d46
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitXor 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 32b4b2dec89041d2a44565b4ab0fe34d
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitXor 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 9be5e58a3ff84d0ebc1a3ab3640caee5
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitXor 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] dd33c27bdb2c4b4fb51af9a6f2ce1f56
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitXor 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 82fc9518eec44ac1a4757834df86286c
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitXor 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 4bcae82ba5b54a19910b87f51d385389
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitXor 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 1bdd6770681e41bcad4a0453144b5175
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitXor 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 4173c772178445efb463b1d8c3eb8e24
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitXor 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] c4d5f6e5b532436881a888981bcfae20
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitXor 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] c10fe6f33ad54095bc1e968d831a4702
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitXor 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] bcf5546eb3be406494c264da9dac5a0a
+django/db/models/constraints.py core/ReplaceBinaryOperator_Mod_BitXor 12
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 0b35a0d484d547e2ae9b1ca5d34a7b02
+django/db/models/constraints.py core/ReplaceBinaryOperator_BitAnd_Add 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] cf924c0e3e314ddcb308571b035f6351
+django/db/models/constraints.py core/ReplaceBinaryOperator_BitAnd_Sub 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 8f9ee0cc7d4c40b7a05528ecea68b50a
+django/db/models/constraints.py core/ReplaceBinaryOperator_BitAnd_Mul 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] e7a1afaebc3e4c619d08cb4fbca78402
+django/db/models/constraints.py core/ReplaceBinaryOperator_BitAnd_Div 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 01f5572c6df645bdb763df654c01ddc1
+django/db/models/constraints.py core/ReplaceBinaryOperator_BitAnd_FloorDiv 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 1f4237eee6cd42959132808093ddb417
+django/db/models/constraints.py core/ReplaceBinaryOperator_BitAnd_Mod 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b02437155bab4d68884efb54359caaf7
+django/db/models/constraints.py core/ReplaceBinaryOperator_BitAnd_Pow 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 98af8c5ab1a544ba88afe6ce9cf07899
+django/db/models/constraints.py core/ReplaceBinaryOperator_BitAnd_RShift 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 75ad3e9d92fe4c439f5ffe99c85d702d
+django/db/models/constraints.py core/ReplaceBinaryOperator_BitAnd_LShift 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 12e981cd83174df795005a911e3d1401
+django/db/models/constraints.py core/ReplaceBinaryOperator_BitAnd_BitOr 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 255240146f0b4976a8b0e49a1dab4258
+django/db/models/constraints.py core/ReplaceBinaryOperator_BitAnd_BitXor 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] aa004813d95d4e1883c1ac646c96c019
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] d214348d651646c0b75b8b89e39bc26f
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_NotEq 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 0e67c69a9af5493cb853820483c621f1
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_NotEq 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 8b9432b109e84ee88a9090199cbc4b2e
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_NotEq 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 8eaa7802025f4dd8b1517b9f40952ba9
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_NotEq 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 6fe8b824a82544ada5fdd1bb1123fa67
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_NotEq 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] e77b60803335426794b0f2eb884a6054
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_NotEq 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] c00342af710c4588acc51c3933df3335
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_NotEq 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 9fc614006d91451faf55f366a904c981
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_NotEq 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 9920f752ad654f15b37619e32c0d0985
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_NotEq 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 4d61347d7f6e4c7094a6b8946d9b1a93
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_NotEq 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 1e0b19f63af64ec397fd6fcc670c494c
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_NotEq 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b564e5bb38b04526879693d0d885fba0
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 96de91c93480493ab8ae7ad33f1ed8f3
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Lt 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 455d3f27d2284a9ea27f26554bbfe4e0
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Lt 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 8ab8364330954352b0320274021ec7d0
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Lt 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 13e0a96695074b76a8346e53fadd113b
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Lt 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 727a659e179841ddb2f3fb2347650c45
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Lt 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] a5da2796b8864b7f80f9c94ab003fbe7
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Lt 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 5e67a5f28386431aa53fff61039a193b
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Lt 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 564b30407e6942e5b8fd78244df224ee
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Lt 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 8dbcf8aab8834322a6642cc3dcb10130
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Lt 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] f86b29c0ceca4e57a650d73ac9c2b932
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Lt 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 30339caa6e2946ebae6b3fc4a0a2ce1e
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Lt 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] a1e1c4aff7c4408ba500e28f90bca777
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 3d2fa7a0a4814ca881405776f09caaf5
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_LtE 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] a623dc6a875f4869bd8d3859d58d6679
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_LtE 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 95f971ed93f7411983a3f1d2910c94e2
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_LtE 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 829cb41f6be7403eabcdd4df2ab6dff9
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_LtE 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] c6b7afc77628438ca8b5ddd6e7d41763
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_LtE 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 4b2b012a7b0a476381a57403893423b8
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_LtE 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 234c15e020924253b822e9fd0703a73f
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_LtE 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 22f756f5726741839e03cec686e5d627
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_LtE 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] a42237d3b7c74c8896140d07f2202a15
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_LtE 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] d5db73fb269e44e1a45b446fbcc8aa21
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_LtE 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 3ee77894dc6843228fcc9d7396c4b670
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_LtE 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 7cd999df48414d9584e6c8a404a29f43
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 4410300c1d5748e38c54d3b47b90487b
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Gt 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] f9fecff2a21c450d99d77536ec7ff52b
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Gt 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 1b4eab243b734638aa323fa2eecf9cce
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Gt 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 61d6232ba1e64faa8be9a7c4cb58e5d7
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Gt 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 3ca562a7edde4856a539f4024a4b288e
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Gt 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] f3b74086d13349bdbe3ace82d3ac6016
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Gt 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 3596dbcecabf44048f75b6b901e66f7f
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Gt 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 487c3e218ce74e28a20248c13d4c1d11
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Gt 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 8deb64fd4b124e68a11ca5f591f701ac
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Gt 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 6b60415cb887493bbdabddd279ccf05b
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Gt 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] c895ae50b76a4a38a2a5887f0214d180
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Gt 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] ffb013d8dee04324a689e76d4f96fa09
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 0dee85ea474e4b65828221d12bd45dde
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_GtE 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 281dfb2252ab4f84b7b3388bd5954a67
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_GtE 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] dd5e8eb960f5487fbe26107334e83cc3
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_GtE 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 0831d55dd9da4158ad34dd7a87348ab1
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_GtE 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 8cd6837e597c47b58ca2e26c7aa1aa4b
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_GtE 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 2c3aa9cf476147799589afd9e346d494
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_GtE 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b8c4822bc8834a2ba4590c45bf8431ef
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_GtE 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 0d6b869401a14ffa9256dad73ccb1959
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_GtE 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 63ad280b2d7a4d9c93cc5b7d75ff9ba5
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_GtE 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 15bb47c97beb47d981e780b14ce6ff04
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_GtE 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 7a90821f9404498dbefbe90b3e76b653
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_GtE 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b5db54c16c434605a53d8cae7c76adc0
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Is 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 3bde9cab81364087903758367dc2f664
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Is 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 42b759041a84448786491039fb52a37a
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Is 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 993da7b2a5f14086bbd9c1bf7eb72399
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Is 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 99c421fe96f14382a61b9fb21ed56433
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Is 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 49510f8825e54e339ea2cea8583f8c81
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Is 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b755df70ed4346bda5279ff00355f9f2
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Is 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] a59e011c9c8a4481953166864901247e
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Is 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 70f9b511ecae44718c3b69f639c8b532
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Is 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] f4992ef7ca1047edbf1610ee23f905f8
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Is 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 96dde31e64e1472799f4dbf30ecc2108
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Is 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] f3c86abacd634ecb8f760cdb36525da2
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_Is 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 243809f6c87c4a698656e97409dbd3c4
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_IsNot 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b5784c79c1a8425593be6a81e1ad5da5
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_IsNot 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 8852a25edf1948c7b4a79677e24efd15
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_IsNot 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 084bba3a51b44c1c85ca6ced55e4fcfa
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_IsNot 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 4f8fce2013e34ba19f2a6912f560c383
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_IsNot 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b4371df4a3824ff099b6d384b660b5aa
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_IsNot 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 219b75268f454121942e66eb31ca799c
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_IsNot 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 6025f3ad1bbb428194496f894a185980
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_IsNot 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 95106b9528eb4fe59788c5ca757d2788
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_IsNot 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 82dabe6a224d49b49c4b94c746772377
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_IsNot 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] bf05c303b7d24eadbdc47510839eba7a
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_IsNot 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 09f98102659a437da141958bea54f8b3
+django/db/models/constraints.py core/ReplaceComparisonOperator_Eq_IsNot 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 9156faa9b4294b87b0b1d44ba04bfb42
+django/db/models/constraints.py core/ReplaceComparisonOperator_NotEq_Eq 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] a080a6e3c37f403892c970a5902ee597
+django/db/models/constraints.py core/ReplaceComparisonOperator_NotEq_Eq 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] c479d0259db248dd8ed71120f2eeff51
+django/db/models/constraints.py core/ReplaceComparisonOperator_NotEq_Lt 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 2d97e1dac74c42e19f93580f4c725a3a
+django/db/models/constraints.py core/ReplaceComparisonOperator_NotEq_Lt 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] aaac9cbc23e645deb1f75e45db2748a7
+django/db/models/constraints.py core/ReplaceComparisonOperator_NotEq_LtE 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] ca1095d54854445e8cce5a365945f4ab
+django/db/models/constraints.py core/ReplaceComparisonOperator_NotEq_LtE 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] c2001726e53241ac9128550e0e383556
+django/db/models/constraints.py core/ReplaceComparisonOperator_NotEq_Gt 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 45700bab87ea45b6a326fafcc0617ca0
+django/db/models/constraints.py core/ReplaceComparisonOperator_NotEq_Gt 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 8ceab70e5c114ebab105b6ed853be0f1
+django/db/models/constraints.py core/ReplaceComparisonOperator_NotEq_GtE 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] dad1ba96066d4097a858c97a3b5bbf9d
+django/db/models/constraints.py core/ReplaceComparisonOperator_NotEq_GtE 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 01f36c37a34749ba9e7082792b65a2c6
+django/db/models/constraints.py core/ReplaceComparisonOperator_NotEq_Is 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 51e6c548824041ec90916a2529a12d56
+django/db/models/constraints.py core/ReplaceComparisonOperator_NotEq_Is 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 3aef2154335e4de48d4bceb682348a92
+django/db/models/constraints.py core/ReplaceComparisonOperator_NotEq_IsNot 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] d6cf8e95c146487da7694aca7b7fd4af
+django/db/models/constraints.py core/ReplaceComparisonOperator_NotEq_IsNot 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] dfb6cda5c6e642e2b6f1d5994f3342be
+django/db/models/constraints.py core/ReplaceComparisonOperator_Is_Eq 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 5e9c5ca4a57744aeb3d472175a8bd4e8
+django/db/models/constraints.py core/ReplaceComparisonOperator_Is_NotEq 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b525419269b840fca477f9cad0fd7fbe
+django/db/models/constraints.py core/ReplaceComparisonOperator_Is_Lt 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] ae4485baf077439aac86ef118984f9b1
+django/db/models/constraints.py core/ReplaceComparisonOperator_Is_LtE 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 1e98fb24a91846558475aededece1630
+django/db/models/constraints.py core/ReplaceComparisonOperator_Is_Gt 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 42b341838f3f4a84955ae601af0dcaa6
+django/db/models/constraints.py core/ReplaceComparisonOperator_Is_GtE 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] ce44bb29d650488ebf4f0b1889245312
+django/db/models/constraints.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b11fd3c9da604e8bacd8ce34abe2b151
+django/db/models/constraints.py core/ReplaceComparisonOperator_Is_IsNot 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 963bb2b99db640d1a0b0c171d4a9cc62
+django/db/models/constraints.py core/ReplaceComparisonOperator_Is_IsNot 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 0f92f89cef2146ffbac1d98abd008fc4
+django/db/models/constraints.py core/ReplaceComparisonOperator_Is_IsNot 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 6778744cb57c42bab496580aea465ae1
+django/db/models/constraints.py core/ReplaceComparisonOperator_Is_IsNot 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 3d883261710443d7bc17d5d582a3d9dd
+django/db/models/constraints.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] f3d213c96b97445ca46e3fc92fe8609c
+django/db/models/constraints.py core/ReplaceComparisonOperator_IsNot_Is 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 5a079d2e50aa4d08ac238b7bd9a174ad
+django/db/models/constraints.py core/ReplaceComparisonOperator_IsNot_Is 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] a2b484ad46144e46b359636552a15c8e
+django/db/models/constraints.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] ab017aced91946b5bf0cc524d0dda1b9
+django/db/models/constraints.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 34c0efe816794badb2f8307b383174c5
+django/db/models/constraints.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] ef26f514b4ad46379b7c340c365b2894
+django/db/models/constraints.py core/ReplaceUnaryOperator_Delete_Not 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 0c629879ea5e4196a6709e9871f5a2d0
+django/db/models/constraints.py core/ReplaceUnaryOperator_Delete_Not 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 620cbb70c8e54501831eb25f8ae8ac13
+django/db/models/constraints.py core/ReplaceUnaryOperator_Delete_Not 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 659f7f29edf14138b02655e138cf0958
+django/db/models/constraints.py core/ReplaceUnaryOperator_Delete_Not 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 3beba5746b144d04a627cc62affcc4de
+django/db/models/constraints.py core/ReplaceUnaryOperator_Delete_Not 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] b5bad25a6c7b4d139591348d65fc1559
+django/db/models/constraints.py core/ReplaceUnaryOperator_Delete_Not 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] a30eaec6f0a24bb7a6b3a729eb6b8a97
+django/db/models/constraints.py core/ReplaceUnaryOperator_Delete_Not 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] f90943acc9c040858ca4335ff9bdc876
+django/db/models/constraints.py core/ReplaceUnaryOperator_Delete_Not 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 7535b54cc00a45babfd81c3586fbb6f9
+django/db/models/constraints.py core/ReplaceUnaryOperator_Delete_Not 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b7491ea4d6de4a048d53b033249bf924
+django/db/models/constraints.py core/ReplaceUnaryOperator_Delete_Not 12
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 171cf51f95494a69b0e99dc8b93677d0
+django/db/models/constraints.py core/ReplaceUnaryOperator_Delete_Not 13
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 0efeaef7ec734b579dd243dd2976a767
+django/db/models/constraints.py core/ReplaceUnaryOperator_Delete_Not 14
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 4e6def5c9b2a436ea011a2459dbd5699
+django/db/models/constraints.py core/ReplaceUnaryOperator_Delete_Not 15
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 8a943aa7665e44cdb37f6f4253b22209
+django/db/models/constraints.py core/AddNot 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 8f521d03763545f39f280361d264575b
+django/db/models/constraints.py core/AddNot 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] d2117175f67c4e6499ccf3522e5c5203
+django/db/models/constraints.py core/AddNot 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 8a262cbe82994fbfad098011e1032995
+django/db/models/constraints.py core/AddNot 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 5dc5873eabf74caabf4ba9f57edf6aa7
+django/db/models/constraints.py core/AddNot 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 4fa70f7ce9804b7a840d7f7ad84808cf
+django/db/models/constraints.py core/AddNot 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 3cf3e5e9cbfb40478cc6ef7d873bc560
+django/db/models/constraints.py core/AddNot 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 4c513a5e81844401aa43d2146f295524
+django/db/models/constraints.py core/AddNot 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 7f92b809190a4ad7b7abd7eb5318a398
+django/db/models/constraints.py core/AddNot 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 9412d047e02a42cc831cce3a49ccdf2e
+django/db/models/constraints.py core/AddNot 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] bf05117a1d414a228a94e6331a730319
+django/db/models/constraints.py core/AddNot 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] fcd54f2eb8944f5a9e165693e16429c4
+django/db/models/constraints.py core/AddNot 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 2d506fc0a6e24625922f212dc0901d69
+django/db/models/constraints.py core/AddNot 12
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 1a2b96519add409a92b2f869d18301b8
+django/db/models/constraints.py core/AddNot 13
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 951b3337d35a467d936d826c83a923fa
+django/db/models/constraints.py core/AddNot 14
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] f10709dd962348409d56dc696e53ad08
+django/db/models/constraints.py core/AddNot 15
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 40c6c56078814db5917d8b4793de5a97
+django/db/models/constraints.py core/AddNot 16
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] f48d2174b9a14f12b48719f36953a42a
+django/db/models/constraints.py core/AddNot 17
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 52f16dccfaa84b7c9a23ff4f38e0aebd
+django/db/models/constraints.py core/AddNot 18
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] d3f18df467dd49bbad7a52e64de03edb
+django/db/models/constraints.py core/AddNot 19
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] e93d3f8cf7444cf88773b5c7b77b2bb0
+django/db/models/constraints.py core/AddNot 20
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 47576991cd894211b8744b58694cd08c
+django/db/models/constraints.py core/AddNot 21
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 722fd0c6b9174976a8a6ed42d168c765
+django/db/models/constraints.py core/AddNot 22
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 077c5995c4504a7fb0cd4071e075672c
+django/db/models/constraints.py core/AddNot 23
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 2d4819ea0552413cbf6d4d939adb5c49
+django/db/models/constraints.py core/AddNot 24
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] cdfe71e41b1d48e184435e00d3f7ea54
+django/db/models/constraints.py core/AddNot 25
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] bc673e38661246dba57d68c3a6e6f0cc
+django/db/models/constraints.py core/AddNot 26
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] bd1b684e6acc438ab06109a9dddda065
+django/db/models/constraints.py core/AddNot 27
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 2370c82347da48d7afd1a50715cef4ee
+django/db/models/constraints.py core/AddNot 28
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b6a3c639fcd942d3ba1aec7e423ee1b1
+django/db/models/constraints.py core/AddNot 29
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 54325e2cfab44933ba0dfb48d572c856
+django/db/models/constraints.py core/AddNot 30
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 731bc94c5f134db486b2fabea7710c73
+django/db/models/constraints.py core/AddNot 31
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] d1cfa7c20248443fb96ab97a33ebe374
+django/db/models/constraints.py core/AddNot 32
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] bb3b8e61337b47df8f3e0fef10cb6aed
+django/db/models/constraints.py core/AddNot 33
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 33305bfab8034347ac8776b428fdff23
+django/db/models/constraints.py core/AddNot 34
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 9bc0a6a3514d4875913bb3ea9c7b4365
+django/db/models/constraints.py core/AddNot 35
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 01987cd09eb94544be4ae814fb88daeb
+django/db/models/constraints.py core/AddNot 36
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 09035712800741d5a0b2425cba59a8b2
+django/db/models/constraints.py core/AddNot 37
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 0f0e28fd08ca44c9aee615efdeb789b3
+django/db/models/constraints.py core/AddNot 38
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 2b1baf88cd2d4925bba4ea60936edb2d
+django/db/models/constraints.py core/AddNot 39
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 011db14541814b0ba8b2eaa715a5ad90
+django/db/models/constraints.py core/AddNot 40
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 37ef0e0188924b389205999f0b296b24
+django/db/models/constraints.py core/AddNot 41
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 909b32ecbe0942ea940fb9ae6a5df043
+django/db/models/constraints.py core/AddNot 42
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 50dc2ae3212340d4b70da09a20067d13
+django/db/models/constraints.py core/AddNot 43
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 6f3e6a3716354bbe915bccf47c98018e
+django/db/models/constraints.py core/AddNot 44
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 9923e5e3d3414bbda83696d5cd19c483
+django/db/models/constraints.py core/AddNot 45
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] e48bc4da1e75407bb87f66a97cb928d8
+django/db/models/constraints.py core/AddNot 46
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b9895d9ccc9c4a0a991ec4063e386c1f
+django/db/models/constraints.py core/ReplaceFalseWithTrue 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 60291f08d40245efae5df3a0d4f60dfa
+django/db/models/constraints.py core/ReplaceFalseWithTrue 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 3fe2c510960b42dda32d3cf4153b7d97
+django/db/models/constraints.py core/ReplaceFalseWithTrue 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] f293cb4bae5a49e6ab2daaaa77751060
+django/db/models/constraints.py core/ReplaceFalseWithTrue 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 5b3fdaadf25d4d14b599d3cfd96101dc
+django/db/models/constraints.py core/ReplaceFalseWithTrue 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] bd39be652eaf4802b65ee87bdc28f86f
+django/db/models/constraints.py core/ReplaceAndWithOr 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] e6be6bbffed742e2999610c69f3a4dab
+django/db/models/constraints.py core/ReplaceAndWithOr 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 1bd6c4d0fd1f4408be0f5d5040fd15e9
+django/db/models/constraints.py core/ReplaceAndWithOr 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b41fc736b1cc41c985be9eb27b9b5d6d
+django/db/models/constraints.py core/ReplaceAndWithOr 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] abdfe42bd599410cb9a64fe5f77e0a35
+django/db/models/constraints.py core/ReplaceAndWithOr 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 0a9bc77c8d1748f5bdcb54cf8e1e7e51
+django/db/models/constraints.py core/ReplaceAndWithOr 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 939642588d994d66a279775235c85381
+django/db/models/constraints.py core/ReplaceAndWithOr 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] a0f9f4cf2685426c8b3c535759032143
+django/db/models/constraints.py core/ReplaceAndWithOr 7
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 146cb32733e94196b766370b68c3998b
+django/db/models/constraints.py core/ReplaceAndWithOr 8
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 23dfd12ff2bb47a387fa4fc04fe6caed
+django/db/models/constraints.py core/ReplaceAndWithOr 9
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 11a21c8f466a43ecb270a9e0d80e2d67
+django/db/models/constraints.py core/ReplaceAndWithOr 10
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] a66cbfa601b943d18437d6ac555783a9
+django/db/models/constraints.py core/ReplaceAndWithOr 11
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 292b1c5eeafe46ee83a25ab9f73bb8ba
+django/db/models/constraints.py core/ReplaceAndWithOr 12
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b8cbdbcb4f834386b53f38776daffacb
+django/db/models/constraints.py core/ReplaceAndWithOr 13
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] ca4e82ac43584dc493be98e2c38a0941
+django/db/models/constraints.py core/ReplaceAndWithOr 14
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] d942561b824347d9a2fe10f13e425fb6
+django/db/models/constraints.py core/ReplaceAndWithOr 15
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b80baa1bde5a4606adf66b5bdefea9d3
+django/db/models/constraints.py core/ReplaceAndWithOr 16
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] deba04143fba47ddb9d737f707509bce
+django/db/models/constraints.py core/ReplaceAndWithOr 17
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 85dd30598207499aa03dbfd30e621f62
+django/db/models/constraints.py core/ReplaceAndWithOr 18
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 102dd866ac1b447b938d6566d532266d
+django/db/models/constraints.py core/ReplaceAndWithOr 19
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] f5188d2ea2944e61ae55a0ee2d519877
+django/db/models/constraints.py core/ReplaceAndWithOr 20
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] b27aa286f46e41388361a8f9addbd31f
+django/db/models/constraints.py core/ReplaceAndWithOr 21
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 6f2629a251444b34abb1c254170b8653
+django/db/models/constraints.py core/ReplaceAndWithOr 22
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 1886da71171440cdb72593046e65d11b
+django/db/models/constraints.py core/ReplaceOrWithAnd 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] a3a4331ac6724a4eb4b37b983ecea1ca
+django/db/models/constraints.py core/ExceptionReplacer 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 9a255bf920a7492fa73e84e25caee591
+django/db/models/constraints.py core/ExceptionReplacer 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 9ec4766cf4a6453c85b88a9cacd04e42
+django/db/models/constraints.py core/RemoveDecorator 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 52413e67c98b45c78e06a774cc2e03cb
+django/db/models/constraints.py core/RemoveDecorator 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 0030ae7cbf704eae8596e96ee99a4880
+django/db/models/constraints.py core/ZeroIterationForLoop 0
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] c776f8a0a6134db2ab96a149cd148b8b
+django/db/models/constraints.py core/ZeroIterationForLoop 1
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 3995451d8f8f4502a5935351ab25b98f
+django/db/models/constraints.py core/ZeroIterationForLoop 2
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.KILLED
+[job-id] 29c0b6f82af94f478e71240015985ef8
+django/db/models/constraints.py core/ZeroIterationForLoop 3
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] a928a3ae27104326a69123adcbda85d3
+django/db/models/constraints.py core/ZeroIterationForLoop 4
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] 13212455e0f848c98c3bffa4025b3975
+django/db/models/constraints.py core/ZeroIterationForLoop 5
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+[job-id] c2805e0f89044a77acb9e969e3fb6c90
+django/db/models/constraints.py core/ZeroIterationForLoop 6
+worker outcome: WorkerOutcome.NORMAL, test outcome: TestOutcome.SURVIVED
+total jobs: 380
+complete: 380 (100.00%)
+surviving mutants: 313 (82.37%)
+ 
+[django__django__5.0] [django__django-16501] Return Code: 0 
+[django__django__5.0] [django__django-16501] 
+MutationNum: 380 
+[django__django__5.0] [django__django-16501] 
+MutationLOG: 17.629999999999995% 
+[django__django__5.0] [django__django-16501] 
+MutationUncertainty: 0.0 
+[django__django__5.0] [django__django-16501] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/db/models/constraints.py'
+        and ((308 <= spec.start_pos[0] <= 372))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__5.0] [django__django-16501] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16501] Std. Output:
+FUNC_MUTATION_RESULT 25.454545454545453 55
+ 
+[django__django__5.0] [django__django-16501] Return Code: 0 
+[django__django__5.0] [django__django-16501] 
+FunctionMutationLOG: 25.454545454545453% 
+[django__django__5.0] [django__django-16501] 
+FunctionMutationNum: 55 
+[django__django__5.0] [django__django-16501] Test script run successful 
+[django__django__5.0] [django__django-16501] Removing coverage 
+[django__django__5.0] [django__django-16501] >>>>> Unfiltered Tests Failed 

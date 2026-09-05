@@ -1,0 +1,325 @@
+[django__django__4.1] [django__django-15695] Task Metadata:
+	- Instance ID: django__django-15695
+	- Testbed: django__django__4.1
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.9.19
+ 
+[django__django__4.1] [django__django-15695] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__4.1] [django__django-15695] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15695] Std. Output:
+ 
+[django__django__4.1] [django__django-15695] Return Code: 0 
+[django__django__4.1] [django__django-15695] Command: git -c advice.detachedHead=false checkout 647480166bfe7532e8c471fef0146e3a17e6c0c9 
+[django__django__4.1] [django__django-15695] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15695] Std. Output:
+HEAD is now at 647480166b Refs #33685 -- Doc'd that using PostgreSQL's service names for testing purposes is not supported.
+ 
+[django__django__4.1] [django__django-15695] Return Code: 0 
+[django__django__4.1] [django__django-15695] Command: git diff > /opt/temp_django__django-15695_gold_init.patch 
+[django__django__4.1] [django__django-15695] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15695] Std. Output:
+ 
+[django__django__4.1] [django__django-15695] Return Code: 0 
+[django__django__4.1] [django__django-15695] Command: git apply -v /opt/temp_django__django-15695_gold.patch 
+[django__django__4.1] [django__django-15695] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15695] Std. Output:
+Checking patch django/db/migrations/operations/models.py...
+Applied patch django/db/migrations/operations/models.py cleanly.
+ 
+[django__django__4.1] [django__django-15695] Return Code: 0 
+[django__django__4.1] [django__django-15695] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__4.1] [django__django-15695] Command: git diff > /opt/temp_django__django-15695_test_init.patch 
+[django__django__4.1] [django__django-15695] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15695] Std. Output:
+ 
+[django__django__4.1] [django__django-15695] Return Code: 0 
+[django__django__4.1] [django__django-15695] Command: git restore tests/migrations/test_operations.py 
+[django__django__4.1] [django__django-15695] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15695] Std. Output:
+ 
+[django__django__4.1] [django__django-15695] Return Code: 0 
+[django__django__4.1] [django__django-15695] Command: git apply -v /opt/temp_django__django-15695_test.patch 
+[django__django__4.1] [django__django-15695] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.1] [django__django-15695] Std. Output:
+Checking patch tests/migrations/test_operations.py...
+Applied patch tests/migrations/test_operations.py cleanly.
+ 
+[django__django__4.1] [django__django-15695] Return Code: 0 
+[django__django__4.1] [django__django-15695] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__4.1] [django__django-15695] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_operations 
+[django__django__4.1] [django__django-15695] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15695] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+test_database_forwards_skipped_when_not_allowed (migrations.test_operations.RenameIndexDatabaseForwardsTests) ... ERROR
+
+======================================================================
+ERROR: test_database_forwards_skipped_when_not_allowed (migrations.test_operations.RenameIndexDatabaseForwardsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_operations.py", line 79, in test_database_forwards_skipped_when_not_allowed
+    from_state = self._make_state_with_index("old_idx", ("weight",))
+  File "/opt/django__django/tests/migrations/test_operations.py", line 60, in _make_state_with_index
+    model_cls = type(self.model_name, (models.Model,), {"__module__": __name__, "Meta": meta})
+  File "/opt/django__django/django/db/models/base.py", line 364, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 226, in register_model
+    warnings.warn(
+RuntimeWarning: Model 'testapp.pony' was already registered. Reloading models is not advised as it can lead to inconsistencies, most notably with related models.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.1] [django__django-15695] Return Code: 1 
+[django__django__4.1] [django__django-15695] TestsTime: 1.5097055435180664 
+[django__django__4.1] [django__django-15695] Test script run successful 
+[django__django__4.1] [django__django-15695] Removing coverage 
+[django__django__4.1] [django__django-15695] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_operations 
+[django__django__4.1] [django__django-15695] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15695] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+test_database_forwards_noop_when_names_equal (migrations.test_operations.RenameIndexDatabaseForwardsTests) ... ERROR
+
+======================================================================
+ERROR: test_database_forwards_noop_when_names_equal (migrations.test_operations.RenameIndexDatabaseForwardsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_operations.py", line 76, in test_database_forwards_noop_when_names_equal
+    from_state = self._make_state_with_index("same_name", ("weight",))
+  File "/opt/django__django/tests/migrations/test_operations.py", line 60, in _make_state_with_index
+    model_cls = type(self.model_name, (models.Model,), {"__module__": __name__, "Meta": meta})
+  File "/opt/django__django/django/db/models/base.py", line 364, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 226, in register_model
+    warnings.warn(
+RuntimeWarning: Model 'testapp.pony' was already registered. Reloading models is not advised as it can lead to inconsistencies, most notably with related models.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.1] [django__django-15695] Return Code: 1 
+[django__django__4.1] [django__django-15695] TestsTime: 0.812730073928833 
+[django__django__4.1] [django__django-15695] Test script run successful 
+[django__django__4.1] [django__django-15695] Removing coverage 
+[django__django__4.1] [django__django-15695] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_operations 
+[django__django__4.1] [django__django-15695] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15695] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+test_database_forwards_raises_on_multiple_matching_indexes (migrations.test_operations.RenameIndexDatabaseForwardsTests) ... ERROR
+
+======================================================================
+ERROR: test_database_forwards_raises_on_multiple_matching_indexes (migrations.test_operations.RenameIndexDatabaseForwardsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_operations.py", line 78, in test_database_forwards_raises_on_multiple_matching_indexes
+    from_state = self._make_state_with_index("unused", ("weight", "pink"))
+  File "/opt/django__django/tests/migrations/test_operations.py", line 60, in _make_state_with_index
+    model_cls = type(self.model_name, (models.Model,), {"__module__": __name__, "Meta": meta})
+  File "/opt/django__django/django/db/models/base.py", line 364, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 226, in register_model
+    warnings.warn(
+RuntimeWarning: Model 'testapp.pony' was already registered. Reloading models is not advised as it can lead to inconsistencies, most notably with related models.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.1] [django__django-15695] Return Code: 1 
+[django__django__4.1] [django__django-15695] TestsTime: 0.838883638381958 
+[django__django__4.1] [django__django-15695] Test script run successful 
+[django__django__4.1] [django__django-15695] Removing coverage 
+[django__django__4.1] [django__django-15695] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_operations 
+[django__django__4.1] [django__django-15695] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15695] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+test_database_forwards_renames_named_index (migrations.test_operations.RenameIndexDatabaseForwardsTests) ... ERROR
+
+======================================================================
+ERROR: test_database_forwards_renames_named_index (migrations.test_operations.RenameIndexDatabaseForwardsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_operations.py", line 78, in test_database_forwards_renames_named_index
+    from_state = self._make_state_with_index(old_name, ("weight",))
+  File "/opt/django__django/tests/migrations/test_operations.py", line 60, in _make_state_with_index
+    model_cls = type(self.model_name, (models.Model,), {"__module__": __name__, "Meta": meta})
+  File "/opt/django__django/django/db/models/base.py", line 364, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 226, in register_model
+    warnings.warn(
+RuntimeWarning: Model 'testapp.pony' was already registered. Reloading models is not advised as it can lead to inconsistencies, most notably with related models.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.1] [django__django-15695] Return Code: 1 
+[django__django__4.1] [django__django-15695] TestsTime: 0.7717592716217041 
+[django__django__4.1] [django__django-15695] Test script run successful 
+[django__django__4.1] [django__django-15695] Removing coverage 
+[django__django__4.1] [django__django-15695] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_operations 
+[django__django__4.1] [django__django-15695] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.1] [django__django-15695] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+test_database_forwards_renames_unnamed_index (migrations.test_operations.RenameIndexDatabaseForwardsTests) ... ERROR
+
+======================================================================
+ERROR: test_database_forwards_renames_unnamed_index (migrations.test_operations.RenameIndexDatabaseForwardsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_operations.py", line 80, in test_database_forwards_renames_unnamed_index
+    from_state = self._make_state_with_index("unused", ("weight", "pink"))
+  File "/opt/django__django/tests/migrations/test_operations.py", line 60, in _make_state_with_index
+    model_cls = type(self.model_name, (models.Model,), {"__module__": __name__, "Meta": meta})
+  File "/opt/django__django/django/db/models/base.py", line 364, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 226, in register_model
+    warnings.warn(
+RuntimeWarning: Model 'testapp.pony' was already registered. Reloading models is not advised as it can lead to inconsistencies, most notably with related models.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.1] [django__django-15695] Return Code: 1 
+[django__django__4.1] [django__django-15695] TestsTime: 0.7377877235412598 
+[django__django__4.1] [django__django-15695] Test script run successful 
+[django__django__4.1] [django__django-15695] Removing coverage 
+[django__django__4.1] [django__django-15695] >>>>> Tests configfull pred
+ 
+[django__django__4.1] [django__django-15695] TestsTime: 0.0 
+[django__django__4.1] [django__django-15695] >>>>> Some Tests Failed 
+[django__django__4.1] [django__django-15695] >>>>> Unfiltered Tests Failed 

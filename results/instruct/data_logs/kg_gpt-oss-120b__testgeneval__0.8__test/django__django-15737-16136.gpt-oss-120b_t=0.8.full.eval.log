@@ -1,0 +1,206 @@
+[django__django__4.2] [django__django-15737] Task Metadata:
+	- Instance ID: django__django-15737
+	- Testbed: django__django__4.2
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.9.19
+ 
+[django__django__4.2] [django__django-15737] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__4.2] [django__django-15737] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15737] Std. Output:
+ 
+[django__django__4.2] [django__django-15737] Return Code: 0 
+[django__django__4.2] [django__django-15737] Command: git -c advice.detachedHead=false checkout f1e0fc645bb0b2c15d1510c9a8501743297dec9d 
+[django__django__4.2] [django__django-15737] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15737] Std. Output:
+Previous HEAD position was 0fbdb9784d Fixed #23718 -- Doc'd that test mirrors require TransactionTestCase.
+HEAD is now at f1e0fc645b Fixed #33754 -- Fixed crash with prematurely closed ASGI request body.
+ 
+[django__django__4.2] [django__django-15737] Return Code: 0 
+[django__django__4.2] [django__django-15737] Command: git diff > /opt/temp_django__django-15737_gold_init.patch 
+[django__django__4.2] [django__django-15737] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15737] Std. Output:
+ 
+[django__django__4.2] [django__django-15737] Return Code: 0 
+[django__django__4.2] [django__django-15737] Command: git apply -v /opt/temp_django__django-15737_gold.patch 
+[django__django__4.2] [django__django-15737] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15737] Std. Output:
+Checking patch django/db/models/base.py...
+Applied patch django/db/models/base.py cleanly.
+ 
+[django__django__4.2] [django__django-15737] Return Code: 0 
+[django__django__4.2] [django__django-15737] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__4.2] [django__django-15737] Command: git diff > /opt/temp_django__django-15737_test_init.patch 
+[django__django__4.2] [django__django-15737] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15737] Std. Output:
+ 
+[django__django__4.2] [django__django-15737] Return Code: 0 
+[django__django__4.2] [django__django-15737] Command: git restore tests/many_to_one/tests.py 
+[django__django__4.2] [django__django-15737] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15737] Std. Output:
+ 
+[django__django__4.2] [django__django-15737] Return Code: 0 
+[django__django__4.2] [django__django-15737] Command: git apply -v /opt/temp_django__django-15737_test.patch 
+[django__django__4.2] [django__django-15737] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15737] Std. Output:
+Checking patch tests/many_to_one/tests.py...
+Applied patch tests/many_to_one/tests.py cleanly.
+ 
+[django__django__4.2] [django__django-15737] Return Code: 0 
+[django__django__4.2] [django__django-15737] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__4.2] [django__django-15737] Command: coverage run ./tests/runtests.py --verbosity 2 many_to_one.tests 
+[django__django__4.2] [django__django-15737] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.2] [django__django-15737] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 766, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 425, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 1046, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 897, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 848, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/many_to_one/tests.py", line 45, in <module>
+    apps.clear_cache()
+  File "/opt/django__django/django/apps/registry.py", line 383, in clear_cache
+    for model in app_config.get_models(include_auto_created=True):
+  File "/opt/django__django/django/apps/config.py", line 254, in get_models
+    self.apps.check_models_ready()
+AttributeError: 'NoneType' object has no attribute 'check_models_ready'
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application many_to_one
+ 
+[django__django__4.2] [django__django-15737] Return Code: 1 
+[django__django__4.2] [django__django-15737] TestsTime: 1.4621038436889648 
+[django__django__4.2] [django__django-15737] Test script run successful 
+[django__django__4.2] [django__django-15737] Removing coverage 
+[django__django__4.2] [django__django-15737] Command: coverage run ./tests/runtests.py --verbosity 2 many_to_one.tests 
+[django__django__4.2] [django__django-15737] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.2] [django__django-15737] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 766, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 425, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 1046, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 897, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 848, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/many_to_one/tests.py", line 45, in <module>
+    apps.clear_cache()
+  File "/opt/django__django/django/apps/registry.py", line 383, in clear_cache
+    for model in app_config.get_models(include_auto_created=True):
+  File "/opt/django__django/django/apps/config.py", line 254, in get_models
+    self.apps.check_models_ready()
+AttributeError: 'NoneType' object has no attribute 'check_models_ready'
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application many_to_one
+ 
+[django__django__4.2] [django__django-15737] Return Code: 1 
+[django__django__4.2] [django__django-15737] TestsTime: 0.5151174068450928 
+[django__django__4.2] [django__django-15737] Test script run successful 
+[django__django__4.2] [django__django-15737] Removing coverage 
+[django__django__4.2] [django__django-15737] Command: coverage run ./tests/runtests.py --verbosity 2 many_to_one.tests 
+[django__django__4.2] [django__django-15737] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.2] [django__django-15737] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 766, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 425, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 1046, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 897, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 848, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/many_to_one/tests.py", line 45, in <module>
+    apps.clear_cache()
+  File "/opt/django__django/django/apps/registry.py", line 383, in clear_cache
+    for model in app_config.get_models(include_auto_created=True):
+  File "/opt/django__django/django/apps/config.py", line 254, in get_models
+    self.apps.check_models_ready()
+AttributeError: 'NoneType' object has no attribute 'check_models_ready'
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application many_to_one
+ 
+[django__django__4.2] [django__django-15737] Return Code: 1 
+[django__django__4.2] [django__django-15737] TestsTime: 0.6446628570556641 
+[django__django__4.2] [django__django-15737] Test script run successful 
+[django__django__4.2] [django__django-15737] Removing coverage 
+[django__django__4.2] [django__django-15737] Command: coverage run ./tests/runtests.py --verbosity 2 many_to_one.tests 
+[django__django__4.2] [django__django-15737] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.2] [django__django-15737] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 766, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 425, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 1046, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 897, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 848, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/many_to_one/tests.py", line 45, in <module>
+    apps.clear_cache()
+  File "/opt/django__django/django/apps/registry.py", line 383, in clear_cache
+    for model in app_config.get_models(include_auto_created=True):
+  File "/opt/django__django/django/apps/config.py", line 254, in get_models
+    self.apps.check_models_ready()
+AttributeError: 'NoneType' object has no attribute 'check_models_ready'
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application many_to_one
+ 
+[django__django__4.2] [django__django-15737] Return Code: 1 
+[django__django__4.2] [django__django-15737] TestsTime: 0.7251942157745361 
+[django__django__4.2] [django__django-15737] Test script run successful 
+[django__django__4.2] [django__django-15737] Removing coverage 
+[django__django__4.2] [django__django-15737] Command: coverage run ./tests/runtests.py --verbosity 2 many_to_one.tests 
+[django__django__4.2] [django__django-15737] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.2] [django__django-15737] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 766, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 425, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 1046, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 897, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 848, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.9.19/lib/python3.9/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/many_to_one/tests.py", line 45, in <module>
+    apps.clear_cache()
+  File "/opt/django__django/django/apps/registry.py", line 383, in clear_cache
+    for model in app_config.get_models(include_auto_created=True):
+  File "/opt/django__django/django/apps/config.py", line 254, in get_models
+    self.apps.check_models_ready()
+AttributeError: 'NoneType' object has no attribute 'check_models_ready'
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application many_to_one
+ 
+[django__django__4.2] [django__django-15737] Return Code: 1 
+[django__django__4.2] [django__django-15737] TestsTime: 0.6898517608642578 
+[django__django__4.2] [django__django-15737] Test script run successful 
+[django__django__4.2] [django__django-15737] Removing coverage 
+[django__django__4.2] [django__django-15737] >>>>> Tests configfull pred
+ 
+[django__django__4.2] [django__django-15737] TestsTime: 0.0 
+[django__django__4.2] [django__django-15737] >>>>> Some Tests Failed 
+[django__django__4.2] [django__django-15737] >>>>> Unfiltered Tests Failed 
