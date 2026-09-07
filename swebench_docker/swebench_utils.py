@@ -584,7 +584,7 @@ def get_model_report(
         report_map["generated"].append(p[KEY_ID])
 
         # Get log file
-        log_path = os.path.join(log_dir, f"{p[KEY_ID]}.{model}.eval.log")
+        log_path = os.path.join(log_dir, f"{p[KEY_ID]}.{model}.full.eval.log")
         if not os.path.exists(log_path):
             continue
         report_map["with_logs"].append(p[KEY_ID])
