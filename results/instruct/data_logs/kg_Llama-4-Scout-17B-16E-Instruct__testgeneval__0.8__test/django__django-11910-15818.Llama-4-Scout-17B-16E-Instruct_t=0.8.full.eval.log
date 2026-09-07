@@ -1,0 +1,1856 @@
+[django__django__3.1] [django__django-11910] Task Metadata:
+	- Instance ID: django__django-11910
+	- Testbed: django__django__3.1
+	- Evaluation Model: Llama-4-Scout-17B-16E-Instruct_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.1] [django__django-11910] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11910] Std. Output:
+ 
+[django__django__3.1] [django__django-11910] Return Code: 0 
+[django__django__3.1] [django__django-11910] Command: git -c advice.detachedHead=false checkout d232fd76a85870daf345fd8f8d617fe7802ae194 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Previous HEAD position was 0668164b4a Fixed E128, E741 flake8 warnings.
+HEAD is now at d232fd76a8 Clarified that SECURE_REDIRECT_EXEMPT patterns should not include leading slashes.
+ 
+[django__django__3.1] [django__django-11910] Return Code: 0 
+[django__django__3.1] [django__django-11910] Command: git diff > /opt/temp_django__django-11910_gold_init.patch 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11910] Std. Output:
+ 
+[django__django__3.1] [django__django-11910] Return Code: 0 
+[django__django__3.1] [django__django-11910] Command: git apply -v /opt/temp_django__django-11910_gold.patch 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Checking patch django/db/migrations/autodetector.py...
+Applied patch django/db/migrations/autodetector.py cleanly.
+ 
+[django__django__3.1] [django__django-11910] Return Code: 0 
+[django__django__3.1] [django__django-11910] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.1] [django__django-11910] Command: git diff > /opt/temp_django__django-11910_test_init.patch 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11910] Std. Output:
+ 
+[django__django__3.1] [django__django-11910] Return Code: 0 
+[django__django__3.1] [django__django-11910] Command: git restore tests/migrations/test_autodetector.py 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11910] Std. Output:
+ 
+[django__django__3.1] [django__django-11910] Return Code: 0 
+[django__django__3.1] [django__django-11910] Command: git apply -v /opt/temp_django__django-11910_test.patch 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Checking patch tests/migrations/test_autodetector.py...
+Applied patch tests/migrations/test_autodetector.py cleanly.
+ 
+[django__django__3.1] [django__django-11910] Return Code: 0 
+[django__django__3.1] [django__django-11910] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_no_change (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_no_change (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 17, in test_no_change
+    ('name', models.CharField(max_length=100)),
+TypeError: __init__() missing 1 required positional argument: 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 4.175813913345337 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_change (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_change (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 16, in test_change
+    ('name', models.CharField(max_length=100)),
+TypeError: __init__() missing 1 required positional argument: 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.6789400577545166 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_m2m_to_concrete (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_m2m_to_concrete (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 16, in test_m2m_to_concrete
+    ('m2m', models.ManyToManyField('other.Model')),
+TypeError: __init__() missing 1 required positional argument: 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.5417189598083496 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_m2m_to_concrete (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_m2m_to_concrete (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 16, in test_m2m_to_concrete
+    ('fk', models.ForeignKey('other.Model', on_delete=models.CASCADE)),
+TypeError: __init__() missing 1 required positional argument: 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.58426833152771 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_rename_relation (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_rename_relation (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 16, in test_rename_relation
+    ('fk', models.ForeignKey('other.OldModel', on_delete=models.CASCADE)),
+TypeError: __init__() missing 1 required positional argument: 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.9079587459564209 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_remote_field_rename (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_remote_field_rename (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 16, in test_remote_field_rename
+    ('fk', models.ForeignKey('other.Model', on_delete=models.CASCADE, to_field='old_field')),
+TypeError: __init__() missing 1 required positional argument: 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.564594030380249 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_default (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_default (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 16, in test_default
+    ('field', models.CharField(max_length=100, default='old')),
+TypeError: __init__() missing 1 required positional argument: 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.521639347076416 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_null (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_null (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 16, in test_null
+    ('field', models.CharField(max_length=100, null=True)),
+TypeError: __init__() missing 1 required positional argument: 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.5019569396972656 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] >>>>> Tests configfull pred
+ 
+[django__django__3.1] [django__django-11910] TestsTime: 0.0 
+[django__django__3.1] [django__django-11910] >>>>> Some Tests Failed 
+[django__django__3.1] [django__django-11910] >>>>> Unfiltered Tests Failed 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_no_change (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_no_change (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 15, in test_no_change
+    project_state.models.add_model(ModelState(
+AttributeError: 'dict' object has no attribute 'add_model'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.6992313861846924 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_change (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_change (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_change
+    project_state.models.add_model(ModelState(
+AttributeError: 'dict' object has no attribute 'add_model'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.49146437644958496 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_m2m_to_m2m (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_m2m_to_m2m (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_m2m_to_m2m
+    project_state.models.add_model(ModelState(
+AttributeError: 'dict' object has no attribute 'add_model'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.45787954330444336 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_m2m_to_concrete (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_m2m_to_concrete (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_m2m_to_concrete
+    project_state.models.add_model(ModelState(
+AttributeError: 'dict' object has no attribute 'add_model'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.48924851417541504 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_concrete_to_m2m (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_concrete_to_m2m (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_concrete_to_m2m
+    project_state.models.add_model(ModelState(
+AttributeError: 'dict' object has no attribute 'add_model'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.5054910182952881 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_foreign_key (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_foreign_key (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_foreign_key
+    project_state.models.add_model(ModelState(
+AttributeError: 'dict' object has no attribute 'add_model'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.5457231998443604 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_remote_field_rename (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_remote_field_rename (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_remote_field_rename
+    project_state.models.add_model(ModelState(
+AttributeError: 'dict' object has no attribute 'add_model'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.5235517024993896 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_to_field_rename (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_to_field_rename (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_to_field_rename
+    project_state.models.add_model(ModelState(
+AttributeError: 'dict' object has no attribute 'add_model'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.5434184074401855 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_through_model_rename (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_through_model_rename (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_through_model_rename
+    project_state.models.add_model(ModelState(
+AttributeError: 'dict' object has no attribute 'add_model'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 1.0514533519744873 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_default (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_default (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_default
+    project_state.models.add_model(ModelState(
+AttributeError: 'dict' object has no attribute 'add_model'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.6803834438323975 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_null (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_null (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_null
+    project_state.models.add_model(ModelState(
+AttributeError: 'dict' object has no attribute 'add_model'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.4699580669403076 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] >>>>> Tests configfull pred
+ 
+[django__django__3.1] [django__django-11910] TestsTime: 0.0 
+[django__django__3.1] [django__django-11910] >>>>> Some Tests Failed 
+[django__django__3.1] [django__django-11910] >>>>> Unfiltered Tests Failed 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_no_change (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_no_change (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 15, in test_no_change
+    from_state=StateApps(),
+TypeError: __init__() missing 2 required positional arguments: 'real_apps' and 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.4355037212371826 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_change_field (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_change_field (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_change_field
+    from_state=StateApps(),
+TypeError: __init__() missing 2 required positional arguments: 'real_apps' and 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.6123006343841553 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_change_to_m2m (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_change_to_m2m (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_change_to_m2m
+    from_state=StateApps(),
+TypeError: __init__() missing 2 required positional arguments: 'real_apps' and 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.4438908100128174 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_change_from_m2m (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_change_from_m2m (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_change_from_m2m
+    from_state=StateApps(),
+TypeError: __init__() missing 2 required positional arguments: 'real_apps' and 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.45624876022338867 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_foreign_key_rename (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_foreign_key_rename (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_foreign_key_rename
+    from_state=StateApps(),
+TypeError: __init__() missing 2 required positional arguments: 'real_apps' and 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.4979252815246582 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_foreign_key_rename_to_field (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_foreign_key_rename_to_field (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_foreign_key_rename_to_field
+    from_state=StateApps(),
+TypeError: __init__() missing 2 required positional arguments: 'real_apps' and 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.473691463470459 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_not_null_change (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_not_null_change (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_not_null_change
+    from_state=StateApps(),
+TypeError: __init__() missing 2 required positional arguments: 'real_apps' and 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.43929100036621094 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] >>>>> Tests configfull pred
+ 
+[django__django__3.1] [django__django-11910] TestsTime: 0.0 
+[django__django__3.1] [django__django-11910] >>>>> Some Tests Failed 
+[django__django__3.1] [django__django-11910] >>>>> Unfiltered Tests Failed 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_no_change (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_no_change (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 15, in test_no_change
+    from_state=StateApps(),
+TypeError: __init__() missing 2 required positional arguments: 'real_apps' and 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.43473267555236816 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_change (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_change (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_change
+    from_state=StateApps(),
+TypeError: __init__() missing 2 required positional arguments: 'real_apps' and 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.5664534568786621 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_m2m_to_concrete (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_m2m_to_concrete (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_m2m_to_concrete
+    from_state=StateApps(),
+TypeError: __init__() missing 2 required positional arguments: 'real_apps' and 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.7466397285461426 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_concrete_to_m2m (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_concrete_to_m2m (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_concrete_to_m2m
+    from_state=StateApps(),
+TypeError: __init__() missing 2 required positional arguments: 'real_apps' and 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.4316089153289795 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_change_field_with_default (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_change_field_with_default (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_change_field_with_default
+    from_state=StateApps(),
+TypeError: __init__() missing 2 required positional arguments: 'real_apps' and 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.4393885135650635 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_change_field_null (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_change_field_null (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_change_field_null
+    from_state=StateApps(),
+TypeError: __init__() missing 2 required positional arguments: 'real_apps' and 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.4386594295501709 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_change_field_default_and_null (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_change_field_default_and_null (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_change_field_default_and_null
+    from_state=StateApps(),
+TypeError: __init__() missing 2 required positional arguments: 'real_apps' and 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.44840407371520996 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_change_remote_field (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_change_remote_field (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 14, in test_change_remote_field
+    from_state=StateApps(),
+TypeError: __init__() missing 2 required positional arguments: 'real_apps' and 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, migrations, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table migrations_modelwithcustombase
+    Creating table migrations_unmigratedmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.437175989151001 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] >>>>> Tests configfull pred
+ 
+[django__django__3.1] [django__django-11910] TestsTime: 0.0 
+[django__django__3.1] [django__django-11910] >>>>> Some Tests Failed 
+[django__django__3.1] [django__django-11910] >>>>> Unfiltered Tests Failed 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+test_no_change (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_no_change (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 28, in test_no_change
+    old_apps = StateApps([old_model])
+TypeError: __init__() missing 1 required positional argument: 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.36551451683044434 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+test_change (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_change (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 27, in test_change
+    old_apps = StateApps([old_model])
+TypeError: __init__() missing 1 required positional argument: 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.43155837059020996 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+test_m2m_to_concrete (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_m2m_to_concrete (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 27, in test_m2m_to_concrete
+    old_apps = StateApps([old_model])
+TypeError: __init__() missing 1 required positional argument: 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.3322608470916748 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+test_concrete_to_m2m (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_concrete_to_m2m (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 27, in test_concrete_to_m2m
+    old_apps = StateApps([old_model])
+TypeError: __init__() missing 1 required positional argument: 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.34053564071655273 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+test_rename_field (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_rename_field (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 27, in test_rename_field
+    old_apps = StateApps([old_model])
+TypeError: __init__() missing 1 required positional argument: 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.45404720306396484 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+test_field_with_default (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_field_with_default (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 27, in test_field_with_default
+    old_apps = StateApps([old_model])
+TypeError: __init__() missing 1 required positional argument: 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.6252946853637695 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_autodetector 
+[django__django__3.1] [django__django-11910] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11910] Std. Output:
+test_field_with_null (migrations.test_autodetector.TestGenerateAlteredFields) ... ERROR
+
+======================================================================
+ERROR: test_field_with_null (migrations.test_autodetector.TestGenerateAlteredFields)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/migrations/test_autodetector.py", line 27, in test_field_with_null
+    old_apps = StateApps([old_model])
+TypeError: __init__() missing 1 required positional argument: 'models'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11910] Return Code: 1 
+[django__django__3.1] [django__django-11910] TestsTime: 0.7021644115447998 
+[django__django__3.1] [django__django-11910] Test script run successful 
+[django__django__3.1] [django__django-11910] Removing coverage 
+[django__django__3.1] [django__django-11910] >>>>> Tests configfull pred
+ 
+[django__django__3.1] [django__django-11910] TestsTime: 0.0 
+[django__django__3.1] [django__django-11910] >>>>> Some Tests Failed 
+[django__django__3.1] [django__django-11910] >>>>> Unfiltered Tests Failed 

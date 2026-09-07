@@ -1,0 +1,2132 @@
+[django__django__3.0] [django__django-11592] Task Metadata:
+	- Instance ID: django__django-11592
+	- Testbed: django__django__3.0
+	- Evaluation Model: Llama-4-Scout-17B-16E-Instruct_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-11592] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11592] Std. Output:
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] Command: git -c advice.detachedHead=false checkout 806ba19bbff311b7d567857ae61db6ff84af4a2c 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11592] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at 806ba19bbf Added Query.is_sliced property.
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] Command: git diff > /opt/temp_django__django-11592_gold_init.patch 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11592] Std. Output:
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] Command: git apply -v /opt/temp_django__django-11592_gold.patch 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11592] Std. Output:
+Checking patch django/core/handlers/wsgi.py...
+Applied patch django/core/handlers/wsgi.py cleanly.
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-11592] Command: git diff > /opt/temp_django__django-11592_test_init.patch 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11592] Std. Output:
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] Command: git restore tests/wsgi/tests.py 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11592] Std. Output:
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] Command: git apply -v /opt/temp_django__django-11592_test.patch 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11592] Std. Output:
+Checking patch tests/wsgi/tests.py...
+Applied patch tests/wsgi/tests.py cleanly.
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_sets_script_prefix (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_sets_script_prefix (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 26, in test_call_sets_script_prefix
+    self.wsgi_handler(self.environ, Mock())
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 80, in __init__
+    self.method = environ['REQUEST_METHOD'].upper()
+KeyError: 'REQUEST_METHOD'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.781883716583252 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_sends_request_started_signal (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_sends_request_started_signal (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 24, in test_call_sends_request_started_signal
+    self.wsgi_handler(self.environ, Mock())
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 80, in __init__
+    self.method = environ['REQUEST_METHOD'].upper()
+KeyError: 'REQUEST_METHOD'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.35563158988952637 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_creates_request_object (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_creates_request_object (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/wsgi/tests.py", line 24, in test_call_creates_request_object
+    response = self.wsgi_handler(self.environ, Mock())
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 80, in __init__
+    self.method = environ['REQUEST_METHOD'].upper()
+KeyError: 'REQUEST_METHOD'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.3406665325164795 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_calls_get_response (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_calls_get_response (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 26, in test_call_calls_get_response
+    self.wsgi_handler(self.environ, Mock())
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 80, in __init__
+    self.method = environ['REQUEST_METHOD'].upper()
+KeyError: 'REQUEST_METHOD'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.3414595127105713 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_sets_handler_class_on_response (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_sets_handler_class_on_response (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 26, in test_call_sets_handler_class_on_response
+    self.wsgi_handler(self.environ, Mock())
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 80, in __init__
+    self.method = environ['REQUEST_METHOD'].upper()
+KeyError: 'REQUEST_METHOD'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.5926451683044434 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_calls_start_response (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_calls_start_response (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1175, in patched
+    arg = patching.__enter__()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1247, in __enter__
+    original, local = self.get_original()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1221, in get_original
+    "%s does not have the attribute %r" % (target, name)
+AttributeError: <module 'django.core.handlers.wsgi' from '/opt/django__django/django/core/handlers/wsgi.py'> does not have the attribute 'start_response'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.780956506729126 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_returns_response (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_returns_response (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 26, in test_call_returns_response
+    returned_response = self.wsgi_handler(self.environ, Mock())
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 80, in __init__
+    self.method = environ['REQUEST_METHOD'].upper()
+KeyError: 'REQUEST_METHOD'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.7113633155822754 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_returns_file_wrapper_response (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_returns_file_wrapper_response (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 26, in test_call_returns_file_wrapper_response
+    returned_response = self.wsgi_handler(self.environ, Mock())
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 80, in __init__
+    self.method = environ['REQUEST_METHOD'].upper()
+KeyError: 'REQUEST_METHOD'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.5596532821655273 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_with_file_to_stream_and_no_file_wrapper (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_with_file_to_stream_and_no_file_wrapper (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/wsgi/tests.py", line 27, in test_call_with_file_to_stream_and_no_file_wrapper
+    response = self.wsgi_handler(environ, Mock())
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 80, in __init__
+    self.method = environ['REQUEST_METHOD'].upper()
+KeyError: 'REQUEST_METHOD'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.6026694774627686 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11592] TestsTime: 0.0 
+[django__django__3.0] [django__django-11592] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11592] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_sets_script_prefix (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_sets_script_prefix (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 20, in test_call_sets_script_prefix
+    handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+TypeError: request() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.6361386775970459 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_sends_request_started_signal (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_sends_request_started_signal (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 21, in test_call_sends_request_started_signal
+    handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+TypeError: request() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.4736204147338867 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_creates_request (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_creates_request (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/wsgi/tests.py", line 20, in test_call_creates_request
+    response = handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+TypeError: request() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.6167559623718262 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_get_response (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_get_response (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 24, in test_call_get_response
+    response = handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+TypeError: request() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.5109844207763672 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_response_handler_class (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_response_handler_class (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 24, in test_call_response_handler_class
+    response = handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+TypeError: request() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.6183769702911377 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_start_response (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_start_response (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 24, in test_call_start_response
+    handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+TypeError: request() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.5135791301727295 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_start_response_with_cookies (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_start_response_with_cookies (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 26, in test_call_start_response_with_cookies
+    handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+TypeError: request() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.48888397216796875 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_file_to_stream (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_file_to_stream (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 29, in test_call_file_to_stream
+    response = handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+TypeError: request() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.705254316329956 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_no_file_to_stream (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_no_file_to_stream (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 24, in test_call_no_file_to_stream
+    response = handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+TypeError: request() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.6191952228546143 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11592] TestsTime: 0.0 
+[django__django__3.0] [django__django-11592] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11592] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_set_script_prefix_called (wsgi.tests.TestWSGIHandlerCall) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.009s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] TestsTime: 0.5659706592559814 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_get_script_name_called (wsgi.tests.TestWSGIHandlerCall) ... FAIL
+
+======================================================================
+FAIL: test_get_script_name_called (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 33, in test_get_script_name_called
+    mock_get_script_name.assert_called_once_with(self.environ)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 824, in assert_called_once_with
+    raise AssertionError(msg)
+AssertionError: Expected 'get_script_name' to be called once. Called 2 times.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.010s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.5716550350189209 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_request_started_signal_sent (wsgi.tests.TestWSGIHandlerCall) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] TestsTime: 0.8549628257751465 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_request_class_called (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_request_class_called (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/opt/django__django/django/utils/deprecation.py", line 93, in __call__
+    response = self.process_request(request)
+  File "/opt/django__django/django/middleware/csrf.py", line 200, in process_request
+    csrf_token = self._get_token(request)
+  File "/opt/django__django/django/middleware/csrf.py", line 174, in _get_token
+    csrf_token = _sanitize_token(cookie_token)
+  File "/opt/django__django/django/middleware/csrf.py", line 107, in _sanitize_token
+    if re.search('[^a-zA-Z0-9]', token):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/re.py", line 182, in search
+    return _compile(pattern, flags).search(string)
+TypeError: expected string or bytes-like object
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/django__django/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/opt/django__django/django/utils/deprecation.py", line 94, in __call__
+    response = response or self.get_response(request)
+  File "/opt/django__django/django/core/handlers/exception.py", line 36, in inner
+    response = response_for_exception(request, exc)
+  File "/opt/django__django/django/core/handlers/exception.py", line 90, in response_for_exception
+    response = handle_uncaught_exception(request, get_resolver(get_urlconf()), sys.exc_info())
+  File "/opt/django__django/django/core/handlers/exception.py", line 129, in handle_uncaught_exception
+    return callback(request, **param_dict)
+  File "/opt/django__django/django/utils/decorators.py", line 122, in _wrapped_view
+    result = middleware.process_request(request)
+  File "/opt/django__django/django/middleware/csrf.py", line 200, in process_request
+    csrf_token = self._get_token(request)
+  File "/opt/django__django/django/middleware/csrf.py", line 174, in _get_token
+    csrf_token = _sanitize_token(cookie_token)
+  File "/opt/django__django/django/middleware/csrf.py", line 107, in _sanitize_token
+    if re.search('[^a-zA-Z0-9]', token):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/re.py", line 182, in search
+    return _compile(pattern, flags).search(string)
+TypeError: expected string or bytes-like object
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/django__django/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/opt/django__django/django/utils/deprecation.py", line 94, in __call__
+    response = response or self.get_response(request)
+  File "/opt/django__django/django/core/handlers/exception.py", line 36, in inner
+    response = response_for_exception(request, exc)
+  File "/opt/django__django/django/core/handlers/exception.py", line 90, in response_for_exception
+    response = handle_uncaught_exception(request, get_resolver(get_urlconf()), sys.exc_info())
+  File "/opt/django__django/django/core/handlers/exception.py", line 129, in handle_uncaught_exception
+    return callback(request, **param_dict)
+  File "/opt/django__django/django/utils/decorators.py", line 122, in _wrapped_view
+    result = middleware.process_request(request)
+  File "/opt/django__django/django/middleware/csrf.py", line 200, in process_request
+    csrf_token = self._get_token(request)
+  File "/opt/django__django/django/middleware/csrf.py", line 174, in _get_token
+    csrf_token = _sanitize_token(cookie_token)
+  File "/opt/django__django/django/middleware/csrf.py", line 107, in _sanitize_token
+    if re.search('[^a-zA-Z0-9]', token):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/re.py", line 182, in search
+    return _compile(pattern, flags).search(string)
+TypeError: expected string or bytes-like object
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/django__django/tests/wsgi/tests.py", line 32, in test_request_class_called
+    self.handler(self.environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 133, in __call__
+    response = self.get_response(request)
+  File "/opt/django__django/django/core/handlers/base.py", line 75, in get_response
+    response = self._middleware_chain(request)
+  File "/opt/django__django/django/core/handlers/exception.py", line 36, in inner
+    response = response_for_exception(request, exc)
+  File "/opt/django__django/django/core/handlers/exception.py", line 90, in response_for_exception
+    response = handle_uncaught_exception(request, get_resolver(get_urlconf()), sys.exc_info())
+  File "/opt/django__django/django/core/handlers/exception.py", line 129, in handle_uncaught_exception
+    return callback(request, **param_dict)
+  File "/opt/django__django/django/utils/decorators.py", line 122, in _wrapped_view
+    result = middleware.process_request(request)
+  File "/opt/django__django/django/middleware/csrf.py", line 200, in process_request
+    csrf_token = self._get_token(request)
+  File "/opt/django__django/django/middleware/csrf.py", line 174, in _get_token
+    csrf_token = _sanitize_token(cookie_token)
+  File "/opt/django__django/django/middleware/csrf.py", line 107, in _sanitize_token
+    if re.search('[^a-zA-Z0-9]', token):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/re.py", line 182, in search
+    return _compile(pattern, flags).search(string)
+TypeError: expected string or bytes-like object
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.49277544021606445 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_get_response_called (wsgi.tests.TestWSGIHandlerCall) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] TestsTime: 0.6780886650085449 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_response_handler_class_set (wsgi.tests.TestWSGIHandlerCall) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] TestsTime: 0.5339047908782959 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_start_response_called (wsgi.tests.TestWSGIHandlerCall) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] TestsTime: 0.7165999412536621 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_response_returned (wsgi.tests.TestWSGIHandlerCall) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] TestsTime: 0.6441173553466797 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_file_to_stream_returned (wsgi.tests.TestWSGIHandlerCall) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] TestsTime: 0.5787467956542969 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_no_file_to_stream_returned (wsgi.tests.TestWSGIHandlerCall) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] TestsTime: 0.7915987968444824 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11592] Test Script:  coverage run ./tests/runtests.py --verbosity 2 wsgi.tests;
+ 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_file_to_stream_returned (wsgi.tests.TestWSGIHandlerCall) ... ok
+test_get_response_called (wsgi.tests.TestWSGIHandlerCall) ... ok
+test_no_file_to_stream_returned (wsgi.tests.TestWSGIHandlerCall) ... ok
+test_request_started_signal_sent (wsgi.tests.TestWSGIHandlerCall) ... ok
+test_response_handler_class_set (wsgi.tests.TestWSGIHandlerCall) ... ok
+test_response_returned (wsgi.tests.TestWSGIHandlerCall) ... ok
+test_set_script_prefix_called (wsgi.tests.TestWSGIHandlerCall) ... ok
+test_start_response_called (wsgi.tests.TestWSGIHandlerCall) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.009s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] TestsTime: 0.6125388145446777 
+[django__django__3.0] [django__django-11592] 
+>>>>> All Tests Passed
+ 
+[django__django__3.0] [django__django-11592] Current Working Directory: /opt/django__django 
+[django__django__3.0] [django__django-11592] Command: coverage json -o coverage.json 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11592] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] 
+CoverageLOG: 65.04065040650407%
+ 
+[django__django__3.0] [django__django-11592] 
+FunctionCoverageLOG: 100.0%
+ 
+[django__django__3.0] [django__django-11592] Running mutation testing 
+[django__django__3.0] [django__django-11592] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.0] [django__django-11592] Std. Output:
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11592] Std. Output:
+82.42 82.42 82.42
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] Command: cr-report mutation.sqlite 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11592] Std. Output:
+[job-id] a514752fd11f40c4b2b201f421c5ffe1
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] c85602c362854f4aa26b7c5ce285945a
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] 10bced99a1fd488f8ca8a1a2bd903ffd
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] e9d86765218e40fab614a7c8166ade62
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] 1e640169e2634b0e82cff66cd6909b03
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 3cb48121c9884532b9350bbb5abf1f84
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] bce25249cf6041d3bf7d82faf0681904
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 25fbe87d2d674609b3ff3eabb3680634
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] dc95b2affb884c79ac067d5b0941c903
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] f2002088532944509a6c8e3264827369
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_Mod 1
+worker outcome: normal, test outcome: survived
+[job-id] 98f3e77945aa485bb465961800abc86f
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 9d20df848ac748e58b69f13820df81e6
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 23712b3ce1704f00b3d0ec0f7435324f
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] f23604fc8a5f432286d794a431f8fc8e
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] bfd8190608cd45ca87aba4e605e4302b
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] cd59e07691954071bf7d9e87aa32d7d5
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 3cddbc3d5736410dbae95f41bc416418
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] c383bd7da1b446558d19e9469237ddfc
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] ffc75d819ef6454bb83864e15e25af7d
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 46b1c66480864a1b9268cbbca178be1d
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] c2fe44c71e534106a4128f74a33786a8
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] 0150c8e106594197896e355518d4dbb8
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Add_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] 27616ee9456a4b76b97aee2391cabcc5
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] bc74093dc48b44cf9816bb1e7598cff2
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_Add 1
+worker outcome: normal, test outcome: survived
+[job-id] 67847831d3b84a409a3f48a56b27bbea
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] b98fb84fcc674fc99f04de57e9e2139d
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] da63384a2ad949799983c1a0f63e1a63
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 7153e57ca26b418f9c8f3ad74afdeb3a
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] 1595f8ad7b9643a9bbbb7d4803bc6573
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 7726d935f27343819343337130fc3781
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] 8e7a023e0b1946d99ec3227d3deaae8d
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] 6813b530ee1b4dfba0470f6599e2b71e
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_Mod 1
+worker outcome: normal, test outcome: survived
+[job-id] 1c3d94d342c0463091d5d7da76bbb47c
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 0f93aa082513460d9b0ebeb5b622392b
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 839ef82d40964bc6ba258f336bc9a725
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 97c7d8797699415c92978fd21a5d555d
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] f5b2aec8415243d486ffac0b2bcc4912
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 6b454b059ea64c5eade25f50005d0fcb
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 7b750fe063be4c82afdda43984d2f018
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 24916879b2b340e49ff826804c487938
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] a6bf73b0fad84514babfdd7c2c7aaadf
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] ff376f64b62d47119633e5da9e0cc452
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 3a39ce0173954192bad9ca590331ab8a
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] bba1a3dc25584cf7a4ca8eb3376ad4b9
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Sub_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] dca89d9c937947a590e26ce9781dd359
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] ec3dd571bf9a4b35897f7c98cfb17a15
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_Add 1
+worker outcome: normal, test outcome: survived
+[job-id] 67be9fcfcb8f4eca8d8ad03498c05764
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] 85dece90800846379e0574b3b4e32590
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] 34470e035cb64f81b7b9c4579578dc2c
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] b6e16238463947bea01eb76ae65bca23
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] 04e2ed99ba8d4cf48991df0a917b7415
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 8c7790091bd04df7a5d2ecade0f0eeab
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] 3e3b1fafdb12419d9c227a06feafccf1
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] 6122fb2e9fbb4f13856ac30363baeac1
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_Mod 1
+worker outcome: normal, test outcome: survived
+[job-id] b2ad22efca484234a39bec75016a9d8c
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 108526ca907848e08850fcde71fbee20
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 30889854a4554d7fbfdf91bb218013e5
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 69d9f0b45a194dcdbf61a5a91b6f08d8
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] d63d19c7b8db472da8fedc83864a61bd
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 616492bb8ffa4924b2bc5b735967f2a2
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] d34c9596cba942ce9e069798033b4a02
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 0d9dcfb2cf8c491a8dd6bcf704c69df9
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 719ec791d2c24174b17937bc398e4632
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] ce48160bc0c748aab0fe1c426d8eb0ab
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 1dce843eef26433ca038555f6f33814c
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] c995f55af8b740ebb65aa8d1af6f77fd
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mul_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] 2d6eef6162bf4609bf9fa443834abb74
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] 6e02cb3c90d74b24a858faad320777a1
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_Add 1
+worker outcome: normal, test outcome: killed
+[job-id] 522b84127db94d0ab700c36a2062305e
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 2158bca4fc854f4abe346f47b9675cf2
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_Sub 1
+worker outcome: normal, test outcome: killed
+[job-id] 80d307ae6778418c8609b6aaad52a078
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] 5f9590bc42f041e6ac96c4e93db078de
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_Mul 1
+worker outcome: normal, test outcome: killed
+[job-id] 330692b648ec4c8cb70182485b695c21
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] 92c64a71a6964c79988641cdf99a25ee
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_Div 1
+worker outcome: normal, test outcome: killed
+[job-id] c394b6b12e364c87b74a98a9ae9859a2
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] fc40cbad5d8b40a9aed36ce22965033c
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_FloorDiv 1
+worker outcome: normal, test outcome: killed
+[job-id] 095cf90feea04771b43d75ff937b40fc
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] 375a0db188e14b8585cb2b26963fa02f
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_Pow 1
+worker outcome: normal, test outcome: killed
+[job-id] 2e68d409507c4c5b97864a950b525502
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] ad662fd1e8a24cfdbdeb55c7761fe3ec
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_RShift 1
+worker outcome: normal, test outcome: killed
+[job-id] b52e65ebc8ae42a39e1b1adbb402b70d
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] c74abf51bdc348baad771be2c201c9a9
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_LShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 847b376a91314a84ae50f7dde7ea4505
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] ee48292f00854a77ad2db77afa8f3885
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_BitOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 99908020ecbb4f7982bb7b8a5ae2e4a6
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 2c7023e86fb24b9c8e6bd3789f842a0b
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_BitAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] 18c78b7698ab4cd7a8217263227f44ab
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] 1b3f63ed4be649ef8bad7a85986e2e2c
+django/core/handlers/wsgi.py core/ReplaceBinaryOperator_Mod_BitXor 1
+worker outcome: normal, test outcome: killed
+[job-id] 317516a9ae5f4ec1a8b1064229adeb34
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 495c1855a3ca49b49a6537f6c4d01b9f
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 030da186fb7b4cc09b5688fa30807bb4
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] e2c7d5f0aadf455e966a1bcf96bcfa52
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 6c1ca8eeb30a4219880b06cf6c189b58
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 90b7518dcfeb49bc933e458a459a8ca0
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Lt_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] 39f1f56319a648c6a94020e8844da3a8
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Lt_Eq 1
+worker outcome: normal, test outcome: survived
+[job-id] c949945a11c1447badb7cacf4bea849a
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Lt_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] fd00a6c9cbb942199c5299d839c2ca3a
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Lt_NotEq 1
+worker outcome: normal, test outcome: survived
+[job-id] cfb56691ee6d4e5c96ef9b7c66982110
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Lt_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 520dc2d0beda4c3691c56b1e665e50a6
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Lt_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] c4998f4673e74b38826a990ecc65cc0f
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Lt_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] d227e9b4b987408cbc319fc9b166e360
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Lt_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] 6c366ed6f06446dc99fe958f1c9e656e
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Lt_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] bebbb094c6934dcda0d120e9a1b93cba
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Lt_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 9c839fb84b0f43afb4d464429f5c6bc8
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Lt_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 10b77675d47a4aa89ad0b7021c3868c3
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Lt_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 4f4401f2d36a4f9ba447eb845b257390
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Lt_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 39e695c171134e62ab5d2b491dac39d2
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Lt_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] db9ef274f53e4adda9a2361055ad73e7
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Gt_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] 3fa362c2bbc3488aa6f7982de47e91db
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Gt_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] b775b7cd4e6a438386068fc5abf1ba3d
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Gt_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 42cfda6dc42a4f10a0bdb9ca6a44dd1f
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Gt_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 92ff452387a94c3098d45fa854a1ab90
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Gt_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] de5f8d52b063435fa7be9be475299216
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Gt_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] af5cf5c5aad04a9aaecb19962440c070
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Gt_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 3e1ac88dae2b451f8f03d32056f218cb
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 2bf53aaf7a4e422ab307fc698eb7730c
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Is_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 88fce699fb2b44f2932d4e4347b01653
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_Is_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] f4d885ee83ab4f028b2efc9f910ca8d6
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] d180d36825ed4f81ac987c88c59f7cfb
+django/core/handlers/wsgi.py core/ReplaceComparisonOperator_IsNot_Is 1
+worker outcome: normal, test outcome: killed
+[job-id] 0ecd3085a06d4a1796d35bb0d7dfc748
+django/core/handlers/wsgi.py core/ReplaceUnaryOperator_USub_UAdd 0
+worker outcome: normal, test outcome: survived
+[job-id] 8675bdeb3a9a492398846a6615b8b6b3
+django/core/handlers/wsgi.py core/ReplaceUnaryOperator_USub_Invert 0
+worker outcome: normal, test outcome: survived
+[job-id] 37c0982d9bce435ba0b08f793dbf9e3a
+django/core/handlers/wsgi.py core/ReplaceUnaryOperator_USub_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] 49fc867742a840c288d5f2a8e7d64bd5
+django/core/handlers/wsgi.py core/ReplaceUnaryOperator_Delete_USub 0
+worker outcome: normal, test outcome: survived
+[job-id] 49b2826d954549c4b812be0bc6625230
+django/core/handlers/wsgi.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] 88f7db9912ff4b26b25c144dddf2a1dd
+django/core/handlers/wsgi.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] 48113088c7d0491fa46d9f6e48d5401a
+django/core/handlers/wsgi.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: normal, test outcome: survived
+[job-id] f69c5286796240b99d3938d35088b572
+django/core/handlers/wsgi.py core/AddNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 4d0dcd3fa90847f3a081a10950ac3616
+django/core/handlers/wsgi.py core/AddNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 3c6b9529c6d84065b7f914ca17934b0b
+django/core/handlers/wsgi.py core/AddNot 2
+worker outcome: normal, test outcome: survived
+[job-id] eed9c638272c493c82781fd2f3fa6b85
+django/core/handlers/wsgi.py core/AddNot 3
+worker outcome: normal, test outcome: survived
+[job-id] 514a1e2dea434e609fd5b3fc45417667
+django/core/handlers/wsgi.py core/AddNot 4
+worker outcome: normal, test outcome: survived
+[job-id] d48b472a9f214d6b8ffae9490857f565
+django/core/handlers/wsgi.py core/AddNot 5
+worker outcome: normal, test outcome: survived
+[job-id] ce01997363b14ab8b106db17b4215875
+django/core/handlers/wsgi.py core/AddNot 6
+worker outcome: normal, test outcome: survived
+[job-id] 11cd4e2135724c8e927cccfe0a8890d9
+django/core/handlers/wsgi.py core/AddNot 7
+worker outcome: normal, test outcome: survived
+[job-id] d611fbc008164dceb839c1d8fd5cf273
+django/core/handlers/wsgi.py core/AddNot 8
+worker outcome: normal, test outcome: survived
+[job-id] 539fe07b5b3141ada4eace5321b3a496
+django/core/handlers/wsgi.py core/AddNot 9
+worker outcome: normal, test outcome: killed
+[job-id] 6d569bf325e7400eb4d4ad4652a89bed
+django/core/handlers/wsgi.py core/AddNot 10
+worker outcome: normal, test outcome: killed
+[job-id] 0326f995d2a748319e79774c0fac0b1a
+django/core/handlers/wsgi.py core/AddNot 11
+worker outcome: normal, test outcome: survived
+[job-id] ddd3dc6509e841f08b98a5cf4ce11888
+django/core/handlers/wsgi.py core/AddNot 12
+worker outcome: normal, test outcome: survived
+[job-id] 61dfd52809914869bd96ab1f3b104025
+django/core/handlers/wsgi.py core/AddNot 13
+worker outcome: normal, test outcome: survived
+[job-id] 1c249a07f5534f4b8eda136c777689cd
+django/core/handlers/wsgi.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: survived
+[job-id] 52db04e8eff4446ea11c13ef4fd13feb
+django/core/handlers/wsgi.py core/ReplaceAndWithOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 8cfda812fa3949b59e4c89bf7fa70c5d
+django/core/handlers/wsgi.py core/ReplaceAndWithOr 1
+worker outcome: normal, test outcome: survived
+[job-id] f27a3d3e15814254b100b99df3cf50dc
+django/core/handlers/wsgi.py core/ReplaceOrWithAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 3c1bc07cadb941009241dc85de39706f
+django/core/handlers/wsgi.py core/ReplaceOrWithAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] ee4ae77b57ab4cd8996a49d620603803
+django/core/handlers/wsgi.py core/ReplaceOrWithAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] 4a9b0ba5309040019a6e0c644408b238
+django/core/handlers/wsgi.py core/ReplaceOrWithAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] 3be92615e46e46b5bec02d91caca8cb1
+django/core/handlers/wsgi.py core/ReplaceBreakWithContinue 0
+worker outcome: normal, test outcome: survived
+[job-id] e8ce9c94975b49f7b371b8ab44bc92fc
+django/core/handlers/wsgi.py core/ExceptionReplacer 0
+worker outcome: normal, test outcome: killed
+[job-id] 3c8538f3502c466283eedf8dd162ff98
+django/core/handlers/wsgi.py core/ExceptionReplacer 1
+worker outcome: normal, test outcome: killed
+[job-id] 98f56df18c554bbdbe6184ad088fa5b7
+django/core/handlers/wsgi.py core/NumberReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] a77be83954784f31bcd94907a97b4a63
+django/core/handlers/wsgi.py core/NumberReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] a4f64e70d4d742279b8f4d192b7a0103
+django/core/handlers/wsgi.py core/NumberReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] 0d38c7b6d2d44dcdabc9fed0af533d41
+django/core/handlers/wsgi.py core/NumberReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] 41f09b755bdf4e1d87ca31c9da101d45
+django/core/handlers/wsgi.py core/NumberReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] 0f836837e7ec4a3081f296d774e00c83
+django/core/handlers/wsgi.py core/NumberReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] f282ad7a40bf4d0ea3bbeb9be25e7572
+django/core/handlers/wsgi.py core/NumberReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] b139a5d2114e417ca635e1bcf1f17f32
+django/core/handlers/wsgi.py core/NumberReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] ad6758f3365e4318b2152964b188f503
+django/core/handlers/wsgi.py core/NumberReplacer 8
+worker outcome: normal, test outcome: survived
+[job-id] 5274e230c5144dcdb4367727379f4f76
+django/core/handlers/wsgi.py core/NumberReplacer 9
+worker outcome: normal, test outcome: survived
+[job-id] 7f877291e0104f719f19191826fcca9f
+django/core/handlers/wsgi.py core/NumberReplacer 10
+worker outcome: normal, test outcome: survived
+[job-id] a3478190b66848f78a4a94825ef2cc30
+django/core/handlers/wsgi.py core/NumberReplacer 11
+worker outcome: normal, test outcome: survived
+[job-id] 4a0a2cee8df34823b861ab81c9d39aa8
+django/core/handlers/wsgi.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: survived
+[job-id] 8465beae73094772b079f72874671d9f
+django/core/handlers/wsgi.py core/RemoveDecorator 1
+worker outcome: normal, test outcome: killed
+[job-id] c9131d73819d46d18c913a308d6bd74f
+django/core/handlers/wsgi.py core/RemoveDecorator 2
+worker outcome: normal, test outcome: survived
+total jobs: 165
+complete: 165 (100.00%)
+surviving mutants: 136 (82.42%)
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] 
+MutationNum: 165 
+[django__django__3.0] [django__django-11592] 
+MutationLOG: 17.58% 
+[django__django__3.0] [django__django-11592] 
+MutationUncertainty: 0.0 
+[django__django__3.0] [django__django-11592] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/core/handlers/wsgi.py'
+        and ((129 <= spec.start_pos[0] <= 145))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11592] Std. Output:
+FUNC_MUTATION_RESULT 92.85714285714286 14
+ 
+[django__django__3.0] [django__django-11592] Return Code: 0 
+[django__django__3.0] [django__django-11592] 
+FunctionMutationLOG: 92.85714285714286% 
+[django__django__3.0] [django__django-11592] 
+FunctionMutationNum: 14 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_sets_script_prefix (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_sets_script_prefix (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 20, in test_call_sets_script_prefix
+    handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+TypeError: request() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.6143522262573242 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_sends_request_started_signal (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_sends_request_started_signal (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 19, in test_call_sends_request_started_signal
+    handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+TypeError: request() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.4773554801940918 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_creates_request_object (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_creates_request_object (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/wsgi/tests.py", line 18, in test_call_creates_request_object
+    response = handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+TypeError: request() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.4153623580932617 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_calls_get_response (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_calls_get_response (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/wsgi/tests.py", line 18, in test_call_calls_get_response
+    handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+TypeError: request() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.5934538841247559 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_calls_start_response (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_calls_start_response (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1175, in patched
+    arg = patching.__enter__()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1247, in __enter__
+    original, local = self.get_original()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1221, in get_original
+    "%s does not have the attribute %r" % (target, name)
+AttributeError: <module 'django.core.handlers.wsgi' from '/opt/django__django/django/core/handlers/wsgi.py'> does not have the attribute 'start_response'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.6894850730895996 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_returns_response (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_returns_response (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/wsgi/tests.py", line 18, in test_call_returns_response
+    response = handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+TypeError: request() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.6058075428009033 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_returns_file_wrapper_response (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_returns_file_wrapper_response (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1175, in patched
+    arg = patching.__enter__()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1247, in __enter__
+    original, local = self.get_original()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1221, in get_original
+    "%s does not have the attribute %r" % (target, name)
+AttributeError: <module 'django.core.handlers.wsgi' from '/opt/django__django/django/core/handlers/wsgi.py'> does not have the attribute 'environ'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.5771510601043701 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_sets_handler_class (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_sets_handler_class (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/wsgi/tests.py", line 18, in test_call_sets_handler_class
+    response = handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+TypeError: request() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.6103713512420654 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_call_handles_empty_script_name (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_call_handles_empty_script_name (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 20, in test_call_handles_empty_script_name
+    handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+TypeError: request() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.669175386428833 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11592] TestsTime: 0.0 
+[django__django__3.0] [django__django-11592] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11592] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_set_script_prefix_called (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_set_script_prefix_called (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 19, in test_set_script_prefix_called
+    self.wsgi_handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 80, in __init__
+    self.method = environ['REQUEST_METHOD'].upper()
+KeyError: 'REQUEST_METHOD'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.3698139190673828 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_get_script_name_called (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_get_script_name_called (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 19, in test_get_script_name_called
+    self.wsgi_handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 80, in __init__
+    self.method = environ['REQUEST_METHOD'].upper()
+KeyError: 'REQUEST_METHOD'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.3870697021484375 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_request_started_signal_sent (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_request_started_signal_sent (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 19, in test_request_started_signal_sent
+    self.wsgi_handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 80, in __init__
+    self.method = environ['REQUEST_METHOD'].upper()
+KeyError: 'REQUEST_METHOD'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.49822235107421875 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_request_class_called (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_request_class_called (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/opt/django__django/django/utils/deprecation.py", line 93, in __call__
+    response = self.process_request(request)
+  File "/opt/django__django/django/middleware/csrf.py", line 200, in process_request
+    csrf_token = self._get_token(request)
+  File "/opt/django__django/django/middleware/csrf.py", line 174, in _get_token
+    csrf_token = _sanitize_token(cookie_token)
+  File "/opt/django__django/django/middleware/csrf.py", line 107, in _sanitize_token
+    if re.search('[^a-zA-Z0-9]', token):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/re.py", line 182, in search
+    return _compile(pattern, flags).search(string)
+TypeError: expected string or bytes-like object
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/django__django/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/opt/django__django/django/utils/deprecation.py", line 94, in __call__
+    response = response or self.get_response(request)
+  File "/opt/django__django/django/core/handlers/exception.py", line 36, in inner
+    response = response_for_exception(request, exc)
+  File "/opt/django__django/django/core/handlers/exception.py", line 90, in response_for_exception
+    response = handle_uncaught_exception(request, get_resolver(get_urlconf()), sys.exc_info())
+  File "/opt/django__django/django/core/handlers/exception.py", line 129, in handle_uncaught_exception
+    return callback(request, **param_dict)
+  File "/opt/django__django/django/utils/decorators.py", line 122, in _wrapped_view
+    result = middleware.process_request(request)
+  File "/opt/django__django/django/middleware/csrf.py", line 200, in process_request
+    csrf_token = self._get_token(request)
+  File "/opt/django__django/django/middleware/csrf.py", line 174, in _get_token
+    csrf_token = _sanitize_token(cookie_token)
+  File "/opt/django__django/django/middleware/csrf.py", line 107, in _sanitize_token
+    if re.search('[^a-zA-Z0-9]', token):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/re.py", line 182, in search
+    return _compile(pattern, flags).search(string)
+TypeError: expected string or bytes-like object
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/django__django/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/opt/django__django/django/utils/deprecation.py", line 94, in __call__
+    response = response or self.get_response(request)
+  File "/opt/django__django/django/core/handlers/exception.py", line 36, in inner
+    response = response_for_exception(request, exc)
+  File "/opt/django__django/django/core/handlers/exception.py", line 90, in response_for_exception
+    response = handle_uncaught_exception(request, get_resolver(get_urlconf()), sys.exc_info())
+  File "/opt/django__django/django/core/handlers/exception.py", line 129, in handle_uncaught_exception
+    return callback(request, **param_dict)
+  File "/opt/django__django/django/utils/decorators.py", line 122, in _wrapped_view
+    result = middleware.process_request(request)
+  File "/opt/django__django/django/middleware/csrf.py", line 200, in process_request
+    csrf_token = self._get_token(request)
+  File "/opt/django__django/django/middleware/csrf.py", line 174, in _get_token
+    csrf_token = _sanitize_token(cookie_token)
+  File "/opt/django__django/django/middleware/csrf.py", line 107, in _sanitize_token
+    if re.search('[^a-zA-Z0-9]', token):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/re.py", line 182, in search
+    return _compile(pattern, flags).search(string)
+TypeError: expected string or bytes-like object
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/django__django/tests/wsgi/tests.py", line 19, in test_request_class_called
+    self.wsgi_handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 133, in __call__
+    response = self.get_response(request)
+  File "/opt/django__django/django/core/handlers/base.py", line 75, in get_response
+    response = self._middleware_chain(request)
+  File "/opt/django__django/django/core/handlers/exception.py", line 36, in inner
+    response = response_for_exception(request, exc)
+  File "/opt/django__django/django/core/handlers/exception.py", line 90, in response_for_exception
+    response = handle_uncaught_exception(request, get_resolver(get_urlconf()), sys.exc_info())
+  File "/opt/django__django/django/core/handlers/exception.py", line 129, in handle_uncaught_exception
+    return callback(request, **param_dict)
+  File "/opt/django__django/django/utils/decorators.py", line 122, in _wrapped_view
+    result = middleware.process_request(request)
+  File "/opt/django__django/django/middleware/csrf.py", line 200, in process_request
+    csrf_token = self._get_token(request)
+  File "/opt/django__django/django/middleware/csrf.py", line 174, in _get_token
+    csrf_token = _sanitize_token(cookie_token)
+  File "/opt/django__django/django/middleware/csrf.py", line 107, in _sanitize_token
+    if re.search('[^a-zA-Z0-9]', token):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/re.py", line 182, in search
+    return _compile(pattern, flags).search(string)
+TypeError: expected string or bytes-like object
+
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.6424722671508789 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_get_response_called (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_get_response_called (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/wsgi/tests.py", line 21, in test_get_response_called
+    self.wsgi_handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 80, in __init__
+    self.method = environ['REQUEST_METHOD'].upper()
+KeyError: 'REQUEST_METHOD'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.7777400016784668 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_start_response_called (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_start_response_called (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1175, in patched
+    arg = patching.__enter__()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1247, in __enter__
+    original, local = self.get_original()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1221, in get_original
+    "%s does not have the attribute %r" % (target, name)
+AttributeError: <module 'django.core.handlers.wsgi' from '/opt/django__django/django/core/handlers/wsgi.py'> does not have the attribute 'start_response'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.3252243995666504 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_response_handler_class_set (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_response_handler_class_set (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/wsgi/tests.py", line 20, in test_response_handler_class_set
+    response = self.wsgi_handler(environ, start_response)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 132, in __call__
+    request = self.request_class(environ)
+  File "/opt/django__django/django/core/handlers/wsgi.py", line 80, in __init__
+    self.method = environ['REQUEST_METHOD'].upper()
+KeyError: 'REQUEST_METHOD'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.5503513813018799 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_file_to_stream_returned (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_file_to_stream_returned (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1175, in patched
+    arg = patching.__enter__()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1247, in __enter__
+    original, local = self.get_original()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1221, in get_original
+    "%s does not have the attribute %r" % (target, name)
+AttributeError: <module 'django.core.handlers.wsgi' from '/opt/django__django/django/core/handlers/wsgi.py'> does not have the attribute 'environ'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 1.6232588291168213 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] Command: coverage run ./tests/runtests.py --verbosity 2 wsgi.tests 
+[django__django__3.0] [django__django-11592] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11592] Std. Output:
+test_no_file_to_stream_returned (wsgi.tests.TestWSGIHandlerCall) ... ERROR
+
+======================================================================
+ERROR: test_no_file_to_stream_returned (wsgi.tests.TestWSGIHandlerCall)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1175, in patched
+    arg = patching.__enter__()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1247, in __enter__
+    original, local = self.get_original()
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1221, in get_original
+    "%s does not have the attribute %r" % (target, name)
+AttributeError: <module 'django.core.handlers.wsgi' from '/opt/django__django/django/core/handlers/wsgi.py'> does not have the attribute 'environ'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application wsgi
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11592] Return Code: 1 
+[django__django__3.0] [django__django-11592] TestsTime: 0.38941001892089844 
+[django__django__3.0] [django__django-11592] Test script run successful 
+[django__django__3.0] [django__django-11592] Removing coverage 
+[django__django__3.0] [django__django-11592] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11592] TestsTime: 0.0 
+[django__django__3.0] [django__django-11592] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11592] >>>>> Unfiltered Tests Failed 

@@ -1,0 +1,1336 @@
+[django__django__3.0] [django__django-11433] Task Metadata:
+	- Instance ID: django__django-11433
+	- Testbed: django__django__3.0
+	- Evaluation Model: Llama-4-Scout-17B-16E-Instruct_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-11433] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11433] Std. Output:
+ 
+[django__django__3.0] [django__django-11433] Return Code: 0 
+[django__django__3.0] [django__django-11433] Command: git -c advice.detachedHead=false checkout 21b1d239125f1228e579b1ce8d94d4d5feadd2a6 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at 21b1d23912 Added CVE-2019-12308 to the security release archive.
+ 
+[django__django__3.0] [django__django-11433] Return Code: 0 
+[django__django__3.0] [django__django-11433] Command: git diff > /opt/temp_django__django-11433_gold_init.patch 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11433] Std. Output:
+ 
+[django__django__3.0] [django__django-11433] Return Code: 0 
+[django__django__3.0] [django__django-11433] Command: git apply -v /opt/temp_django__django-11433_gold.patch 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Checking patch django/forms/models.py...
+Applied patch django/forms/models.py cleanly.
+ 
+[django__django__3.0] [django__django-11433] Return Code: 0 
+[django__django__3.0] [django__django-11433] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-11433] Command: git diff > /opt/temp_django__django-11433_test_init.patch 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11433] Std. Output:
+ 
+[django__django__3.0] [django__django-11433] Return Code: 0 
+[django__django__3.0] [django__django-11433] Command: git restore tests/model_forms/tests.py 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11433] Std. Output:
+ 
+[django__django__3.0] [django__django-11433] Return Code: 0 
+[django__django__3.0] [django__django-11433] Command: git apply -v /opt/temp_django__django-11433_test.patch 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Checking patch tests/model_forms/tests.py...
+Applied patch tests/model_forms/tests.py cleanly.
+ 
+[django__django__3.0] [django__django-11433] Return Code: 0 
+[django__django__3.0] [django__django-11433] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 7.776123046875 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.6982498168945312 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.48130273818969727 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.4682931900024414 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.5737869739532471 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.4189271926879883 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.34594273567199707 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.437150239944458 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.6529703140258789 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11433] TestsTime: 0.0 
+[django__django__3.0] [django__django-11433] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11433] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 8, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.6255404949188232 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 8, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.646622896194458 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 8, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.6049671173095703 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 8, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.5441992282867432 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 8, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.6840291023254395 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 8, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.6599435806274414 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 8, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.6591122150421143 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 8, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.39756178855895996 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 8, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.7040188312530518 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 8, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.6700263023376465 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11433] TestsTime: 0.0 
+[django__django__3.0] [django__django-11433] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11433] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.5381433963775635 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.4405515193939209 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.33501625061035156 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.36786770820617676 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.3560206890106201 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.40811800956726074 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.5604674816131592 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.5781049728393555 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.5737311840057373 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11433] TestsTime: 0.0 
+[django__django__3.0] [django__django-11433] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11433] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.5977678298950195 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.48551464080810547 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.509387731552124 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.47445082664489746 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.6458766460418701 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.6841051578521729 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.5843677520751953 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.525153398513794 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.6293306350708008 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11433] TestsTime: 0.0 
+[django__django__3.0] [django__django-11433] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11433] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.6236441135406494 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.6901443004608154 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.4993405342102051 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.4694793224334717 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.4630296230316162 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.6976313591003418 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.7208356857299805 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] Command: coverage run ./tests/runtests.py --verbosity 2 model_forms.tests 
+[django__django__3.0] [django__django-11433] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11433] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/model_forms/tests.py", line 7, in <module>
+    class Person(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 316, in __new__
+    new_class._meta.apps.register_model(new_class._meta.app_label, new_class)
+  File "/opt/django__django/django/apps/registry.py", line 229, in register_model
+    (model_name, app_label, app_models[model_name], model))
+RuntimeError: Conflicting 'person' models in application 'model_forms': <class 'model_forms.models.Person'> and <class 'model_forms.tests.Person'>.
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application model_forms
+ 
+[django__django__3.0] [django__django-11433] Return Code: 1 
+[django__django__3.0] [django__django-11433] TestsTime: 0.5339505672454834 
+[django__django__3.0] [django__django-11433] Test script run successful 
+[django__django__3.0] [django__django-11433] Removing coverage 
+[django__django__3.0] [django__django-11433] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11433] TestsTime: 0.0 
+[django__django__3.0] [django__django-11433] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11433] >>>>> Unfiltered Tests Failed 

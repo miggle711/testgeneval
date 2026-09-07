@@ -1,0 +1,878 @@
+[django__django__3.0] [django__django-11543] Task Metadata:
+	- Instance ID: django__django-11543
+	- Testbed: django__django__3.0
+	- Evaluation Model: Llama-4-Scout-17B-16E-Instruct_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-11543] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11543] Std. Output:
+ 
+[django__django__3.0] [django__django-11543] Return Code: 0 
+[django__django__3.0] [django__django-11543] Command: git -c advice.detachedHead=false checkout 00d4e6f8b587dcea147c51ece253dc54c461a11d 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11543] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at 00d4e6f8b5 Updated Select2 to version 4.0.7.
+ 
+[django__django__3.0] [django__django-11543] Return Code: 0 
+[django__django__3.0] [django__django-11543] Command: git diff > /opt/temp_django__django-11543_gold_init.patch 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11543] Std. Output:
+ 
+[django__django__3.0] [django__django-11543] Return Code: 0 
+[django__django__3.0] [django__django-11543] Command: git apply -v /opt/temp_django__django-11543_gold.patch 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11543] Std. Output:
+Checking patch django/core/servers/basehttp.py...
+Applied patch django/core/servers/basehttp.py cleanly.
+ 
+[django__django__3.0] [django__django-11543] Return Code: 0 
+[django__django__3.0] [django__django-11543] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-11543] Command: git diff > /opt/temp_django__django-11543_test_init.patch 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11543] Std. Output:
+ 
+[django__django__3.0] [django__django-11543] Return Code: 0 
+[django__django__3.0] [django__django-11543] Command: git restore tests/servers/tests.py 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11543] Std. Output:
+ 
+[django__django__3.0] [django__django-11543] Return Code: 0 
+[django__django__3.0] [django__django-11543] Command: git apply -v /opt/temp_django__django-11543_test.patch 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11543] Std. Output:
+Checking patch tests/servers/tests.py...
+Applied patch tests/servers/tests.py cleanly.
+ 
+[django__django__3.0] [django__django-11543] Return Code: 0 
+[django__django__3.0] [django__django-11543] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_content_length_present (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_content_length_present (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 13, in setUp
+    self.server_handler = ServerHandler(None, None, None, {}, request_handler=self.request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.7560067176818848 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_content_length_absent (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_content_length_absent (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 13, in setUp
+    self.server_handler = ServerHandler(None, None, None, {}, request_handler=self.request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.5424590110778809 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_connection_close (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_connection_close (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 13, in setUp
+    self.server_handler = ServerHandler(None, None, None, {}, request_handler=self.request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.6231825351715088 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_connection_keep_alive (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_connection_keep_alive (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 13, in setUp
+    self.server_handler = ServerHandler(None, None, None, {}, request_handler=self.request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.7228779792785645 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_server_not_threading_mixin (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_server_not_threading_mixin (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 13, in setUp
+    self.server_handler = ServerHandler(None, None, None, {}, request_handler=self.request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.7358250617980957 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_server_is_threading_mixin (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_server_is_threading_mixin (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 13, in setUp
+    self.server_handler = ServerHandler(None, None, None, {}, request_handler=self.request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.6810388565063477 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11543] TestsTime: 0.0 
+[django__django__3.0] [django__django-11543] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11543] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_content_length_present (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_content_length_present (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 15, in test_cleanup_headers_content_length_present
+    handler = ServerHandler(Mock(), Mock(), Mock(), {}, request_handler=request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.601668119430542 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_content_length_absent (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_content_length_absent (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 14, in test_cleanup_headers_content_length_absent
+    handler = ServerHandler(Mock(), Mock(), Mock(), {}, request_handler=request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.47544121742248535 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_connection_close (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_connection_close (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 14, in test_cleanup_headers_connection_close
+    handler = ServerHandler(Mock(), Mock(), Mock(), {}, request_handler=request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.6328146457672119 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_connection_keep_alive (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_connection_keep_alive (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 14, in test_cleanup_headers_connection_keep_alive
+    handler = ServerHandler(Mock(), Mock(), Mock(), {}, request_handler=request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.5859959125518799 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_server_not_threading_mixin (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_server_not_threading_mixin (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/servers/tests.py", line 15, in test_cleanup_headers_server_not_threading_mixin
+    handler = ServerHandler(Mock(), Mock(), Mock(), {}, request_handler=request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.7483494281768799 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11543] TestsTime: 0.0 
+[django__django__3.0] [django__django-11543] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11543] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_content_length_present (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_content_length_present (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 15, in setUp
+    request_handler=self.request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.5707428455352783 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_content_length_absent (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_content_length_absent (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 15, in setUp
+    request_handler=self.request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.8372294902801514 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_connection_close (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_connection_close (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 15, in setUp
+    request_handler=self.request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.7156295776367188 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_persistent_connection (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_persistent_connection (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 15, in setUp
+    request_handler=self.request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.457017183303833 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_non_persistent_connection (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_non_persistent_connection (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 15, in setUp
+    request_handler=self.request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.7332820892333984 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_super_called (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_super_called (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 15, in setUp
+    request_handler=self.request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.5883123874664307 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11543] TestsTime: 0.0 
+[django__django__3.0] [django__django-11543] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11543] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_no_content_length (servers.tests.TestServerHandler) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_no_content_length (servers.tests.TestServerHandler)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 13, in setUp
+    self.request_handler = WSGIRequestHandler(self.server.socket, self.server)
+TypeError: __init__() missing 1 required positional argument: 'server'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.140s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.6463096141815186 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_content_length_threading_server (servers.tests.TestServerHandler) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_content_length_threading_server (servers.tests.TestServerHandler)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 13, in setUp
+    self.request_handler = WSGIRequestHandler(self.server.socket, self.server)
+TypeError: __init__() missing 1 required positional argument: 'server'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.3170332908630371 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_content_length_non_threading_server (servers.tests.TestServerHandler) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_content_length_non_threading_server (servers.tests.TestServerHandler)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 13, in setUp
+    self.request_handler = WSGIRequestHandler(self.server.socket, self.server)
+TypeError: __init__() missing 1 required positional argument: 'server'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.36228322982788086 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_connection_close (servers.tests.TestServerHandler) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_connection_close (servers.tests.TestServerHandler)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 13, in setUp
+    self.request_handler = WSGIRequestHandler(self.server.socket, self.server)
+TypeError: __init__() missing 1 required positional argument: 'server'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.47736620903015137 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_connection_keep_alive (servers.tests.TestServerHandler) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_connection_keep_alive (servers.tests.TestServerHandler)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 13, in setUp
+    self.request_handler = WSGIRequestHandler(self.server.socket, self.server)
+TypeError: __init__() missing 1 required positional argument: 'server'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.6677639484405518 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_super_called (servers.tests.TestServerHandler) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_super_called (servers.tests.TestServerHandler)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 13, in setUp
+    self.request_handler = WSGIRequestHandler(self.server.socket, self.server)
+TypeError: __init__() missing 1 required positional argument: 'server'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.5332205295562744 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11543] TestsTime: 0.0 
+[django__django__3.0] [django__django-11543] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11543] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_content_length_present (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_content_length_present (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 12, in setUp
+    self.server_handler = ServerHandler(None, None, None, {}, request_handler=self.request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.4066300392150879 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_content_length_absent (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_content_length_absent (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 12, in setUp
+    self.server_handler = ServerHandler(None, None, None, {}, request_handler=self.request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.6607732772827148 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_connection_close_present (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_connection_close_present (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 12, in setUp
+    self.server_handler = ServerHandler(None, None, None, {}, request_handler=self.request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.7295145988464355 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_persistent_connection (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_persistent_connection (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 12, in setUp
+    self.server_handler = ServerHandler(None, None, None, {}, request_handler=self.request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.5563576221466064 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_non_persistent_connection (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_non_persistent_connection (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 12, in setUp
+    self.server_handler = ServerHandler(None, None, None, {}, request_handler=self.request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.7273242473602295 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] Command: coverage run ./tests/runtests.py --verbosity 2 servers.tests 
+[django__django__3.0] [django__django-11543] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11543] Std. Output:
+test_cleanup_headers_calls_super (servers.tests.TestServerHandlerCleanupHeaders) ... ERROR
+
+======================================================================
+ERROR: test_cleanup_headers_calls_super (servers.tests.TestServerHandlerCleanupHeaders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/servers/tests.py", line 12, in setUp
+    self.server_handler = ServerHandler(None, None, None, {}, request_handler=self.request_handler)
+  File "/opt/django__django/django/core/servers/basehttp.py", line 95, in __init__
+    super().__init__(LimitedStream(stdin, content_length), stdout, stderr, environ, **kwargs)
+TypeError: __init__() got an unexpected keyword argument 'request_handler'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application servers
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11543] Return Code: 1 
+[django__django__3.0] [django__django-11543] TestsTime: 0.45584559440612793 
+[django__django__3.0] [django__django-11543] Test script run successful 
+[django__django__3.0] [django__django-11543] Removing coverage 
+[django__django__3.0] [django__django-11543] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11543] TestsTime: 0.0 
+[django__django__3.0] [django__django-11543] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11543] >>>>> Unfiltered Tests Failed 

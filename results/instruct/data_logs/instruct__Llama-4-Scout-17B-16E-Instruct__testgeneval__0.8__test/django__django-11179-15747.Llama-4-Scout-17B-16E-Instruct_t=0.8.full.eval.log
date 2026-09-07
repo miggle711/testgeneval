@@ -1,0 +1,3813 @@
+[django__django__3.0] [django__django-11179] Task Metadata:
+	- Instance ID: django__django-11179
+	- Testbed: django__django__3.0
+	- Evaluation Model: Llama-4-Scout-17B-16E-Instruct_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-11179] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11179] Std. Output:
+ 
+[django__django__3.0] [django__django-11179] Return Code: 0 
+[django__django__3.0] [django__django-11179] Command: git -c advice.detachedHead=false checkout 19fc6376ce67d01ca37a91ef2f55ef769f50513a 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at 19fc6376ce Fixed #30304 -- Added support for the HttpOnly, SameSite, and Secure flags on language cookies.
+ 
+[django__django__3.0] [django__django-11179] Return Code: 0 
+[django__django__3.0] [django__django-11179] Command: git diff > /opt/temp_django__django-11179_gold_init.patch 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11179] Std. Output:
+ 
+[django__django__3.0] [django__django-11179] Return Code: 0 
+[django__django__3.0] [django__django-11179] Command: git apply -v /opt/temp_django__django-11179_gold.patch 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Checking patch django/db/models/deletion.py...
+Applied patch django/db/models/deletion.py cleanly.
+ 
+[django__django__3.0] [django__django-11179] Return Code: 0 
+[django__django__3.0] [django__django-11179] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-11179] Command: git diff > /opt/temp_django__django-11179_test_init.patch 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11179] Std. Output:
+ 
+[django__django__3.0] [django__django-11179] Return Code: 0 
+[django__django__3.0] [django__django-11179] Command: git restore tests/delete/tests.py 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11179] Std. Output:
+ 
+[django__django__3.0] [django__django-11179] Return Code: 0 
+[django__django__3.0] [django__django-11179] Command: git apply -v /opt/temp_django__django-11179_test.patch 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Checking patch tests/delete/tests.py...
+Applied patch tests/delete/tests.py cleanly.
+ 
+[django__django__3.0] [django__django-11179] Return Code: 0 
+[django__django__3.0] [django__django-11179] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_cascade (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_cascade (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.model1 = Model('Model1', {'id': django.db.models.AutoField(primary_key=True)})
+  File "/opt/django__django/django/db/models/base.py", line 404, in __init__
+    opts = self._meta
+AttributeError: 'Model' object has no attribute '_meta'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 1.5297372341156006 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_protect (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_protect (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.model1 = Model('Model1', {'id': django.db.models.AutoField(primary_key=True)})
+  File "/opt/django__django/django/db/models/base.py", line 404, in __init__
+    opts = self._meta
+AttributeError: 'Model' object has no attribute '_meta'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.9789712429046631 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_set_null (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_set_null (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.model1 = Model('Model1', {'id': django.db.models.AutoField(primary_key=True)})
+  File "/opt/django__django/django/db/models/base.py", line 404, in __init__
+    opts = self._meta
+AttributeError: 'Model' object has no attribute '_meta'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.6308860778808594 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_set_default (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_set_default (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.model1 = Model('Model1', {'id': django.db.models.AutoField(primary_key=True)})
+  File "/opt/django__django/django/db/models/base.py", line 404, in __init__
+    opts = self._meta
+AttributeError: 'Model' object has no attribute '_meta'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.7381279468536377 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_set (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_set (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.model1 = Model('Model1', {'id': django.db.models.AutoField(primary_key=True)})
+  File "/opt/django__django/django/db/models/base.py", line 404, in __init__
+    opts = self._meta
+AttributeError: 'Model' object has no attribute '_meta'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.7736563682556152 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_delete_fast (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_delete_fast (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.model1 = Model('Model1', {'id': django.db.models.AutoField(primary_key=True)})
+  File "/opt/django__django/django/db/models/base.py", line 404, in __init__
+    opts = self._meta
+AttributeError: 'Model' object has no attribute '_meta'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.862478494644165 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_delete_slow (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_delete_slow (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.model1 = Model('Model1', {'id': django.db.models.AutoField(primary_key=True)})
+  File "/opt/django__django/django/db/models/base.py", line 404, in __init__
+    opts = self._meta
+AttributeError: 'Model' object has no attribute '_meta'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 1.0636074542999268 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_fast_deletes (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_fast_deletes (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.model1 = Model('Model1', {'id': django.db.models.AutoField(primary_key=True)})
+  File "/opt/django__django/django/db/models/base.py", line 404, in __init__
+    opts = self._meta
+AttributeError: 'Model' object has no attribute '_meta'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.8628544807434082 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_signals (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_signals (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.model1 = Model('Model1', {'id': django.db.models.AutoField(primary_key=True)})
+  File "/opt/django__django/django/db/models/base.py", line 404, in __init__
+    opts = self._meta
+AttributeError: 'Model' object has no attribute '_meta'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.8813881874084473 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_delete_batch (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_delete_batch (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.model1 = Model('Model1', {'id': django.db.models.AutoField(primary_key=True)})
+  File "/opt/django__django/django/db/models/base.py", line 404, in __init__
+    opts = self._meta
+AttributeError: 'Model' object has no attribute '_meta'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.876812219619751 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_reverse_dependency (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_reverse_dependency (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.model1 = Model('Model1', {'id': django.db.models.AutoField(primary_key=True)})
+  File "/opt/django__django/django/db/models/base.py", line 404, in __init__
+    opts = self._meta
+AttributeError: 'Model' object has no attribute '_meta'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.8727548122406006 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_keep_parents (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_keep_parents (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.model1 = Model('Model1', {'id': django.db.models.AutoField(primary_key=True)})
+  File "/opt/django__django/django/db/models/base.py", line 404, in __init__
+    opts = self._meta
+AttributeError: 'Model' object has no attribute '_meta'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.969313383102417 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_delete_rollback (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_delete_rollback (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.model1 = Model('Model1', {'id': django.db.models.AutoField(primary_key=True)})
+  File "/opt/django__django/django/db/models/base.py", line 404, in __init__
+    opts = self._meta
+AttributeError: 'Model' object has no attribute '_meta'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.7466106414794922 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_connection (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_connection (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.model1 = Model('Model1', {'id': django.db.models.AutoField(primary_key=True)})
+  File "/opt/django__django/django/db/models/base.py", line 404, in __init__
+    opts = self._meta
+AttributeError: 'Model' object has no attribute '_meta'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.6721267700195312 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11179] TestsTime: 0.0 
+[django__django__3.0] [django__django-11179] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11179] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 5, in <module>
+    from django.db.models.fields import CASCADE as ON_CASCADE
+ImportError: cannot import name 'CASCADE'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.6497797966003418 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 5, in <module>
+    from django.db.models.fields import CASCADE as ON_CASCADE
+ImportError: cannot import name 'CASCADE'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.681771993637085 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 5, in <module>
+    from django.db.models.fields import CASCADE as ON_CASCADE
+ImportError: cannot import name 'CASCADE'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.4442613124847412 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 5, in <module>
+    from django.db.models.fields import CASCADE as ON_CASCADE
+ImportError: cannot import name 'CASCADE'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.5682592391967773 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 5, in <module>
+    from django.db.models.fields import CASCADE as ON_CASCADE
+ImportError: cannot import name 'CASCADE'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.7899060249328613 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 5, in <module>
+    from django.db.models.fields import CASCADE as ON_CASCADE
+ImportError: cannot import name 'CASCADE'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.6493256092071533 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 5, in <module>
+    from django.db.models.fields import CASCADE as ON_CASCADE
+ImportError: cannot import name 'CASCADE'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.7239587306976318 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 5, in <module>
+    from django.db.models.fields import CASCADE as ON_CASCADE
+ImportError: cannot import name 'CASCADE'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.6899681091308594 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 5, in <module>
+    from django.db.models.fields import CASCADE as ON_CASCADE
+ImportError: cannot import name 'CASCADE'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.6492593288421631 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 28
+    signals.pre_delete.connect(lambda **kwargs: kwargs['instance'].delete_called_pre_delete_before = True, sender=Book)
+                              ^
+SyntaxError: lambda cannot contain assignment
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.5979995727539062 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 5, in <module>
+    from django.db.models.fields import CASCADE as ON_CASCADE
+ImportError: cannot import name 'CASCADE'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.6047453880310059 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 5, in <module>
+    from django.db.models.fields import CASCADE as ON_CASCADE
+ImportError: cannot import name 'CASCADE'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.6791603565216064 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 5, in <module>
+    from django.db.models.fields import CASCADE as ON_CASCADE
+ImportError: cannot import name 'CASCADE'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.7027573585510254 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 5, in <module>
+    from django.db.models.fields import CASCADE as ON_CASCADE
+ImportError: cannot import name 'CASCADE'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.7075846195220947 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 5, in <module>
+    from django.db.models.fields import CASCADE as ON_CASCADE
+ImportError: cannot import name 'CASCADE'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.664210319519043 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 5, in <module>
+    from django.db.models.fields import CASCADE as ON_CASCADE
+ImportError: cannot import name 'CASCADE'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.6965818405151367 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 5, in <module>
+    from django.db.models.fields import CASCADE as ON_CASCADE
+ImportError: cannot import name 'CASCADE'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.6826221942901611 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 5, in <module>
+    from django.db.models.fields import CASCADE as ON_CASCADE
+ImportError: cannot import name 'CASCADE'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.4881625175476074 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11179] TestsTime: 0.0 
+[django__django__3.0] [django__django-11179] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11179] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_protected_error (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_protected_error (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.user = models.Model.objects.create(id=1)
+AttributeError: type object 'Model' has no attribute 'objects'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.936049222946167 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_cascade (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_cascade (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.user = models.Model.objects.create(id=1)
+AttributeError: type object 'Model' has no attribute 'objects'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.9665436744689941 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_do_nothing (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_do_nothing (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.user = models.Model.objects.create(id=1)
+AttributeError: type object 'Model' has no attribute 'objects'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.9729199409484863 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_collector_delete_fast (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_collector_delete_fast (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.user = models.Model.objects.create(id=1)
+AttributeError: type object 'Model' has no attribute 'objects'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 1.1524033546447754 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_collector_delete_fast_multiple (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_collector_delete_fast_multiple (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.user = models.Model.objects.create(id=1)
+AttributeError: type object 'Model' has no attribute 'objects'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.873046875 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_collector_delete_no_fast (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_collector_delete_no_fast (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.user = models.Model.objects.create(id=1)
+AttributeError: type object 'Model' has no attribute 'objects'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.8140676021575928 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_collector_delete_signals (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_collector_delete_signals (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.user = models.Model.objects.create(id=1)
+AttributeError: type object 'Model' has no attribute 'objects'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.9855160713195801 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_collector_delete_rollback (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_collector_delete_rollback (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.user = models.Model.objects.create(id=1)
+AttributeError: type object 'Model' has no attribute 'objects'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.7391471862792969 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_collector_delete_pre_delete_exception (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_collector_delete_pre_delete_exception (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.user = models.Model.objects.create(id=1)
+AttributeError: type object 'Model' has no attribute 'objects'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.9140360355377197 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_collector_delete_fast_deletes (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_collector_delete_fast_deletes (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.user = models.Model.objects.create(id=1)
+AttributeError: type object 'Model' has no attribute 'objects'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 1.0854129791259766 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_collector_delete_fast_deletes_bulk (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_collector_delete_fast_deletes_bulk (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.user = models.Model.objects.create(id=1)
+AttributeError: type object 'Model' has no attribute 'objects'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 1.0566127300262451 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_collector_delete_rollback_on_error (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_collector_delete_rollback_on_error (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.user = models.Model.objects.create(id=1)
+AttributeError: type object 'Model' has no attribute 'objects'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.5787818431854248 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_collector_delete_fast_delete_queryset (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_collector_delete_fast_delete_queryset (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.user = models.Model.objects.create(id=1)
+AttributeError: type object 'Model' has no attribute 'objects'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.6737151145935059 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_collector_delete_instance (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_collector_delete_instance (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.user = models.Model.objects.create(id=1)
+AttributeError: type object 'Model' has no attribute 'objects'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.9022731781005859 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_collector_delete_instance_bulk (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_collector_delete_instance_bulk (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.user = models.Model.objects.create(id=1)
+AttributeError: type object 'Model' has no attribute 'objects'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 1.0690135955810547 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_collector_delete_instance_signals (delete.tests.DeletionTests) ... ERROR
+
+======================================================================
+ERROR: test_collector_delete_instance_signals (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 11, in setUp
+    self.user = models.Model.objects.create(id=1)
+AttributeError: type object 'Model' has no attribute 'objects'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 1.1043486595153809 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11179] TestsTime: 0.0 
+[django__django__3.0] [django__django-11179] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11179] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ERROR
+
+======================================================================
+ERROR: setUpClass (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/testcases.py", line 1137, in setUpClass
+    cls.setUpTestData()
+  File "/opt/django__django/tests/delete/tests.py", line 12, in setUpTestData
+    cls.author1 = Author.objects.create(name='John')
+NameError: name 'Author' is not defined
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 1.1868364810943604 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ERROR
+
+======================================================================
+ERROR: setUpClass (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/testcases.py", line 1137, in setUpClass
+    cls.setUpTestData()
+  File "/opt/django__django/tests/delete/tests.py", line 12, in setUpTestData
+    cls.author1 = Author.objects.create(name='John')
+NameError: name 'Author' is not defined
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 1.1319100856781006 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ERROR
+
+======================================================================
+ERROR: setUpClass (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/testcases.py", line 1137, in setUpClass
+    cls.setUpTestData()
+  File "/opt/django__django/tests/delete/tests.py", line 12, in setUpTestData
+    cls.author1 = Author.objects.create(name='John')
+NameError: name 'Author' is not defined
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.5737788677215576 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ERROR
+
+======================================================================
+ERROR: setUpClass (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/testcases.py", line 1137, in setUpClass
+    cls.setUpTestData()
+  File "/opt/django__django/tests/delete/tests.py", line 12, in setUpTestData
+    cls.author1 = Author.objects.create(name='John')
+NameError: name 'Author' is not defined
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.8701543807983398 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ERROR
+
+======================================================================
+ERROR: setUpClass (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/testcases.py", line 1137, in setUpClass
+    cls.setUpTestData()
+  File "/opt/django__django/tests/delete/tests.py", line 12, in setUpTestData
+    cls.author1 = Author.objects.create(name='John')
+NameError: name 'Author' is not defined
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 1.1791751384735107 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ERROR
+
+======================================================================
+ERROR: setUpClass (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/testcases.py", line 1137, in setUpClass
+    cls.setUpTestData()
+  File "/opt/django__django/tests/delete/tests.py", line 12, in setUpTestData
+    cls.author1 = Author.objects.create(name='John')
+NameError: name 'Author' is not defined
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 1.0023984909057617 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ERROR
+
+======================================================================
+ERROR: setUpClass (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/testcases.py", line 1137, in setUpClass
+    cls.setUpTestData()
+  File "/opt/django__django/tests/delete/tests.py", line 12, in setUpTestData
+    cls.author1 = Author.objects.create(name='John')
+NameError: name 'Author' is not defined
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 1.2077066898345947 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ERROR
+
+======================================================================
+ERROR: setUpClass (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/testcases.py", line 1137, in setUpClass
+    cls.setUpTestData()
+  File "/opt/django__django/tests/delete/tests.py", line 12, in setUpTestData
+    cls.author1 = Author.objects.create(name='John')
+NameError: name 'Author' is not defined
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.7433466911315918 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ERROR
+
+======================================================================
+ERROR: setUpClass (delete.tests.DeletionTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/testcases.py", line 1137, in setUpClass
+    cls.setUpTestData()
+  File "/opt/django__django/tests/delete/tests.py", line 12, in setUpTestData
+    cls.author1 = Author.objects.create(name='John')
+NameError: name 'Author' is not defined
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.7419068813323975 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11179] TestsTime: 0.0 
+[django__django__3.0] [django__django-11179] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11179] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.8280801773071289 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.7768185138702393 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.9000742435455322 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.6752736568450928 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.9661703109741211 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.45354318618774414 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.48839282989501953 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.43605518341064453 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.5059711933135986 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.7527620792388916 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.808197021484375 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.6480574607849121 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.670762300491333 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.7271904945373535 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.5443634986877441 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.4908912181854248 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.6134483814239502 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.6385483741760254 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.6820392608642578 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.7997591495513916 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.7906954288482666 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11179] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11179] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 9, in <module>
+    from .models import Article, Book, BookProxy, BookWithFkToSelf, Category, Person
+ImportError: cannot import name 'Article'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11179] Return Code: 1 
+[django__django__3.0] [django__django-11179] TestsTime: 0.9282867908477783 
+[django__django__3.0] [django__django-11179] Test script run successful 
+[django__django__3.0] [django__django-11179] Removing coverage 
+[django__django__3.0] [django__django-11179] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11179] TestsTime: 0.0 
+[django__django__3.0] [django__django-11179] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11179] >>>>> Unfiltered Tests Failed 

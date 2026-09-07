@@ -1,0 +1,3683 @@
+[django__django__3.0] [django__django-11333] Task Metadata:
+	- Instance ID: django__django-11333
+	- Testbed: django__django__3.0
+	- Evaluation Model: Llama-4-Scout-17B-16E-Instruct_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-11333] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11333] Std. Output:
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] Command: git -c advice.detachedHead=false checkout 55b68de643b5c2d5f0a8ea7587ab3b2966021ccc 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11333] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at 55b68de643 Fixed #30608 -- Fixed non-unicode EmailMessage crash when domain name for localhost is non-ASCII.
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] Command: git diff > /opt/temp_django__django-11333_gold_init.patch 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11333] Std. Output:
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] Command: git apply -v /opt/temp_django__django-11333_gold.patch 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11333] Std. Output:
+Checking patch django/urls/base.py...
+Checking patch django/urls/resolvers.py...
+Applied patch django/urls/base.py cleanly.
+Applied patch django/urls/resolvers.py cleanly.
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-11333] Command: git diff > /opt/temp_django__django-11333_test_init.patch 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11333] Std. Output:
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] Command: git restore tests/urlpatterns/test_resolvers.py 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11333] Std. Output:
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] Command: git apply -v /opt/temp_django__django-11333_test.patch 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11333] Std. Output:
+Checking patch tests/urlpatterns/test_resolvers.py...
+Applied patch tests/urlpatterns/test_resolvers.py cleanly.
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 4.717195987701416 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.8596062660217285 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 1.2094957828521729 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.99906325340271 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.792576789855957 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.5660574436187744 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.8100314140319824 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.6182208061218262 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11333] TestsTime: 0.0 
+[django__django__3.0] [django__django-11333] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11333] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.4516947269439697 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.9482834339141846 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.9571630954742432 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.5199575424194336 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.47861647605895996 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.6243436336517334 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.502180814743042 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.5832111835479736 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.5731408596038818 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11333] TestsTime: 0.0 
+[django__django__3.0] [django__django-11333] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11333] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.7045834064483643 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.8155543804168701 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 1.1772325038909912 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.740591287612915 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.7978715896606445 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.65720534324646 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 1.0307872295379639 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.7093346118927002 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.9607217311859131 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.34812092781066895 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.9971306324005127 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.6190400123596191 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.35519909858703613 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.6168761253356934 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.6394302845001221 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.5614428520202637 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11333] TestsTime: 0.0 
+[django__django__3.0] [django__django-11333] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11333] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.6279065608978271 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.5918624401092529 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.4800221920013428 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.6414496898651123 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.8543951511383057 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.5457887649536133 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 4, in <module>
+    from django.urls.exceptions import ImproperlyConfigured
+ImportError: cannot import name 'ImproperlyConfigured'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.48474669456481934 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11333] TestsTime: 0.0 
+[django__django__3.0] [django__django-11333] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11333] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_get_resolver_with_no_args (urlpatterns.test_resolvers.GetResolverTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, urlpatterns
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] TestsTime: 1.2762277126312256 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_get_resolver_with_urlconf (urlpatterns.test_resolvers.GetResolverTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, urlpatterns
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] TestsTime: 0.6047825813293457 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_get_resolver_with_none_urlconf (urlpatterns.test_resolvers.GetResolverTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, urlpatterns
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] TestsTime: 0.9402925968170166 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_get_resolver_returns_same_resolver_for_same_urlconf (urlpatterns.test_resolvers.GetResolverTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, urlpatterns
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] TestsTime: 0.5783820152282715 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_get_resolver_with_root_urlconf (urlpatterns.test_resolvers.GetResolverTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, urlpatterns
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] TestsTime: 1.5289475917816162 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_get_resolver_with_empty_urlconf (urlpatterns.test_resolvers.GetResolverTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, urlpatterns
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] TestsTime: 0.6335513591766357 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_get_resolver_with_invalid_urlconf (urlpatterns.test_resolvers.GetResolverTests) ... FAIL
+
+======================================================================
+FAIL: test_get_resolver_with_invalid_urlconf (urlpatterns.test_resolvers.GetResolverTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 11, in test_get_resolver_with_invalid_urlconf
+    get_resolver('invalid_urlconf')
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, urlpatterns
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.6168749332427979 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_get_resolver_with_non_existent_urlconf (urlpatterns.test_resolvers.GetResolverTests) ... FAIL
+
+======================================================================
+FAIL: test_get_resolver_with_non_existent_urlconf (urlpatterns.test_resolvers.GetResolverTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 11, in test_get_resolver_with_non_existent_urlconf
+    get_resolver('non_existent_urlconf')
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, urlpatterns
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 1.0164318084716797 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11333] Test Script:  coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers;
+ 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_get_resolver_returns_same_resolver_for_same_urlconf (urlpatterns.test_resolvers.GetResolverTests) ... ok
+test_get_resolver_with_empty_urlconf (urlpatterns.test_resolvers.GetResolverTests) ... ok
+test_get_resolver_with_no_args (urlpatterns.test_resolvers.GetResolverTests) ... ok
+test_get_resolver_with_none_urlconf (urlpatterns.test_resolvers.GetResolverTests) ... ok
+test_get_resolver_with_root_urlconf (urlpatterns.test_resolvers.GetResolverTests) ... ok
+test_get_resolver_with_urlconf (urlpatterns.test_resolvers.GetResolverTests) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.005s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, urlpatterns
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] TestsTime: 0.5821080207824707 
+[django__django__3.0] [django__django-11333] 
+>>>>> All Tests Passed
+ 
+[django__django__3.0] [django__django-11333] Current Working Directory: /opt/django__django 
+[django__django__3.0] [django__django-11333] Command: coverage json -o coverage.json 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11333] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] 
+CoverageLOG: 35.351089588377725%
+ 
+[django__django__3.0] [django__django-11333] 
+FunctionCoverageLOG: 100.0%
+ 
+[django__django__3.0] [django__django-11333] Running mutation testing 
+[django__django__3.0] [django__django-11333] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.0] [django__django-11333] MutationTimeout 
+[django__django__3.0] [django__django-11333] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11333] Std. Output:
+82.03 82.25 82.46
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] Command: cr-report mutation.sqlite 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11333] Std. Output:
+[job-id] f7028dfc57cd419091a936df50717d3c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] 3caac28564f646ddb342e8e6aa00ea8a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] d9a45e01981649da993406d35fbca043
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 2
+worker outcome: normal, test outcome: survived
+[job-id] 53660a1bac6f4821a7c12f94858936c3
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 3
+worker outcome: normal, test outcome: survived
+[job-id] 768bc81b9c4947179bd976a57fdcea34
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 4
+worker outcome: normal, test outcome: survived
+[job-id] 2a8635433ace46a7bef212fc3bf71010
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 5
+worker outcome: normal, test outcome: survived
+[job-id] cbb371dbe478421bbd0712eb32761e4e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 6
+worker outcome: normal, test outcome: survived
+[job-id] 7d9141feafec4d999a04de028160968f
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 7
+worker outcome: normal, test outcome: survived
+[job-id] 28ebf550d7b849a9bf73464e8ce84519
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 8
+worker outcome: normal, test outcome: survived
+[job-id] abc5d4b7f3ab4224aabc20667b60729c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 9
+worker outcome: normal, test outcome: survived
+[job-id] f4e4cc602b5d4a96ad343710dba776ea
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 10
+worker outcome: normal, test outcome: survived
+[job-id] f26ea9d2b331418c9c8b02cd354f253d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 11
+worker outcome: normal, test outcome: survived
+[job-id] 9348e209fba44f68848201c3feeba8b0
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 12
+worker outcome: normal, test outcome: survived
+[job-id] 4d3c7c7007274665862e7b781c85539c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 13
+worker outcome: normal, test outcome: survived
+[job-id] eae8c6d9c9f14eb89925404a58f6bc7b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 14
+worker outcome: normal, test outcome: survived
+[job-id] 1ab78079b62f47168b394bc6a8404c07
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 15
+worker outcome: normal, test outcome: survived
+[job-id] 3ce66d34c7b0465ba328824dc0758e66
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 16
+worker outcome: normal, test outcome: survived
+[job-id] 868c681434864ab0bd3b14765f9c6c9b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 17
+worker outcome: normal, test outcome: survived
+[job-id] 62ef3113381f4257b3a9366f21814085
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 18
+worker outcome: normal, test outcome: survived
+[job-id] 3ad12cd9870c4f5b9612fa2636e7a17a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 19
+worker outcome: normal, test outcome: survived
+[job-id] 69b50dc496af49d483c283050120d198
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 20
+worker outcome: normal, test outcome: survived
+[job-id] 554c407ed92b4c47a037465a980ebfdb
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 21
+worker outcome: normal, test outcome: survived
+[job-id] 224937c421794f86ae0403fef3b2c452
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 22
+worker outcome: normal, test outcome: survived
+[job-id] 7800452277a24cd0a7e6256939093c9c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 23
+worker outcome: normal, test outcome: killed
+[job-id] 4ae190e649b44294a1669a93173c85d4
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Sub 24
+worker outcome: normal, test outcome: killed
+[job-id] 1869e873421243bda9830e6011698ea9
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] e3f2d873d6544fc5bde0e25d90551aa5
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] 14d18f203f7243d5bf5bc5bf22d2a302
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] 04aa4742146248c4b7be92b39d77f0cd
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 3
+worker outcome: normal, test outcome: survived
+[job-id] 963c50e958ff4c98b1b470a251cb555c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 4
+worker outcome: normal, test outcome: survived
+[job-id] 12bd2ad239d34f409360f6401ea40f73
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 5
+worker outcome: normal, test outcome: survived
+[job-id] fd4f1d61f58445b99e07a06d53eb87e6
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 6
+worker outcome: normal, test outcome: survived
+[job-id] 14c10fa393944d0089d0e300d765496f
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 7
+worker outcome: normal, test outcome: survived
+[job-id] ec88542ce7c148a9a35fa84be96df996
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 8
+worker outcome: normal, test outcome: survived
+[job-id] 35f80fde1c154f808dd3f142b7c42ec7
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 9
+worker outcome: normal, test outcome: survived
+[job-id] 7ef06aea682d43a19d800cea3a17cb3a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 10
+worker outcome: normal, test outcome: survived
+[job-id] 6e50bacb12a64edd9a1b19e72cb524b6
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 11
+worker outcome: normal, test outcome: survived
+[job-id] 39e3d8cdebc64284b68f2a3d0750fe4f
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 12
+worker outcome: normal, test outcome: survived
+[job-id] 526262ac591f494f812fe8d881cadd6d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 13
+worker outcome: normal, test outcome: survived
+[job-id] 90ee782c84c646b5960969a08f8fbed8
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 14
+worker outcome: normal, test outcome: survived
+[job-id] d8958e2b971749c4a281203dfe030e54
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 15
+worker outcome: normal, test outcome: survived
+[job-id] 9171af0078fd4b759e063d3e9381740a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 16
+worker outcome: normal, test outcome: survived
+[job-id] 2c7a34ac3abc437388b843cb91ecd7f3
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 17
+worker outcome: normal, test outcome: survived
+[job-id] e9cd8b4c56544174bc76700d89b1cceb
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 18
+worker outcome: normal, test outcome: survived
+[job-id] ad34280d1cf6462b8894a42754e20006
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 19
+worker outcome: normal, test outcome: survived
+[job-id] e8ec380868104788b7b6b8c948604f64
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 20
+worker outcome: normal, test outcome: survived
+[job-id] 5eb877ffb1654eeea8cb4f78201f3c29
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 21
+worker outcome: normal, test outcome: survived
+[job-id] 028b687d392f40c1bc815a768259ac60
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 22
+worker outcome: normal, test outcome: survived
+[job-id] 7e40e509dbec499f9ed6bafe5660f090
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 23
+worker outcome: normal, test outcome: survived
+[job-id] 0af516db9dc14c04ba5947af73fa641d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mul 24
+worker outcome: normal, test outcome: survived
+[job-id] a08ab7a05bf4409c8fa2724bb71a8ca9
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] d2867121c5ff48a5b241f9ed7441798a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] 4d0ac61c5d0e431c84ed93fd49a907af
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] 6b3ef8098fe14a0cb6ff86aff521e1b2
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 3
+worker outcome: normal, test outcome: survived
+[job-id] 8d20cb67928a47e4b5551eac0ce0a5f3
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 4
+worker outcome: normal, test outcome: survived
+[job-id] 072fa34b4d9842788f5ae84c87ab05f0
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 5
+worker outcome: normal, test outcome: survived
+[job-id] 8d55adc59aec4726bc7925e5b8731f5f
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 6
+worker outcome: normal, test outcome: survived
+[job-id] 2b4f806a1de04bc8aa1e55fcfd1d39bf
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 7
+worker outcome: normal, test outcome: survived
+[job-id] c3478223dfdb40d297c9c51811d4f501
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 8
+worker outcome: normal, test outcome: survived
+[job-id] 5faf26961d7947778c405beebf4acb8d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 9
+worker outcome: normal, test outcome: survived
+[job-id] 8cc1686ef8f04994bc351ca01d209bad
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 10
+worker outcome: normal, test outcome: survived
+[job-id] 3ec1d91d9b0f4e18a151aa57ccd28097
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 11
+worker outcome: normal, test outcome: survived
+[job-id] a60f8efaf6d1442a94d847d1e669b1b0
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 12
+worker outcome: normal, test outcome: survived
+[job-id] 084b4df3e7cc4cffa80ecb44d08edc55
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 13
+worker outcome: normal, test outcome: survived
+[job-id] 053ae7dbb62b47098ab10b84b188965d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 14
+worker outcome: normal, test outcome: survived
+[job-id] 225291b05b04486694fd4de13aafd62f
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 15
+worker outcome: normal, test outcome: survived
+[job-id] 367771487d534d8a92d2f60befda21d5
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 16
+worker outcome: normal, test outcome: survived
+[job-id] 00252ce6747848ce8ecbccb79e1a9614
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 17
+worker outcome: normal, test outcome: survived
+[job-id] d0090709ae394e1ba82e796a281ed3d7
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 18
+worker outcome: normal, test outcome: survived
+[job-id] 788bf836ee5c40b18a971fca3b687b7e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 19
+worker outcome: normal, test outcome: survived
+[job-id] c525d6e989384f74bc2f767936f489f6
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 20
+worker outcome: normal, test outcome: survived
+[job-id] 7112eba935be451893bc504749d54f7a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 21
+worker outcome: normal, test outcome: survived
+[job-id] 7bca6e72d3d042ca9e1fefff7e5c7654
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 22
+worker outcome: normal, test outcome: survived
+[job-id] 1eaf58af04d3415c859a9d731247f76c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 23
+worker outcome: normal, test outcome: survived
+[job-id] f984cdbef3034fc6aff0c479024c8207
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Div 24
+worker outcome: normal, test outcome: survived
+[job-id] a0e23e50c72148e8859cf1d5091c0507
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 4c1becb4dbb6479b948403e6a9f2a498
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] 2850d6edb8c74ee7a2352d961ba974a6
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] 7f34c8d7a01c4f0fb94dc226e13427a8
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 3
+worker outcome: normal, test outcome: survived
+[job-id] 18d744433a3a42fd85def8fbe4c0b600
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 4
+worker outcome: normal, test outcome: survived
+[job-id] 5192fe126e204bb9be13c4255ac441f5
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 5
+worker outcome: normal, test outcome: survived
+[job-id] ba205956e6814c94af9fb090cbf04b66
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 6
+worker outcome: normal, test outcome: survived
+[job-id] 890070ee817f4cf7afee435c985ca42b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 7
+worker outcome: normal, test outcome: survived
+[job-id] ab18c878133948a0a1eaa7c3dca173e0
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 8
+worker outcome: normal, test outcome: survived
+[job-id] 99ef31c93326491aa6ba624791fd703b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 9
+worker outcome: normal, test outcome: survived
+[job-id] 560b9bde2133444295767bfda534cd7b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 10
+worker outcome: normal, test outcome: survived
+[job-id] c1267a5a78f3477abf6282a5922ee296
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 11
+worker outcome: normal, test outcome: survived
+[job-id] 0e4fa31c30b149d983b7be0515608aef
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 12
+worker outcome: normal, test outcome: survived
+[job-id] 1a56097a687446939a222f06303d538e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 13
+worker outcome: normal, test outcome: survived
+[job-id] 1e2e27e53dfb406f813aaa56b948aae2
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 14
+worker outcome: normal, test outcome: survived
+[job-id] 027a9952d19c4a58a9488af82a3a573e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 15
+worker outcome: normal, test outcome: survived
+[job-id] 50a09da6511d4972abb19cbc631cbd24
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 16
+worker outcome: normal, test outcome: survived
+[job-id] ba95e40811e04ea5a1fff388b75e1ac7
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 17
+worker outcome: normal, test outcome: survived
+[job-id] 955609bfe02a4a7c9990c7e5aa7dd211
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 18
+worker outcome: normal, test outcome: survived
+[job-id] 5463dffd252a4752b76fa62c07d89f90
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 19
+worker outcome: normal, test outcome: survived
+[job-id] 3a3fab3947f2466c98fdb619141b6b1e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 20
+worker outcome: normal, test outcome: survived
+[job-id] eb6efbeb41e748e99474bc9e814a8410
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 21
+worker outcome: normal, test outcome: survived
+[job-id] 4dfe7530c3714639b68c10884c3e0a65
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 22
+worker outcome: normal, test outcome: survived
+[job-id] 46e71d0e7ac44e9383f635456377cd28
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 23
+worker outcome: normal, test outcome: survived
+[job-id] 24d52667354e4afe894ccc01c05fb452
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_FloorDiv 24
+worker outcome: normal, test outcome: survived
+[job-id] 19fa91dbb06e4d64b47b0456995ce3c2
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] e60be0ef594a4e078e75a1b4d64cd909
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 1
+worker outcome: normal, test outcome: survived
+[job-id] ad1513584b4b4b99a0876014d7080b40
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 2
+worker outcome: normal, test outcome: survived
+[job-id] d00cf1f78b5a4c3c85d1651a6166f77f
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 3
+worker outcome: normal, test outcome: survived
+[job-id] 8bdc498e7eec4193b6a4d4af2e12f0be
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 4
+worker outcome: normal, test outcome: survived
+[job-id] 0d223a3e47984211a3fbc2f39b93bcdf
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 5
+worker outcome: normal, test outcome: survived
+[job-id] 56058206bd1a4305abbdd39ef5b42cac
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 6
+worker outcome: normal, test outcome: survived
+[job-id] 97f205f8529f492d88390fa3851dc862
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 7
+worker outcome: normal, test outcome: survived
+[job-id] 9c4410f671474b3d8ed6f2e755cf5807
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 8
+worker outcome: normal, test outcome: survived
+[job-id] bbbdb5248e1a41cb97439dc972f32cdf
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 9
+worker outcome: normal, test outcome: survived
+[job-id] 9db6f0ef7245490a9c1d0257feecbdee
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 10
+worker outcome: normal, test outcome: survived
+[job-id] f298ef6821b949bbaff64977a237ac3d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 11
+worker outcome: normal, test outcome: survived
+[job-id] 3044c04fee4243448fab150d73a23f68
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 12
+worker outcome: normal, test outcome: survived
+[job-id] 2cfdc888ba82435780e0a5ae5fad365f
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 13
+worker outcome: normal, test outcome: survived
+[job-id] b9277eab22934b038da5e35742f71faa
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 14
+worker outcome: normal, test outcome: survived
+[job-id] efd720e8d00645488253614b97ca7e12
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 15
+worker outcome: normal, test outcome: survived
+[job-id] bdb1b65222124e10b4b3af7530f473a5
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 16
+worker outcome: normal, test outcome: survived
+[job-id] 10336fe4d17c441b9dc0a37d5002d054
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 17
+worker outcome: normal, test outcome: survived
+[job-id] 2c444839de83427194e3cf88efd11c82
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 18
+worker outcome: normal, test outcome: survived
+[job-id] fbd0e4af5c4c474ab067ed1f9f7e5ac3
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 19
+worker outcome: normal, test outcome: survived
+[job-id] 4b5e8281a70b48bd92d9eab8cd839dad
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 20
+worker outcome: normal, test outcome: survived
+[job-id] 4b1d7a56a0af4b8c99cc8db1dcbd60ce
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 21
+worker outcome: normal, test outcome: survived
+[job-id] ec98b4ec8994490d84c4d6119c8276b1
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 22
+worker outcome: normal, test outcome: survived
+[job-id] e4453fcaba1f40009573b35f5963817c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 23
+worker outcome: normal, test outcome: survived
+[job-id] 028d42bc346340b5810ac096e01eba12
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Mod 24
+worker outcome: normal, test outcome: survived
+[job-id] 3dae21a0d4a143979ae004761b19dcc7
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 6665e37a31cb437091cddd1477943d35
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 614fda1ce38c40288c87689faa81bffe
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] a337336fe4ea453b9c3abbe050ff2e21
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 3
+worker outcome: normal, test outcome: survived
+[job-id] d7ea74150aa143a0a09ca17570389acd
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 4
+worker outcome: normal, test outcome: survived
+[job-id] b2b7be7b6c0c4a308ffc9bb9388bdaf6
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 5
+worker outcome: normal, test outcome: survived
+[job-id] a4e0b8e9df844b789e43085b88b609ab
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 6
+worker outcome: normal, test outcome: survived
+[job-id] 499b5a47e50249d0be4164e9101e5aa8
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 7
+worker outcome: normal, test outcome: survived
+[job-id] af2cd6e6affc4eb4a3f6b2117afc27a4
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 8
+worker outcome: normal, test outcome: survived
+[job-id] 904c46063a784e51bea57fe4b8258f81
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 9
+worker outcome: normal, test outcome: survived
+[job-id] 77d2ec47f4eb4db882df3426a9e1d677
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 10
+worker outcome: normal, test outcome: survived
+[job-id] 0c3d5d94e60a46c2b256de7d52d2b7c6
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 11
+worker outcome: normal, test outcome: survived
+[job-id] b823138d414e4215b362d27bc9984259
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 12
+worker outcome: normal, test outcome: survived
+[job-id] f483819f717246958c4cae21df85b289
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 13
+worker outcome: normal, test outcome: survived
+[job-id] 48e0eb761d494486867e86ac163023bb
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 14
+worker outcome: normal, test outcome: survived
+[job-id] 40be8ace5765440bbe42f9b7a9ea985c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 15
+worker outcome: normal, test outcome: survived
+[job-id] f85a6772502644648d306123ff11e38b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 16
+worker outcome: normal, test outcome: survived
+[job-id] aa17f592d47c48478006f2135c8fadb1
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 17
+worker outcome: normal, test outcome: survived
+[job-id] 858f5d6accdb4ef085672a5588a12604
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 18
+worker outcome: normal, test outcome: survived
+[job-id] 787b40208405453eadb8c8254d2704e0
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 19
+worker outcome: normal, test outcome: survived
+[job-id] 66a903f1cc49483789b5c373b7f4c3eb
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 20
+worker outcome: normal, test outcome: survived
+[job-id] 1e9fa31f2e754f3cb6dc72b94ac43042
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 21
+worker outcome: normal, test outcome: survived
+[job-id] ade6b46fd4f54a628c4e8866967c2588
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 22
+worker outcome: normal, test outcome: survived
+[job-id] 284508dc34964a04869e826641211505
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 23
+worker outcome: normal, test outcome: survived
+[job-id] 6b4d5811f50c437aba27352f119fe0cd
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_Pow 24
+worker outcome: normal, test outcome: survived
+[job-id] 411d0944e37747469ae9111c917111de
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 7b8bc4c675c045eeae8209a400573b33
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 3da356cbd1f24724a9fdfc0bfde88dbe
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] b7870d2a506c4f1e9276bd5b232b03d2
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 3
+worker outcome: normal, test outcome: survived
+[job-id] 54d8c2a9a99e4aeba5f285fb7978fbc7
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 4
+worker outcome: normal, test outcome: survived
+[job-id] 21c4247df4f142f7838d59b756c747e0
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 5
+worker outcome: normal, test outcome: survived
+[job-id] 11799643b40140e78dc36bf95f9bb139
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 6
+worker outcome: normal, test outcome: survived
+[job-id] 27bf585ccd0840f59499d867518e6571
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 7
+worker outcome: normal, test outcome: survived
+[job-id] 19c5c2b933834564853de68c3dea1db4
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 8
+worker outcome: normal, test outcome: survived
+[job-id] 290373ce3b5742abbf545ff49bef0370
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 9
+worker outcome: normal, test outcome: survived
+[job-id] 2c8f577a7e104b9b9201dc05ebbe8fab
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 10
+worker outcome: normal, test outcome: survived
+[job-id] ad73e2674bdb412495022fe63e0a3bbe
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 11
+worker outcome: normal, test outcome: survived
+[job-id] 2ab8956b6eb842cf8b37c2250cc36016
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 12
+worker outcome: normal, test outcome: survived
+[job-id] 0fa8ae3eca9d491c9e3a10bceb4fee29
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 13
+worker outcome: normal, test outcome: survived
+[job-id] 8855b33c801d4a2091102fc8c41de9ca
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 14
+worker outcome: normal, test outcome: survived
+[job-id] 856134ad7ca6435c871d13046749839d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 15
+worker outcome: normal, test outcome: survived
+[job-id] d8ff22326dfe4000acdb5244c4f49865
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 16
+worker outcome: normal, test outcome: survived
+[job-id] 4df11dfaf007491297dbcf2046def817
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 17
+worker outcome: normal, test outcome: survived
+[job-id] 4d9e225821204b4286ccb5410e284963
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 18
+worker outcome: normal, test outcome: survived
+[job-id] 8e9ebbe129a44dd29062d07d3cfcbd1c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 19
+worker outcome: normal, test outcome: survived
+[job-id] 097c76b21232429b864037c3c584d565
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 20
+worker outcome: normal, test outcome: survived
+[job-id] 14d546ac61c0401aa254c854523d87e0
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 21
+worker outcome: normal, test outcome: survived
+[job-id] 884ebe8b434d4255a6b2404120c92779
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 22
+worker outcome: normal, test outcome: survived
+[job-id] f8cbf00dfa85471c97fb4eed483a6f69
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 23
+worker outcome: normal, test outcome: survived
+[job-id] f60c7ad0f44b4bbe8e3c52358133e93b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_RShift 24
+worker outcome: normal, test outcome: survived
+[job-id] 0320249a3a394800a5cbfc1366fc7296
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 894d02ef4fec44c9b2054c6e438adce1
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] c14b4a4d6857490cad6ef743c8e03d14
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] 5d4a8a4aee5a484a919e891e0e605d9f
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 3
+worker outcome: normal, test outcome: survived
+[job-id] d4f34d59208940dc99d734a8141245b5
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 4
+worker outcome: normal, test outcome: survived
+[job-id] e6f09fc19a5e41fa924e4ddc34fd3bf9
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 5
+worker outcome: normal, test outcome: survived
+[job-id] aff3beb2fe334f17a76bf7ee9cc899f3
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 6
+worker outcome: normal, test outcome: survived
+[job-id] ae08e8754fb048afbbf9ffda82c3c1da
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 7
+worker outcome: normal, test outcome: survived
+[job-id] 3099caaf6bbc48a4983e066a3bfdec81
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 8
+worker outcome: normal, test outcome: survived
+[job-id] 547995ee87584a14ae22a1b4030d5663
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 9
+worker outcome: normal, test outcome: survived
+[job-id] a9c0915bcabd420b91394449fca4714b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 10
+worker outcome: normal, test outcome: survived
+[job-id] a712c7e102fa4be7b688fc958d8faa87
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 11
+worker outcome: normal, test outcome: survived
+[job-id] b8449d7594dc45fe988cecb7baf96274
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 12
+worker outcome: normal, test outcome: survived
+[job-id] 1c6257863e1d48d895eb00c47e5bbd10
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 13
+worker outcome: normal, test outcome: survived
+[job-id] 18f98f6c79ac4695be4afdbc4b4e807a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 14
+worker outcome: normal, test outcome: survived
+[job-id] 5497b774d0d542e68d6e3c3e45d617cb
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 15
+worker outcome: normal, test outcome: survived
+[job-id] be3496d844bd499983ff65e018afd533
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 16
+worker outcome: normal, test outcome: survived
+[job-id] bd63094f17a04b1787a5bf50b5acc589
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 17
+worker outcome: normal, test outcome: survived
+[job-id] 0fcca5ec1b7e4fff8144d70324f84e70
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 18
+worker outcome: normal, test outcome: survived
+[job-id] e817e729f392456fa231dded110a4d3b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 19
+worker outcome: normal, test outcome: survived
+[job-id] d0a8e8db69434a8ebc23e488300cd147
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 20
+worker outcome: normal, test outcome: survived
+[job-id] 7d53ade7af1842c49ffd81ddde7dc86c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 21
+worker outcome: normal, test outcome: survived
+[job-id] eb3831bfe09241a487b86fc558432e71
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 22
+worker outcome: normal, test outcome: survived
+[job-id] 2e9de1e1282b4d8ea6384a6065b7c5f4
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 23
+worker outcome: normal, test outcome: survived
+[job-id] 6e1ce29cfce5446a8197b51dd9d4c3f8
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_LShift 24
+worker outcome: normal, test outcome: survived
+[job-id] a0740d5a1cac42dca5819052e08a4fb6
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 7ce16af6344d4a8c8a3d6a278c4f161c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] b5167fc70f92421994092c3426a82061
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] bce62db677af4173a9a3c215674881eb
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 3
+worker outcome: normal, test outcome: survived
+[job-id] 8f8a30bbb085466b81aee144a370ab23
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 4
+worker outcome: normal, test outcome: survived
+[job-id] 73a7f234cd3447c8aba6b361d9774699
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 5
+worker outcome: normal, test outcome: survived
+[job-id] f3aaa88fec6942db9d56c40a92b1c0d7
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 6
+worker outcome: normal, test outcome: survived
+[job-id] d16c317fc01a4e86b8d47a82e40e1934
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 7
+worker outcome: normal, test outcome: survived
+[job-id] 0e02ffa263c4429c8d656d70cc73e5d4
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 8
+worker outcome: normal, test outcome: survived
+[job-id] f0dc73bdd85f445b8bd1ac552f5408d3
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 9
+worker outcome: normal, test outcome: survived
+[job-id] 3b07ea5344934cdabeb1b3caff6d5bf5
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 10
+worker outcome: normal, test outcome: survived
+[job-id] 9a224c9c61c44a8ab8e036c36081f758
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 11
+worker outcome: normal, test outcome: survived
+[job-id] e11fbcb6fc6a48c7976be3a07ee003a0
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 12
+worker outcome: normal, test outcome: survived
+[job-id] 06d95c8574944ce49fb84991b7e596ac
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 13
+worker outcome: normal, test outcome: survived
+[job-id] dda094262b854c86979156be985d5972
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 14
+worker outcome: normal, test outcome: survived
+[job-id] 8371b19382fe415ebaf2288b0f033089
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 15
+worker outcome: normal, test outcome: survived
+[job-id] 327d892db96647b8bc263232e7373000
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 16
+worker outcome: normal, test outcome: survived
+[job-id] 80d8523b713a4749a958e8c0d399c36b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 17
+worker outcome: normal, test outcome: survived
+[job-id] 9a876ba5da6b4916ac911c3101a66dd5
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 18
+worker outcome: normal, test outcome: survived
+[job-id] d64cc5ab7a43498c8e140d9cb5679968
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 19
+worker outcome: normal, test outcome: survived
+[job-id] cfc391f1d3e549dca65141c912cf5cf0
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 20
+worker outcome: normal, test outcome: survived
+[job-id] c12a4ba91ed94e25831bf41eb10013a9
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 21
+worker outcome: normal, test outcome: survived
+[job-id] 49cc4fd663574038a8aee7e29fab03fa
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 22
+worker outcome: normal, test outcome: survived
+[job-id] 6f62a1fe44cb4f68aa6aae4b7a1c3a35
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 23
+worker outcome: normal, test outcome: survived
+[job-id] f0b4ca98dc1e4047ba8025525decb290
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitOr 24
+worker outcome: normal, test outcome: survived
+[job-id] a15f098789604b9d93bf7055f416ba77
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] af9adb12d63a46e88c0b517bdba96e37
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 7bd7b0b0135b4cce88096c310eb729aa
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] 89a17bce6a3b41f38f6f2c53c627cfff
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] 2f111ef44fac48a7b053eab1228ebf3b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 4
+worker outcome: normal, test outcome: survived
+[job-id] c5141a4aa77d4573a3ba271398f6b41c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 5
+worker outcome: normal, test outcome: survived
+[job-id] a94a50f29fbc4b8db2f6ae51b8b372e4
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 6
+worker outcome: normal, test outcome: survived
+[job-id] 248b77ba1c264487af046fc6d61b97a8
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 7
+worker outcome: normal, test outcome: survived
+[job-id] 142fb0077ad4487abf4bbff746fca5a4
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 8
+worker outcome: normal, test outcome: survived
+[job-id] 4a1ab42e336243a697ec38ecb5f68158
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 9
+worker outcome: normal, test outcome: survived
+[job-id] 09004b1331704876951d833212d1a78a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 10
+worker outcome: normal, test outcome: survived
+[job-id] e1f6e1c50cbb4236a7816f501e3d7a94
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 11
+worker outcome: normal, test outcome: survived
+[job-id] 5f13880f403448db9d5711aae8e70a81
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 12
+worker outcome: normal, test outcome: survived
+[job-id] 9760275c1b0949538003113e67eb488e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 13
+worker outcome: normal, test outcome: survived
+[job-id] a5820340bad54d258f5c4437f1630c0a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 14
+worker outcome: normal, test outcome: survived
+[job-id] 657382ce76b24c7ba84f7db64505e932
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 15
+worker outcome: normal, test outcome: survived
+[job-id] f3b249697506416ab33e387f99892d00
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 16
+worker outcome: normal, test outcome: survived
+[job-id] d28e116c22384d049ac4ed111b82b7d6
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 17
+worker outcome: normal, test outcome: survived
+[job-id] 5b38174b9b074441a1f866201183dd6a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 18
+worker outcome: normal, test outcome: survived
+[job-id] 7ea59055a4534bfab5583c6ba18e6cfc
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 19
+worker outcome: normal, test outcome: survived
+[job-id] 737687550ab043b1a724eefb17fa350b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 20
+worker outcome: normal, test outcome: survived
+[job-id] 6801fc220d3c41ea8a7666392f38c0e9
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 21
+worker outcome: normal, test outcome: survived
+[job-id] 29489f9613c74ba5802a61917a2db2c1
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 22
+worker outcome: normal, test outcome: survived
+[job-id] 3cf3e6e9503d4351ac547e542af4a1e0
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 23
+worker outcome: normal, test outcome: survived
+[job-id] 7e0f5c90672c47d2ba3a0aa111c95aa6
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitAnd 24
+worker outcome: normal, test outcome: survived
+[job-id] 75afd7734f164aacb3059496ba755c7f
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] c2210c65822f4d6fad1183696c92b7b1
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] 90b37e6515b740d1adc3a20dbd7b44d3
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] b43b37ac93f34751baee39532beb3f10
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 3
+worker outcome: normal, test outcome: survived
+[job-id] 1b41506fff4d419ea911eba4126982a2
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 4
+worker outcome: normal, test outcome: survived
+[job-id] 8c268aef334f4567b29b14c27d81f582
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 5
+worker outcome: normal, test outcome: survived
+[job-id] bada6ef5f1ae49c39b34312571d020e4
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 6
+worker outcome: normal, test outcome: survived
+[job-id] a2200bd988e5405eaf5200a99fae44d5
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 7
+worker outcome: normal, test outcome: survived
+[job-id] afda25b9870b4972a481e5e4cce90d8d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 8
+worker outcome: normal, test outcome: survived
+[job-id] aeb9f2a38d46457bbf132134889af8ea
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 9
+worker outcome: normal, test outcome: survived
+[job-id] 2bb804f0e0a047ad9aec3c0f4a2e3448
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 10
+worker outcome: normal, test outcome: survived
+[job-id] f37d22665b0c4a7c8f7ff9853afb4b67
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 11
+worker outcome: normal, test outcome: survived
+[job-id] 50e400b8a75b40a59c64fb6569c5183e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 12
+worker outcome: normal, test outcome: survived
+[job-id] 4140b500ddb74abdb28bd61b0e033c56
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 13
+worker outcome: normal, test outcome: survived
+[job-id] aed53dfcc3534c63a7c766bd79aa7b5b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 14
+worker outcome: normal, test outcome: survived
+[job-id] 59f9b6812f774d948fc24ece84609232
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 15
+worker outcome: normal, test outcome: survived
+[job-id] fdad64e552e84952b48aab53b29d608e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 16
+worker outcome: normal, test outcome: survived
+[job-id] a8df9cdf5ff64ee3ac4ce3df54c20126
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 17
+worker outcome: normal, test outcome: survived
+[job-id] 34cf3752d36b496f8d57a4da0238b831
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 18
+worker outcome: normal, test outcome: survived
+[job-id] a49f2428e8ba456ba9418c310a8d141d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 19
+worker outcome: normal, test outcome: survived
+[job-id] 0dc5dc332833412abb477a8898227193
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 20
+worker outcome: normal, test outcome: survived
+[job-id] 3fb26d42d9aa4284b8c78395945f3ade
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 21
+worker outcome: normal, test outcome: survived
+[job-id] 7805e35d7ace4952ab5f0284412f4945
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 22
+worker outcome: normal, test outcome: survived
+[job-id] db96fa935ae44cc0ab126dafb862694f
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 23
+worker outcome: normal, test outcome: survived
+[job-id] 4ec37f87ebb240b9917884238bdda298
+django/urls/resolvers.py core/ReplaceBinaryOperator_Add_BitXor 24
+worker outcome: normal, test outcome: survived
+[job-id] ad9bebd293d949998cc30b246dfa2a7f
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mul_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] d3f1742054f24899850216db1c0248d5
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mul_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 4c13d6c9850b495daacf0e8f4df6a71e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mul_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] bb1783944482435da93fe8bd73ad2eeb
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mul_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] 52d4e2606aa64ea7a4c0d42ba378fc5a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mul_Mod 0
+worker outcome: normal, test outcome: killed
+[job-id] ca737789364d46329847f0edaa2c41a8
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mul_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] 1e9e058fdbd54c22baf98ed7fc831ae2
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mul_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] fb0bfb7fd9584cc09a62a2fd3bb3a99f
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mul_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] dc1d154f369445e8859d5629361f2dbb
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mul_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 46e56b615dd44b8aabe0842ea556aa0b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mul_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 79b136f7b81840ebabce7f04b1a2bcdb
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mul_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] cbd909ca77a44653bade016203c1fd4d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] 6c462b0d809c46c5b81ff80a3cab98a7
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Add 1
+worker outcome: normal, test outcome: survived
+[job-id] 3b9b4467d8b3456a8860b2400b27cb87
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Add 2
+worker outcome: normal, test outcome: survived
+[job-id] b003ac49ab2f4aa08df0c56c8dd7fe0f
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Add 3
+worker outcome: normal, test outcome: survived
+[job-id] a2a25cc9367d4aa79f45f5ba0201c9a3
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Add 4
+worker outcome: normal, test outcome: survived
+[job-id] a17574853a6d40e0860f92c0fa898331
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Add 5
+worker outcome: normal, test outcome: survived
+[job-id] 02aeae1c72fc4345b9a73ff527faafb1
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Add 6
+worker outcome: normal, test outcome: survived
+[job-id] 8ce94329d07a45fb8d204ebf77055ede
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Add 7
+worker outcome: normal, test outcome: survived
+[job-id] 04af8540638c478fb23c155d63cde592
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Add 8
+worker outcome: normal, test outcome: survived
+[job-id] e29ff0a957d24e48a3000ea59046280c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Add 9
+worker outcome: normal, test outcome: killed
+[job-id] 8a118f9c9cb840189eb56b3482a7cfbf
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Add 10
+worker outcome: normal, test outcome: killed
+[job-id] ee797b3ae5bb426bb197417d08cc1f78
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Add 11
+worker outcome: normal, test outcome: survived
+[job-id] 39682b8b90e8417591f77e467a98a181
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Add 12
+worker outcome: normal, test outcome: survived
+[job-id] 698395937d454d5e87320b07a1c43e7f
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Add 13
+worker outcome: normal, test outcome: survived
+[job-id] 0c0605bf10d04bf3a378fd1cc48180a1
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Add 14
+worker outcome: normal, test outcome: survived
+[job-id] f76da7d6e40b4115b1900d7a9d942050
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Add 15
+worker outcome: normal, test outcome: survived
+[job-id] f9de53fda072481c8c02a3eec2eabdbe
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Add 16
+worker outcome: normal, test outcome: survived
+[job-id] d3a5c0c99379460ea3f008f76d4e96ed
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Add 17
+worker outcome: normal, test outcome: survived
+[job-id] f2d3e458cfe2454a9829d04502549139
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Add 18
+worker outcome: normal, test outcome: survived
+[job-id] 7ea53a5a5bcf4f34bb2bfa0b69e29131
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] a279143411d949ebab0b108c441baadb
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] 87c266e9964742659855fa24abfa225a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Sub 2
+worker outcome: normal, test outcome: survived
+[job-id] 957d1c14931042b085610b749e2f0eea
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Sub 3
+worker outcome: normal, test outcome: survived
+[job-id] e3b714c6ff8c41d89d272626c4654735
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Sub 4
+worker outcome: normal, test outcome: survived
+[job-id] a69cd8d73cf24a71a47dd684503e9a2c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Sub 5
+worker outcome: normal, test outcome: survived
+[job-id] fe5a3c18f87f4c70b27303b4c662dce7
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Sub 6
+worker outcome: normal, test outcome: survived
+[job-id] d4b009d8d1914afa8cfe9eb417dec45d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Sub 7
+worker outcome: normal, test outcome: survived
+[job-id] 7b4d8fb5a755422794b072b08e733031
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Sub 8
+worker outcome: normal, test outcome: survived
+[job-id] 2a0500052f444823bf04288ceae3b5cd
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Sub 9
+worker outcome: normal, test outcome: killed
+[job-id] f13891a1b05d463c9af0655f8aad4540
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Sub 10
+worker outcome: normal, test outcome: killed
+[job-id] 91fd150c5eae450fb656c3c77584c680
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Sub 11
+worker outcome: normal, test outcome: survived
+[job-id] e42efe8c1563472cae050f187b3ae30d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Sub 12
+worker outcome: normal, test outcome: survived
+[job-id] 5a3f5fc03f044d0dab1a1e00452a3f42
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Sub 13
+worker outcome: normal, test outcome: survived
+[job-id] 9d0054c839fc46b38d92340f30100a98
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Sub 14
+worker outcome: normal, test outcome: survived
+[job-id] 0eaf6fce4eb54f358da6048465e0b866
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Sub 15
+worker outcome: normal, test outcome: survived
+[job-id] 1119f2cf932d4c5bb3dbcb5d4fe71af3
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Sub 16
+worker outcome: normal, test outcome: survived
+[job-id] a7b76bb9ca5a4e4f879d7ea51f926540
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Sub 17
+worker outcome: normal, test outcome: survived
+[job-id] 9ef20f7615d34249877e174d118ca0f3
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Sub 18
+worker outcome: normal, test outcome: survived
+[job-id] 2c987ad32dfe4b7d9f0adfbc6a9a5f53
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] c72c57eb45f644d3bff972f679c8b2dd
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] 73ca04001ac94864ba78cb19409d3eb2
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] e4e59f3aef7c46aa8854e35fb7d4880d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Mul 3
+worker outcome: normal, test outcome: survived
+[job-id] dbf1441c15a94ec197dd81690f62ff81
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Mul 4
+worker outcome: normal, test outcome: survived
+[job-id] 9072bac9db3f48e9bf4d6b424f5c5a7d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Mul 5
+worker outcome: normal, test outcome: survived
+[job-id] 0d495ab3c8f94a1ba9ab2613ed890fcf
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Mul 6
+worker outcome: normal, test outcome: survived
+[job-id] 886f36003b0e43ee9ef6d7e838b518bc
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Mul 7
+worker outcome: normal, test outcome: survived
+[job-id] f9c94998cb5b46999a79a05dc2872464
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Mul 8
+worker outcome: normal, test outcome: survived
+[job-id] 9f70cb22a5524161a5c89fa70f2e123f
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Mul 9
+worker outcome: normal, test outcome: survived
+[job-id] c595608f0cf245a88d1d88fa4a152f28
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Mul 10
+worker outcome: normal, test outcome: killed
+[job-id] 89cf71f4e4d8403b9a44ffdc760c017d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Mul 11
+worker outcome: normal, test outcome: survived
+[job-id] ef96ecb4bf4e4bd2a927b35dcd2d30a2
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Mul 12
+worker outcome: normal, test outcome: survived
+[job-id] be0cf853d17744d88febbe2ac38c70a7
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Mul 13
+worker outcome: normal, test outcome: survived
+[job-id] 1a3671f1f071423cacebc355ba0efd01
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Mul 14
+worker outcome: normal, test outcome: survived
+[job-id] c0472173105a4950bfc7184aa70574ee
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Mul 15
+worker outcome: normal, test outcome: survived
+[job-id] 2121afdac14f415bafb0e61a9ddb086d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Mul 16
+worker outcome: normal, test outcome: survived
+[job-id] 03a32cba36da4eafbf068547daf6d5d6
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Mul 17
+worker outcome: normal, test outcome: survived
+[job-id] ae095728906340aa92b32cc130fbc62a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Mul 18
+worker outcome: normal, test outcome: survived
+[job-id] 91876de0f4e247f392e86c2905c5789b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] e1097113cc1243f4984fbe30690a20e1
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] fbbe5e04f0a14714aa136228dad107e5
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] 1c90c76de38c49ed9a0e0cbe10e7ebe6
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Div 3
+worker outcome: normal, test outcome: survived
+[job-id] e2e5190602b84b8bb24ff6e452dc56f3
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Div 4
+worker outcome: normal, test outcome: survived
+[job-id] 0b8994f9a492405db1442216f7115605
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Div 5
+worker outcome: normal, test outcome: survived
+[job-id] 5fc0a55c69194590af7cc7baac2ad702
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Div 6
+worker outcome: normal, test outcome: survived
+[job-id] d75436146305459da5c43d49b99ae86a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Div 7
+worker outcome: normal, test outcome: survived
+[job-id] bba2c7e657b84049995ec9589c84d5b6
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Div 8
+worker outcome: normal, test outcome: survived
+[job-id] 3505fbe9f7ee468f8a08b28b6b528c17
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Div 9
+worker outcome: normal, test outcome: killed
+[job-id] 6d7aa6b26bcc411a812ffe878712f822
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Div 10
+worker outcome: normal, test outcome: killed
+[job-id] d659485087e548e1a10f6e758d54d428
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Div 11
+worker outcome: normal, test outcome: survived
+[job-id] 6f8d0962436f4168aa4ee6f800b41c7b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Div 12
+worker outcome: normal, test outcome: survived
+[job-id] cee6304ef2cc4900bdef8e39f12a7ed7
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Div 13
+worker outcome: normal, test outcome: survived
+[job-id] 5d744fd6af414ddcaf5f721ee2d98cfe
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Div 14
+worker outcome: normal, test outcome: survived
+[job-id] 0b585b874ba54ad8a61b7f21e3450fb7
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Div 15
+worker outcome: normal, test outcome: survived
+[job-id] 1428562b0a234c209869c552774e57f4
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Div 16
+worker outcome: normal, test outcome: survived
+[job-id] bd080df03c9e48f898b1977dc98f4697
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Div 17
+worker outcome: normal, test outcome: survived
+[job-id] 74fe58c1d741439888d4a8639cea1f78
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Div 18
+worker outcome: normal, test outcome: survived
+[job-id] 359e5cbc95c54f0b9b59d377e0ca7a3c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] cd064051d0f1493b9321f1376f3d9769
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] a78656cede1a467ba64d9a49a5e0e8c1
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] f1313734cfa6490aa67fafd5a52c21e2
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_FloorDiv 3
+worker outcome: normal, test outcome: survived
+[job-id] fe07354b5d434fa9b633e86974b168e4
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_FloorDiv 4
+worker outcome: normal, test outcome: survived
+[job-id] acec9acdfc4a4e2ba14f110274a67b7b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_FloorDiv 5
+worker outcome: normal, test outcome: survived
+[job-id] 6208f715cddd40b0afed7e88b68d47e6
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_FloorDiv 6
+worker outcome: normal, test outcome: survived
+[job-id] c7a4874bb5f34891a4cfe6428de67cc0
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_FloorDiv 7
+worker outcome: normal, test outcome: survived
+[job-id] c4863e75006a406daedcd4a9f6375026
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_FloorDiv 8
+worker outcome: normal, test outcome: survived
+[job-id] ed6af7a2d51649329614e96190fd5716
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_FloorDiv 9
+worker outcome: normal, test outcome: killed
+[job-id] b2b0e3c348e14ab7a7e61f2ca8f52b52
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_FloorDiv 10
+worker outcome: normal, test outcome: killed
+[job-id] 650cc1b47a4d4aeb908e0dc6fa28a1ae
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_FloorDiv 11
+worker outcome: normal, test outcome: survived
+[job-id] 19e0fb9df24846afadd64d13d30507e9
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_FloorDiv 12
+worker outcome: normal, test outcome: survived
+[job-id] 429fd479d5bb4807accf476d8fa35c4c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_FloorDiv 13
+worker outcome: normal, test outcome: survived
+[job-id] 6f13b59b927a49fa961088927062f0f8
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_FloorDiv 14
+worker outcome: normal, test outcome: survived
+[job-id] 3e9c3b61964949dbbb6d9a12b0110d73
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_FloorDiv 15
+worker outcome: normal, test outcome: survived
+[job-id] faa9421fee4142fe95a3f97f1c704c1b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_FloorDiv 16
+worker outcome: normal, test outcome: survived
+[job-id] b0da852b926749ba90b115737106d11d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_FloorDiv 17
+worker outcome: normal, test outcome: survived
+[job-id] 1ea2e156278f4b6088c3539f6dc1368d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_FloorDiv 18
+worker outcome: normal, test outcome: survived
+[job-id] c4aeeb3ef68c43c9869f2d338e6bb3c1
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] bb1667a27cab4b0f8958929997d565a8
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 22ff2da081b64c1bab64df57825fd748
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] 265e1ab537c140f58ba0365eeb11d1f3
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Pow 3
+worker outcome: normal, test outcome: survived
+[job-id] 6503385f5b9347d8910a77b506902eef
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Pow 4
+worker outcome: normal, test outcome: survived
+[job-id] 40b8fce031ec4a6dab63d6858d777e60
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Pow 5
+worker outcome: normal, test outcome: survived
+[job-id] eb19d05deeae467fa2d8e162ed6d6f04
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Pow 6
+worker outcome: normal, test outcome: survived
+[job-id] cdcf73c7f9f14c0dbeb69174e7e33d27
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Pow 7
+worker outcome: normal, test outcome: survived
+[job-id] da4f2313de8e470baf54a25db842a8f6
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Pow 8
+worker outcome: normal, test outcome: survived
+[job-id] f86713068b02477a969f8c3ea2cd1eeb
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Pow 9
+worker outcome: normal, test outcome: killed
+[job-id] 3e3acba80e8b42048e0626d07d5b369b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Pow 10
+worker outcome: normal, test outcome: killed
+[job-id] 286108d0278840ff89981f82ad70e98a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Pow 11
+worker outcome: normal, test outcome: survived
+[job-id] d584821f6684466d88ab7278f78092fc
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Pow 12
+worker outcome: normal, test outcome: survived
+[job-id] f368aa5007e747108a23a44949a81800
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Pow 13
+worker outcome: normal, test outcome: survived
+[job-id] a96989c1b2dd4fecb6b803c1c558d5d3
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Pow 14
+worker outcome: normal, test outcome: survived
+[job-id] a068450b99ce4d2db34b275cb6874f3e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Pow 15
+worker outcome: normal, test outcome: survived
+[job-id] cd215e4b88a9412f827eb15d72247451
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Pow 16
+worker outcome: normal, test outcome: survived
+[job-id] deb9f71ab78540258499f26d8ee7e90a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Pow 17
+worker outcome: normal, test outcome: survived
+[job-id] c7d229a5ea5845ff913de718344f047b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_Pow 18
+worker outcome: normal, test outcome: survived
+[job-id] 76fb280a1a38406fa3fa7906a5bd83ca
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] bc06f14eb4e24ded8f6eb6920f017a1d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 99b0d7e66d014387ae6a524d662f1587
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] 6465f3d2acb647ce980104a0e9a3b3c8
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_RShift 3
+worker outcome: normal, test outcome: survived
+[job-id] 813a2add1605464f8e2bd618173b311e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_RShift 4
+worker outcome: normal, test outcome: survived
+[job-id] 2602ce6b433547e0a829e6df570ea8d4
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_RShift 5
+worker outcome: normal, test outcome: survived
+[job-id] 0c6d42bc8b2c4443ab8f0b194c6a65af
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_RShift 6
+worker outcome: normal, test outcome: survived
+[job-id] 5e90c93e9fa54ab8827958ae5ad70b2e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_RShift 7
+worker outcome: normal, test outcome: survived
+[job-id] 90aab32a650c4f52a6d6c852fd5499c3
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_RShift 8
+worker outcome: normal, test outcome: survived
+[job-id] 7ba539171eef4077a741e69d822db9a9
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_RShift 9
+worker outcome: normal, test outcome: killed
+[job-id] abb4e079a6784695ac4bfce04719717c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_RShift 10
+worker outcome: normal, test outcome: killed
+[job-id] 92c71091442e4500a28e45d9fc12f442
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_RShift 11
+worker outcome: normal, test outcome: survived
+[job-id] 0dcc88ea84004bff975e098d0ffbca89
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_RShift 12
+worker outcome: normal, test outcome: survived
+[job-id] af8e647e1ebb45d097ce636203aa2185
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_RShift 13
+worker outcome: normal, test outcome: survived
+[job-id] 66334dfe9d8149cf88f61e20e5b92bf4
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_RShift 14
+worker outcome: normal, test outcome: survived
+[job-id] 90247758901b45ee81ff21f8f0484ad2
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_RShift 15
+worker outcome: normal, test outcome: survived
+[job-id] 77cc54952cbc4ad1ab226773de43d137
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_RShift 16
+worker outcome: normal, test outcome: survived
+[job-id] 21f6785ee08f44d18ab9eb5ea3357bfb
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_RShift 17
+worker outcome: normal, test outcome: survived
+[job-id] 9568d6f94ea94a41ad95f8f4df970a18
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_RShift 18
+worker outcome: normal, test outcome: survived
+[job-id] 7ed56d37ee05438fabfb28eeca5e3d0a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] ee301bd2c8cf4161b47148c633a9cf6b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 7d3ba5999f954bdbb9b9125a7c73092d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] ed2310dcdd664c3c9992dc24f9d94103
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_LShift 3
+worker outcome: normal, test outcome: survived
+[job-id] eaf239218ac84e21baddece74c7cb592
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_LShift 4
+worker outcome: normal, test outcome: survived
+[job-id] 53fad3e872f14687adc67ad5a328e017
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_LShift 5
+worker outcome: normal, test outcome: survived
+[job-id] e153fd9523734db1b0c24dbd5e48bfb0
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_LShift 6
+worker outcome: normal, test outcome: survived
+[job-id] 6f90a7d9753e4e71933b23796f8c63cb
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_LShift 7
+worker outcome: normal, test outcome: survived
+[job-id] 1199ef18eb7749a9804e983d35a4e424
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_LShift 8
+worker outcome: normal, test outcome: survived
+[job-id] f0aa2049d25644278f82533053f89724
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_LShift 9
+worker outcome: normal, test outcome: killed
+[job-id] a94bc8fdb22e4c7e9e6f4758346c6c8d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_LShift 10
+worker outcome: normal, test outcome: killed
+[job-id] e1754d22d2fe49b7a0acceba8e3f96d0
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_LShift 11
+worker outcome: normal, test outcome: survived
+[job-id] 6d4f18a4e3fc45768782b79a37db9268
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_LShift 12
+worker outcome: normal, test outcome: survived
+[job-id] 5321be0610f44c52b2832da721572976
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_LShift 13
+worker outcome: normal, test outcome: survived
+[job-id] 9707ff4ba1d34b1b8a365a53d4801d9e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_LShift 14
+worker outcome: normal, test outcome: survived
+[job-id] cc08095051824839be0f39ac75579a75
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_LShift 15
+worker outcome: normal, test outcome: survived
+[job-id] d3b127db843748e68c21d9ca04d88243
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_LShift 16
+worker outcome: normal, test outcome: survived
+[job-id] 1241e6360dd342e7ad0ae441b2f3506d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_LShift 17
+worker outcome: normal, test outcome: survived
+[job-id] 2636da53af7f4f5aaff3540fd0abb3a6
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_LShift 18
+worker outcome: normal, test outcome: survived
+[job-id] 63ec6e0d16174eea96b870f4666daa2c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] f7a061df66494be79159612723f91c9f
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 5990fd01522f438c9fa0ff6b857e537d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] 8254080a8391457f8ad34c0e74b24ba3
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitOr 3
+worker outcome: normal, test outcome: survived
+[job-id] 63e0beab05a640579ac51630aa1489a4
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitOr 4
+worker outcome: normal, test outcome: survived
+[job-id] 6a7fe5b71121464b8213cbd3534a810e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitOr 5
+worker outcome: normal, test outcome: survived
+[job-id] 3191080ccc284b51bce58504f9092774
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitOr 6
+worker outcome: normal, test outcome: survived
+[job-id] abbdd10e61bd47e5b3c0732f5324b76f
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitOr 7
+worker outcome: normal, test outcome: survived
+[job-id] edc72340ca4d4de1abd8ed27b1125209
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitOr 8
+worker outcome: normal, test outcome: survived
+[job-id] 7d51c5bb1b1a4f8e9e80071ddde3290c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitOr 9
+worker outcome: normal, test outcome: killed
+[job-id] 8883e23cf343472aa324673ee62e953e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitOr 10
+worker outcome: normal, test outcome: killed
+[job-id] fe86da1763204b81bca2ce75fea0b768
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitOr 11
+worker outcome: normal, test outcome: survived
+[job-id] afaa8ea7352a40b8afec65ba430d645b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitOr 12
+worker outcome: normal, test outcome: survived
+[job-id] 24c47bf344e240e6a141a0f5ef82b908
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitOr 13
+worker outcome: normal, test outcome: survived
+[job-id] a8cff4ae664141dfacef8f5a317c56cf
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitOr 14
+worker outcome: normal, test outcome: survived
+[job-id] 5abb6b6eb1a748299f005530f0844581
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitOr 15
+worker outcome: normal, test outcome: survived
+[job-id] 73a222499fe0404d819454cf15b1c1b5
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitOr 16
+worker outcome: normal, test outcome: survived
+[job-id] 0c1bb45bbc9c4e32a88519fa56af6325
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitOr 17
+worker outcome: normal, test outcome: survived
+[job-id] 9f96e59bd8694c77b466907148c1a765
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitOr 18
+worker outcome: normal, test outcome: survived
+[job-id] 283f19281362470aae4184c62b483968
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] e9c23b3374bb4270bacf34af05f687d9
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 266382b9b856484bb544f0fda2f09f95
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] 9fae0b103f7748c3bbe576f4bee0c9aa
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] 75a9eef0a3014c25987b4d181ffaec0b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitAnd 4
+worker outcome: normal, test outcome: survived
+[job-id] 15137fdd695b4a11ad00c089cd848019
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitAnd 5
+worker outcome: normal, test outcome: survived
+[job-id] 5bf855571c874934a0bf4a3168ae6d1e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitAnd 6
+worker outcome: normal, test outcome: survived
+[job-id] 98bbf1c51e55426f850ac597bc3ef3f3
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitAnd 7
+worker outcome: normal, test outcome: survived
+[job-id] f9e5fdcc0974482891e10e7edd9a1092
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitAnd 8
+worker outcome: normal, test outcome: survived
+[job-id] 1e051146f6364fca9992b54f4a239725
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitAnd 9
+worker outcome: normal, test outcome: killed
+[job-id] b6af43bb451c47f7ac43b0c8a9f32b21
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitAnd 10
+worker outcome: normal, test outcome: killed
+[job-id] 450693edadd1415a9d289efab2840f45
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitAnd 11
+worker outcome: normal, test outcome: survived
+[job-id] 2ab81128e72a4536ad43742e5fcc5501
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitAnd 12
+worker outcome: normal, test outcome: survived
+[job-id] 1e298d05fa8549038e2ac8e1b97de05c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitAnd 13
+worker outcome: normal, test outcome: survived
+[job-id] a3f3329cb55548119aaf00cef7f883b4
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitAnd 14
+worker outcome: normal, test outcome: survived
+[job-id] 596f031a83ef4152962c6c04711579c4
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitAnd 15
+worker outcome: normal, test outcome: survived
+[job-id] 525d90e323c34141ae8afcee47545345
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitAnd 16
+worker outcome: normal, test outcome: survived
+[job-id] 10bce3e71170481693acf606c49d9ad1
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitAnd 17
+worker outcome: normal, test outcome: survived
+[job-id] c42f440981d94875821ea0af34a86901
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitAnd 18
+worker outcome: normal, test outcome: survived
+[job-id] 67e3b8a1f97b49c28cf05e88d60c10d4
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] 0c33d6bf504f486c8ff785c15c2c47ab
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] 6f5eae8153864129948e68c877fce70e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] a6e884b0cc484a798770f9364fcdb311
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitXor 3
+worker outcome: normal, test outcome: survived
+[job-id] 8155e566fc99405595d2e64114dd42e4
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitXor 4
+worker outcome: normal, test outcome: survived
+[job-id] dd4a81b1700740748c23239756a45e67
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitXor 5
+worker outcome: normal, test outcome: survived
+[job-id] 4d8aabaf4d824863a142db670aa14155
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitXor 6
+worker outcome: normal, test outcome: survived
+[job-id] 1614d747f07549e3ae833e0e1a501713
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitXor 7
+worker outcome: normal, test outcome: survived
+[job-id] fb09d74cf5f848219b973e5e36f9e84d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitXor 8
+worker outcome: normal, test outcome: survived
+[job-id] 1bea5703efbd465d9fb7cb8f4ffe534b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitXor 9
+worker outcome: normal, test outcome: killed
+[job-id] a5031a5b3a0e46e0995b65647031d7ac
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitXor 10
+worker outcome: normal, test outcome: killed
+[job-id] 53acdb28360b4b579352638ac55d3e74
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitXor 11
+worker outcome: normal, test outcome: survived
+[job-id] 98b01dac1fc047cb813291e27e60d8a5
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitXor 12
+worker outcome: normal, test outcome: survived
+[job-id] 6bbdf00b31144312a27d508746b1cebd
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitXor 13
+worker outcome: normal, test outcome: survived
+[job-id] 6a4b4916a8fe4d26b21ea608838c7338
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitXor 14
+worker outcome: normal, test outcome: survived
+[job-id] 87aa99d23a1d4f96aec31bb3d4bbf4e0
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitXor 15
+worker outcome: normal, test outcome: survived
+[job-id] 0e7f8d46e54448ab86ec35317259a69c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitXor 16
+worker outcome: normal, test outcome: survived
+[job-id] 9ad00bca826b45c5b8ec4938b003c018
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitXor 17
+worker outcome: normal, test outcome: survived
+[job-id] 45330c20dbea46a58c3d6d17a51b8e63
+django/urls/resolvers.py core/ReplaceBinaryOperator_Mod_BitXor 18
+worker outcome: normal, test outcome: survived
+[job-id] bafcbba14b0d4518ae6b1b12650bb987
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] 4e0f25001a024feb94e5c5fa9457b80a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Add 1
+worker outcome: normal, test outcome: killed
+[job-id] 642e6b6c10af41658ff1cb3e3fac16c4
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Add 2
+worker outcome: normal, test outcome: killed
+[job-id] bbf56a8ad48142d9af6bb593d0a74d5e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Add 3
+worker outcome: normal, test outcome: killed
+[job-id] 0f86d7d061414b2ca1e3f14b74d98480
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Add 4
+worker outcome: normal, test outcome: killed
+[job-id] bcdabb706a7747e2b3f05819eb4d3fd9
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Add 5
+worker outcome: normal, test outcome: killed
+[job-id] 43ed0b22717e42c19271fc4a283c55a2
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Add 6
+worker outcome: normal, test outcome: killed
+[job-id] 1d1c8ee42bda4eb8b2e20bef9ce3c594
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] cdc5b1c711784ae99edb630eeb7e448a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Sub 1
+worker outcome: normal, test outcome: killed
+[job-id] fd6eff35633c499cbeca05385b1db0e1
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Sub 2
+worker outcome: normal, test outcome: killed
+[job-id] abc4d9ee1b7d41f788e529bbf872fe60
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Sub 3
+worker outcome: normal, test outcome: killed
+[job-id] bb0104b41416491ca8696035efe16f25
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Sub 4
+worker outcome: normal, test outcome: killed
+[job-id] 3562452b82284915b8f647d7ae7173d9
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Sub 5
+worker outcome: normal, test outcome: killed
+[job-id] 4bd7669679ed4497b89d934e7d6985e0
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Sub 6
+worker outcome: normal, test outcome: killed
+[job-id] f7f6f234a49f4dad8f3f6ab4cdc1da0b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] c77f82b57f4246a2887c2a9a511623c9
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Mul 1
+worker outcome: normal, test outcome: killed
+[job-id] 9ccd2f31ede0469f8a7b4f11ca7a71b1
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Mul 2
+worker outcome: normal, test outcome: killed
+[job-id] 9bdc48a65f9542e7b5ee185bb75e38b0
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Mul 3
+worker outcome: normal, test outcome: killed
+[job-id] 117fe360329d4ad38dda1fc9ab8cef74
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Mul 4
+worker outcome: normal, test outcome: killed
+[job-id] 7e998fb305cb455a8303e5b1121fafba
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Mul 5
+worker outcome: normal, test outcome: killed
+[job-id] 2004d42035c1450f87455b2f3c79615e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Mul 6
+worker outcome: normal, test outcome: killed
+[job-id] 88204530b93f451da8784922724b675c
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] 05446e1a5d0f4f39a6aef359050e87b6
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Div 1
+worker outcome: normal, test outcome: killed
+[job-id] 1538afd1486749519478d8e67e4b5ae4
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Div 2
+worker outcome: normal, test outcome: killed
+[job-id] df1af5381bbb4f90a248f099e4989c69
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Div 3
+worker outcome: normal, test outcome: killed
+[job-id] 92cb7e1b765042dc997c8868c7b7c8fc
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Div 4
+worker outcome: normal, test outcome: killed
+[job-id] 059592249a734bd6b846371982f3bb3d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Div 5
+worker outcome: normal, test outcome: killed
+[job-id] 23e1e970a7db42949da917e97f44fdee
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Div 6
+worker outcome: normal, test outcome: killed
+[job-id] c9bc6016a6f449378448e8586b65fd5e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] 20116c200f1843608ea3ea7182747bdd
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_FloorDiv 1
+worker outcome: normal, test outcome: killed
+[job-id] c73de905e61343129bff75cd66bdf60d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_FloorDiv 2
+worker outcome: normal, test outcome: killed
+[job-id] fd0d2ca3d1c64badad20858afb6fc466
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_FloorDiv 3
+worker outcome: normal, test outcome: killed
+[job-id] 3aa73a6790ad4bb3aa6d3581fdb702a2
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_FloorDiv 4
+worker outcome: normal, test outcome: killed
+[job-id] 4c7a7e62f260448fbb0ad5679cdeaf8a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_FloorDiv 5
+worker outcome: normal, test outcome: killed
+[job-id] c797773a6deb401690a3586ec92b6373
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_FloorDiv 6
+worker outcome: normal, test outcome: killed
+[job-id] e7575452360d44239ac4f92129c21b47
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Mod 0
+worker outcome: normal, test outcome: killed
+[job-id] b9d2bc3746fd4293840e84abadc89fcc
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Mod 1
+worker outcome: normal, test outcome: killed
+[job-id] c6e0c3d5fae6495b8cb21c39a21425b7
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Mod 2
+worker outcome: normal, test outcome: killed
+[job-id] 5521774fa1c34ee7a29fb7093ca5b062
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Mod 3
+worker outcome: normal, test outcome: killed
+[job-id] a41dc792ec38403682e5a9da5182a5fb
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Mod 4
+worker outcome: normal, test outcome: killed
+[job-id] 73862657a99c40038e27dbe1d8383b19
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Mod 5
+worker outcome: normal, test outcome: killed
+[job-id] a45a83b10cff44629a365a6ca05807a6
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_Mod 6
+worker outcome: normal, test outcome: killed
+[job-id] ec0640cbe1484d598bc04a797d832ebc
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] f859eca63a794dde93b8b54798a74fe2
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_RShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 49287ce6654743708ef4a713b6cab55b
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_RShift 2
+worker outcome: normal, test outcome: killed
+[job-id] 86745440b2c14be8a7a973b5e5b2bf6f
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_RShift 3
+worker outcome: normal, test outcome: killed
+[job-id] ef35accdfc83478c821368f127214dfb
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_RShift 4
+worker outcome: normal, test outcome: killed
+[job-id] a16bd4fde4fc4009b5384834a9601a29
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_RShift 5
+worker outcome: normal, test outcome: killed
+[job-id] ba79584227a54ab0ba8d64246bc13f4e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_RShift 6
+worker outcome: normal, test outcome: killed
+[job-id] 163198df7c724365acaf3f4e65a2aa97
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 0c7b6d36257a4625a806a42691819c85
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_LShift 1
+worker outcome: normal, test outcome: killed
+[job-id] fd955881918b4611aaaf7c6fac149658
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_LShift 2
+worker outcome: normal, test outcome: killed
+[job-id] 0d4e6590fbb74e40a723d9254cecd511
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_LShift 3
+worker outcome: normal, test outcome: killed
+[job-id] c5106246fcf647f9a1d8f7358cb36e4a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_LShift 4
+worker outcome: normal, test outcome: killed
+[job-id] 67595f0f32144fb5a7e216027a06ec30
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_LShift 5
+worker outcome: normal, test outcome: killed
+[job-id] 85b21ddc45ee4880bda576c8fde42ef7
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_LShift 6
+worker outcome: normal, test outcome: killed
+[job-id] 4c135fa8bba34397ac71cc25113ceebb
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] f2e6217312424d97b57f85dfa69e947e
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 9e9a88bd5ad54757b6c574248964d563
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitOr 2
+worker outcome: normal, test outcome: killed
+[job-id] f977d5cf6ddf4a00bd66d122de04cc33
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitOr 3
+worker outcome: normal, test outcome: killed
+[job-id] 587452f3c58e4904834aa1390ca2f54a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitOr 4
+worker outcome: normal, test outcome: killed
+[job-id] aa6de421e3cd4cac99df4f5d1b307dfa
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitOr 5
+worker outcome: normal, test outcome: killed
+[job-id] b0a1fa8ed3814bc5b8b5358dfcb503f4
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitOr 6
+worker outcome: normal, test outcome: killed
+[job-id] d24e13863bc049bbb07dce69b18e5219
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 95803d9d93524570874bbc8bcfcc1f04
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] b490680bb4c84f11b3f456fb84e085c1
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitAnd 2
+worker outcome: normal, test outcome: killed
+[job-id] d7391aa13a934d8aab01b041e839f7fc
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitAnd 3
+worker outcome: normal, test outcome: killed
+[job-id] 94dd7e5f3353461b88394195785c5b20
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitAnd 4
+worker outcome: normal, test outcome: killed
+[job-id] c33db72842714d6e993904e016264887
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitAnd 5
+worker outcome: normal, test outcome: killed
+[job-id] 9c479ec63ed4475393950c10a0f4e3eb
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitAnd 6
+worker outcome: normal, test outcome: killed
+[job-id] 681e4b5c0de249239632b1072281fa50
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] db3556869df2452e8269881bf7927d2d
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitXor 1
+worker outcome: normal, test outcome: killed
+[job-id] a2a4f6d501cd4699a991461a45cf9b7f
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitXor 2
+worker outcome: normal, test outcome: killed
+[job-id] 3a2f5b5ac25749c98555eec2ad127b98
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitXor 3
+worker outcome: normal, test outcome: killed
+[job-id] 5dca9f2f9480457cbf72fbf58d26e68a
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitXor 4
+worker outcome: normal, test outcome: killed
+[job-id] fb905e7a324d493a9d9ba724e3ccf8ee
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitXor 5
+worker outcome: normal, test outcome: killed
+[job-id] dcc9dd38b573405aa0018edeedf37a3f
+django/urls/resolvers.py core/ReplaceBinaryOperator_Pow_BitXor 6
+worker outcome: normal, test outcome: killed
+[job-id] 9aa229a19365430cbad5e86162b924a0
+django/urls/resolvers.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 9e4ecd30e00b48c58ac1bc6050c2e8cd
+django/urls/resolvers.py core/ReplaceComparisonOperator_Eq_NotEq 1
+worker outcome: normal, test outcome: survived
+[job-id] 9a9b2c09dba84dfbabb282df671c85cd
+django/urls/resolvers.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 11042814ac364e6689822a045e67e9b5
+django/urls/resolvers.py core/ReplaceComparisonOperator_Eq_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] edbb8b67a16748d2a4d36a745015e378
+django/urls/resolvers.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] a4495bde78254e8c9b51128079f14ea8
+django/urls/resolvers.py core/ReplaceComparisonOperator_Eq_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 1878b011817741da8dbe0fdcc2a8112b
+django/urls/resolvers.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] b869714dc98143bc9c62e968726e9aa0
+django/urls/resolvers.py core/ReplaceComparisonOperator_Eq_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] 7a1c08a47f714cf78d53d2450be42f7c
+django/urls/resolvers.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] d4a924a718a14709b671ba6d1a52f973
+django/urls/resolvers.py core/ReplaceComparisonOperator_Eq_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 437c49251a4b454a9fd7b71045939b30
+django/urls/resolvers.py core/ReplaceComparisonOperator_Eq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] af465c97f466485da3046d6a2560103b
+django/urls/resolvers.py core/ReplaceComparisonOperator_Eq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] c3b31921b1bd4c06a7d9b6eb23074b4a
+django/urls/resolvers.py core/ReplaceComparisonOperator_NotEq_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] 56c2d0b094c74cc69f036fab7c7f242b
+django/urls/resolvers.py core/ReplaceComparisonOperator_NotEq_Eq 1
+worker outcome: normal, test outcome: survived
+[job-id] b8d906e6d36d4edaa3ce7fae5034d032
+django/urls/resolvers.py core/ReplaceComparisonOperator_NotEq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 7fe71cdb726a4b279c18d6d66352019b
+django/urls/resolvers.py core/ReplaceComparisonOperator_NotEq_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] 2b41bbc854d7411a964f87e623081b6b
+django/urls/resolvers.py core/ReplaceComparisonOperator_NotEq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 14eb0b4f48e543ddb264354fdbc1036a
+django/urls/resolvers.py core/ReplaceComparisonOperator_NotEq_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 72fc9255c8dc41e8ac6045911f39ee9d
+django/urls/resolvers.py core/ReplaceComparisonOperator_NotEq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] c95e0be2ad7147fdbb15e17f4a159a6f
+django/urls/resolvers.py core/ReplaceComparisonOperator_NotEq_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] 97f0e8bda7704bd9bed29606fd9546d1
+django/urls/resolvers.py core/ReplaceComparisonOperator_NotEq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 3beb42c8fafb4a1da98c675132dbbe8e
+django/urls/resolvers.py core/ReplaceComparisonOperator_NotEq_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 6278f8116b3245ecba9d04fd42e49d66
+django/urls/resolvers.py core/ReplaceComparisonOperator_NotEq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 2cf6b4b874414e36baeb87764f8004e1
+django/urls/resolvers.py core/ReplaceComparisonOperator_NotEq_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 526147f1ec7144eab3a3ea6049f16c57
+django/urls/resolvers.py core/ReplaceComparisonOperator_NotEq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] fff257ff4980488aae5ffd532a59733b
+django/urls/resolvers.py core/ReplaceComparisonOperator_NotEq_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] d99ea7490a46415ab3e1c0a2b35d614f
+django/urls/resolvers.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: killed
+[job-id] 1747074cae0d489793cbdafd5f20f546
+django/urls/resolvers.py core/ReplaceComparisonOperator_Is_IsNot 1
+worker outcome: normal, test outcome: killed
+[job-id] 4806e733c1574d33a0fd8f1600e9caf2
+django/urls/resolvers.py core/ReplaceComparisonOperator_Is_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 27341c51d7e84732bc0f461ae9f8762c
+django/urls/resolvers.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] e80731b9f7d54c93b4eed287d9ad54c9
+django/urls/resolvers.py core/ReplaceComparisonOperator_IsNot_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 987085cd352b4b01a7d238163524f0ae
+django/urls/resolvers.py core/ReplaceComparisonOperator_IsNot_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] cafe69b35b7e4e77becf3a4a509aa288
+django/urls/resolvers.py core/ReplaceComparisonOperator_IsNot_Is 3
+worker outcome: normal, test outcome: survived
+[job-id] d75633644d4e46bd925bbf3006cdcbbb
+django/urls/resolvers.py core/ReplaceComparisonOperator_IsNot_Is 4
+worker outcome: normal, test outcome: survived
+[job-id] bcaf22fc02734c70b7f775c68bb025e4
+django/urls/resolvers.py core/ReplaceComparisonOperator_IsNot_Is 5
+worker outcome: normal, test outcome: survived
+[job-id] 412b3cc37a6c4d4599c70d75ef6303ba
+django/urls/resolvers.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] 09fd747915e44ed7bdf8bb910d903f5b
+django/urls/resolvers.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] dcb329e0f349496fb1eeaf2a6b329b96
+django/urls/resolvers.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: normal, test outcome: survived
+[job-id] ff179ea6272b474b9f143310205e3e88
+django/urls/resolvers.py core/ReplaceUnaryOperator_Delete_Not 3
+worker outcome: normal, test outcome: survived
+[job-id] d526875863f24db383f77b200f0e8544
+django/urls/resolvers.py core/ReplaceUnaryOperator_Delete_Not 4
+worker outcome: normal, test outcome: survived
+[job-id] 63a5bb463567482c940225b98e42328b
+django/urls/resolvers.py core/ReplaceUnaryOperator_Delete_Not 5
+worker outcome: normal, test outcome: survived
+[job-id] 064fbba2ea4a4f4b87506215055ab26b
+django/urls/resolvers.py core/ReplaceUnaryOperator_Delete_Not 6
+worker outcome: normal, test outcome: survived
+[job-id] df3d98b20f694b1abac550d39b7c2260
+django/urls/resolvers.py core/ReplaceUnaryOperator_Delete_Not 7
+worker outcome: normal, test outcome: survived
+[job-id] 8b6ac6a2fee2432bb42d93466933332c
+django/urls/resolvers.py core/ReplaceUnaryOperator_Delete_Not 8
+worker outcome: normal, test outcome: survived
+[job-id] 9521fee79c2948eb9632d7d80855affa
+django/urls/resolvers.py core/ReplaceUnaryOperator_Delete_Not 9
+worker outcome: normal, test outcome: survived
+[job-id] a0c44c24ea23474cb840d08ab04f52b4
+django/urls/resolvers.py core/ReplaceUnaryOperator_Delete_Not 10
+worker outcome: normal, test outcome: survived
+[job-id] 44b3c7515da14a0f9f6f22abfb3fea3e
+django/urls/resolvers.py core/ReplaceUnaryOperator_Delete_Not 11
+worker outcome: normal, test outcome: survived
+[job-id] fda96913d2854470a9e27df1a24abd82
+django/urls/resolvers.py core/ReplaceUnaryOperator_Delete_Not 12
+worker outcome: normal, test outcome: killed
+[job-id] 27913508127c4bdfb5d1537ff935ab7b
+django/urls/resolvers.py core/ReplaceUnaryOperator_Delete_Not 13
+worker outcome: normal, test outcome: survived
+[job-id] eca7dab5dc2b405bb5180cec42b62d87
+django/urls/resolvers.py core/AddNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 0690c14f533048c5851e0e60a088455e
+django/urls/resolvers.py core/AddNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 23cc29f19d074822991353556a2e8e54
+django/urls/resolvers.py core/AddNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 7e6cad616d014071ab73eadbe74cf8d5
+django/urls/resolvers.py core/AddNot 3
+worker outcome: normal, test outcome: killed
+[job-id] ea416f9d7548411a98aa6ee1920f3a9c
+django/urls/resolvers.py core/AddNot 4
+worker outcome: normal, test outcome: killed
+[job-id] d5a2604460d24b0aae5d0c21649cd052
+django/urls/resolvers.py core/AddNot 5
+worker outcome: normal, test outcome: survived
+[job-id] d828c68927cc44f8abee9a0fba489f8c
+django/urls/resolvers.py core/AddNot 6
+worker outcome: normal, test outcome: survived
+[job-id] 38baa40c131e445db5815953f2cb66fe
+django/urls/resolvers.py core/AddNot 7
+worker outcome: normal, test outcome: survived
+[job-id] 78bdd62857f24619b180e033d71eb7cf
+django/urls/resolvers.py core/AddNot 8
+worker outcome: normal, test outcome: survived
+[job-id] e8d17b8a6993429ebfa384037153189f
+django/urls/resolvers.py core/AddNot 9
+worker outcome: normal, test outcome: survived
+[job-id] 74f6318dd2e244e9a2062a83ff13ff18
+django/urls/resolvers.py core/AddNot 10
+worker outcome: normal, test outcome: survived
+[job-id] abc8aa50323145d3bdcde452fbac422e
+django/urls/resolvers.py core/AddNot 11
+worker outcome: normal, test outcome: survived
+[job-id] e39abc5481564f14915b1b5ce468bab7
+django/urls/resolvers.py core/AddNot 12
+worker outcome: normal, test outcome: survived
+[job-id] 2c007a47cece4dae9737125781095e71
+django/urls/resolvers.py core/AddNot 13
+worker outcome: normal, test outcome: survived
+[job-id] cb7c9f8b138e44d6951977d6f9fc54c0
+django/urls/resolvers.py core/AddNot 14
+worker outcome: normal, test outcome: survived
+[job-id] 7ffea888d3d249d58f876bdd50647d51
+django/urls/resolvers.py core/AddNot 15
+worker outcome: normal, test outcome: survived
+[job-id] d6dcad966d134db0a107c3c4c3649e58
+django/urls/resolvers.py core/AddNot 16
+worker outcome: normal, test outcome: survived
+[job-id] da57441c293047ccbe39a1e5c905cc22
+django/urls/resolvers.py core/AddNot 17
+worker outcome: normal, test outcome: survived
+[job-id] 895fcc06f8ef4908914aa47b2a72bc26
+django/urls/resolvers.py core/AddNot 18
+worker outcome: normal, test outcome: survived
+[job-id] ff1dc5e3d5154622bbd5d9e946eb8f6f
+django/urls/resolvers.py core/AddNot 19
+worker outcome: normal, test outcome: survived
+[job-id] b334753848a54673be3995fb296545cb
+django/urls/resolvers.py core/AddNot 20
+worker outcome: normal, test outcome: survived
+[job-id] 3d0947abc1e5447099a7ed8cc8fcd19c
+django/urls/resolvers.py core/AddNot 21
+worker outcome: normal, test outcome: survived
+[job-id] 242ea8a2a2c8457da60057e002408d4c
+django/urls/resolvers.py core/AddNot 22
+worker outcome: normal, test outcome: survived
+[job-id] 5c373e7b0fec4a9092d0addff434590b
+django/urls/resolvers.py core/AddNot 23
+worker outcome: normal, test outcome: survived
+[job-id] bc5e41c22e164993bf2ba1b42d0bf58a
+django/urls/resolvers.py core/AddNot 24
+worker outcome: normal, test outcome: survived
+[job-id] dfa6daebc7e946e4803b8e8824abd885
+django/urls/resolvers.py core/AddNot 25
+worker outcome: normal, test outcome: survived
+[job-id] ef762aa44bd04b4d801d04950f2ac54f
+django/urls/resolvers.py core/AddNot 26
+worker outcome: normal, test outcome: survived
+[job-id] cd9a8e781b0640759e9af432f584548f
+django/urls/resolvers.py core/AddNot 27
+worker outcome: normal, test outcome: survived
+[job-id] 8a295f10938e4a2fa10c9d93e674116a
+django/urls/resolvers.py core/AddNot 28
+worker outcome: normal, test outcome: survived
+[job-id] ef943b67473e4cb0b47bba8488d41cc0
+django/urls/resolvers.py core/AddNot 29
+worker outcome: normal, test outcome: survived
+[job-id] d8b5f01bb4ac4b159c02826a4ec39a4b
+django/urls/resolvers.py core/AddNot 30
+worker outcome: normal, test outcome: survived
+[job-id] 083e35e6615449d69f5867ea88d0525d
+django/urls/resolvers.py core/AddNot 31
+worker outcome: normal, test outcome: survived
+[job-id] 36d7dfc5fe8d4c9695bdd5b566a87bb9
+django/urls/resolvers.py core/AddNot 32
+worker outcome: normal, test outcome: survived
+[job-id] cf74bca614ac4f61b86ae4a6b6f2ad59
+django/urls/resolvers.py core/AddNot 33
+worker outcome: normal, test outcome: survived
+[job-id] dd152f27c6b54ab498b44fbbdf761882
+django/urls/resolvers.py core/AddNot 34
+worker outcome: normal, test outcome: survived
+[job-id] c2d78b935a2e4415a0537e31dbc9becb
+django/urls/resolvers.py core/AddNot 35
+worker outcome: normal, test outcome: survived
+[job-id] e8a39b5fca5b451eaac441c0589b914c
+django/urls/resolvers.py core/AddNot 36
+worker outcome: normal, test outcome: survived
+[job-id] d8cfaf8733014bb8bf09d935eca45fe9
+django/urls/resolvers.py core/AddNot 37
+worker outcome: normal, test outcome: survived
+total jobs: 769
+complete: 659 (85.70%)
+surviving mutants: 542 (82.25%)
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] 
+MutationNum: 769 
+[django__django__3.0] [django__django-11333] 
+MutationLOG: 17.75% 
+[django__django__3.0] [django__django-11333] 
+MutationUncertainty: 0.20999999999999375 
+[django__django__3.0] [django__django-11333] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/urls/resolvers.py'
+        and ((66 <= spec.start_pos[0] <= 69) or (72 <= spec.start_pos[0] <= 74))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11333] Std. Output:
+FUNC_MUTATION_RESULT 100.0 2
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] 
+FunctionMutationLOG: 100.0% 
+[django__django__3.0] [django__django-11333] 
+FunctionMutationNum: 2 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] >>>>> Unfiltered Tests Failed 

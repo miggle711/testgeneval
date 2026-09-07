@@ -1,0 +1,2716 @@
+[django__django__3.0] [django__django-11115] Task Metadata:
+	- Instance ID: django__django-11115
+	- Testbed: django__django__3.0
+	- Evaluation Model: Qwen3-Coder-30B-A3B-Instruct_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-11115] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11115] Std. Output:
+ 
+[django__django__3.0] [django__django-11115] Return Code: 0 
+[django__django__3.0] [django__django-11115] Command: git -c advice.detachedHead=false checkout 981dd6dd71ea80e5149c2eff564622e96c12b5be 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at 981dd6dd71 Fixed #28431 -- Added a system check for BinaryField to prevent strings defaults.
+ 
+[django__django__3.0] [django__django-11115] Return Code: 0 
+[django__django__3.0] [django__django-11115] Command: git diff > /opt/temp_django__django-11115_gold_init.patch 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11115] Std. Output:
+ 
+[django__django__3.0] [django__django-11115] Return Code: 0 
+[django__django__3.0] [django__django-11115] Command: git apply -v /opt/temp_django__django-11115_gold.patch 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Checking patch django/contrib/admin/sites.py...
+Applied patch django/contrib/admin/sites.py cleanly.
+ 
+[django__django__3.0] [django__django-11115] Return Code: 0 
+[django__django__3.0] [django__django-11115] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-11115] Command: git diff > /opt/temp_django__django-11115_test_init.patch 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11115] Std. Output:
+ 
+[django__django__3.0] [django__django-11115] Return Code: 0 
+[django__django__3.0] [django__django-11115] Command: git restore tests/admin_registration/tests.py 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11115] Std. Output:
+ 
+[django__django__3.0] [django__django-11115] Return Code: 0 
+[django__django__3.0] [django__django-11115] Command: git apply -v /opt/temp_django__django-11115_test.patch 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Checking patch tests/admin_registration/tests.py...
+Applied patch tests/admin_registration/tests.py cleanly.
+ 
+[django__django__3.0] [django__django-11115] Return Code: 0 
+[django__django__3.0] [django__django-11115] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class SwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 1.0009045600891113 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class SwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 1.0117173194885254 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class SwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.7309846878051758 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class SwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5740349292755127 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class SwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.323498010635376 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class SwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.3037900924682617 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class SwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.779198408126831 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class SwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.49683237075805664 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class SwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.4657742977142334 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class SwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6291775703430176 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class SwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6242964267730713 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class SwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5771143436431885 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class SwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5336751937866211 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class SwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.8287746906280518 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class SwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.47073936462402344 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class SwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.7323780059814453 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11115] TestsTime: 0.0 
+[django__django__3.0] [django__django-11115] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11115] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 21, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.9385402202606201 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 21, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6410517692565918 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 21, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.47805142402648926 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 21, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.8961303234100342 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 21, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.4711902141571045 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 21, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.7940433025360107 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 21, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5712895393371582 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 21, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.42563939094543457 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 21, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5414865016937256 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 21, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6194741725921631 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 21, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5820112228393555 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 21, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5979881286621094 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 21, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6650595664978027 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 21, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.638282299041748 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 21, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.505364179611206 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 21, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5339813232421875 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 21, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6034541130065918 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 21, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6380026340484619 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 21, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.7231104373931885 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 21, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.38494420051574707 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11115] TestsTime: 0.0 
+[django__django__3.0] [django__django-11115] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11115] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.47620558738708496 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.4623146057128906 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.39431262016296387 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6439390182495117 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6739373207092285 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.7347652912139893 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6504795551300049 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.7010912895202637 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5372395515441895 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.7236924171447754 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5030765533447266 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5505266189575195 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.48882579803466797 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6023168563842773 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5148005485534668 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5861721038818359 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6453425884246826 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6733217239379883 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11115] TestsTime: 0.0 
+[django__django__3.0] [django__django-11115] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11115] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6093075275421143 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6347999572753906 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5419785976409912 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.45372867584228516 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.3358452320098877 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6102921962738037 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6869807243347168 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5899016857147217 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6750016212463379 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6767153739929199 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6194617748260498 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6345627307891846 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.35143327713012695 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.4714839458465576 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.4320545196533203 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 18, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.702427864074707 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11115] TestsTime: 0.0 
+[django__django__3.0] [django__django-11115] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11115] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5937216281890869 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6746728420257568 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5710625648498535 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5285017490386963 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.7402629852294922 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.4549107551574707 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5641858577728271 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.3391900062561035 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5005743503570557 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6242897510528564 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6587450504302979 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5709383487701416 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5356588363647461 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.5918924808502197 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.6127293109893799 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.4593045711517334 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.48137760162353516 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] Command: coverage run ./tests/runtests.py --verbosity 2 admin_registration.tests 
+[django__django__3.0] [django__django-11115] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11115] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 503, in <module>
+    options.exclude_tags,
+  File "./tests/runtests.py", line 290, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 627, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 488, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/admin_registration/tests.py", line 23, in <module>
+    class MockSwappedModel(models.Model):
+  File "/opt/django__django/django/db/models/base.py", line 117, in __new__
+    new_class.add_to_class('_meta', Options(meta, app_label))
+  File "/opt/django__django/django/db/models/base.py", line 321, in add_to_class
+    value.contribute_to_class(cls, name)
+  File "/opt/django__django/django/db/models/options.py", line 194, in contribute_to_class
+    raise TypeError("'class Meta' got invalid attribute(s): %s" % ','.join(meta_attrs))
+TypeError: 'class Meta' got invalid attribute(s): swapped
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application admin_registration
+ 
+[django__django__3.0] [django__django-11115] Return Code: 1 
+[django__django__3.0] [django__django-11115] TestsTime: 0.35082554817199707 
+[django__django__3.0] [django__django-11115] Test script run successful 
+[django__django__3.0] [django__django-11115] Removing coverage 
+[django__django__3.0] [django__django-11115] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11115] TestsTime: 0.0 
+[django__django__3.0] [django__django-11115] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11115] >>>>> Unfiltered Tests Failed 

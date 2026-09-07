@@ -1,0 +1,2013 @@
+[django__django__3.1] [django__django-11772] Task Metadata:
+	- Instance ID: django__django-11772
+	- Testbed: django__django__3.1
+	- Evaluation Model: Llama-4-Scout-17B-16E-Instruct_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.1] [django__django-11772] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Command: git -c advice.detachedHead=false checkout 6c9778a58e4f680db180d4cc9dc5639d2ec1b40c 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+Previous HEAD position was 0668164b4a Fixed E128, E741 flake8 warnings.
+HEAD is now at 6c9778a58e Fixed #30776 -- Restored max length validation on AuthenticationForm.UsernameField.
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Command: git diff > /opt/temp_django__django-11772_gold_init.patch 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Command: git apply -v /opt/temp_django__django-11772_gold.patch 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+Checking patch django/core/cache/utils.py...
+Applied patch django/core/cache/utils.py cleanly.
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.1] [django__django-11772] Command: git diff > /opt/temp_django__django-11772_test_init.patch 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Command: git restore tests/cache/tests.py 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Command: git apply -v /opt/temp_django__django-11772_test.patch 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+Checking patch tests/cache/tests.py...
+Applied patch tests/cache/tests.py cleanly.
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_without_vary_on (cache.tests.TestMakeTemplateFragmentKey) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] TestsTime: 1.1146488189697266 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_with_one_vary_on (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_with_one_vary_on (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 12, in test_with_one_vary_on
+    self.assertEqual(key, TEMPLATE_FRAGMENT_KEY_TEMPLATE % ('foo', '900150983cd24fb0d6963f7d28e17f72'))
+AssertionError: 'template.cache.foo.493e283d571a73056196f1a68efd0f66' != 'template.cache.foo.900150983cd24fb0d6963f7d28e17f72'
+- template.cache.foo.493e283d571a73056196f1a68efd0f66
++ template.cache.foo.900150983cd24fb0d6963f7d28e17f72
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.5177245140075684 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_with_many_vary_on (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_with_many_vary_on (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 12, in test_with_many_vary_on
+    self.assertEqual(key, TEMPLATE_FRAGMENT_KEY_TEMPLATE % ('bar', '4b35f12ab03cec09beec4c21b2d2fa88'))
+AssertionError: 'template.cache.bar.17c1a507a0cb58384f4c639067a93520' != 'template.cache.bar.4b35f12ab03cec09beec4c21b2d2fa88'
+- template.cache.bar.17c1a507a0cb58384f4c639067a93520
++ template.cache.bar.4b35f12ab03cec09beec4c21b2d2fa88
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.48756957054138184 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_proper_escaping (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_proper_escaping (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 12, in test_proper_escaping
+    self.assertEqual(key, TEMPLATE_FRAGMENT_KEY_TEMPLATE % ('spam', 'f27688177baec990cdf3fbd9d9c3f469'))
+AssertionError: 'template.cache.spam.06c8ae8e8c430b69fb0a6443504153dc' != 'template.cache.spam.f27688177baec990cdf3fbd9d9c3f469'
+- template.cache.spam.06c8ae8e8c430b69fb0a6443504153dc
++ template.cache.spam.f27688177baec990cdf3fbd9d9c3f469
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.3561403751373291 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_none (cache.tests.TestMakeTemplateFragmentKey) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] TestsTime: 0.43512868881225586 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_empty_list (cache.tests.TestMakeTemplateFragmentKey) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] TestsTime: 0.4389190673828125 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_fragment_name_with_colon (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_fragment_name_with_colon (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 12, in test_fragment_name_with_colon
+    self.assertEqual(key, TEMPLATE_FRAGMENT_KEY_TEMPLATE % ('a:fragment', '900150983cd24fb0d6963f7d28e17f72'))
+AssertionError: 'template.cache.a:fragment.493e283d571a73056196f1a68efd0f66' != 'template.cache.a:fragment.900150983cd24fb0d6963f7d28e17f72'
+- template.cache.a:fragment.493e283d571a73056196f1a68efd0f66
++ template.cache.a:fragment.900150983cd24fb0d6963f7d28e17f72
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.5191802978515625 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_fragment_name_with_colon (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_fragment_name_with_colon (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 12, in test_fragment_name_with_colon
+    self.assertEqual(key, TEMPLATE_FRAGMENT_KEY_TEMPLATE % ('a/fragment', '900150983cd24fb0d6963f7d28e17f72'))
+AssertionError: 'template.cache.a:fragment.493e283d571a73056196f1a68efd0f66' != 'template.cache.a:fragment.900150983cd24fb0d6963f7d28e17f72'
+- template.cache.a:fragment.493e283d571a73056196f1a68efd0f66
++ template.cache.a:fragment.900150983cd24fb0d6963f7d28e17f72
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.5938942432403564 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_with_non_string (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_vary_on_with_non_string (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 12, in test_vary_on_with_non_string
+    self.assertEqual(key, TEMPLATE_FRAGMENT_KEY_TEMPLATE % ('foo', 'a3621c5e037e9c9d2f0d6aa74f9c89fa'))
+AssertionError: 'template.cache.foo.a956bcd6a9b1c13308928c03ea971177' != 'template.cache.foo.a3621c5e037e9c9d2f0d6aa74f9c89fa'
+- template.cache.foo.a956bcd6a9b1c13308928c03ea971177
++ template.cache.foo.a3621c5e037e9c9d2f0d6aa74f9c89fa
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.47754979133605957 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_with_unicode (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_vary_on_with_unicode (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 12, in test_vary_on_with_unicode
+    self.assertEqual(key, TEMPLATE_FRAGMENT_KEY_TEMPLATE % ('foo', '721c2cd635f083d3e263b8d1a29f3449'))
+AssertionError: 'template.cache.foo.2b5db6eb4dec4670f54e600d5798e5bb' != 'template.cache.foo.721c2cd635f083d3e263b8d1a29f3449'
+- template.cache.foo.2b5db6eb4dec4670f54e600d5798e5bb
++ template.cache.foo.721c2cd635f083d3e263b8d1a29f3449
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.5346925258636475 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] >>>>> Tests configfull pred
+ 
+[django__django__3.1] [django__django-11772] Test Script:  coverage run ./tests/runtests.py --verbosity 2 cache.tests;
+ 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_empty_list (cache.tests.TestMakeTemplateFragmentKey) ... ok
+test_vary_on_none (cache.tests.TestMakeTemplateFragmentKey) ... ok
+test_without_vary_on (cache.tests.TestMakeTemplateFragmentKey) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] TestsTime: 0.5677800178527832 
+[django__django__3.1] [django__django-11772] 
+>>>>> All Tests Passed
+ 
+[django__django__3.1] [django__django-11772] Current Working Directory: /opt/django__django 
+[django__django__3.1] [django__django-11772] Command: coverage json -o coverage.json 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] 
+CoverageLOG: 77.77777777777777%
+ 
+[django__django__3.1] [django__django-11772] 
+FunctionCoverageLOG: 71.42857142857143%
+ 
+[django__django__3.1] [django__django-11772] Running mutation testing 
+[django__django__3.1] [django__django-11772] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.1] [django__django-11772] Std. Output:
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+7.14 7.14 7.14
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Command: cr-report mutation.sqlite 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+[job-id] d37c6cee44674c24ac9c7ef721903a8a
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] 82bf2bbbd4bf47f9ac2626f0192b9a4f
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 7170631d74704b138b10103629a001de
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] 156ac811ef1645d78ed111f65a607579
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] 64a4395f1de44071a6b70e97cae09b2e
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] 7c5b7f5b11084b6392a97666b4086d4a
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] d4398d8287ca4b83a6cff36315ff7306
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 74eb32ec8f8d4b7c9230ef4a24488fc8
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] c658ac1425e84d499f3bf56b4caaf01a
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 90ce91cd305747788c87e368c23109cc
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 8512add7c5cc40bea0c1edcfd70c315b
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] 03490a0052f54bb6858bd671e59c296d
+django/core/cache/utils.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] 3e0020d9b42e4c65898c39b378974a86
+django/core/cache/utils.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] 09f8998c3de249e6b1b8b591e488a8ba
+django/core/cache/utils.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: survived
+total jobs: 14
+complete: 14 (100.00%)
+surviving mutants: 1 (7.14%)
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] 
+MutationNum: 14 
+[django__django__3.1] [django__django-11772] 
+MutationLOG: 92.86% 
+[django__django__3.1] [django__django-11772] 
+MutationUncertainty: 0.0 
+[django__django__3.1] [django__django-11772] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/core/cache/utils.py'
+        and ((6 <= spec.start_pos[0] <= 12))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+FUNC_MUTATION_RESULT 92.85714285714286 14
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] 
+FunctionMutationLOG: 92.85714285714286% 
+[django__django__3.1] [django__django-11772] 
+FunctionMutationNum: 14 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] >>>>> Unfiltered Tests Failed 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_without_vary_on (cache.tests.TestMakeTemplateFragmentKey) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] TestsTime: 0.5309979915618896 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_with_one_vary_on (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_with_one_vary_on (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 10, in test_with_one_vary_on
+    self.assertEqual(key, 'template.cache.foo.900150983cd24fb0d6963f7d28e17f72')
+AssertionError: 'template.cache.foo.493e283d571a73056196f1a68efd0f66' != 'template.cache.foo.900150983cd24fb0d6963f7d28e17f72'
+- template.cache.foo.493e283d571a73056196f1a68efd0f66
++ template.cache.foo.900150983cd24fb0d6963f7d28e17f72
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.5615115165710449 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_with_many_vary_on (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_with_many_vary_on (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 10, in test_with_many_vary_on
+    self.assertEqual(key, 'template.cache.bar.4b35f12ab03cec09beec4c21b2d2fa88')
+AssertionError: 'template.cache.bar.17c1a507a0cb58384f4c639067a93520' != 'template.cache.bar.4b35f12ab03cec09beec4c21b2d2fa88'
+- template.cache.bar.17c1a507a0cb58384f4c639067a93520
++ template.cache.bar.4b35f12ab03cec09beec4c21b2d2fa88
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.6265163421630859 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_proper_escaping (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_proper_escaping (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 10, in test_proper_escaping
+    self.assertEqual(key, 'template.cache.spam.f27688177baec990cdf3fbd9d9c3f469')
+AssertionError: 'template.cache.spam.06c8ae8e8c430b69fb0a6443504153dc' != 'template.cache.spam.f27688177baec990cdf3fbd9d9c3f469'
+- template.cache.spam.06c8ae8e8c430b69fb0a6443504153dc
++ template.cache.spam.f27688177baec990cdf3fbd9d9c3f469
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.5436086654663086 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_empty_fragment_name (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_empty_fragment_name (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 10, in test_empty_fragment_name
+    self.assertEqual(key, 'template.cache..da39a3ee5e6b4b0d3255bfef95601890afd80709')
+AssertionError: 'template.cache..d41d8cd98f00b204e9800998ecf8427e' != 'template.cache..da39a3ee5e6b4b0d3255bfef95601890afd80709'
+- template.cache..d41d8cd98f00b204e9800998ecf8427e
++ template.cache..da39a3ee5e6b4b0d3255bfef95601890afd80709
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.37331461906433105 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_none_fragment_name (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_none_fragment_name (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 10, in test_none_fragment_name
+    make_template_fragment_key(None)
+AssertionError: TypeError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.4274320602416992 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_empty_list (cache.tests.TestMakeTemplateFragmentKey) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] TestsTime: 0.5620729923248291 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_none (cache.tests.TestMakeTemplateFragmentKey) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] TestsTime: 0.6401247978210449 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_non_iterable (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_vary_on_non_iterable (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 10, in test_vary_on_non_iterable
+    make_template_fragment_key('foo', 'abc')
+AssertionError: TypeError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.5646123886108398 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_with_non_string_values (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_vary_on_with_non_string_values (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 10, in test_vary_on_with_non_string_values
+    self.assertEqual(key, 'template.cache.foo.4a44dc15346f4f4a9e7c5a6a7b8c9d0e')
+AssertionError: 'template.cache.foo.a956bcd6a9b1c13308928c03ea971177' != 'template.cache.foo.4a44dc15346f4f4a9e7c5a6a7b8c9d0e'
+- template.cache.foo.a956bcd6a9b1c13308928c03ea971177
++ template.cache.foo.4a44dc15346f4f4a9e7c5a6a7b8c9d0e
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.6908679008483887 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] >>>>> Tests configfull pred
+ 
+[django__django__3.1] [django__django-11772] Test Script:  coverage run ./tests/runtests.py --verbosity 2 cache.tests;
+ 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_empty_list (cache.tests.TestMakeTemplateFragmentKey) ... ok
+test_vary_on_none (cache.tests.TestMakeTemplateFragmentKey) ... ok
+test_without_vary_on (cache.tests.TestMakeTemplateFragmentKey) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] TestsTime: 0.5917582511901855 
+[django__django__3.1] [django__django-11772] 
+>>>>> All Tests Passed
+ 
+[django__django__3.1] [django__django-11772] Current Working Directory: /opt/django__django 
+[django__django__3.1] [django__django-11772] Command: coverage json -o coverage.json 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] 
+CoverageLOG: 77.77777777777777%
+ 
+[django__django__3.1] [django__django-11772] 
+FunctionCoverageLOG: 71.42857142857143%
+ 
+[django__django__3.1] [django__django-11772] Running mutation testing 
+[django__django__3.1] [django__django-11772] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.1] [django__django-11772] Std. Output:
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+7.14 7.14 7.14
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Command: cr-report mutation.sqlite 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+[job-id] 8d36debaa3d54fd5a7e1e716f516b602
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] be1f406f0d374b708431873854c94781
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] f1b5db105c8a45df93f78978d2401016
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] 079ef50ad32448dc953b3b90571c1609
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] da17d166aa3948fb972e45b9083072ea
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] c36273b1a1f54ce58810843bf4dcff93
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] a93fbcccdf844be391a3d294b2b3a5f9
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 5d27c5acedc7426fb5cba33af1c9fe5b
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] bf0228bda6a94fdb8e7fba3b53c766d8
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 75163eab5c2d4109a8096d2d5802564c
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 42b9bad69c4847f1b8413697f4013c33
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] d29b643c7c6e4498b1b21ac95b997d4d
+django/core/cache/utils.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] b7aeb22843f74739aeed96d357dd68c5
+django/core/cache/utils.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] 5fa2fc8c685544b194bd7bcb24142a62
+django/core/cache/utils.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: survived
+total jobs: 14
+complete: 14 (100.00%)
+surviving mutants: 1 (7.14%)
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] 
+MutationNum: 14 
+[django__django__3.1] [django__django-11772] 
+MutationLOG: 92.86% 
+[django__django__3.1] [django__django-11772] 
+MutationUncertainty: 0.0 
+[django__django__3.1] [django__django-11772] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/core/cache/utils.py'
+        and ((6 <= spec.start_pos[0] <= 12))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+FUNC_MUTATION_RESULT 92.85714285714286 14
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] 
+FunctionMutationLOG: 92.85714285714286% 
+[django__django__3.1] [django__django-11772] 
+FunctionMutationNum: 14 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] >>>>> Unfiltered Tests Failed 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_without_vary_on (cache.tests.TestMakeTemplateFragmentKey) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] TestsTime: 0.5003116130828857 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_with_one_vary_on (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_with_one_vary_on (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 10, in test_with_one_vary_on
+    self.assertEqual(key, 'template.cache.foo.900150983cd24fb0d6963f7d28e17f72')
+AssertionError: 'template.cache.foo.493e283d571a73056196f1a68efd0f66' != 'template.cache.foo.900150983cd24fb0d6963f7d28e17f72'
+- template.cache.foo.493e283d571a73056196f1a68efd0f66
++ template.cache.foo.900150983cd24fb0d6963f7d28e17f72
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.39170122146606445 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_with_many_vary_on (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_with_many_vary_on (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 10, in test_with_many_vary_on
+    self.assertEqual(key, 'template.cache.bar.4b35f12ab03cec09beec4c21b2d2fa88')
+AssertionError: 'template.cache.bar.17c1a507a0cb58384f4c639067a93520' != 'template.cache.bar.4b35f12ab03cec09beec4c21b2d2fa88'
+- template.cache.bar.17c1a507a0cb58384f4c639067a93520
++ template.cache.bar.4b35f12ab03cec09beec4c21b2d2fa88
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.4586470127105713 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_proper_escaping (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_proper_escaping (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 10, in test_proper_escaping
+    self.assertEqual(key, 'template.cache.spam.f27688177baec990cdf3fbd9d9c3f469')
+AssertionError: 'template.cache.spam.06c8ae8e8c430b69fb0a6443504153dc' != 'template.cache.spam.f27688177baec990cdf3fbd9d9c3f469'
+- template.cache.spam.06c8ae8e8c430b69fb0a6443504153dc
++ template.cache.spam.f27688177baec990cdf3fbd9d9c3f469
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.741138219833374 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_none (cache.tests.TestMakeTemplateFragmentKey) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] TestsTime: 0.7768950462341309 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_empty_list (cache.tests.TestMakeTemplateFragmentKey) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] TestsTime: 0.35862064361572266 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_fragment_name_with_colon (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_fragment_name_with_colon (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 10, in test_fragment_name_with_colon
+    self.assertEqual(key, 'template.cache.foo:bar.900150983cd24fb0d6963f7d28e17f72')
+AssertionError: 'template.cache.foo:bar.493e283d571a73056196f1a68efd0f66' != 'template.cache.foo:bar.900150983cd24fb0d6963f7d28e17f72'
+- template.cache.foo:bar.493e283d571a73056196f1a68efd0f66
++ template.cache.foo:bar.900150983cd24fb0d6963f7d28e17f72
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.33046674728393555 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_fragment_name_with_colon (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_fragment_name_with_colon (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 10, in test_fragment_name_with_colon
+    self.assertEqual(key, 'template.cache.foo/bar.900150983cd24fb0d6963f7d28e17f72')
+AssertionError: 'template.cache.foo:bar.493e283d571a73056196f1a68efd0f66' != 'template.cache.foo:bar.900150983cd24fb0d6963f7d28e17f72'
+- template.cache.foo:bar.493e283d571a73056196f1a68efd0f66
++ template.cache.foo:bar.900150983cd24fb0d6963f7d28e17f72
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.33347153663635254 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_with_non_string (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_vary_on_with_non_string (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 10, in test_vary_on_with_non_string
+    self.assertEqual(key, 'template.cache.foo.4a44dc15346f4c7a26f181e1c9c7d0e4')
+AssertionError: 'template.cache.foo.a956bcd6a9b1c13308928c03ea971177' != 'template.cache.foo.4a44dc15346f4c7a26f181e1c9c7d0e4'
+- template.cache.foo.a956bcd6a9b1c13308928c03ea971177
++ template.cache.foo.4a44dc15346f4c7a26f181e1c9c7d0e4
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.3300743103027344 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_with_unicode (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_vary_on_with_unicode (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 10, in test_vary_on_with_unicode
+    self.assertEqual(key, 'template.cache.foo.721c204bbadf9e9d2e2a1b5e7f3c5d2e')
+AssertionError: 'template.cache.foo.2b5db6eb4dec4670f54e600d5798e5bb' != 'template.cache.foo.721c204bbadf9e9d2e2a1b5e7f3c5d2e'
+- template.cache.foo.2b5db6eb4dec4670f54e600d5798e5bb
++ template.cache.foo.721c204bbadf9e9d2e2a1b5e7f3c5d2e
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.35277462005615234 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] >>>>> Tests configfull pred
+ 
+[django__django__3.1] [django__django-11772] Test Script:  coverage run ./tests/runtests.py --verbosity 2 cache.tests;
+ 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_empty_list (cache.tests.TestMakeTemplateFragmentKey) ... ok
+test_vary_on_none (cache.tests.TestMakeTemplateFragmentKey) ... ok
+test_without_vary_on (cache.tests.TestMakeTemplateFragmentKey) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] TestsTime: 0.4994323253631592 
+[django__django__3.1] [django__django-11772] 
+>>>>> All Tests Passed
+ 
+[django__django__3.1] [django__django-11772] Current Working Directory: /opt/django__django 
+[django__django__3.1] [django__django-11772] Command: coverage json -o coverage.json 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] 
+CoverageLOG: 77.77777777777777%
+ 
+[django__django__3.1] [django__django-11772] 
+FunctionCoverageLOG: 71.42857142857143%
+ 
+[django__django__3.1] [django__django-11772] Running mutation testing 
+[django__django__3.1] [django__django-11772] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.1] [django__django-11772] Std. Output:
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+7.14 7.14 7.14
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Command: cr-report mutation.sqlite 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+[job-id] 6322e5d2d883477891abf05ca1b707b5
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] 0f1ec619b9564818b69801338efeb410
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 73b0a7ced27c44a0911360ec512ec945
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] 2e65d8cf3bc64ef98578bd0a0dafac9b
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] bee9456888a94184af0fe0fd6da62a22
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] 5aeaff6e0a86403ebedb885750fbe00f
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] e9b92eedc9fe4b97a14ef06cce7b0c1d
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 3776ff720e634ea7bd9f6a22be5dde9f
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] d9e17ddfed044477a529ad1dcacab602
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 89a3b80a7ccc472f9c2c44b170973699
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 365d741f0a7e4dde9e1d687faddee4d0
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] 4a59570bf3d04441b3f923ba8c74de2a
+django/core/cache/utils.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] 72350d84e611463980b635668afbe5a0
+django/core/cache/utils.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] 2237ce9e30c6489380ecc87555f494d8
+django/core/cache/utils.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: survived
+total jobs: 14
+complete: 14 (100.00%)
+surviving mutants: 1 (7.14%)
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] 
+MutationNum: 14 
+[django__django__3.1] [django__django-11772] 
+MutationLOG: 92.86% 
+[django__django__3.1] [django__django-11772] 
+MutationUncertainty: 0.0 
+[django__django__3.1] [django__django-11772] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/core/cache/utils.py'
+        and ((6 <= spec.start_pos[0] <= 12))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+FUNC_MUTATION_RESULT 92.85714285714286 14
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] 
+FunctionMutationLOG: 92.85714285714286% 
+[django__django__3.1] [django__django-11772] 
+FunctionMutationNum: 14 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] >>>>> Unfiltered Tests Failed 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_without_vary_on (cache.tests.TestMakeTemplateFragmentKey) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] TestsTime: 0.4761662483215332 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_with_one_vary_on (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_with_one_vary_on (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 12, in test_with_one_vary_on
+    self.assertEqual(key, TEMPLATE_FRAGMENT_KEY_TEMPLATE % ('foo', '900150983cd24fb0d6963f7d28e17f72'))
+AssertionError: 'template.cache.foo.493e283d571a73056196f1a68efd0f66' != 'template.cache.foo.900150983cd24fb0d6963f7d28e17f72'
+- template.cache.foo.493e283d571a73056196f1a68efd0f66
++ template.cache.foo.900150983cd24fb0d6963f7d28e17f72
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.33193540573120117 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_with_many_vary_on (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_with_many_vary_on (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 12, in test_with_many_vary_on
+    self.assertEqual(key, TEMPLATE_FRAGMENT_KEY_TEMPLATE % ('bar', '4b35f12ab03cec09beec4c21b2d2fa88'))
+AssertionError: 'template.cache.bar.17c1a507a0cb58384f4c639067a93520' != 'template.cache.bar.4b35f12ab03cec09beec4c21b2d2fa88'
+- template.cache.bar.17c1a507a0cb58384f4c639067a93520
++ template.cache.bar.4b35f12ab03cec09beec4c21b2d2fa88
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.358964204788208 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_proper_escaping (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_proper_escaping (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 12, in test_proper_escaping
+    self.assertEqual(key, TEMPLATE_FRAGMENT_KEY_TEMPLATE % ('spam', 'f27688177baec990cdf3fbd9d9c3f469'))
+AssertionError: 'template.cache.spam.06c8ae8e8c430b69fb0a6443504153dc' != 'template.cache.spam.f27688177baec990cdf3fbd9d9c3f469'
+- template.cache.spam.06c8ae8e8c430b69fb0a6443504153dc
++ template.cache.spam.f27688177baec990cdf3fbd9d9c3f469
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.7029802799224854 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_none (cache.tests.TestMakeTemplateFragmentKey) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] TestsTime: 0.7737259864807129 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_empty_list (cache.tests.TestMakeTemplateFragmentKey) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] TestsTime: 0.7583680152893066 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_non_string (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_vary_on_non_string (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 12, in test_vary_on_non_string
+    self.assertEqual(key, TEMPLATE_FRAGMENT_KEY_TEMPLATE % ('a.fragment', 'a66f2d2684f3e4a2a5a3c9e0e0e0e0e'))
+AssertionError: 'template.cache.a.fragment.a956bcd6a9b1c13308928c03ea971177' != 'template.cache.a.fragment.a66f2d2684f3e4a2a5a3c9e0e0e0e0e'
+- template.cache.a.fragment.a956bcd6a9b1c13308928c03ea971177
++ template.cache.a.fragment.a66f2d2684f3e4a2a5a3c9e0e0e0e0e
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.5822064876556396 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_fragment_name_with_special_chars (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_fragment_name_with_special_chars (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 12, in test_fragment_name_with_special_chars
+    self.assertEqual(key, TEMPLATE_FRAGMENT_KEY_TEMPLATE % ('a.fragment:with:colon', '900150983cd24fb0d6963f7d28e17f72'))
+AssertionError: 'template.cache.a.fragment:with:colon.493e283d571a73056196f1a68efd0f66' != 'template.cache.a.fragment:with:colon.900150983cd24fb0d6963f7d28e17f72'
+- template.cache.a.fragment:with:colon.493e283d571a73056196f1a68efd0f66
++ template.cache.a.fragment:with:colon.900150983cd24fb0d6963f7d28e17f72
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.7613174915313721 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_fragment_name_with_empty_string (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_fragment_name_with_empty_string (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 12, in test_fragment_name_with_empty_string
+    self.assertEqual(key, TEMPLATE_FRAGMENT_KEY_TEMPLATE % ('', '900150983cd24fb0d6963f7d28e17f72'))
+AssertionError: 'template.cache..493e283d571a73056196f1a68efd0f66' != 'template.cache..900150983cd24fb0d6963f7d28e17f72'
+- template.cache..493e283d571a73056196f1a68efd0f66
++ template.cache..900150983cd24fb0d6963f7d28e17f72
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.513469934463501 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] >>>>> Tests configfull pred
+ 
+[django__django__3.1] [django__django-11772] Test Script:  coverage run ./tests/runtests.py --verbosity 2 cache.tests;
+ 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_empty_list (cache.tests.TestMakeTemplateFragmentKey) ... ok
+test_vary_on_none (cache.tests.TestMakeTemplateFragmentKey) ... ok
+test_without_vary_on (cache.tests.TestMakeTemplateFragmentKey) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] TestsTime: 0.5886111259460449 
+[django__django__3.1] [django__django-11772] 
+>>>>> All Tests Passed
+ 
+[django__django__3.1] [django__django-11772] Current Working Directory: /opt/django__django 
+[django__django__3.1] [django__django-11772] Command: coverage json -o coverage.json 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] 
+CoverageLOG: 77.77777777777777%
+ 
+[django__django__3.1] [django__django-11772] 
+FunctionCoverageLOG: 71.42857142857143%
+ 
+[django__django__3.1] [django__django-11772] Running mutation testing 
+[django__django__3.1] [django__django-11772] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.1] [django__django-11772] Std. Output:
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+7.14 7.14 7.14
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Command: cr-report mutation.sqlite 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+[job-id] 38fb84fa7da843e8b7cab99e7ec74ced
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] 97b3b4b5f5264534bc0fc36d28157031
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 30bcada9b2bb4573b2306565d4aa06d0
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] 5545309ef81c45c999ad075fd7c73d41
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] f5d48176d96c4f5493d89feb4724ddb0
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] 0046f3a15d1543eebdcbc18849016020
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] 93410bb7f57a4affbef655689194a9f1
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] efc41966f5c84dcab2db77ddc8caf6f5
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 4fb7b8501ba04bdaad081014352d513c
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 8a5e5afc2f394abf892d606b75079a32
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] c2a27084d29d40efa22ee348161f1f80
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] 69f29d3d746b4ce0a9e1c84082e90a5c
+django/core/cache/utils.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] 5e63e4baeb8a4a6a9910c4d20196e5b1
+django/core/cache/utils.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] 7ff75d2c62f44eab9df5f24bcabb9317
+django/core/cache/utils.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: survived
+total jobs: 14
+complete: 14 (100.00%)
+surviving mutants: 1 (7.14%)
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] 
+MutationNum: 14 
+[django__django__3.1] [django__django-11772] 
+MutationLOG: 92.86% 
+[django__django__3.1] [django__django-11772] 
+MutationUncertainty: 0.0 
+[django__django__3.1] [django__django-11772] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/core/cache/utils.py'
+        and ((6 <= spec.start_pos[0] <= 12))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+FUNC_MUTATION_RESULT 92.85714285714286 14
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] 
+FunctionMutationLOG: 92.85714285714286% 
+[django__django__3.1] [django__django-11772] 
+FunctionMutationNum: 14 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] >>>>> Unfiltered Tests Failed 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_without_vary_on (cache.tests.TestMakeTemplateFragmentKey) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] TestsTime: 0.9064326286315918 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_with_one_vary_on (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_with_one_vary_on (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 12, in test_with_one_vary_on
+    self.assertEqual(key, TEMPLATE_FRAGMENT_KEY_TEMPLATE % ('foo', '900150983cd24fb0d6963f7d28e17f72'))
+AssertionError: 'template.cache.foo.493e283d571a73056196f1a68efd0f66' != 'template.cache.foo.900150983cd24fb0d6963f7d28e17f72'
+- template.cache.foo.493e283d571a73056196f1a68efd0f66
++ template.cache.foo.900150983cd24fb0d6963f7d28e17f72
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.4466373920440674 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_with_many_vary_on (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_with_many_vary_on (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 12, in test_with_many_vary_on
+    self.assertEqual(key, TEMPLATE_FRAGMENT_KEY_TEMPLATE % ('bar', '4b35f12ab03cec09beec4c21b2d2fa88'))
+AssertionError: 'template.cache.bar.17c1a507a0cb58384f4c639067a93520' != 'template.cache.bar.4b35f12ab03cec09beec4c21b2d2fa88'
+- template.cache.bar.17c1a507a0cb58384f4c639067a93520
++ template.cache.bar.4b35f12ab03cec09beec4c21b2d2fa88
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.47617626190185547 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_proper_escaping (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_proper_escaping (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 12, in test_proper_escaping
+    self.assertEqual(key, TEMPLATE_FRAGMENT_KEY_TEMPLATE % ('spam', 'f27688177baec990cdf3fbd9d9c3f469'))
+AssertionError: 'template.cache.spam.06c8ae8e8c430b69fb0a6443504153dc' != 'template.cache.spam.f27688177baec990cdf3fbd9d9c3f469'
+- template.cache.spam.06c8ae8e8c430b69fb0a6443504153dc
++ template.cache.spam.f27688177baec990cdf3fbd9d9c3f469
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.7378730773925781 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_empty_fragment_name (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_empty_fragment_name (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 12, in test_empty_fragment_name
+    self.assertEqual(key, TEMPLATE_FRAGMENT_KEY_TEMPLATE % ('', 'da39a3ee5e6b4b0d3255bfef95601890'))
+AssertionError: 'template.cache..d41d8cd98f00b204e9800998ecf8427e' != 'template.cache..da39a3ee5e6b4b0d3255bfef95601890'
+- template.cache..d41d8cd98f00b204e9800998ecf8427e
++ template.cache..da39a3ee5e6b4b0d3255bfef95601890
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.6802170276641846 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_none_fragment_name (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_none_fragment_name (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 12, in test_none_fragment_name
+    make_template_fragment_key(None)
+AssertionError: TypeError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.5919077396392822 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_empty_list (cache.tests.TestMakeTemplateFragmentKey) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] TestsTime: 0.725792407989502 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_none (cache.tests.TestMakeTemplateFragmentKey) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] TestsTime: 0.4917285442352295 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_non_string (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_vary_on_non_string (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 12, in test_vary_on_non_string
+    self.assertEqual(key, TEMPLATE_FRAGMENT_KEY_TEMPLATE % ('foo', 'a1fbe1c2671bc32c'))
+AssertionError: 'template.cache.foo.a956bcd6a9b1c13308928c03ea971177' != 'template.cache.foo.a1fbe1c2671bc32c'
+- template.cache.foo.a956bcd6a9b1c13308928c03ea971177
++ template.cache.foo.a1fbe1c2671bc32c
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.7118303775787354 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_with_non_string (cache.tests.TestMakeTemplateFragmentKey) ... FAIL
+
+======================================================================
+FAIL: test_vary_on_with_non_string (cache.tests.TestMakeTemplateFragmentKey)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/cache/tests.py", line 12, in test_vary_on_with_non_string
+    self.assertEqual(key, TEMPLATE_FRAGMENT_KEY_TEMPLATE % ('foo', '4b35f12ab03cec09beec4c21b2d2fa88'))
+AssertionError: 'template.cache.foo.eed96ca7c346e81f891abc47f88369ba' != 'template.cache.foo.4b35f12ab03cec09beec4c21b2d2fa88'
+- template.cache.foo.eed96ca7c346e81f891abc47f88369ba
++ template.cache.foo.4b35f12ab03cec09beec4c21b2d2fa88
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 1 
+[django__django__3.1] [django__django-11772] TestsTime: 0.556525468826294 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] >>>>> Tests configfull pred
+ 
+[django__django__3.1] [django__django-11772] Test Script:  coverage run ./tests/runtests.py --verbosity 2 cache.tests;
+ 
+[django__django__3.1] [django__django-11772] Command: coverage run ./tests/runtests.py --verbosity 2 cache.tests 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+test_vary_on_empty_list (cache.tests.TestMakeTemplateFragmentKey) ... ok
+test_vary_on_none (cache.tests.TestMakeTemplateFragmentKey) ... ok
+test_without_vary_on (cache.tests.TestMakeTemplateFragmentKey) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application cache
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] TestsTime: 0.5987570285797119 
+[django__django__3.1] [django__django-11772] 
+>>>>> All Tests Passed
+ 
+[django__django__3.1] [django__django-11772] Current Working Directory: /opt/django__django 
+[django__django__3.1] [django__django-11772] Command: coverage json -o coverage.json 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] 
+CoverageLOG: 77.77777777777777%
+ 
+[django__django__3.1] [django__django-11772] 
+FunctionCoverageLOG: 71.42857142857143%
+ 
+[django__django__3.1] [django__django-11772] Running mutation testing 
+[django__django__3.1] [django__django-11772] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.1] [django__django-11772] Std. Output:
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.1] [django__django-11772] Std. Output:
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+7.14 7.14 7.14
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] Command: cr-report mutation.sqlite 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+[job-id] c79eaeb19fa248a2b4d47f574e6d6d74
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] 45a3dfb641364d8eb01487774a13568d
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 2121bccc61d64fd49ef33d4787125452
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] 434a5314e1fb4a9fac07cf8741b23b26
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] 259f2f8a7fb8443089d71d1b14e345a2
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] 04d070040bb940958124ffa8ee4bb255
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] 5e1b29b65c8c44c789e9779f78c4e81c
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] f27909e343f24eeb89e6535f8766aaf3
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 262788d6a8ff4fa59a3eb4ec91a1a85f
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] e55187e02da84a969846115eb5fece15
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 3a8f0c59371d4c4c803256cfb5a37398
+django/core/cache/utils.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] d84468c6a7f3438ba1735bb861a73a86
+django/core/cache/utils.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] b4546df2b8f74072a7e0a304daf90a0d
+django/core/cache/utils.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] 8e19f903ec8a4ee3a42c86d75e64e87f
+django/core/cache/utils.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: survived
+total jobs: 14
+complete: 14 (100.00%)
+surviving mutants: 1 (7.14%)
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] 
+MutationNum: 14 
+[django__django__3.1] [django__django-11772] 
+MutationLOG: 92.86% 
+[django__django__3.1] [django__django-11772] 
+MutationUncertainty: 0.0 
+[django__django__3.1] [django__django-11772] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/core/cache/utils.py'
+        and ((6 <= spec.start_pos[0] <= 12))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__3.1] [django__django-11772] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.1] [django__django-11772] Std. Output:
+FUNC_MUTATION_RESULT 92.85714285714286 14
+ 
+[django__django__3.1] [django__django-11772] Return Code: 0 
+[django__django__3.1] [django__django-11772] 
+FunctionMutationLOG: 92.85714285714286% 
+[django__django__3.1] [django__django-11772] 
+FunctionMutationNum: 14 
+[django__django__3.1] [django__django-11772] Test script run successful 
+[django__django__3.1] [django__django-11772] Removing coverage 
+[django__django__3.1] [django__django-11772] >>>>> Unfiltered Tests Failed 

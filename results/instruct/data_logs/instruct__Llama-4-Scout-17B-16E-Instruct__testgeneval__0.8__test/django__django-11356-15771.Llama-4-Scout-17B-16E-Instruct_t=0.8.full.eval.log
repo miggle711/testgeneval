@@ -1,0 +1,2039 @@
+[django__django__3.0] [django__django-11356] Task Metadata:
+	- Instance ID: django__django-11356
+	- Testbed: django__django__3.0
+	- Evaluation Model: Llama-4-Scout-17B-16E-Instruct_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-11356] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11356] Std. Output:
+ 
+[django__django__3.0] [django__django-11356] Return Code: 0 
+[django__django__3.0] [django__django-11356] Command: git -c advice.detachedHead=false checkout 330638b89f14e1fb06e9d313ccc9768ae167c53f 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at 330638b89f Fixed #6785 -- Made QuerySet.get() fetch a limited number of rows.
+ 
+[django__django__3.0] [django__django-11356] Return Code: 0 
+[django__django__3.0] [django__django-11356] Command: git diff > /opt/temp_django__django-11356_gold_init.patch 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11356] Std. Output:
+ 
+[django__django__3.0] [django__django-11356] Return Code: 0 
+[django__django__3.0] [django__django-11356] Command: git apply -v /opt/temp_django__django-11356_gold.patch 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Checking patch django/db/models/fields/related.py...
+Applied patch django/db/models/fields/related.py cleanly.
+ 
+[django__django__3.0] [django__django-11356] Return Code: 0 
+[django__django__3.0] [django__django-11356] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-11356] Command: git diff > /opt/temp_django__django-11356_test_init.patch 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11356] Std. Output:
+ 
+[django__django__3.0] [django__django-11356] Return Code: 0 
+[django__django__3.0] [django__django-11356] Command: git restore tests/delete/tests.py 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11356] Std. Output:
+ 
+[django__django__3.0] [django__django-11356] Return Code: 0 
+[django__django__3.0] [django__django-11356] Command: git apply -v /opt/temp_django__django-11356_test.patch 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Checking patch tests/delete/tests.py...
+Applied patch tests/delete/tests.py cleanly.
+ 
+[django__django__3.0] [django__django-11356] Return Code: 0 
+[django__django__3.0] [django__django-11356] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_foreign_key_checks (delete.tests.RelatedFieldsTests) ... FAIL
+
+======================================================================
+FAIL: test_foreign_key_checks (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 20, in test_foreign_key_checks
+    self.assertEqual(len(errors), 1)
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 1.816500186920166 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_foreign_key_with_to_string (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_foreign_key_with_to_string (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 18, in test_foreign_key_with_to_string
+    self.assertEqual(Model.field.remote_field.model, 'self')
+AttributeError: 'ForwardManyToOneDescriptor' object has no attribute 'remote_field'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.5508651733398438 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_foreign_key_with_to_model (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_foreign_key_with_to_model (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 15, in test_foreign_key_with_to_model
+    class Model(models.Model):
+  File "/opt/django__django/tests/delete/tests.py", line 16, in Model
+    field = ForeignKey(Model, on_delete=CASCADE)
+NameError: free variable 'Model' referenced before assignment in enclosing scope
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.6202495098114014 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_foreign_key_with_on_delete (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_foreign_key_with_on_delete (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 18, in test_foreign_key_with_on_delete
+    self.assertEqual(Model.field.remote_field.on_delete, SET_NULL)
+AttributeError: 'ForwardManyToOneDescriptor' object has no attribute 'remote_field'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.8933360576629639 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_one_to_one_field (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_one_to_one_field (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 18, in test_one_to_one_field
+    self.assertTrue(Model.field.unique)
+AttributeError: 'ForwardOneToOneDescriptor' object has no attribute 'unique'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.7081954479217529 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_many_to_many_field (delete.tests.RelatedFieldsTests) ... FAIL
+
+======================================================================
+FAIL: test_many_to_many_field (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 18, in test_many_to_many_field
+    self.assertIsInstance(Model.field, ManyToManyField)
+AssertionError: <django.db.models.fields.related_descriptors.ManyToManyDescriptor object at 0x7c7225871a90> is not an instance of <class 'django.db.models.fields.related.ManyToManyField'>
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.6312961578369141 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_foreign_key_init (delete.tests.RelatedFieldsTests) ... FAIL
+
+======================================================================
+FAIL: test_foreign_key_init (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 20, in test_foreign_key_init
+    self.fail("ForeignKey with invalid model name should raise ValueError")
+AssertionError: ForeignKey with invalid model name should raise ValueError
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.5391204357147217 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_foreign_key_deconstruct (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_foreign_key_deconstruct (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 18, in test_foreign_key_deconstruct
+    deconstructed = Model.field.deconstruct()
+AttributeError: 'ForwardManyToOneDescriptor' object has no attribute 'deconstruct'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.5708622932434082 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_one_to_one_field_deconstruct (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_one_to_one_field_deconstruct (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 18, in test_one_to_one_field_deconstruct
+    deconstructed = Model.field.deconstruct()
+AttributeError: 'ForwardOneToOneDescriptor' object has no attribute 'deconstruct'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.5025110244750977 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_many_to_many_field_deconstruct (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_many_to_many_field_deconstruct (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 18, in test_many_to_many_field_deconstruct
+    deconstructed = Model.field.deconstruct()
+AttributeError: 'ManyToManyDescriptor' object has no attribute 'deconstruct'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.5447218418121338 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_create_many_to_many_intermediary_model (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_create_many_to_many_intermediary_model (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 18, in test_create_many_to_many_intermediary_model
+    intermediary_model = create_many_to_many_intermediary_model(Model.field, Model)
+  File "/opt/django__django/django/db/models/fields/related.py", line 1046, in create_many_to_many_intermediary_model
+    to_model = resolve_relation(klass, field.remote_field.model)
+AttributeError: 'ManyToManyDescriptor' object has no attribute 'remote_field'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.6242728233337402 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_related_name (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_related_name (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 18, in test_related_name
+    self.assertEqual(Model.field.remote_field.related_name, 'related')
+AttributeError: 'ForwardManyToOneDescriptor' object has no attribute 'remote_field'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.5907759666442871 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_related_query_name (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_related_query_name (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 18, in test_related_query_name
+    self.assertEqual(Model.field.related_query_name(), 'query')
+AttributeError: 'ForwardManyToOneDescriptor' object has no attribute 'related_query_name'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.5801103115081787 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_limit_choices_to (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_limit_choices_to (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 18, in test_limit_choices_to
+    self.assertEqual(Model.field.get_limit_choices_to(), {'name': 'test'})
+AttributeError: 'ForwardManyToOneDescriptor' object has no attribute 'get_limit_choices_to'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.6389927864074707 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_db_constraint (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_db_constraint (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 18, in test_db_constraint
+    self.assertFalse(Model.field.db_constraint)
+AttributeError: 'ForwardManyToOneDescriptor' object has no attribute 'db_constraint'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.5041630268096924 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_parent_link (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_parent_link (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 18, in test_parent_link
+    self.assertTrue(Model.field.remote_field.parent_link)
+AttributeError: 'ForwardManyToOneDescriptor' object has no attribute 'remote_field'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.703376054763794 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_swappable (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_swappable (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 18, in test_swappable
+    self.assertFalse(Model.field.swappable)
+AttributeError: 'ForwardManyToOneDescriptor' object has no attribute 'swappable'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.6990690231323242 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_check_unique (delete.tests.RelatedFieldsTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 0 
+[django__django__3.0] [django__django-11356] TestsTime: 0.5362198352813721 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_check_to_fields_exist (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_check_to_fields_exist (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 15, in test_check_to_fields_exist
+    class Model(models.Model):
+  File "/opt/django__django/tests/delete/tests.py", line 16, in Model
+    field = ForeignKey('self', on_delete=CASCADE, to_fields=['__invalid__'])
+  File "/opt/django__django/django/db/models/fields/related.py", line 813, in __init__
+    super().__init__(to, on_delete, from_fields=['self'], to_fields=[to_field], **kwargs)
+TypeError: __init__() got multiple values for keyword argument 'to_fields'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.4850740432739258 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_check_unique_target (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_check_unique_target (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 15, in test_check_unique_target
+    class Model(models.Model):
+  File "/opt/django__django/tests/delete/tests.py", line 18, in Model
+    field = ForeignKey('self', on_delete=CASCADE, to_fields=['field1', 'field2'])
+  File "/opt/django__django/django/db/models/fields/related.py", line 813, in __init__
+    super().__init__(to, on_delete, from_fields=['self'], to_fields=[to_field], **kwargs)
+TypeError: __init__() got multiple values for keyword argument 'to_fields'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.7695112228393555 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_resolve_relation (delete.tests.RelatedFieldsTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 0 
+[django__django__3.0] [django__django-11356] TestsTime: 0.5766141414642334 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 521, in <module>
+    getattr(options, 'test_name_patterns', None),
+  File "./tests/runtests.py", line 299, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 15
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.3734593391418457 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 521, in <module>
+    getattr(options, 'test_name_patterns', None),
+  File "./tests/runtests.py", line 299, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/delete/tests.py", line 12, in <module>
+    class RelatedFieldsTests(TestCase):
+  File "/opt/django__django/tests/delete/tests.py", line 16, in RelatedFieldsTests
+    fields.related.lazy_related_operation(test_func, A, 'self', field='test_field')
+  File "/opt/django__django/django/db/models/fields/related.py", line 80, in lazy_related_operation
+    return apps.lazy_model_operation(partial(function, **kwargs), *model_keys)
+  File "/opt/django__django/django/apps/registry.py", line 415, in lazy_model_operation
+    apply_next_model(model_class)
+  File "/opt/django__django/django/apps/registry.py", line 403, in apply_next_model
+    self.lazy_model_operation(next_function, *more_models)
+  File "/opt/django__django/django/apps/registry.py", line 415, in lazy_model_operation
+    apply_next_model(model_class)
+  File "/opt/django__django/django/apps/registry.py", line 403, in apply_next_model
+    self.lazy_model_operation(next_function, *more_models)
+  File "/opt/django__django/django/apps/registry.py", line 389, in lazy_model_operation
+    function()
+TypeError: test_func() got multiple values for argument 'field'
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.3260972499847412 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_get_path_info (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_get_path_info (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 16, in test_get_path_info
+    path_info = field.get_path_info()
+  File "/opt/django__django/django/db/models/fields/related.py", line 701, in get_path_info
+    from_opts = self.model._meta
+AttributeError: 'ForeignKey' object has no attribute 'model'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.5285181999206543 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_get_reverse_path_info (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_get_reverse_path_info (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 16, in test_get_reverse_path_info
+    path_info = field.get_reverse_path_info()
+  File "/opt/django__django/django/db/models/fields/related.py", line 884, in get_reverse_path_info
+    opts = self.model._meta
+AttributeError: 'ForeignKey' object has no attribute 'model'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.5614461898803711 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_get_limit_choices_to (delete.tests.RelatedFieldsTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 0 
+[django__django__3.0] [django__django-11356] TestsTime: 0.6041402816772461 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_formfield (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_formfield (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 17, in test_formfield
+    self.assertIsInstance(form_field, models.fields.formfields.ModelChoiceField)
+AttributeError: module 'django.db.models.fields' has no attribute 'formfields'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.5179293155670166 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_db_type (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_db_type (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 16, in test_db_type
+    db_type = field.db_type(connection=connection)
+NameError: name 'connection' is not defined
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.6122133731842041 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_deconstruct_with_abstract_model (delete.tests.RelatedFieldsTests) ... ERROR
+
+======================================================================
+ERROR: test_deconstruct_with_abstract_model (delete.tests.RelatedFieldsTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/delete/tests.py", line 21, in test_deconstruct_with_abstract_model
+    deconstructed = AbstractModel.fk.deconstruct()
+AttributeError: 'ForwardManyToOneDescriptor' object has no attribute 'deconstruct'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 1 
+[django__django__3.0] [django__django-11356] TestsTime: 0.5370430946350098 
+[django__django__3.0] [django__django-11356] Test script run successful 
+[django__django__3.0] [django__django-11356] Removing coverage 
+[django__django__3.0] [django__django-11356] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11356] Test Script:  coverage run ./tests/runtests.py --verbosity 2 delete.tests;
+ 
+[django__django__3.0] [django__django-11356] Command: coverage run ./tests/runtests.py --verbosity 2 delete.tests 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_check_unique (delete.tests.RelatedFieldsTests) ... ok
+test_get_limit_choices_to (delete.tests.RelatedFieldsTests) ... ok
+test_resolve_relation (delete.tests.RelatedFieldsTests) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.003s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application delete
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, delete, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table delete_r
+    Creating table delete_s
+    Creating table delete_t
+    Creating table delete_u
+    Creating table delete_rchild
+    Creating table delete_rchildchild
+    Creating table delete_a
+    Creating table delete_m
+    Creating table delete_mr
+    Creating table delete_mrnull
+    Creating table delete_avatar
+    Creating table delete_user
+    Creating table delete_hiddenuser
+    Creating table delete_hiddenuserprofile
+    Creating table delete_m2mto
+    Creating table delete_m2mfrom
+    Creating table delete_parent
+    Creating table delete_child
+    Creating table delete_base
+    Creating table delete_reltobase
+    Creating table delete_origin
+    Creating table delete_referrer
+    Creating table delete_secondreferrer
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11356] Return Code: 0 
+[django__django__3.0] [django__django-11356] TestsTime: 0.6180591583251953 
+[django__django__3.0] [django__django-11356] 
+>>>>> All Tests Passed
+ 
+[django__django__3.0] [django__django-11356] Current Working Directory: /opt/django__django 
+[django__django__3.0] [django__django-11356] Command: coverage json -o coverage.json 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11356] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.0] [django__django-11356] Return Code: 0 
+[django__django__3.0] [django__django-11356] 
+CoverageLOG: 67.70538243626062%
+ 
+[django__django__3.0] [django__django-11356] 
+FunctionCoverageLOG: 91.66666666666666%
+ 
+[django__django__3.0] [django__django-11356] Running mutation testing 
+[django__django__3.0] [django__django-11356] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11356] Std. Output:
+ 
+[django__django__3.0] [django__django-11356] Return Code: 0 
+[django__django__3.0] [django__django-11356] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.0] [django__django-11356] MutationTimeout 
+[django__django__3.0] [django__django-11356] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11356] Std. Output:
+51.41 55.78 60.15
+ 
+[django__django__3.0] [django__django-11356] Return Code: 0 
+[django__django__3.0] [django__django-11356] Command: cr-report mutation.sqlite 
+[django__django__3.0] [django__django-11356] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 

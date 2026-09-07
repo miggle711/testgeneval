@@ -1,0 +1,2082 @@
+[django__django__3.0] [django__django-10973] Task Metadata:
+	- Instance ID: django__django-10973
+	- Testbed: django__django__3.0
+	- Evaluation Model: Llama-4-Scout-17B-16E-Instruct_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-10973] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Command: git -c advice.detachedHead=false checkout ddb293685235fd09e932805771ae97f72e817181 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at ddb2936852 Refs #25175 -- Renamed test file referencing the old postgresql_psycopg2 engine.
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Command: git diff > /opt/temp_django__django-10973_gold_init.patch 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Command: git apply -v /opt/temp_django__django-10973_gold.patch 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Checking patch django/db/backends/postgresql/client.py...
+Applied patch django/db/backends/postgresql/client.py cleanly.
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-10973] Command: git diff > /opt/temp_django__django-10973_test_init.patch 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Command: git restore tests/dbshell/test_postgresql.py 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Command: git apply -v /opt/temp_django__django-10973_test.patch 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Checking patch tests/dbshell/test_postgresql.py...
+Applied patch tests/dbshell/test_postgresql.py cleanly.
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db (dbshell.test_postgresql.TestDatabaseClient) ... FAIL
+
+======================================================================
+FAIL: test_runshell_db (dbshell.test_postgresql.TestDatabaseClient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/dbshell/test_postgresql.py", line 31, in test_runshell_db
+    ], check=True, env={'PGPASSWORD': 'mypassword'})
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 825, in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 814, in assert_called_with
+    raise AssertionError(_error_message()) from cause
+AssertionError: Expected call: run(['psql', '-U', 'myuser', '-h', 'localhost', '-p', '5432', 'mydb'], check=True, env={'PGPASSWORD': 'mypassword'})
+Actual call: run(['psql', '-U', 'myuser', '-h', 'localhost', '-p', '5432', 'mydb'], check=True, env={'PYENV_HOOK_PATH': '/opt/pyenv/pyenv.d:/usr/etc/pyenv.d:/usr/local/etc/pyenv.d:/etc/pyenv.d:/usr/lib/pyenv/hooks:/opt/pyenv/plugins/pyenv-virtualenv/etc/pyenv.d', 'HOSTNAME': 'MU00224328L', 'REPO_DIR': '/opt/django__django', 'PYENV_VERSION': '3.6.15', 'PWD': '/opt/django__django', 'ONLY_BASELINE': 'False', 'HOME': '/root', 'SKIP_MUTATION': 'False', 'PYENV_DIR': '/opt/django__django', 'TESTBED_NAME': 'django__django__3.0', 'TIMEOUT': '60', 'SHLVL': '1', 'IND': '60', 'LC_CTYPE': 'C.UTF-8', 'SETTING': 'full', 'PYENV_ROOT': '/opt/pyenv', 'PATH': '/opt/pyenv/versions/3.6.15/bin:/opt/pyenv/libexec:/opt/pyenv/plugins/python-build/bin:/opt/pyenv/plugins/pyenv-virtualenv/bin:/opt/pyenv/plugins/pyenv-update/bin:/opt/pyenv/plugins/pyenv-doctor/bin:/opt/pyenv/shims:/opt/pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'LOG_DIR': '/opt/logs', 'IMAGE_TYPE': 'pyenv', 'COVERAGE_RUN': 'true', 'TMPDIR': '/tmp/django_7cw3735h', 'DJANGO_SETTINGS_MODULE': 'test_sqlite', 'TZ': 'America/Chicago', 'PGPASSWORD': 'mypassword'})
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 1 
+[django__django__3.0] [django__django-10973] TestsTime: 1.03950834274292 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_without_password (dbshell.test_postgresql.TestDatabaseClient) ... FAIL
+
+======================================================================
+FAIL: test_runshell_db_without_password (dbshell.test_postgresql.TestDatabaseClient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/dbshell/test_postgresql.py", line 29, in test_runshell_db_without_password
+    ], check=True, env={})
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 825, in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 814, in assert_called_with
+    raise AssertionError(_error_message()) from cause
+AssertionError: Expected call: run(['psql', '-U', 'myuser', '-h', 'localhost', '-p', '5432', 'mydb'], check=True, env={})
+Actual call: run(['psql', '-U', 'myuser', '-h', 'localhost', '-p', '5432', 'mydb'], check=True, env={'PYENV_HOOK_PATH': '/opt/pyenv/pyenv.d:/usr/etc/pyenv.d:/usr/local/etc/pyenv.d:/etc/pyenv.d:/usr/lib/pyenv/hooks:/opt/pyenv/plugins/pyenv-virtualenv/etc/pyenv.d', 'HOSTNAME': 'MU00224328L', 'REPO_DIR': '/opt/django__django', 'PYENV_VERSION': '3.6.15', 'PWD': '/opt/django__django', 'ONLY_BASELINE': 'False', 'HOME': '/root', 'SKIP_MUTATION': 'False', 'PYENV_DIR': '/opt/django__django', 'TESTBED_NAME': 'django__django__3.0', 'TIMEOUT': '60', 'SHLVL': '1', 'IND': '60', 'LC_CTYPE': 'C.UTF-8', 'SETTING': 'full', 'PYENV_ROOT': '/opt/pyenv', 'PATH': '/opt/pyenv/versions/3.6.15/bin:/opt/pyenv/libexec:/opt/pyenv/plugins/python-build/bin:/opt/pyenv/plugins/pyenv-virtualenv/bin:/opt/pyenv/plugins/pyenv-update/bin:/opt/pyenv/plugins/pyenv-doctor/bin:/opt/pyenv/shims:/opt/pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'LOG_DIR': '/opt/logs', 'IMAGE_TYPE': 'pyenv', 'COVERAGE_RUN': 'true', 'TMPDIR': '/tmp/django_yw1_i3rp', 'DJANGO_SETTINGS_MODULE': 'test_sqlite', 'TZ': 'America/Chicago'})
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 1 
+[django__django__3.0] [django__django-10973] TestsTime: 1.9485819339752197 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_signal_ignored (dbshell.test_postgresql.TestDatabaseClient) ... ERROR
+
+======================================================================
+ERROR: test_runshell_db_signal_ignored (dbshell.test_postgresql.TestDatabaseClient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/dbshell/test_postgresql.py", line 24, in test_runshell_db_signal_ignored
+    mock_signal.assert_has_calls([mock.call(signal.SIGINT, signal.SIG_IGN),
+NameError: name 'mock' is not defined
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 1 
+[django__django__3.0] [django__django-10973] TestsTime: 0.8127012252807617 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell (dbshell.test_postgresql.TestDatabaseClient) ... ERROR
+
+======================================================================
+ERROR: test_runshell (dbshell.test_postgresql.TestDatabaseClient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/dbshell/test_postgresql.py", line 13, in test_runshell
+    client = DatabaseClient()
+TypeError: __init__() missing 1 required positional argument: 'connection'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 1 
+[django__django__3.0] [django__django-10973] TestsTime: 1.0067179203033447 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_executable_name (dbshell.test_postgresql.TestDatabaseClient) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] TestsTime: 0.607612133026123 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-10973] Test Script:  coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql;
+ 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_executable_name (dbshell.test_postgresql.TestDatabaseClient) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] TestsTime: 0.756720781326294 
+[django__django__3.0] [django__django-10973] 
+>>>>> All Tests Passed
+ 
+[django__django__3.0] [django__django-10973] Current Working Directory: /opt/django__django 
+[django__django__3.0] [django__django-10973] Command: coverage json -o coverage.json 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] 
+CoverageLOG: 26.666666666666668%
+ 
+[django__django__3.0] [django__django-10973] 
+FunctionCoverageLOG: 4.545454545454546%
+ 
+[django__django__3.0] [django__django-10973] Running mutation testing 
+[django__django__3.0] [django__django-10973] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.0] [django__django-10973] Std. Output:
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+100.00 100.00 100.00
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Command: cr-report mutation.sqlite 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+[job-id] a06d13e21ffd45e39926d5a509dac06a
+django/db/backends/postgresql/client.py core/AddNot 0
+worker outcome: normal, test outcome: survived
+[job-id] a7ed657ef935436cbbda9b2af12584df
+django/db/backends/postgresql/client.py core/AddNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 4011b168ca7546f6a26eedf665e4afc9
+django/db/backends/postgresql/client.py core/AddNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 5479f1fad2e44228a3fccff4ce761426
+django/db/backends/postgresql/client.py core/AddNot 3
+worker outcome: normal, test outcome: survived
+[job-id] df63b9f567644ad09e25f7cfe9657145
+django/db/backends/postgresql/client.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: survived
+[job-id] 97e2a827e3dd454399cdbbffc20e5d89
+django/db/backends/postgresql/client.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: survived
+total jobs: 6
+complete: 6 (100.00%)
+surviving mutants: 6 (100.00%)
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] 
+MutationNum: 6 
+[django__django__3.0] [django__django-10973] 
+MutationLOG: 0.0% 
+[django__django__3.0] [django__django-10973] 
+MutationUncertainty: 0.0 
+[django__django__3.0] [django__django-10973] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/db/backends/postgresql/client.py'
+        and ((11 <= spec.start_pos[0] <= 39))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+FUNC_MUTATION_RESULT 0.0 6
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] 
+FunctionMutationLOG: 0.0% 
+[django__django__3.0] [django__django-10973] 
+FunctionMutationNum: 6 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_with_all_params (dbshell.test_postgresql.TestDatabaseClient) ... FAIL
+
+======================================================================
+FAIL: test_runshell_db_with_all_params (dbshell.test_postgresql.TestDatabaseClient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/dbshell/test_postgresql.py", line 24, in test_runshell_db_with_all_params
+    ], check=True, env={'PGPASSWORD': 'mypassword'})
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 825, in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 814, in assert_called_with
+    raise AssertionError(_error_message()) from cause
+AssertionError: Expected call: run(['psql', '-U', 'myuser', '-h', 'localhost', '-p', '5432', 'mydb'], check=True, env={'PGPASSWORD': 'mypassword'})
+Actual call: run(['psql', '-U', 'myuser', '-h', 'localhost', '-p', '5432', 'mydb'], check=True, env={'PYENV_HOOK_PATH': '/opt/pyenv/pyenv.d:/usr/etc/pyenv.d:/usr/local/etc/pyenv.d:/etc/pyenv.d:/usr/lib/pyenv/hooks:/opt/pyenv/plugins/pyenv-virtualenv/etc/pyenv.d', 'HOSTNAME': 'MU00224328L', 'REPO_DIR': '/opt/django__django', 'PYENV_VERSION': '3.6.15', 'PWD': '/opt/django__django', 'ONLY_BASELINE': 'False', 'HOME': '/root', 'SKIP_MUTATION': 'False', 'PYENV_DIR': '/opt/django__django', 'TESTBED_NAME': 'django__django__3.0', 'TIMEOUT': '60', 'SHLVL': '1', 'IND': '60', 'LC_CTYPE': 'C.UTF-8', 'SETTING': 'full', 'PYENV_ROOT': '/opt/pyenv', 'PATH': '/opt/pyenv/versions/3.6.15/bin:/opt/pyenv/libexec:/opt/pyenv/plugins/python-build/bin:/opt/pyenv/plugins/pyenv-virtualenv/bin:/opt/pyenv/plugins/pyenv-update/bin:/opt/pyenv/plugins/pyenv-doctor/bin:/opt/pyenv/shims:/opt/pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'LOG_DIR': '/opt/logs', 'IMAGE_TYPE': 'pyenv', 'COVERAGE_RUN': 'true', 'TMPDIR': '/tmp/django_gf5kl5cx', 'DJANGO_SETTINGS_MODULE': 'test_sqlite', 'TZ': 'America/Chicago', 'PGPASSWORD': 'mypassword'})
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 1 
+[django__django__3.0] [django__django-10973] TestsTime: 0.9979836940765381 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_with_some_params (dbshell.test_postgresql.TestDatabaseClient) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] TestsTime: 0.7605166435241699 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_with_no_params (dbshell.test_postgresql.TestDatabaseClient) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] TestsTime: 0.5959196090698242 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell (dbshell.test_postgresql.TestDatabaseClient) ... ERROR
+
+======================================================================
+ERROR: test_runshell (dbshell.test_postgresql.TestDatabaseClient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/dbshell/test_postgresql.py", line 12, in test_runshell
+    client = DatabaseClient()
+TypeError: __init__() missing 1 required positional argument: 'connection'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 1 
+[django__django__3.0] [django__django-10973] TestsTime: 0.5590977668762207 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_sigint_handler (dbshell.test_postgresql.TestDatabaseClient) ... ERROR
+
+======================================================================
+ERROR: test_runshell_db_sigint_handler (dbshell.test_postgresql.TestDatabaseClient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/dbshell/test_postgresql.py", line 17, in test_runshell_db_sigint_handler
+    DatabaseClient.runshell_db(conn_params)
+  File "/opt/django__django/django/db/backends/postgresql/client.py", line 36, in runshell_db
+    subprocess.run(args, check=True, env=subprocess_env)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/subprocess.py", line 423, in run
+    with Popen(*popenargs, **kwargs) as process:
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/subprocess.py", line 729, in __init__
+    restore_signals, start_new_session)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/subprocess.py", line 1364, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'psql': 'psql'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.262s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 1 
+[django__django__3.0] [django__django-10973] TestsTime: 1.2650978565216064 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_subprocess_env (dbshell.test_postgresql.TestDatabaseClient) ... FAIL
+
+======================================================================
+FAIL: test_runshell_db_subprocess_env (dbshell.test_postgresql.TestDatabaseClient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/dbshell/test_postgresql.py", line 21, in test_runshell_db_subprocess_env
+    env={'PGPASSWORD': 'mypassword'}
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 825, in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 814, in assert_called_with
+    raise AssertionError(_error_message()) from cause
+AssertionError: Expected call: run(['psql', 'mydb'], check=True, env={'PGPASSWORD': 'mypassword'})
+Actual call: run(['psql', 'mydb'], check=True, env={'PYENV_HOOK_PATH': '/opt/pyenv/pyenv.d:/usr/etc/pyenv.d:/usr/local/etc/pyenv.d:/etc/pyenv.d:/usr/lib/pyenv/hooks:/opt/pyenv/plugins/pyenv-virtualenv/etc/pyenv.d', 'HOSTNAME': 'MU00224328L', 'REPO_DIR': '/opt/django__django', 'PYENV_VERSION': '3.6.15', 'PWD': '/opt/django__django', 'ONLY_BASELINE': 'False', 'HOME': '/root', 'SKIP_MUTATION': 'False', 'PYENV_DIR': '/opt/django__django', 'TESTBED_NAME': 'django__django__3.0', 'TIMEOUT': '60', 'SHLVL': '1', 'IND': '60', 'LC_CTYPE': 'C.UTF-8', 'SETTING': 'full', 'PYENV_ROOT': '/opt/pyenv', 'PATH': '/opt/pyenv/versions/3.6.15/bin:/opt/pyenv/libexec:/opt/pyenv/plugins/python-build/bin:/opt/pyenv/plugins/pyenv-virtualenv/bin:/opt/pyenv/plugins/pyenv-update/bin:/opt/pyenv/plugins/pyenv-doctor/bin:/opt/pyenv/shims:/opt/pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'LOG_DIR': '/opt/logs', 'IMAGE_TYPE': 'pyenv', 'COVERAGE_RUN': 'true', 'TMPDIR': '/tmp/django_hd20fi2h', 'DJANGO_SETTINGS_MODULE': 'test_sqlite', 'TZ': 'America/Chicago', 'PGPASSWORD': 'mypassword'})
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 1 
+[django__django__3.0] [django__django-10973] TestsTime: 0.6698739528656006 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_subprocess_env_without_password (dbshell.test_postgresql.TestDatabaseClient) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] TestsTime: 1.0079700946807861 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-10973] Test Script:  coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql;
+ 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_subprocess_env_without_password (dbshell.test_postgresql.TestDatabaseClient) ... ok
+test_runshell_db_with_no_params (dbshell.test_postgresql.TestDatabaseClient) ... ok
+test_runshell_db_with_some_params (dbshell.test_postgresql.TestDatabaseClient) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] TestsTime: 0.5996716022491455 
+[django__django__3.0] [django__django-10973] 
+>>>>> All Tests Passed
+ 
+[django__django__3.0] [django__django-10973] Current Working Directory: /opt/django__django 
+[django__django__3.0] [django__django-10973] Command: coverage json -o coverage.json 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] 
+CoverageLOG: 86.66666666666667%
+ 
+[django__django__3.0] [django__django-10973] 
+FunctionCoverageLOG: 86.36363636363636%
+ 
+[django__django__3.0] [django__django-10973] Running mutation testing 
+[django__django__3.0] [django__django-10973] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.0] [django__django-10973] Std. Output:
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+0.00 0.00 0.00
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Command: cr-report mutation.sqlite 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+[job-id] cc42c32cce7c4732821f6bb3c7008479
+django/db/backends/postgresql/client.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] d2d5ea41807943e0b2001713abac59eb
+django/db/backends/postgresql/client.py core/AddNot 1
+worker outcome: normal, test outcome: killed
+[job-id] ec1378bd97b54912bc4b5c40f2cc2845
+django/db/backends/postgresql/client.py core/AddNot 2
+worker outcome: normal, test outcome: killed
+[job-id] e7af83d673c74826b87aefce599945af
+django/db/backends/postgresql/client.py core/AddNot 3
+worker outcome: normal, test outcome: killed
+[job-id] 3612ddeee931427789c5e5dbc86c3e8c
+django/db/backends/postgresql/client.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: killed
+[job-id] 687863a096a64365b43a260d92988509
+django/db/backends/postgresql/client.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: killed
+total jobs: 6
+complete: 6 (100.00%)
+surviving mutants: 0 (0.00%)
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] 
+MutationNum: 6 
+[django__django__3.0] [django__django-10973] 
+MutationLOG: 100.0% 
+[django__django__3.0] [django__django-10973] 
+MutationUncertainty: 0.0 
+[django__django__3.0] [django__django-10973] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/db/backends/postgresql/client.py'
+        and ((11 <= spec.start_pos[0] <= 39))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+FUNC_MUTATION_RESULT 100.0 6
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] 
+FunctionMutationLOG: 100.0% 
+[django__django__3.0] [django__django-10973] 
+FunctionMutationNum: 6 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db (dbshell.test_postgresql.TestDatabaseClient) ... FAIL
+
+======================================================================
+FAIL: test_runshell_db (dbshell.test_postgresql.TestDatabaseClient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/dbshell/test_postgresql.py", line 28, in test_runshell_db
+    env={'PGPASSWORD': 'mypassword'}
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 825, in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 814, in assert_called_with
+    raise AssertionError(_error_message()) from cause
+AssertionError: Expected call: run(['psql', '-U', 'myuser', '-h', 'localhost', '-p', '5432', 'mydb'], check=True, env={'PGPASSWORD': 'mypassword'})
+Actual call: run(['psql', '-U', 'myuser', '-h', 'localhost', '-p', '5432', 'mydb'], check=True, env={'PYENV_HOOK_PATH': '/opt/pyenv/pyenv.d:/usr/etc/pyenv.d:/usr/local/etc/pyenv.d:/etc/pyenv.d:/usr/lib/pyenv/hooks:/opt/pyenv/plugins/pyenv-virtualenv/etc/pyenv.d', 'HOSTNAME': 'MU00224328L', 'REPO_DIR': '/opt/django__django', 'PYENV_VERSION': '3.6.15', 'PWD': '/opt/django__django', 'ONLY_BASELINE': 'False', 'HOME': '/root', 'SKIP_MUTATION': 'False', 'PYENV_DIR': '/opt/django__django', 'TESTBED_NAME': 'django__django__3.0', 'TIMEOUT': '60', 'SHLVL': '1', 'IND': '60', 'LC_CTYPE': 'C.UTF-8', 'SETTING': 'full', 'PYENV_ROOT': '/opt/pyenv', 'PATH': '/opt/pyenv/versions/3.6.15/bin:/opt/pyenv/libexec:/opt/pyenv/plugins/python-build/bin:/opt/pyenv/plugins/pyenv-virtualenv/bin:/opt/pyenv/plugins/pyenv-update/bin:/opt/pyenv/plugins/pyenv-doctor/bin:/opt/pyenv/shims:/opt/pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'LOG_DIR': '/opt/logs', 'IMAGE_TYPE': 'pyenv', 'COVERAGE_RUN': 'true', 'TMPDIR': '/tmp/django_y1onuyyw', 'DJANGO_SETTINGS_MODULE': 'test_sqlite', 'TZ': 'America/Chicago', 'PGPASSWORD': 'mypassword'})
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 1 
+[django__django__3.0] [django__django-10973] TestsTime: 1.1681678295135498 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_without_password (dbshell.test_postgresql.TestDatabaseClient) ... FAIL
+
+======================================================================
+FAIL: test_runshell_db_without_password (dbshell.test_postgresql.TestDatabaseClient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/dbshell/test_postgresql.py", line 26, in test_runshell_db_without_password
+    env={}
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 825, in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 814, in assert_called_with
+    raise AssertionError(_error_message()) from cause
+AssertionError: Expected call: run(['psql', '-U', 'myuser', '-h', 'localhost', '-p', '5432', 'mydb'], check=True, env={})
+Actual call: run(['psql', '-U', 'myuser', '-h', 'localhost', '-p', '5432', 'mydb'], check=True, env={'PYENV_HOOK_PATH': '/opt/pyenv/pyenv.d:/usr/etc/pyenv.d:/usr/local/etc/pyenv.d:/etc/pyenv.d:/usr/lib/pyenv/hooks:/opt/pyenv/plugins/pyenv-virtualenv/etc/pyenv.d', 'HOSTNAME': 'MU00224328L', 'REPO_DIR': '/opt/django__django', 'PYENV_VERSION': '3.6.15', 'PWD': '/opt/django__django', 'ONLY_BASELINE': 'False', 'HOME': '/root', 'SKIP_MUTATION': 'False', 'PYENV_DIR': '/opt/django__django', 'TESTBED_NAME': 'django__django__3.0', 'TIMEOUT': '60', 'SHLVL': '1', 'IND': '60', 'LC_CTYPE': 'C.UTF-8', 'SETTING': 'full', 'PYENV_ROOT': '/opt/pyenv', 'PATH': '/opt/pyenv/versions/3.6.15/bin:/opt/pyenv/libexec:/opt/pyenv/plugins/python-build/bin:/opt/pyenv/plugins/pyenv-virtualenv/bin:/opt/pyenv/plugins/pyenv-update/bin:/opt/pyenv/plugins/pyenv-doctor/bin:/opt/pyenv/shims:/opt/pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'LOG_DIR': '/opt/logs', 'IMAGE_TYPE': 'pyenv', 'COVERAGE_RUN': 'true', 'TMPDIR': '/tmp/django_9rdc_2x9', 'DJANGO_SETTINGS_MODULE': 'test_sqlite', 'TZ': 'America/Chicago'})
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 1 
+[django__django__3.0] [django__django-10973] TestsTime: 0.6069221496582031 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_with_empty_password (dbshell.test_postgresql.TestDatabaseClient) ... FAIL
+
+======================================================================
+FAIL: test_runshell_db_with_empty_password (dbshell.test_postgresql.TestDatabaseClient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/dbshell/test_postgresql.py", line 27, in test_runshell_db_with_empty_password
+    env={}
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 825, in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 814, in assert_called_with
+    raise AssertionError(_error_message()) from cause
+AssertionError: Expected call: run(['psql', '-U', 'myuser', '-h', 'localhost', '-p', '5432', 'mydb'], check=True, env={})
+Actual call: run(['psql', '-U', 'myuser', '-h', 'localhost', '-p', '5432', 'mydb'], check=True, env={'PYENV_HOOK_PATH': '/opt/pyenv/pyenv.d:/usr/etc/pyenv.d:/usr/local/etc/pyenv.d:/etc/pyenv.d:/usr/lib/pyenv/hooks:/opt/pyenv/plugins/pyenv-virtualenv/etc/pyenv.d', 'HOSTNAME': 'MU00224328L', 'REPO_DIR': '/opt/django__django', 'PYENV_VERSION': '3.6.15', 'PWD': '/opt/django__django', 'ONLY_BASELINE': 'False', 'HOME': '/root', 'SKIP_MUTATION': 'False', 'PYENV_DIR': '/opt/django__django', 'TESTBED_NAME': 'django__django__3.0', 'TIMEOUT': '60', 'SHLVL': '1', 'IND': '60', 'LC_CTYPE': 'C.UTF-8', 'SETTING': 'full', 'PYENV_ROOT': '/opt/pyenv', 'PATH': '/opt/pyenv/versions/3.6.15/bin:/opt/pyenv/libexec:/opt/pyenv/plugins/python-build/bin:/opt/pyenv/plugins/pyenv-virtualenv/bin:/opt/pyenv/plugins/pyenv-update/bin:/opt/pyenv/plugins/pyenv-doctor/bin:/opt/pyenv/shims:/opt/pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'LOG_DIR': '/opt/logs', 'IMAGE_TYPE': 'pyenv', 'COVERAGE_RUN': 'true', 'TMPDIR': '/tmp/django_0p5z5rnc', 'DJANGO_SETTINGS_MODULE': 'test_sqlite', 'TZ': 'America/Chicago'})
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 1 
+[django__django__3.0] [django__django-10973] TestsTime: 0.6218037605285645 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell (dbshell.test_postgresql.TestDatabaseClient) ... ERROR
+
+======================================================================
+ERROR: test_runshell (dbshell.test_postgresql.TestDatabaseClient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/dbshell/test_postgresql.py", line 13, in test_runshell
+    client = DatabaseClient()
+TypeError: __init__() missing 1 required positional argument: 'connection'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 1 
+[django__django__3.0] [django__django-10973] TestsTime: 0.6520991325378418 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_executable_name (dbshell.test_postgresql.TestDatabaseClient) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] TestsTime: 0.826514720916748 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-10973] Test Script:  coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql;
+ 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_executable_name (dbshell.test_postgresql.TestDatabaseClient) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] TestsTime: 0.8977301120758057 
+[django__django__3.0] [django__django-10973] 
+>>>>> All Tests Passed
+ 
+[django__django__3.0] [django__django-10973] Current Working Directory: /opt/django__django 
+[django__django__3.0] [django__django-10973] Command: coverage json -o coverage.json 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] 
+CoverageLOG: 26.666666666666668%
+ 
+[django__django__3.0] [django__django-10973] 
+FunctionCoverageLOG: 4.545454545454546%
+ 
+[django__django__3.0] [django__django-10973] Running mutation testing 
+[django__django__3.0] [django__django-10973] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.0] [django__django-10973] Std. Output:
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+100.00 100.00 100.00
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Command: cr-report mutation.sqlite 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+[job-id] 4e5d0cf5884549f6be42ef428ee61d6b
+django/db/backends/postgresql/client.py core/AddNot 0
+worker outcome: normal, test outcome: survived
+[job-id] ddaede818c6d49b3bbd781e465de9be0
+django/db/backends/postgresql/client.py core/AddNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 35ff57d3eef64b70b3005619ec56961f
+django/db/backends/postgresql/client.py core/AddNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 5a192a5fadfa472ab9fb86d866c42ed2
+django/db/backends/postgresql/client.py core/AddNot 3
+worker outcome: normal, test outcome: survived
+[job-id] d9548829d5234d65935313acc3056c4d
+django/db/backends/postgresql/client.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: survived
+[job-id] aaaebfe21d00436091227b583468fabd
+django/db/backends/postgresql/client.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: survived
+total jobs: 6
+complete: 6 (100.00%)
+surviving mutants: 6 (100.00%)
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] 
+MutationNum: 6 
+[django__django__3.0] [django__django-10973] 
+MutationLOG: 0.0% 
+[django__django__3.0] [django__django-10973] 
+MutationUncertainty: 0.0 
+[django__django__3.0] [django__django-10973] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/db/backends/postgresql/client.py'
+        and ((11 <= spec.start_pos[0] <= 39))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+FUNC_MUTATION_RESULT 0.0 6
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] 
+FunctionMutationLOG: 0.0% 
+[django__django__3.0] [django__django-10973] 
+FunctionMutationNum: 6 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_with_all_params (dbshell.test_postgresql.TestDatabaseClient) ... FAIL
+
+======================================================================
+FAIL: test_runshell_db_with_all_params (dbshell.test_postgresql.TestDatabaseClient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/dbshell/test_postgresql.py", line 26, in test_runshell_db_with_all_params
+    ], check=True, env={'PGPASSWORD': 'mypassword'})
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 825, in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 814, in assert_called_with
+    raise AssertionError(_error_message()) from cause
+AssertionError: Expected call: run(['psql', '-U', 'myuser', '-h', 'localhost', '-p', '5432', 'mydb'], check=True, env={'PGPASSWORD': 'mypassword'})
+Actual call: run(['psql', '-U', 'myuser', '-h', 'localhost', '-p', '5432', 'mydb'], check=True, env={'PYENV_HOOK_PATH': '/opt/pyenv/pyenv.d:/usr/etc/pyenv.d:/usr/local/etc/pyenv.d:/etc/pyenv.d:/usr/lib/pyenv/hooks:/opt/pyenv/plugins/pyenv-virtualenv/etc/pyenv.d', 'HOSTNAME': 'MU00224328L', 'REPO_DIR': '/opt/django__django', 'PYENV_VERSION': '3.6.15', 'PWD': '/opt/django__django', 'ONLY_BASELINE': 'False', 'HOME': '/root', 'SKIP_MUTATION': 'False', 'PYENV_DIR': '/opt/django__django', 'TESTBED_NAME': 'django__django__3.0', 'TIMEOUT': '60', 'SHLVL': '1', 'IND': '60', 'LC_CTYPE': 'C.UTF-8', 'SETTING': 'full', 'PYENV_ROOT': '/opt/pyenv', 'PATH': '/opt/pyenv/versions/3.6.15/bin:/opt/pyenv/libexec:/opt/pyenv/plugins/python-build/bin:/opt/pyenv/plugins/pyenv-virtualenv/bin:/opt/pyenv/plugins/pyenv-update/bin:/opt/pyenv/plugins/pyenv-doctor/bin:/opt/pyenv/shims:/opt/pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'LOG_DIR': '/opt/logs', 'IMAGE_TYPE': 'pyenv', 'COVERAGE_RUN': 'true', 'TMPDIR': '/tmp/django_yjltbxmq', 'DJANGO_SETTINGS_MODULE': 'test_sqlite', 'TZ': 'America/Chicago', 'PGPASSWORD': 'mypassword'})
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 1 
+[django__django__3.0] [django__django-10973] TestsTime: 0.639106273651123 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_with_some_params (dbshell.test_postgresql.TestDatabaseClient) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] TestsTime: 0.7124378681182861 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_without_params (dbshell.test_postgresql.TestDatabaseClient) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] TestsTime: 0.6731562614440918 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell (dbshell.test_postgresql.TestDatabaseClient) ... ERROR
+
+======================================================================
+ERROR: test_runshell (dbshell.test_postgresql.TestDatabaseClient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/dbshell/test_postgresql.py", line 13, in test_runshell
+    client = DatabaseClient()
+TypeError: __init__() missing 1 required positional argument: 'connection'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 1 
+[django__django__3.0] [django__django-10973] TestsTime: 0.6032304763793945 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_sigint_handler (dbshell.test_postgresql.TestDatabaseClient) ... ERROR
+
+======================================================================
+ERROR: test_runshell_db_sigint_handler (dbshell.test_postgresql.TestDatabaseClient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/dbshell/test_postgresql.py", line 20, in test_runshell_db_sigint_handler
+    mock_signal.assert_has_calls([mock.call(signal.SIGINT, signal.SIG_IGN),
+NameError: name 'mock' is not defined
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 1 
+[django__django__3.0] [django__django-10973] TestsTime: 0.9127140045166016 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_exception (dbshell.test_postgresql.TestDatabaseClient) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] TestsTime: 0.9249234199523926 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_executable_name (dbshell.test_postgresql.TestDatabaseClient) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] TestsTime: 0.6555488109588623 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-10973] Test Script:  coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql;
+ 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_executable_name (dbshell.test_postgresql.TestDatabaseClient) ... ok
+test_runshell_db_exception (dbshell.test_postgresql.TestDatabaseClient) ... ok
+test_runshell_db_with_some_params (dbshell.test_postgresql.TestDatabaseClient) ... ok
+test_runshell_db_without_params (dbshell.test_postgresql.TestDatabaseClient) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.003s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] TestsTime: 0.4847221374511719 
+[django__django__3.0] [django__django-10973] 
+>>>>> All Tests Passed
+ 
+[django__django__3.0] [django__django-10973] Current Working Directory: /opt/django__django 
+[django__django__3.0] [django__django-10973] Command: coverage json -o coverage.json 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] 
+CoverageLOG: 86.66666666666667%
+ 
+[django__django__3.0] [django__django-10973] 
+FunctionCoverageLOG: 86.36363636363636%
+ 
+[django__django__3.0] [django__django-10973] Running mutation testing 
+[django__django__3.0] [django__django-10973] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.0] [django__django-10973] Std. Output:
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+0.00 0.00 0.00
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Command: cr-report mutation.sqlite 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+[job-id] 8d19f5fb8b00484182871f597bd4910a
+django/db/backends/postgresql/client.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] 81f11a040cb648c59682364e6cfd95cd
+django/db/backends/postgresql/client.py core/AddNot 1
+worker outcome: normal, test outcome: killed
+[job-id] 41f68a96109e4515968121d350b4e028
+django/db/backends/postgresql/client.py core/AddNot 2
+worker outcome: normal, test outcome: killed
+[job-id] a68e19b5060149e08e1a36ff9ea62f2e
+django/db/backends/postgresql/client.py core/AddNot 3
+worker outcome: normal, test outcome: killed
+[job-id] 318023f3fdf84e948e1a79595452a2e2
+django/db/backends/postgresql/client.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: killed
+[job-id] 3e8c1bbff76841fc9674d21ccab37229
+django/db/backends/postgresql/client.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: killed
+total jobs: 6
+complete: 6 (100.00%)
+surviving mutants: 0 (0.00%)
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] 
+MutationNum: 6 
+[django__django__3.0] [django__django-10973] 
+MutationLOG: 100.0% 
+[django__django__3.0] [django__django-10973] 
+MutationUncertainty: 0.0 
+[django__django__3.0] [django__django-10973] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/db/backends/postgresql/client.py'
+        and ((11 <= spec.start_pos[0] <= 39))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+FUNC_MUTATION_RESULT 100.0 6
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] 
+FunctionMutationLOG: 100.0% 
+[django__django__3.0] [django__django-10973] 
+FunctionMutationNum: 6 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_with_all_params (dbshell.test_postgresql.TestDatabaseClient) ... FAIL
+
+======================================================================
+FAIL: test_runshell_db_with_all_params (dbshell.test_postgresql.TestDatabaseClient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/dbshell/test_postgresql.py", line 30, in test_runshell_db_with_all_params
+    ], check=True, env={'PGPASSWORD': 'mypassword'})
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 825, in assert_called_once_with
+    return self.assert_called_with(*args, **kwargs)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 814, in assert_called_with
+    raise AssertionError(_error_message()) from cause
+AssertionError: Expected call: run(['psql', '-U', 'myuser', '-h', 'localhost', '-p', '5432', 'mydb'], check=True, env={'PGPASSWORD': 'mypassword'})
+Actual call: run(['psql', '-U', 'myuser', '-h', 'localhost', '-p', '5432', 'mydb'], check=True, env={'PYENV_HOOK_PATH': '/opt/pyenv/pyenv.d:/usr/etc/pyenv.d:/usr/local/etc/pyenv.d:/etc/pyenv.d:/usr/lib/pyenv/hooks:/opt/pyenv/plugins/pyenv-virtualenv/etc/pyenv.d', 'HOSTNAME': 'MU00224328L', 'REPO_DIR': '/opt/django__django', 'PYENV_VERSION': '3.6.15', 'PWD': '/opt/django__django', 'ONLY_BASELINE': 'False', 'HOME': '/root', 'SKIP_MUTATION': 'False', 'PYENV_DIR': '/opt/django__django', 'TESTBED_NAME': 'django__django__3.0', 'TIMEOUT': '60', 'SHLVL': '1', 'IND': '60', 'LC_CTYPE': 'C.UTF-8', 'SETTING': 'full', 'PYENV_ROOT': '/opt/pyenv', 'PATH': '/opt/pyenv/versions/3.6.15/bin:/opt/pyenv/libexec:/opt/pyenv/plugins/python-build/bin:/opt/pyenv/plugins/pyenv-virtualenv/bin:/opt/pyenv/plugins/pyenv-update/bin:/opt/pyenv/plugins/pyenv-doctor/bin:/opt/pyenv/shims:/opt/pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'LOG_DIR': '/opt/logs', 'IMAGE_TYPE': 'pyenv', 'COVERAGE_RUN': 'true', 'TMPDIR': '/tmp/django_dcdf2jk9', 'DJANGO_SETTINGS_MODULE': 'test_sqlite', 'TZ': 'America/Chicago', 'PGPASSWORD': 'mypassword'})
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 1 
+[django__django__3.0] [django__django-10973] TestsTime: 0.783604621887207 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_with_some_params (dbshell.test_postgresql.TestDatabaseClient) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] TestsTime: 0.6324865818023682 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_without_params (dbshell.test_postgresql.TestDatabaseClient) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] TestsTime: 0.6434080600738525 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell (dbshell.test_postgresql.TestDatabaseClient) ... ERROR
+
+======================================================================
+ERROR: test_runshell (dbshell.test_postgresql.TestDatabaseClient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/dbshell/test_postgresql.py", line 13, in test_runshell
+    client = DatabaseClient()
+TypeError: __init__() missing 1 required positional argument: 'connection'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 1 
+[django__django__3.0] [django__django-10973] TestsTime: 0.9228765964508057 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_sigint_handler (dbshell.test_postgresql.TestDatabaseClient) ... ERROR
+
+======================================================================
+ERROR: test_runshell_db_sigint_handler (dbshell.test_postgresql.TestDatabaseClient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/dbshell/test_postgresql.py", line 20, in test_runshell_db_sigint_handler
+    mock_signal.assert_has_calls([Mock.call(signal.SIGINT, signal.SIG_IGN),
+AttributeError: type object 'Mock' has no attribute 'call'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 1 
+[django__django__3.0] [django__django-10973] TestsTime: 0.7943410873413086 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_exception (dbshell.test_postgresql.TestDatabaseClient) ... ERROR
+
+======================================================================
+ERROR: test_runshell_db_exception (dbshell.test_postgresql.TestDatabaseClient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/mock.py", line 1183, in patched
+    return func(*args, **keywargs)
+  File "/opt/django__django/tests/dbshell/test_postgresql.py", line 18, in test_runshell_db_exception
+    mock_subprocess_run.side_effect = subprocess.CalledProcessError(1)
+TypeError: __init__() missing 1 required positional argument: 'cmd'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 1 
+[django__django__3.0] [django__django-10973] TestsTime: 0.689692497253418 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-10973] Test Script:  coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql;
+ 
+[django__django__3.0] [django__django-10973] Command: coverage run ./tests/runtests.py --verbosity 2 dbshell.test_postgresql 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_runshell_db_with_some_params (dbshell.test_postgresql.TestDatabaseClient) ... ok
+test_runshell_db_without_params (dbshell.test_postgresql.TestDatabaseClient) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.006s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application dbshell
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, dbshell, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] TestsTime: 0.9191372394561768 
+[django__django__3.0] [django__django-10973] 
+>>>>> All Tests Passed
+ 
+[django__django__3.0] [django__django-10973] Current Working Directory: /opt/django__django 
+[django__django__3.0] [django__django-10973] Command: coverage json -o coverage.json 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] 
+CoverageLOG: 86.66666666666667%
+ 
+[django__django__3.0] [django__django-10973] 
+FunctionCoverageLOG: 86.36363636363636%
+ 
+[django__django__3.0] [django__django-10973] Running mutation testing 
+[django__django__3.0] [django__django-10973] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-10973] Std. Output:
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.0] [django__django-10973] Std. Output:
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+0.00 0.00 0.00
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] Command: cr-report mutation.sqlite 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+[job-id] 881c7b5caff34234bad01d2d7946ada0
+django/db/backends/postgresql/client.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] fd532ac812fd44b6a0cc6d4410d82a92
+django/db/backends/postgresql/client.py core/AddNot 1
+worker outcome: normal, test outcome: killed
+[job-id] e73d55325ce24b58a7fc503739fd761f
+django/db/backends/postgresql/client.py core/AddNot 2
+worker outcome: normal, test outcome: killed
+[job-id] b4b1f1b9927b4f70bdbea22f31d8f4dc
+django/db/backends/postgresql/client.py core/AddNot 3
+worker outcome: normal, test outcome: killed
+[job-id] 5031ea99703c4d75b1e0225b74b2ecfd
+django/db/backends/postgresql/client.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: killed
+[job-id] 20a97c3190c04012b0ec8f7d6e1185cf
+django/db/backends/postgresql/client.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: killed
+total jobs: 6
+complete: 6 (100.00%)
+surviving mutants: 0 (0.00%)
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] 
+MutationNum: 6 
+[django__django__3.0] [django__django-10973] 
+MutationLOG: 100.0% 
+[django__django__3.0] [django__django-10973] 
+MutationUncertainty: 0.0 
+[django__django__3.0] [django__django-10973] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/db/backends/postgresql/client.py'
+        and ((11 <= spec.start_pos[0] <= 39))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__3.0] [django__django-10973] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-10973] Std. Output:
+FUNC_MUTATION_RESULT 100.0 6
+ 
+[django__django__3.0] [django__django-10973] Return Code: 0 
+[django__django__3.0] [django__django-10973] 
+FunctionMutationLOG: 100.0% 
+[django__django__3.0] [django__django-10973] 
+FunctionMutationNum: 6 
+[django__django__3.0] [django__django-10973] Test script run successful 
+[django__django__3.0] [django__django-10973] Removing coverage 
+[django__django__3.0] [django__django-10973] >>>>> Unfiltered Tests Failed 

@@ -1,0 +1,3169 @@
+[django__django__3.0] [django__django-11584] Task Metadata:
+	- Instance ID: django__django-11584
+	- Testbed: django__django__3.0
+	- Evaluation Model: Llama-4-Scout-17B-16E-Instruct_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-11584] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11584] Std. Output:
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] Command: git -c advice.detachedHead=false checkout fed5e19369f456e41f0768f4fb92602af027a46d 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at fed5e19369 Removed unused BaseReloader.watch_file().
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] Command: git diff > /opt/temp_django__django-11584_gold_init.patch 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11584] Std. Output:
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] Command: git apply -v /opt/temp_django__django-11584_gold.patch 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Checking patch django/utils/autoreload.py...
+Checking patch django/utils/translation/reloader.py...
+Applied patch django/utils/autoreload.py cleanly.
+Applied patch django/utils/translation/reloader.py cleanly.
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-11584] Command: git diff > /opt/temp_django__django-11584_test_init.patch 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11584] Std. Output:
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] Command: git restore tests/utils_tests/test_autoreload.py 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11584] Std. Output:
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] Command: git apply -v /opt/temp_django__django-11584_test.patch 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Checking patch tests/utils_tests/test_autoreload.py...
+Applied patch tests/utils_tests/test_autoreload.py cleanly.
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir (utils_tests.test_autoreload.BaseReloaderTestCase) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir (utils_tests.test_autoreload.BaseReloaderTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 1.3808119297027588 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_absolute_path (utils_tests.test_autoreload.BaseReloaderTestCase) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_absolute_path (utils_tests.test_autoreload.BaseReloaderTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.6279869079589844 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_non_absolute_path (utils_tests.test_autoreload.BaseReloaderTestCase) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_non_absolute_path (utils_tests.test_autoreload.BaseReloaderTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.5521261692047119 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_file_not_found (utils_tests.test_autoreload.BaseReloaderTestCase) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_file_not_found (utils_tests.test_autoreload.BaseReloaderTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.6223950386047363 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_logging (utils_tests.test_autoreload.BaseReloaderTestCase) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_logging (utils_tests.test_autoreload.BaseReloaderTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.7797701358795166 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_multiple_calls (utils_tests.test_autoreload.BaseReloaderTestCase) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_multiple_calls (utils_tests.test_autoreload.BaseReloaderTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.9842636585235596 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_empty_glob (utils_tests.test_autoreload.BaseReloaderTestCase) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_empty_glob (utils_tests.test_autoreload.BaseReloaderTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.6265370845794678 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_none_path (utils_tests.test_autoreload.BaseReloaderTestCase) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_none_path (utils_tests.test_autoreload.BaseReloaderTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.6485791206359863 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_none_glob (utils_tests.test_autoreload.BaseReloaderTestCase) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_none_glob (utils_tests.test_autoreload.BaseReloaderTestCase)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.7298524379730225 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11584] TestsTime: 0.0 
+[django__django__3.0] [django__django-11584] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11584] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir (utils_tests.test_autoreload.BaseReloaderTests) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir (utils_tests.test_autoreload.BaseReloaderTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 16, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.9824576377868652 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_glob (utils_tests.test_autoreload.BaseReloaderTests) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_glob (utils_tests.test_autoreload.BaseReloaderTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 16, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.6908409595489502 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_multiple_globs (utils_tests.test_autoreload.BaseReloaderTests) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_multiple_globs (utils_tests.test_autoreload.BaseReloaderTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 16, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.7374119758605957 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_abs_path (utils_tests.test_autoreload.BaseReloaderTests) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_abs_path (utils_tests.test_autoreload.BaseReloaderTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 16, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.5635745525360107 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_abs_path_already_absolute (utils_tests.test_autoreload.BaseReloaderTests) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_abs_path_already_absolute (utils_tests.test_autoreload.BaseReloaderTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 16, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.5177562236785889 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_file_not_found (utils_tests.test_autoreload.BaseReloaderTests) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_file_not_found (utils_tests.test_autoreload.BaseReloaderTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 16, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.7421231269836426 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_file_not_found_already_absolute (utils_tests.test_autoreload.BaseReloaderTests) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_file_not_found_already_absolute (utils_tests.test_autoreload.BaseReloaderTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 16, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.7660627365112305 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_relative_path (utils_tests.test_autoreload.BaseReloaderTests) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_relative_path (utils_tests.test_autoreload.BaseReloaderTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 16, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.7015562057495117 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11584] TestsTime: 0.0 
+[django__django__3.0] [django__django-11584] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11584] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_absolute_path (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] TestsTime: 0.9337360858917236 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_relative_path (utils_tests.test_autoreload.BaseReloaderTests) ... FAIL
+
+======================================================================
+FAIL: test_watch_dir_relative_path (utils_tests.test_autoreload.BaseReloaderTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 24, in test_watch_dir_relative_path
+    self.reloader.watch_dir(self.tempdir.name, '*.py')
+AssertionError: no logs of level DEBUG or higher triggered on utils_tests.test_autoreload
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.9826877117156982 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_nonexistent_path (utils_tests.test_autoreload.BaseReloaderTests) ... FAIL
+
+======================================================================
+FAIL: test_watch_dir_nonexistent_path (utils_tests.test_autoreload.BaseReloaderTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 25, in test_watch_dir_nonexistent_path
+    self.reloader.watch_dir(nonexistent_path, '*.py')
+AssertionError: no logs of level DEBUG or higher triggered on utils_tests.test_autoreload
+
+----------------------------------------------------------------------
+Ran 1 test in 0.014s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.5283684730529785 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_glob (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] TestsTime: 0.6346170902252197 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_multiple_globs (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] TestsTime: 0.9125857353210449 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_overlapping_globs (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] TestsTime: 0.6542937755584717 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_recursive_glob (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] TestsTime: 0.5374469757080078 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_multiple_recursive_globs (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] TestsTime: 0.5100886821746826 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_nested_glob_recursive (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] TestsTime: 0.5607106685638428 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_overlapping_glob_recursive (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] TestsTime: 0.7946176528930664 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_with_trailing_slash (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] TestsTime: 0.7984623908996582 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_with_non_absolute_path_raises (utils_tests.test_autoreload.BaseReloaderTests) ... FAIL
+
+======================================================================
+FAIL: test_watch_dir_with_non_absolute_path_raises (utils_tests.test_autoreload.BaseReloaderTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 24, in test_watch_dir_with_non_absolute_path_raises
+    self.reloader.watch_dir('relative_path', '*.py')
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.515998363494873 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11584] Test Script:  coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload;
+ 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_absolute_path (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+test_watch_dir_glob (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+test_watch_dir_multiple_globs (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+test_watch_dir_multiple_recursive_globs (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+test_watch_dir_nested_glob_recursive (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+test_watch_dir_overlapping_glob_recursive (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+test_watch_dir_overlapping_globs (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+test_watch_dir_recursive_glob (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+test_watch_dir_with_trailing_slash (utils_tests.test_autoreload.BaseReloaderTests) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.015s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] TestsTime: 0.9261255264282227 
+[django__django__3.0] [django__django-11584] 
+>>>>> All Tests Passed
+ 
+[django__django__3.0] [django__django-11584] Current Working Directory: /opt/django__django 
+[django__django__3.0] [django__django-11584] Command: coverage json -o coverage.json 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] 
+CoverageLOG: 22.5974025974026%
+ 
+[django__django__3.0] [django__django-11584] 
+FunctionCoverageLOG: 66.66666666666666%
+ 
+[django__django__3.0] [django__django-11584] Running mutation testing 
+[django__django__3.0] [django__django-11584] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__3.0] [django__django-11584] Std. Output:
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11584] Std. Output:
+97.00 97.00 97.00
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] Command: cr-report mutation.sqlite 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11584] Std. Output:
+[job-id] 8cb32162562f4f48b928c6f2d4abbb95
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] 79734cb8c065475da254ef35c80588d9
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] 2f770c3a306d4feaaa083e0f9b1b923a
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] 64d4c8a8ceea40b7bbd2615a2422a977
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] 99a14c7c84fe49c19ae33c20ecc523ea
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] c160807ae40b4960898e7e6c86d09843
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] 6d86e14c839c40c68f0224081adcae7b
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 69033ec33d4649e4bed63d3212467283
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] c764aef682b644d5809c34f6d9e31321
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] 518d0feb26ad4cd7aa08a37f26c29259
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_Mod 1
+worker outcome: normal, test outcome: survived
+[job-id] 5cc62d533d784d66bb039386a2cbcec3
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 91cfad3d35924a06b8707fb3c25c9c28
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 9f8930708e314c72a2d3edd529a6dfe1
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 599cb5192f65433499956a3ec20a7d8d
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 15784d3a5a2e44b5868f7a92b1a34c81
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 0588efc1b2974b38bca55397519ce3cd
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] d593ed667ae74057b663de204c219bac
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 672778876b9f4b0389458f826224d1bf
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 7ef7dec022a341ed86730823c6d900ea
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] e63998568bed4a7682d6e87843d25e21
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] ec3b6cadd1f5451f9a8c00b50be63fc7
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] df37d2fa07664e818c8b108ab4a28f28
+django/utils/autoreload.py core/ReplaceBinaryOperator_Add_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] aebbe59504694e3793a13bfadadd4c6a
+django/utils/autoreload.py core/ReplaceBinaryOperator_Div_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] 91d066428b8f43748a0917c700d91ede
+django/utils/autoreload.py core/ReplaceBinaryOperator_Div_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] bc3c7c2da026405890ad9ed04de70455
+django/utils/autoreload.py core/ReplaceBinaryOperator_Div_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] e845d69ccece4009ace71af459493a66
+django/utils/autoreload.py core/ReplaceBinaryOperator_Div_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 32b9e1bef6184321a97376c7279a5d55
+django/utils/autoreload.py core/ReplaceBinaryOperator_Div_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] 09153d55f4884535bab02c8e8e2e7f19
+django/utils/autoreload.py core/ReplaceBinaryOperator_Div_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 4802062f28fe49bfaa1f0c757ac4cded
+django/utils/autoreload.py core/ReplaceBinaryOperator_Div_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] af986f75ae49454c9a87c661ccd9e72f
+django/utils/autoreload.py core/ReplaceBinaryOperator_Div_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 2355598101f44b0292456ee4813b67a1
+django/utils/autoreload.py core/ReplaceBinaryOperator_Div_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] cb4161923bec4573bfc6bd5cd62f0f73
+django/utils/autoreload.py core/ReplaceBinaryOperator_Div_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 2cc13df2f7734e82a8076b6fc0df3551
+django/utils/autoreload.py core/ReplaceBinaryOperator_Div_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] eb3520ab67f945fb86e9b82b139fc09e
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] dcaa4e9a284945609b1366c9fee01572
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Add 1
+worker outcome: normal, test outcome: survived
+[job-id] f6955d0144cc481ebe457771085ca753
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Add 2
+worker outcome: normal, test outcome: survived
+[job-id] c1205378785a45438144d241d9ca7ae2
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Add 3
+worker outcome: normal, test outcome: survived
+[job-id] 85b19cd36f784d13a8a6594dd731fd25
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Add 4
+worker outcome: normal, test outcome: survived
+[job-id] 8dee307d517f4afab8290b145e725152
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Add 5
+worker outcome: normal, test outcome: survived
+[job-id] 3b64e91457244eb99b789e3d37d6d7f7
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Add 6
+worker outcome: normal, test outcome: survived
+[job-id] 796044ce95884f9090d63c66950cb930
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Add 7
+worker outcome: normal, test outcome: survived
+[job-id] df6a9da76c5e4821a6d67c38dd788b1b
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] 1470882fcf1545cc856d8c419e0ad4d6
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] 5a70957cd19e4691a9569233df8fa807
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Sub 2
+worker outcome: normal, test outcome: survived
+[job-id] f77c04ea6ae5437dbf288aaf38ec12c9
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Sub 3
+worker outcome: normal, test outcome: survived
+[job-id] 6408ba0f56f049ec8c7c8218e53538cc
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Sub 4
+worker outcome: normal, test outcome: survived
+[job-id] e3b224f896864f7da6caa3d62d3cc015
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Sub 5
+worker outcome: normal, test outcome: survived
+[job-id] 2e7db980a6ee45a2a938e5088197e28a
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Sub 6
+worker outcome: normal, test outcome: survived
+[job-id] 9344a29a93ef4ffb93c035da71d5ceca
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Sub 7
+worker outcome: normal, test outcome: survived
+[job-id] c7de9275e50646a3a41e35220e1c787b
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] c1d897f0fa854677abae41ba3e2772df
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] b450510f4c954105a070c5b30986f491
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] e1bb220c5e904aab894a42422e1852c0
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Mul 3
+worker outcome: normal, test outcome: survived
+[job-id] 82a4bc0d9fc44291b1f0276b98469419
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Mul 4
+worker outcome: normal, test outcome: survived
+[job-id] 4974fc6b291e4b35844ee9c32ede33c6
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Mul 5
+worker outcome: normal, test outcome: survived
+[job-id] 56cd33e30dde4c08b3b257f20b8c73ba
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Mul 6
+worker outcome: normal, test outcome: survived
+[job-id] ae45697536494191bf73ee736f400466
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Mul 7
+worker outcome: normal, test outcome: survived
+[job-id] 9399099d1f2847f185e6dde6b0d8ba85
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] eb2f8254c53540cfa131d631241da919
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] d771f9ea616e4b77a21c84e8947a9db1
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] 4cde95c4eb8b4c0b917e43490345c8e2
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Div 3
+worker outcome: normal, test outcome: survived
+[job-id] ded9dd58fa02436390213fc7ef4021cd
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Div 4
+worker outcome: normal, test outcome: survived
+[job-id] 96172911662e44ab8c30ec235a4dcab9
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Div 5
+worker outcome: normal, test outcome: survived
+[job-id] d4382f472aa14fb29a77d9fc418709a2
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Div 6
+worker outcome: normal, test outcome: survived
+[job-id] 159d9d23cd5749ac86992136be30f894
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Div 7
+worker outcome: normal, test outcome: survived
+[job-id] 3f1b13d50c824d91a3001cb6edb18b7c
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 631cddfb59eb456d995c4e1b47ccabb6
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] 680127f0ba854685a799f5e4d69a6a4e
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] 39b15bd199cb4eb1b1871cccd39f2d2f
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_FloorDiv 3
+worker outcome: normal, test outcome: survived
+[job-id] a3be33a252554e9c96d39a8591a73ca2
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_FloorDiv 4
+worker outcome: normal, test outcome: survived
+[job-id] 3596bd1bffc54fd892284efccfc0a7f1
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_FloorDiv 5
+worker outcome: normal, test outcome: survived
+[job-id] fd4d495438cf462496cc5ce6cffc4232
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_FloorDiv 6
+worker outcome: normal, test outcome: survived
+[job-id] fe53bae74e244a53857a46e98897e0eb
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_FloorDiv 7
+worker outcome: normal, test outcome: survived
+[job-id] 0a2019a1a4354e46869b0ea16673e82b
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] f48a996a65e4420ab062ee01eee1867c
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 0171f3f88b8f438b94b09c578ee431d4
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] 6dc376f46be24816bbff7cf06592521d
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Pow 3
+worker outcome: normal, test outcome: survived
+[job-id] e6d9bc8aa3034216a669dc29035284a3
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Pow 4
+worker outcome: normal, test outcome: survived
+[job-id] c6b3a00126cd4d22afebf51ed83e7a53
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Pow 5
+worker outcome: normal, test outcome: survived
+[job-id] c2ce054b9c99443cb5a98f3c7d828a44
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Pow 6
+worker outcome: normal, test outcome: survived
+[job-id] daa4c3493167432483ae99251fadda6f
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_Pow 7
+worker outcome: normal, test outcome: survived
+[job-id] ba86dcc291214fd58d295c6aef9acf53
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 81a0d68c69554bd891b5378e9309f56b
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 650e313f91f84a9ca2884d7b3b084c1c
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] e51cfc8312534f68973bde1e9a19975f
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_RShift 3
+worker outcome: normal, test outcome: survived
+[job-id] a65d4ec1df6140e79e28cf983decd219
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_RShift 4
+worker outcome: normal, test outcome: survived
+[job-id] 74858b943a7f48a29f8448919aac3b01
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_RShift 5
+worker outcome: normal, test outcome: survived
+[job-id] 30c15aa348a24d228336b4e2911af97b
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_RShift 6
+worker outcome: normal, test outcome: survived
+[job-id] 6be69c758a0541f4a70f6a43839ce7a1
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_RShift 7
+worker outcome: normal, test outcome: survived
+[job-id] ca03e20493ef43b7ad4253c7e8db3a55
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 7fd5fd0c150d473ab564d28be4b093b0
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 9ad429a3becb49b48b00472f4732af3a
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] 4e6cfa2b6173427ca555d842485d5d32
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_LShift 3
+worker outcome: normal, test outcome: survived
+[job-id] 2cf105df773d492f8e0e52b8bd0bfc95
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_LShift 4
+worker outcome: normal, test outcome: survived
+[job-id] 365219b1641e4b648dbcb90ddb1bca50
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_LShift 5
+worker outcome: normal, test outcome: survived
+[job-id] c877e331e0614b98b098d0c33ab78203
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_LShift 6
+worker outcome: normal, test outcome: survived
+[job-id] c5422bac525649b09dc31fa5f5fe02cd
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_LShift 7
+worker outcome: normal, test outcome: survived
+[job-id] 13b99fc302074b5689bd380964923135
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 7e7651aaad584351b9df2d029c8bac18
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 3ced0369e5d344d8ad731ebf2143f474
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] 0b73a5e0a88047648c1166728223ab13
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitOr 3
+worker outcome: normal, test outcome: survived
+[job-id] 889f2bc5b8d74980bf45060e4cdf9315
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitOr 4
+worker outcome: normal, test outcome: survived
+[job-id] 88997eb084cd471a9dccb3b7ae2e64d6
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitOr 5
+worker outcome: normal, test outcome: survived
+[job-id] dda59dabfdf247f3ae76ad00a6ea979c
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitOr 6
+worker outcome: normal, test outcome: survived
+[job-id] eba2b6574cc54af48e0b767ad1d1b0b4
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitOr 7
+worker outcome: normal, test outcome: survived
+[job-id] 0bef864a1551456e98051937cb9ec879
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 213feb332c004467abc0444769c92596
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 31fb80a974d14ebb8706b296d26ce1d2
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] 13d6bcae4f0d41df9119a734f644ca51
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] 24eb24a0b3e14f07b5c049f8eec06c6e
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitAnd 4
+worker outcome: normal, test outcome: survived
+[job-id] 59bb7939c72843ebb77956fb3375f705
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitAnd 5
+worker outcome: normal, test outcome: survived
+[job-id] c7fc863f15854f919e63df77a83eebc3
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitAnd 6
+worker outcome: normal, test outcome: survived
+[job-id] 2d3e0f0d46b14f49a31bb7f2cb0b8779
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitAnd 7
+worker outcome: normal, test outcome: survived
+[job-id] 4f0461cfaaeb49649a9d4e423103ce50
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] 2ceedb587e65494dbd7d9612d4abd370
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] 8648171362a14eb1aa790194e3870afe
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] ee43265c0a2e414d823561eee83e6036
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitXor 3
+worker outcome: normal, test outcome: survived
+[job-id] 995ab8dc7cb34c45bf84d9f5ca5200d2
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitXor 4
+worker outcome: normal, test outcome: survived
+[job-id] 9a33f4418869451b9abc1fb9845fe1c7
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitXor 5
+worker outcome: normal, test outcome: survived
+[job-id] 2b110525dbc84932a82fd2c516853fa0
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitXor 6
+worker outcome: normal, test outcome: survived
+[job-id] b9bc5a2d0c20434bbacc217386c92a20
+django/utils/autoreload.py core/ReplaceBinaryOperator_Mod_BitXor 7
+worker outcome: normal, test outcome: survived
+[job-id] 4c789816f19c4a288610188eac6cb635
+django/utils/autoreload.py core/ReplaceBinaryOperator_Pow_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] f253eae12f8b4e2aa3833a59e7c960f2
+django/utils/autoreload.py core/ReplaceBinaryOperator_Pow_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 7ee070ab87a044a49ada1bebdc4d0547
+django/utils/autoreload.py core/ReplaceBinaryOperator_Pow_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] 16eaa9aeea1e446d89f11cfe9eda45e4
+django/utils/autoreload.py core/ReplaceBinaryOperator_Pow_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] 2a22230b6ddc48d8834176af93e28b17
+django/utils/autoreload.py core/ReplaceBinaryOperator_Pow_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] fdfe9e0ac1ed4d3093bd8d8639852b6f
+django/utils/autoreload.py core/ReplaceBinaryOperator_Pow_Mod 0
+worker outcome: normal, test outcome: killed
+[job-id] 356d01623fdb4279b99aaf97e02d27b0
+django/utils/autoreload.py core/ReplaceBinaryOperator_Pow_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 6e74cd32e0eb474e925b32559a4914c9
+django/utils/autoreload.py core/ReplaceBinaryOperator_Pow_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] a7842533bd2a41ec8436b50f60d333a7
+django/utils/autoreload.py core/ReplaceBinaryOperator_Pow_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] f301d31d693f4d52b54e13718782f43d
+django/utils/autoreload.py core/ReplaceBinaryOperator_Pow_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 08655f7a3f354ea9a3fb6d0afc6fff80
+django/utils/autoreload.py core/ReplaceBinaryOperator_Pow_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] cac53152628f411282a83fdbd5b54927
+django/utils/autoreload.py core/ReplaceBinaryOperator_BitAnd_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] f37e19d41c6e4908baf10569c8de2697
+django/utils/autoreload.py core/ReplaceBinaryOperator_BitAnd_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] ac836a60250344148e206d4e5b427b90
+django/utils/autoreload.py core/ReplaceBinaryOperator_BitAnd_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] 713038398c5841f0bfeaec1bc4a4bcf2
+django/utils/autoreload.py core/ReplaceBinaryOperator_BitAnd_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 57ea90a199fa41b6847e0a6a3fc3b894
+django/utils/autoreload.py core/ReplaceBinaryOperator_BitAnd_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 71302fd05eb948669a89d16fe6b0d6b9
+django/utils/autoreload.py core/ReplaceBinaryOperator_BitAnd_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] 49fef6ca31c346e892119c41aa8d14ef
+django/utils/autoreload.py core/ReplaceBinaryOperator_BitAnd_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 9faab39e722a44b0b766b862f3364ef9
+django/utils/autoreload.py core/ReplaceBinaryOperator_BitAnd_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 181020db7ff54b6e9a079ea076d63eaf
+django/utils/autoreload.py core/ReplaceBinaryOperator_BitAnd_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 180ab1befab44d2fa8139778c1295ef3
+django/utils/autoreload.py core/ReplaceBinaryOperator_BitAnd_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] a29533b69faf4b53978e3b70f6be7626
+django/utils/autoreload.py core/ReplaceBinaryOperator_BitAnd_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] 076cb0930f0043d59f3a57c5477d127c
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 3eae7a38d6cf41f7ad021c057e5f3a08
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_NotEq 1
+worker outcome: normal, test outcome: survived
+[job-id] 66c80258c485468d9884fccf589aac58
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_NotEq 2
+worker outcome: normal, test outcome: survived
+[job-id] 02693d26219f43a6a86e7e5ec1ee8ca0
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 7b66ac9f460d4c20b12b2a0160cdc696
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] 3ea9543fffa54967a2bc570e43ddb69f
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_Lt 2
+worker outcome: normal, test outcome: survived
+[job-id] 5721df9558c44c1eaed8a16e76974386
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 7857a6ed7d4240f3acc561ff08e0571d
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 656283ccc1494092a931fb671b31bfba
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_LtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 22f6264552064f49bd5aecfcdb19bd2f
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] ec54ef10ffc04b4e910e0a8e74cda5e6
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] 9e08c42ba1c0480fa12f423ced1b4329
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_Gt 2
+worker outcome: normal, test outcome: survived
+[job-id] e56ed0de87c24e11ac5b02c40879fb82
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] fc3d5c973c324e85af59d7fc3a0397b4
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 9d34678d391e49c2bf41fad0ce2663ff
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_GtE 2
+worker outcome: normal, test outcome: survived
+[job-id] ae613210f2284db4b0b2f361a5759a4d
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 469e718a12bc4b85a9e2d00dd0560421
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 1fa3ce07021542a5b12b1002fbc8cbdd
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] e33732f3f8ad4ec08640c4ccf5b84ec5
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 813d40e9b6ba41ffba08ff2a18ebde17
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 1ec5f2e438be4554aa2b85c101172ca3
+django/utils/autoreload.py core/ReplaceComparisonOperator_Eq_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] af089e5031ab4d0ea5dd10b553aaac08
+django/utils/autoreload.py core/ReplaceComparisonOperator_NotEq_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] 5d32d35d2f324c01a666501ecbea5311
+django/utils/autoreload.py core/ReplaceComparisonOperator_NotEq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 765bca6bd7744107b9fa798841a78db2
+django/utils/autoreload.py core/ReplaceComparisonOperator_NotEq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 099b4f17f3e243228a7dd8fc74cd318b
+django/utils/autoreload.py core/ReplaceComparisonOperator_NotEq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] e91b9a2f2d1f432aaeb060e770fafff3
+django/utils/autoreload.py core/ReplaceComparisonOperator_NotEq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] aac27760b0b9466490dc4e04eb3759c0
+django/utils/autoreload.py core/ReplaceComparisonOperator_Lt_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] bb8ead6b8d3a4bbd9353688da8af46fc
+django/utils/autoreload.py core/ReplaceComparisonOperator_Lt_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 333f44a2b2314cbcbd33d763233be6ef
+django/utils/autoreload.py core/ReplaceComparisonOperator_Lt_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 195d2e6ffdac4efaaed80968b7c3faa6
+django/utils/autoreload.py core/ReplaceComparisonOperator_Lt_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] aa4ff0b843f44dfba686a7e9d35e9403
+django/utils/autoreload.py core/ReplaceComparisonOperator_Lt_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 5173135d9cc94a6cba05478cf45af33c
+django/utils/autoreload.py core/ReplaceComparisonOperator_Lt_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 383d4aabf0f34361a2ff1e0ab5f6f085
+django/utils/autoreload.py core/ReplaceComparisonOperator_Lt_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 019015fb469a4beabe93572c19c547d1
+django/utils/autoreload.py core/ReplaceComparisonOperator_Gt_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] 01f6299507da4a23bf79e30f4e4f6c69
+django/utils/autoreload.py core/ReplaceComparisonOperator_Gt_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] a58acbd84ad84b32980a043f4bffcaf6
+django/utils/autoreload.py core/ReplaceComparisonOperator_Gt_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 058cc864275140868e02a0d2d55c572e
+django/utils/autoreload.py core/ReplaceComparisonOperator_Gt_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] fcd484ad67694bfba43aaf5d5a22837a
+django/utils/autoreload.py core/ReplaceComparisonOperator_Gt_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] f09d2ff6f30748efbaaada14b23ed163
+django/utils/autoreload.py core/ReplaceComparisonOperator_Gt_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] a6fd011b5c3947aba1f177ec4f9c9c43
+django/utils/autoreload.py core/ReplaceComparisonOperator_Gt_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 495b3e2f69f24f958eb65671f2a0d966
+django/utils/autoreload.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 5174eeb7f1e546c19a0d63b1db08357e
+django/utils/autoreload.py core/ReplaceComparisonOperator_Is_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 1e37fa6ab8934185a64bd5f54998c8a1
+django/utils/autoreload.py core/ReplaceComparisonOperator_Is_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 35b6730da4a3403bb8b4dc35df52343d
+django/utils/autoreload.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] ae8e6ddabda743d8ad5675b9210ec367
+django/utils/autoreload.py core/ReplaceComparisonOperator_IsNot_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] a94cc54b3cfd41f9b78e4a2f1e12ceab
+django/utils/autoreload.py core/ReplaceUnaryOperator_USub_UAdd 0
+worker outcome: normal, test outcome: survived
+[job-id] 45e770fe354942ae9186a93130bb20e2
+django/utils/autoreload.py core/ReplaceUnaryOperator_USub_Invert 0
+worker outcome: normal, test outcome: survived
+[job-id] 40319ab6827e4959a5511b7e0f70b8e6
+django/utils/autoreload.py core/ReplaceUnaryOperator_USub_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] 01ca74f379484ee394d6fd2886030642
+django/utils/autoreload.py core/ReplaceUnaryOperator_Delete_USub 0
+worker outcome: normal, test outcome: survived
+[job-id] 176e4b50d5d84bca9507c7220c7a05da
+django/utils/autoreload.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] 4c2bf25c577b41ac8965b5ad3f850026
+django/utils/autoreload.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] c867adc3c95d4d098ee6d1eff2555bf6
+django/utils/autoreload.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: normal, test outcome: survived
+[job-id] 57624dd8b7fd421e96e6b095c3ec661f
+django/utils/autoreload.py core/ReplaceUnaryOperator_Delete_Not 3
+worker outcome: normal, test outcome: survived
+[job-id] f8bd5cc084374ec7a29f278251b47565
+django/utils/autoreload.py core/ReplaceUnaryOperator_Delete_Not 4
+worker outcome: normal, test outcome: survived
+[job-id] 047269f1cf6e40ec9378a9fc483407cc
+django/utils/autoreload.py core/ReplaceUnaryOperator_Delete_Not 5
+worker outcome: normal, test outcome: survived
+[job-id] c665db6d7ea0464ebd644798945b1b84
+django/utils/autoreload.py core/ReplaceUnaryOperator_Delete_Not 6
+worker outcome: normal, test outcome: survived
+[job-id] fdc565b6035f41978ad8c07e8ddd9ea8
+django/utils/autoreload.py core/ReplaceUnaryOperator_Delete_Not 7
+worker outcome: normal, test outcome: survived
+[job-id] ee742c1a0f644220b4733368de4a87e5
+django/utils/autoreload.py core/ReplaceUnaryOperator_Delete_Not 8
+worker outcome: normal, test outcome: survived
+[job-id] 076d0a746f674c9babc061abce220aaf
+django/utils/autoreload.py core/ReplaceUnaryOperator_Delete_Not 9
+worker outcome: normal, test outcome: survived
+[job-id] d6382f48e97a4f13839aebf0faf4df81
+django/utils/autoreload.py core/ReplaceUnaryOperator_Delete_Not 10
+worker outcome: normal, test outcome: survived
+[job-id] b21a08a48f6545fab42c94ace89f0a71
+django/utils/autoreload.py core/ReplaceUnaryOperator_Delete_Not 11
+worker outcome: normal, test outcome: survived
+[job-id] 0a79111171c248d88d27cf63d1ec9d53
+django/utils/autoreload.py core/ReplaceUnaryOperator_Delete_Not 12
+worker outcome: normal, test outcome: survived
+[job-id] 56f1e2ad379a4347b262978467cb38fd
+django/utils/autoreload.py core/ReplaceUnaryOperator_Delete_Not 13
+worker outcome: normal, test outcome: survived
+[job-id] 5dc34617a511493786fa354b0251f499
+django/utils/autoreload.py core/ReplaceUnaryOperator_Delete_Not 14
+worker outcome: normal, test outcome: survived
+[job-id] 6c01eb521d8b4daa8f3c6e28cbfd3d99
+django/utils/autoreload.py core/ReplaceUnaryOperator_Delete_Not 15
+worker outcome: normal, test outcome: survived
+[job-id] 043e0bd466154c388b33331710806933
+django/utils/autoreload.py core/ReplaceUnaryOperator_Delete_Not 16
+worker outcome: normal, test outcome: survived
+[job-id] 49380ecfd912403fa4d88ab51a1ffcfb
+django/utils/autoreload.py core/ReplaceUnaryOperator_Delete_Not 17
+worker outcome: normal, test outcome: survived
+[job-id] 7888a57fbe3e4204b78ab790f3613ee9
+django/utils/autoreload.py core/AddNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 28680c99ce93453f97a5a0d2f0546436
+django/utils/autoreload.py core/AddNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 00b095ec821f4175a7d8121ba8ebc296
+django/utils/autoreload.py core/AddNot 2
+worker outcome: normal, test outcome: survived
+[job-id] c2d755f00abd4190b412c74a6c037f1a
+django/utils/autoreload.py core/AddNot 3
+worker outcome: normal, test outcome: survived
+[job-id] e1a904768e7e41c3868fed796941eaca
+django/utils/autoreload.py core/AddNot 4
+worker outcome: normal, test outcome: survived
+[job-id] 6492a966811e4ea0b4cb9c81007c8848
+django/utils/autoreload.py core/AddNot 5
+worker outcome: normal, test outcome: survived
+[job-id] 5b78e6cd1319473a9b4a2de4ae11bb0f
+django/utils/autoreload.py core/AddNot 6
+worker outcome: normal, test outcome: survived
+[job-id] cacdcd5ce0234b0589086496765cffff
+django/utils/autoreload.py core/AddNot 7
+worker outcome: normal, test outcome: survived
+[job-id] 3d984ff3145d476bba2171da6f20000a
+django/utils/autoreload.py core/AddNot 8
+worker outcome: normal, test outcome: survived
+[job-id] fb193c8084984d1f9ec43356cf0eb2cc
+django/utils/autoreload.py core/AddNot 9
+worker outcome: normal, test outcome: survived
+[job-id] b55a01b2844b44c38cb0ed80a1f7b42c
+django/utils/autoreload.py core/AddNot 10
+worker outcome: normal, test outcome: survived
+[job-id] cd9015c5809c46d291dd916da4aae701
+django/utils/autoreload.py core/AddNot 11
+worker outcome: normal, test outcome: survived
+[job-id] 23cab535b49b4952b4216976d2b2c22f
+django/utils/autoreload.py core/AddNot 12
+worker outcome: normal, test outcome: survived
+[job-id] a65baae6cf1f40309139d257a9202fcf
+django/utils/autoreload.py core/AddNot 13
+worker outcome: normal, test outcome: survived
+[job-id] 6c75a1dafc884b8b9356e1fe565bdc15
+django/utils/autoreload.py core/AddNot 14
+worker outcome: normal, test outcome: survived
+[job-id] 5476b1e0a2d04a298f52cac135a3c96c
+django/utils/autoreload.py core/AddNot 15
+worker outcome: normal, test outcome: survived
+[job-id] a858844ac4274e70aa4da190f02bd2a2
+django/utils/autoreload.py core/AddNot 16
+worker outcome: normal, test outcome: survived
+[job-id] c7758dcb61c94fdea0a479e8b1d9660b
+django/utils/autoreload.py core/AddNot 17
+worker outcome: normal, test outcome: survived
+[job-id] 58de078ed4af4ce1b15f6c3f4730505e
+django/utils/autoreload.py core/AddNot 18
+worker outcome: normal, test outcome: survived
+[job-id] 99cfc1b341aa466d8a8ce1744fa0d88b
+django/utils/autoreload.py core/AddNot 19
+worker outcome: normal, test outcome: survived
+[job-id] 0faf461dc4cc417d9f255e83734c141a
+django/utils/autoreload.py core/AddNot 20
+worker outcome: normal, test outcome: survived
+[job-id] a98052ac2fe14f3183986fda18601654
+django/utils/autoreload.py core/AddNot 21
+worker outcome: normal, test outcome: survived
+[job-id] 15075fbd3b0e41af8a1586bbcdda177e
+django/utils/autoreload.py core/AddNot 22
+worker outcome: normal, test outcome: survived
+[job-id] 80063c8e51254bf1abf9ec94f30f2cf0
+django/utils/autoreload.py core/AddNot 23
+worker outcome: normal, test outcome: survived
+[job-id] 71c1141f370c49e2b1e039ea9013784f
+django/utils/autoreload.py core/AddNot 24
+worker outcome: normal, test outcome: survived
+[job-id] d14e263ac95f4ba89ebcdeefc57395d3
+django/utils/autoreload.py core/AddNot 25
+worker outcome: normal, test outcome: survived
+[job-id] 2e449504c999410088fed1f5c07d2a7a
+django/utils/autoreload.py core/AddNot 26
+worker outcome: normal, test outcome: survived
+[job-id] cdf7b08ea69040faa0304e29c4ee517c
+django/utils/autoreload.py core/AddNot 27
+worker outcome: normal, test outcome: survived
+[job-id] c63b1d57ba9f4d39a3cf1c4cfe7f0d58
+django/utils/autoreload.py core/AddNot 28
+worker outcome: normal, test outcome: survived
+[job-id] 8073a9e572ac4c6389263c0c290eeb2b
+django/utils/autoreload.py core/AddNot 29
+worker outcome: normal, test outcome: survived
+[job-id] 90ad180522334029ae8bad7755aa49b3
+django/utils/autoreload.py core/AddNot 30
+worker outcome: normal, test outcome: survived
+[job-id] bef8934bf13f48df87fe5f20b4083627
+django/utils/autoreload.py core/AddNot 31
+worker outcome: normal, test outcome: survived
+[job-id] 53f801478ea94e5ab7a8c1cb9325a8b8
+django/utils/autoreload.py core/AddNot 32
+worker outcome: normal, test outcome: survived
+[job-id] 6fee932a27ea4693b84f4e693f3572d6
+django/utils/autoreload.py core/AddNot 33
+worker outcome: normal, test outcome: survived
+[job-id] 8dc747e1a3614185838dcc6a00a46f81
+django/utils/autoreload.py core/AddNot 34
+worker outcome: normal, test outcome: survived
+[job-id] c58b8b0feb0148bfab87188f84fa70fd
+django/utils/autoreload.py core/AddNot 35
+worker outcome: normal, test outcome: survived
+[job-id] 92dad46d2fb74940b3bf4a42cf94ece4
+django/utils/autoreload.py core/AddNot 36
+worker outcome: normal, test outcome: survived
+[job-id] 726ef7c603b64dc6b031aa242b5cd99b
+django/utils/autoreload.py core/AddNot 37
+worker outcome: normal, test outcome: survived
+[job-id] b755870576bc436d96124eb80d027207
+django/utils/autoreload.py core/AddNot 38
+worker outcome: normal, test outcome: survived
+[job-id] 41577f1fa42e40e6b5e2ba0ea844f942
+django/utils/autoreload.py core/AddNot 39
+worker outcome: normal, test outcome: survived
+[job-id] 954384c069c44cc6bf401246710d5d02
+django/utils/autoreload.py core/AddNot 40
+worker outcome: normal, test outcome: survived
+[job-id] 215115f4ee674d939712039239096ac0
+django/utils/autoreload.py core/AddNot 41
+worker outcome: normal, test outcome: survived
+[job-id] 3d9862a2959448b8b431930fb372ae75
+django/utils/autoreload.py core/AddNot 42
+worker outcome: normal, test outcome: survived
+[job-id] 667bba3e8e1640a7937c1900a1fe2a1c
+django/utils/autoreload.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: survived
+[job-id] cdf6b5c46fa54c12a13834bb28bc1649
+django/utils/autoreload.py core/ReplaceTrueWithFalse 1
+worker outcome: normal, test outcome: survived
+[job-id] 4f3efe2b9c194fafb365e61f888dfd3a
+django/utils/autoreload.py core/ReplaceTrueWithFalse 2
+worker outcome: normal, test outcome: survived
+[job-id] db9a3040063a49d28ba7ba06cfd06f8d
+django/utils/autoreload.py core/ReplaceTrueWithFalse 3
+worker outcome: normal, test outcome: survived
+[job-id] 1249cbe3573d4c88ae4c93482c177e61
+django/utils/autoreload.py core/ReplaceTrueWithFalse 4
+worker outcome: normal, test outcome: survived
+[job-id] 78c961431da64cafbeae44251c864bed
+django/utils/autoreload.py core/ReplaceTrueWithFalse 5
+worker outcome: normal, test outcome: survived
+[job-id] 79ba525c1fc44bbf80e9f2afaa33e4ea
+django/utils/autoreload.py core/ReplaceTrueWithFalse 6
+worker outcome: normal, test outcome: survived
+[job-id] e451ddec9ea84db2ab9a4f855d281e81
+django/utils/autoreload.py core/ReplaceTrueWithFalse 7
+worker outcome: normal, test outcome: survived
+[job-id] df11858468f344f9aa7ecdaed9888cda
+django/utils/autoreload.py core/ReplaceTrueWithFalse 8
+worker outcome: normal, test outcome: survived
+[job-id] 904afc46ee3c42b38dbaaa0a26074e8a
+django/utils/autoreload.py core/ReplaceTrueWithFalse 9
+worker outcome: normal, test outcome: survived
+[job-id] d22d341539ba40d5893dc8c4db4a4df1
+django/utils/autoreload.py core/ReplaceTrueWithFalse 10
+worker outcome: normal, test outcome: survived
+[job-id] 5719759718b14e049817b811552aae30
+django/utils/autoreload.py core/ReplaceTrueWithFalse 11
+worker outcome: normal, test outcome: survived
+[job-id] 018441eae51c4401808a4e30eace8e38
+django/utils/autoreload.py core/ReplaceTrueWithFalse 12
+worker outcome: normal, test outcome: survived
+[job-id] ba2337204345408dbb5a97d4ec8dab4c
+django/utils/autoreload.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: survived
+[job-id] 8174a89c9ef345a1a6160afe62e4748f
+django/utils/autoreload.py core/ReplaceFalseWithTrue 1
+worker outcome: normal, test outcome: survived
+[job-id] bfce6eeaa7e543ba9b15a335dd11a9f0
+django/utils/autoreload.py core/ReplaceFalseWithTrue 2
+worker outcome: normal, test outcome: survived
+[job-id] 5b8cc30cc9774897815055941d163d09
+django/utils/autoreload.py core/ReplaceOrWithAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] a6621aeba8634c0dad8051f53e6318b4
+django/utils/autoreload.py core/ReplaceBreakWithContinue 0
+worker outcome: normal, test outcome: survived
+[job-id] c3521d0d04214ca0948426db5aa7bd40
+django/utils/autoreload.py core/ReplaceContinueWithBreak 0
+worker outcome: normal, test outcome: survived
+[job-id] 17892d659ee14cdeb93af64a3f704545
+django/utils/autoreload.py core/ReplaceContinueWithBreak 1
+worker outcome: normal, test outcome: survived
+[job-id] f81cb5607607498aa598d5613b427a1c
+django/utils/autoreload.py core/ReplaceContinueWithBreak 2
+worker outcome: normal, test outcome: survived
+[job-id] f794e989c76841039752f7a1a90c0138
+django/utils/autoreload.py core/ReplaceContinueWithBreak 3
+worker outcome: normal, test outcome: survived
+[job-id] 373321cfbdc24922aee67cafa2ab0186
+django/utils/autoreload.py core/ReplaceContinueWithBreak 4
+worker outcome: normal, test outcome: survived
+[job-id] c3eefa67fb7a4be78b01c7012fac9e05
+django/utils/autoreload.py core/ReplaceContinueWithBreak 5
+worker outcome: normal, test outcome: survived
+[job-id] 7e6660cdfeb24d379c8c7392958bc815
+django/utils/autoreload.py core/ReplaceContinueWithBreak 6
+worker outcome: normal, test outcome: survived
+[job-id] 1dd02077aeba4041bce973e68aae7995
+django/utils/autoreload.py core/ReplaceContinueWithBreak 7
+worker outcome: normal, test outcome: survived
+[job-id] bbfd37c1233f42bea0d122a7747da7a5
+django/utils/autoreload.py core/ReplaceContinueWithBreak 8
+worker outcome: normal, test outcome: survived
+[job-id] c1c8bfecbb4149488fac8f7ec61119a1
+django/utils/autoreload.py core/ReplaceContinueWithBreak 9
+worker outcome: normal, test outcome: survived
+[job-id] d5900dbd54034829ae617132bdae602e
+django/utils/autoreload.py core/ExceptionReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] b8af47e42a8f46a3825261dc27d499d2
+django/utils/autoreload.py core/ExceptionReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] 6db45c39bdc740889e27ee0092ea2299
+django/utils/autoreload.py core/ExceptionReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] cff3d1b37c8b4438b5dd639ab96363d5
+django/utils/autoreload.py core/ExceptionReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] 43c22c83f16b4a5aa8af29e9e6fa50f2
+django/utils/autoreload.py core/ExceptionReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] 33e3a91caae44d0291c239605d4d0bb1
+django/utils/autoreload.py core/ExceptionReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] ffe3dc79dbd54d188c99080f1004634a
+django/utils/autoreload.py core/ExceptionReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] 08918d332e834043a307eedf24945075
+django/utils/autoreload.py core/ExceptionReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] 85fd6a3cb3154463bbf22ebd0bb6482f
+django/utils/autoreload.py core/ExceptionReplacer 8
+worker outcome: normal, test outcome: survived
+[job-id] 80d5386b2d684784a7f534b5cd9b981c
+django/utils/autoreload.py core/ExceptionReplacer 9
+worker outcome: normal, test outcome: survived
+[job-id] db9f60417b86431781735cbe26d3abaf
+django/utils/autoreload.py core/ExceptionReplacer 10
+worker outcome: normal, test outcome: survived
+[job-id] 0c20d335a9e949518b707d167cde5ba0
+django/utils/autoreload.py core/ExceptionReplacer 11
+worker outcome: normal, test outcome: survived
+[job-id] d3195ab29615462f8a71b45f3778fcb0
+django/utils/autoreload.py core/ExceptionReplacer 12
+worker outcome: normal, test outcome: survived
+[job-id] a47c294c1c7a4efcb2672d5349b4a5fb
+django/utils/autoreload.py core/ExceptionReplacer 13
+worker outcome: normal, test outcome: survived
+[job-id] 42f076e973344d66af1d0fb648fe02b6
+django/utils/autoreload.py core/ExceptionReplacer 14
+worker outcome: normal, test outcome: survived
+[job-id] 8a46c7d990364b84a09bb41dc20590f4
+django/utils/autoreload.py core/ExceptionReplacer 15
+worker outcome: normal, test outcome: survived
+[job-id] 5b05e121603d45bd99686f7e413569c2
+django/utils/autoreload.py core/ExceptionReplacer 16
+worker outcome: normal, test outcome: survived
+[job-id] 84d4b82fae9844e2985d80727a617a2e
+django/utils/autoreload.py core/ExceptionReplacer 17
+worker outcome: normal, test outcome: survived
+[job-id] e2e6ada2883e4b5694686fc8ab0410a5
+django/utils/autoreload.py core/NumberReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] cf469f1d6cce42bead4961a00c7df811
+django/utils/autoreload.py core/NumberReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] 7afa5a704f1745789aa7c55f7378708a
+django/utils/autoreload.py core/NumberReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] 4433e110ba44453eb02f59077c5ebd74
+django/utils/autoreload.py core/NumberReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] e491411d39f14ada8361dffa5bea6d25
+django/utils/autoreload.py core/NumberReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] e0a71a150b9740189193c8599a9e6445
+django/utils/autoreload.py core/NumberReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] 6f243e39ea044f1d8db0a3769e419f08
+django/utils/autoreload.py core/NumberReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] e79df5084af6478c94e15aad1ae0580e
+django/utils/autoreload.py core/NumberReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] 5457af01f703433fb24035fd65d15231
+django/utils/autoreload.py core/NumberReplacer 8
+worker outcome: normal, test outcome: survived
+[job-id] e3c78dedc5a74dc69e457a91dd362f3c
+django/utils/autoreload.py core/NumberReplacer 9
+worker outcome: normal, test outcome: survived
+[job-id] 48af3638bb5745b18cb29096b9f0f933
+django/utils/autoreload.py core/NumberReplacer 10
+worker outcome: normal, test outcome: survived
+[job-id] cc399099b98c48a08e50f5bf47dace13
+django/utils/autoreload.py core/NumberReplacer 11
+worker outcome: normal, test outcome: survived
+[job-id] ebc40476d2f74d79b8475f3026af65da
+django/utils/autoreload.py core/NumberReplacer 12
+worker outcome: normal, test outcome: survived
+[job-id] 2a9fce9052d843b3a7151e04247c1577
+django/utils/autoreload.py core/NumberReplacer 13
+worker outcome: normal, test outcome: survived
+[job-id] 7276d84bd75146e5a5b8f76a10612177
+django/utils/autoreload.py core/NumberReplacer 14
+worker outcome: normal, test outcome: survived
+[job-id] 2c0544d87d434d19a164330102115154
+django/utils/autoreload.py core/NumberReplacer 15
+worker outcome: normal, test outcome: survived
+[job-id] 886fb94551f740deb0e559b4586b98f9
+django/utils/autoreload.py core/NumberReplacer 16
+worker outcome: normal, test outcome: survived
+[job-id] fae69d5baade4c3da96945cd9f9828f2
+django/utils/autoreload.py core/NumberReplacer 17
+worker outcome: normal, test outcome: survived
+[job-id] edf2885f307745f99793ff462bded6cb
+django/utils/autoreload.py core/NumberReplacer 18
+worker outcome: normal, test outcome: survived
+[job-id] 9bb665384c714540bc0ec7d35652b334
+django/utils/autoreload.py core/NumberReplacer 19
+worker outcome: normal, test outcome: survived
+[job-id] 03fa861a940a4c8c9e0fa650aff76b58
+django/utils/autoreload.py core/NumberReplacer 20
+worker outcome: normal, test outcome: survived
+[job-id] 6189a2759b9244f49979a570d3e0f800
+django/utils/autoreload.py core/NumberReplacer 21
+worker outcome: normal, test outcome: survived
+[job-id] 4a61943a5f9040c28ae5df5a02465121
+django/utils/autoreload.py core/NumberReplacer 22
+worker outcome: normal, test outcome: survived
+[job-id] 1c831554dd9f40d9937390a5b9036b48
+django/utils/autoreload.py core/NumberReplacer 23
+worker outcome: normal, test outcome: survived
+[job-id] 12e2203e0486431190d7472dd397c33f
+django/utils/autoreload.py core/NumberReplacer 24
+worker outcome: normal, test outcome: survived
+[job-id] 90aaf9f9d54040ebbe279a0b0d615aa8
+django/utils/autoreload.py core/NumberReplacer 25
+worker outcome: normal, test outcome: survived
+[job-id] a51f0467fe9d4d969e8165293b64b835
+django/utils/autoreload.py core/NumberReplacer 26
+worker outcome: normal, test outcome: survived
+[job-id] 3f8f6bdcea9f439ba3609a40c3cef891
+django/utils/autoreload.py core/NumberReplacer 27
+worker outcome: normal, test outcome: survived
+[job-id] 4cee72e84ec945ce8484d4f1789868e2
+django/utils/autoreload.py core/NumberReplacer 28
+worker outcome: normal, test outcome: survived
+[job-id] 5963dd562e9a48cebe732efee376f781
+django/utils/autoreload.py core/NumberReplacer 29
+worker outcome: normal, test outcome: survived
+[job-id] 48e8457e28cb4f58b88f0ea2953fddc5
+django/utils/autoreload.py core/NumberReplacer 30
+worker outcome: normal, test outcome: survived
+[job-id] 4a218728c4b34fde8fb91f504a41a519
+django/utils/autoreload.py core/NumberReplacer 31
+worker outcome: normal, test outcome: survived
+[job-id] 7f62509d26de4dfdac711fa68012549c
+django/utils/autoreload.py core/NumberReplacer 32
+worker outcome: normal, test outcome: survived
+[job-id] d778007bf5794bcf80970c69d9e85263
+django/utils/autoreload.py core/NumberReplacer 33
+worker outcome: normal, test outcome: survived
+[job-id] 06fe7136e1ff48bdb44b5fe3c40a67a5
+django/utils/autoreload.py core/NumberReplacer 34
+worker outcome: normal, test outcome: survived
+[job-id] f00d5c06f8044b13b251872d5b0f4934
+django/utils/autoreload.py core/NumberReplacer 35
+worker outcome: normal, test outcome: survived
+[job-id] 9b5687237e6942b2ab66138799051686
+django/utils/autoreload.py core/NumberReplacer 36
+worker outcome: normal, test outcome: survived
+[job-id] 03a91b9b80b844c0a6f22d337ffbb08f
+django/utils/autoreload.py core/NumberReplacer 37
+worker outcome: normal, test outcome: survived
+[job-id] 117bcac588674ec58810e22e29ab2499
+django/utils/autoreload.py core/NumberReplacer 38
+worker outcome: normal, test outcome: survived
+[job-id] acb2f20d3c3441138ec47265285c598a
+django/utils/autoreload.py core/NumberReplacer 39
+worker outcome: normal, test outcome: survived
+[job-id] 95f8543d72aa49e1bf2b0af9408c5ecf
+django/utils/autoreload.py core/NumberReplacer 40
+worker outcome: normal, test outcome: survived
+[job-id] 76c124b7e1f1475186d529bfe4e0592e
+django/utils/autoreload.py core/NumberReplacer 41
+worker outcome: normal, test outcome: survived
+[job-id] 5c17fe5a66484914a6575be8d65a94ad
+django/utils/autoreload.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: survived
+[job-id] 7f3da057f2d249c1bbf88ff5a60c555d
+django/utils/autoreload.py core/RemoveDecorator 1
+worker outcome: normal, test outcome: survived
+[job-id] 6fee1eaaedc74285b6c6715055e5cdd9
+django/utils/autoreload.py core/RemoveDecorator 2
+worker outcome: normal, test outcome: survived
+[job-id] 38b2a4180ba745509188416d0d83b942
+django/utils/autoreload.py core/RemoveDecorator 3
+worker outcome: normal, test outcome: survived
+[job-id] b37229c7076247318a40b538fc063503
+django/utils/autoreload.py core/RemoveDecorator 4
+worker outcome: normal, test outcome: survived
+[job-id] f8519b1014d345b1ac26fedb6fd8e6ac
+django/utils/autoreload.py core/RemoveDecorator 5
+worker outcome: normal, test outcome: survived
+[job-id] 57921781ffb24c84b2d915005072b93d
+django/utils/autoreload.py core/RemoveDecorator 6
+worker outcome: normal, test outcome: survived
+[job-id] 55a9960aeb954b91a6e388f97b3ce1a4
+django/utils/autoreload.py core/RemoveDecorator 7
+worker outcome: normal, test outcome: survived
+[job-id] 3c8d9edd024e490184e6ded96c6b3e79
+django/utils/autoreload.py core/RemoveDecorator 8
+worker outcome: normal, test outcome: survived
+[job-id] c6cbd90738634262b4e33cd1f122f099
+django/utils/autoreload.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: survived
+[job-id] cda342acfd5440efa8efed250060b4a2
+django/utils/autoreload.py core/ZeroIterationForLoop 1
+worker outcome: normal, test outcome: survived
+[job-id] 762d3da92d4c4f97a27c9e8b8b7de6a2
+django/utils/autoreload.py core/ZeroIterationForLoop 2
+worker outcome: normal, test outcome: survived
+[job-id] a4bf40c8c3794b17b88139fc91d9eb22
+django/utils/autoreload.py core/ZeroIterationForLoop 3
+worker outcome: normal, test outcome: survived
+[job-id] 24c70717d54e4c90bdaa324aa81690ef
+django/utils/autoreload.py core/ZeroIterationForLoop 4
+worker outcome: normal, test outcome: survived
+[job-id] d62ebdd78f7d460d8671b00760afb143
+django/utils/autoreload.py core/ZeroIterationForLoop 5
+worker outcome: normal, test outcome: survived
+[job-id] 36316e15c27c498bbaafc543ac33c136
+django/utils/autoreload.py core/ZeroIterationForLoop 6
+worker outcome: normal, test outcome: survived
+[job-id] c8c0ea6d497641799ad4d777a52a7c53
+django/utils/autoreload.py core/ZeroIterationForLoop 7
+worker outcome: normal, test outcome: survived
+[job-id] 7b1d799168eb44b2b986519539051fc6
+django/utils/autoreload.py core/ZeroIterationForLoop 8
+worker outcome: normal, test outcome: survived
+[job-id] 17ff9c7450fa4a78844eae3ed1665386
+django/utils/autoreload.py core/ZeroIterationForLoop 9
+worker outcome: normal, test outcome: survived
+[job-id] cf31b41345a6491d91bd4b1c6c451b29
+django/utils/autoreload.py core/ZeroIterationForLoop 10
+worker outcome: normal, test outcome: survived
+[job-id] 49fc16ce80fd4b9d9ba071e2ad114ed7
+django/utils/autoreload.py core/ZeroIterationForLoop 11
+worker outcome: normal, test outcome: survived
+[job-id] 00cab9bb342a4b89b7cb086b33823427
+django/utils/autoreload.py core/ZeroIterationForLoop 12
+worker outcome: normal, test outcome: survived
+[job-id] 2924cf088e21417996ffe48509a62865
+django/utils/autoreload.py core/ZeroIterationForLoop 13
+worker outcome: normal, test outcome: survived
+[job-id] 805226767af646ce9d9398e3c0d94b76
+django/utils/autoreload.py core/ZeroIterationForLoop 14
+worker outcome: normal, test outcome: survived
+[job-id] bf801336251547c99f94c55375ea5812
+django/utils/autoreload.py core/ZeroIterationForLoop 15
+worker outcome: normal, test outcome: survived
+[job-id] 416936d3ac044b51b0e5d6b9a9dd6261
+django/utils/autoreload.py core/ZeroIterationForLoop 16
+worker outcome: normal, test outcome: survived
+total jobs: 367
+complete: 367 (100.00%)
+surviving mutants: 356 (97.00%)
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] 
+MutationNum: 367 
+[django__django__3.0] [django__django-11584] 
+MutationLOG: 3.0% 
+[django__django__3.0] [django__django-11584] 
+MutationUncertainty: 0.0 
+[django__django__3.0] [django__django-11584] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/utils/autoreload.py'
+        and ((241 <= spec.start_pos[0] <= 253))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11584] Std. Output:
+FUNC_MUTATION_RESULT 0.0 2
+ 
+[django__django__3.0] [django__django-11584] Return Code: 0 
+[django__django__3.0] [django__django-11584] 
+FunctionMutationLOG: 0.0% 
+[django__django__3.0] [django__django-11584] 
+FunctionMutationNum: 2 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14
+    self.tempdir = pathlib.Path tempfile.mkdtemp()
+                                       ^
+SyntaxError: invalid syntax
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.4331834316253662 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14
+    self.tempdir = pathlib.Path tempfile.mkdtemp()
+                                       ^
+SyntaxError: invalid syntax
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.3269176483154297 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14
+    self.tempdir = pathlib.Path tempfile.mkdtemp()
+                                       ^
+SyntaxError: invalid syntax
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.35114431381225586 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14
+    self.tempdir = pathlib.Path tempfile.mkdtemp()
+                                       ^
+SyntaxError: invalid syntax
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.41893887519836426 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14
+    self.tempdir = pathlib.Path tempfile.mkdtemp()
+                                       ^
+SyntaxError: invalid syntax
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.5641181468963623 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14
+    self.tempdir = pathlib.Path tempfile.mkdtemp()
+                                       ^
+SyntaxError: invalid syntax
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.5119180679321289 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14
+    self.tempdir = pathlib.Path tempfile.mkdtemp()
+                                       ^
+SyntaxError: invalid syntax
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.5749666690826416 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 564, in <module>
+    options.start_at, options.start_after,
+  File "./tests/runtests.py", line 310, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14
+    self.tempdir = pathlib.Path tempfile.mkdtemp()
+                                       ^
+SyntaxError: invalid syntax
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.39685845375061035 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11584] TestsTime: 0.0 
+[django__django__3.0] [django__django-11584] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11584] >>>>> Unfiltered Tests Failed 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir (utils_tests.test_autoreload.BaseReloaderTests) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir (utils_tests.test_autoreload.BaseReloaderTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.462918758392334 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_glob (utils_tests.test_autoreload.BaseReloaderTests) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_glob (utils_tests.test_autoreload.BaseReloaderTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.8005826473236084 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_multiple_globs (utils_tests.test_autoreload.BaseReloaderTests) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_multiple_globs (utils_tests.test_autoreload.BaseReloaderTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.6490750312805176 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_absolute_path (utils_tests.test_autoreload.BaseReloaderTests) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_absolute_path (utils_tests.test_autoreload.BaseReloaderTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.6449973583221436 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_relative_path (utils_tests.test_autoreload.BaseReloaderTests) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_relative_path (utils_tests.test_autoreload.BaseReloaderTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.9030992984771729 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_non_existent_path (utils_tests.test_autoreload.BaseReloaderTests) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_non_existent_path (utils_tests.test_autoreload.BaseReloaderTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.7242631912231445 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_logging (utils_tests.test_autoreload.BaseReloaderTests) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_logging (utils_tests.test_autoreload.BaseReloaderTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.7124831676483154 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_autoreload 
+[django__django__3.0] [django__django-11584] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11584] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_watch_dir_logging_non_existent_path (utils_tests.test_autoreload.BaseReloaderTests) ... ERROR
+
+======================================================================
+ERROR: test_watch_dir_logging_non_existent_path (utils_tests.test_autoreload.BaseReloaderTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_autoreload.py", line 14, in setUp
+    self.tempdir = pathlib.Path.mkdtemp()
+AttributeError: type object 'Path' has no attribute 'mkdtemp'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, sessions, staticfiles, utils_tests
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table utils_tests_category
+    Creating table utils_tests_categoryinfo
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11584] Return Code: 1 
+[django__django__3.0] [django__django-11584] TestsTime: 0.7071888446807861 
+[django__django__3.0] [django__django-11584] Test script run successful 
+[django__django__3.0] [django__django-11584] Removing coverage 
+[django__django__3.0] [django__django-11584] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11584] TestsTime: 0.0 
+[django__django__3.0] [django__django-11584] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11584] >>>>> Unfiltered Tests Failed 
