@@ -573,6 +573,179 @@ lost instances still need a real decision, regenerate them specifically
 once the fix is confirmed, or accept the loss as a disclosed gap in
 that run.
 
+## pass@1 and pass@5 completeness, and today's real issues (2026-09-07)
+
+Every model in the shortlist needs both real pass@1 (`NUM_SAMPLES=1`)
+and real pass@5 (`NUM_SAMPLES=5`) data, both arms, at `t=0.8`. Real,
+current status as of this writing:
+
+| Model | Arm | pass@1 | pass@5 |
+|---|---|---|---|
+| gpt-oss-120B | instruct | Done (1176/1210) | Running (59869225) |
+| gpt-oss-120B | kg_only | Done (1201/1210) | Running (59869226) |
+| gpt-oss-20B | instruct | Done (1210/1210) | Done (1210/1210) |
+| gpt-oss-20B | kg_only | Done (1210/1210) | Done (1210/1210, one instance at 4/5 samples) |
+| Qwen3-4B | instruct | Done (1198/1210) | Running (59854228) |
+| Qwen3-4B | kg_only | Done (1208/1210) | Running (59854229) |
+| Llama-3.1-8B | instruct | Done (1195/1210) | Running (59853976) |
+| Llama-3.1-8B | kg_only | Done (1208/1210) | Running (59853977) |
+| Qwen3-Coder-30B | instruct | Ready to submit | Done (1210/1210) |
+| Qwen3-Coder-30B | kg_only | Ready to submit | Done (1208/1210) |
+| Llama-4-Scout | instruct | Ready to submit | Done (1123/1210) |
+| Llama-4-Scout | kg_only | Ready to submit | Done (1186/1210) |
+
+### The real, root problem behind almost everything today
+
+Output filenames (built in `run_api.py`, e.g.
+`gpt-oss-120b__testgeneval__0.8__test.jsonl`) do not encode
+`NUM_SAMPLES`. Model, dataset, and temperature are all in the name, real
+sample count is not. So a real pass@1 job and a later real pass@5 job
+for the same model and arm write to, and read `existing_ids` from, the
+exact same file, with no way for either job to tell the two runs apart.
+This single, real gap caused every distinct problem documented below.
+Filed as a real, standing fix candidate (append `k{N}` to the output
+filename), not yet implemented, worked around today by manually
+renaming the existing file aside before submitting a differently-sampled
+run for the same model and arm.
+
+### Real, silent no-ops: three real "pass@5" jobs that never actually ran at k=5
+
+Confirmed for three separate models today, each independently:
+
+- **gpt-oss-20B**: the real job assigned as pass@5 read the file's 1180
+  already-completed real pass@1 ids via `existing_ids`, saw almost
+  nothing left to do, and only real gap-filled 30 and 9 missing
+  instances respectively, both of which then failed outright on a
+  separate, real `MAX_MODEL_LEN=32768` too-tight default (see below).
+  Real pass@5 generation never happened for this model until a second,
+  explicit resubmit.
+- **Qwen3-4B**: no evidence a real pass@5 job was ever even submitted.
+  Confirmed by searching every real job that ever wrote to this model's
+  output file, the most recent one was the earlier real pass@1 fix.
+- **gpt-oss-120B**: the real job assigned as pass@5
+  (`59753854`/`59753855`) was cancelled before it ever started
+  (`CANCELLED`, `0:0` elapsed). A real resubmit
+  (`59755347`/`59755348`) also failed to produce real pass@5 data:
+  the `instruct` side (`59755347`) hit the identical silent
+  gap-fill pattern (`Read 1179 already completed ids`, `Filtered to
+  31 instances`), and the `kg_only` side (`59755348`) crashed outright
+  in 40 real seconds on `torch.float16 is not supported for
+  quantization method gpt_oss_mxfp4`, a real, already-known,
+  already-documented requirement (`DTYPE=bfloat16`) that was left
+  unset on that specific submission.
+
+All three are real, now fixed by moving the existing pass@1 file aside
+(`mv ... __pass1.jsonl`) before resubmitting with `NUM_SAMPLES=5`
+explicitly, confirmed via each job's own `Read 0 already completed ids`
+log line.
+
+### A real, genuine data-mixing incident, not just a no-op: Llama-3.1-8B
+
+Unlike the three no-ops above, Llama-3.1-8B's real pass@1 and real
+pass@5 jobs for the same model and arm both genuinely ran, writing into
+the same real file. The result was 1519 real total lines for `instruct`
+(1195 unique real ids) and 1512 for `kg_only` (1208 unique real ids),
+some real ids appearing up to 7 times across a mix of `k=1` and `k=5`
+rows, accumulated across at least 16 separate real jobs that had ever
+written to this one file over the project's history.
+
+Fixed by writing a real, one-off script (kept only as a local
+scratchpad file, not committed) that grouped every real row by its
+actual `id` field (not `instance_id`, an earlier version of the check
+wrongly grouped by `instance_id`, producing a false "duplicate" alarm,
+since two structurally distinct real `id`s can share the same
+`instance_id`, confirmed directly: `django__django-12091-15824` and
+`django__django-12091-15825` are both real, correct, different tasks
+under the same source commit), then split into two clean files by real
+sample count, keeping the last real occurrence per id when a genuine
+same-k duplicate existed. Verified the split's row counts summed
+exactly back to the pre-split totals before trusting it. The isolated,
+real pass@5 partial data (324 instruct, 304 kg_only rows) was then
+placed back at the plain filename so a real resubmit's `existing_ids`
+would resume from it correctly, confirmed via each job's own
+`Read 324` / `Read 304 already completed ids` log lines, rather than
+starting over.
+
+### `MAX_MODEL_LEN=32768` regression on a gpt-oss-20B resubmit
+
+The real job meant to gap-fill gpt-oss-20B's missing context-overflow
+instances did not carry forward the already-known, already-fixed
+`MAX_MODEL_LEN` override from testgeneval#44 (real prompts for this
+model can run past 65000 tokens). Every one of the real 30 and 9
+gap-fill attempts failed outright on `Input length (up to 67430)
+exceeds model's maximum context length (32768)`, confirmed directly
+from the job's own error log. Fixed by explicitly setting
+`MAX_MODEL_LEN=98304` on the real resubmit (same value already proven
+safe for Qwen3-Coder-30B).
+
+### Real evaluation has not actually happened for any of this project's data
+
+jliu0290 committed real evaluation report files
+(`f222d1d`, `ff4ba30`) for five real model/arm combinations
+(Llama-4-Scout both arms, Qwen3-Coder-30B both arms, gpt-oss-120B
+kg_only). Every real `_summary.json`'s `total_predictions` count
+matched this project's own independently confirmed real completion
+counts exactly, so the real inference side of these reports is
+genuine. But every real `_report.json`'s `with_logs` category, and
+every other real outcome category (`install_fail`, `test_errored`,
+`test_timeout`, `mutation_timeout`), came back completely empty across
+all five files. Traced directly into `swebench_docker/swebench_utils.py`
+(line 590): `with_logs` is only appended to when a real, per-instance
+`.eval.log` file exists on disk, the artifact real Docker-based test
+execution produces. None do. Confirmed this is not a code bug, the
+report-generation logic is working exactly as written, real evaluation
+(the actual Docker container run per instance) never happened for any
+of these five real files.
+
+Traced the likely real cause into `swebench_docker/run_docker.py`:
+this fork shells out to the real `docker` CLI directly via
+`asyncio.create_subprocess_exec`, wrapped in a broad `except Exception`
+that only logs a warning on failure rather than raising. If the real
+Docker daemon was not running wherever this was executed, every
+real container-launch attempt would fail exactly this way: silent,
+logged only as a warning, `generated` still correctly populated
+(upstream of Docker entirely), every real evaluation-outcome category
+staying empty. Not yet confirmed directly with jliu0290 what command or
+environment produced these reports. No real pass@k, coverage, or
+mutation score exists anywhere in this project as of this writing, this
+remains the single largest real gap between the current, near-complete
+real inference dataset and an actual, reportable result.
+
+### A real, local attempt to build the evaluation Docker images
+
+Investigated reviving the stale `feat/apptainer-backend` branch
+(Docker-free evaluation, runnable on M3 itself) as an alternative to
+needing a working Docker install. Real, current M3 disk headroom is
+genuinely large enough now (`/fs04` at roughly 3.8TB used of 5.1TB,
+about 1.3TB real free), removing what was originally thought to be the
+main blocker. The real remaining blocker turned out to be local
+machine storage instead: `scripts/pull_images.py --makefile
+Makefile.testgenevallite` (102 real, distinct pre-built Docker images,
+pulled rather than built, matching this project's own documented
+"easiest path") is real, fast per-image (each pull took single-digit
+real seconds), but real total local disk usage climbed faster than
+expected, some real per-repo testbed images (astropy, sympy, sphinx)
+run 3 to 3.6GB each, unlike the earlier assumed "dozen-plus" images at
+a smaller average size.
+
+The real local Docker daemon hung twice under this real disk pressure
+(basic commands like `docker images`/`docker system df` timing out with
+no response), both times recovered cleanly via a full Docker Desktop
+restart with no real data loss, confirmed by re-verifying the real
+pulled-image count directly against the Makefile's own real target list
+after each recovery rather than trusting a mid-hang read (one such read
+falsely showed only 1 real image present during the second hang; the
+real count was unaffected once the daemon actually recovered). All 102
+real `testgenevallite` images were eventually confirmed present via a
+direct diff against the Makefile's real target list. The real, full
+`testgeneval` (not lite) dataset defines 370 images, roughly 3.6x more;
+given how much local space 102 images alone consumed, the full dataset
+is very unlikely to be viable on this same machine without either
+substantially more real local storage or moving the work to a machine
+with more of it. The 102 real testgenevallite images were deleted again
+afterward to restore local headroom, this was a real, deliberate
+feasibility check, not a completed setup.
+
 ## Why context-overflow losses happen
 
 The `instruct` arm's prompt shows the model the whole source file as flat
