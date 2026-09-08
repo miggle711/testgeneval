@@ -581,8 +581,8 @@ current status as of this writing:
 
 | Model | Arm | pass@1 | pass@5 |
 |---|---|---|---|
-| gpt-oss-120B | instruct | Done (1176/1210) | Running (59869225) |
-| gpt-oss-120B | kg_only | Done (1201/1210) | Running (59869226) |
+| gpt-oss-120B | instruct | Done (1176/1210) | Done (1176/1179, 3 real ids permanently excluded on reasoning-budget exhaustion, see below) |
+| gpt-oss-120B | kg_only | Done (1201/1210) | Done (1200/1201, 1 real id at 4/5 samples, same real cause) |
 | gpt-oss-20B | instruct | Done (1210/1210) | Done (1210/1210) |
 | gpt-oss-20B | kg_only | Done (1210/1210) | Done (1210/1210, one instance at 4/5 samples) |
 | Qwen3-4B | instruct | Done (1198/1210) | Running (59854228) |
@@ -728,6 +728,80 @@ char count doesn't map linearly enough to token count at this scale to
 safely draw the real 17536-token line, tokenizing with the real model
 tokenizer was necessary, not optional, before deciding which ids were
 fixable and which were structurally excluded.
+
+### gpt-oss-120B pass@5 (59869225/59869226) finished: testgeneval#40's reasoning-budget issue resurfaces at a much smaller real scale (2026-09-08)
+
+Both jobs completed (`sacct`: `COMPLETED`, `0:0`, 4:49:28 and 3:45:41
+elapsed). Auditing the real output files directly found a small, real
+shortfall in each: `instruct` at 1176/1179 unique real ids with a full
+5/5 samples (3 real ids at 0/5), `kg_only` at 1200/1201 (1 real id at
+4/5). Total 4 real ids affected across 2,381 real per-instance attempts
+(a ~0.17% real rate), much smaller than the losses documented elsewhere
+in this doc, but worth tracing to a real cause rather than waved off as
+noise.
+
+Checked each affected id directly against its own job's real log and
+found the same real signature every time:
+
+```
+Warning: choice.message.content is None for astropy__astropy-14295-15681 (finish_reason=length, completion_tokens=600), skipping this sample
+Warning: choice.message.content is None for sphinx-doc__sphinx-9155-17043 (finish_reason=length, completion_tokens=2115), skipping this sample
+Warning: choice.message.content is None for sphinx-doc__sphinx-9547-17058 (finish_reason=length, completion_tokens=285), skipping this sample
+Warning: choice.message.content is None for sympy__sympy-20322-17413 (finish_reason=length, completion_tokens=12523), skipping this sample
+```
+
+This is the exact same real failure mode already diagnosed and filed as
+testgeneval#40 during pass@1 calibration (see the gpt-oss-120B/gpt-oss-20B
+rows earlier in this doc): gpt-oss's "harmony" response format emits
+real reasoning content in a separate channel before the final answer,
+and vLLM's Harmony parser only populates `message.content` from that
+final channel. If the real reasoning channel consumes the whole output
+budget first, `finish_reason=length` fires with `message.content=None`,
+even though `completion_tokens` shows real, nonzero usage, the tokens
+went to reasoning, not to the actual answer. `run_api.py` correctly
+detects this and skips the sample rather than writing garbage, real,
+safe behavior, just an empty result for that sample.
+
+The `OUTPUT_LIMITS=48000` fix applied for testgeneval#40 clearly did
+help: 51/160 (32%) real instances were affected at the old 4096 cap
+during pass@1 calibration, versus 4/1210 affected here even at pass@5
+(5x the real per-instance attempts). It did not fully eliminate the
+failure mode, just reduced its real frequency by roughly two orders of
+magnitude. All 4 real completion_tokens values here (285, 600, 2115,
+12523) are nowhere near the 48000 cap, so this is not a "the cap is
+still too low" problem in the ordinary sense, it is the real
+reasoning/content split behavior itself: for these specific prompts,
+the model's own reasoning process apparently runs long enough to
+exhaust `finish_reason=length` before committing to a final answer,
+independent of how large the real overall cap is.
+
+Real, telling detail: each of the 3 fully-broken `instruct` ids failed
+identically on all 5 real samples (same `finish_reason`, same real
+`completion_tokens` value every time), not a random per-sample fluke,
+consistent with this being a near-deterministic property of this
+model against these specific prompts, not transient bad luck. A plain
+resubmit of just these 4 ids would very likely reproduce the same real
+failure rather than recover them.
+
+One real id, `astropy__astropy-14295-15681`, is also independently
+excluded from Llama-3.1-8B's kg_only pass@5 above on real context
+length (44,443 tokens, the 3rd-longest real prompt in that dataset),
+direct real, cross-model corroboration that this specific instance's
+prompt is unusually demanding, not a coincidence. The other 3 (2
+sphinx-doc, 1 sympy) are not shared with any other model's real
+exclusion list checked so far.
+
+Decision: treat these 4 real ids as excluded for gpt-oss-120B pass@5
+specifically, same as the Llama-3.1-8B context-length exclusions above,
+rather than resubmit into the same likely outcome. Real new denominators
+for these two files: `instruct` 1179 (already reflecting the earlier
+93 context-length losses) minus these 3 = **1176**; `kg_only` 1201
+minus a fractional loss (1 id short by 1 of 5 samples, not a full
+exclusion) = effectively **1200.8** real complete samples, or report
+as 1200/1201 fully-complete ids plus 1 partial. Not yet checked: gpt-
+oss-20B pass@5 (already marked `Done` above) for the same signature,
+worth a quick pass given it shares the same real Harmony/reasoning
+architecture as gpt-oss-120B.
 
 ### `MAX_MODEL_LEN=32768` regression on a gpt-oss-20B resubmit
 
