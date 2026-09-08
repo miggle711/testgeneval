@@ -588,7 +588,7 @@ current status as of this writing:
 | Qwen3-4B | instruct | Done (1198/1210) | Running (59854228) |
 | Qwen3-4B | kg_only | Done (1208/1210) | Running (59854229) |
 | Llama-3.1-8B | instruct | Done (1195/1210) | Running (59853976) |
-| Llama-3.1-8B | kg_only | Done (1208/1210) | Running (59853977) |
+| Llama-3.1-8B | kg_only | Done (1208/1210) | Done (1114/1210, 29 real ids permanently excluded on context length, see below; real denominator 1181) |
 | Qwen3-Coder-30B | instruct | Ready to submit | Done (1210/1210) |
 | Qwen3-Coder-30B | kg_only | Ready to submit | Done (1208/1210) |
 | Llama-4-Scout | instruct | Ready to submit | Done (1123/1210) |
@@ -665,6 +665,69 @@ placed back at the plain filename so a real resubmit's `existing_ids`
 would resume from it correctly, confirmed via each job's own
 `Read 324` / `Read 304 already completed ids` log lines, rather than
 starting over.
+
+### Llama-3.1-8B kg_only pass@5 (59853977) finished: a stale line count, a real timeout cluster, and a real permanent exclusion (2026-09-08)
+
+The table above previously showed this job as `Running`. It has since
+completed (`sacct`: `COMPLETED`, `0:0`, 19:33:43 elapsed against a
+36:00:00 budget, so it did not hit the wall-clock limit). Auditing its
+real output file directly (not trusting the "Running" status alone)
+surfaced three things worth recording:
+
+The file's raw line count (304) looked like a real 304/1210 (~25%)
+shortfall, but the job's own log told a different story: `Read 304
+already completed ids from <file>` followed by `Filtered to 906
+instances`, meaning 304 was what already existed *before this job
+ran* (the isolated pass@5 partial rows from the data-mixing fix
+above), not this job's own output. The job then ran all 906 of its
+own real instances to completion (progress bar reached `906/906`,
+script logged `Done!`), but a real cluster of `Request timed out`
+lines (356 of them, collapsing into 96 `RetryError`s that exhausted
+their retry budget) sat entirely in the final ~5% of the log, none
+earlier in the 19.5-hour run, meaning 96 of the 906 never got a
+response and were never written. Real final count: 304 + (906 - 96)
+= 1114, confirmed directly against the file (`wc -l`, 0 duplicate
+ids by real `id`, cross-checked with `check_all_dupes.py`).
+
+Splitting those 96 missing ids by real prompt length, tokenized with
+the model's own tokenizer (`AutoTokenizer.from_pretrained`, run inside
+the `testgeneval-vllm` conda env on M3, the bare login node has no
+`transformers` install) against the real input budget for this run
+(`MAX_MODEL_LEN - MAX_NEW_TOKENS` = `65536 - 48000` = `17536` tokens),
+showed two genuinely different causes tangled inside the same real
+timeout cluster:
+
+- **29 of 96** have real prompts from 17,640 up to 62,706 tokens,
+  already over the 17536-token budget regardless of any timeout. Same
+  underlying failure mode as the context-overflow losses documented
+  above for `instruct`, just not surfaced as an explicit
+  `BadRequestError` this time, the request timed out before the vLLM
+  server could even return that specific error. All 29 come from just
+  five repos already known in this project for unusually large source
+  files: scikit-learn (19), matplotlib (3), sphinx-doc (3), astropy
+  (2), sympy (1). Real ids and token counts recorded in
+  `results/llama3.1-8b_kg_only_pass5_excluded_ids.txt`.
+- **67 of 96** were genuinely within budget and failed purely on real
+  wall-clock time, recoverable with a longer client timeout and a
+  targeted resubmit (`existing_ids` would skip the 1114 already-done
+  rows automatically).
+
+Decision: exclude the 29 real over-budget ids rather than shrink
+`MAX_NEW_TOKENS` to force them in, real generation quality on the
+recoverable majority matters more than fitting a handful of outsized
+instances at a reduced output budget. Real new denominator for this
+specific file is `1210 - 29 = 1181`, not 1210; report completion
+against 1181 for this model/arm/k combination specifically, same
+treatment as DeepSeek-Coder-6.7B/DeepSeek-V2-Lite's context-overflow
+losses elsewhere in this doc. The 67 recoverable ids have not been
+resubmitted yet as of this writing.
+
+A char-count-based estimate would have been directly misleading here:
+real char counts for the 96 missing prompts ranged up to 282,905, but
+char count doesn't map linearly enough to token count at this scale to
+safely draw the real 17536-token line, tokenizing with the real model
+tokenizer was necessary, not optional, before deciding which ids were
+fixable and which were structurally excluded.
 
 ### `MAX_MODEL_LEN=32768` regression on a gpt-oss-20B resubmit
 
