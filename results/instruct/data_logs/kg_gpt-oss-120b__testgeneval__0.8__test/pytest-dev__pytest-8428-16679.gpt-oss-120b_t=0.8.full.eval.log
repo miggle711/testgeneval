@@ -1,0 +1,313 @@
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Task Metadata:
+	- Instance ID: pytest-dev__pytest-8428
+	- Testbed: pytest-dev__pytest__8.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.11.8
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Command: git config --global --add safe.directory /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Std. Output:
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Command: git -c advice.detachedHead=false checkout fe51121f39ca48c1af21733a60ae069b316b1cdb 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Std. Output:
+Previous HEAD position was 10056865d Merge pull request #11309 from bluetech/docs-xfail
+HEAD is now at fe51121f3 Merge pull request #11042 from bluetech/pkg-init-argpath
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-8428_gold_init.patch 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Std. Output:
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-8428_gold.patch 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Std. Output:
+Checking patch src/_pytest/deprecated.py...
+Checking patch src/_pytest/fixtures.py...
+Checking patch src/_pytest/mark/structures.py...
+Applied patch src/_pytest/deprecated.py cleanly.
+Applied patch src/_pytest/fixtures.py cleanly.
+Applied patch src/_pytest/mark/structures.py cleanly.
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-8428_test_init.patch 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Std. Output:
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Command: git restore testing/deprecated_test.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Std. Output:
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-8428_test.patch 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Std. Output:
+Checking patch testing/deprecated_test.py...
+Applied patch testing/deprecated_test.py cleanly.
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/deprecated_test.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/deprecated_test.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/deprecated_test.py F                                             [100%]
+
+=================================== FAILURES ===================================
+________________________ test_import_deprecated_module _________________________
+
+    def test_import_deprecated_module():
+        """
+        Ensure that the `deprecated` module can be imported without errors.
+        """
+        try:
+>           import deprecated  # type: ignore
+E           ModuleNotFoundError: No module named 'deprecated'
+
+testing/deprecated_test.py:14: ModuleNotFoundError
+
+During handling of the above exception, another exception occurred:
+
+    def test_import_deprecated_module():
+        """
+        Ensure that the `deprecated` module can be imported without errors.
+        """
+        try:
+            import deprecated  # type: ignore
+        except Exception as exc:
+>           pytest.fail(f"Importing deprecated module raised an exception: {exc}")
+E           Failed: Importing deprecated module raised an exception: No module named 'deprecated'
+
+testing/deprecated_test.py:16: Failed
+=========================== short test summary info ============================
+FAILED testing/deprecated_test.py::test_import_deprecated_module - Failed: Im...
+============================== 1 failed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Return Code: 1 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] TestsTime: 0.6989240646362305 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/deprecated_test.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/deprecated_test.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/deprecated_test.py F                                             [100%]
+
+=================================== FAILURES ===================================
+_____________________ test_module_has_no_public_attributes _____________________
+
+    def test_module_has_no_public_attributes():
+        """
+        The provided source is empty, so the module should not expose any public
+        attributes (functions, classes, variables) other than the standard dunder
+        attributes.
+        """
+>       import deprecated  # type: ignore
+E       ModuleNotFoundError: No module named 'deprecated'
+
+testing/deprecated_test.py:15: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED testing/deprecated_test.py::test_module_has_no_public_attributes - Mod...
+============================== 1 failed in 0.02s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Return Code: 1 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] TestsTime: 0.5311098098754883 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/deprecated_test.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/deprecated_test.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/deprecated_test.py F                                             [100%]
+
+=================================== FAILURES ===================================
+_______________________ test_module_reload_is_idempotent _______________________
+
+    def test_module_reload_is_idempotent():
+        """
+        Reloading an empty module should be a no‑op and should not introduce any
+        new attributes.
+        """
+>       import deprecated  # type: ignore
+E       ModuleNotFoundError: No module named 'deprecated'
+
+testing/deprecated_test.py:14: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED testing/deprecated_test.py::test_module_reload_is_idempotent - ModuleN...
+============================== 1 failed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Return Code: 1 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] TestsTime: 0.48824620246887207 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/deprecated_test.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/deprecated_test.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/deprecated_test.py F                                             [100%]
+
+=================================== FAILURES ===================================
+_______________ test_module_warns_on_access_of_missing_attribute _______________
+
+    def test_module_warns_on_access_of_missing_attribute():
+        """
+        Accessing a missing attribute on an empty module should raise AttributeError.
+        This test confirms the default Python behaviour, which is important when
+        later adding a deprecated decorator that may rely on attribute look‑ups.
+        """
+>       import deprecated  # type: ignore
+E       ModuleNotFoundError: No module named 'deprecated'
+
+testing/deprecated_test.py:15: ModuleNotFoundError
+=========================== short test summary info ============================
+FAILED testing/deprecated_test.py::test_module_warns_on_access_of_missing_attribute
+============================== 1 failed in 0.02s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Return Code: 1 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] TestsTime: 0.5424978733062744 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/deprecated_test.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/deprecated_test.py x                                             [100%]
+
+=========================== short test summary info ============================
+XFAIL testing/deprecated_test.py::test_placeholder_for_future_deprecated_decorator - No functionality defined yet; placeholder for future tests
+============================== 1 xfailed in 0.87s ==============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] TestsTime: 1.3389549255371094 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] >>>>> Tests configfull pred
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Test Script: conda run -n pytest-dev__pytest__8.0  coverage run -m pytest -rA testing/deprecated_test.py;
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/deprecated_test.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/deprecated_test.py x                                             [100%]
+
+=========================== short test summary info ============================
+XFAIL testing/deprecated_test.py::test_placeholder_for_future_deprecated_decorator - No functionality defined yet; placeholder for future tests
+============================== 1 xfailed in 0.22s ==============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] TestsTime: 0.6569902896881104 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] 
+>>>>> All Tests Passed
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Current Working Directory: /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Command: conda run -n pytest-dev__pytest__8.0 coverage json -o coverage.json 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Std. Output:
+Wrote JSON report to coverage.json
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] 
+CoverageLOG: 96.0%
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Running mutation testing 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Command: conda run -n pytest-dev__pytest__8.0 cosmic-ray init mutation.toml mutation.sqlite 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Std. Output:
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Command: conda run -n pytest-dev__pytest__8.0 cosmic-ray exec mutation.toml mutation.sqlite 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Std. Output:
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Command: conda run -n pytest-dev__pytest__8.0 cr-rate mutation.sqlite --estimate --confidence 95.0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Std. Output:
+50.00 50.00 50.00
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Command: conda run -n pytest-dev__pytest__8.0 cr-report mutation.sqlite 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Std. Output:
+[job-id] 0550ee4e4dca484d860ce5484d8c25e6
+src/_pytest/deprecated.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: killed
+[job-id] d3dd12eacb9b4dc6ad725cc9753bf245
+src/_pytest/deprecated.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] b50cb77139aa41c5acd5166e9479ce7d
+src/_pytest/deprecated.py core/NumberReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] c094ce006b4244438d9028c9ea846eee
+src/_pytest/deprecated.py core/NumberReplacer 1
+worker outcome: normal, test outcome: survived
+total jobs: 4
+complete: 4 (100.00%)
+surviving mutants: 2 (50.00%)
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] 
+MutationNum: 4 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] 
+MutationLOG: 50.0% 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] 
+MutationUncertainty: 0.0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-8428] >>>>> Unfiltered Tests Failed 

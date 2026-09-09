@@ -1,0 +1,421 @@
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Task Metadata:
+	- Instance ID: pytest-dev__pytest-7521
+	- Testbed: pytest-dev__pytest__6.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.11.8
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Command: git config --global --add safe.directory /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Std. Output:
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Command: git -c advice.detachedHead=false checkout 41d211c24a6781843b174379d6d6538f5c17adb9 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Std. Output:
+Previous HEAD position was 634cde950 Merge pull request #7745 from asottile/exec_globals_type_problem
+HEAD is now at 41d211c24 testing: use a tighter check if `bash` is available (#7520)
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-7521_gold_init.patch 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Std. Output:
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-7521_gold.patch 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Std. Output:
+Checking patch src/_pytest/capture.py...
+Applied patch src/_pytest/capture.py cleanly.
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-7521_test_init.patch 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Std. Output:
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Command: git restore testing/test_capture.py 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Std. Output:
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-7521_test.patch 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Std. Output:
+Checking patch testing/test_capture.py...
+Applied patch testing/test_capture.py cleanly.
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Command: conda run -n pytest-dev__pytest__6.0 coverage run -m pytest -rA testing/test_capture.py 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_capture.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.0.1.dev180+g634cde950, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_capture.py                                                 [100%]
+
+==================================== ERRORS ====================================
+_______ ERROR at setup of test_init_valid_fd_nonzero_not_in_patchsysdict _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x766ae47edd60>
+
+    @pytest.fixture(autouse=True)
+    def patch_capture(monkeypatch):
+        """
+        Replace heavy OS/file objects with lightweight dummies for every test.
+        The fixture is applied automatically.
+        """
+        # --- os helpers ----------------------------------------------------
+        # By default, os.fstat succeeds (valid fd). Individual tests may
+        # override to raise OSError.
+        monkeypatch.setattr(cap_mod.os, "fstat", lambda fd: None)
+    
+        # os.open returns a deterministic fake fd (e.g. 100)
+        monkeypatch.setattr(cap_mod.os, "open", lambda path, flags: 100)
+    
+        # os.dup returns a deterministic saved fd (e.g. 200)
+        monkeypatch.setattr(cap_mod.os, "dup", lambda fd: 200)
+    
+        # Record calls to dup2 and close for later assertions
+        dup2_calls = []
+        close_calls = []
+    
+        def fake_dup2(src, dst):
+            dup2_calls.append((src, dst))
+    
+        def fake_close(fd):
+            close_calls.append(fd)
+    
+        monkeypatch.setattr(cap_mod.os, "dup2", fake_dup2)
+        monkeypatch.setattr(cap_mod.os, "close", fake_close)
+    
+        # Make the recorded call lists accessible via the module
+        cap_mod._test_dup2_calls = dup2_calls
+        cap_mod._test_close_calls = close_calls
+    
+        # --- file helpers --------------------------------------------------
+        # TemporaryFile used by the capture code – return a DummyFile with fd 42
+        dummy_tmp = DummyFile(fd=42)
+        monkeypatch.setattr(cap_mod, "TemporaryFile", lambda buffering=0: dummy_tmp)
+    
+        # EncodedFile – just wrap the DummyFile
+        monkeypatch.setattr(cap_mod, "EncodedFile", lambda f, **kw: DummyEncodedFile(f, **kw))
+    
+        # open (used when targetfd == 0) – return a DummyFile with fd 0
+>       monkeypatch.setattr(cap_mod, "open", lambda path, mode='r': DummyFile(fd=0))
+E       AttributeError: <module 'src._pytest.capture' from '/home/swe-bench/pytest-dev__pytest/src/_pytest/capture.py'> has no attribute 'open'
+
+testing/test_capture.py:143: AttributeError
+=========================== short test summary info ============================
+ERROR testing/test_capture.py::test_init_valid_fd_nonzero_not_in_patchsysdict
+=============================== 1 error in 0.03s ===============================
+
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Return Code: 1 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] TestsTime: 0.7738521099090576 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Test script run successful 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Removing coverage 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Removing cache 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Command: conda run -n pytest-dev__pytest__6.0 coverage run -m pytest -rA testing/test_capture.py 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_capture.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.0.1.dev180+g634cde950, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_capture.py                                                 [100%]
+
+==================================== ERRORS ====================================
+_________ ERROR at setup of test_init_valid_fd_nonzero_in_patchsysdict _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x72231649b520>
+
+    @pytest.fixture(autouse=True)
+    def patch_capture(monkeypatch):
+        """
+        Replace heavy OS/file objects with lightweight dummies for every test.
+        The fixture is applied automatically.
+        """
+        # --- os helpers ----------------------------------------------------
+        # By default, os.fstat succeeds (valid fd). Individual tests may
+        # override to raise OSError.
+        monkeypatch.setattr(cap_mod.os, "fstat", lambda fd: None)
+    
+        # os.open returns a deterministic fake fd (e.g. 100)
+        monkeypatch.setattr(cap_mod.os, "open", lambda path, flags: 100)
+    
+        # os.dup returns a deterministic saved fd (e.g. 200)
+        monkeypatch.setattr(cap_mod.os, "dup", lambda fd: 200)
+    
+        # Record calls to dup2 and close for later assertions
+        dup2_calls = []
+        close_calls = []
+    
+        def fake_dup2(src, dst):
+            dup2_calls.append((src, dst))
+    
+        def fake_close(fd):
+            close_calls.append(fd)
+    
+        monkeypatch.setattr(cap_mod.os, "dup2", fake_dup2)
+        monkeypatch.setattr(cap_mod.os, "close", fake_close)
+    
+        # Make the recorded call lists accessible via the module
+        cap_mod._test_dup2_calls = dup2_calls
+        cap_mod._test_close_calls = close_calls
+    
+        # --- file helpers --------------------------------------------------
+        # TemporaryFile used by the capture code – return a DummyFile with fd 42
+        dummy_tmp = DummyFile(fd=42)
+        monkeypatch.setattr(cap_mod, "TemporaryFile", lambda buffering=0: dummy_tmp)
+    
+        # EncodedFile – just wrap the DummyFile
+        monkeypatch.setattr(cap_mod, "EncodedFile", lambda f, **kw: DummyEncodedFile(f, **kw))
+    
+        # open (used when targetfd == 0) – return a DummyFile with fd 0
+>       monkeypatch.setattr(cap_mod, "open", lambda path, mode='r': DummyFile(fd=0))
+E       AttributeError: <module 'src._pytest.capture' from '/home/swe-bench/pytest-dev__pytest/src/_pytest/capture.py'> has no attribute 'open'
+
+testing/test_capture.py:143: AttributeError
+=========================== short test summary info ============================
+ERROR testing/test_capture.py::test_init_valid_fd_nonzero_in_patchsysdict - A...
+=============================== 1 error in 0.04s ===============================
+
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Return Code: 1 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] TestsTime: 0.542945384979248 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Test script run successful 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Removing coverage 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Removing cache 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Command: conda run -n pytest-dev__pytest__6.0 coverage run -m pytest -rA testing/test_capture.py 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_capture.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.0.1.dev180+g634cde950, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_capture.py                                                 [100%]
+
+==================================== ERRORS ====================================
+__________________ ERROR at setup of test_init_targetfd_zero ___________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7cc9f123e640>
+
+    @pytest.fixture(autouse=True)
+    def patch_capture(monkeypatch):
+        """
+        Replace heavy OS/file objects with lightweight dummies for every test.
+        The fixture is applied automatically.
+        """
+        # --- os helpers ----------------------------------------------------
+        # By default, os.fstat succeeds (valid fd). Individual tests may
+        # override to raise OSError.
+        monkeypatch.setattr(cap_mod.os, "fstat", lambda fd: None)
+    
+        # os.open returns a deterministic fake fd (e.g. 100)
+        monkeypatch.setattr(cap_mod.os, "open", lambda path, flags: 100)
+    
+        # os.dup returns a deterministic saved fd (e.g. 200)
+        monkeypatch.setattr(cap_mod.os, "dup", lambda fd: 200)
+    
+        # Record calls to dup2 and close for later assertions
+        dup2_calls = []
+        close_calls = []
+    
+        def fake_dup2(src, dst):
+            dup2_calls.append((src, dst))
+    
+        def fake_close(fd):
+            close_calls.append(fd)
+    
+        monkeypatch.setattr(cap_mod.os, "dup2", fake_dup2)
+        monkeypatch.setattr(cap_mod.os, "close", fake_close)
+    
+        # Make the recorded call lists accessible via the module
+        cap_mod._test_dup2_calls = dup2_calls
+        cap_mod._test_close_calls = close_calls
+    
+        # --- file helpers --------------------------------------------------
+        # TemporaryFile used by the capture code – return a DummyFile with fd 42
+        dummy_tmp = DummyFile(fd=42)
+        monkeypatch.setattr(cap_mod, "TemporaryFile", lambda buffering=0: dummy_tmp)
+    
+        # EncodedFile – just wrap the DummyFile
+        monkeypatch.setattr(cap_mod, "EncodedFile", lambda f, **kw: DummyEncodedFile(f, **kw))
+    
+        # open (used when targetfd == 0) – return a DummyFile with fd 0
+>       monkeypatch.setattr(cap_mod, "open", lambda path, mode='r': DummyFile(fd=0))
+E       AttributeError: <module 'src._pytest.capture' from '/home/swe-bench/pytest-dev__pytest/src/_pytest/capture.py'> has no attribute 'open'
+
+testing/test_capture.py:143: AttributeError
+=========================== short test summary info ============================
+ERROR testing/test_capture.py::test_init_targetfd_zero - AttributeError: <mod...
+=============================== 1 error in 0.02s ===============================
+
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Return Code: 1 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] TestsTime: 0.5430090427398682 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Test script run successful 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Removing coverage 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Removing cache 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Command: conda run -n pytest-dev__pytest__6.0 coverage run -m pytest -rA testing/test_capture.py 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_capture.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.0.1.dev180+g634cde950, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_capture.py                                                 [100%]
+
+==================================== ERRORS ====================================
+_________________ ERROR at setup of test_init_invalid_fd_path __________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7da7365b2d00>
+
+    @pytest.fixture(autouse=True)
+    def patch_capture(monkeypatch):
+        """
+        Replace heavy OS/file objects with lightweight dummies for every test.
+        The fixture is applied automatically.
+        """
+        # --- os helpers ----------------------------------------------------
+        # By default, os.fstat succeeds (valid fd). Individual tests may
+        # override to raise OSError.
+        monkeypatch.setattr(cap_mod.os, "fstat", lambda fd: None)
+    
+        # os.open returns a deterministic fake fd (e.g. 100)
+        monkeypatch.setattr(cap_mod.os, "open", lambda path, flags: 100)
+    
+        # os.dup returns a deterministic saved fd (e.g. 200)
+        monkeypatch.setattr(cap_mod.os, "dup", lambda fd: 200)
+    
+        # Record calls to dup2 and close for later assertions
+        dup2_calls = []
+        close_calls = []
+    
+        def fake_dup2(src, dst):
+            dup2_calls.append((src, dst))
+    
+        def fake_close(fd):
+            close_calls.append(fd)
+    
+        monkeypatch.setattr(cap_mod.os, "dup2", fake_dup2)
+        monkeypatch.setattr(cap_mod.os, "close", fake_close)
+    
+        # Make the recorded call lists accessible via the module
+        cap_mod._test_dup2_calls = dup2_calls
+        cap_mod._test_close_calls = close_calls
+    
+        # --- file helpers --------------------------------------------------
+        # TemporaryFile used by the capture code – return a DummyFile with fd 42
+        dummy_tmp = DummyFile(fd=42)
+        monkeypatch.setattr(cap_mod, "TemporaryFile", lambda buffering=0: dummy_tmp)
+    
+        # EncodedFile – just wrap the DummyFile
+        monkeypatch.setattr(cap_mod, "EncodedFile", lambda f, **kw: DummyEncodedFile(f, **kw))
+    
+        # open (used when targetfd == 0) – return a DummyFile with fd 0
+>       monkeypatch.setattr(cap_mod, "open", lambda path, mode='r': DummyFile(fd=0))
+E       AttributeError: <module 'src._pytest.capture' from '/home/swe-bench/pytest-dev__pytest/src/_pytest/capture.py'> has no attribute 'open'
+
+testing/test_capture.py:143: AttributeError
+=========================== short test summary info ============================
+ERROR testing/test_capture.py::test_init_invalid_fd_path - AttributeError: <m...
+=============================== 1 error in 0.02s ===============================
+
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Return Code: 1 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] TestsTime: 0.5351932048797607 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Test script run successful 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Removing coverage 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Removing cache 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Command: conda run -n pytest-dev__pytest__6.0 coverage run -m pytest -rA testing/test_capture.py 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_capture.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.0.1.dev180+g634cde950, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_capture.py                                                 [100%]
+
+==================================== ERRORS ====================================
+_____________ ERROR at setup of test_repr_includes_all_key_fields ______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x71a4dbdb4730>
+
+    @pytest.fixture(autouse=True)
+    def patch_capture(monkeypatch):
+        """
+        Replace heavy OS/file objects with lightweight dummies for every test.
+        The fixture is applied automatically.
+        """
+        # --- os helpers ----------------------------------------------------
+        # By default, os.fstat succeeds (valid fd). Individual tests may
+        # override to raise OSError.
+        monkeypatch.setattr(cap_mod.os, "fstat", lambda fd: None)
+    
+        # os.open returns a deterministic fake fd (e.g. 100)
+        monkeypatch.setattr(cap_mod.os, "open", lambda path, flags: 100)
+    
+        # os.dup returns a deterministic saved fd (e.g. 200)
+        monkeypatch.setattr(cap_mod.os, "dup", lambda fd: 200)
+    
+        # Record calls to dup2 and close for later assertions
+        dup2_calls = []
+        close_calls = []
+    
+        def fake_dup2(src, dst):
+            dup2_calls.append((src, dst))
+    
+        def fake_close(fd):
+            close_calls.append(fd)
+    
+        monkeypatch.setattr(cap_mod.os, "dup2", fake_dup2)
+        monkeypatch.setattr(cap_mod.os, "close", fake_close)
+    
+        # Make the recorded call lists accessible via the module
+        cap_mod._test_dup2_calls = dup2_calls
+        cap_mod._test_close_calls = close_calls
+    
+        # --- file helpers --------------------------------------------------
+        # TemporaryFile used by the capture code – return a DummyFile with fd 42
+        dummy_tmp = DummyFile(fd=42)
+        monkeypatch.setattr(cap_mod, "TemporaryFile", lambda buffering=0: dummy_tmp)
+    
+        # EncodedFile – just wrap the DummyFile
+        monkeypatch.setattr(cap_mod, "EncodedFile", lambda f, **kw: DummyEncodedFile(f, **kw))
+    
+        # open (used when targetfd == 0) – return a DummyFile with fd 0
+>       monkeypatch.setattr(cap_mod, "open", lambda path, mode='r': DummyFile(fd=0))
+E       AttributeError: <module 'src._pytest.capture' from '/home/swe-bench/pytest-dev__pytest/src/_pytest/capture.py'> has no attribute 'open'
+
+testing/test_capture.py:143: AttributeError
+=========================== short test summary info ============================
+ERROR testing/test_capture.py::test_repr_includes_all_key_fields - AttributeE...
+=============================== 1 error in 0.02s ===============================
+
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Return Code: 1 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] TestsTime: 0.5502462387084961 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Test script run successful 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Removing coverage 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] Removing cache 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] >>>>> Tests configfull pred
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] TestsTime: 0.0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] >>>>> Some Tests Failed 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7521] >>>>> Unfiltered Tests Failed 

@@ -1,0 +1,1341 @@
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Task Metadata:
+	- Instance ID: pytest-dev__pytest-8641
+	- Testbed: pytest-dev__pytest__6.3
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.11.8
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Command: git config --global --add safe.directory /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Std. Output:
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Command: git -c advice.detachedHead=false checkout 634312b14a45db8d60d72016e01294284e3a18d4 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Std. Output:
+HEAD is now at 634312b14 Merge pull request #8633 from The-Compiler/ci-colors
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-8641_gold_init.patch 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Std. Output:
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-8641_gold.patch 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Std. Output:
+Checking patch src/_pytest/logging.py...
+Applied patch src/_pytest/logging.py cleanly.
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-8641_test_init.patch 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Std. Output:
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Command: git restore testing/logging/test_formatter.py 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Std. Output:
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-8641_test.patch 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Std. Output:
+Checking patch testing/logging/test_formatter.py...
+Applied patch testing/logging/test_formatter.py cleanly.
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Command: conda run -n pytest-dev__pytest__6.3 coverage run -m pytest -rA testing/logging/test_formatter.py 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/logging/test_formatter.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.3.0.dev425+g634312b14, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 2 items
+
+testing/logging/test_formatter.py FF                                     [100%]
+
+=================================== FAILURES ===================================
+____________ test_formatter_applies_correct_colour_per_level[True] _____________
+
+terminal_writer = <test_formatter.DummyTerminalWriter object at 0x745ec072f100>
+
+    def test_formatter_applies_correct_colour_per_level(terminal_writer):
+        """
+        Verify that the formatter creates a mapping for each known log level and
+        that the colour applied matches ``ColoredLevelFormatter.LOGLEVEL_COLOROPTS``.
+        """
+        fmt = "%(levelname)-8s %(message)s"
+        # Initialise the formatter – this populates ``_level_to_fmt_mapping``.
+        formatter = ColoredLevelFormatter(terminal_writer, fmt)
+    
+        # The original format (without colour) is stored for fallback.
+        original_fmt = formatter._original_fmt
+    
+        # Check that a mapping entry exists for every level defined in LOGLEVEL_COLOROPTS.
+        for level, colour_opts in ColoredLevelFormatter.LOGLEVEL_COLOROPTS.items():
+            # Build the expected coloured level name using the dummy writer.
+            level_name = logging.getLevelName(level)
+            # The format string used for the level name (including any width modifiers)
+            # is taken from the original format string via the regex.
+            match = ColoredLevelFormatter.LEVELNAME_FMT_REGEX.search(fmt)
+            assert match is not None
+            level_fmt = match.group() % {"levelname": level_name}
+            expected = terminal_writer.markup(level_fmt, **{c: True for c in colour_opts})
+    
+            # The formatter should have substituted the original %(levelname)... placeholder
+            # with the coloured version.
+            stored_fmt = formatter._level_to_fmt_mapping.get(level)
+            assert stored_fmt is not None, f"Missing mapping for level {level}"
+            # The stored format should contain the expected coloured snippet.
+            assert expected in stored_fmt
+    
+            # Now emit a log record and ensure the output uses the coloured text.
+            record = logging.LogRecord(
+                name="test",
+                level=level,
+                pathname=__file__,
+                lineno=10,
+                msg="hello",
+                args=(),
+                exc_info=None,
+            )
+            output = formatter.format(record)
+    
+            # When markup is disabled the colour codes are stripped.
+            if not terminal_writer.hasmarkup:
+                # Expected plain text (no colour codes)
+                plain_level = level_fmt
+                assert plain_level in output
+            else:
+                # Expected coloured text
+                assert expected in output
+    
+        # A level that is not in LOGLEVEL_COLOROPTS should fall back to the original fmt.
+        unknown_level = 12345
+        record = logging.LogRecord(
+            name="test",
+            level=unknown_level,
+            pathname=__file__,
+            lineno=20,
+            msg="unknown",
+            args=(),
+            exc_info=None,
+        )
+        output = formatter.format(record)
+        # The output must contain the uncoloured level name string.
+>       assert f"{unknown_level}" not in output  # unknown numeric level name not used
+E       AssertionError: assert '12345' not in 'Level 12345 unknown'
+E         '12345' is contained here:
+E           Level 12345 unknown
+E         ?       +++++
+
+testing/logging/test_formatter.py:135: AssertionError
+____________ test_formatter_applies_correct_colour_per_level[False] ____________
+
+terminal_writer = <test_formatter.DummyTerminalWriter object at 0x745ec0add550>
+
+    def test_formatter_applies_correct_colour_per_level(terminal_writer):
+        """
+        Verify that the formatter creates a mapping for each known log level and
+        that the colour applied matches ``ColoredLevelFormatter.LOGLEVEL_COLOROPTS``.
+        """
+        fmt = "%(levelname)-8s %(message)s"
+        # Initialise the formatter – this populates ``_level_to_fmt_mapping``.
+        formatter = ColoredLevelFormatter(terminal_writer, fmt)
+    
+        # The original format (without colour) is stored for fallback.
+        original_fmt = formatter._original_fmt
+    
+        # Check that a mapping entry exists for every level defined in LOGLEVEL_COLOROPTS.
+        for level, colour_opts in ColoredLevelFormatter.LOGLEVEL_COLOROPTS.items():
+            # Build the expected coloured level name using the dummy writer.
+            level_name = logging.getLevelName(level)
+            # The format string used for the level name (including any width modifiers)
+            # is taken from the original format string via the regex.
+            match = ColoredLevelFormatter.LEVELNAME_FMT_REGEX.search(fmt)
+            assert match is not None
+            level_fmt = match.group() % {"levelname": level_name}
+            expected = terminal_writer.markup(level_fmt, **{c: True for c in colour_opts})
+    
+            # The formatter should have substituted the original %(levelname)... placeholder
+            # with the coloured version.
+            stored_fmt = formatter._level_to_fmt_mapping.get(level)
+            assert stored_fmt is not None, f"Missing mapping for level {level}"
+            # The stored format should contain the expected coloured snippet.
+            assert expected in stored_fmt
+    
+            # Now emit a log record and ensure the output uses the coloured text.
+            record = logging.LogRecord(
+                name="test",
+                level=level,
+                pathname=__file__,
+                lineno=10,
+                msg="hello",
+                args=(),
+                exc_info=None,
+            )
+            output = formatter.format(record)
+    
+            # When markup is disabled the colour codes are stripped.
+            if not terminal_writer.hasmarkup:
+                # Expected plain text (no colour codes)
+                plain_level = level_fmt
+                assert plain_level in output
+            else:
+                # Expected coloured text
+                assert expected in output
+    
+        # A level that is not in LOGLEVEL_COLOROPTS should fall back to the original fmt.
+        unknown_level = 12345
+        record = logging.LogRecord(
+            name="test",
+            level=unknown_level,
+            pathname=__file__,
+            lineno=20,
+            msg="unknown",
+            args=(),
+            exc_info=None,
+        )
+        output = formatter.format(record)
+        # The output must contain the uncoloured level name string.
+>       assert f"{unknown_level}" not in output  # unknown numeric level name not used
+E       AssertionError: assert '12345' not in 'Level 12345 unknown'
+E         '12345' is contained here:
+E           Level 12345 unknown
+E         ?       +++++
+
+testing/logging/test_formatter.py:135: AssertionError
+=========================== short test summary info ============================
+FAILED testing/logging/test_formatter.py::test_formatter_applies_correct_colour_per_level[True]
+FAILED testing/logging/test_formatter.py::test_formatter_applies_correct_colour_per_level[False]
+============================== 2 failed in 0.03s ===============================
+
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Return Code: 1 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] TestsTime: 0.8586342334747314 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Test script run successful 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Removing coverage 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Removing cache 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Command: conda run -n pytest-dev__pytest__6.3 coverage run -m pytest -rA testing/logging/test_formatter.py 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/logging/test_formatter.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.3.0.dev425+g634312b14, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+______________ ERROR collecting testing/logging/test_formatter.py ______________
+src/_pytest/python.py:576: in _importtestmodule
+    mod = import_path(self.path, mode=importmode, root=self.config.rootpath)
+src/_pytest/pathlib.py:533: in import_path
+    importlib.import_module(module_name)
+../miniconda3/envs/pytest-dev__pytest__6.3/lib/python3.9/importlib/__init__.py:127: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+<frozen importlib._bootstrap>:1030: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1007: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:986: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:680: in _load_unlocked
+    ???
+src/_pytest/assertion/rewrite.py:161: in exec_module
+    source_stat, co = _rewrite_test(fn, self.config)
+src/_pytest/assertion/rewrite.py:354: in _rewrite_test
+    tree = ast.parse(source, filename=fn_)
+../miniconda3/envs/pytest-dev__pytest__6.3/lib/python3.9/ast.py:50: in parse
+    return compile(source, filename, mode, flags,
+E     File "/home/swe-bench/pytest-dev__pytest/testing/logging/test_formatter.py", line 109
+E       )
+E        ^
+E   SyntaxError: unexpected EOF while parsing
+=========================== short test summary info ============================
+ERROR testing/logging/test_formatter.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.23s ===============================
+
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Return Code: 2 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] TestsTime: 0.8772118091583252 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Test script run successful 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Removing coverage 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Removing cache 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Command: conda run -n pytest-dev__pytest__6.3 coverage run -m pytest -rA testing/logging/test_formatter.py 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/logging/test_formatter.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.3.0.dev425+g634312b14, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/logging/test_formatter.py E                                      [100%]
+
+==================================== ERRORS ====================================
+_____________ ERROR at setup of test_short_and_long_level_formats ______________
+file /home/swe-bench/pytest-dev__pytest/testing/logging/test_formatter.py, line 71
+  def test_short_and_long_level_formats(logfmt, level, expected_coloured):
+E       fixture 'logfmt' not found
+>       available fixtures: LineMatcher, _config_for_test, _pytest, _sys_snapshot, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, color_mapping, doctest_namespace, dummy_yaml_custom_test, linecomp, mock_timing, monkeypatch, pytestconfig, pytester, record_property, record_testsuite_property, record_xml_attribute, recwarn, restore_tracing, terminal_writer, testdir, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory, tw_mock
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/home/swe-bench/pytest-dev__pytest/testing/logging/test_formatter.py:71
+=========================== short test summary info ============================
+ERROR testing/logging/test_formatter.py::test_short_and_long_level_formats
+=============================== 1 error in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Return Code: 1 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] TestsTime: 0.7141876220703125 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Test script run successful 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Removing coverage 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Removing cache 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Command: conda run -n pytest-dev__pytest__6.3 coverage run -m pytest -rA testing/logging/test_formatter.py 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.3.0.dev425+g634312b14, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/logging/test_formatter.py .                                      [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/logging/test_formatter.py::test_formatter_respects_terminalwriter_without_markup
+============================== 1 passed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] TestsTime: 0.5548098087310791 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Test script run successful 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Removing coverage 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Removing cache 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Command: conda run -n pytest-dev__pytest__6.3 coverage run -m pytest -rA testing/logging/test_formatter.py 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/logging/test_formatter.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.3.0.dev425+g634312b14, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/logging/test_formatter.py F                                      [100%]
+
+=================================== FAILURES ===================================
+_____________ test_formatter_preserves_original_fmt_when_no_match ______________
+
+    def test_formatter_preserves_original_fmt_when_no_match():
+        """
+        If the format string contains a ``%(levelname)`` token that does not match
+        the regular expression (e.g. using a non‑standard conversion specifier),
+        the formatter should fall back to the original format.
+        """
+        # Use a format that includes ``%(levelname)s`` but adds an unsupported
+        # conversion flag (e.g. ``%+5s`` which the regex does not capture).
+        fmt = "%(levelname)+5s %(message)s"
+        tw = DummyTerminalWriter(hasmarkup=True)
+        formatter = ColoredLevelFormatter(tw, fmt)
+    
+        # No mapping should have been produced because the regex did not match.
+>       assert formatter._level_to_fmt_mapping == {}
+E       AssertionError: assert {0: 'NOTSET %...ssage)s', ...} == {}
+E         Left contains 6 more items:
+E         {0: 'NOTSET %(message)s',
+E          10: '\x1b[35mDEBUG\x1b[0m %(message)s',
+E          20: '\x1b[32m INFO\x1b[0m %(message)s',
+E          30: '\x1b[33mWARNING\x1b[0m %(message)s',
+E          40: '\x1b[31;1mERROR\x1b[0m %(message)s',
+E          50: '\x1b[31mCRITICAL\x1b[0m %(message)s'}...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+testing/logging/test_formatter.py:86: AssertionError
+=========================== short test summary info ============================
+FAILED testing/logging/test_formatter.py::test_formatter_preserves_original_fmt_when_no_match
+============================== 1 failed in 0.03s ===============================
+
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Return Code: 1 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] TestsTime: 0.9685506820678711 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Test script run successful 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Removing coverage 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Removing cache 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Command: conda run -n pytest-dev__pytest__6.3 coverage run -m pytest -rA testing/logging/test_formatter.py 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.3.0.dev425+g634312b14, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/logging/test_formatter.py .                                      [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/logging/test_formatter.py::test_formatter_handles_logging_notset_level
+============================== 1 passed in 0.06s ===============================
+
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] TestsTime: 0.7867002487182617 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Test script run successful 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Removing coverage 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Removing cache 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] >>>>> Tests configfull pred
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Test Script: conda run -n pytest-dev__pytest__6.3  coverage run -m pytest -rA testing/logging/test_formatter.py;
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Command: conda run -n pytest-dev__pytest__6.3 coverage run -m pytest -rA testing/logging/test_formatter.py 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.3.0.dev425+g634312b14, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 2 items
+
+testing/logging/test_formatter.py ..                                     [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/logging/test_formatter.py::test_formatter_respects_terminalwriter_without_markup
+PASSED testing/logging/test_formatter.py::test_formatter_handles_logging_notset_level
+============================== 2 passed in 0.02s ===============================
+
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] TestsTime: 0.8601305484771729 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] 
+>>>>> All Tests Passed
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Current Working Directory: /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Command: conda run -n pytest-dev__pytest__6.3 coverage json -o coverage.json 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Std. Output:
+Wrote JSON report to coverage.json
+
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] 
+CoverageLOG: 65.17412935323384%
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Running mutation testing 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Command: conda run -n pytest-dev__pytest__6.3 cosmic-ray init mutation.toml mutation.sqlite 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Std. Output:
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Command: conda run -n pytest-dev__pytest__6.3 cosmic-ray exec mutation.toml mutation.sqlite 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Std. Output:
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Command: conda run -n pytest-dev__pytest__6.3 cr-rate mutation.sqlite --estimate --confidence 95.0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Std. Output:
+80.48 80.48 80.48
+
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Command: conda run -n pytest-dev__pytest__6.3 cr-report mutation.sqlite 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Std. Output:
+[job-id] 0769dce6193a490e8a9c96a5844e4c03
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] 951e98874b6643d9aa454f4fabf4ece8
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_Sub 1
+worker outcome: normal, test outcome: killed
+[job-id] 799daa5a7556499f9f04d9936183336b
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_Sub 2
+worker outcome: normal, test outcome: survived
+[job-id] dd1cdf29bd0945f59219df42acefd142
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] 00e24912f8774799acaedce87608765b
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_Mul 1
+worker outcome: normal, test outcome: killed
+[job-id] d14f7f1a4de1429db84f22260626267c
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] eb534b997bd045dbbfa77d5777d89a1c
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 358d03b8bdb04900bd5239cdbf7163eb
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_Div 1
+worker outcome: normal, test outcome: killed
+[job-id] 07597622000d444f97588997002f3c46
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] 6535910d2ae2463692395e4e6ecdbdcf
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] c8dfe22a0bd24233975d234b029a1f79
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_FloorDiv 1
+worker outcome: normal, test outcome: killed
+[job-id] 1e5b5c980ad348bfbc61b125014335d2
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] 756e1b67e3cc4a5691aceed8f0753d4e
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] d2170cb432f64e77a6b9bdc685cd06cc
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_Mod 1
+worker outcome: normal, test outcome: killed
+[job-id] 28269661b3ac474d9133f404af389a52
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_Mod 2
+worker outcome: normal, test outcome: survived
+[job-id] 4b6453abac224c31a1f5c864ec960e69
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 2eaa069519e94836bee383dad3040075
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_Pow 1
+worker outcome: normal, test outcome: killed
+[job-id] 8354b49b2ac84ca283291c690ec04ea9
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] c43dd8fe435445678c49ad0f124c4414
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 936f35aef754481395234e887b575136
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_RShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 5a66f5fc3e8440e5958fe5aabee5dab9
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] d3aacfc67b554d178f235fe0f14e7842
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 457967caf0b045f7a6f8e83ef7ce901a
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_LShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 7e5a5e17d8494f6fb81eb259c6815614
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] 15a97efc4b234d70a4df0b27ef9a2f38
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] a8e91628ba414005925382485b33a21c
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_BitOr 1
+worker outcome: normal, test outcome: killed
+[job-id] cc3bf6b4efbe48f4b5481d37afdbd418
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] 429ab9b496564d5e89ab254f9d27c202
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 5b119c29afe549eba81bc1781edb8c83
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_BitAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] 9c20b796d151425383448a912b8b9a5d
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] 0515b0ac802643d595f938e1e4c9b57c
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] d6b6a88460774ced996c0541c519bf86
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_BitXor 1
+worker outcome: normal, test outcome: killed
+[job-id] a5ac1afa011344f6b6fb4a9f7155512c
+src/_pytest/logging.py core/ReplaceBinaryOperator_Add_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] 0c990c5f39ba4836b58ba696df4f491b
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] 6b1af945019f4eaca6c5ddbeb3f0a442
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_Add 1
+worker outcome: normal, test outcome: killed
+[job-id] facf75288c5a44c0adb0379d92f3e1a2
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] 05d069bc7061447c9fb735284cc6a11b
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_Sub 1
+worker outcome: normal, test outcome: killed
+[job-id] 0772f8bd868b40f9a09fef543570dc3c
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] fdd3977fd2254c23820098f4aead4c44
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] c7fbb19e48764fbb948e62161215fd10
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 5e2f341e253a40da89415914c17b39b5
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_FloorDiv 1
+worker outcome: normal, test outcome: killed
+[job-id] 8b3612ddcee54f04a4798d3752343ba3
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] 9d4e579e6cc2438a97d7382f4b6cd3a9
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_Mod 1
+worker outcome: normal, test outcome: killed
+[job-id] 14a57894ff504af8b3442afe2e99414f
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 795753efba6641838aac864fd14872be
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_Pow 1
+worker outcome: normal, test outcome: killed
+[job-id] a4a34fe90692473d8f58b317b4842deb
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] e4814f0c80f84fd6b3c419fc9325c23c
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_RShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 456e80c0eef6496185f88d738aac65ef
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] aaa953ffe0b241fb90b2c66af48f6a9c
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_LShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 9d57b4746fc74e4cbcc98668d5546726
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 899bc602d71a44d888598ed6106ec4ed
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_BitOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 1dca4c22a7774ece8b88ff4d93899a7a
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] c28568f32578484caa952a8734598493
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_BitAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] 4dd360a4cdff4bac8fc76450cbfafd13
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] f6b1f540f7714d09acf32fb694e0ee9e
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mul_BitXor 1
+worker outcome: normal, test outcome: killed
+[job-id] 09e341c3d3f24caa89d2ac37b6753290
+src/_pytest/logging.py core/ReplaceBinaryOperator_Div_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] 5d1482c4085f48b3bc0a5fd30b0e9689
+src/_pytest/logging.py core/ReplaceBinaryOperator_Div_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] 06d3e9661eef4a01b5e93d137a9ae220
+src/_pytest/logging.py core/ReplaceBinaryOperator_Div_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] db6c5dff5726434bb5d89445cd092fea
+src/_pytest/logging.py core/ReplaceBinaryOperator_Div_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 8cd43da5f90147f380dceace1e9ec6a7
+src/_pytest/logging.py core/ReplaceBinaryOperator_Div_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] d2c726949c9f4c51a499d0f00c8bd94d
+src/_pytest/logging.py core/ReplaceBinaryOperator_Div_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 859c2b7aeb55414d861b62cb7b719c11
+src/_pytest/logging.py core/ReplaceBinaryOperator_Div_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 42c26da7e01f445c862d98bbcb70cc66
+src/_pytest/logging.py core/ReplaceBinaryOperator_Div_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 08e27c65ed2644d6a16a657f468578d1
+src/_pytest/logging.py core/ReplaceBinaryOperator_Div_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 91bb3fc86f3944da9bf5d6c2e68417ce
+src/_pytest/logging.py core/ReplaceBinaryOperator_Div_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 857971daf1c74ea4b9889ead10d3e878
+src/_pytest/logging.py core/ReplaceBinaryOperator_Div_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] 83cc710d1a4847528212f7fc4af2cbfb
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] ba2b5643b7d44b18843751e9b6cb3eea
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_Add 1
+worker outcome: normal, test outcome: survived
+[job-id] 821090e802774861a565164382874ad3
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_Add 2
+worker outcome: normal, test outcome: survived
+[job-id] d570590b40a7405fb1091bab27280c2a
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 1689d12775e54089af3f95c9dc1d521a
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] 1c18b1c9a325417e80a1178f1bd9584a
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_Sub 2
+worker outcome: normal, test outcome: survived
+[job-id] 4c6d9283f7f74ef59931a396102118d9
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] 48c48ac804c745898c1d36e1501acb36
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] 2975dc4af6934c04951d3beed145815a
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] 8c656de2e71447d4a55305d191003da9
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] 5927abfc391f426b8964e10259576d67
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] 241252a6d58e4930868abc09dc462977
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] 24fca0b47381491093dbb984925ff0d2
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] 89ffadee6ff246d3ac176fb846898893
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] 40833988ae16477ca4bdcd5459393442
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] 2c6b6d0afd1a482c8b3996bc944de2a8
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] d1877b4e323b44a4be31ad06c5c47722
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 9dea3b142ded43f38df54ab048f3f1ed
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] 4fb496204f27429b81b34e5ac5584921
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] ee4bdf22980d439ebdeb08db96940bbe
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 78c20083fe814e41b338e41aafce8369
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] d9574b7fb00f4538be242f18fd836158
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] b0e151136c0c4509b9fbc7520849d893
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] ae9631be6b5a407eba4393f1ad4b4293
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] d023f495a8a64cf9bb6219693df9d71b
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 4c989d7541c140429e2d0be0378b2fcc
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 670963636cec493487c13e10753112bb
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] b879ae60e5f7465d9f8e9fd8c0f75aa8
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 337ccf148e0e471d8cad288b51884040
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 5638abc15d45458eb5c1e2809aa98d2b
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] c5c4faea555147d087b2cbab3df82083
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] bf94357842da4843b50ccba3e280916d
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] cb70cc0e8a5e4098ab45478781d5c438
+src/_pytest/logging.py core/ReplaceBinaryOperator_Mod_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] 41318db6a8ad4ab2a71c1d7c83df90ba
+src/_pytest/logging.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] dade27757fbc47548e5a3eaf6a95ee09
+src/_pytest/logging.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 6b92c8cbdd214677813eb08633e1ea66
+src/_pytest/logging.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 1648103018654947886cb5fdab153474
+src/_pytest/logging.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 9ef1a6efa83a40329f983b879b31b21b
+src/_pytest/logging.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 47485724616542d78d9e6e6463169213
+src/_pytest/logging.py core/ReplaceComparisonOperator_Eq_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] fad8dd5cb51b4abe80ee1c3beec3cdb8
+src/_pytest/logging.py core/ReplaceComparisonOperator_Eq_IsNot 0
+worker outcome: normal, test outcome: killed
+[job-id] 7fb82e28830344fb9093db3d7b05d803
+src/_pytest/logging.py core/ReplaceComparisonOperator_NotEq_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] e7eb5f21fc824f949b6c2532183909a5
+src/_pytest/logging.py core/ReplaceComparisonOperator_NotEq_Eq 1
+worker outcome: normal, test outcome: survived
+[job-id] 0ef2be83a1304320b9c76a869b154b54
+src/_pytest/logging.py core/ReplaceComparisonOperator_NotEq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 1dcaa875a4d64b5aa3877a45d4aa6798
+src/_pytest/logging.py core/ReplaceComparisonOperator_NotEq_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] 0e5bceaa3807429fb1121f00e8b364c1
+src/_pytest/logging.py core/ReplaceComparisonOperator_NotEq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 754964b0f9f24d8da3a67e5e9411af68
+src/_pytest/logging.py core/ReplaceComparisonOperator_NotEq_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 33db689390934c7f9545ac258a674fea
+src/_pytest/logging.py core/ReplaceComparisonOperator_NotEq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] a470434c98394840b966a5da6cfed352
+src/_pytest/logging.py core/ReplaceComparisonOperator_NotEq_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] e842b4cbc8674f05b5a17809e7e4418a
+src/_pytest/logging.py core/ReplaceComparisonOperator_NotEq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 60072bca52db4ef8968b4f378ddddfeb
+src/_pytest/logging.py core/ReplaceComparisonOperator_NotEq_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] fc9f45ef31274515a8fa9dc9cab09208
+src/_pytest/logging.py core/ReplaceComparisonOperator_NotEq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 3f3705115b2a4f048cce490fa7275853
+src/_pytest/logging.py core/ReplaceComparisonOperator_NotEq_Is 1
+worker outcome: normal, test outcome: killed
+[job-id] 5c93a7798a774aaa96e8b607436dc03d
+src/_pytest/logging.py core/ReplaceComparisonOperator_NotEq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 2ea210b1a1fa43c4b247dfe8de058184
+src/_pytest/logging.py core/ReplaceComparisonOperator_NotEq_IsNot 1
+worker outcome: normal, test outcome: killed
+[job-id] bfd909b3ef024c438756568e3c6c15ee
+src/_pytest/logging.py core/ReplaceComparisonOperator_Lt_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] 92053849ab7849bc9312236904f4c204
+src/_pytest/logging.py core/ReplaceComparisonOperator_Lt_Eq 1
+worker outcome: normal, test outcome: survived
+[job-id] 26d05e331ae3443a9b18bbdace644984
+src/_pytest/logging.py core/ReplaceComparisonOperator_Lt_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 23d6ecdbe02e4442a7dd64d8e10c261e
+src/_pytest/logging.py core/ReplaceComparisonOperator_Lt_NotEq 1
+worker outcome: normal, test outcome: survived
+[job-id] 49cc2e225e7c4b8fb5d5f18696f6e9cd
+src/_pytest/logging.py core/ReplaceComparisonOperator_Lt_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] edfe1494f2fb40859fd4738a2d8b1f64
+src/_pytest/logging.py core/ReplaceComparisonOperator_Lt_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] ea23f3a9868743e5a8734c8fce90c44e
+src/_pytest/logging.py core/ReplaceComparisonOperator_Lt_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 69345e24953549e0adf71e1f1af1279c
+src/_pytest/logging.py core/ReplaceComparisonOperator_Lt_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] ea282ef8dffb4c6bb7940404f9a92539
+src/_pytest/logging.py core/ReplaceComparisonOperator_Lt_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] f2d3da83f4fb41bd9b8f981a56d73379
+src/_pytest/logging.py core/ReplaceComparisonOperator_Lt_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] ca68bf6ca8924c0898251a55948540f6
+src/_pytest/logging.py core/ReplaceComparisonOperator_GtE_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] 35ae729d65ba4c1b94d8536ef4923557
+src/_pytest/logging.py core/ReplaceComparisonOperator_GtE_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 583dad7e8e064acc90a7f6b98d39ab00
+src/_pytest/logging.py core/ReplaceComparisonOperator_GtE_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 15503addb7754b179bde54aaedcd736d
+src/_pytest/logging.py core/ReplaceComparisonOperator_GtE_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 35633def35404489badf704bf7098e83
+src/_pytest/logging.py core/ReplaceComparisonOperator_GtE_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 08de43ea30f74602ab2baca09a1c2c48
+src/_pytest/logging.py core/ReplaceComparisonOperator_GtE_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] 6f996d6dbf124a9bb38794a6c4e81b65
+src/_pytest/logging.py core/ReplaceComparisonOperator_GtE_IsNot 0
+worker outcome: normal, test outcome: killed
+[job-id] 87b5bfad1b70463fbfb07c17609c7b58
+src/_pytest/logging.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 59caae7dcd8a44ed93e87dadef670ea7
+src/_pytest/logging.py core/ReplaceComparisonOperator_Is_IsNot 1
+worker outcome: normal, test outcome: killed
+[job-id] db4b8e135daf46bbbb7a0b7940be2ba5
+src/_pytest/logging.py core/ReplaceComparisonOperator_Is_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 5f12ea1457194c0ea2be3104081d73f1
+src/_pytest/logging.py core/ReplaceComparisonOperator_Is_IsNot 3
+worker outcome: normal, test outcome: survived
+[job-id] b2518a653890485ab2a4db7f4084696a
+src/_pytest/logging.py core/ReplaceComparisonOperator_Is_IsNot 4
+worker outcome: normal, test outcome: survived
+[job-id] cc026706a5304a28bd428011b7211ecb
+src/_pytest/logging.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] e5c7acbe382e496aaa2bd4e00d8e58bf
+src/_pytest/logging.py core/ReplaceComparisonOperator_IsNot_Is 1
+worker outcome: normal, test outcome: killed
+[job-id] cc6318f75f7c4868a6305f338aac9331
+src/_pytest/logging.py core/ReplaceComparisonOperator_IsNot_Is 2
+worker outcome: normal, test outcome: killed
+[job-id] 2aa00c845c9e4bf8bb270340a23cbfa7
+src/_pytest/logging.py core/ReplaceComparisonOperator_IsNot_Is 3
+worker outcome: normal, test outcome: killed
+[job-id] ee400dcbc9ba45bcac983b00f75b6bd6
+src/_pytest/logging.py core/ReplaceComparisonOperator_IsNot_Is 4
+worker outcome: normal, test outcome: survived
+[job-id] b5985da7d23e43f79db0b8d322a6ec69
+src/_pytest/logging.py core/ReplaceComparisonOperator_IsNot_Is 5
+worker outcome: normal, test outcome: survived
+[job-id] a0dc3a83f4ed4262a7525ce3c66a78a3
+src/_pytest/logging.py core/ReplaceUnaryOperator_USub_UAdd 0
+worker outcome: normal, test outcome: survived
+[job-id] 0eb64e7f0a1341368bd72c549d3b900f
+src/_pytest/logging.py core/ReplaceUnaryOperator_USub_UAdd 1
+worker outcome: normal, test outcome: survived
+[job-id] aae87fdfa1bc4d2d8450a1eb8d799901
+src/_pytest/logging.py core/ReplaceUnaryOperator_USub_Invert 0
+worker outcome: normal, test outcome: survived
+[job-id] 46f223a639fd482491d4ebacf3fe408f
+src/_pytest/logging.py core/ReplaceUnaryOperator_USub_Invert 1
+worker outcome: normal, test outcome: survived
+[job-id] e5d6c54b98dd4e45b0cb10ffd2cae483
+src/_pytest/logging.py core/ReplaceUnaryOperator_USub_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] 15b59c4666774899b41d8239bc572c69
+src/_pytest/logging.py core/ReplaceUnaryOperator_USub_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] d0bd3b5088b14958893a92020acbd120
+src/_pytest/logging.py core/ReplaceUnaryOperator_Delete_USub 0
+worker outcome: normal, test outcome: survived
+[job-id] b3394dda4fe54823b6ba4798f4e5c016
+src/_pytest/logging.py core/ReplaceUnaryOperator_Delete_USub 1
+worker outcome: normal, test outcome: survived
+[job-id] 9ff14b9b30ef498f977cb0a7c2d9cd16
+src/_pytest/logging.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] 68f36e7355664ae08d89c91578e8bd46
+src/_pytest/logging.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] dfed6a1502284b3b8a91b6dc1a9a0931
+src/_pytest/logging.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: normal, test outcome: survived
+[job-id] 964e367cdc7648a2b0e0511737a8861a
+src/_pytest/logging.py core/ReplaceUnaryOperator_Delete_Not 3
+worker outcome: normal, test outcome: survived
+[job-id] c7e95f79e8544ad9a1b1659952f9ee95
+src/_pytest/logging.py core/ReplaceUnaryOperator_Delete_Not 4
+worker outcome: normal, test outcome: survived
+[job-id] e65ea1ac293349a0b456021a19647d19
+src/_pytest/logging.py core/ReplaceUnaryOperator_Delete_Not 5
+worker outcome: normal, test outcome: survived
+[job-id] adfd2c2f4df246e0a08286e7e2d270f7
+src/_pytest/logging.py core/ReplaceUnaryOperator_Delete_Not 6
+worker outcome: normal, test outcome: survived
+[job-id] e807edae60734c10a32e95ea23a51d1c
+src/_pytest/logging.py core/ReplaceUnaryOperator_Delete_Not 7
+worker outcome: normal, test outcome: survived
+[job-id] da7b8382735b44d5a14b3bcfbaaa0350
+src/_pytest/logging.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] cc0c00c026a543a7857a86d3c87c85e2
+src/_pytest/logging.py core/AddNot 1
+worker outcome: normal, test outcome: survived
+[job-id] cab30223707146feae2fb7b6855b8d10
+src/_pytest/logging.py core/AddNot 2
+worker outcome: normal, test outcome: survived
+[job-id] dfa8d39e70af46669026af7b291ffdb8
+src/_pytest/logging.py core/AddNot 3
+worker outcome: normal, test outcome: survived
+[job-id] 342993adb29040da84134bbb1dc40722
+src/_pytest/logging.py core/AddNot 4
+worker outcome: normal, test outcome: survived
+[job-id] 059cb91534f54add909138c82188801a
+src/_pytest/logging.py core/AddNot 5
+worker outcome: normal, test outcome: survived
+[job-id] 87e06ff82e6f4bb1ac466428b5384f13
+src/_pytest/logging.py core/AddNot 6
+worker outcome: normal, test outcome: survived
+[job-id] debe2e419e964d66a28878a3984a77c7
+src/_pytest/logging.py core/AddNot 7
+worker outcome: normal, test outcome: survived
+[job-id] 6c78f95f01d84fc1881c032e642eea7d
+src/_pytest/logging.py core/AddNot 8
+worker outcome: normal, test outcome: survived
+[job-id] 8d8a65c3911f4dae8a46b635a182f2cd
+src/_pytest/logging.py core/AddNot 9
+worker outcome: normal, test outcome: killed
+[job-id] 10e24df9265744b09b6df14629b85be9
+src/_pytest/logging.py core/AddNot 10
+worker outcome: normal, test outcome: killed
+[job-id] 28371f486e404bbb96895b1564488000
+src/_pytest/logging.py core/AddNot 11
+worker outcome: normal, test outcome: killed
+[job-id] 430ff89d7218451591be74e2c98f8fe1
+src/_pytest/logging.py core/AddNot 12
+worker outcome: normal, test outcome: killed
+[job-id] 73e1dc0bb9534a3490c0b82be2e84eed
+src/_pytest/logging.py core/AddNot 13
+worker outcome: normal, test outcome: killed
+[job-id] eca09c099dd74a3eb09c7bd9035bf2e9
+src/_pytest/logging.py core/AddNot 14
+worker outcome: normal, test outcome: survived
+[job-id] d21f2170a1fe4bfdba05e68d1adf7d86
+src/_pytest/logging.py core/AddNot 15
+worker outcome: normal, test outcome: survived
+[job-id] 76f3350d5c164b8eaa87415fc74e59e9
+src/_pytest/logging.py core/AddNot 16
+worker outcome: normal, test outcome: survived
+[job-id] 6f54201afbef4b348a7c0c2f18b9d731
+src/_pytest/logging.py core/AddNot 17
+worker outcome: normal, test outcome: survived
+[job-id] da2ea7c15a224c8b93615376a3511eb5
+src/_pytest/logging.py core/AddNot 18
+worker outcome: normal, test outcome: killed
+[job-id] 203e689d4c4d4d9cabd7ea289683e528
+src/_pytest/logging.py core/AddNot 19
+worker outcome: normal, test outcome: survived
+[job-id] 8830af2c2403427a80fe5ea80cd4e0af
+src/_pytest/logging.py core/AddNot 20
+worker outcome: normal, test outcome: survived
+[job-id] f1309c2f0cbb44da9d74457324726b9c
+src/_pytest/logging.py core/AddNot 21
+worker outcome: normal, test outcome: survived
+[job-id] 46e3ef7683934b5c83b92c5c687f66d7
+src/_pytest/logging.py core/AddNot 22
+worker outcome: normal, test outcome: survived
+[job-id] 40fd8763aeeb4891b3e30caecaaa52e4
+src/_pytest/logging.py core/AddNot 23
+worker outcome: normal, test outcome: survived
+[job-id] e22296d6dbb347f7b8f804c63e65a06d
+src/_pytest/logging.py core/AddNot 24
+worker outcome: normal, test outcome: survived
+[job-id] ce86dd27ac70483480bbf9b691da39ec
+src/_pytest/logging.py core/AddNot 25
+worker outcome: normal, test outcome: survived
+[job-id] 1adfb2acbe2f43208766248ecd8a9b96
+src/_pytest/logging.py core/AddNot 26
+worker outcome: normal, test outcome: survived
+[job-id] 3455c6bce45649bba7d4b5135319c948
+src/_pytest/logging.py core/AddNot 27
+worker outcome: normal, test outcome: survived
+[job-id] 69dfba1283d24da1942fd9829004dee1
+src/_pytest/logging.py core/AddNot 28
+worker outcome: normal, test outcome: survived
+[job-id] 35b6dcdafb5d48bd83247c47d3708939
+src/_pytest/logging.py core/AddNot 29
+worker outcome: normal, test outcome: survived
+[job-id] fe0207b0542549eb84c5762a73d011ec
+src/_pytest/logging.py core/AddNot 30
+worker outcome: normal, test outcome: survived
+[job-id] df0a4065e64c40ddadf0cd4111453447
+src/_pytest/logging.py core/AddNot 31
+worker outcome: normal, test outcome: survived
+[job-id] f095e91d5fc84f54bd56ccfcf16df847
+src/_pytest/logging.py core/AddNot 32
+worker outcome: normal, test outcome: survived
+[job-id] a1019874023b4f6b9c99dc8814ee397f
+src/_pytest/logging.py core/AddNot 33
+worker outcome: normal, test outcome: survived
+[job-id] c629e52adae54b209a4a476e2b4df937
+src/_pytest/logging.py core/AddNot 34
+worker outcome: normal, test outcome: survived
+[job-id] e1f12867093640ae9fe90bcc6654b40e
+src/_pytest/logging.py core/AddNot 35
+worker outcome: normal, test outcome: survived
+[job-id] e6bad174340f4d6bbf8d0f673cde0572
+src/_pytest/logging.py core/AddNot 36
+worker outcome: normal, test outcome: survived
+[job-id] f2d80f4b999d4dba83595b2eb558a657
+src/_pytest/logging.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: survived
+[job-id] e481a96f869546708236c7f4367504da
+src/_pytest/logging.py core/ReplaceTrueWithFalse 1
+worker outcome: normal, test outcome: survived
+[job-id] 2a8bdfeb1eb74a2d93a7969dfa3ea74c
+src/_pytest/logging.py core/ReplaceTrueWithFalse 2
+worker outcome: normal, test outcome: survived
+[job-id] 7853e99cda134615b8bacb409a4f2880
+src/_pytest/logging.py core/ReplaceTrueWithFalse 3
+worker outcome: normal, test outcome: survived
+[job-id] 38425ea5d64b4623b7237197aa0db0bc
+src/_pytest/logging.py core/ReplaceTrueWithFalse 4
+worker outcome: normal, test outcome: survived
+[job-id] 0b54ca70686244898b4587a3e1ccb110
+src/_pytest/logging.py core/ReplaceTrueWithFalse 5
+worker outcome: normal, test outcome: survived
+[job-id] 614bb6e80cd0450e9fb778f547dd8af0
+src/_pytest/logging.py core/ReplaceTrueWithFalse 6
+worker outcome: normal, test outcome: survived
+[job-id] 956eb6435a9549e9a31ff6f0ff394374
+src/_pytest/logging.py core/ReplaceTrueWithFalse 7
+worker outcome: normal, test outcome: survived
+[job-id] a000c23c335f48b8922b322422cce9d3
+src/_pytest/logging.py core/ReplaceTrueWithFalse 8
+worker outcome: normal, test outcome: killed
+[job-id] f50a977248c44055be0f49d31c5cc7df
+src/_pytest/logging.py core/ReplaceTrueWithFalse 9
+worker outcome: normal, test outcome: survived
+[job-id] d2c428aa60624ca197ae1d5504fc22d7
+src/_pytest/logging.py core/ReplaceTrueWithFalse 10
+worker outcome: normal, test outcome: survived
+[job-id] 8b99c570e1d54cb587dc837a129fd8de
+src/_pytest/logging.py core/ReplaceTrueWithFalse 11
+worker outcome: normal, test outcome: killed
+[job-id] c58a0e6f17df4d64983723b070d30de1
+src/_pytest/logging.py core/ReplaceTrueWithFalse 12
+worker outcome: normal, test outcome: survived
+[job-id] e43d019db52649399a9cd0006167effb
+src/_pytest/logging.py core/ReplaceTrueWithFalse 13
+worker outcome: normal, test outcome: survived
+[job-id] 3fd5648af42f4435ac163f2070e4fe17
+src/_pytest/logging.py core/ReplaceTrueWithFalse 14
+worker outcome: normal, test outcome: survived
+[job-id] 3a0735ccadb440dbba06934ee3c71143
+src/_pytest/logging.py core/ReplaceTrueWithFalse 15
+worker outcome: normal, test outcome: survived
+[job-id] 18a6658f784b4802b0c66d8212593ef1
+src/_pytest/logging.py core/ReplaceTrueWithFalse 16
+worker outcome: normal, test outcome: survived
+[job-id] 6210de36186a425bb4d5ee54dc449498
+src/_pytest/logging.py core/ReplaceTrueWithFalse 17
+worker outcome: normal, test outcome: survived
+[job-id] 78f2ba8c94b7432996f59e2a14e83b8a
+src/_pytest/logging.py core/ReplaceTrueWithFalse 18
+worker outcome: normal, test outcome: survived
+[job-id] 3d0b8125b9c145f1a823bfeeb2b28d0f
+src/_pytest/logging.py core/ReplaceTrueWithFalse 19
+worker outcome: normal, test outcome: survived
+[job-id] 7cfd4aa202334dc89910c317a0e23499
+src/_pytest/logging.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: survived
+[job-id] 865ec4c25641417491666c1174bf8dbb
+src/_pytest/logging.py core/ReplaceFalseWithTrue 1
+worker outcome: normal, test outcome: survived
+[job-id] de53727eee804abf85e640bd477c97e5
+src/_pytest/logging.py core/ReplaceFalseWithTrue 2
+worker outcome: normal, test outcome: survived
+[job-id] fd1a03a2e98647a4b2d5a0b37c3e0f32
+src/_pytest/logging.py core/ReplaceFalseWithTrue 3
+worker outcome: normal, test outcome: survived
+[job-id] e4cf566ed5614823b60804811ce0347d
+src/_pytest/logging.py core/ReplaceFalseWithTrue 4
+worker outcome: normal, test outcome: survived
+[job-id] 9575f89e9f194440a27a37dcd48f3a40
+src/_pytest/logging.py core/ReplaceFalseWithTrue 5
+worker outcome: normal, test outcome: survived
+[job-id] 66c32d746e8344ab8b399dd63ae91308
+src/_pytest/logging.py core/ReplaceFalseWithTrue 6
+worker outcome: normal, test outcome: survived
+[job-id] 968bb5d9703d4b1bb96b4aacba0d0b68
+src/_pytest/logging.py core/ReplaceFalseWithTrue 7
+worker outcome: normal, test outcome: survived
+[job-id] f04e973b537e4b658d95f17650f4e8db
+src/_pytest/logging.py core/ReplaceAndWithOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 18cacf3e0ed44094837b119bbab531a1
+src/_pytest/logging.py core/ReplaceAndWithOr 1
+worker outcome: normal, test outcome: survived
+[job-id] f5833e5a3b594f6f9247aa5c3394ea88
+src/_pytest/logging.py core/ReplaceAndWithOr 2
+worker outcome: normal, test outcome: survived
+[job-id] 4b1bee6dc0744ad7a9c55a803f210982
+src/_pytest/logging.py core/ReplaceOrWithAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] ae0618ab952f4b59b8529a6cf9717aa4
+src/_pytest/logging.py core/ReplaceOrWithAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 2671bf3dac0741a6ad18b4166f0a31f5
+src/_pytest/logging.py core/ReplaceBreakWithContinue 0
+worker outcome: normal, test outcome: survived
+[job-id] 60e9c6c037154f86a376bec534cd33a4
+src/_pytest/logging.py core/ExceptionReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] c7b18e69ba3a4b6d90cec1f735560764
+src/_pytest/logging.py core/ExceptionReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] 61c387e862344ca9b700d7b13cbe6e02
+src/_pytest/logging.py core/ExceptionReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] cb6d2f16ff7f46eaaddda4a28f97d483
+src/_pytest/logging.py core/NumberReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] f5a0a952329a4c38aeeba6626c923682
+src/_pytest/logging.py core/NumberReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] f69f5eb7c8f8404ea8dde13eaa7184be
+src/_pytest/logging.py core/NumberReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] d13769372d9f443e93e789692c7a6829
+src/_pytest/logging.py core/NumberReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] 9533245a309645d9a3046400f80546f9
+src/_pytest/logging.py core/NumberReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] 56bd1cc0f95d4dec94c31d73b1c0b326
+src/_pytest/logging.py core/NumberReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] d68262f8f22548c0a3b7cc7eba67147a
+src/_pytest/logging.py core/NumberReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] 8811b46ebd3e472e8b4383b14446f160
+src/_pytest/logging.py core/NumberReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] 66eab1779c9a426f88b5565466e060a0
+src/_pytest/logging.py core/NumberReplacer 8
+worker outcome: normal, test outcome: survived
+[job-id] 8958156b6ae94fd1a612a8ad8dceb0d2
+src/_pytest/logging.py core/NumberReplacer 9
+worker outcome: normal, test outcome: survived
+[job-id] ccda143f05da4dceb4f56c863d6fb596
+src/_pytest/logging.py core/NumberReplacer 10
+worker outcome: normal, test outcome: survived
+[job-id] 8b58fa307d9d4d7897001fc20db27ba2
+src/_pytest/logging.py core/NumberReplacer 11
+worker outcome: normal, test outcome: survived
+[job-id] ae64c3c9e0d9405382e8ad68257c8ed1
+src/_pytest/logging.py core/NumberReplacer 12
+worker outcome: normal, test outcome: survived
+[job-id] c989538024bf41e28ad3cf47a367c266
+src/_pytest/logging.py core/NumberReplacer 13
+worker outcome: normal, test outcome: survived
+[job-id] 9355e7852c5143179b86f03bb8a1f30c
+src/_pytest/logging.py core/NumberReplacer 14
+worker outcome: normal, test outcome: survived
+[job-id] f49f697b8ed847ddba62019f9fc645db
+src/_pytest/logging.py core/NumberReplacer 15
+worker outcome: normal, test outcome: survived
+[job-id] 2e85f7a6df784759b961d0fda0ef54a6
+src/_pytest/logging.py core/NumberReplacer 16
+worker outcome: normal, test outcome: survived
+[job-id] 02c0616998f5494296c9463ed3f9fafb
+src/_pytest/logging.py core/NumberReplacer 17
+worker outcome: normal, test outcome: survived
+[job-id] 80cad47bb0f54378ae080d9e96a8874f
+src/_pytest/logging.py core/NumberReplacer 18
+worker outcome: normal, test outcome: survived
+[job-id] dad59d8a48314aa0ac9f4e978e7bbc45
+src/_pytest/logging.py core/NumberReplacer 19
+worker outcome: normal, test outcome: survived
+[job-id] ada876d4903648fd925dc3fbdc2dcca6
+src/_pytest/logging.py core/NumberReplacer 20
+worker outcome: normal, test outcome: survived
+[job-id] a840b2a71de049d99eac73b0cb70b049
+src/_pytest/logging.py core/NumberReplacer 21
+worker outcome: normal, test outcome: survived
+[job-id] 94f8e3665506479989b4ff6ee496ed79
+src/_pytest/logging.py core/NumberReplacer 22
+worker outcome: normal, test outcome: survived
+[job-id] 5e815a2e51a945afbbd5691940053bac
+src/_pytest/logging.py core/NumberReplacer 23
+worker outcome: normal, test outcome: survived
+[job-id] 8543333e68fa4689a1a21426cdd77897
+src/_pytest/logging.py core/NumberReplacer 24
+worker outcome: normal, test outcome: survived
+[job-id] 1757937c1aff4aa1a1ec52d60b570aed
+src/_pytest/logging.py core/NumberReplacer 25
+worker outcome: normal, test outcome: survived
+[job-id] a63dcc84035b4e8ca7b6e8bb6cf688d8
+src/_pytest/logging.py core/NumberReplacer 26
+worker outcome: normal, test outcome: survived
+[job-id] f08a569c0d3e4e189c7016afe285f2ae
+src/_pytest/logging.py core/NumberReplacer 27
+worker outcome: normal, test outcome: survived
+[job-id] 976bc71114824132b9e07a2f8336308c
+src/_pytest/logging.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: survived
+[job-id] 18ba93c32e344a3796a56ac5e7fc56a9
+src/_pytest/logging.py core/RemoveDecorator 1
+worker outcome: normal, test outcome: killed
+[job-id] 834d3b336f9746b1821d82d55a174dfe
+src/_pytest/logging.py core/RemoveDecorator 2
+worker outcome: normal, test outcome: survived
+[job-id] 86f6484ebd154f47955204caa3f60bfa
+src/_pytest/logging.py core/RemoveDecorator 3
+worker outcome: normal, test outcome: survived
+[job-id] 54d6ca03c7fd46b09fa5989095ad1232
+src/_pytest/logging.py core/RemoveDecorator 4
+worker outcome: normal, test outcome: survived
+[job-id] c829de25354a4391930fd8a2da7fdf0f
+src/_pytest/logging.py core/RemoveDecorator 5
+worker outcome: normal, test outcome: survived
+[job-id] 58b64cbf54804e8f9568ae1a0dda4de0
+src/_pytest/logging.py core/RemoveDecorator 6
+worker outcome: normal, test outcome: survived
+[job-id] 2b418fc270914363a8dfab9a455d42a1
+src/_pytest/logging.py core/RemoveDecorator 7
+worker outcome: normal, test outcome: survived
+[job-id] 96c1cc3164f54f2699766b3ad50c6147
+src/_pytest/logging.py core/RemoveDecorator 8
+worker outcome: normal, test outcome: survived
+[job-id] 2221f8371e424d448f6f71901bea462e
+src/_pytest/logging.py core/RemoveDecorator 9
+worker outcome: normal, test outcome: survived
+[job-id] 8a3c0607e81d4f7f8975aac4a8f9680e
+src/_pytest/logging.py core/RemoveDecorator 10
+worker outcome: normal, test outcome: survived
+[job-id] d102fbcca3eb4e6e9ef290ae3f7efd84
+src/_pytest/logging.py core/RemoveDecorator 11
+worker outcome: normal, test outcome: survived
+[job-id] bca68c204dce4706a2d96cb98e6adcfa
+src/_pytest/logging.py core/RemoveDecorator 12
+worker outcome: normal, test outcome: killed
+[job-id] a0dba9703a5640e7998f2cb3fee26c30
+src/_pytest/logging.py core/RemoveDecorator 13
+worker outcome: normal, test outcome: survived
+[job-id] 1cae5c47b72d44f7ab46a53df35e349e
+src/_pytest/logging.py core/RemoveDecorator 14
+worker outcome: normal, test outcome: survived
+[job-id] c293a721595b425dbbbd56d1dd433ae1
+src/_pytest/logging.py core/RemoveDecorator 15
+worker outcome: normal, test outcome: survived
+[job-id] 0baa6a0c506c4043a04c9e3874cd9856
+src/_pytest/logging.py core/RemoveDecorator 16
+worker outcome: normal, test outcome: killed
+[job-id] 016d94ff322140beaba3c7b0fefc1d5f
+src/_pytest/logging.py core/RemoveDecorator 17
+worker outcome: normal, test outcome: survived
+[job-id] 3e820b30610f427484a67de9dc91dfaa
+src/_pytest/logging.py core/RemoveDecorator 18
+worker outcome: normal, test outcome: survived
+[job-id] 42bc5628624049ec818ecf6e6d973b0b
+src/_pytest/logging.py core/RemoveDecorator 19
+worker outcome: normal, test outcome: survived
+[job-id] 29481fe305a943a4ac1ce1c5720e3722
+src/_pytest/logging.py core/RemoveDecorator 20
+worker outcome: normal, test outcome: survived
+[job-id] 4b2b74ca81484d418f9e4058e973c107
+src/_pytest/logging.py core/RemoveDecorator 21
+worker outcome: normal, test outcome: survived
+[job-id] c6825cc664014c15b0e6409208b43535
+src/_pytest/logging.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: survived
+[job-id] 4d83a7688c4c4bb7952cc79bb3f37764
+src/_pytest/logging.py core/ZeroIterationForLoop 1
+worker outcome: normal, test outcome: killed
+[job-id] f235aedadc794dfa95584b2b59ab72d1
+src/_pytest/logging.py core/ZeroIterationForLoop 2
+worker outcome: normal, test outcome: survived
+[job-id] 1905bcaf4d48425cb606dfe2d0885c1c
+src/_pytest/logging.py core/ZeroIterationForLoop 3
+worker outcome: normal, test outcome: survived
+total jobs: 292
+complete: 292 (100.00%)
+surviving mutants: 235 (80.48%)
+
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] 
+MutationNum: 292 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] 
+MutationLOG: 19.519999999999996% 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] 
+MutationUncertainty: 0.0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Test script run successful 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Removing coverage 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] Removing cache 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8641] >>>>> Unfiltered Tests Failed 

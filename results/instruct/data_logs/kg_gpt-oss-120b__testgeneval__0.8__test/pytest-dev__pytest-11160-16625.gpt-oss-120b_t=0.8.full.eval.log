@@ -1,0 +1,402 @@
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Task Metadata:
+	- Instance ID: pytest-dev__pytest-11160
+	- Testbed: pytest-dev__pytest__8.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.11.8
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: git config --global --add safe.directory /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: git -c advice.detachedHead=false checkout 6995257cf470d2143ad1683824962de4071c0eb7 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+Previous HEAD position was 10056865d Merge pull request #11309 from bluetech/docs-xfail
+HEAD is now at 6995257cf [pre-commit.ci] pre-commit autoupdate (#11165)
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-11160_gold_init.patch 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-11160_gold.patch 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+Checking patch src/_pytest/recwarn.py...
+Applied patch src/_pytest/recwarn.py cleanly.
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-11160_test_init.patch 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: git restore testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-11160_test.patch 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+Checking patch testing/test_recwarn.py...
+Applied patch testing/test_recwarn.py cleanly.
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_recwarn.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/test_recwarn.py F                                                [100%]
+
+=================================== FAILURES ===================================
+_________________ test_pop_removes_warning_and_preserves_order _________________
+
+    def test_pop_removes_warning_and_preserves_order():
+        """Ensure that ``pop`` removes the chosen warning and that the order of the
+        remaining warnings is unchanged."""
+>       rec = _record_warnings(
+            ("first", UserWarning),
+            ("second", DeprecationWarning),
+            ("third", Warning),
+        )
+
+testing/test_recwarn.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+testing/test_recwarn.py:16: in _record_warnings
+    rec = WarningsRecorder()
+src/_pytest/recwarn.py:185: in __init__
+    check_ispytest(_ispytest)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ispytest = False
+
+    def check_ispytest(ispytest: bool) -> None:
+        if not ispytest:
+>           warn(PRIVATE, stacklevel=3)
+E           pytest.PytestDeprecationWarning: A private pytest class or function was used.
+
+src/_pytest/deprecated.py:151: PytestDeprecationWarning
+=========================== short test summary info ============================
+FAILED testing/test_recwarn.py::test_pop_removes_warning_and_preserves_order
+============================== 1 failed in 0.03s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 1 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] TestsTime: 3.50478458404541 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_recwarn.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/test_recwarn.py F                                                [100%]
+
+=================================== FAILURES ===================================
+____________________ test_pop_exact_match_takes_precedence _____________________
+
+    def test_pop_exact_match_takes_precedence():
+        """If a warning of the exact requested class exists, it should be popped
+        immediately, even if a subclass warning appears earlier in the list."""
+>       rec = _record_warnings(
+            ("subclass warning", UserWarning),
+            ("exact warning", DeprecationWarning),
+        )
+
+testing/test_recwarn.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+testing/test_recwarn.py:16: in _record_warnings
+    rec = WarningsRecorder()
+src/_pytest/recwarn.py:185: in __init__
+    check_ispytest(_ispytest)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ispytest = False
+
+    def check_ispytest(ispytest: bool) -> None:
+        if not ispytest:
+>           warn(PRIVATE, stacklevel=3)
+E           pytest.PytestDeprecationWarning: A private pytest class or function was used.
+
+src/_pytest/deprecated.py:151: PytestDeprecationWarning
+=========================== short test summary info ============================
+FAILED testing/test_recwarn.py::test_pop_exact_match_takes_precedence - pytes...
+============================== 1 failed in 0.02s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 1 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] TestsTime: 0.49781203269958496 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_recwarn.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/test_recwarn.py F                                                [100%]
+
+=================================== FAILURES ===================================
+_______________ test_pop_subclass_selection_returns_most_generic _______________
+
+    def test_pop_subclass_selection_returns_most_generic():
+        """When no exact match exists, ``pop`` should return the most generic
+        warning (i.e., the one that is not a subclass of any other match)."""
+>       rec = _record_warnings(
+            ("subclass warning", UserWarning),   # subclass of Warning
+            ("generic warning", Warning),        # generic warning
+        )
+
+testing/test_recwarn.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+testing/test_recwarn.py:16: in _record_warnings
+    rec = WarningsRecorder()
+src/_pytest/recwarn.py:185: in __init__
+    check_ispytest(_ispytest)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ispytest = False
+
+    def check_ispytest(ispytest: bool) -> None:
+        if not ispytest:
+>           warn(PRIVATE, stacklevel=3)
+E           pytest.PytestDeprecationWarning: A private pytest class or function was used.
+
+src/_pytest/deprecated.py:151: PytestDeprecationWarning
+=========================== short test summary info ============================
+FAILED testing/test_recwarn.py::test_pop_subclass_selection_returns_most_generic
+============================== 1 failed in 0.03s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 1 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] TestsTime: 0.5447080135345459 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_recwarn.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/test_recwarn.py F                                                [100%]
+
+=================================== FAILURES ===================================
+__________________ test_pop_with_multiple_subclass_hierarchy ___________________
+
+    def test_pop_with_multiple_subclass_hierarchy():
+        """With a deeper hierarchy, ``pop`` must still return the most generic
+        warning that matches the requested class."""
+        class MyWarning(UserWarning):
+            """Custom warning for testing."""
+    
+>       rec = _record_warnings(
+            ("my warning", MyWarning),          # most specific
+            ("user warning", UserWarning),      # intermediate
+            ("generic warning", Warning),       # most generic
+        )
+
+testing/test_recwarn.py:32: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+testing/test_recwarn.py:16: in _record_warnings
+    rec = WarningsRecorder()
+src/_pytest/recwarn.py:185: in __init__
+    check_ispytest(_ispytest)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ispytest = False
+
+    def check_ispytest(ispytest: bool) -> None:
+        if not ispytest:
+>           warn(PRIVATE, stacklevel=3)
+E           pytest.PytestDeprecationWarning: A private pytest class or function was used.
+
+src/_pytest/deprecated.py:151: PytestDeprecationWarning
+=========================== short test summary info ============================
+FAILED testing/test_recwarn.py::test_pop_with_multiple_subclass_hierarchy - p...
+============================== 1 failed in 0.02s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 1 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] TestsTime: 0.5111260414123535 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_recwarn.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/test_recwarn.py F                                                [100%]
+
+=================================== FAILURES ===================================
+________________ test_pop_raises_assertion_error_when_not_found ________________
+
+    def test_pop_raises_assertion_error_when_not_found():
+        """If no matching warning exists, ``pop`` must raise ``AssertionError`` with
+        a helpful message."""
+>       rec = _record_warnings(
+            ("only warning", UserWarning),
+        )
+
+testing/test_recwarn.py:27: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+testing/test_recwarn.py:16: in _record_warnings
+    rec = WarningsRecorder()
+src/_pytest/recwarn.py:185: in __init__
+    check_ispytest(_ispytest)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ispytest = False
+
+    def check_ispytest(ispytest: bool) -> None:
+        if not ispytest:
+>           warn(PRIVATE, stacklevel=3)
+E           pytest.PytestDeprecationWarning: A private pytest class or function was used.
+
+src/_pytest/deprecated.py:151: PytestDeprecationWarning
+=========================== short test summary info ============================
+FAILED testing/test_recwarn.py::test_pop_raises_assertion_error_when_not_found
+============================== 1 failed in 0.02s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 1 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] TestsTime: 0.5127999782562256 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_recwarn.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/test_recwarn.py F                                                [100%]
+
+=================================== FAILURES ===================================
+______________ test_pop_default_argument_uses_warning_base_class _______________
+
+    def test_pop_default_argument_uses_warning_base_class():
+        """Calling ``pop`` without arguments should look for any warning (i.e.,
+        ``Warning`` base class)."""
+>       rec = _record_warnings(
+            ("first", UserWarning),
+            ("second", DeprecationWarning),
+        )
+
+testing/test_recwarn.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+testing/test_recwarn.py:16: in _record_warnings
+    rec = WarningsRecorder()
+src/_pytest/recwarn.py:185: in __init__
+    check_ispytest(_ispytest)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ispytest = False
+
+    def check_ispytest(ispytest: bool) -> None:
+        if not ispytest:
+>           warn(PRIVATE, stacklevel=3)
+E           pytest.PytestDeprecationWarning: A private pytest class or function was used.
+
+src/_pytest/deprecated.py:151: PytestDeprecationWarning
+=========================== short test summary info ============================
+FAILED testing/test_recwarn.py::test_pop_default_argument_uses_warning_base_class
+============================== 1 failed in 0.02s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 1 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] TestsTime: 0.5346322059631348 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_recwarn.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/test_recwarn.py F                                                [100%]
+
+=================================== FAILURES ===================================
+________________ test_pop_preserves_warning_message_attributes _________________
+
+    def test_pop_preserves_warning_message_attributes():
+        """The object returned by ``pop`` should be a ``warnings.WarningMessage`` and
+        expose the expected attributes."""
+>       rec = _record_warnings(
+            ("test message", RuntimeWarning),
+        )
+
+testing/test_recwarn.py:29: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+testing/test_recwarn.py:16: in _record_warnings
+    rec = WarningsRecorder()
+src/_pytest/recwarn.py:185: in __init__
+    check_ispytest(_ispytest)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ispytest = False
+
+    def check_ispytest(ispytest: bool) -> None:
+        if not ispytest:
+>           warn(PRIVATE, stacklevel=3)
+E           pytest.PytestDeprecationWarning: A private pytest class or function was used.
+
+src/_pytest/deprecated.py:151: PytestDeprecationWarning
+=========================== short test summary info ============================
+FAILED testing/test_recwarn.py::test_pop_preserves_warning_message_attributes
+============================== 1 failed in 0.02s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 1 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] TestsTime: 0.49788331985473633 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] >>>>> Tests configfull pred
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] TestsTime: 0.0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] >>>>> Some Tests Failed 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] >>>>> Unfiltered Tests Failed 

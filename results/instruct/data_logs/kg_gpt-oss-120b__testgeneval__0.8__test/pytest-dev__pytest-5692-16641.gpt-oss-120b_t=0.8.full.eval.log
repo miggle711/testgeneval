@@ -1,0 +1,1746 @@
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Task Metadata:
+	- Instance ID: pytest-dev__pytest-5692
+	- Testbed: pytest-dev__pytest__5.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.11.8
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Command: git config --global --add safe.directory /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Std. Output:
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Return Code: 0 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Command: git -c advice.detachedHead=false checkout 29e336bd9bf87eaef8e2683196ee1975f1ad4088 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Std. Output:
+Previous HEAD position was c2f762460 Merge pull request #5673 from bluetech/type-annotations-3
+HEAD is now at 29e336bd9 Merge pull request #5687 from blueyed/merge-master
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Return Code: 0 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-5692_gold_init.patch 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Std. Output:
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Return Code: 0 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-5692_gold.patch 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Std. Output:
+Checking patch src/_pytest/junitxml.py...
+Applied patch src/_pytest/junitxml.py cleanly.
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Return Code: 0 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-5692_test_init.patch 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Std. Output:
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Return Code: 0 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Command: git restore testing/test_junitxml.py 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Std. Output:
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Return Code: 0 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-5692_test.patch 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Std. Output:
+Checking patch testing/test_junitxml.py...
+Applied patch testing/test_junitxml.py cleanly.
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Return Code: 0 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Command: conda run -n pytest-dev__pytest__5.0 coverage run -m pytest -rA testing/test_junitxml.py 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_junitxml.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-5.0.2.dev262+gc2f762460, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/test_junitxml.py F                                               [100%]
+
+=================================== FAILURES ===================================
+_________ test_sessionfinish_creates_missing_directory_and_writes_xml __________
+
+temp_log_path = PosixPath('/tmp/pytest-of-swe-bench/pytest-0/test_sessionfinish_creates_mis0/nested/dir/junit.xml')
+
+    def test_sessionfinish_creates_missing_directory_and_writes_xml(temp_log_path):
+        """When the log directory does not exist, ``pytest_sessionfinish`` must
+        create it and write a well‑formed XML file."""
+        log = LogXML(str(temp_log_path), prefix=None)
+    
+        # Initialise the session (sets suite_start_time, etc.).
+        log.pytest_sessionstart()
+    
+        # Create a simple passing report and record it.
+>       report = make_dummy_report(passed=True, when="call", duration=0.12)
+
+testing/test_junitxml.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+testing/test_junitxml.py:56: in make_dummy_report
+    class DummyReport(BaseReport):
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    class DummyReport(BaseReport):
+        # ``BaseReport`` expects these attributes to exist.
+>       nodeid = nodeid
+E       NameError: name 'nodeid' is not defined
+
+testing/test_junitxml.py:58: NameError
+=========================== short test summary info ============================
+FAILED testing/test_junitxml.py::test_sessionfinish_creates_missing_directory_and_writes_xml
+=========================== 1 failed in 0.54 seconds ===========================
+
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Return Code: 1 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] TestsTime: 6.832192420959473 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Test script run successful 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Removing coverage 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Removing cache 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Command: conda run -n pytest-dev__pytest__5.0 coverage run -m pytest -rA testing/test_junitxml.py 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_junitxml.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-5.0.2.dev262+gc2f762460, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/test_junitxml.py F                                               [100%]
+
+=================================== FAILURES ===================================
+_____________ test_tests_attribute_respects_cnt_double_fail_tests ______________
+
+    def test_tests_attribute_respects_cnt_double_fail_tests():
+        """When a test fails both in ``call`` and ``teardown`` the
+        ``cnt_double_fail_tests`` correction must be applied."""
+        log = LogXML("tmp.xml", prefix=None)
+    
+        # Simulate a normal session start.
+        log.pytest_sessionstart()
+    
+        # Simulate a test that fails in call and then errors in teardown.
+        # This will make ``cnt_double_fail_tests`` increase.
+>       report_call = make_dummy_report(passed=False, failed=True, when="call", duration=0.05)
+
+testing/test_junitxml.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+testing/test_junitxml.py:56: in make_dummy_report
+    class DummyReport(BaseReport):
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    class DummyReport(BaseReport):
+        # ``BaseReport`` expects these attributes to exist.
+>       nodeid = nodeid
+E       NameError: name 'nodeid' is not defined
+
+testing/test_junitxml.py:58: NameError
+=========================== short test summary info ============================
+FAILED testing/test_junitxml.py::test_tests_attribute_respects_cnt_double_fail_tests
+=========================== 1 failed in 0.13 seconds ===========================
+
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Return Code: 1 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] TestsTime: 0.6685481071472168 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Test script run successful 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Removing coverage 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Removing cache 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Command: conda run -n pytest-dev__pytest__5.0 coverage run -m pytest -rA testing/test_junitxml.py 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-5.0.2.dev262+gc2f762460, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/test_junitxml.py .                                               [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/test_junitxml.py::test_global_properties_are_written
+=========================== 1 passed in 0.96 seconds ===========================
+
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Return Code: 0 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] TestsTime: 1.4558651447296143 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Test script run successful 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Removing coverage 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Removing cache 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Command: conda run -n pytest-dev__pytest__5.0 coverage run -m pytest -rA testing/test_junitxml.py 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_junitxml.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-5.0.2.dev262+gc2f762460, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/test_junitxml.py F                                               [100%]
+
+=================================== FAILURES ===================================
+___________________ test_unicode_handling_in_report_longrepr ___________________
+
+    def test_unicode_handling_in_report_longrepr():
+        """Unicode characters in the report's ``longrepr`` must not break XML
+        generation."""
+        log = LogXML("tmp_unicode.xml", prefix=None)
+        log.pytest_sessionstart()
+    
+        # Use a Cyrillic string that contains a non‑ASCII exclamation mark.
+        unicode_msg = "ВНИ!"
+>       report = make_dummy_report(
+            passed=False,
+            failed=True,
+            when="call",
+            duration=0.01,
+            longrepr=unicode_msg,
+        )
+
+testing/test_junitxml.py:98: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+testing/test_junitxml.py:56: in make_dummy_report
+    class DummyReport(BaseReport):
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    class DummyReport(BaseReport):
+        # ``BaseReport`` expects these attributes to exist.
+>       nodeid = nodeid
+E       NameError: name 'nodeid' is not defined
+
+testing/test_junitxml.py:58: NameError
+=========================== short test summary info ============================
+FAILED testing/test_junitxml.py::test_unicode_handling_in_report_longrepr - N...
+=========================== 1 failed in 0.12 seconds ===========================
+
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Return Code: 1 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] TestsTime: 0.6318888664245605 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Test script run successful 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Removing coverage 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Removing cache 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Command: conda run -n pytest-dev__pytest__5.0 coverage run -m pytest -rA testing/test_junitxml.py 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_junitxml.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-5.0.2.dev262+gc2f762460, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/test_junitxml.py F                                               [100%]
+
+=================================== FAILURES ===================================
+__________________ test_url_attribute_is_written_to_testcase ___________________
+
+    def test_url_attribute_is_written_to_testcase():
+        """If a report carries a ``url`` attribute, it must be emitted on the
+        ``<testcase>`` element."""
+        log = LogXML("tmp_url.xml", prefix=None)
+        log.pytest_sessionstart()
+    
+        test_url = "http://www.github.com/pytest-dev"
+>       report = make_dummy_report(
+            passed=False,
+            failed=True,
+            when="call",
+            duration=0.03,
+            url=test_url,
+        )
+
+testing/test_junitxml.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+testing/test_junitxml.py:56: in make_dummy_report
+    class DummyReport(BaseReport):
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    class DummyReport(BaseReport):
+        # ``BaseReport`` expects these attributes to exist.
+>       nodeid = nodeid
+E       NameError: name 'nodeid' is not defined
+
+testing/test_junitxml.py:58: NameError
+=========================== short test summary info ============================
+FAILED testing/test_junitxml.py::test_url_attribute_is_written_to_testcase - ...
+=========================== 1 failed in 0.13 seconds ===========================
+
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Return Code: 1 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] TestsTime: 0.620861291885376 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Test script run successful 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Removing coverage 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Removing cache 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] >>>>> Tests configfull pred
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Test Script: conda run -n pytest-dev__pytest__5.0  coverage run -m pytest -rA testing/test_junitxml.py;
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Command: conda run -n pytest-dev__pytest__5.0 coverage run -m pytest -rA testing/test_junitxml.py 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-5.0.2.dev262+gc2f762460, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/test_junitxml.py .                                               [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/test_junitxml.py::test_global_properties_are_written
+=========================== 1 passed in 0.61 seconds ===========================
+
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Return Code: 0 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] TestsTime: 1.077289342880249 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] 
+>>>>> All Tests Passed
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Current Working Directory: /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Command: conda run -n pytest-dev__pytest__5.0 coverage json -o coverage.json 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Std. Output:
+Wrote JSON report to coverage.json
+
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Return Code: 0 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] 
+CoverageLOG: 37.24340175953079%
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] 
+FunctionCoverageLOG: 91.66666666666666%
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Running mutation testing 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Command: conda run -n pytest-dev__pytest__5.0 cosmic-ray init mutation.toml mutation.sqlite 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Std. Output:
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Return Code: 0 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Command: conda run -n pytest-dev__pytest__5.0 cosmic-ray exec mutation.toml mutation.sqlite 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Std. Output:
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Return Code: 0 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Command: conda run -n pytest-dev__pytest__5.0 cr-rate mutation.sqlite --estimate --confidence 95.0 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Std. Output:
+78.95 78.95 78.95
+
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Return Code: 0 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Command: conda run -n pytest-dev__pytest__5.0 cr-report mutation.sqlite 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Std. Output:
+[job-id] 9f4a0c4bd51945809fddec2d8163a366
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 9192176db26b42db8609fbdcac7bc3e5
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Sub 1
+worker outcome: normal, test outcome: killed
+[job-id] 832f97530c7c4233ba473d6affd76524
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Sub 2
+worker outcome: normal, test outcome: survived
+[job-id] 27cf71d9b3f64692b0515b99953fd7e7
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Sub 3
+worker outcome: normal, test outcome: survived
+[job-id] 036caeba4a9f483fb575ec8efa452af7
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Sub 4
+worker outcome: normal, test outcome: survived
+[job-id] 75e79b43ec654ff48cefc522b1debaff
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Sub 5
+worker outcome: normal, test outcome: survived
+[job-id] 23c8fa745f12420aac560e2c5d9db3a0
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] 10a67bb8d4a443dd88da3cb44307245a
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Mul 1
+worker outcome: normal, test outcome: killed
+[job-id] 1368a90b88bc41e49bc7472e73b56fe8
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] bf83404c73d3497facff3e3f1b776692
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Mul 3
+worker outcome: normal, test outcome: survived
+[job-id] 92352900b0bf454083d6dac6f5f8110e
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Mul 4
+worker outcome: normal, test outcome: survived
+[job-id] 699d2e357bcc440f991c740848cccda7
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Mul 5
+worker outcome: normal, test outcome: survived
+[job-id] 3ebb58678c614e72940313c289b22b49
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] a68d98fa1b1c470c9b2c66e53117ca65
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Div 1
+worker outcome: normal, test outcome: killed
+[job-id] d28ee4406f284176b35e94331341bc7b
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] 1c483c5b9d3d4881b615890a2b3d4a67
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Div 3
+worker outcome: normal, test outcome: killed
+[job-id] 187fec8e441546aebbaf825ed458abcc
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Div 4
+worker outcome: normal, test outcome: killed
+[job-id] 5af4fcfb08714d62b960aa9fdfb6ce3c
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Div 5
+worker outcome: normal, test outcome: killed
+[job-id] 7280d88305ff47a5916a747ee0243d6c
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] eb91407152704a1aa33eb09299c2d087
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_FloorDiv 1
+worker outcome: normal, test outcome: killed
+[job-id] 667e57974c5345b29ec4bc39d9c0363f
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] d9bfdb12cb8c4d80be0f708d924ca168
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_FloorDiv 3
+worker outcome: normal, test outcome: killed
+[job-id] 99a57718e69646f39709fde962fe8933
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_FloorDiv 4
+worker outcome: normal, test outcome: killed
+[job-id] bc8fe96dab31431aaec9a0a6852dd8c0
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_FloorDiv 5
+worker outcome: normal, test outcome: killed
+[job-id] a52071ce6bd4446da16514fbf980ab6d
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Mod 0
+worker outcome: normal, test outcome: killed
+[job-id] bd477adec4d549a59be69977d258f448
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Mod 1
+worker outcome: normal, test outcome: killed
+[job-id] 18b5dabfe7d84a26967b43cf727da6a1
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Mod 2
+worker outcome: normal, test outcome: survived
+[job-id] b492c0359d7f4b3ab1f642ed967729b0
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Mod 3
+worker outcome: normal, test outcome: killed
+[job-id] cea9bf8d67b044dfb96376101a58fa38
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Mod 4
+worker outcome: normal, test outcome: killed
+[job-id] cf6487908d0a48519fe4bf485f585e6b
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Mod 5
+worker outcome: normal, test outcome: killed
+[job-id] f87b7d884edf42dab0471bd4bfdb4e81
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] bb495526c3ac4ffb851546cee22dc2d7
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Pow 1
+worker outcome: normal, test outcome: killed
+[job-id] 7d4fe4a7a5144b89bd50c6afe4d484cc
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] 5a961a02675c45a98e406c07ced28983
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Pow 3
+worker outcome: normal, test outcome: survived
+[job-id] fa4908a8b8754322b84abd269da2976f
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Pow 4
+worker outcome: normal, test outcome: survived
+[job-id] 1cb44debdedc4d9186749df13bca76c8
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_Pow 5
+worker outcome: normal, test outcome: survived
+[job-id] ab9dbab1a47f4ec9a0b90fe0d3e4f4cf
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] aab3cbddd92d4e188fc06db80bee7402
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_RShift 1
+worker outcome: normal, test outcome: killed
+[job-id] af2e18027ea24312ae87fa4b0e75589c
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] 58bc5f2f3f79401da3a12d8615acfa0d
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_RShift 3
+worker outcome: normal, test outcome: survived
+[job-id] 2ba993facf3e485cb505a19d53cd3f5c
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_RShift 4
+worker outcome: normal, test outcome: survived
+[job-id] fafa88f004144ae2b05d92f91520a102
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_RShift 5
+worker outcome: normal, test outcome: survived
+[job-id] 401a91b4033841d98baf193943ba75a2
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 5938ceca5c8147f7b93bede6f33d3273
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_LShift 1
+worker outcome: normal, test outcome: killed
+[job-id] a3f393eae9f6444eb9dfd9ee6ef727f8
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] 467de8c9468846cd93a0c2737d773e00
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_LShift 3
+worker outcome: normal, test outcome: survived
+[job-id] 4075a8e1b40e47b7a87ee312b92f6d54
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_LShift 4
+worker outcome: normal, test outcome: survived
+[job-id] 2e20412909f64def9e2f6a3e538126c3
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_LShift 5
+worker outcome: normal, test outcome: survived
+[job-id] 41fe75d31a0f4b37a3953c2c81b70a4a
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] e72318495267440192ef921249025cc4
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_BitOr 1
+worker outcome: normal, test outcome: killed
+[job-id] b9b61a3b7d9a4f3aabe5f73ff3e6569e
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] 80a0e6548de84f8a8619bfef76458904
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_BitOr 3
+worker outcome: normal, test outcome: survived
+[job-id] f552167b9b5c42789e3e898efe03f368
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_BitOr 4
+worker outcome: normal, test outcome: survived
+[job-id] b94a1b59059b43289e506f37060107e8
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_BitOr 5
+worker outcome: normal, test outcome: survived
+[job-id] 24d9b711f5f14710a1c8402b6369304b
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] db94b1c27c1b4d75a9b8970f5adabc62
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_BitAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] 714a037d7dd646b4a445aa1875d4e03f
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] 2fc291acc8624f16845074448f8513db
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_BitAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] 5bda17e546ab48dab42e182e8c0ca0d2
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_BitAnd 4
+worker outcome: normal, test outcome: survived
+[job-id] b8deaf5200c3453086c1293b4f900ff2
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_BitAnd 5
+worker outcome: normal, test outcome: survived
+[job-id] 90fb5d3a4dd74680bf4c3db2dccb336c
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] de8b9c2f73fe4bd5b49420791839b8c4
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_BitXor 1
+worker outcome: normal, test outcome: killed
+[job-id] baf939d5a667472fbe5a5e3f5d8b9e90
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] 8d0943bf8c8f49c6859d279f8c66f5fa
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_BitXor 3
+worker outcome: normal, test outcome: survived
+[job-id] 6403be7701084dce83a1c637a53cce63
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_BitXor 4
+worker outcome: normal, test outcome: survived
+[job-id] 66be88f2ff84441eb6d6d857cd3ad2d0
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Add_BitXor 5
+worker outcome: normal, test outcome: survived
+[job-id] 606ab12717824980a29e65ec35408c61
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] d7beafe65b584702bd944c48d16c2872
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_Add 1
+worker outcome: normal, test outcome: survived
+[job-id] 34dc1d3b9abc485ba4715193440f377e
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] 8f8108ddf3cf46f68726c6b4604ed112
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] 36965f8a33184727aa141918215ab6f9
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] cff0f7869b2446d68ce701146a36065d
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_Div 1
+worker outcome: normal, test outcome: killed
+[job-id] 0b6215b4edea4dd9b6f45da8b55c77f1
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 3eb379f1dd02420ea240975008ae5b58
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_FloorDiv 1
+worker outcome: normal, test outcome: killed
+[job-id] 5c7b5dba3dea4421af554a71d2cb030b
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] 12affe123a834ce6a04c24525fcefdd9
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_Mod 1
+worker outcome: normal, test outcome: killed
+[job-id] eb2c3d868b16493bb8249e40a73502cb
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] ca71d431be6f41eda5af948ea84fa6a2
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 7acc345759334b93834befb4638ce69a
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 7318623cb3834abd9d22595cfb9bd9c6
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 4db5d5fab94b44818ebdfd6010c913d7
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] a03acec9266945ff933d0d5b7cea5ecf
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] a265382501db4ed7b2dd3895320c971b
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] a1a78f66e962459297c2998fb1c5fab3
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 58a36179572a4af7800ea213d33908c7
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] eda9191fdf5c4e4996bec95d8a8b5082
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 8b6fdcd8e6c740cd8ae36f12a484cdfa
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] a2ad3e7db057454eb49b2d008f877c3f
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Sub_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] 294bcf2c1628405abd94a8683665ecbc
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] 8e2177bc82d6462f9eef4ce202861f91
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Add 1
+worker outcome: normal, test outcome: survived
+[job-id] 4a9aed3ad4dc4196b0f8f682d8f76897
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Add 2
+worker outcome: normal, test outcome: survived
+[job-id] 78c0c57d728b40edb01e93d2235282c9
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Add 3
+worker outcome: normal, test outcome: survived
+[job-id] e1b54cf86b6448ef948a890881fc9931
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Add 4
+worker outcome: normal, test outcome: killed
+[job-id] 8aa3f67ef17f41789eb9747c8aad7d65
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Add 5
+worker outcome: normal, test outcome: survived
+[job-id] 9330103288ec4c78be3e2908bf0af135
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] bd25b27253f6403cb795852e7729d52a
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] db0d1c87baa54871bad7179d71702182
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Sub 2
+worker outcome: normal, test outcome: survived
+[job-id] 077ecf0a39a347c29ea8c4b851c4986d
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Sub 3
+worker outcome: normal, test outcome: survived
+[job-id] c4d0b683925442a1ae8c506f3b17d3ff
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Sub 4
+worker outcome: normal, test outcome: killed
+[job-id] fd5c82ce14214784a16d2032dd8d8712
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Sub 5
+worker outcome: normal, test outcome: survived
+[job-id] af025fc375b14739af22c23df3d7c4e8
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] ed022fd796bb4544931a63783f8e0933
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] 632c7396cfe04630b1ba6947b8470ffa
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] 01f6c225bb244629a088a03ab17f580d
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Mul 3
+worker outcome: normal, test outcome: survived
+[job-id] f664805a7c5041b7a3cc5331c70d51ca
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Mul 4
+worker outcome: normal, test outcome: killed
+[job-id] f03eca6a47af4051973ca190f2299ab1
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Mul 5
+worker outcome: normal, test outcome: survived
+[job-id] 59c71434cf0b46358bd230ed733429ea
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] f492063eec1344deb51b32b4e8d7e9c1
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] 2141292ce16d4d2cac1f28d0c3eb9a79
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] cecb1be0ef8146e598775d884015901a
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Div 3
+worker outcome: normal, test outcome: survived
+[job-id] 3bc7eba0e9624089baf51e60bd45dfa7
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Div 4
+worker outcome: normal, test outcome: killed
+[job-id] 75fa9da13be94aedbff9f5543d221ff4
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Div 5
+worker outcome: normal, test outcome: survived
+[job-id] 9913f8d6cd614f83b74cf6fc8313ea14
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] e76360ee07b443a490b40f805b7c7a70
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] ba03e23106bf4e1ca519c0053b171b19
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] ae762dfb42734ff2aeca9bfcf1812926
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_FloorDiv 3
+worker outcome: normal, test outcome: survived
+[job-id] 77443bee0de745cdbc4ff1e6c2dc07e6
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_FloorDiv 4
+worker outcome: normal, test outcome: killed
+[job-id] b7bb60a6cb2f460587ef17ad03ea7f14
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_FloorDiv 5
+worker outcome: normal, test outcome: survived
+[job-id] 46d763272fe84be793d4f3cf0a08c645
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] cc751f95728a4c099da78e65a51d7ad9
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] b8c779629f5e46bca97634e9c328a58f
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] 447c2cb630064a2da7e1453c11ce70db
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Pow 3
+worker outcome: normal, test outcome: survived
+[job-id] 683cc24938fb4edabf8074ac27acf035
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Pow 4
+worker outcome: normal, test outcome: killed
+[job-id] 08082902785d431db8df3ca95b17cfce
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_Pow 5
+worker outcome: normal, test outcome: survived
+[job-id] 1ffc267539a24af68048d10eb3952534
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 6f3c87e2cdd24331b3d38a9e73a82430
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 29b2df6be42d420f889708dc450c5137
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] acdbef00a353448e9e637facb961378d
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_RShift 3
+worker outcome: normal, test outcome: survived
+[job-id] 3217945f2d9e4296b3f9959f017c51fc
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_RShift 4
+worker outcome: normal, test outcome: killed
+[job-id] 1ea64328151f4976985e8218800db7bf
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_RShift 5
+worker outcome: normal, test outcome: survived
+[job-id] 319090858e5a4b4384ac847056fda928
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 4cdcd2821bad48139e2d71479b72a472
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 01df5618733c49ba91c8d96fdfe2a524
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] bde66b281dcd471f9da39da8caa708a0
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_LShift 3
+worker outcome: normal, test outcome: survived
+[job-id] 92ca010632924981ad40aa73df89d5f1
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_LShift 4
+worker outcome: normal, test outcome: killed
+[job-id] 51b3ae4827b240f28b4aed6db42c2613
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_LShift 5
+worker outcome: normal, test outcome: survived
+[job-id] bdfb71cf3e5e43d89684d40e147e8d4d
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 176acb9294fb447fa9216d18b03de0d4
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] fac0ab745c3a4718895a8b59656835f9
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] 4c1cbb8fdb054046af827a91153677f3
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_BitOr 3
+worker outcome: normal, test outcome: survived
+[job-id] 7d071c9517294de5a6c432756748caac
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_BitOr 4
+worker outcome: normal, test outcome: killed
+[job-id] cac979da75754fb3b1be1989266459ed
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_BitOr 5
+worker outcome: normal, test outcome: survived
+[job-id] 52bfccf9514d4822b8550017bd7598a8
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] a180313c91ee4bc28d8eb005cf62594f
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 53ee52febd2244c09053a37e8f1fb2f1
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] 172441355001493a8f226ef5ddf7449e
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_BitAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] ac8c8b1530cb46719fe24d77430d3b22
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_BitAnd 4
+worker outcome: normal, test outcome: killed
+[job-id] 32c0bec3f2f34eebafdf56dd666d78ac
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_BitAnd 5
+worker outcome: normal, test outcome: survived
+[job-id] e59268f16bb54ba8bd0e1317fd66a75d
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] 788f6d3f2a9c4da3ae2569535afea39d
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] eb77d85e12214859bed83b560ed53287
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] 834ac45420af459684e5073d43905dba
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_BitXor 3
+worker outcome: normal, test outcome: survived
+[job-id] 043b49494f394f7dabad9ea2d119b742
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_BitXor 4
+worker outcome: normal, test outcome: killed
+[job-id] 8ffd420364d94da68460bc9b4f7baf43
+src/_pytest/junitxml.py core/ReplaceBinaryOperator_Mod_BitXor 5
+worker outcome: normal, test outcome: survived
+[job-id] 1bcc5efd74bf4e8a870de7c64d2d6f37
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 138f92a0e1e34f8193b6aa3d754afdbf
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_NotEq 1
+worker outcome: normal, test outcome: survived
+[job-id] 8cc2d40ad3744855b74474d63718ed92
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_NotEq 2
+worker outcome: normal, test outcome: survived
+[job-id] 469992e54fc542c19adf4df4a8169239
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_NotEq 3
+worker outcome: normal, test outcome: survived
+[job-id] 5614003a21544a33bec100fd29d82649
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_NotEq 4
+worker outcome: normal, test outcome: survived
+[job-id] 24eb4636050148d0a674483b4d078c64
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_NotEq 5
+worker outcome: normal, test outcome: survived
+[job-id] 368424d616784b8b83f52ce6d09eac61
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_NotEq 6
+worker outcome: normal, test outcome: survived
+[job-id] 8122fc043e1848afbd95e3840810ed62
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_NotEq 7
+worker outcome: normal, test outcome: survived
+[job-id] a5e29793441949c78c5ade79b2b72c7f
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_NotEq 8
+worker outcome: normal, test outcome: survived
+[job-id] 415288de89b549a9850c56bf1466acb9
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_NotEq 9
+worker outcome: normal, test outcome: survived
+[job-id] 73acce8182964e05beb290bc48082a8f
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_NotEq 10
+worker outcome: normal, test outcome: survived
+[job-id] 0d4283a151fd4eb2bb5e7bac5a20122f
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_NotEq 11
+worker outcome: normal, test outcome: survived
+[job-id] 8d4715cd74b84e4c8b0780edfdd4c505
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_NotEq 12
+worker outcome: normal, test outcome: survived
+[job-id] 3e34a65d266a470db70fa411c6255fc2
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_NotEq 13
+worker outcome: normal, test outcome: survived
+[job-id] 2390d55d726542cdb7b681c6f5c6658a
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_NotEq 14
+worker outcome: normal, test outcome: survived
+[job-id] e21e23971b4c429d886add7dd3ed294a
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_NotEq 15
+worker outcome: normal, test outcome: survived
+[job-id] a58eca5859ba4d61a6852b8468472b6a
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_NotEq 16
+worker outcome: normal, test outcome: survived
+[job-id] 5b80828e3fb946a3a99a72ea831e63ec
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 35e62344cb3249e388671e2ab45c426d
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] 70f002e207da4e41b910320b53d49d65
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Lt 2
+worker outcome: normal, test outcome: survived
+[job-id] 08b4b19aa8fd43cdb570a929271a7810
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Lt 3
+worker outcome: normal, test outcome: survived
+[job-id] 5bf0fa264c704f029c0037db3ca624bb
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Lt 4
+worker outcome: normal, test outcome: survived
+[job-id] 7d6698b1b777469da11c86b9d442e514
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Lt 5
+worker outcome: normal, test outcome: survived
+[job-id] e2d0398f32e84a3395385b4a6f10607a
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Lt 6
+worker outcome: normal, test outcome: survived
+[job-id] a9d8bd6e37a24341a0cee68b04e31153
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Lt 7
+worker outcome: normal, test outcome: survived
+[job-id] 4aa5af5e42fb4e6d811a3ccf18efb73c
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Lt 8
+worker outcome: normal, test outcome: survived
+[job-id] 3b737f707d444e598ad6d08649e64c64
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Lt 9
+worker outcome: normal, test outcome: survived
+[job-id] 4136be5a85ab458ea968763e6fe6fb2c
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Lt 10
+worker outcome: normal, test outcome: survived
+[job-id] 9ba9b12da9284db7987f48033145cc11
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Lt 11
+worker outcome: normal, test outcome: survived
+[job-id] 9e9236c561384f97a32339c0a3bb391d
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Lt 12
+worker outcome: normal, test outcome: survived
+[job-id] afe9de21ff924a7c8059d62c091e2219
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Lt 13
+worker outcome: normal, test outcome: survived
+[job-id] e01605cffca146dab2216333cde63a24
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Lt 14
+worker outcome: normal, test outcome: survived
+[job-id] 2e56d91cb38349b3b3f034db4734b658
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Lt 15
+worker outcome: normal, test outcome: survived
+[job-id] d9aaa0d15b5844c4bf2fdc4746b8d260
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Lt 16
+worker outcome: normal, test outcome: survived
+[job-id] a06d0be44148448b8909868e36aa83bc
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] a86cbeb3132247fbb94d866fd060781c
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 440becbf5c92464cace36b38007f95c8
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_LtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 016e78245d8b443987840db985a96475
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_LtE 3
+worker outcome: normal, test outcome: survived
+[job-id] a55888ce32e3445b9546613308779acc
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_LtE 4
+worker outcome: normal, test outcome: survived
+[job-id] b5220ca2e1aa4558bd18e8e03ff257fb
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_LtE 5
+worker outcome: normal, test outcome: survived
+[job-id] f7d939dc0e27452f864f7d5361595f3f
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_LtE 6
+worker outcome: normal, test outcome: survived
+[job-id] 1531a0058f9e405592559ee83cc914ff
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_LtE 7
+worker outcome: normal, test outcome: survived
+[job-id] 187fca5375b84ddba86fbc0359de6d97
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_LtE 8
+worker outcome: normal, test outcome: survived
+[job-id] 83240574df224705903f7217840a3961
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_LtE 9
+worker outcome: normal, test outcome: survived
+[job-id] 281e76e8126543cf8fd3c1ec31bf7e37
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_LtE 10
+worker outcome: normal, test outcome: survived
+[job-id] 0e47baa00ca142dba61a5d2297c20237
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_LtE 11
+worker outcome: normal, test outcome: survived
+[job-id] b700c21b76f94788becca65284e84e38
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_LtE 12
+worker outcome: normal, test outcome: survived
+[job-id] 81995e39af994bf1b4aac64883f4e147
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_LtE 13
+worker outcome: normal, test outcome: survived
+[job-id] 9e67ede9278a4b11add4048b2558611e
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_LtE 14
+worker outcome: normal, test outcome: survived
+[job-id] cc68b4ff85f34635a21561e6cb022a4e
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_LtE 15
+worker outcome: normal, test outcome: survived
+[job-id] 13f9f813965c4fb7909905cd9735e485
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_LtE 16
+worker outcome: normal, test outcome: survived
+[job-id] d8b55e82773f47998f89f2a5b2eee13b
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 9a8b5383101942eba4cac3167ea7f89d
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] fa7345571b01486ca504c1122359aa3e
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Gt 2
+worker outcome: normal, test outcome: survived
+[job-id] 376143a96eff498198a21db0a9b6fcb2
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Gt 3
+worker outcome: normal, test outcome: survived
+[job-id] f0e44b55dade4746b15fd67951f3dcf7
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Gt 4
+worker outcome: normal, test outcome: survived
+[job-id] 7e83e586bc5c490383b02307cc2169c2
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Gt 5
+worker outcome: normal, test outcome: survived
+[job-id] 9bd38b3626d544e2a0f912faadc23fa9
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Gt 6
+worker outcome: normal, test outcome: survived
+[job-id] ce4cd392bfe04368bdcfbd8f9f7c3b85
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Gt 7
+worker outcome: normal, test outcome: survived
+[job-id] 5708a9835cdc451592c0cd3f88f71fa1
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Gt 8
+worker outcome: normal, test outcome: survived
+[job-id] 0f056e631e7b4c4fbd9d3062cfdac9a6
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Gt 9
+worker outcome: normal, test outcome: survived
+[job-id] 6de8509164134db4a9ccc7fb82809415
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Gt 10
+worker outcome: normal, test outcome: survived
+[job-id] 5628d2e37317426ea7c071b13aa2c119
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Gt 11
+worker outcome: normal, test outcome: survived
+[job-id] 788e0cf2cdeb4fb78158f65956ac182f
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Gt 12
+worker outcome: normal, test outcome: survived
+[job-id] fab8e6d7607a4023b24dd90933ba2f3b
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Gt 13
+worker outcome: normal, test outcome: survived
+[job-id] cd1e98eb2d10404d9fd18389ea4ed6cc
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Gt 14
+worker outcome: normal, test outcome: survived
+[job-id] e48267b215234832b40a46f37ea7eef8
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Gt 15
+worker outcome: normal, test outcome: survived
+[job-id] 2f8b6e122f7946dca79a30957a4e6935
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Gt 16
+worker outcome: normal, test outcome: survived
+[job-id] 0cfaf87369dd462e885a4112891841fe
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 8aa654eb9b014beb8937a1be2cdecebf
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 154d88ae322b4889894182e34926fc2b
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_GtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 93233ee637504c1bbe85b0c9ccabd9f2
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_GtE 3
+worker outcome: normal, test outcome: survived
+[job-id] 7cdf6f5189d94e038159ad35d1683d9e
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_GtE 4
+worker outcome: normal, test outcome: survived
+[job-id] bae939ec65474b6088133a16923f143e
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_GtE 5
+worker outcome: normal, test outcome: survived
+[job-id] dc8cc65d706b4a4eb579a3ac08f1bf00
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_GtE 6
+worker outcome: normal, test outcome: survived
+[job-id] 6a09b03adf694af78896909bbdf6ea95
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_GtE 7
+worker outcome: normal, test outcome: survived
+[job-id] 4bc3529e6aaf45e0a6d6e57734244635
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_GtE 8
+worker outcome: normal, test outcome: survived
+[job-id] f3bf117b81134b64bbe6bc271c10ec1f
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_GtE 9
+worker outcome: normal, test outcome: survived
+[job-id] ff389a240ce04880969b59475a954e72
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_GtE 10
+worker outcome: normal, test outcome: survived
+[job-id] ec234408e3a54b9c8b46c82da2ba7f10
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_GtE 11
+worker outcome: normal, test outcome: survived
+[job-id] 8df5b96e70a14964bc6ea886dc0fb577
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_GtE 12
+worker outcome: normal, test outcome: survived
+[job-id] cb89ea87dded491a973477c1525ed5c6
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_GtE 13
+worker outcome: normal, test outcome: survived
+[job-id] 92a564d4fd884111841bee1ec2e7c657
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_GtE 14
+worker outcome: normal, test outcome: survived
+[job-id] b85af9b629bc412bb119581109777fc7
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_GtE 15
+worker outcome: normal, test outcome: survived
+[job-id] 86214368f18a4a44940608c539145697
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_GtE 16
+worker outcome: normal, test outcome: survived
+[job-id] 472957ff0174421b8c71d704714a7c66
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] ed1cf53be3c549ff8bdc16c4115069c4
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Is 1
+worker outcome: normal, test outcome: killed
+[job-id] 05023cc0459343d3bdcdc856d4fb9f63
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Is 2
+worker outcome: normal, test outcome: killed
+[job-id] e476f5df8507418cb1fad672b8d58e8a
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Is 3
+worker outcome: normal, test outcome: killed
+[job-id] b56d2fe5d3f1490da8ff7d8b8c09b552
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Is 4
+worker outcome: normal, test outcome: killed
+[job-id] 01a719367369434caff24c5f77bcbfdd
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Is 5
+worker outcome: normal, test outcome: killed
+[job-id] 68cc450e721b4437a4dba3b4779d99b8
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Is 6
+worker outcome: normal, test outcome: killed
+[job-id] 9b41d16c16cf41619e4b9513955ba51b
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Is 7
+worker outcome: normal, test outcome: survived
+[job-id] 7345722f04134b44a17a9078f8f74d6f
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Is 8
+worker outcome: normal, test outcome: survived
+[job-id] a53d96f66df243b4bcdd97f6599cb2cf
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Is 9
+worker outcome: normal, test outcome: survived
+[job-id] 24e5284b9e644710b2f32fd6ac5ad303
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Is 10
+worker outcome: normal, test outcome: killed
+[job-id] 7098ccfc1ed8404a8a8f10673f5ba8d0
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Is 11
+worker outcome: normal, test outcome: killed
+[job-id] b0e328522f714254bb5bdd74e8a9abbe
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Is 12
+worker outcome: normal, test outcome: survived
+[job-id] 282a1c1f115a472086f4cde79f1a5eef
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Is 13
+worker outcome: normal, test outcome: survived
+[job-id] a46b7b95a87d44df8c62cd024c2d38fc
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Is 14
+worker outcome: normal, test outcome: survived
+[job-id] b5e7d9e00e6c4b6181b32a9356334ecb
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Is 15
+worker outcome: normal, test outcome: killed
+[job-id] 8e2a8b84150544449f7b399e11627b9c
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_Is 16
+worker outcome: normal, test outcome: survived
+[job-id] cce13d924f3c48599c84455efdf15f27
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_IsNot 0
+worker outcome: normal, test outcome: killed
+[job-id] 02416e5da4a149189fb2f2614c292d71
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_IsNot 1
+worker outcome: normal, test outcome: killed
+[job-id] 1bffa986602a46f8b60a6e5e6c38017c
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_IsNot 2
+worker outcome: normal, test outcome: killed
+[job-id] c709fd369cab44d19b4f2eec3cd5026a
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_IsNot 3
+worker outcome: normal, test outcome: killed
+[job-id] f8eebb7bf336467186c3b0ba5ef5f140
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_IsNot 4
+worker outcome: normal, test outcome: killed
+[job-id] 25e88ad804dd4d1b9d78b6dc136fd428
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_IsNot 5
+worker outcome: normal, test outcome: killed
+[job-id] 5adbb6ea7d4e41588854bf6919bc1f6c
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_IsNot 6
+worker outcome: normal, test outcome: killed
+[job-id] 009028f1ae274500a5f872db10e13a48
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_IsNot 7
+worker outcome: normal, test outcome: survived
+[job-id] 73e04c0c6e70456a9a97de30202ddf56
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_IsNot 8
+worker outcome: normal, test outcome: survived
+[job-id] 9ecf9caf1ffd4ab1a6e1871abce2388a
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_IsNot 9
+worker outcome: normal, test outcome: survived
+[job-id] b289fa4c73b34540abfdecaa5faa98e8
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_IsNot 10
+worker outcome: normal, test outcome: killed
+[job-id] 06fc154710fb450784bff2f303117b28
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_IsNot 11
+worker outcome: normal, test outcome: killed
+[job-id] 2829a07507c4456f96887f3405a4f348
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_IsNot 12
+worker outcome: normal, test outcome: survived
+[job-id] 6fc3076fee01427cb04b40d8ad8166e9
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_IsNot 13
+worker outcome: normal, test outcome: survived
+[job-id] 28317b177e7f4880bba51728809c0dbc
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_IsNot 14
+worker outcome: normal, test outcome: survived
+[job-id] 45843e66807245279411958292097f4a
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_IsNot 15
+worker outcome: normal, test outcome: killed
+[job-id] 2633c52a23c84436ac3161b6e81001a7
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Eq_IsNot 16
+worker outcome: normal, test outcome: survived
+[job-id] 46c027b5db4c4beb95aed4d8859c0cf5
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Lt_Eq 0
+worker outcome: normal, test outcome: killed
+[job-id] 4c3277ee688a4c5a9c611a36bc09a2a4
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Lt_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 121d8b2707cc4c908b03508f9aa7dc96
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Lt_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] a968a712dc8c429fb9194423eb534409
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Lt_Gt 0
+worker outcome: normal, test outcome: killed
+[job-id] ab699a6038b14d0aadf273d62ca2eb31
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Lt_GtE 0
+worker outcome: normal, test outcome: killed
+[job-id] 0a4334986b014c06890d564533bdcf69
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Lt_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] bff05314072747a3b32e835018ba3837
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_Lt_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] d63029eae0534b2495a6b174bc63bf75
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_LtE_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] a77ae3b97ad244778a4d65161996d4e7
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_LtE_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 733e40a70bdd480eb50fd48488202341
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_LtE_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] b57cd810785444c09fb0a517485ee08a
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_LtE_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] c1e8fd07e6364379a73379fb33570fa3
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_LtE_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] b4f053ff44844006b8593079ecd2fafe
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 8b54d47ae5b042cc92ebad5b8698b708
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_IsNot_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] b5bbf7125da4430ba6d73eb0e6345de2
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_IsNot_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] 708eaa90ec444727ab16e43b13203f5b
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_IsNot_Is 3
+worker outcome: normal, test outcome: survived
+[job-id] f57a78759f53421480ba95c3c5fc28ce
+src/_pytest/junitxml.py core/ReplaceComparisonOperator_IsNot_Is 4
+worker outcome: normal, test outcome: survived
+[job-id] a7c3102f7f9c40e99b32797892f22c36
+src/_pytest/junitxml.py core/ReplaceUnaryOperator_USub_UAdd 0
+worker outcome: normal, test outcome: survived
+[job-id] 9f75140d59e34be69d447a275771b882
+src/_pytest/junitxml.py core/ReplaceUnaryOperator_USub_UAdd 1
+worker outcome: normal, test outcome: survived
+[job-id] e401b7577d5d4172bd2bc571b9599a84
+src/_pytest/junitxml.py core/ReplaceUnaryOperator_USub_UAdd 2
+worker outcome: normal, test outcome: survived
+[job-id] c1c9da82a88c4bc3b6c243252cd2ed06
+src/_pytest/junitxml.py core/ReplaceUnaryOperator_USub_Invert 0
+worker outcome: normal, test outcome: survived
+[job-id] 79d7e44157404f3e9df4f72b260d54a3
+src/_pytest/junitxml.py core/ReplaceUnaryOperator_USub_Invert 1
+worker outcome: normal, test outcome: survived
+[job-id] 235551b6bd62458f9865fc5c8ee91fc5
+src/_pytest/junitxml.py core/ReplaceUnaryOperator_USub_Invert 2
+worker outcome: normal, test outcome: survived
+[job-id] 9091ecf3b0e6407ead8f82aa0f222485
+src/_pytest/junitxml.py core/ReplaceUnaryOperator_USub_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] a4fafe0dd53940f8a9f7935289e45311
+src/_pytest/junitxml.py core/ReplaceUnaryOperator_USub_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] 5a7620507821412cb9cb5eb89e004fc1
+src/_pytest/junitxml.py core/ReplaceUnaryOperator_USub_Not 2
+worker outcome: normal, test outcome: survived
+[job-id] bfb48d26bae34d9f9d998381f1baceb6
+src/_pytest/junitxml.py core/ReplaceUnaryOperator_Delete_USub 0
+worker outcome: normal, test outcome: survived
+[job-id] 6aba511fa79640dfaa51db47d7f46176
+src/_pytest/junitxml.py core/ReplaceUnaryOperator_Delete_USub 1
+worker outcome: normal, test outcome: survived
+[job-id] a4ace58ba662477689d709ddd3b4a4d6
+src/_pytest/junitxml.py core/ReplaceUnaryOperator_Delete_USub 2
+worker outcome: normal, test outcome: survived
+[job-id] 47d0d1745b264521bbd6fb8bd93ecad4
+src/_pytest/junitxml.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: killed
+[job-id] 8eecdecb33514854b649a5dd08e77b54
+src/_pytest/junitxml.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] 9289c2f700784fc49052388ac39cbf1d
+src/_pytest/junitxml.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: normal, test outcome: survived
+[job-id] 4392cf795ea74faa9c48effbe80fee6c
+src/_pytest/junitxml.py core/ReplaceUnaryOperator_Delete_Not 3
+worker outcome: normal, test outcome: killed
+[job-id] b698b23faef34ff99f597acb4f8c4c5f
+src/_pytest/junitxml.py core/ReplaceUnaryOperator_Delete_Not 4
+worker outcome: normal, test outcome: survived
+[job-id] 431bec3cdac34d8c81ed8e23cb67b95f
+src/_pytest/junitxml.py core/ReplaceUnaryOperator_Delete_Not 5
+worker outcome: normal, test outcome: survived
+[job-id] 00d6820555644dabb2aec273d49daabc
+src/_pytest/junitxml.py core/ReplaceUnaryOperator_Delete_Not 6
+worker outcome: normal, test outcome: killed
+[job-id] 0cb8131f495a4dc797b2ec7bf60f5b9b
+src/_pytest/junitxml.py core/AddNot 0
+worker outcome: normal, test outcome: survived
+[job-id] cb186646fbbe4c4fbfc914a93ad53184
+src/_pytest/junitxml.py core/AddNot 1
+worker outcome: normal, test outcome: killed
+[job-id] b937c867ca584cd7b69d494f263c665d
+src/_pytest/junitxml.py core/AddNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 4ca52385a2c4446fb83811291f3a271f
+src/_pytest/junitxml.py core/AddNot 3
+worker outcome: normal, test outcome: survived
+[job-id] 03a3169f084d4e72a3ffbe5314f99baf
+src/_pytest/junitxml.py core/AddNot 4
+worker outcome: normal, test outcome: survived
+[job-id] 2dd787414c284bae9b2059cb4475e11d
+src/_pytest/junitxml.py core/AddNot 5
+worker outcome: normal, test outcome: survived
+[job-id] 0fad1c457cab420794b345cd62d56618
+src/_pytest/junitxml.py core/AddNot 6
+worker outcome: normal, test outcome: survived
+[job-id] 3b0bca3274084f5684d83b595c10e8d3
+src/_pytest/junitxml.py core/AddNot 7
+worker outcome: normal, test outcome: survived
+[job-id] 867a9ccdd8e940bdac9a8b671d884296
+src/_pytest/junitxml.py core/AddNot 8
+worker outcome: normal, test outcome: survived
+[job-id] f70daef128d943fbb9472b3fa46de849
+src/_pytest/junitxml.py core/AddNot 9
+worker outcome: normal, test outcome: survived
+[job-id] 6a81dd1c09fb47fa86c0fed6eb2fd3df
+src/_pytest/junitxml.py core/AddNot 10
+worker outcome: normal, test outcome: survived
+[job-id] 5745fd7e4f99496e9b8a3efa1c4d7f8f
+src/_pytest/junitxml.py core/AddNot 11
+worker outcome: normal, test outcome: survived
+[job-id] 6a1033c2eb2c4789ad6b1b8eeff45e5d
+src/_pytest/junitxml.py core/AddNot 12
+worker outcome: normal, test outcome: survived
+[job-id] acdbf9beb39948ccab907d3f01d5bf22
+src/_pytest/junitxml.py core/AddNot 13
+worker outcome: normal, test outcome: survived
+[job-id] 564fbe89bd5e4a30b84d4b4d6b9abae5
+src/_pytest/junitxml.py core/AddNot 14
+worker outcome: normal, test outcome: survived
+[job-id] de575ca6d2d8414e834eb6f1fc244924
+src/_pytest/junitxml.py core/AddNot 15
+worker outcome: normal, test outcome: survived
+[job-id] f31e74aeb41b4c39a0f34d99be54a130
+src/_pytest/junitxml.py core/AddNot 16
+worker outcome: normal, test outcome: survived
+[job-id] 9d84c38c5e4047fd86e6ef28919206f1
+src/_pytest/junitxml.py core/AddNot 17
+worker outcome: normal, test outcome: survived
+[job-id] ef19e729a36340308e5e9a1505cbdb0a
+src/_pytest/junitxml.py core/AddNot 18
+worker outcome: normal, test outcome: survived
+[job-id] c9255b63376d4109a19e645817d9cedd
+src/_pytest/junitxml.py core/AddNot 19
+worker outcome: normal, test outcome: survived
+[job-id] 17d630b8aea745b4863ef7e74e244510
+src/_pytest/junitxml.py core/AddNot 20
+worker outcome: normal, test outcome: survived
+[job-id] 303bfc52e2f543b59103a3527fcc2e58
+src/_pytest/junitxml.py core/AddNot 21
+worker outcome: normal, test outcome: survived
+[job-id] cd222cf0bc114b60adf8b06787dcef50
+src/_pytest/junitxml.py core/AddNot 22
+worker outcome: normal, test outcome: survived
+[job-id] 1b34ac2f1cb049a4a2d677a2a728a3c5
+src/_pytest/junitxml.py core/AddNot 23
+worker outcome: normal, test outcome: survived
+[job-id] 9673b440da8f4e5d9a030bfd43096076
+src/_pytest/junitxml.py core/AddNot 24
+worker outcome: normal, test outcome: survived
+[job-id] d4c263f2942b4d8d857177206433e81d
+src/_pytest/junitxml.py core/AddNot 25
+worker outcome: normal, test outcome: survived
+[job-id] 46c1178659ad44c9b323ad0581bb216f
+src/_pytest/junitxml.py core/AddNot 26
+worker outcome: normal, test outcome: killed
+[job-id] 99dad7b92c164de39eb1c7b30ca9c1fd
+src/_pytest/junitxml.py core/AddNot 27
+worker outcome: normal, test outcome: survived
+[job-id] 6be7c3050f164b0386c0d7703c7c3f69
+src/_pytest/junitxml.py core/AddNot 28
+worker outcome: normal, test outcome: killed
+[job-id] 969af04273ba45dd9e8b2e252343eea6
+src/_pytest/junitxml.py core/AddNot 29
+worker outcome: normal, test outcome: killed
+[job-id] 0e47d12369854217bb6684f1a7b5c00e
+src/_pytest/junitxml.py core/AddNot 30
+worker outcome: normal, test outcome: survived
+[job-id] 8a01f0f5dd3b4a9591884f887fbdf9f6
+src/_pytest/junitxml.py core/AddNot 31
+worker outcome: normal, test outcome: survived
+[job-id] bd9a9f1980e742e49c16f85fa1de65aa
+src/_pytest/junitxml.py core/AddNot 32
+worker outcome: normal, test outcome: survived
+[job-id] 9ad42645b67648cba57736c61a20b2fd
+src/_pytest/junitxml.py core/AddNot 33
+worker outcome: normal, test outcome: survived
+[job-id] 30a104f5c3104cb3879add390755fef1
+src/_pytest/junitxml.py core/AddNot 34
+worker outcome: normal, test outcome: survived
+[job-id] 0d607826cec940849b6461a38e4f7e27
+src/_pytest/junitxml.py core/AddNot 35
+worker outcome: normal, test outcome: survived
+[job-id] 8a5b81f8dcea4fa8be7da7210f17dd76
+src/_pytest/junitxml.py core/AddNot 36
+worker outcome: normal, test outcome: survived
+[job-id] da037ac3ea514a749e63dfc54f24d00c
+src/_pytest/junitxml.py core/AddNot 37
+worker outcome: normal, test outcome: survived
+[job-id] df24c58c208b45a48f3ee1df37ec8d59
+src/_pytest/junitxml.py core/AddNot 38
+worker outcome: normal, test outcome: survived
+[job-id] 227e5eeaa4534ef491f40df81376025b
+src/_pytest/junitxml.py core/AddNot 39
+worker outcome: normal, test outcome: survived
+[job-id] 5f1edf4f25d3494db9eb882a82afd008
+src/_pytest/junitxml.py core/AddNot 40
+worker outcome: normal, test outcome: survived
+[job-id] d87e9b8f3f9a4933a56ce81af9860d26
+src/_pytest/junitxml.py core/AddNot 41
+worker outcome: normal, test outcome: survived
+[job-id] a33809bf165b4f26b0569d3f81acd3a7
+src/_pytest/junitxml.py core/AddNot 42
+worker outcome: normal, test outcome: survived
+[job-id] 2e49d3c266df4786846d23b1f07da784
+src/_pytest/junitxml.py core/AddNot 43
+worker outcome: normal, test outcome: survived
+[job-id] d86631227c1b4500a0d02e1e43f80488
+src/_pytest/junitxml.py core/AddNot 44
+worker outcome: normal, test outcome: killed
+[job-id] f22bfbf4008a4f06ac80d3125e61017f
+src/_pytest/junitxml.py core/AddNot 45
+worker outcome: normal, test outcome: killed
+[job-id] e1e15c872f6041d989866fda15e69a6c
+src/_pytest/junitxml.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: survived
+[job-id] 4ab6821b101841a6804f300a334a0674
+src/_pytest/junitxml.py core/ReplaceTrueWithFalse 1
+worker outcome: normal, test outcome: survived
+[job-id] e95a7613316c4c49b810c484e59aed0e
+src/_pytest/junitxml.py core/ReplaceTrueWithFalse 2
+worker outcome: normal, test outcome: survived
+[job-id] 86477998a25b41759a95f06c826dc2c9
+src/_pytest/junitxml.py core/ReplaceTrueWithFalse 3
+worker outcome: normal, test outcome: survived
+[job-id] 90ed721235b74ab7b9dd595bf9c37de1
+src/_pytest/junitxml.py core/ReplaceTrueWithFalse 4
+worker outcome: normal, test outcome: survived
+[job-id] fc6f854bbd42418ea47efe78eb6e6d9f
+src/_pytest/junitxml.py core/ReplaceTrueWithFalse 5
+worker outcome: normal, test outcome: survived
+[job-id] dc70e45deecd4120bed0e4228aec5c9c
+src/_pytest/junitxml.py core/ReplaceAndWithOr 0
+worker outcome: normal, test outcome: survived
+[job-id] bd4de033fa344c70867bdea4b669a3fa
+src/_pytest/junitxml.py core/ReplaceAndWithOr 1
+worker outcome: normal, test outcome: survived
+[job-id] a8683cba728e4bfb931964b96faac82e
+src/_pytest/junitxml.py core/ReplaceAndWithOr 2
+worker outcome: normal, test outcome: survived
+[job-id] 4ba9818fadf9437d8c6a971c76d5ade8
+src/_pytest/junitxml.py core/ReplaceAndWithOr 3
+worker outcome: normal, test outcome: survived
+[job-id] 7bced0b1bfcb403ebf3e691bcc2b27cc
+src/_pytest/junitxml.py core/ReplaceAndWithOr 4
+worker outcome: normal, test outcome: killed
+[job-id] d51cb46e116348b08b169b104f611860
+src/_pytest/junitxml.py core/ReplaceAndWithOr 5
+worker outcome: normal, test outcome: survived
+[job-id] a9bb7be27a094d11915061e02b2fe679
+src/_pytest/junitxml.py core/ReplaceAndWithOr 6
+worker outcome: normal, test outcome: survived
+[job-id] 34e224a8d4064695a23400872a63b911
+src/_pytest/junitxml.py core/ReplaceAndWithOr 7
+worker outcome: normal, test outcome: survived
+[job-id] ade8ebd511bd4718b4649cd975e6b559
+src/_pytest/junitxml.py core/ReplaceAndWithOr 8
+worker outcome: normal, test outcome: survived
+[job-id] 2760930a62cf4046bb2fcedb01684304
+src/_pytest/junitxml.py core/ReplaceOrWithAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 167bb034692e48c4865b291e1dc299d4
+src/_pytest/junitxml.py core/ReplaceOrWithAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] dfbdb0e13ae34c488e2fa528dc6bbeec
+src/_pytest/junitxml.py core/ReplaceOrWithAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] 013e003692d14902bbd61a6a3cdae6ec
+src/_pytest/junitxml.py core/ExceptionReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] 03b539200d4c40a687946b190a2b59ad
+src/_pytest/junitxml.py core/NumberReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] cae9fc4ac8284bcea33b6e970ade39af
+src/_pytest/junitxml.py core/NumberReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] ec17204941e34664a373648df96af116
+src/_pytest/junitxml.py core/NumberReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] 7d7880677f6e4b6689d8f3806c44d29a
+src/_pytest/junitxml.py core/NumberReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] f9c8290427a1432595d77138a8769193
+src/_pytest/junitxml.py core/NumberReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] d658af35b3a44ac7a2fc37717e85a402
+src/_pytest/junitxml.py core/NumberReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] 502b7c68184d4b518e191a32a2dc2f6f
+src/_pytest/junitxml.py core/NumberReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] 536b90f26b22446e98e630c73a4bde62
+src/_pytest/junitxml.py core/NumberReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] 22f8f2dcefdd4575913ec47c802f070a
+src/_pytest/junitxml.py core/NumberReplacer 8
+worker outcome: normal, test outcome: survived
+[job-id] aa47a73ab15247f2803d5b78af33d0d3
+src/_pytest/junitxml.py core/NumberReplacer 9
+worker outcome: normal, test outcome: survived
+[job-id] 9c47593572684a46ba40b65e1f6cd8b4
+src/_pytest/junitxml.py core/NumberReplacer 10
+worker outcome: normal, test outcome: survived
+[job-id] 0058fe2c3b30452b8900f01dc6bcc44f
+src/_pytest/junitxml.py core/NumberReplacer 11
+worker outcome: normal, test outcome: survived
+[job-id] 69182a0d52fb47539d137c3292a7752a
+src/_pytest/junitxml.py core/NumberReplacer 12
+worker outcome: normal, test outcome: survived
+[job-id] 429d96efb05240689f91d6613f24cea7
+src/_pytest/junitxml.py core/NumberReplacer 13
+worker outcome: normal, test outcome: survived
+[job-id] 3b1f38b68b4446c890b033ae8f400d6f
+src/_pytest/junitxml.py core/NumberReplacer 14
+worker outcome: normal, test outcome: survived
+[job-id] cbc000a31fbf447388ad6f60654d61c4
+src/_pytest/junitxml.py core/NumberReplacer 15
+worker outcome: normal, test outcome: survived
+[job-id] 9fdb58e2816f4538b3a80f2be05f9ecb
+src/_pytest/junitxml.py core/NumberReplacer 16
+worker outcome: normal, test outcome: survived
+[job-id] 783dfc636af548a1907136c1ec6cf326
+src/_pytest/junitxml.py core/NumberReplacer 17
+worker outcome: normal, test outcome: survived
+[job-id] 02660abe066d44b1a6016ea57361258a
+src/_pytest/junitxml.py core/NumberReplacer 18
+worker outcome: normal, test outcome: survived
+[job-id] aa97471eaee342dd8c76d8d9728efa11
+src/_pytest/junitxml.py core/NumberReplacer 19
+worker outcome: normal, test outcome: survived
+[job-id] 7bd018f37dc5431bb950680e463d10b4
+src/_pytest/junitxml.py core/NumberReplacer 20
+worker outcome: normal, test outcome: killed
+[job-id] e097fe32e01d4992b360377ad741b7c2
+src/_pytest/junitxml.py core/NumberReplacer 21
+worker outcome: normal, test outcome: survived
+[job-id] 1f0bfe4f7b3746ceb900ca4c10560307
+src/_pytest/junitxml.py core/NumberReplacer 22
+worker outcome: normal, test outcome: survived
+[job-id] 6c172b5d05574caf8dda955f5370cbb7
+src/_pytest/junitxml.py core/NumberReplacer 23
+worker outcome: normal, test outcome: survived
+[job-id] 92511c23f37546ffb8c8d68b6fabda70
+src/_pytest/junitxml.py core/NumberReplacer 24
+worker outcome: normal, test outcome: survived
+[job-id] d9f0a26cb279416d86adfa11be4ffbd8
+src/_pytest/junitxml.py core/NumberReplacer 25
+worker outcome: normal, test outcome: survived
+[job-id] 5dcaafc024db4de395c4a7b0c698331d
+src/_pytest/junitxml.py core/NumberReplacer 26
+worker outcome: normal, test outcome: survived
+[job-id] 8e3a84c376704683a1001cde9009c00c
+src/_pytest/junitxml.py core/NumberReplacer 27
+worker outcome: normal, test outcome: survived
+[job-id] a54c79b8194d4e26a8e5bf1e1862050e
+src/_pytest/junitxml.py core/NumberReplacer 28
+worker outcome: normal, test outcome: survived
+[job-id] 36b9d41c1fb342d3aab07ea21c6a81de
+src/_pytest/junitxml.py core/NumberReplacer 29
+worker outcome: normal, test outcome: survived
+[job-id] dfd68ba7a3784c2baab2fb1269f51ae5
+src/_pytest/junitxml.py core/NumberReplacer 30
+worker outcome: normal, test outcome: survived
+[job-id] 261addfafccf4630972afd5d007a8b9f
+src/_pytest/junitxml.py core/NumberReplacer 31
+worker outcome: normal, test outcome: survived
+[job-id] b35536a0923f4c4c943ab20c9ba96792
+src/_pytest/junitxml.py core/NumberReplacer 32
+worker outcome: normal, test outcome: survived
+[job-id] c1aeb2c9d1844622bbc9ccabf0c4f25d
+src/_pytest/junitxml.py core/NumberReplacer 33
+worker outcome: normal, test outcome: survived
+[job-id] b0d528e8cbfe49cb939cdad6a9865e2d
+src/_pytest/junitxml.py core/NumberReplacer 34
+worker outcome: normal, test outcome: survived
+[job-id] 667089494eb8487dbf80468d9cb07898
+src/_pytest/junitxml.py core/NumberReplacer 35
+worker outcome: normal, test outcome: survived
+[job-id] 156084cfa0fa4c6b931b24e8a0435dca
+src/_pytest/junitxml.py core/NumberReplacer 36
+worker outcome: normal, test outcome: survived
+[job-id] 5d11b25614f04388b2a94a10de047398
+src/_pytest/junitxml.py core/NumberReplacer 37
+worker outcome: normal, test outcome: survived
+[job-id] e5d83d293fef409b87a94530e1eec9fa
+src/_pytest/junitxml.py core/NumberReplacer 38
+worker outcome: normal, test outcome: survived
+[job-id] b4711719c3af466ba073bd545d2866d7
+src/_pytest/junitxml.py core/NumberReplacer 39
+worker outcome: normal, test outcome: survived
+[job-id] edc81757f72941af95b21c6c8bfd88f5
+src/_pytest/junitxml.py core/NumberReplacer 40
+worker outcome: normal, test outcome: survived
+[job-id] 80d26355f6e04f1faf9060b06cdf6890
+src/_pytest/junitxml.py core/NumberReplacer 41
+worker outcome: normal, test outcome: survived
+[job-id] 3025a288bda44c9b84e7e187a3d4f86c
+src/_pytest/junitxml.py core/NumberReplacer 42
+worker outcome: normal, test outcome: survived
+[job-id] febc8fd91c5b4eb6b12f07cb6c366095
+src/_pytest/junitxml.py core/NumberReplacer 43
+worker outcome: normal, test outcome: survived
+[job-id] 39e690aeb3494ecfa59bac1dd76796de
+src/_pytest/junitxml.py core/NumberReplacer 44
+worker outcome: normal, test outcome: survived
+[job-id] 64782209fd6949e0be1de92761dfb0a4
+src/_pytest/junitxml.py core/NumberReplacer 45
+worker outcome: normal, test outcome: survived
+[job-id] 7b2f6e314c6e4c75849fddd145870731
+src/_pytest/junitxml.py core/NumberReplacer 46
+worker outcome: normal, test outcome: survived
+[job-id] a68506fe3ece44d685dbb405c1863100
+src/_pytest/junitxml.py core/NumberReplacer 47
+worker outcome: normal, test outcome: survived
+[job-id] 86ddfedaaf7047268d5ec39f77dff44a
+src/_pytest/junitxml.py core/NumberReplacer 48
+worker outcome: normal, test outcome: survived
+[job-id] c50bdaedd4db429f9d6fa2b4e20f1064
+src/_pytest/junitxml.py core/NumberReplacer 49
+worker outcome: normal, test outcome: survived
+[job-id] ce3e44e0e46848bf875e2a62ba879bf4
+src/_pytest/junitxml.py core/NumberReplacer 50
+worker outcome: normal, test outcome: survived
+[job-id] aefdb87c8c10480ab7a6fa33b56b37b0
+src/_pytest/junitxml.py core/NumberReplacer 51
+worker outcome: normal, test outcome: survived
+[job-id] 781672147a424d75bfd10b7e54a516a6
+src/_pytest/junitxml.py core/NumberReplacer 52
+worker outcome: normal, test outcome: survived
+[job-id] 160a15b5be5149058707428020153d8d
+src/_pytest/junitxml.py core/NumberReplacer 53
+worker outcome: normal, test outcome: survived
+[job-id] d70fccfd266c40619852cc86ce9a2841
+src/_pytest/junitxml.py core/NumberReplacer 54
+worker outcome: normal, test outcome: survived
+[job-id] 3bfea3c959234ef3adc3b2de15ed48a7
+src/_pytest/junitxml.py core/NumberReplacer 55
+worker outcome: normal, test outcome: survived
+[job-id] 813567c035c64e8090d292360d62e863
+src/_pytest/junitxml.py core/NumberReplacer 56
+worker outcome: normal, test outcome: survived
+[job-id] fc4ecaedc6e04783bf9e57365a656d91
+src/_pytest/junitxml.py core/NumberReplacer 57
+worker outcome: normal, test outcome: survived
+[job-id] 3de40a9d64a042aebced96eb2392faf6
+src/_pytest/junitxml.py core/NumberReplacer 58
+worker outcome: normal, test outcome: survived
+[job-id] 4ba823ba8d8e43ee9fb11c9b06e3c22a
+src/_pytest/junitxml.py core/NumberReplacer 59
+worker outcome: normal, test outcome: survived
+[job-id] 215adba6c0134e8ea59a76bce290cd7c
+src/_pytest/junitxml.py core/NumberReplacer 60
+worker outcome: normal, test outcome: survived
+[job-id] d3aa8ae97ac8499d806a29482428b035
+src/_pytest/junitxml.py core/NumberReplacer 61
+worker outcome: normal, test outcome: survived
+[job-id] 197d9df0be304ca398244b977130ac68
+src/_pytest/junitxml.py core/NumberReplacer 62
+worker outcome: normal, test outcome: survived
+[job-id] d13ee4ddc9dc4df385d5ab912d4e3151
+src/_pytest/junitxml.py core/NumberReplacer 63
+worker outcome: normal, test outcome: survived
+[job-id] ebbd8b3c593d4c8a8336019b3d5f85a2
+src/_pytest/junitxml.py core/NumberReplacer 64
+worker outcome: normal, test outcome: survived
+[job-id] 8327529e348d4facb6b604fe9a477c29
+src/_pytest/junitxml.py core/NumberReplacer 65
+worker outcome: normal, test outcome: survived
+[job-id] 1287c15a03bf408c97763d615b6c91f0
+src/_pytest/junitxml.py core/NumberReplacer 66
+worker outcome: normal, test outcome: survived
+[job-id] d0602425787d4ac4836279c16ebcdaa6
+src/_pytest/junitxml.py core/NumberReplacer 67
+worker outcome: normal, test outcome: survived
+[job-id] 1954da1842414ab8bba3ebec332f332a
+src/_pytest/junitxml.py core/NumberReplacer 68
+worker outcome: normal, test outcome: survived
+[job-id] cd093be783864200ae882d8970813d1a
+src/_pytest/junitxml.py core/NumberReplacer 69
+worker outcome: normal, test outcome: survived
+[job-id] 1ec90b01d9704e7bbe8f073af7541d2f
+src/_pytest/junitxml.py core/NumberReplacer 70
+worker outcome: normal, test outcome: survived
+[job-id] fc25a6bde0f343eea9979aa2d5f0363a
+src/_pytest/junitxml.py core/NumberReplacer 71
+worker outcome: normal, test outcome: survived
+[job-id] 8b558f248d2f4402830cc9e6e91b8e60
+src/_pytest/junitxml.py core/NumberReplacer 72
+worker outcome: normal, test outcome: survived
+[job-id] b07151be26374bdcb83f68ebf9c722b1
+src/_pytest/junitxml.py core/NumberReplacer 73
+worker outcome: normal, test outcome: survived
+[job-id] 1250db7ce92a43b18a39d94c5b9cf239
+src/_pytest/junitxml.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: survived
+[job-id] c042dc95d03744c2ad913425996a80a5
+src/_pytest/junitxml.py core/RemoveDecorator 1
+worker outcome: normal, test outcome: survived
+[job-id] 981e8bab1c2c43ba82b40f469fae3799
+src/_pytest/junitxml.py core/RemoveDecorator 2
+worker outcome: normal, test outcome: survived
+[job-id] 7ccd4fe0162240d195f79094150de71d
+src/_pytest/junitxml.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: survived
+[job-id] 0c6d9e2052bc40cd9a389eebde1fdecb
+src/_pytest/junitxml.py core/ZeroIterationForLoop 1
+worker outcome: normal, test outcome: survived
+[job-id] 4a0814cbe9654a81ad6cb44cd8baae23
+src/_pytest/junitxml.py core/ZeroIterationForLoop 2
+worker outcome: normal, test outcome: survived
+[job-id] c16b38a252294825bd8dfac50093b54f
+src/_pytest/junitxml.py core/ZeroIterationForLoop 3
+worker outcome: normal, test outcome: survived
+[job-id] 56c36b7c94424d6eb91bc6ac1cfcce7e
+src/_pytest/junitxml.py core/ZeroIterationForLoop 4
+worker outcome: normal, test outcome: survived
+total jobs: 456
+complete: 456 (100.00%)
+surviving mutants: 360 (78.95%)
+
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Return Code: 0 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] 
+MutationNum: 456 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] 
+MutationLOG: 21.049999999999997% 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] 
+MutationUncertainty: 0.0 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Command: conda run -n pytest-dev__pytest__5.0 python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'src/_pytest/junitxml.py'
+        and ((645 <= spec.start_pos[0] <= 675))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Std. Output:
+FUNC_MUTATION_RESULT 44.285714285714285 70
+
+ 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Return Code: 0 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] 
+FunctionMutationLOG: 44.285714285714285% 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] 
+FunctionMutationNum: 70 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Test script run successful 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Removing coverage 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] Removing cache 
+[pytest-dev__pytest__5.0] [pytest-dev__pytest-5692] >>>>> Unfiltered Tests Failed 

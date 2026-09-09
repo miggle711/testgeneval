@@ -1,0 +1,231 @@
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Task Metadata:
+	- Instance ID: pytest-dev__pytest-9279
+	- Testbed: pytest-dev__pytest__7.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.11.8
+ 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Command: git config --global --add safe.directory /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Std. Output:
+ 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Return Code: 0 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Command: git -c advice.detachedHead=false checkout 86446edc869f14de4d9e32d9f1fa4d8cd1df8cb6 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Std. Output:
+Previous HEAD position was e2ee3144e Merge pull request #9352 from truth-quark/spelling_fix_9351
+HEAD is now at 86446edc8 Merge pull request #9273 from bluetech/nose-fixtures2
+ 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Return Code: 0 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-9279_gold_init.patch 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Std. Output:
+ 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Return Code: 0 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-9279_gold.patch 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Std. Output:
+Checking patch src/_pytest/nodes.py...
+Applied patch src/_pytest/nodes.py cleanly.
+ 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Return Code: 0 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-9279_test_init.patch 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Std. Output:
+ 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Return Code: 0 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Command: git restore testing/test_nodes.py 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Std. Output:
+ 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Return Code: 0 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-9279_test.patch 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Std. Output:
+Checking patch testing/test_nodes.py...
+Applied patch testing/test_nodes.py cleanly.
+ 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Return Code: 0 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Command: conda run -n pytest-dev__pytest__7.0 coverage run -m pytest -rA testing/test_nodes.py 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_nodes.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.0.0.dev332+ge2ee3144e, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_nodes.py F                                                  [100%]
+
+=================================== FAILURES ===================================
+________________________ test_item_initialisation_basic ________________________
+Direct construction of _pytest.nodes.Item has been deprecated, please use _pytest.nodes.Item.from_parent.
+See https://docs.pytest.org/en/stable/deprecations.html#node-construction-changed-to-node-from-parent for more details.
+=========================== short test summary info ============================
+FAILED testing/test_nodes.py::test_item_initialisation_basic
+============================== 1 failed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Return Code: 1 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] TestsTime: 0.710899829864502 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Test script run successful 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Removing coverage 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Removing cache 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Command: conda run -n pytest-dev__pytest__7.0 coverage run -m pytest -rA testing/test_nodes.py 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_nodes.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.0.0.dev332+ge2ee3144e, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_nodes.py F                                                  [100%]
+
+=================================== FAILURES ===================================
+________________ test_item_initialisation_with_explicit_nodeid _________________
+Direct construction of _pytest.nodes.Item has been deprecated, please use _pytest.nodes.Item.from_parent.
+See https://docs.pytest.org/en/stable/deprecations.html#node-construction-changed-to-node-from-parent for more details.
+=========================== short test summary info ============================
+FAILED testing/test_nodes.py::test_item_initialisation_with_explicit_nodeid
+============================== 1 failed in 0.00s ===============================
+
+ 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Return Code: 1 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] TestsTime: 0.43078136444091797 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Test script run successful 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Removing coverage 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Removing cache 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Command: conda run -n pytest-dev__pytest__7.0 coverage run -m pytest -rA testing/test_nodes.py 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_nodes.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.0.0.dev332+ge2ee3144e, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_nodes.py F                                                  [100%]
+
+=================================== FAILURES ===================================
+____________ test_item_nodeid_is_derived_from_parent_when_not_given ____________
+Direct construction of _pytest.nodes.Item has been deprecated, please use _pytest.nodes.Item.from_parent.
+See https://docs.pytest.org/en/stable/deprecations.html#node-construction-changed-to-node-from-parent for more details.
+=========================== short test summary info ============================
+FAILED testing/test_nodes.py::test_item_nodeid_is_derived_from_parent_when_not_given
+============================== 1 failed in 0.00s ===============================
+
+ 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Return Code: 1 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] TestsTime: 0.4372084140777588 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Test script run successful 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Removing coverage 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Removing cache 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Command: conda run -n pytest-dev__pytest__7.0 coverage run -m pytest -rA testing/test_nodes.py 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_nodes.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.0.0.dev332+ge2ee3144e, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_nodes.py F                                                  [100%]
+
+=================================== FAILURES ===================================
+___________ test_item_initialisation_without_parent_requires_config ____________
+Direct construction of _pytest.nodes.Item has been deprecated, please use _pytest.nodes.Item.from_parent.
+See https://docs.pytest.org/en/stable/deprecations.html#node-construction-changed-to-node-from-parent for more details.
+=========================== short test summary info ============================
+FAILED testing/test_nodes.py::test_item_initialisation_without_parent_requires_config
+============================== 1 failed in 0.00s ===============================
+
+ 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Return Code: 1 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] TestsTime: 0.4540233612060547 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Test script run successful 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Removing coverage 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Removing cache 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Command: conda run -n pytest-dev__pytest__7.0 coverage run -m pytest -rA testing/test_nodes.py 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_nodes.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.0.0.dev332+ge2ee3144e, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_nodes.py F                                                  [100%]
+
+=================================== FAILURES ===================================
+____________ test_item_initialisation_with_extra_kwargs_is_accepted ____________
+Direct construction of _pytest.nodes.Item has been deprecated, please use _pytest.nodes.Item.from_parent.
+See https://docs.pytest.org/en/stable/deprecations.html#node-construction-changed-to-node-from-parent for more details.
+=========================== short test summary info ============================
+FAILED testing/test_nodes.py::test_item_initialisation_with_extra_kwargs_is_accepted
+============================== 1 failed in 0.00s ===============================
+
+ 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Return Code: 1 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] TestsTime: 0.4312095642089844 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Test script run successful 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Removing coverage 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Removing cache 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Command: conda run -n pytest-dev__pytest__7.0 coverage run -m pytest -rA testing/test_nodes.py 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_nodes.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.0.0.dev332+ge2ee3144e, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_nodes.py F                                                  [100%]
+
+=================================== FAILURES ===================================
+__________ test_report_sections_and_user_properties_are_mutable_lists __________
+Direct construction of _pytest.nodes.Item has been deprecated, please use _pytest.nodes.Item.from_parent.
+See https://docs.pytest.org/en/stable/deprecations.html#node-construction-changed-to-node-from-parent for more details.
+=========================== short test summary info ============================
+FAILED testing/test_nodes.py::test_report_sections_and_user_properties_are_mutable_lists
+============================== 1 failed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Return Code: 1 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] TestsTime: 0.42940831184387207 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Test script run successful 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Removing coverage 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Removing cache 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Command: conda run -n pytest-dev__pytest__7.0 coverage run -m pytest -rA testing/test_nodes.py 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_nodes.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.0.0.dev332+ge2ee3144e, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_nodes.py F                                                  [100%]
+
+=================================== FAILURES ===================================
+______ test_item_initialisation_with_parent_and_no_path_uses_parent_path _______
+Direct construction of _pytest.nodes.Item has been deprecated, please use _pytest.nodes.Item.from_parent.
+See https://docs.pytest.org/en/stable/deprecations.html#node-construction-changed-to-node-from-parent for more details.
+=========================== short test summary info ============================
+FAILED testing/test_nodes.py::test_item_initialisation_with_parent_and_no_path_uses_parent_path
+============================== 1 failed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Return Code: 1 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] TestsTime: 0.43567943572998047 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Test script run successful 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Removing coverage 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] Removing cache 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] >>>>> Tests configfull pred
+ 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] TestsTime: 0.0 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] >>>>> Some Tests Failed 
+[pytest-dev__pytest__7.0] [pytest-dev__pytest-9279] >>>>> Unfiltered Tests Failed 
