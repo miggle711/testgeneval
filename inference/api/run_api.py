@@ -161,6 +161,15 @@ MODEL_COST_PER_OUTPUT = {
 # as a starting point since it shares the same architecture and harmony
 # format, not confirmed identical, worth its own real calibration run
 # before trusting this number for it specifically.
+# Per-request client timeout in seconds, applies to every chat completion
+# call below. Defaults to the OpenAI SDK's own built-in default (600s) if
+# unset, so leaving REQUEST_TIMEOUT unset preserves existing behavior.
+# Confirmed real 2026-09-09/10: a Llama-3.1-8B kg_only pass@5 resubmit lost
+# 62/96 real remaining instances to this exact 600s default, dominated by
+# scikit-learn's unusually large real prompts, see testgeneval#49. Raise
+# this when resubmitting against a slow-prompt-heavy subset.
+REQUEST_TIMEOUT = float(os.environ.get("REQUEST_TIMEOUT", "600"))
+
 OUTPUT_LIMITS = {
     "gpt-3.5-turbo-0125": 4_096,
     "gpt-4-turbo-2024-04-09": 8_192,
@@ -262,12 +271,14 @@ def call_chat(
     if _key_rotator is not None:
         next_key = _key_rotator.next()
         client = openai.OpenAI(
-            api_key=next_key or openai.api_key, base_url=openai.base_url
+            api_key=next_key or openai.api_key, base_url=openai.base_url,
+            timeout=REQUEST_TIMEOUT,
         )
     else:
         if not hasattr(_thread_local, "client"):
             _thread_local.client = openai.OpenAI(
-                api_key=openai.api_key, base_url=openai.base_url
+                api_key=openai.api_key, base_url=openai.base_url,
+                timeout=REQUEST_TIMEOUT,
             )
         client = _thread_local.client
 

@@ -118,6 +118,18 @@ MAX_MODEL_LEN="${MAX_MODEL_LEN:-32768}"
 # under whatever max_tokens the client sends, unset by default until
 # confirmed to actually work against this bug in a real test.
 MAX_NEW_TOKENS="${MAX_NEW_TOKENS:-}"
+# Per-request client timeout (seconds) for run_api.py's OpenAI() client.
+# Read directly by run_api.py via os.environ.get, not a vllm serve flag,
+# so no VLLM_SERVE_ARGS wiring needed here, sbatch already propagates it
+# into the job's environment. Defaults to the OpenAI SDK's own 600s if
+# unset. Confirmed real 2026-09-09/10: a resubmit against a slow-prompt-
+# heavy subset (scikit-learn, mostly) lost 62/96 real remaining instances
+# to this exact 600s default, see testgeneval#49. Raise this (e.g. 1800)
+# when resubmitting against instances already known to be slow.
+REQUEST_TIMEOUT="${REQUEST_TIMEOUT:-}"
+if [ -n "$REQUEST_TIMEOUT" ]; then
+    export REQUEST_TIMEOUT
+fi
 # Some models' chat templates reject a system role entirely (confirmed
 # real on M3: bigcode/starcoder2-15b-instruct-v0.1 400s on every single
 # request with "System messages are not allowed in this template").
