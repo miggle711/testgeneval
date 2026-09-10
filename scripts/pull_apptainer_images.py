@@ -40,19 +40,29 @@ import sys
 # swe-bench-astropy_astropy-testbed:5.1 -> repo_name "astropy_astropy",
 # version "5.1". The repo part already carries the underscore form
 # run_apptainer.py wants, so no further mapping is needed.
+#
+# The Makefile's `docker build -t <ns>/...` lines name the *build*
+# targets, usually `aorwall/...`. But the aorwall (upstream) testbed
+# images do NOT carry cosmic-ray or this repo's swebench_docker, so a
+# mutation run against one fails with ModuleNotFoundError: cosmic_ray
+# (confirmed real 2026-09-11). The fork's own pre-built images, at
+# `kdjain/...`, do. So --namespace defaults to kdjain and the tag read
+# from the Makefile is rewritten to it, the same rewrite pull_images.py
+# does.
 _TESTBED_RE = re.compile(
-    r"(?P<namespace>aorwall|kdjain)/swe-bench-(?P<repo>[a-z0-9_]+)-testbed:(?P<version>[0-9.]+)"
+    r"(?:aorwall|kdjain)/swe-bench-(?P<repo>[a-z0-9_]+)-testbed:(?P<version>[0-9.]+)"
 )
 
 
 def parse_makefile(makefile_path):
-    """Return a sorted, de-duplicated list of (namespace, repo, version)
-    for every testbed image the Makefile references."""
+    """Return a sorted, de-duplicated list of (repo, version) for every
+    testbed image the Makefile references. The namespace in the Makefile
+    is ignored; the caller supplies the one to actually pull from."""
     seen = set()
     with open(makefile_path) as f:
         for line in f:
             for m in _TESTBED_RE.finditer(line):
-                seen.add((m.group("namespace"), m.group("repo"), m.group("version")))
+                seen.add((m.group("repo"), m.group("version")))
     return sorted(seen)
 
 
@@ -84,6 +94,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--makefile", default="Makefile.testgeneval", help="Path to the Makefile to read image references from.")
     parser.add_argument("--out-dir", default=os.environ.get("APPTAINER_IMAGES_DIR", os.path.expanduser("~/apptainer_images")), help="Directory to write .sif files into (default: $APPTAINER_IMAGES_DIR).")
+    parser.add_argument("--namespace", default="kdjain", help="Docker Hub namespace to pull testbed images from (default: kdjain, the fork's account whose images carry cosmic-ray; aorwall's do not).")
     parser.add_argument("--force", action="store_true", help="Re-pull and overwrite .sif files that already exist.")
     parser.add_argument("--dry-run", action="store_true", help="List what would be pulled and exit.")
     args = parser.parse_args()
@@ -101,23 +112,24 @@ def main():
             print(f"WARNING: {var}={val} is not an existing directory.", file=sys.stderr)
 
     images = parse_makefile(args.makefile)
-    print(f"{len(images)} distinct testbed images in {args.makefile}")
+    print(f"{len(images)} distinct testbed images in {args.makefile} "
+          f"(pulling from namespace '{args.namespace}')")
 
     if args.dry_run:
-        for ns, repo, version in images:
-            print(f"  docker://{ns}/swe-bench-{repo}-testbed:{version} -> "
+        for repo, version in images:
+            print(f"  docker://{args.namespace}/swe-bench-{repo}-testbed:{version} -> "
                   f"{os.path.join(args.out_dir, sif_name(repo, version))}")
         return
 
     os.makedirs(args.out_dir, exist_ok=True)
 
     ok, failed = 0, []
-    for i, (ns, repo, version) in enumerate(images, 1):
+    for i, (repo, version) in enumerate(images, 1):
         print(f"[{i}/{len(images)}] {repo} {version}")
-        if pull_one(ns, repo, version, args.out_dir, force=args.force):
+        if pull_one(args.namespace, repo, version, args.out_dir, force=args.force):
             ok += 1
         else:
-            failed.append(f"{ns}/swe-bench-{repo}-testbed:{version}")
+            failed.append(f"{args.namespace}/swe-bench-{repo}-testbed:{version}")
 
     print(f"\ndone: {ok} ok, {len(failed)} failed")
     if failed:
