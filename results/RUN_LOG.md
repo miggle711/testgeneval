@@ -579,20 +579,24 @@ Every model in the shortlist needs both real pass@1 (`NUM_SAMPLES=1`)
 and real pass@5 (`NUM_SAMPLES=5`) data, both arms, at `t=0.8`. Real,
 current status as of this writing:
 
+Table below updated 2026-09-10. "pass@1" here means the older `t=0.8`
+`NUM_SAMPLES=1` runs documented in the "Current batch" table above,
+kept for reference; the active work is the pass@5 column.
+
 | Model | Arm | pass@1 | pass@5 |
 |---|---|---|---|
-| gpt-oss-120B | instruct | Done (1176/1210) | Done (1176/1179, 3 real ids permanently excluded on reasoning-budget exhaustion, see below) |
-| gpt-oss-120B | kg_only | Done (1201/1210) | Done (1200/1201, 1 real id at 4/5 samples, same real cause) |
-| gpt-oss-20B | instruct | Done (1210/1210) | Done (1210/1210) |
-| gpt-oss-20B | kg_only | Done (1210/1210) | Done (1210/1210, one instance at 4/5 samples) |
-| Qwen3-4B | instruct | Done (1198/1210) | Running (59854228) |
-| Qwen3-4B | kg_only | Done (1208/1210) | Running (59854229) |
-| Llama-3.1-8B | instruct | Done (1195/1210) | Running (59853976) |
-| Llama-3.1-8B | kg_only | Done (1208/1210) | Done (1114/1210, 29 real ids permanently excluded on context length, see below; real denominator 1181) |
-| Qwen3-Coder-30B | instruct | Ready to submit | Done (1210/1210) |
-| Qwen3-Coder-30B | kg_only | Ready to submit | Done (1208/1210) |
-| Llama-4-Scout | instruct | Ready to submit | Done (1123/1210) |
-| Llama-4-Scout | kg_only | Ready to submit | Done (1186/1210) |
+| gpt-oss-120B | instruct | Done (1176/1210) | Done (1176/1179, 3 real ids excluded on reasoning-budget exhaustion, see 2026-09-08 section) |
+| gpt-oss-120B | kg_only | Done (1201/1210) | Done (1200/1201, 1 real id at 4/5, same cause) |
+| gpt-oss-20B | instruct | Done (1210/1210) | Done (1210/1210, fully clean) |
+| gpt-oss-20B | kg_only | Done (1210/1210) | Done (1209/1210 at 5/5, 1 id at 4/5, `django__django-14411-16029`, real `finish_reason=stop` + null content, see 2026-09-10 section) |
+| Qwen3-4B | instruct | Done (1198/1210) | Redoing (59964291, resumed from 311/1210 after a real 36h TIMEOUT, `--time=48:00:00`) |
+| Qwen3-4B | kg_only | Done (1208/1210) | Redoing (59964915, resumed from 750/1210 after a real 36h TIMEOUT, `--time=48:00:00`) |
+| Llama-3.1-8B | instruct | Done (1195/1210) | Redoing (59968456, resumed from 700/1210 after a real 36h TIMEOUT, `REQUEST_TIMEOUT=1800`, `--time=48:00:00`) |
+| Llama-3.1-8B | kg_only | Done (1208/1210) | Done (1148/1210), then Redoing (59966731, 62 real ids still missing after the first fixup, `REQUEST_TIMEOUT=1800`, see 2026-09-10 section); 29+ of the 62 are permanent context-length exclusions |
+| Qwen3-Coder-30B | instruct | Done (59870795) | Done (1210/1210) |
+| Qwen3-Coder-30B | kg_only | Done (59870796) | Done (1208/1210) |
+| Llama-4-Scout | instruct | Redoing (59967047, real config-contradiction OOM on the first attempt, see 2026-09-10 section; now on m3h H100) | Done (1123/1210) |
+| Llama-4-Scout | kg_only | Redoing (59967051, same cause, now on m3h H100) | Done (1186/1210) |
 
 ### The real, root problem behind almost everything today
 
@@ -802,6 +806,116 @@ as 1200/1201 fully-complete ids plus 1 partial. Not yet checked: gpt-
 oss-20B pass@5 (already marked `Done` above) for the same signature,
 worth a quick pass given it shares the same real Harmony/reasoning
 architecture as gpt-oss-120B.
+
+### Pass@5 batch, second wave: real TIMEOUTs, a config-contradiction OOM, and a QOS ceiling (2026-09-10)
+
+Two days on from the 2026-09-08 sections above, a real check of every
+job across all four accounts surfaced several distinct problems. Recorded
+here together since they were diagnosed in one pass.
+
+**Three pass@5 jobs hit a real 36-hour wall-clock TIMEOUT, not a clean
+finish.** `59853976` (Llama-3.1-8B instruct), `59854228` (Qwen3-4B
+instruct), `59854229` (Qwen3-4B kg_only), all submitted with
+`--time=36:00:00`, all killed by the scheduler at exactly 1 day 12 hours
+with `State=TIMEOUT`, none reached their own `Done!`. This is not a bug,
+the jobs were making real, steady progress the whole time (progress bars
+at 71%, 50%, similar; GPU healthy; throughput normal right up to the
+kill), they were simply too slow to finish 1210 real instances at pass@5
+(5x the per-instance work of pass@1) inside 36 hours. Real per-instance
+rates measured directly from the progress bars at the moment of
+cancellation:
+
+- Llama-3.1-8B instruct: **272.33 s/it** (the slowest of any pass@5 job
+  this session, consistent with this model having the longest real
+  prompts of the small models, ~11265 mean input tokens). 886 filtered
+  instances would need ~67 hours.
+- Qwen3-4B instruct: **~100.29 s/it**. 1210 instances need ~33.7 hours,
+  just over the 36h budget once startup and any retry overhead is added.
+- Qwen3-4B kg_only: faster (~50 s/it, kg_only's shorter prompts), got
+  further (750/1210) but still not done in time.
+
+Because `run_api.py` flushes every completed instance to disk immediately
+(`open(..., "a+")`, `print(..., flush=True)`, confirmed in source), no
+real work was lost, each file held exactly the clean, complete ids
+generated before the kill (Llama-3.1-8B instruct 700, Qwen3-4B instruct
+311, Qwen3-4B kg_only 750, all `{5: N}`, 0 malformed, 0 duplicate ids).
+All three resubmitted with `--time=48:00:00` and `existing_ids` resuming
+from the real partial file. Practical rule going forward: budget pass@5
+wall-clock as roughly `(instances * per-instance-seconds * safety
+margin)`, and for a model whose pass@1 already ran slow, 48h is the
+floor, not 36.
+
+**Llama-4-Scout pass@1 failed on a real, internally-contradictory config,
+not a resource problem.** jliu0290's resubmits (`59882720`/`59882721`)
+OOM'd on GPUs 1 and 2 during worker startup, before any inference. The
+`gres/gpu=4` request was already confirmed correct earlier, so this was
+not the earlier GPU-count issue. Real cause, straight from the job's own
+logged args: `'max_model_len': 32768, 'override_generation_config':
+{'max_new_tokens': 48000}`. `max_new_tokens` (48000) is larger than
+`max_model_len` (32768) itself, telling vLLM to reserve output-token
+room bigger than the whole context window. `MAX_MODEL_LEN` was never set
+on the command, so it fell to the slurm script's default of `32768`,
+while `MAX_NEW_TOKENS=48000` was carried over from the testgeneval#46
+fix pattern. The model itself supports far more: real
+`text_config.max_position_embeddings` is 10485760 (10.5M), with
+`original_max_position_embeddings` 8192. Fixed by setting
+`MAX_MODEL_LEN=65536` explicitly (well above 48000, matching other
+models) and, since the earlier OOM happened at `MAX_NUM_SEQS=16` even at
+the smaller 32768, dropping to the conservative `MAX_NUM_SEQS=6` used for
+Qwen3-Coder-30B after its own OOMs. Lesson: whenever `MAX_NEW_TOKENS` is
+set, `MAX_MODEL_LEN` must be set alongside it and must exceed it, never
+left to the script default.
+
+**A real per-user GPU QOS ceiling blocks concurrent large jobs.** On the
+default `gpu` partition, `sacctmgr show qos` reports `gpuq` has
+`MaxTRESPerUser = gres/gpu=4`. With two 1-GPU L40S jobs already running,
+a 4-GPU job (Llama-4-Scout, `TENSOR_PARALLEL_SIZE=4`) cannot start until
+both free up, `squeue` shows it as `PD (QOSMaxGRESPerUser)`, distinct
+from an ordinary `(Priority)` wait. Worked around by moving Llama-4-Scout
+to the `m3h` H100 partition (`--partition=m3h --qos=m3h
+--gres=gpu:H100:4`), a separate GPU pool that does not count against the
+`gpuq` cap, so it can run alongside the L40S jobs. `m3h` has its own
+`gres/gpu=4` per-user cap though, so the instruct and kg_only Scout jobs
+still queue one behind the other there, not concurrently.
+
+**gpt-oss-20B pass@5 checked for the reasoning-exhaustion signature
+(deferred from the 2026-09-08 section): mostly clean, one real edge
+case.** `instruct` (`59854225`): 1210/1210, zero `content is None`, zero
+`Failed, skipping`, fully clean. `kg_only` (`59854226`): 1209/1210 at
+5/5, one id (`django__django-14411-16029`) at 4/5, one real
+`choice.message.content is None` warning, but with
+`finish_reason=stop`, `completion_tokens=3762`, not
+`finish_reason=length`. This is a genuinely distinct failure from
+gpt-oss-120B's reasoning-budget exhaustion: the model emitted a valid
+stop signal at a modest token count but the Harmony parser still found
+nothing in the final content channel (all output stayed in the reasoning
+channel and the model simply ended). Rarer (1 in 6050 real samples for
+this arm, ~0.017%), a real fourth distinct failure mode alongside
+context overflow, request timeout, and reasoning-budget exhaustion. Not
+worth resubmitting for a single sample; noted and accepted.
+
+**Llama-3.1-8B kg_only pass@5 fixup did not fully close the gap, and
+testgeneval#49 was filed.** The `59897378` fixup (documented 2026-09-08
+targeting the 96 recoverable ids) completed cleanly (`Done!`, no
+timeout) but 62 of the 96 real attempts still `Failed, skipping`, almost
+all `Request timed out` / `RetryError[APITimeoutError]`. The real file
+landed at 1148 unique ids (1114 + 96 - 62 = 1148, reconciles exactly, 0
+malformed, 0 dupes). Of the 62, all 29 previously-documented permanent
+context-length exclusions are present, plus **33 real ids that were
+never in the original missing set at all**, meaning the timeout is
+intermittently claiming previously-successful instances on retry, not
+just failing to recover the known-hard ones. The 62 are heavily
+scikit-learn (roughly 77%), consistent with that repo's large source
+files. Root cause traced directly: `run_api.py`'s `openai.OpenAI(...)`
+is constructed with no `timeout=` argument at either call site (lines
+~264, ~269), so every request runs on the OpenAI SDK's own 600s default,
+and there was no env var anywhere in the project to change it. Filed as
+testgeneval#49; fixed by adding a `REQUEST_TIMEOUT` env var (default
+600, preserving existing behavior) wired into both client construction
+sites and into `m3_run_inference.slurm`. Resubmitted as `59966731` with
+`REQUEST_TIMEOUT=1800`; this is the first real test of that code path,
+outcome (does the scikit-learn timeout pattern actually go away) not yet
+known as of this writing.
 
 ### `MAX_MODEL_LEN=32768` regression on a gpt-oss-20B resubmit
 
