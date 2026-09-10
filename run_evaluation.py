@@ -238,10 +238,11 @@ if __name__ == "__main__":
         default="docker",
         help="(Optional) Container backend. 'docker' (default) is "
              "unchanged from before. 'apptainer' is for M3, which does "
-             "not support Docker -- requires .sif files already built "
-             "and present locally (see swebench_docker/run_apptainer.py "
-             "and testgeneval#2, M3 needs sudo to build/pull these "
-             "itself, which regular accounts don't have).",
+             "not support Docker -- requires .sif files already present "
+             "in APPTAINER_IMAGES_DIR (populate with "
+             "scripts/pull_apptainer_images.py; apptainer pull works "
+             "rootless on an M3 login node, see "
+             "swebench_docker/run_apptainer.py and testgeneval#2).",
     )
     args = parser.parse_args()
     asyncio.run(main(**vars(args)))

@@ -1,10 +1,19 @@
 # Alternative to run_docker.py for M3, which does not support Docker but
 # does support Apptainer. Every Docker-derived testbed image still has to
-# be converted to a .sif file and pulled onto M3 by hand first (M3 requires
-# sudo for `apptainer pull`/`build` from Docker Hub, which regular accounts
-# don't have -- confirmed real, see testgeneval#2), this module only
-# handles running an already-present .sif, the same way run_docker.py only
-# handles running an already-pulled Docker image.
+# be converted to a .sif file first, this module only handles running an
+# already-present .sif, the same way run_docker.py only handles running an
+# already-pulled Docker image. Use scripts/pull_apptainer_images.py to
+# populate APPTAINER_IMAGES_DIR.
+#
+# `apptainer pull docker://<image>` works rootless on an M3 login node,
+# confirmed real 2026-09-11 (astropy testbed pulled and converted to a
+# 902MB .sif in ~9 min, no sudo). Only `apptainer build` from a .def file
+# needs root, which is not what this path does. `APPTAINER_CACHEDIR` AND
+# `APPTAINER_TMPDIR` both have to point at scratch before pulling, or the
+# final mksquashfs step fills /tmp or $HOME and dies with "No space left
+# on device" even when scratch has terabytes free (confirmed real, same
+# day). An earlier version of this comment and testgeneval#2 said M3
+# needs sudo for the pull; that was wrong.
 #
 # Three real differences from a naive docker run -> apptainer translation,
 # each confirmed against a live M3 job (testgeneval#2):
