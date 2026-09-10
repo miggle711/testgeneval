@@ -1,0 +1,274 @@
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Task Metadata:
+	- Instance ID: pytest-dev__pytest-6680
+	- Testbed: pytest-dev__pytest__5.3
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.11.8
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Command: git config --global --add safe.directory /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Std. Output:
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Return Code: 0 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Command: git -c advice.detachedHead=false checkout 194b52145b98fda8ad1c62ebacf96b9e2916309c 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Std. Output:
+Previous HEAD position was 92767fec5 Merge pull request #6836 from bluetech/store
+HEAD is now at 194b52145 Merge pull request #6834 from RonnyPfannschmidt/fix-6833-summarize-warning-item-locations
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Return Code: 0 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-6680_gold_init.patch 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Std. Output:
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Return Code: 0 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-6680_gold.patch 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Std. Output:
+Checking patch src/_pytest/deprecated.py...
+Applied patch src/_pytest/deprecated.py cleanly.
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Return Code: 0 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-6680_test_init.patch 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Std. Output:
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Return Code: 0 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Command: git restore testing/deprecated_test.py 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Std. Output:
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Return Code: 0 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-6680_test.patch 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Std. Output:
+Checking patch testing/deprecated_test.py...
+Applied patch testing/deprecated_test.py cleanly.
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Return Code: 0 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Command: conda run -n pytest-dev__pytest__5.3 coverage run -m pytest -rA testing/deprecated_test.py 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/deprecated_test.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-5.3.5.dev410+g92767fec5, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+_________________ ERROR collecting testing/deprecated_test.py __________________
+src/_pytest/python.py:515: in _importtestmodule
+    mod = self.fspath.pyimport(ensuresyspath=importmode)
+../miniconda3/envs/pytest-dev__pytest__5.3/lib/python3.9/site-packages/py/_path/local.py:704: in pyimport
+    __import__(modname)
+<frozen importlib._bootstrap>:1007: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:986: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:680: in _load_unlocked
+    ???
+src/_pytest/assertion/rewrite.py:134: in exec_module
+    source_stat, co = _rewrite_test(fn, self.config)
+src/_pytest/assertion/rewrite.py:319: in _rewrite_test
+    tree = ast.parse(source, filename=fn)
+../miniconda3/envs/pytest-dev__pytest__5.3/lib/python3.9/ast.py:50: in parse
+    return compile(source, filename, mode, flags,
+E     File "/home/swe-bench/pytest-dev__pytest/testing/deprecated_test.py", line 34
+E       )
+E        ^
+E   SyntaxError: unexpected EOF while parsing
+=========================== short test summary info ============================
+ERROR testing/deprecated_test.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.18s ===============================
+
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Return Code: 2 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] TestsTime: 0.8500041961669922 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Test script run successful 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Removing coverage 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Removing cache 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Command: conda run -n pytest-dev__pytest__5.3 coverage run -m pytest -rA testing/deprecated_test.py 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/deprecated_test.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-5.3.5.dev410+g92767fec5, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/deprecated_test.py E                                             [100%]
+
+==================================== ERRORS ====================================
+____________ ERROR at setup of test_warning_instances_and_messages _____________
+file /home/swe-bench/pytest-dev__pytest/testing/deprecated_test.py, line 14
+  def test_warning_instances_and_messages(warning_const, expected_substring):
+E       fixture 'warning_const' not found
+>       available fixtures: LineMatcher, _config_for_test, _pytest, _sys_snapshot, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, color_mapping, doctest_namespace, dummy_yaml_custom_test, linecomp, monkeypatch, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, restore_tracing, testdir, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory, tw_mock
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/home/swe-bench/pytest-dev__pytest/testing/deprecated_test.py:14
+=========================== short test summary info ============================
+ERROR testing/deprecated_test.py::test_warning_instances_and_messages
+=============================== 1 error in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Return Code: 1 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] TestsTime: 0.49268269538879395 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Test script run successful 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Removing coverage 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Removing cache 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Command: conda run -n pytest-dev__pytest__5.3 coverage run -m pytest -rA testing/deprecated_test.py 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-5.3.5.dev410+g92767fec5, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/deprecated_test.py .                                             [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/deprecated_test.py::test_warning_can_be_issued_via_warnings_warn
+============================== 1 passed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Return Code: 0 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] TestsTime: 0.5123698711395264 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Test script run successful 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Removing coverage 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Removing cache 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Command: conda run -n pytest-dev__pytest__5.3 coverage run -m pytest -rA testing/deprecated_test.py 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/deprecated_test.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-5.3.5.dev410+g92767fec5, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/deprecated_test.py F                                             [100%]
+
+=================================== FAILURES ===================================
+________________ test_node_use_from_parent_unformatted_warning _________________
+
+    def test_node_use_from_parent_unformatted_warning():
+        """``NODE_USE_FROM_PARENT`` is an ``UnformattedWarning`` that formats its
+        message when called with keyword arguments."""
+        unformatted = deprecated.NODE_USE_FROM_PARENT
+        # It should be an instance of UnformattedWarning.
+        assert isinstance(unformatted, deprecated.UnformattedWarning)
+    
+        # The underlying warning class should be ``PytestDeprecationWarning``.
+>       assert unformatted.warning_cls is deprecated.PytestDeprecationWarning
+E       AttributeError: 'UnformattedWarning' object has no attribute 'warning_cls'
+
+testing/deprecated_test.py:24: AttributeError
+=========================== short test summary info ============================
+FAILED testing/deprecated_test.py::test_node_use_from_parent_unformatted_warning
+============================== 1 failed in 0.02s ===============================
+
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Return Code: 1 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] TestsTime: 0.51389479637146 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Test script run successful 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Removing coverage 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Removing cache 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Command: conda run -n pytest-dev__pytest__5.3 coverage run -m pytest -rA testing/deprecated_test.py 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-5.3.5.dev410+g92767fec5, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/deprecated_test.py .                                             [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/deprecated_test.py::test_all_warnings_are_unique_objects
+============================== 1 passed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Return Code: 0 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] TestsTime: 0.4989933967590332 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Test script run successful 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Removing coverage 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Removing cache 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] >>>>> Tests configfull pred
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Test Script: conda run -n pytest-dev__pytest__5.3  coverage run -m pytest -rA testing/deprecated_test.py;
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Command: conda run -n pytest-dev__pytest__5.3 coverage run -m pytest -rA testing/deprecated_test.py 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-5.3.5.dev410+g92767fec5, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 2 items
+
+testing/deprecated_test.py ..                                            [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/deprecated_test.py::test_warning_can_be_issued_via_warnings_warn
+PASSED testing/deprecated_test.py::test_all_warnings_are_unique_objects
+============================== 2 passed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Return Code: 0 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] TestsTime: 0.4871993064880371 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] 
+>>>>> All Tests Passed
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Current Working Directory: /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Command: conda run -n pytest-dev__pytest__5.3 coverage json -o coverage.json 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Std. Output:
+Wrote JSON report to coverage.json
+
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Return Code: 0 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] 
+CoverageLOG: 100.0%
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Running mutation testing 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Command: conda run -n pytest-dev__pytest__5.3 cosmic-ray init mutation.toml mutation.sqlite 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Std. Output:
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Return Code: 0 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Command: conda run -n pytest-dev__pytest__5.3 cosmic-ray exec mutation.toml mutation.sqlite 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Std. Output:
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Return Code: 0 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Command: conda run -n pytest-dev__pytest__5.3 cr-rate mutation.sqlite --estimate --confidence 95.0 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Std. Output:
+0.00 0.00 0.00
+
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Return Code: 0 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Command: conda run -n pytest-dev__pytest__5.3 cr-report mutation.sqlite 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Std. Output:
+total jobs: 0
+no jobs completed
+
+ 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Return Code: 0 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] 
+MutationNum: 0 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] 
+MutationLOG: 100.0% 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] 
+MutationUncertainty: 0.0 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Test script run successful 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Removing coverage 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] Removing cache 
+[pytest-dev__pytest__5.3] [pytest-dev__pytest-6680] >>>>> Unfiltered Tests Failed 

@@ -1,0 +1,2951 @@
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Task Metadata:
+	- Instance ID: pytest-dev__pytest-5254
+	- Testbed: pytest-dev__pytest__4.5
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.11.8
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Command: git config --global --add safe.directory /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Std. Output:
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Command: git -c advice.detachedHead=false checkout 654d8da9f7ffd7a88e02ae2081ffcb2ca2e765b3 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Std. Output:
+Previous HEAD position was 693c3b7f6 Merge pull request #5349 from asottile/mm
+HEAD is now at 654d8da9f Merge pull request #5346 from nicoddemus/improve-collect-warn-message
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-5254_gold_init.patch 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Std. Output:
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-5254_gold.patch 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Std. Output:
+Checking patch src/_pytest/fixtures.py...
+Checking patch src/_pytest/mark/structures.py...
+Applied patch src/_pytest/fixtures.py cleanly.
+Applied patch src/_pytest/mark/structures.py cleanly.
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-5254_test_init.patch 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Std. Output:
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Command: git restore testing/python/fixtures.py 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Std. Output:
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-5254_test.patch 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Std. Output:
+Checking patch testing/python/fixtures.py...
+Applied patch testing/python/fixtures.py cleanly.
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Command: conda run -n pytest-dev__pytest__4.5 coverage run -m pytest -rA testing/python/fixtures.py 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/python/fixtures.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-4.5.1.dev148+g693c3b7f6, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/python/fixtures.py F                                             [100%]
+
+=================================== FAILURES ===================================
+___________________ test_getfixtureclosure_basic_dependency ____________________
+
+    def test_getfixtureclosure_basic_dependency():
+        """
+        Verify that ``FixtureManager.getfixtureclosure`` correctly expands
+        a fixture's dependencies and respects the ordering by scope.
+        """
+        # Setup a dummy session / config
+        cfg = DummyConfig(rootdir=py.path.local("."))
+        sess = DummySession(cfg)
+    
+        # Create the manager and inject it into the session
+        fm = FixtureManager(sess)
+        sess._fixturemanager = fm
+    
+        # Register two fixtures: ``a`` depends on ``b``.
+        # ``a`` uses the function ``fixture_dep_on_b`` which has an argument ``b``.
+        # ``b`` is a leaf fixture.
+        def_func_a = fixture_dep_on_b
+        def_func_b = fixture_b
+    
+        # Create FixtureDef objects (they will query ``getfuncargnames`` internally)
+        fd_a = FixtureDef(
+            fixturemanager=fm,
+            baseid="",
+            argname="a",
+            func=def_func_a,
+            scope="function",
+            params=None,
+            unittest=False,
+        )
+        fd_b = FixtureDef(
+            fixturemanager=fm,
+            baseid="",
+            argname="b",
+            func=def_func_b,
+            scope="function",
+            params=None,
+            unittest=False,
+        )
+    
+        # Populate the manager's internal mapping
+        fm._arg2fixturedefs["a"] = (fd_a,)
+        fm._arg2fixturedefs["b"] = (fd_b,)
+    
+        # Dummy node required by ``getfixtureclosure`` – only its ``nodeid`` matters.
+        node = DummyNode(session=sess, nodeid="some/module.py")
+    
+        # Call ``getfixtureclosure`` with the top‑level fixture name.
+        initial, closure, arg2defs = fm.getfixtureclosure(["a"], node)
+    
+        # The initial list must contain the requested fixture.
+        assert initial == ("a",)
+        # The closure must contain both ``a`` and its dependency ``b``.
+        assert set(closure) == {"a", "b"}
+        # ``arg2defs`` must map both names to the corresponding FixtureDef objects.
+        assert arg2defs["a"][0] is fd_a
+        assert arg2defs["b"][0] is fd_b
+    
+        # The ordering respects scope: all fixtures have the same scope, so the order
+        # is stable (original insertion order). ``a`` appears after ``b`` because
+        # the algorithm adds dependencies first.
+>       assert closure[-1] == "a"
+E       AssertionError: assert 'b' == 'a'
+E         - b
+E         + a
+
+testing/python/fixtures.py:161: AssertionError
+=========================== short test summary info ============================
+FAILED testing/python/fixtures.py::test_getfixtureclosure_basic_dependency - ...
+=========================== 1 failed in 0.30 seconds ===========================
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Return Code: 1 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] TestsTime: 4.982916355133057 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Test script run successful 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Removing coverage 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Removing cache 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Command: conda run -n pytest-dev__pytest__4.5 coverage run -m pytest -rA testing/python/fixtures.py 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/python/fixtures.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-4.5.1.dev148+g693c3b7f6, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/python/fixtures.py F                                             [100%]
+
+=================================== FAILURES ===================================
+____________ test_getfixtureclosure_ignores_direct_parametrize_args ____________
+
+    def test_getfixtureclosure_ignores_direct_parametrize_args():
+        """
+        Ensure that ``ignore_args`` supplied to ``getfixtureclosure`` prevents
+        a fixture from being traversed.
+        """
+        cfg = DummyConfig(rootdir=py.path.local("."))
+        sess = DummySession(cfg)
+        fm = FixtureManager(sess)
+        sess._fixturemanager = fm
+    
+        # Define a fixture ``c`` that depends on ``d``.
+        def fixture_c(d):
+            return f"c-{d}"
+    
+        def fixture_d():
+            return "d"
+    
+        fd_c = FixtureDef(fm, "", "c", fixture_c, "function", None)
+        fd_d = FixtureDef(fm, "", "d", fixture_d, "function", None)
+    
+        fm._arg2fixturedefs["c"] = (fd_c,)
+        fm._arg2fixturedefs["d"] = (fd_d,)
+    
+        node = DummyNode(session=sess, nodeid="mod.py")
+    
+        # ``ignore_args`` contains ``d`` – the dependency should be skipped.
+        initial, closure, arg2defs = fm.getfixtureclosure(["c"], node, ignore_args=("d",))
+    
+        assert initial == ("c",)
+        # ``d`` must not appear in the closure because it is ignored.
+>       assert closure == ["c"]
+E       AssertionError: assert ['c', 'd'] == ['c']
+E         Left contains one more item: 'd'
+E         Use -v to get the full diff
+
+testing/python/fixtures.py:133: AssertionError
+=========================== short test summary info ============================
+FAILED testing/python/fixtures.py::test_getfixtureclosure_ignores_direct_parametrize_args
+=========================== 1 failed in 0.12 seconds ===========================
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Return Code: 1 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] TestsTime: 0.6268746852874756 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Test script run successful 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Removing coverage 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Removing cache 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Command: conda run -n pytest-dev__pytest__4.5 coverage run -m pytest -rA testing/python/fixtures.py 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-4.5.1.dev148+g693c3b7f6, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/python/fixtures.py .                                             [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/python/fixtures.py::test_getfixtureinfo_combines_usefixtures_and_autouse
+=========================== 1 passed in 0.20 seconds ===========================
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] TestsTime: 0.7167439460754395 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Test script run successful 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Removing coverage 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Removing cache 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Command: conda run -n pytest-dev__pytest__4.5 coverage run -m pytest -rA testing/python/fixtures.py 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/python/fixtures.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-4.5.1.dev148+g693c3b7f6, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 0 items
+
+========================= no tests ran in 0.12 seconds =========================
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Return Code: 5 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] TestsTime: 0.6559154987335205 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Test script run successful 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Removing coverage 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Removing cache 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Command: conda run -n pytest-dev__pytest__4.5 coverage run -m pytest -rA testing/python/fixtures.py 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-4.5.1.dev148+g693c3b7f6, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/python/fixtures.py .                                             [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/python/fixtures.py::test_fixturemanager_parsefactories_registers_autouse_and_regular
+=========================== 1 passed in 0.10 seconds ===========================
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] TestsTime: 0.632814884185791 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Test script run successful 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Removing coverage 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Removing cache 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Command: conda run -n pytest-dev__pytest__4.5 coverage run -m pytest -rA testing/python/fixtures.py 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/python/fixtures.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-4.5.1.dev148+g693c3b7f6, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/python/fixtures.py F                                             [100%]
+
+=================================== FAILURES ===================================
+________ test_fixturelookuperror_formatrepr_includes_available_fixtures ________
+
+    def test_fixturelookuperror_formatrepr_includes_available_fixtures():
+        """
+        The ``FixtureLookupError.formatrepr`` method should list available fixture names
+        when a fixture cannot be found.
+        """
+        cfg = DummyConfig(rootdir=py.path.local("."))
+        sess = DummySession(cfg)
+        fm = FixtureManager(sess)
+        sess._fixturemanager = fm
+    
+        # Register a single fixture ``present``.
+        def present():
+            return 1
+    
+        fd_present = FixtureDef(fm, "", "present", present, "function", None)
+        fm._arg2fixturedefs["present"] = (fd_present,)
+    
+        # Create a dummy request object that mimics the minimal API used by the error.
+        class DummyRequest:
+            def __init__(self, pyfuncitem):
+                self._pyfuncitem = pyfuncitem
+                self._fixturemanager = fm
+    
+            def _get_fixturestack(self):
+                return []
+    
+        class DummyItem:
+            def __init__(self):
+                self.parent = types.SimpleNamespace(nodeid="mod.py")
+                self.config = cfg
+    
+        # Raise the error for a missing fixture name.
+        err = FixtureLookupError("missing", DummyRequest(DummyItem()))
+>       repr_obj = err.formatrepr()
+
+testing/python/fixtures.py:136: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = FixtureLookupError('missing', <fixtures.test_fixturelookuperror_formatrepr_includes_available_fixtures.<locals>.DummyRequest object at 0x7174d4bebb20>)
+
+    def formatrepr(self):
+        tblines = []
+        addline = tblines.append
+>       stack = [self.request._pyfuncitem.obj]
+E       AttributeError: 'DummyItem' object has no attribute 'obj'
+
+src/_pytest/fixtures.py:711: AttributeError
+=========================== short test summary info ============================
+FAILED testing/python/fixtures.py::test_fixturelookuperror_formatrepr_includes_available_fixtures
+=========================== 1 failed in 0.45 seconds ===========================
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Return Code: 1 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] TestsTime: 0.9817941188812256 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Test script run successful 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Removing coverage 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Removing cache 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] >>>>> Tests configfull pred
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Test Script: conda run -n pytest-dev__pytest__4.5  coverage run -m pytest -rA testing/python/fixtures.py;
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Command: conda run -n pytest-dev__pytest__4.5 coverage run -m pytest -rA testing/python/fixtures.py 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-4.5.1.dev148+g693c3b7f6, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 2 items
+
+testing/python/fixtures.py ..                                            [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/python/fixtures.py::test_getfixtureinfo_combines_usefixtures_and_autouse
+PASSED testing/python/fixtures.py::test_fixturemanager_parsefactories_registers_autouse_and_regular
+=========================== 2 passed in 0.25 seconds ===========================
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] TestsTime: 0.7653665542602539 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] 
+>>>>> All Tests Passed
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Current Working Directory: /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Command: conda run -n pytest-dev__pytest__4.5 coverage json -o coverage.json 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Std. Output:
+Wrote JSON report to coverage.json
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] 
+CoverageLOG: 42.37967914438503%
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] 
+FunctionCoverageLOG: 59.57446808510638%
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Running mutation testing 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Command: conda run -n pytest-dev__pytest__4.5 cosmic-ray init mutation.toml mutation.sqlite 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Std. Output:
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Command: conda run -n pytest-dev__pytest__4.5 cosmic-ray exec mutation.toml mutation.sqlite 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Std. Output:
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Command: conda run -n pytest-dev__pytest__4.5 cr-rate mutation.sqlite --estimate --confidence 95.0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Std. Output:
+89.01 89.01 89.01
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Command: conda run -n pytest-dev__pytest__4.5 cr-report mutation.sqlite 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Std. Output:
+[job-id] 8edec9c218b744fc937b9dc94c2bdc95
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 321c152126de4f9d9477f9730a6eb564
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Sub 1
+worker outcome: normal, test outcome: killed
+[job-id] 7385282c24c1462084f0b43feecbff0c
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Sub 2
+worker outcome: normal, test outcome: killed
+[job-id] 2a8c552f73504c3e8e63e7f4dbe71552
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Sub 3
+worker outcome: normal, test outcome: survived
+[job-id] d644564c582640f1a48a02211b1d7bdf
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Sub 4
+worker outcome: normal, test outcome: survived
+[job-id] f53dd41643b74828a641ef8e172e5b65
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Sub 5
+worker outcome: normal, test outcome: survived
+[job-id] 0fe2a2d0b6894f50a754d6f34c3ce96d
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Sub 6
+worker outcome: normal, test outcome: survived
+[job-id] 1c29fa8d590c4ac19f6c53fedad38437
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Sub 7
+worker outcome: normal, test outcome: survived
+[job-id] ebaa054883314c5db6259866cbd30ba9
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Sub 8
+worker outcome: normal, test outcome: survived
+[job-id] 529355eca4604bc4a6b459292615f1f9
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Sub 9
+worker outcome: normal, test outcome: survived
+[job-id] 9d116e773d6b4363bbecb31e887c3e6f
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Sub 10
+worker outcome: normal, test outcome: survived
+[job-id] ad947c1bd92a460f9c92fd0d9bda09a1
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Sub 11
+worker outcome: normal, test outcome: survived
+[job-id] d0d92d101b39490db6bca064ca4fef2a
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Sub 12
+worker outcome: normal, test outcome: survived
+[job-id] bf351800635848c2b9deb5380fde40a2
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Sub 13
+worker outcome: normal, test outcome: survived
+[job-id] 140eafe19f0d40d2be26b285b4f4acfc
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Sub 14
+worker outcome: normal, test outcome: killed
+[job-id] 5b0704f54dab4a50a711afeb490e290e
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Sub 15
+worker outcome: normal, test outcome: survived
+[job-id] ce08e19c1dc44a8b825008ad3aa10b8b
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] 23fdba969fc649eabe3fe9d141755889
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mul 1
+worker outcome: normal, test outcome: killed
+[job-id] c6a36d1ec36642a8a787eede5c313d0d
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mul 2
+worker outcome: normal, test outcome: killed
+[job-id] 85e09dac84c2417f9796d876028cfdb3
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mul 3
+worker outcome: normal, test outcome: survived
+[job-id] 391297e9e96e4dcfbdd30f2989df7856
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mul 4
+worker outcome: normal, test outcome: survived
+[job-id] 0bfa216473bf461298816ef83941d4e3
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mul 5
+worker outcome: normal, test outcome: survived
+[job-id] 737ef47b8c0341e0b7a3dbaad6963075
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mul 6
+worker outcome: normal, test outcome: survived
+[job-id] 973e84f993b6430eb8ff230f0f41d1b3
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mul 7
+worker outcome: normal, test outcome: survived
+[job-id] b6e3ceee4dd7445c850f2a77a33ebf4d
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mul 8
+worker outcome: normal, test outcome: survived
+[job-id] 8f8a2df8ffb54d24a86182304ad2a10e
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mul 9
+worker outcome: normal, test outcome: survived
+[job-id] 69039d87757243d48a2ae375cac9cb81
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mul 10
+worker outcome: normal, test outcome: survived
+[job-id] d786b74acd8d45468c40e1c5f21141e7
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mul 11
+worker outcome: normal, test outcome: survived
+[job-id] 40e5b638540c497ba8d89c99b59796f2
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mul 12
+worker outcome: normal, test outcome: survived
+[job-id] 874e6aeffb78400cac28545993c2ac14
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mul 13
+worker outcome: normal, test outcome: survived
+[job-id] 3cec605698a04cdaa72782060adb51a9
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mul 14
+worker outcome: normal, test outcome: killed
+[job-id] e88250240dd147ab8aebed1bfc5a559f
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mul 15
+worker outcome: normal, test outcome: survived
+[job-id] 502c33e091da4ee7b8ece68bf18b85a6
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] 8728e1dfe1e74118b32bbbc814993fae
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Div 1
+worker outcome: normal, test outcome: killed
+[job-id] c1f2cff77b5f437a98aabd9711b2ddb5
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Div 2
+worker outcome: normal, test outcome: killed
+[job-id] 79a3d5a715c24c83a12c9d75c2ae4230
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Div 3
+worker outcome: normal, test outcome: survived
+[job-id] f8ba7c65afe747648bbc8994fa675004
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Div 4
+worker outcome: normal, test outcome: survived
+[job-id] e960b5c9f7634acc95520b613c69c255
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Div 5
+worker outcome: normal, test outcome: survived
+[job-id] d3735d14ecc742e0bb04fc87d69f17fb
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Div 6
+worker outcome: normal, test outcome: survived
+[job-id] e9260191e4a94f20b7bceda901c67532
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Div 7
+worker outcome: normal, test outcome: survived
+[job-id] f653d194f095441da62ea99e8ac487e1
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Div 8
+worker outcome: normal, test outcome: survived
+[job-id] 9b61d4133bc344dda29a7fdd925ad5c4
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Div 9
+worker outcome: normal, test outcome: survived
+[job-id] bb019ec52808465a990ff003a0e5d3dd
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Div 10
+worker outcome: normal, test outcome: survived
+[job-id] 439ae70e22bd42349fe32228e564525c
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Div 11
+worker outcome: normal, test outcome: survived
+[job-id] d04f390a0a2c4734b72d3fab4b82710f
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Div 12
+worker outcome: normal, test outcome: survived
+[job-id] 9c48b7e4f2f7405e9a022ffacde45a06
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Div 13
+worker outcome: normal, test outcome: survived
+[job-id] 78b1a04f2d2d4f419b040f75d0387fb9
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Div 14
+worker outcome: normal, test outcome: killed
+[job-id] 33437e77dd14467990619a7f43034f2e
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Div 15
+worker outcome: normal, test outcome: killed
+[job-id] 7d9b8f2ab9994d73be24790a5fb7bb31
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] 4ddf2e6a734343d6be748d9f91ff11e1
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_FloorDiv 1
+worker outcome: normal, test outcome: killed
+[job-id] d48ef9c03d9144e3a5b4dc82b3ca1226
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_FloorDiv 2
+worker outcome: normal, test outcome: killed
+[job-id] b5a61e089b574f5b939bf7f3b55cf470
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_FloorDiv 3
+worker outcome: normal, test outcome: survived
+[job-id] f21c7978c7f44788870738cbec1e21aa
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_FloorDiv 4
+worker outcome: normal, test outcome: survived
+[job-id] fcc0c8de11a844519b408785226894fe
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_FloorDiv 5
+worker outcome: normal, test outcome: survived
+[job-id] 2dcc1176c7fa4c6cbb0f86921c98a867
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_FloorDiv 6
+worker outcome: normal, test outcome: survived
+[job-id] f734c2ed30694694922a3dc29dd99ca0
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_FloorDiv 7
+worker outcome: normal, test outcome: survived
+[job-id] 96048c7bce9145459bb4b3dc0b1c99ad
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_FloorDiv 8
+worker outcome: normal, test outcome: survived
+[job-id] 64bad0beaf35444196794123f2cc3bf9
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_FloorDiv 9
+worker outcome: normal, test outcome: survived
+[job-id] c992b8940ecc480fa7f94ef9ba3f804f
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_FloorDiv 10
+worker outcome: normal, test outcome: survived
+[job-id] 98e5492df6154094b8f806efb065f419
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_FloorDiv 11
+worker outcome: normal, test outcome: survived
+[job-id] 4b666957dfff4564942d8ea76da126de
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_FloorDiv 12
+worker outcome: normal, test outcome: survived
+[job-id] 6ef5b5357ded492f9fc45eb2fe817335
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_FloorDiv 13
+worker outcome: normal, test outcome: survived
+[job-id] 63ee9cf3c4a04e9a92f5a4ea8d6f609a
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_FloorDiv 14
+worker outcome: normal, test outcome: killed
+[job-id] 8da16fc6b68d4bcd853eadd0608e75a0
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_FloorDiv 15
+worker outcome: normal, test outcome: survived
+[job-id] 3bac802020fa45b5897956b85da16b2d
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mod 0
+worker outcome: normal, test outcome: killed
+[job-id] 7379869ba3ee4c339a7b4edff149aff9
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mod 1
+worker outcome: normal, test outcome: killed
+[job-id] bdcff63db4b24ae28894064396da5d91
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mod 2
+worker outcome: normal, test outcome: killed
+[job-id] 753c9b568bca4ddc8b4a131e6ac8b7bc
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mod 3
+worker outcome: normal, test outcome: survived
+[job-id] 9eb7005f42d549a7b65b2821884a8ba7
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mod 4
+worker outcome: normal, test outcome: survived
+[job-id] a7ef8fe26d9b47fa8277a776bb52c275
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mod 5
+worker outcome: normal, test outcome: survived
+[job-id] 7e1ca9acdb07452c8b626f7c28b3a732
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mod 6
+worker outcome: normal, test outcome: survived
+[job-id] fd3db355310a47cbbc2de5c0ab47fb09
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mod 7
+worker outcome: normal, test outcome: survived
+[job-id] 74fc7d325bfa477893d80fd6e9502d9f
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mod 8
+worker outcome: normal, test outcome: survived
+[job-id] 6433cd8dcc934859adc0d4eddf97f085
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mod 9
+worker outcome: normal, test outcome: survived
+[job-id] 1f353aeec7e34cc7bcdfdefb7dd8245c
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mod 10
+worker outcome: normal, test outcome: survived
+[job-id] ec169b5ceac4401cb62172a3656e1b06
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mod 11
+worker outcome: normal, test outcome: survived
+[job-id] af9a111a48e841dd9a0a364ff17d5cb9
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mod 12
+worker outcome: normal, test outcome: survived
+[job-id] bff1285c30624a10a437c18f50695ba8
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mod 13
+worker outcome: normal, test outcome: survived
+[job-id] 3a5ff03c47f0406d957fd040d5edf4f0
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mod 14
+worker outcome: normal, test outcome: killed
+[job-id] 46264197ad114fd89eeb74a865c2284e
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Mod 15
+worker outcome: normal, test outcome: survived
+[job-id] d8dd5b3336a940289483caeb96d92a94
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] 9664ff56359540f0982320c24c1305bd
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Pow 1
+worker outcome: normal, test outcome: killed
+[job-id] b6ad9212de834e65baed6846ff78df45
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Pow 2
+worker outcome: normal, test outcome: killed
+[job-id] 62bf7e5b8df54dfe9ef263b5a3365fa6
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Pow 3
+worker outcome: normal, test outcome: survived
+[job-id] d42aeb7e569446a7bdcd0d459723194f
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Pow 4
+worker outcome: normal, test outcome: survived
+[job-id] 5230587e27d047f6bca11ddd9a19027b
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Pow 5
+worker outcome: normal, test outcome: survived
+[job-id] c3bbb362b2ce4b7f8555f4065c34fe30
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Pow 6
+worker outcome: normal, test outcome: survived
+[job-id] 42e58b6c8fe045dc85948a062ea0bef1
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Pow 7
+worker outcome: normal, test outcome: survived
+[job-id] 1ae43e815f404d00a918a99ced37f4b0
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Pow 8
+worker outcome: normal, test outcome: survived
+[job-id] 9c4885f323454e5dadbe3638a987dbcc
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Pow 9
+worker outcome: normal, test outcome: survived
+[job-id] 2ff65981fd0b4111a2a4eda8f50ef62b
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Pow 10
+worker outcome: normal, test outcome: survived
+[job-id] 0c945b80efc24906a2e1f7d8ce2017ef
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Pow 11
+worker outcome: normal, test outcome: survived
+[job-id] 93001b0ff74449d0b5b69e3258907391
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Pow 12
+worker outcome: normal, test outcome: survived
+[job-id] 6457a79bbbce47cd828641859a3e0c20
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Pow 13
+worker outcome: normal, test outcome: survived
+[job-id] 80d0a0b8f8aa4c41848049cd7b36fcb0
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Pow 14
+worker outcome: normal, test outcome: killed
+[job-id] a87d523874364526893d86ebb1d7042e
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_Pow 15
+worker outcome: normal, test outcome: survived
+[job-id] 5d419ed9adfc4e3482dc0c10b38714d4
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 5b37ccc1933d4c6aa768aed807d39b7f
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_RShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 23c50b2cca5e442da658c46a9d04ce84
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_RShift 2
+worker outcome: normal, test outcome: killed
+[job-id] 7f08ffda656645cd9c37a077413ac52c
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_RShift 3
+worker outcome: normal, test outcome: survived
+[job-id] 5b8e6ce729bf440c84fdc684166db322
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_RShift 4
+worker outcome: normal, test outcome: survived
+[job-id] e6410a0804544678a1dc0dcf6fe7e637
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_RShift 5
+worker outcome: normal, test outcome: survived
+[job-id] 452a62823c444067943af07bfd40904c
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_RShift 6
+worker outcome: normal, test outcome: survived
+[job-id] 29848b06132f448382f7b83d7cf2481f
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_RShift 7
+worker outcome: normal, test outcome: survived
+[job-id] 417419a2abc44c4abdffc73c504f460e
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_RShift 8
+worker outcome: normal, test outcome: survived
+[job-id] 9abc6beb196f46489435b680e5b48053
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_RShift 9
+worker outcome: normal, test outcome: survived
+[job-id] 44772525059c42358fe6522e7da9a449
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_RShift 10
+worker outcome: normal, test outcome: survived
+[job-id] e5ec31319ddb45a0a0c6de25329f4070
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_RShift 11
+worker outcome: normal, test outcome: survived
+[job-id] 5faf80310fe24cbfa4fea16c3c752432
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_RShift 12
+worker outcome: normal, test outcome: survived
+[job-id] a0911deffcc5487db39add1593973875
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_RShift 13
+worker outcome: normal, test outcome: survived
+[job-id] 4c8ad45dc50944f9b5f1d00317fccf13
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_RShift 14
+worker outcome: normal, test outcome: killed
+[job-id] 515df5dbddc740039611e5ca73d48f74
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_RShift 15
+worker outcome: normal, test outcome: survived
+[job-id] 9cb5790f9cf645a49ca4d903a70a7596
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] d798d24e5d66450a9e6c5e2ec088b01f
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_LShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 2bf841fc124349bf87394e9b03b4c3f2
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_LShift 2
+worker outcome: normal, test outcome: killed
+[job-id] a59d124f46ce4b0fbe280ae7b3e2924a
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_LShift 3
+worker outcome: normal, test outcome: survived
+[job-id] 0011a20f44ee44cfb8682a2c45ab0f07
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_LShift 4
+worker outcome: normal, test outcome: survived
+[job-id] f18eba2a2dc14c7a8fd4cd55257e1b22
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_LShift 5
+worker outcome: normal, test outcome: survived
+[job-id] afe5f0a20a074bdf94b99baa16f6a9db
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_LShift 6
+worker outcome: normal, test outcome: survived
+[job-id] f90a9bf449914aa2aa1db8187c119b27
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_LShift 7
+worker outcome: normal, test outcome: survived
+[job-id] 9c0fe1d128174aca8dd7e39830706f79
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_LShift 8
+worker outcome: normal, test outcome: survived
+[job-id] 7ef5f93fd06c4f688fe2463a492af0b0
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_LShift 9
+worker outcome: normal, test outcome: survived
+[job-id] 1c18c307d6fc41308845506e7426b619
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_LShift 10
+worker outcome: normal, test outcome: survived
+[job-id] 0613848ebe0841a18dc26c3c86a8de9f
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_LShift 11
+worker outcome: normal, test outcome: survived
+[job-id] c09bbfa17fb6491586e4bdd3c1e334cc
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_LShift 12
+worker outcome: normal, test outcome: survived
+[job-id] df2f158b339246c8b0148cb4132606b9
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_LShift 13
+worker outcome: normal, test outcome: survived
+[job-id] 239a07f70b30491cb828aa52df68dd40
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_LShift 14
+worker outcome: normal, test outcome: killed
+[job-id] 5b57333637534e2398bd2ea4827905ad
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_LShift 15
+worker outcome: normal, test outcome: killed
+[job-id] 89e967a73ac04696ac08da0e64dd0c05
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 3ca96ab6d81c48a8baea2fb15eb863e8
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 92f38e57e75b4ac8b420da5cebf823de
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitOr 2
+worker outcome: normal, test outcome: killed
+[job-id] 48c68d67c1af4e66b33e89057a4b20b1
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitOr 3
+worker outcome: normal, test outcome: survived
+[job-id] 685e35f5dbb14dc891a77c4e41850f0b
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitOr 4
+worker outcome: normal, test outcome: survived
+[job-id] 655ac858638c49aa9984aeb8af5ef5c2
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitOr 5
+worker outcome: normal, test outcome: survived
+[job-id] 2e41ba3f02d54fdf98a084f8dd50ff85
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitOr 6
+worker outcome: normal, test outcome: survived
+[job-id] 5c1f460d4a7c469fafc3c4a50f0f44e0
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitOr 7
+worker outcome: normal, test outcome: survived
+[job-id] b2517ab7e0e34dae9c09b61b31d2d710
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitOr 8
+worker outcome: normal, test outcome: survived
+[job-id] 8383850b2ec649febb45ed4ac6d38156
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitOr 9
+worker outcome: normal, test outcome: survived
+[job-id] c602efad188b417793268c475239ae11
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitOr 10
+worker outcome: normal, test outcome: survived
+[job-id] b5f6c3d1b0504f78a548936453cf9640
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitOr 11
+worker outcome: normal, test outcome: survived
+[job-id] 86fa67baf229492fa24c2b928c7a9d20
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitOr 12
+worker outcome: normal, test outcome: survived
+[job-id] 3f2d5273c50c43769a58487967461355
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitOr 13
+worker outcome: normal, test outcome: survived
+[job-id] 73e579f2830e4255ae2a594c4064fb77
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitOr 14
+worker outcome: normal, test outcome: killed
+[job-id] 566eee8f82844134817bcafffdd92941
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitOr 15
+worker outcome: normal, test outcome: survived
+[job-id] e2be023710644d56aa78a814b8ffbf43
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 6b76fc8ae72b4ee6a9880f8ca5bb1110
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] b975d2d3a32f4e5a8346017bf72990bb
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitAnd 2
+worker outcome: normal, test outcome: killed
+[job-id] 47eca3e7da2e41c696db927afa216e4b
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] 45ff66333b3e47a8ab8b853f54bddafb
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitAnd 4
+worker outcome: normal, test outcome: survived
+[job-id] fab5f38308aa4538b63324937600bc20
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitAnd 5
+worker outcome: normal, test outcome: survived
+[job-id] 30532791f13e49a9bd218dd5c6cb7985
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitAnd 6
+worker outcome: normal, test outcome: survived
+[job-id] 61d380d9f9e149499f45981b3a872324
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitAnd 7
+worker outcome: normal, test outcome: survived
+[job-id] 2763abbc82384020bdae038842fecba4
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitAnd 8
+worker outcome: normal, test outcome: survived
+[job-id] c37944b69e744ccd91803a5dbcf9fdd7
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitAnd 9
+worker outcome: normal, test outcome: survived
+[job-id] 5dea8b7b088c4c569bc7e7d6aea757be
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitAnd 10
+worker outcome: normal, test outcome: survived
+[job-id] 37963812221547e0bfd039cd8d748a27
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitAnd 11
+worker outcome: normal, test outcome: survived
+[job-id] 096fa26520b5498094ef6cc328346c5b
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitAnd 12
+worker outcome: normal, test outcome: survived
+[job-id] 30aa5e56ed914f1193273c2337e6f236
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitAnd 13
+worker outcome: normal, test outcome: survived
+[job-id] 37cc269d8a004a8b975dafdff77e9500
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitAnd 14
+worker outcome: normal, test outcome: killed
+[job-id] 8ba1188925254d2aa9be693a87725f82
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitAnd 15
+worker outcome: normal, test outcome: survived
+[job-id] a5e20d8289a24666895a48aea85d10a5
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] f90cb1ffafbc4278ad937adf68c64c23
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitXor 1
+worker outcome: normal, test outcome: killed
+[job-id] 22263f5109e94c93adc2a463eef68743
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitXor 2
+worker outcome: normal, test outcome: killed
+[job-id] f17bd1a6c51147cda83b36f17d2e3c89
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitXor 3
+worker outcome: normal, test outcome: survived
+[job-id] e9fbf6cfce1846b9adb5b07f06fbb404
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitXor 4
+worker outcome: normal, test outcome: survived
+[job-id] 50d0280946cb448aa19fe00dc5f55c51
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitXor 5
+worker outcome: normal, test outcome: survived
+[job-id] 4ac269b3bfac41e896dc53df64023d53
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitXor 6
+worker outcome: normal, test outcome: survived
+[job-id] 992cd51815a6445e9bdd45de8299e06b
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitXor 7
+worker outcome: normal, test outcome: survived
+[job-id] b35b433d03b445ff8c2364855e9f501d
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitXor 8
+worker outcome: normal, test outcome: survived
+[job-id] 09188b505061403eb4a2afb836b8c748
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitXor 9
+worker outcome: normal, test outcome: survived
+[job-id] fe2f34da8fe34e71835ed7779fefb08a
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitXor 10
+worker outcome: normal, test outcome: survived
+[job-id] 17376805569c4845bdce98930f606103
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitXor 11
+worker outcome: normal, test outcome: survived
+[job-id] 84178c941237412e966d85e55dd9cd99
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitXor 12
+worker outcome: normal, test outcome: survived
+[job-id] 015a513690cd4361a28f9b858d70cb29
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitXor 13
+worker outcome: normal, test outcome: survived
+[job-id] 0623c5a696054060965b238389e7731e
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitXor 14
+worker outcome: normal, test outcome: killed
+[job-id] 1ac74622a9524a1892e9c8badc358985
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Add_BitXor 15
+worker outcome: normal, test outcome: survived
+[job-id] dee6bd6f81ee4f49a6adf5f35d149114
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Sub_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] 4acfb5384c91427081817f36b19e94ad
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Sub_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] 616436c6f0594b3f8aab79cda76345ae
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Sub_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] af8c7e0d075c4c3aad277bf413d04022
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Sub_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 7c06bd4934464440a351160e7d1af870
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Sub_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] 06599b2338ba4aeba961faf33401ffd9
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Sub_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 3e7c3981dce845919a6c9c025b514802
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Sub_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 98d57277ba1b45778d74aa683ecb958a
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Sub_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] e2e681ae665c4648a23d7577bcf32f5f
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Sub_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 71ae70cf6abb49ce88892979dbb24def
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Sub_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 59b7a2bf5d92457f88aae296ed71bcfa
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Sub_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] 7ea710f7b5fb49ba8c817bc02d5f5c89
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] bf303e4bc83d4c1598d37502e842aaa5
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Add 1
+worker outcome: normal, test outcome: survived
+[job-id] efab67f615e14390a55f0dbd3a39f0aa
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Add 2
+worker outcome: normal, test outcome: survived
+[job-id] 5a618e7178d244ff844700d4e54dd35f
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Add 3
+worker outcome: normal, test outcome: survived
+[job-id] 8216f115be134458bb32a62f0be6705b
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Add 4
+worker outcome: normal, test outcome: survived
+[job-id] 9124028c95254f698bb80d63ba640941
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Add 5
+worker outcome: normal, test outcome: survived
+[job-id] 7e681cffa1684298a23c7970794082a1
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Add 6
+worker outcome: normal, test outcome: survived
+[job-id] 7019bedee4c8495eb6b231bcedad6ff7
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Add 7
+worker outcome: normal, test outcome: survived
+[job-id] c5c6a3ce153e4bc59a16bfe74e78f685
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Add 8
+worker outcome: normal, test outcome: survived
+[job-id] 23a9a4d5dfd347f0a3f77ddafd60627a
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Add 9
+worker outcome: normal, test outcome: survived
+[job-id] 67acbdb3f3344a399299c3010cae9ef2
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Add 10
+worker outcome: normal, test outcome: survived
+[job-id] b5f8ff18e63248d1aa64f00939c8d97a
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] d1db643a55804eb49ae75fc361569c1c
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] 722b5bf04fd943dcbf3c7d8ce3b852dc
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Sub 2
+worker outcome: normal, test outcome: survived
+[job-id] bae60a5bbe814bcd8e65362c5efc38e8
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Sub 3
+worker outcome: normal, test outcome: survived
+[job-id] f2294767a42c4d6db42fd016cf40758a
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Sub 4
+worker outcome: normal, test outcome: survived
+[job-id] e46cff5600c1483aa01daa7f67035154
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Sub 5
+worker outcome: normal, test outcome: survived
+[job-id] 337c922813e04430978e4af300610250
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Sub 6
+worker outcome: normal, test outcome: survived
+[job-id] 27dcf14e1e2046719df6ba8c231dcf71
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Sub 7
+worker outcome: normal, test outcome: survived
+[job-id] df14c8cc70144ec488feccecb1db20bd
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Sub 8
+worker outcome: normal, test outcome: survived
+[job-id] 12663f003d1447459b7a7423d575eda2
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Sub 9
+worker outcome: normal, test outcome: survived
+[job-id] df58a2abc0c44ab29be4ed552139f0cf
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Sub 10
+worker outcome: normal, test outcome: survived
+[job-id] f28eacff67b745a68a1a9a918c224c77
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] 62307f9023ff4cff9ce7e4222692aa36
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] d907b64daebd49c89c940aefb4f22ea5
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] 8634923443474526898a87cb2d68ff4b
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Mul 3
+worker outcome: normal, test outcome: survived
+[job-id] c8e8814d7f494ea5909bbcfcaf0e8dff
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Mul 4
+worker outcome: normal, test outcome: survived
+[job-id] 31e6b25199034f78903d2ab7f237d918
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Mul 5
+worker outcome: normal, test outcome: survived
+[job-id] bb50a8fcc5ae418c81e898a42cd53f6e
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Mul 6
+worker outcome: normal, test outcome: survived
+[job-id] 4e1d04767c52492dbb14eb99837ec0d8
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Mul 7
+worker outcome: normal, test outcome: survived
+[job-id] 04e1caad63e1486f965910fc0a3785f0
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Mul 8
+worker outcome: normal, test outcome: survived
+[job-id] 599f781e6ab446359f400c77263b8989
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Mul 9
+worker outcome: normal, test outcome: survived
+[job-id] 012cfc762b6645ab8a9807924fb6755a
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Mul 10
+worker outcome: normal, test outcome: survived
+[job-id] 6550bc06dcb54ff2be202851bc179461
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 8dfb9b5b9a67407ebbc70935e7e95905
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] 2d8d9db9f2b24d4c9ae3161fcae377c3
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] 1cb3c6093e7c45cd93768ad9aa9c865c
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Div 3
+worker outcome: normal, test outcome: survived
+[job-id] a45249376c8440889c90cfb96ade1b77
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Div 4
+worker outcome: normal, test outcome: survived
+[job-id] 93f01ab56b754788991149eac2b67a65
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Div 5
+worker outcome: normal, test outcome: survived
+[job-id] 37a0e7845ca74798afbb371030e6249f
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Div 6
+worker outcome: normal, test outcome: survived
+[job-id] 995dad9f87e542f7bc06e09b3335a25d
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Div 7
+worker outcome: normal, test outcome: survived
+[job-id] e32e639fd1b34506b4025a83af30eeec
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Div 8
+worker outcome: normal, test outcome: survived
+[job-id] 7df22d6abd6c49f6a2885fddfd03a9df
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Div 9
+worker outcome: normal, test outcome: survived
+[job-id] 0a8c3b9ac9514754be8c94e1b849bf38
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Div 10
+worker outcome: normal, test outcome: survived
+[job-id] 521c3beaa6124ad4afd783e9f8a100b2
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] d23939d563974817b25194f4075bda80
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] 9c5cff57601d42c8943f6fcdbd6fb97d
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] 317bc5d84f074f0d8c48205a8d443f51
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_FloorDiv 3
+worker outcome: normal, test outcome: survived
+[job-id] 3eea99e47f974ce48a0ae0f7c1e997b6
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_FloorDiv 4
+worker outcome: normal, test outcome: survived
+[job-id] 9c4a7d758d11433e8588fab90c24ed2f
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_FloorDiv 5
+worker outcome: normal, test outcome: survived
+[job-id] 6ba439c649c84043bf668cf392a3420d
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_FloorDiv 6
+worker outcome: normal, test outcome: survived
+[job-id] 5fb2505c0eb34f109f93b96d580c897f
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_FloorDiv 7
+worker outcome: normal, test outcome: survived
+[job-id] dc339e4dc1814ec0b37889f2656fdd93
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_FloorDiv 8
+worker outcome: normal, test outcome: survived
+[job-id] a09f72af48ea4e759c8dc1050e7ecc2d
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_FloorDiv 9
+worker outcome: normal, test outcome: survived
+[job-id] a6c3137a21364d07bd84e6964b978047
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_FloorDiv 10
+worker outcome: normal, test outcome: survived
+[job-id] 1e78c2ae4fc44e2e8de7572e695f4753
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 4008e9222b48459bb2a6b5ed3059e904
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] c34d21e5bd7d459ebf67c03bc98df184
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] 47ec5b550e284a1c96cc7ce14de4b5d6
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Pow 3
+worker outcome: normal, test outcome: survived
+[job-id] 8a632d12bbb94e3ab2753877419c2361
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Pow 4
+worker outcome: normal, test outcome: survived
+[job-id] c8f1d3d8a8104884951f3a82db575741
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Pow 5
+worker outcome: normal, test outcome: survived
+[job-id] ddf3c38d89704bcba4678cfd623721bc
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Pow 6
+worker outcome: normal, test outcome: survived
+[job-id] 555171936b924ff19c867a4884e5261f
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Pow 7
+worker outcome: normal, test outcome: survived
+[job-id] ac607b345f49459f8b993ab4496b245a
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Pow 8
+worker outcome: normal, test outcome: survived
+[job-id] bdc6e57cdc224364b83bdaa6c0d7df74
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Pow 9
+worker outcome: normal, test outcome: survived
+[job-id] a79ef66b16584e3c8e4185cbf225be5d
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_Pow 10
+worker outcome: normal, test outcome: survived
+[job-id] 144b8be8ecd148b5b4df0d7c7fd0a8d3
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] c9ed0ff8367d47b682b043a4833d5ecd
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 10b06c0ee2d24b328fbebba8b11e3e0c
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] 9fb1a647aa5340558a9cff52622bf8da
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_RShift 3
+worker outcome: normal, test outcome: survived
+[job-id] f12634383f8b4fcb9eb230bc2eb4d1b2
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_RShift 4
+worker outcome: normal, test outcome: survived
+[job-id] f73ccef6d8fc4b1d8f635c0131699993
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_RShift 5
+worker outcome: normal, test outcome: survived
+[job-id] 92b982468f16464e91ffefa1b517f09b
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_RShift 6
+worker outcome: normal, test outcome: survived
+[job-id] dfb03455243d43228b2639ece58755a4
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_RShift 7
+worker outcome: normal, test outcome: survived
+[job-id] 66f7d643919f471eb6eba270dfcb3a14
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_RShift 8
+worker outcome: normal, test outcome: survived
+[job-id] 9cdd0ce0c6214f808d2c539969197357
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_RShift 9
+worker outcome: normal, test outcome: survived
+[job-id] 098fc674401b4f9d92617885ba7886e3
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_RShift 10
+worker outcome: normal, test outcome: survived
+[job-id] 95f47a2bfe9f4874bdd6f4f1b189605a
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] abe9ebeccbc44351be7f79046f691253
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 94659a3680ae45c39ec9feb5e4e5de74
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] 4b5ff19f0ed046dd961ac57e5ca3d579
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_LShift 3
+worker outcome: normal, test outcome: survived
+[job-id] a96995d5622b4563a0a0bc573a61b4d2
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_LShift 4
+worker outcome: normal, test outcome: survived
+[job-id] 860d1504c179487fbe78d4a791749e14
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_LShift 5
+worker outcome: normal, test outcome: survived
+[job-id] 9ac05b1dea0442db997178b0f4b31d2d
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_LShift 6
+worker outcome: normal, test outcome: survived
+[job-id] e018202b317d4ee194532950fea10090
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_LShift 7
+worker outcome: normal, test outcome: survived
+[job-id] ccb66b6276ed4d2083ad93e5edc648a6
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_LShift 8
+worker outcome: normal, test outcome: survived
+[job-id] 0e8fdfaaa1234afc999ca809e13e3af3
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_LShift 9
+worker outcome: normal, test outcome: survived
+[job-id] 4c4063e19f104ed992fbf338cca2f3d5
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_LShift 10
+worker outcome: normal, test outcome: survived
+[job-id] 0878d507b08e48dab1d9a130baaa1c37
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] e0779ea68b374d6a8f09ca9477b5b0c5
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 42a9f83689fb4d9d8c05d3498e4c392e
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] d240a6bb814345549c144fb2a57dcce5
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitOr 3
+worker outcome: normal, test outcome: survived
+[job-id] 3635fee892ce4b4b9cd29af6fbdbcab6
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitOr 4
+worker outcome: normal, test outcome: survived
+[job-id] 821fabe17fba4596b3d41229b86c48ea
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitOr 5
+worker outcome: normal, test outcome: survived
+[job-id] 0dd9f954dd114927b70b8ee536e6ef0a
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitOr 6
+worker outcome: normal, test outcome: survived
+[job-id] 6e85a339ca994d7087b1098cfd1753fe
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitOr 7
+worker outcome: normal, test outcome: survived
+[job-id] d015de7d40f74e08a205a389d5c9264f
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitOr 8
+worker outcome: normal, test outcome: survived
+[job-id] b0e9009a11c64724bf2517abee0436da
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitOr 9
+worker outcome: normal, test outcome: survived
+[job-id] 09675aa1781a49d1a728fda6dbb3aafc
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitOr 10
+worker outcome: normal, test outcome: survived
+[job-id] d9f11cc2eeb542518387e3c94c26b6ec
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 98fc0844df6140b5a4195f06efca5cab
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] d3bc0d0ca69a445db187bd3a93f3c7f2
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] b96852438ba44c0985eee6e9c4440e7c
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] 78da8bbef8404713b04bfe8e6a9d7263
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitAnd 4
+worker outcome: normal, test outcome: survived
+[job-id] 03687508f24c4908836225498d5bf78c
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitAnd 5
+worker outcome: normal, test outcome: survived
+[job-id] 8810b4984d284561a9ab934acb51c5d6
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitAnd 6
+worker outcome: normal, test outcome: survived
+[job-id] 93c83e8e9ef846b48dfacbda80f8ad7c
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitAnd 7
+worker outcome: normal, test outcome: survived
+[job-id] a756c1c192c44f02a7c9a66ac2573693
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitAnd 8
+worker outcome: normal, test outcome: survived
+[job-id] 70ece24126854301ba2ae09fe059efc9
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitAnd 9
+worker outcome: normal, test outcome: survived
+[job-id] 07f7d5730e9642798f5cbdcae16a4cb4
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitAnd 10
+worker outcome: normal, test outcome: survived
+[job-id] 7b1929b024cd4d2cba8ec40375af732c
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] 229d9eede83c4a20a808d81267cfe34b
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] 75462cf77a1148a0bec0000c64c7982d
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] 883a63f0baa24bd0b0cea04aee950b68
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitXor 3
+worker outcome: normal, test outcome: survived
+[job-id] 91379a2832334574ae9908ab654da528
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitXor 4
+worker outcome: normal, test outcome: survived
+[job-id] 3288800c6b7a48fbb3a99b6f1773b3cd
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitXor 5
+worker outcome: normal, test outcome: survived
+[job-id] be5959eb2b9e47d09e5c0b7d051c07fe
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitXor 6
+worker outcome: normal, test outcome: survived
+[job-id] fdce503ad2484c20ab44c314d55765d6
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitXor 7
+worker outcome: normal, test outcome: survived
+[job-id] b4085a3f39b44a4d99ab72c953beb624
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitXor 8
+worker outcome: normal, test outcome: survived
+[job-id] 7168337d11224f5480699d246362353a
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitXor 9
+worker outcome: normal, test outcome: survived
+[job-id] 6ca5893955c1427ba3cee9d1ed6e0024
+src/_pytest/fixtures.py core/ReplaceBinaryOperator_Mod_BitXor 10
+worker outcome: normal, test outcome: survived
+[job-id] 2afc8e723091483286746d294ef8fec7
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 052fac6740e84f75a66bd2a6f1f316d2
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_NotEq 1
+worker outcome: normal, test outcome: survived
+[job-id] 26711af5532a4c8bad713156e4278717
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_NotEq 2
+worker outcome: normal, test outcome: survived
+[job-id] 1768c4377ee84ef9b4891d64a110fcba
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_NotEq 3
+worker outcome: normal, test outcome: survived
+[job-id] 8a4287cfa23243e49c3dc4ff0b550db7
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_NotEq 4
+worker outcome: normal, test outcome: survived
+[job-id] 0a9046936fdd4cad9739360c67195e78
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_NotEq 5
+worker outcome: normal, test outcome: survived
+[job-id] 7cba2175f1c144f29f5e6595bed24dc1
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_NotEq 6
+worker outcome: normal, test outcome: survived
+[job-id] 6c21e17c5a67428b951818b70ca08fcd
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_NotEq 7
+worker outcome: normal, test outcome: survived
+[job-id] 8570bd8c0a7e41778eef81a89757cf6d
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_NotEq 8
+worker outcome: normal, test outcome: survived
+[job-id] 06e4c7f2cbc14963b6509846de1ed100
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_NotEq 9
+worker outcome: normal, test outcome: survived
+[job-id] 67246bcdbe644270b9e75953a36225cb
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_NotEq 10
+worker outcome: normal, test outcome: survived
+[job-id] d3ca47dbfbb74e189a789a4e4cee34b3
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_NotEq 11
+worker outcome: normal, test outcome: killed
+[job-id] 9a8224e9f22f46c0955485b3bedea9b8
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 8cd3ebd0fcaf431ca7ac972d1ef83158
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] 08112e95a77b411aba350ac1d7ba2a23
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Lt 2
+worker outcome: normal, test outcome: survived
+[job-id] 88fa700a22214e77993e0425604e10c3
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Lt 3
+worker outcome: normal, test outcome: survived
+[job-id] c166fe86eac14a6e8880c7bf1741c922
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Lt 4
+worker outcome: normal, test outcome: survived
+[job-id] 0c036b0636294cd08758e5a0b48c5fc0
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Lt 5
+worker outcome: normal, test outcome: survived
+[job-id] bc842410e60c4e24b523a26d6bea5f83
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Lt 6
+worker outcome: normal, test outcome: survived
+[job-id] 099815fedd274126b4c32e9752ef3711
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Lt 7
+worker outcome: normal, test outcome: survived
+[job-id] aa9d397c4d6b4da9ad9a75163a36ccff
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Lt 8
+worker outcome: normal, test outcome: survived
+[job-id] 6d62f35116274bf38c66ee6bf0045230
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Lt 9
+worker outcome: normal, test outcome: survived
+[job-id] bce30d0ce8d04fa8946401e939ba5925
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Lt 10
+worker outcome: normal, test outcome: survived
+[job-id] c18a2abf447d443f9045e6afbcdeb458
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Lt 11
+worker outcome: normal, test outcome: killed
+[job-id] c9db69a0d0ec456cb951370ae1fac8c1
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 433c03c0959e4c9b86660ba9c7b619f4
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 0ecd9b17467b47a99589d50318429c70
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_LtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 335984d73a304467b05ebb427ce54183
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_LtE 3
+worker outcome: normal, test outcome: survived
+[job-id] 836259914ed0466caa0fd15f78673f66
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_LtE 4
+worker outcome: normal, test outcome: survived
+[job-id] ff398f1754204b048c873028be6aac02
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_LtE 5
+worker outcome: normal, test outcome: survived
+[job-id] b476a416de424e3492f885dbf4841f6b
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_LtE 6
+worker outcome: normal, test outcome: survived
+[job-id] 14861eff1ae545c4a86a761efcbedb1e
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_LtE 7
+worker outcome: normal, test outcome: survived
+[job-id] 22df022c60f34eed9c64c876e06138fc
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_LtE 8
+worker outcome: normal, test outcome: survived
+[job-id] e1a554e50a4a4418b52fbbcb611a2a46
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_LtE 9
+worker outcome: normal, test outcome: survived
+[job-id] 35fa7c92aab94624a8f0934eec6d348f
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_LtE 10
+worker outcome: normal, test outcome: survived
+[job-id] f1e728235fbd47bcba140eed83fdbad0
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_LtE 11
+worker outcome: normal, test outcome: killed
+[job-id] 1de4bc6ea2ad415ea7e9f44820b0b371
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] c6a3dbb72e0246c3aad9bb344a66b685
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] 80229e6c49d74014b7e550d2299a3154
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Gt 2
+worker outcome: normal, test outcome: survived
+[job-id] 4b127d1faf9c4f508512a43224b31312
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Gt 3
+worker outcome: normal, test outcome: survived
+[job-id] 220dd8bc95c3464fbe623c3b32068a7b
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Gt 4
+worker outcome: normal, test outcome: survived
+[job-id] d24a2863565e4a86af12d23d22e0af4f
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Gt 5
+worker outcome: normal, test outcome: survived
+[job-id] f49a359329cf473f9761223641134f99
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Gt 6
+worker outcome: normal, test outcome: survived
+[job-id] e2bae8d9720246419dfe1d62cd575d45
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Gt 7
+worker outcome: normal, test outcome: survived
+[job-id] 532d4c08776b4cf5a83fbd01db34c289
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Gt 8
+worker outcome: normal, test outcome: survived
+[job-id] 9f481219d115468c914d176fc5ec2456
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Gt 9
+worker outcome: normal, test outcome: survived
+[job-id] 428c5254555e4dcf9aa3a4df4538a923
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Gt 10
+worker outcome: normal, test outcome: survived
+[job-id] ca71dc7674a84edbab619667ed268da0
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Gt 11
+worker outcome: normal, test outcome: survived
+[job-id] 23360b7923fc4299a9cf882454baf582
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] e2825c53466f4be09373349a468fa6b9
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 72a8d77600fd44488b56422257ba719e
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_GtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 39c84ab66f2744ee9f0bebc8125261aa
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_GtE 3
+worker outcome: normal, test outcome: survived
+[job-id] f087d317c1b44c7da24c4c279b787530
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_GtE 4
+worker outcome: normal, test outcome: survived
+[job-id] 0d31327db0594510a5229efccf80defb
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_GtE 5
+worker outcome: normal, test outcome: survived
+[job-id] 8c133757d910451991ed0b0f83cc7d92
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_GtE 6
+worker outcome: normal, test outcome: survived
+[job-id] 14dbc74a5e8844d9813459530b0c12d8
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_GtE 7
+worker outcome: normal, test outcome: survived
+[job-id] ae06a8ed9c4a45dfa0dee3694fe7216e
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_GtE 8
+worker outcome: normal, test outcome: survived
+[job-id] 82759eca973242d8809d4aa3f604c697
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_GtE 9
+worker outcome: normal, test outcome: survived
+[job-id] f01394acc4404b599cd53abe799ae08a
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_GtE 10
+worker outcome: normal, test outcome: survived
+[job-id] 8bdef158f7c2467892afd114814b1770
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_GtE 11
+worker outcome: normal, test outcome: survived
+[job-id] 883f590630aa42a6af6bc44bf5085d87
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 3f0b180f80854116a65eef709b5ca22d
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 9181f18bfc9d43818dfbbff58ef9028c
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] 9a3b56f8c1fc4d9bbc8617cca291bd36
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Is 3
+worker outcome: normal, test outcome: survived
+[job-id] 29704ca7e41f49d7a26ec650004215d1
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Is 4
+worker outcome: normal, test outcome: survived
+[job-id] 83a1c16e131243a2bc02c3eb2787b2d6
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Is 5
+worker outcome: normal, test outcome: survived
+[job-id] f45d5d63bf3f4dbf9adeb361d9446f5a
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Is 6
+worker outcome: normal, test outcome: survived
+[job-id] 417746f48fbf4989a326387709b1f1e6
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_Is 7
+worker outcome: normal, test outcome: survived
+[job-id] e145b4e8772444eca3bbc70ddb5e7945
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 274499ec6dfc404abdf6745893d46ebf
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 2273f6462ae44e68becc43a6491fc559
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] eec121881ca24499b0588a449d0a9643
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_IsNot 3
+worker outcome: normal, test outcome: survived
+[job-id] a6830a2b0ef84a6f90f45df5c5c5b9a5
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_IsNot 4
+worker outcome: normal, test outcome: survived
+[job-id] f7dabc2342414cd8a7c937f299364694
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_IsNot 5
+worker outcome: normal, test outcome: survived
+[job-id] a309cd4e9b79467f97e5df5fca5a31b3
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_IsNot 6
+worker outcome: normal, test outcome: survived
+[job-id] 50df2f429e5342e5af8fbf5872d4f682
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Eq_IsNot 7
+worker outcome: normal, test outcome: killed
+[job-id] c039d926b3f940e6b542cf8af7846d6b
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] 5e96a16e6d574ee09fcd88e326416952
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Eq 1
+worker outcome: normal, test outcome: survived
+[job-id] a3473c431dee495184622d32042bdab9
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Eq 2
+worker outcome: normal, test outcome: survived
+[job-id] c5dd9d626e624b7286e14af773eadfe8
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Eq 3
+worker outcome: normal, test outcome: survived
+[job-id] 363fa93fc3b74be3957a50a9577f31ac
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Eq 4
+worker outcome: normal, test outcome: survived
+[job-id] 848519382ce54c9081b4a7d0e93a402d
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Eq 5
+worker outcome: normal, test outcome: survived
+[job-id] 37f6a014ae744660bb390e959211eb5c
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Eq 6
+worker outcome: normal, test outcome: survived
+[job-id] 2b0ef63340054efe91df8e6794b138cf
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] ff03e1881017473195c18e614c7dca6a
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] 2bb0fbf5f3d14101857eb6ffea04cd5b
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Lt 2
+worker outcome: normal, test outcome: survived
+[job-id] 863ff6850a804461918cf6d0e983780d
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Lt 3
+worker outcome: normal, test outcome: survived
+[job-id] 90e19a8f16334ce8a95aaabe1c63fb26
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Lt 4
+worker outcome: normal, test outcome: survived
+[job-id] 70c89285491643e8b1f0c98530490e9e
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Lt 5
+worker outcome: normal, test outcome: survived
+[job-id] 890d2ed7fb6f4394bf5bb6024c440bf8
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Lt 6
+worker outcome: normal, test outcome: survived
+[job-id] b14ffd1b5de04a1e83062ab8566d1091
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 87bf843d1b2141e4a1c72b3141012cc4
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] d33c6cde9d954510ae6dafe7b7845f45
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_LtE 2
+worker outcome: normal, test outcome: survived
+[job-id] a481efd89c0c4a82b5094919d38de583
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_LtE 3
+worker outcome: normal, test outcome: survived
+[job-id] d10f3a45e388440fa74e70f9e39a56e9
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_LtE 4
+worker outcome: normal, test outcome: survived
+[job-id] 077e2915f8f84613bd64b1d9755aa4e8
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_LtE 5
+worker outcome: normal, test outcome: survived
+[job-id] c63362adc3ae42dea6eadbe590b15188
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_LtE 6
+worker outcome: normal, test outcome: killed
+[job-id] 5db5dc504eab4f4397f2c9de6d69265d
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 0653e437f06649cb940576b4988bbc2e
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] a6d6b972b54145a798548aa24787d9c1
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Gt 2
+worker outcome: normal, test outcome: survived
+[job-id] 7d454f94ea6d465d9913596c3bb43964
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Gt 3
+worker outcome: normal, test outcome: survived
+[job-id] fce605e4186640aea6d4d82a665fe2d4
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Gt 4
+worker outcome: normal, test outcome: survived
+[job-id] b861389bf744451d9b026941831b48e3
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Gt 5
+worker outcome: normal, test outcome: survived
+[job-id] 4619cf250f9443be878420fc0d3b10e5
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Gt 6
+worker outcome: normal, test outcome: survived
+[job-id] c396d3472de7430b9dcc8d6b28a5b6ef
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 4a37d29729b44ad0a30a11f963dc2125
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 0396e5bc2ffb4aad8aa1000ff505ebc9
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_GtE 2
+worker outcome: normal, test outcome: survived
+[job-id] c4b37830d6f74d91b17eb2b3e5c2ce4d
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_GtE 3
+worker outcome: normal, test outcome: survived
+[job-id] 67bab4768c1a466e9f1d1f15b7595018
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_GtE 4
+worker outcome: normal, test outcome: survived
+[job-id] b8ff9ada96ce4a6684797a7ea922b540
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_GtE 5
+worker outcome: normal, test outcome: survived
+[job-id] eacb69dc91cd42cca7d7cd34c1581803
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_GtE 6
+worker outcome: normal, test outcome: survived
+[job-id] 6a4787d4cfe54d64a4e1e31723cd5ff6
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] df3f1c2ef16348f68b0b4ac659147d55
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] e5ba3c33419f4b9385e776b9929858e6
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] f12814d2aa0e489699adb52220326604
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Is 3
+worker outcome: normal, test outcome: survived
+[job-id] 91f715b28f7e4f5bb16df0c01e7e083a
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Is 4
+worker outcome: normal, test outcome: survived
+[job-id] d0ce4dfce39f463b834478bb2d03107d
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Is 5
+worker outcome: normal, test outcome: survived
+[job-id] 8c7732ea0dfa4182842bb538289aa21d
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_Is 6
+worker outcome: normal, test outcome: survived
+[job-id] 2303b6f3c6194a7988b969ce06f5b068
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] d35c3a89fcc54610947c228ad04a04db
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 825ff5ea7370492f9e32dacf34aac71b
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 19b2be815518428cb3ab09b0a71c65bd
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_IsNot 3
+worker outcome: normal, test outcome: survived
+[job-id] 378e0e8e15d64759ac2fc73d55a58d99
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_IsNot 4
+worker outcome: normal, test outcome: survived
+[job-id] 59df979b5e7d4093a1b70dab25742bab
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_IsNot 5
+worker outcome: normal, test outcome: survived
+[job-id] ace6bb06d04e4d78a72ca51f0bc94d17
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_NotEq_IsNot 6
+worker outcome: normal, test outcome: survived
+[job-id] 05bcef0b7fb84e18a65062074e6e5cf8
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Lt_Eq 0
+worker outcome: normal, test outcome: killed
+[job-id] 3294c5ec34aa41d0997cc89257957013
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Lt_Eq 1
+worker outcome: normal, test outcome: survived
+[job-id] b0b6bc9a9b264c8f95dbda7c4fa31fc7
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Lt_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] f30ba981a37b42449746b8602cab4603
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Lt_NotEq 1
+worker outcome: normal, test outcome: survived
+[job-id] bc1a7136b0254d538ddacd0d35bfa6b4
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Lt_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] e14f68d3a3aa4fe6b590c37c3b86ca2c
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Lt_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 3bd6da37f9344020ab476ed50b111484
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Lt_Gt 0
+worker outcome: normal, test outcome: killed
+[job-id] 40c42eb14e474abd983bc306fbca0df8
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Lt_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] 1049b82610aa4e8fadf6eea333f5ac53
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Lt_GtE 0
+worker outcome: normal, test outcome: killed
+[job-id] 7d4924788d4c4e3f8465cf54b0e39948
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Lt_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] f52264d8c9424e66b529dc3913132e4c
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Lt_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] c5ffd671152c4331a8559cd6d8ee257d
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Lt_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] f8eb96dbf94d402a9f55688af58cdbc9
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Gt_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] 6301007dbdd94848878baa305a713c93
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Gt_Eq 1
+worker outcome: normal, test outcome: survived
+[job-id] 9d690732bafb4944afb61d6a95595a6d
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Gt_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 266681dc543a48d58a81a89ca1d24ce0
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Gt_NotEq 1
+worker outcome: normal, test outcome: survived
+[job-id] 6e3936e751fa47d9a2170dc307b505e7
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Gt_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 893f573acd1946acb050de2910131cd6
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Gt_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] d5a7c4bf60fa4f9c862df8871d6dde8f
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Gt_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 734696d305bb48e2a76cf499ee4560b9
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Gt_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 60cbe7a9f2d04acaa7535a32350d22c5
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Gt_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] cb5dd52951474b92ae4976c276f45c76
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Gt_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 2cf83b3efb0d41e29c70d386cd484c53
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Gt_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 8eb967a9e3834c6abbbf37f25fc17f88
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Gt_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 7fff952bccba4a4eb8664eee1d7899da
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Gt_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] ef4c52d66a314d86a64325e6c4ff8824
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Gt_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 6c81a081f65b47dd9a5b31283ed28d9b
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_GtE_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] e3fc198ead3341299c85243c5af3ce5e
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_GtE_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 015c4ba273524c7c8b41a3b459d82455
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_GtE_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 070b4aeefef846218e597c12fb50c9ba
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_GtE_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] efd4201596194be2870a500d37e87d13
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_GtE_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 89385615fd8c456db9cd7a205eded781
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_GtE_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] a9533882bbf040a4a6c10f3748f27c69
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_GtE_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 591f890e39e84c9380123bda4d6cbd1e
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Is_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] a2c28dd105624eafbf42cdeec24104ea
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Is_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 6d84395b569342cbaaa5067f046e3326
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Is_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 7e4e1f7ef535487781901a4620524f9f
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Is_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 51e17074684d481988fdf99a38f815c4
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Is_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] a8e4df9104564f099f13349fea4dfeca
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Is_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 4243f4fe55c44a1bbed3dd7285016bef
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 475268453d4747f892851814bf879547
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Is_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 51736b9c25c1462098ff9746fbf2ce89
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Is_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 93f94a3741ba4397a62354218e6180b5
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Is_IsNot 3
+worker outcome: normal, test outcome: survived
+[job-id] 431ea9eddadb4ab6aeca842a2d3e6129
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Is_IsNot 4
+worker outcome: normal, test outcome: survived
+[job-id] fe4cabdc941a431db2e34608f039631d
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Is_IsNot 5
+worker outcome: normal, test outcome: survived
+[job-id] dc4b0bd415e14d6e9591f53fd0e00f1a
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Is_IsNot 6
+worker outcome: normal, test outcome: survived
+[job-id] 90313b90f22248168bf84310abd7e8dc
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Is_IsNot 7
+worker outcome: normal, test outcome: survived
+[job-id] d5e12fb9019748a8b67e4af89c686e40
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Is_IsNot 8
+worker outcome: normal, test outcome: killed
+[job-id] 6e953613bc5f4350ae58b9933442f8b5
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Is_IsNot 9
+worker outcome: normal, test outcome: survived
+[job-id] 9cf915c32ff4476c930b4958e8a9a9e2
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_Is_IsNot 10
+worker outcome: normal, test outcome: survived
+[job-id] 0a41760fd2bc4cf6947a275d37a9dadf
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] 8881f599ba174b24a1fb8d5f09a1e7cc
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Eq 1
+worker outcome: normal, test outcome: survived
+[job-id] afcea0fdb57c47b98b319407b802e257
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Eq 2
+worker outcome: normal, test outcome: killed
+[job-id] c809d8c5f3554eeeaab6ef7ab15d3cf4
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 43fe2dce0c3948cfbe4071b90e08a1bd
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_NotEq 1
+worker outcome: normal, test outcome: survived
+[job-id] 6cd4433fbc1042d1815a23ca40da1201
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_NotEq 2
+worker outcome: normal, test outcome: survived
+[job-id] 8ddd9f350dc24eff9b5c94df7d183d98
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] e74748ed9abf422cb5b1151a60986d08
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] 8831ee57a5ab469ab8c303d5fac6295f
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Lt 2
+worker outcome: normal, test outcome: killed
+[job-id] 2d6f3c55ac03402eb4363095ca01c2e5
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] a3471a4843d04156bb94254f2d17e704
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 09a85f39cbac475a90c92b21a71f172b
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_LtE 2
+worker outcome: normal, test outcome: killed
+[job-id] d5ce1f2d095a4bdd882640ae7bfc18ee
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 4fb06c750a764775b1c2848f01b460df
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] 94bb079a1ebb47a0ad8394998c323dbb
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Gt 2
+worker outcome: normal, test outcome: killed
+[job-id] 0741763515334f5ca89a14c76ecf1ad4
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] d751411ffa9848c5893cc038b0596c6c
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 96f213248f5c42b9a07f65b57c3e0dff
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_GtE 2
+worker outcome: normal, test outcome: killed
+[job-id] ea8d06959c6e45fa82358115cbac033f
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] df5b8c776294497a833fe3f2de3fc659
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 8411f2fe389341df917421deaef9a0ed
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] 61fd798ea89d4027be471180cf9003dd
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Is 3
+worker outcome: normal, test outcome: survived
+[job-id] ca77d837fe764655af6e58ae604a3c36
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Is 4
+worker outcome: normal, test outcome: survived
+[job-id] 62f2fc5f9a8e4fe8b9ead4d844f3b46f
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Is 5
+worker outcome: normal, test outcome: survived
+[job-id] 93228d1921b34755b342280e3312f545
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Is 6
+worker outcome: normal, test outcome: survived
+[job-id] 05df0632bbb64e74b9788837882a69c9
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Is 7
+worker outcome: normal, test outcome: survived
+[job-id] a2cd382b160c431abe6f4b397e1b2758
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Is 8
+worker outcome: normal, test outcome: survived
+[job-id] eeabafea8ea04304aa35d8a6b5791799
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Is 9
+worker outcome: normal, test outcome: survived
+[job-id] 9e8997d57d21417f9ab8f389060c8ab0
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Is 10
+worker outcome: normal, test outcome: survived
+[job-id] eaef38cfc6e04ad79cda8411b25396fc
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Is 11
+worker outcome: normal, test outcome: killed
+[job-id] d5b10d4fab0b404d9c4cffaf056cfcbd
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Is 12
+worker outcome: normal, test outcome: survived
+[job-id] a15b55d43d7a492dbb708007c1141765
+src/_pytest/fixtures.py core/ReplaceComparisonOperator_IsNot_Is 13
+worker outcome: normal, test outcome: killed
+[job-id] f30f8f4afd2e41a1833ff4c762729aaa
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_UAdd 0
+worker outcome: normal, test outcome: survived
+[job-id] 425de7c17888484aaab581b5b5b335d7
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_UAdd 1
+worker outcome: normal, test outcome: survived
+[job-id] 47ee6de8803940d2afdfea1bc83fa818
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_UAdd 2
+worker outcome: normal, test outcome: survived
+[job-id] 62e277af631242fbb4030482fcec43ee
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_UAdd 3
+worker outcome: normal, test outcome: survived
+[job-id] 164f788d93c641958754793acda8372b
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_UAdd 4
+worker outcome: normal, test outcome: survived
+[job-id] dfa8041eceed4fd5ba1d4b8ac66b2a54
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_UAdd 5
+worker outcome: normal, test outcome: survived
+[job-id] c2ed04449bde4e68bc1574f2e25f5232
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_UAdd 6
+worker outcome: normal, test outcome: survived
+[job-id] 8cec8c9696f34808ac8f2c0015efe1fc
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_Invert 0
+worker outcome: normal, test outcome: survived
+[job-id] a673cce532de4dce921724d7b1724ff5
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_Invert 1
+worker outcome: normal, test outcome: survived
+[job-id] e900601f90684b4a85e2d90e5cffbf70
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_Invert 2
+worker outcome: normal, test outcome: survived
+[job-id] b72805e401204bb4931ed0060586a379
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_Invert 3
+worker outcome: normal, test outcome: survived
+[job-id] f35015e3c1a349e391b0d96ec36c2a82
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_Invert 4
+worker outcome: normal, test outcome: survived
+[job-id] 4a181d82977a41658b4d4bea91068b4e
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_Invert 5
+worker outcome: normal, test outcome: survived
+[job-id] 267a1ffde8d344159722348111f07554
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_Invert 6
+worker outcome: normal, test outcome: survived
+[job-id] aed799be61f24aaba7069fbacb2b37ad
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] 73ecd330d2e647c585544abf06f5c67e
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] ecf5a590acdd4a4bb32dfc0465da873d
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_Not 2
+worker outcome: normal, test outcome: survived
+[job-id] f05e19260c13441fa2820e46fba661bb
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_Not 3
+worker outcome: normal, test outcome: survived
+[job-id] f6df61b91d5f4dbca78efae81cc35016
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_Not 4
+worker outcome: normal, test outcome: survived
+[job-id] 49801500bed54104b4a91efa29a288a0
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_Not 5
+worker outcome: normal, test outcome: survived
+[job-id] c3157c95d13d4e4abbd1136af39a184c
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_USub_Not 6
+worker outcome: normal, test outcome: survived
+[job-id] 81a594cfef3f4259a1afd2c8bac1d265
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_Delete_USub 0
+worker outcome: normal, test outcome: survived
+[job-id] 47fc69815f3c4eb4a7f236490aef68da
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_Delete_USub 1
+worker outcome: normal, test outcome: survived
+[job-id] 14b5bdb9845b45e88fd241fe813d947a
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_Delete_USub 2
+worker outcome: normal, test outcome: survived
+[job-id] cebf8edd0d434b0e81cbe065312c684c
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_Delete_USub 3
+worker outcome: normal, test outcome: survived
+[job-id] 22795c095cc849c985defd7bcc3330fb
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_Delete_USub 4
+worker outcome: normal, test outcome: survived
+[job-id] 5566c07025ce4f4a99b0d2bd3d062405
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_Delete_USub 5
+worker outcome: normal, test outcome: survived
+[job-id] 7ee1522156a6498989c6f762b4928387
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_Delete_USub 6
+worker outcome: normal, test outcome: survived
+[job-id] 3aa700cbb8a647408d56838d5e2da512
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] cd450dc901c84b1f80a9183ea0c0d52e
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] 2b5ce379be72476d93ecab30815d6a63
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: normal, test outcome: survived
+[job-id] 66259de6fade4d7db7da2e2c11524437
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_Delete_Not 3
+worker outcome: normal, test outcome: survived
+[job-id] 466d8bd9e81948cab7396a6423a432d1
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_Delete_Not 4
+worker outcome: normal, test outcome: survived
+[job-id] fe1cdb2284e94d6ba27ddc62062bad3f
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_Delete_Not 5
+worker outcome: normal, test outcome: survived
+[job-id] 3565d8f6ea4d4badae449c71339a9209
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_Delete_Not 6
+worker outcome: normal, test outcome: survived
+[job-id] b1a636cd6365494aa8f92449ba64ca32
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_Delete_Not 7
+worker outcome: normal, test outcome: killed
+[job-id] c36b197dacb3437d90e54b41d448141b
+src/_pytest/fixtures.py core/ReplaceUnaryOperator_Delete_Not 8
+worker outcome: normal, test outcome: survived
+[job-id] 038d2047f3274db8b98a6f7cf3a7ca79
+src/_pytest/fixtures.py core/AddNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 111261065f6b465284901e0b08777581
+src/_pytest/fixtures.py core/AddNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 37e94a263250440482cd9b3ae8779ec4
+src/_pytest/fixtures.py core/AddNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 41d87441fee24bfdab94745b7cdd9d21
+src/_pytest/fixtures.py core/AddNot 3
+worker outcome: normal, test outcome: survived
+[job-id] fa1be3cbf4bd44988009fa08f74559d1
+src/_pytest/fixtures.py core/AddNot 4
+worker outcome: normal, test outcome: survived
+[job-id] 870bdecc5073437da26e4fcf7797940a
+src/_pytest/fixtures.py core/AddNot 5
+worker outcome: normal, test outcome: survived
+[job-id] 95978bd689154d9c9a9c7328971e62fa
+src/_pytest/fixtures.py core/AddNot 6
+worker outcome: normal, test outcome: survived
+[job-id] 2848c745928345be82a0f7a70548a1ee
+src/_pytest/fixtures.py core/AddNot 7
+worker outcome: normal, test outcome: survived
+[job-id] 6397e353067249369e21dd9ae26ee2be
+src/_pytest/fixtures.py core/AddNot 8
+worker outcome: normal, test outcome: survived
+[job-id] 466846a232bc4b08979ff351d8ea7454
+src/_pytest/fixtures.py core/AddNot 9
+worker outcome: normal, test outcome: survived
+[job-id] 8d1c68891f3c43798bec6a21cd13de41
+src/_pytest/fixtures.py core/AddNot 10
+worker outcome: normal, test outcome: survived
+[job-id] 48dea335d7834075b98722f2263e4ab2
+src/_pytest/fixtures.py core/AddNot 11
+worker outcome: normal, test outcome: survived
+[job-id] d300d6400d08405a9f650781d5c378c7
+src/_pytest/fixtures.py core/AddNot 12
+worker outcome: normal, test outcome: killed
+[job-id] 9c4591ffc03c4952a87ad61da79e3f3f
+src/_pytest/fixtures.py core/AddNot 13
+worker outcome: normal, test outcome: survived
+[job-id] fc29a0b7dcd34c7b8f176337662d9dec
+src/_pytest/fixtures.py core/AddNot 14
+worker outcome: normal, test outcome: survived
+[job-id] b050511b0355499ab8c3c1331019a9c3
+src/_pytest/fixtures.py core/AddNot 15
+worker outcome: normal, test outcome: survived
+[job-id] fbfafc0e9d2b41aca9771e4eeaac02c4
+src/_pytest/fixtures.py core/AddNot 16
+worker outcome: normal, test outcome: survived
+[job-id] 7ee6a65f190b4cca9694a4fbd1499ccd
+src/_pytest/fixtures.py core/AddNot 17
+worker outcome: normal, test outcome: survived
+[job-id] edf15dbd0da14393b1ee115e5185b890
+src/_pytest/fixtures.py core/AddNot 18
+worker outcome: normal, test outcome: survived
+[job-id] 3ced02df18ac40ae9d69f2452d1bdea9
+src/_pytest/fixtures.py core/AddNot 19
+worker outcome: normal, test outcome: survived
+[job-id] e751c799ee3f4ec282771113894473ee
+src/_pytest/fixtures.py core/AddNot 20
+worker outcome: normal, test outcome: survived
+[job-id] 82c0ca88e50d4afb9fa1436873ffc61f
+src/_pytest/fixtures.py core/AddNot 21
+worker outcome: normal, test outcome: survived
+[job-id] 7bf6c4cb75994f5f94a283379b167207
+src/_pytest/fixtures.py core/AddNot 22
+worker outcome: normal, test outcome: survived
+[job-id] 352f6600818040f9a028dfed585af608
+src/_pytest/fixtures.py core/AddNot 23
+worker outcome: normal, test outcome: survived
+[job-id] 8d69132b218948ada5a610a5514107c2
+src/_pytest/fixtures.py core/AddNot 24
+worker outcome: normal, test outcome: survived
+[job-id] c5db7bcd01aa4e8b847966771092c5a0
+src/_pytest/fixtures.py core/AddNot 25
+worker outcome: normal, test outcome: survived
+[job-id] 8183f761a6a84f59b3cb9f5091f6ad08
+src/_pytest/fixtures.py core/AddNot 26
+worker outcome: normal, test outcome: survived
+[job-id] 7d9c7cded4df4beabaa7b9d977862475
+src/_pytest/fixtures.py core/AddNot 27
+worker outcome: normal, test outcome: survived
+[job-id] 782ebf9f4c314ad096b1044762336209
+src/_pytest/fixtures.py core/AddNot 28
+worker outcome: normal, test outcome: survived
+[job-id] 9c99d53656b14ad8b15c36cf616800a4
+src/_pytest/fixtures.py core/AddNot 29
+worker outcome: normal, test outcome: survived
+[job-id] 6ad50fc14af44a06a0765679fa032bd2
+src/_pytest/fixtures.py core/AddNot 30
+worker outcome: normal, test outcome: survived
+[job-id] 79a473a7443c47128b6106676f027aa1
+src/_pytest/fixtures.py core/AddNot 31
+worker outcome: normal, test outcome: survived
+[job-id] 79a4aff0562143bcb2eea35ddb820f3c
+src/_pytest/fixtures.py core/AddNot 32
+worker outcome: normal, test outcome: survived
+[job-id] 0059a17d8a774fb796ad6455ce8b2833
+src/_pytest/fixtures.py core/AddNot 33
+worker outcome: normal, test outcome: survived
+[job-id] 9cb72de2643a437fa9eab72cdda9f6e0
+src/_pytest/fixtures.py core/AddNot 34
+worker outcome: normal, test outcome: survived
+[job-id] 262c3b067eb546a2ab3e643f63cdae8c
+src/_pytest/fixtures.py core/AddNot 35
+worker outcome: normal, test outcome: survived
+[job-id] cbac7c377123438bb329b84430004a59
+src/_pytest/fixtures.py core/AddNot 36
+worker outcome: normal, test outcome: survived
+[job-id] 548f52c762654b7c89d0c66e04214d76
+src/_pytest/fixtures.py core/AddNot 37
+worker outcome: normal, test outcome: survived
+[job-id] 9bdb36390d124c39a081f630f40e2d2f
+src/_pytest/fixtures.py core/AddNot 38
+worker outcome: normal, test outcome: survived
+[job-id] 0bfce1f4549b424a84c4a9975fd4289c
+src/_pytest/fixtures.py core/AddNot 39
+worker outcome: normal, test outcome: survived
+[job-id] d091db5e30ab4ec5be944e7f540875f9
+src/_pytest/fixtures.py core/AddNot 40
+worker outcome: normal, test outcome: survived
+[job-id] f753939edaf743bfbf02df6eb6206724
+src/_pytest/fixtures.py core/AddNot 41
+worker outcome: normal, test outcome: survived
+[job-id] 1ad1efb0a7ca4e76b2fb6b59659ca2c6
+src/_pytest/fixtures.py core/AddNot 42
+worker outcome: normal, test outcome: survived
+[job-id] 9e4b117cbdbc4fafb9da757ecc9b3967
+src/_pytest/fixtures.py core/AddNot 43
+worker outcome: normal, test outcome: survived
+[job-id] 7e1229b6aed547efba1311d10ffa5edd
+src/_pytest/fixtures.py core/AddNot 44
+worker outcome: normal, test outcome: survived
+[job-id] c6ff4c326299401085c5f177cff7f719
+src/_pytest/fixtures.py core/AddNot 45
+worker outcome: normal, test outcome: survived
+[job-id] 9c49775532af4aa3b85221602951819d
+src/_pytest/fixtures.py core/AddNot 46
+worker outcome: normal, test outcome: survived
+[job-id] 4a3c61a2a40c4671b214f439afc4c2ef
+src/_pytest/fixtures.py core/AddNot 47
+worker outcome: normal, test outcome: survived
+[job-id] 1d4ea39282fd474b8dd8590a6d84f416
+src/_pytest/fixtures.py core/AddNot 48
+worker outcome: normal, test outcome: survived
+[job-id] 9aab466ef65a4c77a972a37e098eba38
+src/_pytest/fixtures.py core/AddNot 49
+worker outcome: normal, test outcome: survived
+[job-id] 83bb53f5e2824443a7edfb18b29475c7
+src/_pytest/fixtures.py core/AddNot 50
+worker outcome: normal, test outcome: survived
+[job-id] bfcd3527326f419e9cc8f8981996312a
+src/_pytest/fixtures.py core/AddNot 51
+worker outcome: normal, test outcome: survived
+[job-id] 36eb7d923dde4256910dea27602ae4a1
+src/_pytest/fixtures.py core/AddNot 52
+worker outcome: normal, test outcome: survived
+[job-id] d8ea1aa4d98e4884a9c9d1fe3a4f88cb
+src/_pytest/fixtures.py core/AddNot 53
+worker outcome: normal, test outcome: survived
+[job-id] 63ada197d01041f69221283526a29324
+src/_pytest/fixtures.py core/AddNot 54
+worker outcome: normal, test outcome: survived
+[job-id] 60c54f81891b4bd38efa28391bb30a75
+src/_pytest/fixtures.py core/AddNot 55
+worker outcome: normal, test outcome: survived
+[job-id] 718ea2ecfefe4c5b8c2dda5f9cc32747
+src/_pytest/fixtures.py core/AddNot 56
+worker outcome: normal, test outcome: survived
+[job-id] 25f7568fb7b54518a4a6ed5df7f58d6d
+src/_pytest/fixtures.py core/AddNot 57
+worker outcome: normal, test outcome: survived
+[job-id] 3418357c468440eb970d7693bf12ce92
+src/_pytest/fixtures.py core/AddNot 58
+worker outcome: normal, test outcome: survived
+[job-id] 9c974efb68ea47ffa5d57588fb2cbe62
+src/_pytest/fixtures.py core/AddNot 59
+worker outcome: normal, test outcome: survived
+[job-id] 7dcce44647684120be28f5731a7cb89f
+src/_pytest/fixtures.py core/AddNot 60
+worker outcome: normal, test outcome: survived
+[job-id] f8db70a672a54bf2a1e234c911d4e399
+src/_pytest/fixtures.py core/AddNot 61
+worker outcome: normal, test outcome: survived
+[job-id] f45c276a4dca4fadb39efd3b0f3f65f1
+src/_pytest/fixtures.py core/AddNot 62
+worker outcome: normal, test outcome: survived
+[job-id] 2300e2395c0a42058cb32448da86a6b6
+src/_pytest/fixtures.py core/AddNot 63
+worker outcome: normal, test outcome: survived
+[job-id] 96c51f15e0d6426988ade5a470404cdb
+src/_pytest/fixtures.py core/AddNot 64
+worker outcome: normal, test outcome: killed
+[job-id] 7142434db28a488ebf6bcecc4acfead0
+src/_pytest/fixtures.py core/AddNot 65
+worker outcome: normal, test outcome: survived
+[job-id] 1856a7a40b3f407fa758a6dc277d114c
+src/_pytest/fixtures.py core/AddNot 66
+worker outcome: normal, test outcome: killed
+[job-id] bd5863d430be4844b4fdea148463e2c2
+src/_pytest/fixtures.py core/AddNot 67
+worker outcome: normal, test outcome: killed
+[job-id] af786a4a393e48daa373d8aded3a7974
+src/_pytest/fixtures.py core/AddNot 68
+worker outcome: normal, test outcome: killed
+[job-id] a55dc7341bf04c139805804ee7423456
+src/_pytest/fixtures.py core/AddNot 69
+worker outcome: normal, test outcome: killed
+[job-id] d967fc1b968748eb9c71950bcfdae456
+src/_pytest/fixtures.py core/AddNot 70
+worker outcome: normal, test outcome: killed
+[job-id] f7a5ad29f11d4a72ac0af317a7d8b898
+src/_pytest/fixtures.py core/AddNot 71
+worker outcome: normal, test outcome: survived
+[job-id] af6f38d87840440781068cd1f212172f
+src/_pytest/fixtures.py core/AddNot 72
+worker outcome: normal, test outcome: survived
+[job-id] 589953289f3f440ba908955f58a578a3
+src/_pytest/fixtures.py core/AddNot 73
+worker outcome: normal, test outcome: survived
+[job-id] f709226a2eba4de6b10ff2a8c57c9e23
+src/_pytest/fixtures.py core/AddNot 74
+worker outcome: normal, test outcome: survived
+[job-id] 0e3e64eaf8c34a6f9a247f7df7ea69de
+src/_pytest/fixtures.py core/AddNot 75
+worker outcome: normal, test outcome: killed
+[job-id] fba29bf44c334b2e99e99355cd1810bb
+src/_pytest/fixtures.py core/AddNot 76
+worker outcome: normal, test outcome: survived
+[job-id] ffcda69afc8b451faf611bf694b38405
+src/_pytest/fixtures.py core/AddNot 77
+worker outcome: normal, test outcome: survived
+[job-id] d0c540f091ba48a5b4da3e818822160a
+src/_pytest/fixtures.py core/AddNot 78
+worker outcome: normal, test outcome: survived
+[job-id] 5e0075f144074e13a93c31178fe48752
+src/_pytest/fixtures.py core/AddNot 79
+worker outcome: normal, test outcome: survived
+[job-id] fee0ac154a3f45bba285b1e6763282d9
+src/_pytest/fixtures.py core/AddNot 80
+worker outcome: normal, test outcome: survived
+[job-id] 831d82dce7674d238402d236fce09c94
+src/_pytest/fixtures.py core/AddNot 81
+worker outcome: normal, test outcome: survived
+[job-id] 08ba099556cd42c687ae715adf73dbdc
+src/_pytest/fixtures.py core/AddNot 82
+worker outcome: normal, test outcome: survived
+[job-id] 3509a620c05745c8b041414e75ae6556
+src/_pytest/fixtures.py core/AddNot 83
+worker outcome: normal, test outcome: survived
+[job-id] 1e86610f0d1c46f6af7a076867e3cda4
+src/_pytest/fixtures.py core/AddNot 84
+worker outcome: normal, test outcome: survived
+[job-id] ccfbca69c1084a8e8b8a8e9cdb5d9868
+src/_pytest/fixtures.py core/AddNot 85
+worker outcome: normal, test outcome: survived
+[job-id] 265a6c42ac3e4270bb8eaf7627ff3c9b
+src/_pytest/fixtures.py core/AddNot 86
+worker outcome: normal, test outcome: survived
+[job-id] 417750c49ed447048ce2335de825a15e
+src/_pytest/fixtures.py core/AddNot 87
+worker outcome: normal, test outcome: survived
+[job-id] d7d69bd6f2d942fc8475ff593c9bcb8d
+src/_pytest/fixtures.py core/AddNot 88
+worker outcome: normal, test outcome: killed
+[job-id] 48cb8b3096c047d5af68509a0414e98b
+src/_pytest/fixtures.py core/AddNot 89
+worker outcome: normal, test outcome: killed
+[job-id] 1364c70a6a914c2ca1f37f7fb473c942
+src/_pytest/fixtures.py core/AddNot 90
+worker outcome: normal, test outcome: killed
+[job-id] 1ffec53062e24ade9bb2b9b744d79336
+src/_pytest/fixtures.py core/AddNot 91
+worker outcome: normal, test outcome: killed
+[job-id] 659395a46a17460099a63721e4e6cef4
+src/_pytest/fixtures.py core/AddNot 92
+worker outcome: normal, test outcome: survived
+[job-id] 83fb79f3991c452182715b494e910972
+src/_pytest/fixtures.py core/AddNot 93
+worker outcome: normal, test outcome: survived
+[job-id] 514515139b7e4dd79435af469b90ec06
+src/_pytest/fixtures.py core/AddNot 94
+worker outcome: normal, test outcome: killed
+[job-id] 7e99305f3fe747019bcbf79f6c7128c2
+src/_pytest/fixtures.py core/AddNot 95
+worker outcome: normal, test outcome: killed
+[job-id] c4b45beec0ee4a54ada157f416a676ae
+src/_pytest/fixtures.py core/AddNot 96
+worker outcome: normal, test outcome: survived
+[job-id] 1adee4dd7ace4939ba673d1a535580fc
+src/_pytest/fixtures.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: survived
+[job-id] 2598549d7d3143958d70822f161ec218
+src/_pytest/fixtures.py core/ReplaceTrueWithFalse 1
+worker outcome: normal, test outcome: survived
+[job-id] a23c1881daad4f5ea9bcbd3bac2d4cc3
+src/_pytest/fixtures.py core/ReplaceTrueWithFalse 2
+worker outcome: normal, test outcome: survived
+[job-id] 946be318ba8246e7b82be35b3828f5e2
+src/_pytest/fixtures.py core/ReplaceTrueWithFalse 3
+worker outcome: normal, test outcome: survived
+[job-id] 805ddf2f0c99489690e9c4874a8531d3
+src/_pytest/fixtures.py core/ReplaceTrueWithFalse 4
+worker outcome: normal, test outcome: survived
+[job-id] aafbea3ec1424b36946ec2962d292aba
+src/_pytest/fixtures.py core/ReplaceTrueWithFalse 5
+worker outcome: normal, test outcome: survived
+[job-id] 558c66387cb74e5ebfd8b285e6c10c77
+src/_pytest/fixtures.py core/ReplaceTrueWithFalse 6
+worker outcome: normal, test outcome: survived
+[job-id] db17e7b7d3bb491e834c45a8fe8257cd
+src/_pytest/fixtures.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: survived
+[job-id] 7e22ca57f888442bb6b0daebe139aef6
+src/_pytest/fixtures.py core/ReplaceFalseWithTrue 1
+worker outcome: normal, test outcome: survived
+[job-id] 0f6dcc010a0149cda1162ec0fc13d85c
+src/_pytest/fixtures.py core/ReplaceFalseWithTrue 2
+worker outcome: normal, test outcome: survived
+[job-id] 512721b0126e4d9b90e4f19e0b24f2cd
+src/_pytest/fixtures.py core/ReplaceFalseWithTrue 3
+worker outcome: normal, test outcome: survived
+[job-id] 6915065029944ef0afe9fa90f3e366cb
+src/_pytest/fixtures.py core/ReplaceFalseWithTrue 4
+worker outcome: normal, test outcome: survived
+[job-id] 483a2b261b5d425badf8c5374f934eac
+src/_pytest/fixtures.py core/ReplaceFalseWithTrue 5
+worker outcome: normal, test outcome: survived
+[job-id] 4615ab5a41354c669624e43c7374d438
+src/_pytest/fixtures.py core/ReplaceFalseWithTrue 6
+worker outcome: normal, test outcome: survived
+[job-id] d7dd19f8f17444bda22baeb81b9643b8
+src/_pytest/fixtures.py core/ReplaceFalseWithTrue 7
+worker outcome: normal, test outcome: survived
+[job-id] 6d209605973c44b496adaea99bdeaa64
+src/_pytest/fixtures.py core/ReplaceFalseWithTrue 8
+worker outcome: normal, test outcome: survived
+[job-id] b05657f53cd342ce80e41ec98d6f0399
+src/_pytest/fixtures.py core/ReplaceFalseWithTrue 9
+worker outcome: normal, test outcome: survived
+[job-id] eaff45c51f394c789ed7f1dd9106f93a
+src/_pytest/fixtures.py core/ReplaceFalseWithTrue 10
+worker outcome: normal, test outcome: survived
+[job-id] e1a2d647d1a24639849e1c1edd7f4f5b
+src/_pytest/fixtures.py core/ReplaceFalseWithTrue 11
+worker outcome: normal, test outcome: killed
+[job-id] 8115538e8e534ea4b71e319545df9b1e
+src/_pytest/fixtures.py core/ReplaceFalseWithTrue 12
+worker outcome: normal, test outcome: killed
+[job-id] c8ed80ffca1a4b1bb5d6b5ad973a6eb8
+src/_pytest/fixtures.py core/ReplaceFalseWithTrue 13
+worker outcome: normal, test outcome: survived
+[job-id] 4215c44765c046cda4e5c559141973b8
+src/_pytest/fixtures.py core/ReplaceFalseWithTrue 14
+worker outcome: normal, test outcome: survived
+[job-id] 8510810a8f834b5e8323c70430070e43
+src/_pytest/fixtures.py core/ReplaceFalseWithTrue 15
+worker outcome: normal, test outcome: survived
+[job-id] 8a2c96fcdacc4df9b05a6b8af23c54e4
+src/_pytest/fixtures.py core/ReplaceFalseWithTrue 16
+worker outcome: normal, test outcome: survived
+[job-id] 1f3dd34264b94600b84802db3ecfdf21
+src/_pytest/fixtures.py core/ReplaceFalseWithTrue 17
+worker outcome: normal, test outcome: survived
+[job-id] 4b9368dc63d246b2946c570417772392
+src/_pytest/fixtures.py core/ReplaceAndWithOr 0
+worker outcome: normal, test outcome: survived
+[job-id] ea653cb1568d42639565006b961199e2
+src/_pytest/fixtures.py core/ReplaceAndWithOr 1
+worker outcome: normal, test outcome: survived
+[job-id] ae2ca30c9c6a4be08cec36a918aff82e
+src/_pytest/fixtures.py core/ReplaceAndWithOr 2
+worker outcome: normal, test outcome: survived
+[job-id] 4d404885c4fc402c9772369927b6f34b
+src/_pytest/fixtures.py core/ReplaceAndWithOr 3
+worker outcome: normal, test outcome: survived
+[job-id] 9d11578c64df4f17bc83da9843dc8d8f
+src/_pytest/fixtures.py core/ReplaceAndWithOr 4
+worker outcome: normal, test outcome: survived
+[job-id] 1a9b1118027d47389dac7e5d372b75e8
+src/_pytest/fixtures.py core/ReplaceAndWithOr 5
+worker outcome: normal, test outcome: survived
+[job-id] b4130e9217904550847c385571f88833
+src/_pytest/fixtures.py core/ReplaceAndWithOr 6
+worker outcome: normal, test outcome: killed
+[job-id] 77c9f3ff92cd48a3b57d7e238773b89e
+src/_pytest/fixtures.py core/ReplaceAndWithOr 7
+worker outcome: normal, test outcome: killed
+[job-id] 1745cf93cef94049a252590c3d858d11
+src/_pytest/fixtures.py core/ReplaceAndWithOr 8
+worker outcome: normal, test outcome: killed
+[job-id] 1cbbd0c5dfe740e5b18e2a6429880032
+src/_pytest/fixtures.py core/ReplaceAndWithOr 9
+worker outcome: normal, test outcome: survived
+[job-id] f46116775f124dcc9bdb3e0a2bcaeb60
+src/_pytest/fixtures.py core/ReplaceAndWithOr 10
+worker outcome: normal, test outcome: killed
+[job-id] b1f3daac4fa84f739d006b693e50cf20
+src/_pytest/fixtures.py core/ReplaceAndWithOr 11
+worker outcome: normal, test outcome: survived
+[job-id] 203e4c0e0a7f4a58a746bfdeb9306e38
+src/_pytest/fixtures.py core/ReplaceOrWithAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 2a80a95ee141496b9f8b7e062abaf1ef
+src/_pytest/fixtures.py core/ReplaceOrWithAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 1b44f1355d6543449f9c99ed57bf213f
+src/_pytest/fixtures.py core/ReplaceOrWithAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] dc7986bd07d244a58285e81fca3a49b1
+src/_pytest/fixtures.py core/ReplaceOrWithAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] 495b65f449d349e2815cd22a77f1fb2b
+src/_pytest/fixtures.py core/ReplaceOrWithAnd 4
+worker outcome: normal, test outcome: survived
+[job-id] 511409fc3be04099a3e8a87ad8036fe4
+src/_pytest/fixtures.py core/ReplaceOrWithAnd 5
+worker outcome: normal, test outcome: survived
+[job-id] e6d7b083b1704892b1882f66945f54bc
+src/_pytest/fixtures.py core/ReplaceOrWithAnd 6
+worker outcome: normal, test outcome: survived
+[job-id] 88b444d48e2a493b8854298425502624
+src/_pytest/fixtures.py core/ReplaceOrWithAnd 7
+worker outcome: normal, test outcome: survived
+[job-id] c6eea8d8420740de802243310d271830
+src/_pytest/fixtures.py core/ReplaceOrWithAnd 8
+worker outcome: normal, test outcome: survived
+[job-id] 4cb15dfa05aa465795cdc96f6004d5d8
+src/_pytest/fixtures.py core/ReplaceOrWithAnd 9
+worker outcome: normal, test outcome: survived
+[job-id] 59808dc736e44e8286e43c5221d33561
+src/_pytest/fixtures.py core/ReplaceBreakWithContinue 0
+worker outcome: normal, test outcome: survived
+[job-id] d4927f730ff049288c3eab96666de2b6
+src/_pytest/fixtures.py core/ReplaceBreakWithContinue 1
+worker outcome: normal, test outcome: survived
+[job-id] 32ec44ea791f4b50a6ffff3c18df9be4
+src/_pytest/fixtures.py core/ReplaceBreakWithContinue 2
+worker outcome: normal, test outcome: survived
+[job-id] 025e9fccabf948d39f53836183408374
+src/_pytest/fixtures.py core/ReplaceContinueWithBreak 0
+worker outcome: normal, test outcome: survived
+[job-id] 1601077475a2461fa38c204bccebd9bc
+src/_pytest/fixtures.py core/ReplaceContinueWithBreak 1
+worker outcome: normal, test outcome: survived
+[job-id] 5522b1a7d51e4b2b95db1ab181383ea8
+src/_pytest/fixtures.py core/ReplaceContinueWithBreak 2
+worker outcome: normal, test outcome: survived
+[job-id] 73cec237a3ae45d7a20794de20ee0e72
+src/_pytest/fixtures.py core/ReplaceContinueWithBreak 3
+worker outcome: normal, test outcome: survived
+[job-id] 6573c92c41e5430ca04dfaeaa218b0dd
+src/_pytest/fixtures.py core/ReplaceContinueWithBreak 4
+worker outcome: normal, test outcome: survived
+[job-id] e38bea7db9ea4423a71538bb8ee82a32
+src/_pytest/fixtures.py core/ReplaceContinueWithBreak 5
+worker outcome: normal, test outcome: survived
+[job-id] 3927c17ba147453080dc926ccbddd9c6
+src/_pytest/fixtures.py core/ReplaceContinueWithBreak 6
+worker outcome: normal, test outcome: killed
+[job-id] 9b0a8d8608714a11adf71a3bc037395c
+src/_pytest/fixtures.py core/ExceptionReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] 8e0376805691499fbec4b930b26fe6bc
+src/_pytest/fixtures.py core/ExceptionReplacer 1
+worker outcome: normal, test outcome: killed
+[job-id] 36f58521179a4c398e8f4aa942278195
+src/_pytest/fixtures.py core/ExceptionReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] d2568ee77bf1457eb0b7c08b93ccaae5
+src/_pytest/fixtures.py core/ExceptionReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] a0b70b1c1da54409876d5138206ab8b0
+src/_pytest/fixtures.py core/ExceptionReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] f9e8f4ec99794958961397ae1d6eb3b8
+src/_pytest/fixtures.py core/ExceptionReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] 4758f9da27694b4f8979ab64937e7878
+src/_pytest/fixtures.py core/ExceptionReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] 1e374663e695413d8808e5e2c5ee95da
+src/_pytest/fixtures.py core/ExceptionReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] cfaa1bc42789448097c4d815d8f19134
+src/_pytest/fixtures.py core/ExceptionReplacer 8
+worker outcome: normal, test outcome: survived
+[job-id] d0e85ed9bf574ee98851d3fc21863d19
+src/_pytest/fixtures.py core/ExceptionReplacer 9
+worker outcome: normal, test outcome: survived
+[job-id] 069b0f5dce0a43c7a74f42d8dbffce85
+src/_pytest/fixtures.py core/ExceptionReplacer 10
+worker outcome: normal, test outcome: survived
+[job-id] 1ecaf4373f9c43bf882b7b3df5509430
+src/_pytest/fixtures.py core/ExceptionReplacer 11
+worker outcome: normal, test outcome: survived
+[job-id] a164db853f5747ac80af0897d51ddb6b
+src/_pytest/fixtures.py core/ExceptionReplacer 12
+worker outcome: normal, test outcome: survived
+[job-id] 27e00af7728b4ab9ba7fa0cbeddc3ddf
+src/_pytest/fixtures.py core/ExceptionReplacer 13
+worker outcome: normal, test outcome: survived
+[job-id] 6c92171ec8d340ad9142e3aa1ba863df
+src/_pytest/fixtures.py core/ExceptionReplacer 14
+worker outcome: normal, test outcome: killed
+[job-id] c7f58e4d033e4a07904257b69fb9bf67
+src/_pytest/fixtures.py core/ExceptionReplacer 15
+worker outcome: normal, test outcome: survived
+[job-id] 885ed5c0fe0d453681feb722b8a4eae2
+src/_pytest/fixtures.py core/ExceptionReplacer 16
+worker outcome: normal, test outcome: survived
+[job-id] 19655e1b605e45fa9f3eb8a47b078090
+src/_pytest/fixtures.py core/NumberReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] d05f22a486f942209ecc73ad25c4e77a
+src/_pytest/fixtures.py core/NumberReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] 806043a605b244748947b778067ccf49
+src/_pytest/fixtures.py core/NumberReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] ccc7e971776142fb99e3298e90cedd51
+src/_pytest/fixtures.py core/NumberReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] 065754ae8ab94b9591a21c62401c7f84
+src/_pytest/fixtures.py core/NumberReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] 5d99ae5c211440c4b4b9101ec7558819
+src/_pytest/fixtures.py core/NumberReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] f8d971be57f94307be1fcc6916a3c261
+src/_pytest/fixtures.py core/NumberReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] b32f4266898542a0a9058a1a8cf18cbc
+src/_pytest/fixtures.py core/NumberReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] 430cf84c4f904a08a3f8a5330cb0939c
+src/_pytest/fixtures.py core/NumberReplacer 8
+worker outcome: normal, test outcome: survived
+[job-id] 129a86cd9a0943569d59d7877643bec9
+src/_pytest/fixtures.py core/NumberReplacer 9
+worker outcome: normal, test outcome: survived
+[job-id] 6e09b55e3c504ac789d14c6103154e59
+src/_pytest/fixtures.py core/NumberReplacer 10
+worker outcome: normal, test outcome: survived
+[job-id] 0960bf9a243c4e7d9a089cf78b3f14ef
+src/_pytest/fixtures.py core/NumberReplacer 11
+worker outcome: normal, test outcome: survived
+[job-id] b068b2a6072a45b08b29dfef600d8898
+src/_pytest/fixtures.py core/NumberReplacer 12
+worker outcome: normal, test outcome: survived
+[job-id] 5024bc07e6924966b4e4660dbc791668
+src/_pytest/fixtures.py core/NumberReplacer 13
+worker outcome: normal, test outcome: survived
+[job-id] a40040def7f94fdca02f726a3ef5945e
+src/_pytest/fixtures.py core/NumberReplacer 14
+worker outcome: normal, test outcome: survived
+[job-id] fb84d4229d494f54b199a372e7526ede
+src/_pytest/fixtures.py core/NumberReplacer 15
+worker outcome: normal, test outcome: survived
+[job-id] 043f04569d094ca6ada9d1530ff91f5b
+src/_pytest/fixtures.py core/NumberReplacer 16
+worker outcome: normal, test outcome: survived
+[job-id] 21d5c1ed7f9d42a0ac70fa385ecdcf00
+src/_pytest/fixtures.py core/NumberReplacer 17
+worker outcome: normal, test outcome: survived
+[job-id] 292fcc21475140d6992f637f4687f770
+src/_pytest/fixtures.py core/NumberReplacer 18
+worker outcome: normal, test outcome: survived
+[job-id] 4a1b7967ccf74e7fb3e327d070953cdf
+src/_pytest/fixtures.py core/NumberReplacer 19
+worker outcome: normal, test outcome: survived
+[job-id] 0a52187db8b2464d878e9fc6b0962409
+src/_pytest/fixtures.py core/NumberReplacer 20
+worker outcome: normal, test outcome: survived
+[job-id] 5344f481d4d546a0be3947fad7bc4bfa
+src/_pytest/fixtures.py core/NumberReplacer 21
+worker outcome: normal, test outcome: survived
+[job-id] f84ed4f5dc874db38b970a50a8268c5f
+src/_pytest/fixtures.py core/NumberReplacer 22
+worker outcome: normal, test outcome: survived
+[job-id] 184ecc173c014d19b634c67a8cb81d69
+src/_pytest/fixtures.py core/NumberReplacer 23
+worker outcome: normal, test outcome: survived
+[job-id] 2902db7680a0452fbed81eadd3eadf8e
+src/_pytest/fixtures.py core/NumberReplacer 24
+worker outcome: normal, test outcome: survived
+[job-id] fb395be400064972b0cc63e3905386c2
+src/_pytest/fixtures.py core/NumberReplacer 25
+worker outcome: normal, test outcome: survived
+[job-id] 5138716c0d264e8e8d94af19c0b6cb63
+src/_pytest/fixtures.py core/NumberReplacer 26
+worker outcome: normal, test outcome: survived
+[job-id] 3051241a14794dc9a317d981043172e1
+src/_pytest/fixtures.py core/NumberReplacer 27
+worker outcome: normal, test outcome: survived
+[job-id] b11ab39211224e54bef406b291172099
+src/_pytest/fixtures.py core/NumberReplacer 28
+worker outcome: normal, test outcome: survived
+[job-id] 4f232af2e20447b3a00191424e4d48e2
+src/_pytest/fixtures.py core/NumberReplacer 29
+worker outcome: normal, test outcome: survived
+[job-id] 29b466ccc5e04d05aa289af02ae9d5cf
+src/_pytest/fixtures.py core/NumberReplacer 30
+worker outcome: normal, test outcome: survived
+[job-id] 4c3cd8a003024974b05cf39f34a6f60c
+src/_pytest/fixtures.py core/NumberReplacer 31
+worker outcome: normal, test outcome: survived
+[job-id] 0bd218f0c54949ed9a5ad1ed787f1e9c
+src/_pytest/fixtures.py core/NumberReplacer 32
+worker outcome: normal, test outcome: survived
+[job-id] b23ca4e4bcfc4637bcb49338810c3ed3
+src/_pytest/fixtures.py core/NumberReplacer 33
+worker outcome: normal, test outcome: survived
+[job-id] 2b00d08744374793bb692e5b7a66dc01
+src/_pytest/fixtures.py core/NumberReplacer 34
+worker outcome: normal, test outcome: survived
+[job-id] 0835ee2abd5f411fa29803b986dffb7d
+src/_pytest/fixtures.py core/NumberReplacer 35
+worker outcome: normal, test outcome: survived
+[job-id] ed69da0645bd46d984021b681f16f304
+src/_pytest/fixtures.py core/NumberReplacer 36
+worker outcome: normal, test outcome: survived
+[job-id] 63667666833f4fb3b91dec1f977a013d
+src/_pytest/fixtures.py core/NumberReplacer 37
+worker outcome: normal, test outcome: survived
+[job-id] f3eda3188de14a2e8aa123647ed0b222
+src/_pytest/fixtures.py core/NumberReplacer 38
+worker outcome: normal, test outcome: survived
+[job-id] 65783832421b46dc9c9745f7fae708db
+src/_pytest/fixtures.py core/NumberReplacer 39
+worker outcome: normal, test outcome: survived
+[job-id] bfb168055e464d11923594aaf82a14b4
+src/_pytest/fixtures.py core/NumberReplacer 40
+worker outcome: normal, test outcome: survived
+[job-id] 459abd0751c74a6b83ec834b7ad8d51c
+src/_pytest/fixtures.py core/NumberReplacer 41
+worker outcome: normal, test outcome: survived
+[job-id] baa4897a940040e78808af93c46c7f81
+src/_pytest/fixtures.py core/NumberReplacer 42
+worker outcome: normal, test outcome: survived
+[job-id] 9833d875a4c44d7fb095a02931af2db1
+src/_pytest/fixtures.py core/NumberReplacer 43
+worker outcome: normal, test outcome: survived
+[job-id] 781b3792574e42dfbc1027d29f004704
+src/_pytest/fixtures.py core/NumberReplacer 44
+worker outcome: normal, test outcome: survived
+[job-id] 6afe8b2d1877411282c9ebb31a69319d
+src/_pytest/fixtures.py core/NumberReplacer 45
+worker outcome: normal, test outcome: survived
+[job-id] f3c8e385e2e2491290ae099260de8dff
+src/_pytest/fixtures.py core/NumberReplacer 46
+worker outcome: normal, test outcome: survived
+[job-id] 2a3fd19f0091434c8b375216b7960a2a
+src/_pytest/fixtures.py core/NumberReplacer 47
+worker outcome: normal, test outcome: survived
+[job-id] 8660660428784975b8c785fae5928835
+src/_pytest/fixtures.py core/NumberReplacer 48
+worker outcome: normal, test outcome: survived
+[job-id] aa0bb71a6e73490fab7c726d70fb497d
+src/_pytest/fixtures.py core/NumberReplacer 49
+worker outcome: normal, test outcome: survived
+[job-id] af2dfc32f91640e398fbf8eca8840b50
+src/_pytest/fixtures.py core/NumberReplacer 50
+worker outcome: normal, test outcome: survived
+[job-id] 35cc0e9347434034a3d93c2f1c776102
+src/_pytest/fixtures.py core/NumberReplacer 51
+worker outcome: normal, test outcome: survived
+[job-id] d5c56dd93c6c40bebc90526867a36cc5
+src/_pytest/fixtures.py core/NumberReplacer 52
+worker outcome: normal, test outcome: survived
+[job-id] 30c4d7f5301a4ff0b38cf62ef31aca5a
+src/_pytest/fixtures.py core/NumberReplacer 53
+worker outcome: normal, test outcome: survived
+[job-id] 5f6d2ff54b264a97bdce1f9278c61d5a
+src/_pytest/fixtures.py core/NumberReplacer 54
+worker outcome: normal, test outcome: survived
+[job-id] 4db5c380f65140ae8412f479e88f5a78
+src/_pytest/fixtures.py core/NumberReplacer 55
+worker outcome: normal, test outcome: survived
+[job-id] a2264301f94049a4afa96bd16e72e07c
+src/_pytest/fixtures.py core/NumberReplacer 56
+worker outcome: normal, test outcome: survived
+[job-id] e5d3c31dbc18420a8b51dbfaa0f8d0bb
+src/_pytest/fixtures.py core/NumberReplacer 57
+worker outcome: normal, test outcome: survived
+[job-id] ba943a50844a4b6a955e9c0261b67347
+src/_pytest/fixtures.py core/NumberReplacer 58
+worker outcome: normal, test outcome: killed
+[job-id] 62c7777415324a82b0ac5002395ff1aa
+src/_pytest/fixtures.py core/NumberReplacer 59
+worker outcome: normal, test outcome: survived
+[job-id] df1e942bc59f48459677ecb56a17dd99
+src/_pytest/fixtures.py core/NumberReplacer 60
+worker outcome: normal, test outcome: survived
+[job-id] 5fb38b234b3741ac877bec3a10e326ad
+src/_pytest/fixtures.py core/NumberReplacer 61
+worker outcome: normal, test outcome: survived
+[job-id] c65c98716db741d7911695d8a437c90a
+src/_pytest/fixtures.py core/NumberReplacer 62
+worker outcome: normal, test outcome: survived
+[job-id] 85fbdc9d57f3490489cb5dae8e6decdc
+src/_pytest/fixtures.py core/NumberReplacer 63
+worker outcome: normal, test outcome: survived
+[job-id] 328dcf893aa74a1e8848c0d94242815e
+src/_pytest/fixtures.py core/NumberReplacer 64
+worker outcome: normal, test outcome: survived
+[job-id] 5c3e5d691cdc49eb8650f9e999279920
+src/_pytest/fixtures.py core/NumberReplacer 65
+worker outcome: normal, test outcome: survived
+[job-id] bccd5d40e7d24e078458e575e3a4f9b6
+src/_pytest/fixtures.py core/NumberReplacer 66
+worker outcome: normal, test outcome: survived
+[job-id] b7edb9a3ec15436c87cd1a47d9c165fd
+src/_pytest/fixtures.py core/NumberReplacer 67
+worker outcome: normal, test outcome: survived
+[job-id] 825a97dd98dd41ccba9ca5139897e24e
+src/_pytest/fixtures.py core/NumberReplacer 68
+worker outcome: normal, test outcome: survived
+[job-id] 6e9b2cc0a616425987aff0ecf3bd6e42
+src/_pytest/fixtures.py core/NumberReplacer 69
+worker outcome: normal, test outcome: survived
+[job-id] b1e8eead20df4cbebce51939c71bbfb4
+src/_pytest/fixtures.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: survived
+[job-id] 4681add1a8794a3fb72d217f3e76147d
+src/_pytest/fixtures.py core/RemoveDecorator 1
+worker outcome: normal, test outcome: killed
+[job-id] 4537d246d5b04393a0138d1f9ffc7a74
+src/_pytest/fixtures.py core/RemoveDecorator 2
+worker outcome: normal, test outcome: survived
+[job-id] 70ef98cbf0194572a7f7ba8e30c716af
+src/_pytest/fixtures.py core/RemoveDecorator 3
+worker outcome: normal, test outcome: survived
+[job-id] 574792cc0a5942d4add102a71d85e11e
+src/_pytest/fixtures.py core/RemoveDecorator 4
+worker outcome: normal, test outcome: survived
+[job-id] d7032bba05ab4fa1b2842664714ec8e4
+src/_pytest/fixtures.py core/RemoveDecorator 5
+worker outcome: normal, test outcome: survived
+[job-id] 1c839efd56ed421ebf473c585dddac15
+src/_pytest/fixtures.py core/RemoveDecorator 6
+worker outcome: normal, test outcome: survived
+[job-id] e71527584ea7416594d92921909d29db
+src/_pytest/fixtures.py core/RemoveDecorator 7
+worker outcome: normal, test outcome: survived
+[job-id] e4828b3f76c24c518064bfe02daea4cd
+src/_pytest/fixtures.py core/RemoveDecorator 8
+worker outcome: normal, test outcome: survived
+[job-id] 2b25b3db404f4658b7866cef1452f3f0
+src/_pytest/fixtures.py core/RemoveDecorator 9
+worker outcome: normal, test outcome: survived
+[job-id] 31550c6196824bfc825814792aebd9df
+src/_pytest/fixtures.py core/RemoveDecorator 10
+worker outcome: normal, test outcome: survived
+[job-id] ad17bcca3ca740d5be037b894a3d59bc
+src/_pytest/fixtures.py core/RemoveDecorator 11
+worker outcome: normal, test outcome: survived
+[job-id] e3f081fb710f492cb83da82531e0db70
+src/_pytest/fixtures.py core/RemoveDecorator 12
+worker outcome: normal, test outcome: survived
+[job-id] 8d858d46eb374574bb8fc9ef4f56e84c
+src/_pytest/fixtures.py core/RemoveDecorator 13
+worker outcome: normal, test outcome: killed
+[job-id] 7aa290e4ef3b4285b041a913a18ad25c
+src/_pytest/fixtures.py core/RemoveDecorator 14
+worker outcome: normal, test outcome: survived
+[job-id] 1a5bfced15414844881020cb2b47bcb4
+src/_pytest/fixtures.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: survived
+[job-id] 220fca1ca7b14ee9a935c3210598f547
+src/_pytest/fixtures.py core/ZeroIterationForLoop 1
+worker outcome: normal, test outcome: survived
+[job-id] 0d0efb3d4d3f4af38f502018df239892
+src/_pytest/fixtures.py core/ZeroIterationForLoop 2
+worker outcome: normal, test outcome: survived
+[job-id] b37857ba50fb491980d74c3161f55540
+src/_pytest/fixtures.py core/ZeroIterationForLoop 3
+worker outcome: normal, test outcome: survived
+[job-id] fc3796fd093b4c438de9dd63cbae1144
+src/_pytest/fixtures.py core/ZeroIterationForLoop 4
+worker outcome: normal, test outcome: survived
+[job-id] 7fe19893b60b4f26a77f8f61e8cf7042
+src/_pytest/fixtures.py core/ZeroIterationForLoop 5
+worker outcome: normal, test outcome: survived
+[job-id] 3bf315d45a2344aa914746a3fca59c45
+src/_pytest/fixtures.py core/ZeroIterationForLoop 6
+worker outcome: normal, test outcome: survived
+[job-id] 2dc033dd972b4029a74a0c31ad992480
+src/_pytest/fixtures.py core/ZeroIterationForLoop 7
+worker outcome: normal, test outcome: survived
+[job-id] 9ce2f5f4619b465982203910f5062293
+src/_pytest/fixtures.py core/ZeroIterationForLoop 8
+worker outcome: normal, test outcome: survived
+[job-id] 00d8533797254e2ba669b564ddfc509c
+src/_pytest/fixtures.py core/ZeroIterationForLoop 9
+worker outcome: normal, test outcome: survived
+[job-id] 35b73ff9c92345d09f444938eeb58bb1
+src/_pytest/fixtures.py core/ZeroIterationForLoop 10
+worker outcome: normal, test outcome: survived
+[job-id] 738702de0c7c4c4492aa140ab198317d
+src/_pytest/fixtures.py core/ZeroIterationForLoop 11
+worker outcome: normal, test outcome: survived
+[job-id] 2c9a1523a71d4c1199d6dc110a591d0a
+src/_pytest/fixtures.py core/ZeroIterationForLoop 12
+worker outcome: normal, test outcome: survived
+[job-id] 02f26bbeaa41467594f6e303af8cab72
+src/_pytest/fixtures.py core/ZeroIterationForLoop 13
+worker outcome: normal, test outcome: survived
+[job-id] f76dbc240e9e4401a125c5b8aac0f724
+src/_pytest/fixtures.py core/ZeroIterationForLoop 14
+worker outcome: normal, test outcome: survived
+[job-id] 85945964fa3f4886a1a0e3588caba33b
+src/_pytest/fixtures.py core/ZeroIterationForLoop 15
+worker outcome: normal, test outcome: survived
+[job-id] a170a872cea74ee6a25abc6e484294fd
+src/_pytest/fixtures.py core/ZeroIterationForLoop 16
+worker outcome: normal, test outcome: survived
+[job-id] e4aaffc76aa4494d8caf593fe35dc95b
+src/_pytest/fixtures.py core/ZeroIterationForLoop 17
+worker outcome: normal, test outcome: survived
+[job-id] 040b799e64974272b243178b5f72bea8
+src/_pytest/fixtures.py core/ZeroIterationForLoop 18
+worker outcome: normal, test outcome: survived
+[job-id] 3a88ad0bfe5349dd9f596f9856cc3b06
+src/_pytest/fixtures.py core/ZeroIterationForLoop 19
+worker outcome: normal, test outcome: survived
+[job-id] 7a0e66305ae648cbb6db8622bace74c9
+src/_pytest/fixtures.py core/ZeroIterationForLoop 20
+worker outcome: normal, test outcome: survived
+[job-id] 0eaf87bc257e45dbb7a86f2e8b094da7
+src/_pytest/fixtures.py core/ZeroIterationForLoop 21
+worker outcome: normal, test outcome: survived
+[job-id] 940fd751b4eb4a67a812b1c07ff7ca1a
+src/_pytest/fixtures.py core/ZeroIterationForLoop 22
+worker outcome: normal, test outcome: killed
+[job-id] 59d15fa8971b467c9d16fd19a770e094
+src/_pytest/fixtures.py core/ZeroIterationForLoop 23
+worker outcome: normal, test outcome: survived
+[job-id] ba8e42e5fcc74468b9c669678208eafd
+src/_pytest/fixtures.py core/ZeroIterationForLoop 24
+worker outcome: normal, test outcome: survived
+[job-id] 06d7937a733b446daedf51cfdb0431d9
+src/_pytest/fixtures.py core/ZeroIterationForLoop 25
+worker outcome: normal, test outcome: survived
+[job-id] f9d2903d4c314f78a1b7f0c059dff202
+src/_pytest/fixtures.py core/ZeroIterationForLoop 26
+worker outcome: normal, test outcome: survived
+[job-id] 0651b7c949674a999b23dfd07569aeb1
+src/_pytest/fixtures.py core/ZeroIterationForLoop 27
+worker outcome: normal, test outcome: killed
+[job-id] 42da46a9ea8847c89a9b3808fa90f46f
+src/_pytest/fixtures.py core/ZeroIterationForLoop 28
+worker outcome: normal, test outcome: survived
+total jobs: 837
+complete: 837 (100.00%)
+surviving mutants: 745 (89.01%)
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] 
+MutationNum: 837 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] 
+MutationLOG: 10.989999999999995% 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] 
+MutationUncertainty: 0.0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Command: conda run -n pytest-dev__pytest__4.5 python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'src/_pytest/fixtures.py'
+        and ((1132 <= spec.start_pos[0] <= 1151) or (1153 <= spec.start_pos[0] <= 1167) or (1199 <= spec.start_pos[0] <= 1245))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Std. Output:
+FUNC_MUTATION_RESULT 21.818181818181817 55
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] 
+FunctionMutationLOG: 21.818181818181817% 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] 
+FunctionMutationNum: 55 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Test script run successful 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Removing coverage 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] Removing cache 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5254] >>>>> Unfiltered Tests Failed 

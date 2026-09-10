@@ -1,0 +1,726 @@
+[django__django__3.0] [django__django-11165] Task Metadata:
+	- Instance ID: django__django-11165
+	- Testbed: django__django__3.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-11165] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11165] Std. Output:
+ 
+[django__django__3.0] [django__django-11165] Return Code: 0 
+[django__django__3.0] [django__django-11165] Command: git -c advice.detachedHead=false checkout af5ec222ccd24e81f9fec6c34836a4e503e7ccf7 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11165] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at af5ec222cc Used time.monotonic() instead of time.time() where applicable.
+ 
+[django__django__3.0] [django__django-11165] Return Code: 0 
+[django__django__3.0] [django__django-11165] Command: git diff > /opt/temp_django__django-11165_gold_init.patch 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11165] Std. Output:
+ 
+[django__django__3.0] [django__django-11165] Return Code: 0 
+[django__django__3.0] [django__django-11165] Command: git apply -v /opt/temp_django__django-11165_gold.patch 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11165] Std. Output:
+Checking patch django/http/request.py...
+Applied patch django/http/request.py cleanly.
+ 
+[django__django__3.0] [django__django-11165] Return Code: 0 
+[django__django__3.0] [django__django-11165] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-11165] Command: git diff > /opt/temp_django__django-11165_test_init.patch 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11165] Std. Output:
+ 
+[django__django__3.0] [django__django-11165] Return Code: 0 
+[django__django__3.0] [django__django-11165] Command: git restore tests/requests/tests.py 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11165] Std. Output:
+ 
+[django__django__3.0] [django__django-11165] Return Code: 0 
+[django__django__3.0] [django__django-11165] Command: git apply -v /opt/temp_django__django-11165_test.patch 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11165] Std. Output:
+Checking patch tests/requests/tests.py...
+Applied patch tests/requests/tests.py cleanly.
+ 
+[django__django__3.0] [django__django-11165] Return Code: 0 
+[django__django__3.0] [django__django-11165] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 8, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.6106653213500977 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 8, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.40077972412109375 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 8, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.39141845703125 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 521, in <module>
+    getattr(options, 'test_name_patterns', None),
+  File "./tests/runtests.py", line 299, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 50
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.4006800651550293 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 8, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.33883190155029297 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 521, in <module>
+    getattr(options, 'test_name_patterns', None),
+  File "./tests/runtests.py", line 299, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 40
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.39310503005981445 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 521, in <module>
+    getattr(options, 'test_name_patterns', None),
+  File "./tests/runtests.py", line 299, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 42
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.4084951877593994 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 521, in <module>
+    getattr(options, 'test_name_patterns', None),
+  File "./tests/runtests.py", line 299, in django_tests
+    extra_tests=extra_tests,
+  File "/opt/django__django/django/test/runner.py", line 646, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 507, in build_suite
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 39
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.3587961196899414 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 8, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.4226095676422119 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 8, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.38803815841674805 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 8, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.37383580207824707 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 8, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.47348999977111816 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 8, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.3128387928009033 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 8, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.36629390716552734 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 8, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.4469163417816162 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 8, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.4442579746246338 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 8, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.3983182907104492 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 8, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.4090709686279297 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 8, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.4055063724517822 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 8, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.4369533061981201 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 8, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.32498741149902344 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 8, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.34913086891174316 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] Command: coverage run ./tests/runtests.py --verbosity 2 requests.tests 
+[django__django__3.0] [django__django-11165] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11165] Std. Output:
+tests (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/requests/tests.py", line 8, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application requests
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11165] Return Code: 1 
+[django__django__3.0] [django__django-11165] TestsTime: 0.4363586902618408 
+[django__django__3.0] [django__django-11165] Test script run successful 
+[django__django__3.0] [django__django-11165] Removing coverage 
+[django__django__3.0] [django__django-11165] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11165] TestsTime: 0.0 
+[django__django__3.0] [django__django-11165] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11165] >>>>> Unfiltered Tests Failed 

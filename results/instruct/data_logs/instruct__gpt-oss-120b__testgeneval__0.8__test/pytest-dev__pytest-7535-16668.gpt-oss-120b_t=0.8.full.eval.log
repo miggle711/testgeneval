@@ -1,0 +1,3705 @@
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Task Metadata:
+	- Instance ID: pytest-dev__pytest-7535
+	- Testbed: pytest-dev__pytest__6.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.11.8
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: git config --global --add safe.directory /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: git -c advice.detachedHead=false checkout 7ec6401ffabf79d52938ece5b8ff566a8b9c260e 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+Previous HEAD position was 634cde950 Merge pull request #7745 from asottile/exec_globals_type_problem
+HEAD is now at 7ec6401ff Change pytest deprecation warnings into errors for 6.0 release (#7362)
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-7535_gold_init.patch 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-7535_gold.patch 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+Checking patch src/_pytest/_code/code.py...
+Applied patch src/_pytest/_code/code.py cleanly.
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-7535_test_init.patch 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: git restore testing/code/test_code.py 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-7535_test.patch 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+Checking patch testing/code/test_code.py...
+Applied patch testing/code/test_code.py cleanly.
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: conda run -n pytest-dev__pytest__6.0 coverage run -m pytest -rA testing/code/test_code.py 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/code/test_code.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.0.1.dev180+g634cde950, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/code/test_code.py F                                              [100%]
+
+=================================== FAILURES ===================================
+_______________________ test_traceback_entry_str_normal ________________________
+
+    def test_traceback_entry_str_normal():
+        """The __str__ of TracebackEntry should contain file, line, name and source."""
+        with pytest.raises(ValueError) as exc:
+            _raise_value_error()
+        # Build an ExceptionInfo from the caught exception
+        excinfo = ExceptionInfo.from_exc_info(sys.exc_info())
+        # The traceback is a list of TracebackEntry objects, the first entry is the
+        # innermost frame where the exception was raised.
+>       entry = excinfo.traceback[0]
+
+testing/code/test_code.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/_pytest/_code/code.py:510: in traceback
+    self._traceback = Traceback(self.tb, excinfo=ref(self))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = [], tb = None
+excinfo = <weakref at 0x7cdfe5323cc0; to 'ExceptionInfo' at 0x7cdfe547e580>
+
+    def __init__(
+        self,
+        tb: Union[TracebackType, Iterable[TracebackEntry]],
+        excinfo: Optional["ReferenceType[ExceptionInfo[BaseException]]"] = None,
+    ) -> None:
+        """Initialize from given python traceback object and ExceptionInfo."""
+        self._excinfo = excinfo
+        if isinstance(tb, TracebackType):
+    
+            def f(cur: TracebackType) -> Iterable[TracebackEntry]:
+                cur_ = cur  # type: Optional[TracebackType]
+                while cur_ is not None:
+                    yield TracebackEntry(cur_, excinfo=excinfo)
+                    cur_ = cur_.tb_next
+    
+            super().__init__(f(tb))
+        else:
+>           super().__init__(tb)
+E           TypeError: 'NoneType' object is not iterable
+
+src/_pytest/_code/code.py:301: TypeError
+=========================== short test summary info ============================
+FAILED testing/code/test_code.py::test_traceback_entry_str_normal - TypeError...
+============================== 1 failed in 0.04s ===============================
+
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 1 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] TestsTime: 0.6940569877624512 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Test script run successful 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Removing coverage 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Removing cache 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: conda run -n pytest-dev__pytest__6.0 coverage run -m pytest -rA testing/code/test_code.py 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/code/test_code.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.0.1.dev180+g634cde950, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/code/test_code.py F                                              [100%]
+
+=================================== FAILURES ===================================
+________________ test_traceback_entry_str_when_statement_raises ________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f7e937655e0>
+
+    def test_traceback_entry_str_when_statement_raises(monkeypatch):
+        """If obtaining the statement fails, __str__ should show '???' as the line."""
+        with pytest.raises(ValueError) as exc:
+            _raise_value_error()
+        excinfo = ExceptionInfo.from_exc_info(sys.exc_info())
+>       entry = excinfo.traceback[0]
+
+testing/code/test_code.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/_pytest/_code/code.py:510: in traceback
+    self._traceback = Traceback(self.tb, excinfo=ref(self))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = [], tb = None
+excinfo = <weakref at 0x7f7e936f4540; to 'ExceptionInfo' at 0x7f7e93765970>
+
+    def __init__(
+        self,
+        tb: Union[TracebackType, Iterable[TracebackEntry]],
+        excinfo: Optional["ReferenceType[ExceptionInfo[BaseException]]"] = None,
+    ) -> None:
+        """Initialize from given python traceback object and ExceptionInfo."""
+        self._excinfo = excinfo
+        if isinstance(tb, TracebackType):
+    
+            def f(cur: TracebackType) -> Iterable[TracebackEntry]:
+                cur_ = cur  # type: Optional[TracebackType]
+                while cur_ is not None:
+                    yield TracebackEntry(cur_, excinfo=excinfo)
+                    cur_ = cur_.tb_next
+    
+            super().__init__(f(tb))
+        else:
+>           super().__init__(tb)
+E           TypeError: 'NoneType' object is not iterable
+
+src/_pytest/_code/code.py:301: TypeError
+=========================== short test summary info ============================
+FAILED testing/code/test_code.py::test_traceback_entry_str_when_statement_raises
+============================== 1 failed in 0.03s ===============================
+
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 1 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] TestsTime: 0.5238726139068604 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Test script run successful 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Removing coverage 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Removing cache 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: conda run -n pytest-dev__pytest__6.0 coverage run -m pytest -rA testing/code/test_code.py 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/code/test_code.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.0.1.dev180+g634cde950, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/code/test_code.py F                                              [100%]
+
+=================================== FAILURES ===================================
+_________________ test_filter_traceback_filters_internal_paths _________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x78cf8ec7bdc0>
+
+    def test_filter_traceback_filters_internal_paths(monkeypatch):
+        """filter_traceback should reject entries whose path is inside pytest/pluggy/py."""
+        with pytest.raises(ValueError):
+            _raise_value_error()
+        excinfo = ExceptionInfo.from_exc_info(sys.exc_info())
+>       entry = excinfo.traceback[0]
+
+testing/code/test_code.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/_pytest/_code/code.py:510: in traceback
+    self._traceback = Traceback(self.tb, excinfo=ref(self))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = [], tb = None
+excinfo = <weakref at 0x78cf8ec798b0; to 'ExceptionInfo' at 0x78cf8ec7bc70>
+
+    def __init__(
+        self,
+        tb: Union[TracebackType, Iterable[TracebackEntry]],
+        excinfo: Optional["ReferenceType[ExceptionInfo[BaseException]]"] = None,
+    ) -> None:
+        """Initialize from given python traceback object and ExceptionInfo."""
+        self._excinfo = excinfo
+        if isinstance(tb, TracebackType):
+    
+            def f(cur: TracebackType) -> Iterable[TracebackEntry]:
+                cur_ = cur  # type: Optional[TracebackType]
+                while cur_ is not None:
+                    yield TracebackEntry(cur_, excinfo=excinfo)
+                    cur_ = cur_.tb_next
+    
+            super().__init__(f(tb))
+        else:
+>           super().__init__(tb)
+E           TypeError: 'NoneType' object is not iterable
+
+src/_pytest/_code/code.py:301: TypeError
+=========================== short test summary info ============================
+FAILED testing/code/test_code.py::test_filter_traceback_filters_internal_paths
+============================== 1 failed in 0.04s ===============================
+
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 1 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] TestsTime: 0.5460672378540039 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Test script run successful 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Removing coverage 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Removing cache 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: conda run -n pytest-dev__pytest__6.0 coverage run -m pytest -rA testing/code/test_code.py 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/code/test_code.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.0.1.dev180+g634cde950, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/code/test_code.py F                                              [100%]
+
+=================================== FAILURES ===================================
+__________________ test_getfslineno_returns_correct_location ___________________
+
+    def test_getfslineno_returns_correct_location():
+        """getfslineno should return the source file and the first line number (0‑based)."""
+        def sample_function():
+            a = 1
+            b = 2
+            return a + b
+    
+        path, lineno = getfslineno(sample_function)
+        # Path should be a string or py.path.local pointing to this file
+>       assert isinstance(path, (str, type(sample_function.__code__)))
+E       AssertionError: assert False
+E        +  where False = isinstance(local('/home/swe-bench/pytest-dev__pytest/testing/code/test_code.py'), (<class 'str'>, <class 'code'>))
+
+testing/code/test_code.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED testing/code/test_code.py::test_getfslineno_returns_correct_location
+============================== 1 failed in 0.02s ===============================
+
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 1 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] TestsTime: 0.5230419635772705 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Test script run successful 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Removing coverage 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Removing cache 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: conda run -n pytest-dev__pytest__6.0 coverage run -m pytest -rA testing/code/test_code.py 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/code/test_code.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.0.1.dev180+g634cde950, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/code/test_code.py F                                              [100%]
+
+=================================== FAILURES ===================================
+___________ test_recursionindex_returns_none_for_non_recursive_trace ___________
+
+    def test_recursionindex_returns_none_for_non_recursive_trace():
+        """recursionindex should return None when there is no recursion."""
+        def simple():
+            return 1
+    
+        try:
+            simple()
+        except Exception:
+            # No exception expected, but we still create a Traceback from a dummy one
+            tb = Traceback(sys.exc_info()[2])  # empty traceback
+        else:
+            # Create a dummy traceback using the current frame
+            tb = Traceback(traceback.extract_stack())
+    
+        # The method should safely return None for a non‑recursive traceback
+>       assert tb.recursionindex() is None
+
+testing/code/test_code.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = [<FrameSummary file /home/swe-bench/miniconda3/envs/pytest-dev__pytest__6.0/bin/coverage, line 8 in <module>>, <FrameS...nch/pytest-dev__pytest/testing/code/test_code.py, line 44 in test_recursionindex_returns_none_for_non_recursive_trace>]
+
+    def recursionindex(self) -> Optional[int]:
+        """Return the index of the frame/TracebackEntry where recursion originates if
+        appropriate, None if no recursion occurred."""
+        cache = {}  # type: Dict[Tuple[Any, int, int], List[Dict[str, Any]]]
+        for i, entry in enumerate(self):
+            # id for the code.raw is needed to work around
+            # the strange metaprogramming in the decorator lib from pypi
+            # which generates code objects that have hash/value equality
+            # XXX needs a test
+>           key = entry.frame.code.path, id(entry.frame.code.raw), entry.lineno
+E           AttributeError: 'FrameSummary' object has no attribute 'frame'
+
+src/_pytest/_code/code.py:382: AttributeError
+=========================== short test summary info ============================
+FAILED testing/code/test_code.py::test_recursionindex_returns_none_for_non_recursive_trace
+============================== 1 failed in 0.03s ===============================
+
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 1 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] TestsTime: 0.537081241607666 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Test script run successful 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Removing coverage 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Removing cache 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: conda run -n pytest-dev__pytest__6.0 coverage run -m pytest -rA testing/code/test_code.py 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.0.1.dev180+g634cde950, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/code/test_code.py .                                              [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/code/test_code.py::test_code_wrapper_basic_properties
+============================== 1 passed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] TestsTime: 0.49050426483154297 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Test script run successful 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Removing coverage 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Removing cache 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: conda run -n pytest-dev__pytest__6.0 coverage run -m pytest -rA testing/code/test_code.py 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.0.1.dev180+g634cde950, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/code/test_code.py .                                              [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/code/test_code.py::test_frame_eval_and_repr
+============================== 1 passed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] TestsTime: 0.502833366394043 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Test script run successful 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Removing coverage 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Removing cache 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: conda run -n pytest-dev__pytest__6.0 coverage run -m pytest -rA testing/code/test_code.py 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/code/test_code.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.0.1.dev180+g634cde950, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/code/test_code.py F                                              [100%]
+
+=================================== FAILURES ===================================
+_________________________ test_traceback_entry_getargs _________________________
+
+    def test_traceback_entry_getargs():
+        """TracebackEntry.getargs should return argument name/value pairs from the frame."""
+        def func_with_args(a, b, *args, **kwargs):
+            raise RuntimeError("boom")
+    
+        with pytest.raises(RuntimeError):
+            func_with_args(1, 2, 3, x=4)
+    
+        excinfo = ExceptionInfo.from_exc_info(sys.exc_info())
+>       entry = excinfo.traceback[0]
+
+testing/code/test_code.py:41: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/_pytest/_code/code.py:510: in traceback
+    self._traceback = Traceback(self.tb, excinfo=ref(self))
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = [], tb = None
+excinfo = <weakref at 0x737ba4381720; to 'ExceptionInfo' at 0x737ba437cc70>
+
+    def __init__(
+        self,
+        tb: Union[TracebackType, Iterable[TracebackEntry]],
+        excinfo: Optional["ReferenceType[ExceptionInfo[BaseException]]"] = None,
+    ) -> None:
+        """Initialize from given python traceback object and ExceptionInfo."""
+        self._excinfo = excinfo
+        if isinstance(tb, TracebackType):
+    
+            def f(cur: TracebackType) -> Iterable[TracebackEntry]:
+                cur_ = cur  # type: Optional[TracebackType]
+                while cur_ is not None:
+                    yield TracebackEntry(cur_, excinfo=excinfo)
+                    cur_ = cur_.tb_next
+    
+            super().__init__(f(tb))
+        else:
+>           super().__init__(tb)
+E           TypeError: 'NoneType' object is not iterable
+
+src/_pytest/_code/code.py:301: TypeError
+=========================== short test summary info ============================
+FAILED testing/code/test_code.py::test_traceback_entry_getargs - TypeError: '...
+============================== 1 failed in 0.03s ===============================
+
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 1 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] TestsTime: 0.5502438545227051 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Test script run successful 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Removing coverage 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Removing cache 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] >>>>> Tests configfull pred
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Test Script: conda run -n pytest-dev__pytest__6.0  coverage run -m pytest -rA testing/code/test_code.py;
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: conda run -n pytest-dev__pytest__6.0 coverage run -m pytest -rA testing/code/test_code.py 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.0.1.dev180+g634cde950, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 2 items
+
+testing/code/test_code.py ..                                             [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/code/test_code.py::test_code_wrapper_basic_properties
+PASSED testing/code/test_code.py::test_frame_eval_and_repr
+============================== 2 passed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] TestsTime: 0.5544171333312988 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] 
+>>>>> All Tests Passed
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Current Working Directory: /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: conda run -n pytest-dev__pytest__6.0 coverage json -o coverage.json 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+Wrote JSON report to coverage.json
+
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] 
+CoverageLOG: 35.95839524517088%
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] 
+FunctionCoverageLOG: 11.11111111111111%
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Running mutation testing 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: conda run -n pytest-dev__pytest__6.0 cosmic-ray init mutation.toml mutation.sqlite 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: conda run -n pytest-dev__pytest__6.0 cosmic-ray exec mutation.toml mutation.sqlite 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: conda run -n pytest-dev__pytest__6.0 cr-rate mutation.sqlite --estimate --confidence 95.0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+98.29 98.29 98.29
+
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: conda run -n pytest-dev__pytest__6.0 cr-report mutation.sqlite 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+[job-id] 5c751f1859654ddcb0ac9657f41527da
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] b422bd1466ae424e829e8ae3478825b0
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] 641086b8af894421b0ad58a5f13bb638
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 2
+worker outcome: normal, test outcome: survived
+[job-id] db5e2662015442ce8360870f8546eaf9
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 3
+worker outcome: normal, test outcome: survived
+[job-id] a3d5ab68428148cb9d3b551d48ae1dae
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 4
+worker outcome: normal, test outcome: survived
+[job-id] 504c648fa52147dfa1a493a326d44359
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 5
+worker outcome: normal, test outcome: survived
+[job-id] 88ac65627d76451fb896ba0b21a8d749
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 6
+worker outcome: normal, test outcome: survived
+[job-id] 9bc5dcad45494cc0aed391a2d4bd685d
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 7
+worker outcome: normal, test outcome: survived
+[job-id] a1edc0fb5d074b6abeaef6468b68c2d2
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 8
+worker outcome: normal, test outcome: survived
+[job-id] 0e4bf65bd2394282968dcbff216e0560
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 9
+worker outcome: normal, test outcome: survived
+[job-id] c3a9bd36d3004181bf747f8125514ea7
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 10
+worker outcome: normal, test outcome: survived
+[job-id] ba125f8143a849ceac6d19b6500debbc
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 11
+worker outcome: normal, test outcome: survived
+[job-id] 0138c380bd3e4d5f9c0db769c52151a4
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 12
+worker outcome: normal, test outcome: survived
+[job-id] 40603286cd924e06b42d014b529dfc21
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 13
+worker outcome: normal, test outcome: survived
+[job-id] 43c85491045248e7852b5384b351c70b
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 14
+worker outcome: normal, test outcome: survived
+[job-id] 38f106300bd44c778857cca1495c16e7
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 15
+worker outcome: normal, test outcome: survived
+[job-id] d01e0ffe70ad47aab766228686b3f7f4
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 16
+worker outcome: normal, test outcome: survived
+[job-id] 71ecfc369b9a49ca9164f33f50f87094
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 17
+worker outcome: normal, test outcome: survived
+[job-id] 417e8028fb6b4379b9cf2501a9e6055b
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 18
+worker outcome: normal, test outcome: survived
+[job-id] 115cdf29c0c64f1aa096ac155c226736
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 19
+worker outcome: normal, test outcome: survived
+[job-id] 923e0eddbfc64c03b2cbc40b95ccc833
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 20
+worker outcome: normal, test outcome: survived
+[job-id] 02f812f5e8224bab983aaca70f3bca35
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Sub 21
+worker outcome: normal, test outcome: survived
+[job-id] 7122c6edb40c42a7a592efc9d177d582
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] bf23a4613b424cd1a51f4d88d1105223
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] 7578a75b5ad14e1b8fa13d7ce52f151c
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] 4894bc3dca414ff0a068c24265180d2a
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 3
+worker outcome: normal, test outcome: survived
+[job-id] 655aaa0a577940cb9b3e6511a2ae59bf
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 4
+worker outcome: normal, test outcome: survived
+[job-id] 91d70e36a62b4839814d606a12b92714
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 5
+worker outcome: normal, test outcome: survived
+[job-id] f33c3efebcd04cb7bc385e1a43977f69
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 6
+worker outcome: normal, test outcome: survived
+[job-id] ed42aa08a7304abd9b9ce8df35fd1b86
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 7
+worker outcome: normal, test outcome: survived
+[job-id] 67c4dc11dcf943348b996879f39239d1
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 8
+worker outcome: normal, test outcome: survived
+[job-id] f399209183ba4eed9331eb29f897ed61
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 9
+worker outcome: normal, test outcome: survived
+[job-id] 2c10b4dd9f7d482181b31963ba49aaf0
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 10
+worker outcome: normal, test outcome: survived
+[job-id] 4348d24c50484722b8b1bd41c451f60f
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 11
+worker outcome: normal, test outcome: survived
+[job-id] 96a1cee46595473e8c290895f9edc439
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 12
+worker outcome: normal, test outcome: survived
+[job-id] 28a448f5b74c467a99b975952850946f
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 13
+worker outcome: normal, test outcome: survived
+[job-id] 356b0fd62e454dab92ae055072170ce5
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 14
+worker outcome: normal, test outcome: survived
+[job-id] 733edfb8afb441829f2ce7dcbea1b671
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 15
+worker outcome: normal, test outcome: survived
+[job-id] 56e3da79df8043b9a48759f1a4f3f12a
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 16
+worker outcome: normal, test outcome: survived
+[job-id] 631524a7772e4966a0580f638b975d49
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 17
+worker outcome: normal, test outcome: survived
+[job-id] 7830f942350249b99011755be284ee03
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 18
+worker outcome: normal, test outcome: survived
+[job-id] 33858e6695ef4aa199c660469b2969d6
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 19
+worker outcome: normal, test outcome: survived
+[job-id] 41043e08546e458ba5ab5a60c985e0c1
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 20
+worker outcome: normal, test outcome: survived
+[job-id] c7f4f44306f0422fab13f2160102a989
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mul 21
+worker outcome: normal, test outcome: survived
+[job-id] b54dfa8b99844df5b53bfa742900466b
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] d58e91c695114878938b5cd49afb8c27
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] d30d46d56812402b90c794227b7a8973
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] 7976c5c0da274099beea98211e342f23
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 3
+worker outcome: normal, test outcome: survived
+[job-id] 8f56ffd67ead4b9a9a6f51efd449c695
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 4
+worker outcome: normal, test outcome: survived
+[job-id] c4e4b956b34a4c65b47da807e5f3585b
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 5
+worker outcome: normal, test outcome: survived
+[job-id] 08d3844c895c471591211bc11187a5ad
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 6
+worker outcome: normal, test outcome: survived
+[job-id] fcf4327785a94710acde595336b7241d
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 7
+worker outcome: normal, test outcome: survived
+[job-id] c04d93eeb18948ff95ffc11dcae07fa5
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 8
+worker outcome: normal, test outcome: survived
+[job-id] 4989124d30b4415aada5323e1008938e
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 9
+worker outcome: normal, test outcome: survived
+[job-id] 34e79e1ecddf421d9ecdb18cd2c04ac4
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 10
+worker outcome: normal, test outcome: survived
+[job-id] 02f69bc8fe3443eb82f262d9dd33e91e
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 11
+worker outcome: normal, test outcome: survived
+[job-id] b1d708e0147144538737f8428b3d5f6c
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 12
+worker outcome: normal, test outcome: survived
+[job-id] e5f2b6080e9347f19a9d94ac16298b19
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 13
+worker outcome: normal, test outcome: survived
+[job-id] 80fb48fe252f4e8b9d4464b78c4c803a
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 14
+worker outcome: normal, test outcome: survived
+[job-id] 128424efdf6a471eb81144d9a4ba1801
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 15
+worker outcome: normal, test outcome: survived
+[job-id] eecb242ec3e0463182229d8ae9bf0cb6
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 16
+worker outcome: normal, test outcome: survived
+[job-id] 1f91f8c9be8c4ddcb6012ead346c587b
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 17
+worker outcome: normal, test outcome: survived
+[job-id] 3014286b5ff549259218e6caeb76b3e9
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 18
+worker outcome: normal, test outcome: survived
+[job-id] 8707acf51baa4a8092647425653780d1
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 19
+worker outcome: normal, test outcome: survived
+[job-id] 062b83f38560452eb369770c28a190d3
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 20
+worker outcome: normal, test outcome: survived
+[job-id] 15bfec9d981c490188ed3bec937e5648
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Div 21
+worker outcome: normal, test outcome: survived
+[job-id] a6f7410e708c45b5bf1705925f8760fa
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] e5bae637c26a4a868c85b4404046eb49
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] b2601d12d2d9439892dab415f1b006cf
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] 7f2f6fbf31704f92b259f601b3609a44
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 3
+worker outcome: normal, test outcome: survived
+[job-id] 349781626273400fa0124ecca8ea505c
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 4
+worker outcome: normal, test outcome: survived
+[job-id] 9addec8c3afa4df4bb2beedd836d4273
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 5
+worker outcome: normal, test outcome: survived
+[job-id] 7bb6cbd407984273b4557c084a0b9a08
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 6
+worker outcome: normal, test outcome: survived
+[job-id] 976e150bbe2245c1a0fa4ef21895b87c
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 7
+worker outcome: normal, test outcome: survived
+[job-id] e8b3cb98eb784b909365340877b2874e
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 8
+worker outcome: normal, test outcome: survived
+[job-id] 883e6a6b76c844a0b95236cc1e3a0388
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 9
+worker outcome: normal, test outcome: survived
+[job-id] d12dcbfa88564785b6f83c8059ae619b
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 10
+worker outcome: normal, test outcome: survived
+[job-id] 8a8b4e140a274d2fb1b1fc77f3fc14d8
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 11
+worker outcome: normal, test outcome: survived
+[job-id] b1c7be21a1294b46ae5fe33847407053
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 12
+worker outcome: normal, test outcome: survived
+[job-id] 005b9dcf94124b1cb16996c9557f8f00
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 13
+worker outcome: normal, test outcome: survived
+[job-id] e0fb665e100b47339e05ff5e6fe65e80
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 14
+worker outcome: normal, test outcome: survived
+[job-id] 5848517e6d7a4cafbfb9befe99d2e799
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 15
+worker outcome: normal, test outcome: survived
+[job-id] 09f264d4e3d34aab99f4b0fb87c43fbf
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 16
+worker outcome: normal, test outcome: survived
+[job-id] 7d29d6a4cacc49b4936b9cf3726d9ac4
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 17
+worker outcome: normal, test outcome: survived
+[job-id] 0f13de21f898456b938cd3ed7e2acc60
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 18
+worker outcome: normal, test outcome: survived
+[job-id] fd220434171143fc9bef2f3e6b74490a
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 19
+worker outcome: normal, test outcome: survived
+[job-id] ef5b3ac52899421bb025af34cb251d4b
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 20
+worker outcome: normal, test outcome: survived
+[job-id] e56e5056093f4f5b92f1aed7d5d7248e
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_FloorDiv 21
+worker outcome: normal, test outcome: survived
+[job-id] 0719ab31f1ac4e42b4b936fca7474c4e
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] 1aa2b0006ba7405d831395ad42803d13
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 1
+worker outcome: normal, test outcome: survived
+[job-id] 0c92d9a75e374833b00b109e83f7da77
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 2
+worker outcome: normal, test outcome: survived
+[job-id] 522eadeb8e8e42c8ad445a33a4fe89a5
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 3
+worker outcome: normal, test outcome: survived
+[job-id] b0702de8202145789554a8ffde3484bb
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 4
+worker outcome: normal, test outcome: survived
+[job-id] 7d7705f62b52485b89640e682375c2eb
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 5
+worker outcome: normal, test outcome: survived
+[job-id] 02418dc523b647ce837b1a0a00f8cfca
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 6
+worker outcome: normal, test outcome: survived
+[job-id] a64e3f2a042643579f3a62b7ad179713
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 7
+worker outcome: normal, test outcome: survived
+[job-id] 5628cf330aaa4c0ba34594a8a33cfc20
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 8
+worker outcome: normal, test outcome: survived
+[job-id] 28686b58d22b4ab087ce48d11d39c04a
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 9
+worker outcome: normal, test outcome: survived
+[job-id] 8548946ac18d4d1d9fb4099b4d1df37a
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 10
+worker outcome: normal, test outcome: survived
+[job-id] 599c3e18c01146a4ad5cb210b7ce6eb7
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 11
+worker outcome: normal, test outcome: survived
+[job-id] e9a7437a672d402f8a144eadeadb7bc7
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 12
+worker outcome: normal, test outcome: survived
+[job-id] bddd0e444769415b86124af3515c91d3
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 13
+worker outcome: normal, test outcome: survived
+[job-id] a727b5fb24d94f8e9537b94b3884e923
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 14
+worker outcome: normal, test outcome: survived
+[job-id] 617c594af6c14e11a02e9d807f3bd0a4
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 15
+worker outcome: normal, test outcome: survived
+[job-id] 5544fdaa4ca843e4af3ba36d3c516c34
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 16
+worker outcome: normal, test outcome: survived
+[job-id] 3e52feea0dcc421b969e655cb3f5064d
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 17
+worker outcome: normal, test outcome: survived
+[job-id] 9b79af15dd5b43bcb12ffeb61013f667
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 18
+worker outcome: normal, test outcome: survived
+[job-id] ca97fb0b6f394a559fd7e46c9c585985
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 19
+worker outcome: normal, test outcome: survived
+[job-id] bc053b263ea14174a48818146f15cc28
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 20
+worker outcome: normal, test outcome: survived
+[job-id] 93f137e1139b4215a4e5006db887531b
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Mod 21
+worker outcome: normal, test outcome: survived
+[job-id] 8d2ee1017338421088b9c669dcd2cc57
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] a5724b59521b4b7ab45ebc2c4318a3f0
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 4d53921d0cdf46e2b6b42e723ff89dec
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] 7503c39c317d49ba8637dd95e9ff6b69
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 3
+worker outcome: normal, test outcome: survived
+[job-id] caa46d7cde8a40ee984801563ce2a076
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 4
+worker outcome: normal, test outcome: survived
+[job-id] c692f37f7781400a992cbabc26bcc9f7
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 5
+worker outcome: normal, test outcome: survived
+[job-id] c248013120fe420a906209afa311b803
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 6
+worker outcome: normal, test outcome: survived
+[job-id] 4745a288683f4470b7ad9b681a4fba09
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 7
+worker outcome: normal, test outcome: survived
+[job-id] 7523c7e81b79474c929c6e79e2d664e7
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 8
+worker outcome: normal, test outcome: survived
+[job-id] f492ee23b4ea433c8dad31bef37debdb
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 9
+worker outcome: normal, test outcome: survived
+[job-id] 50ece5e06f894cb1865d368395e801d1
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 10
+worker outcome: normal, test outcome: survived
+[job-id] 08d9a38ea2d049ddb69596082a4fa831
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 11
+worker outcome: normal, test outcome: survived
+[job-id] 02b0be451ee94293829ff608b1868fdd
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 12
+worker outcome: normal, test outcome: survived
+[job-id] ad19244b52494719895e01c73b79d787
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 13
+worker outcome: normal, test outcome: survived
+[job-id] 3fea15bc342c4d37a262013255220570
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 14
+worker outcome: normal, test outcome: survived
+[job-id] 622b8c4bbc98484d94cefec8462c4a74
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 15
+worker outcome: normal, test outcome: survived
+[job-id] 58c89a98f2e6403f9efd5b00e30a7ad7
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 16
+worker outcome: normal, test outcome: survived
+[job-id] 05c33270724a4c0c824346ca49ce5ae5
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 17
+worker outcome: normal, test outcome: survived
+[job-id] 8eb3dda42122450291f32581b6271a48
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 18
+worker outcome: normal, test outcome: survived
+[job-id] 8e0e289d3f7042e9b40e3b75ffbdf70f
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 19
+worker outcome: normal, test outcome: survived
+[job-id] 24ab9642bd97490dbda3524df4a73bb6
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 20
+worker outcome: normal, test outcome: survived
+[job-id] 440ccb59f35c4422b553bfede166efb5
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_Pow 21
+worker outcome: normal, test outcome: survived
+[job-id] 524ba2ccbe274f97b08c0afda8a7fae6
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 3394f0d8249a4212b3081ed55676a56c
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 88ed5b24b3ca40d5ac009622c834abfb
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] 917b3ba2bf894be4b022018887ccf722
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 3
+worker outcome: normal, test outcome: survived
+[job-id] d75165f74d3348e3ad482890be5cf2a9
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 4
+worker outcome: normal, test outcome: survived
+[job-id] f409f88857cb451b8226069201deb4ef
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 5
+worker outcome: normal, test outcome: survived
+[job-id] a3a7d3eceb72472d9bdd0178d7ef2fe2
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 6
+worker outcome: normal, test outcome: survived
+[job-id] e2f4e04ddf92487fae13426a6ee8e261
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 7
+worker outcome: normal, test outcome: survived
+[job-id] 27d9ef93008a4749821cc7c6d9fad0fd
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 8
+worker outcome: normal, test outcome: survived
+[job-id] 1336f3045f384114a8224aac84b6f70d
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 9
+worker outcome: normal, test outcome: survived
+[job-id] 477742c72f7b431dad1be2d424ac7ff2
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 10
+worker outcome: normal, test outcome: survived
+[job-id] bfc9f6ce31df4f9c869ad37fcbc6614c
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 11
+worker outcome: normal, test outcome: survived
+[job-id] 69b7f4e0b116446d95d9cda09341004e
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 12
+worker outcome: normal, test outcome: survived
+[job-id] bd0c6f8b40044d5298ef511ed1d68540
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 13
+worker outcome: normal, test outcome: survived
+[job-id] 3002b45da1fd4e3cb1fdd026830d2d01
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 14
+worker outcome: normal, test outcome: survived
+[job-id] 8755bad197dc437aa4e310dde9291dea
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 15
+worker outcome: normal, test outcome: survived
+[job-id] 76672dcc1da841e08c53feb34f5eff37
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 16
+worker outcome: normal, test outcome: survived
+[job-id] 77e231710f2d41dbafbf6ba096336590
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 17
+worker outcome: normal, test outcome: survived
+[job-id] f561aa2bf764484a8fbdd738d509c361
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 18
+worker outcome: normal, test outcome: survived
+[job-id] 03b0df2380b64fd2948f00ca5440c751
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 19
+worker outcome: normal, test outcome: survived
+[job-id] 92878c3efefc4a1bb3b4f57aff55a2f3
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 20
+worker outcome: normal, test outcome: survived
+[job-id] 485bd4f542b94aba86e6eb31218e922d
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_RShift 21
+worker outcome: normal, test outcome: survived
+[job-id] d48d0c9d43684c529b96ac69406ae44b
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 5acc78eb00ad471e9e4a1d6ee3991be1
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] dc980e84e53948cf9a503d10ea928d5a
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] 06e6ced2ba16445cab081ae2366f1c24
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 3
+worker outcome: normal, test outcome: survived
+[job-id] 92dbf2e755634e3e904daf0dbffe1e4c
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 4
+worker outcome: normal, test outcome: survived
+[job-id] 1715d8857e934474a11f50eb84f2d1f6
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 5
+worker outcome: normal, test outcome: survived
+[job-id] abe5bab71f2342a785c63d69d497ba8a
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 6
+worker outcome: normal, test outcome: survived
+[job-id] bbadb5c6f9df4b46b27ff736da3862df
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 7
+worker outcome: normal, test outcome: survived
+[job-id] 4a08d90b2cea4932a9d67fd9ae946af2
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 8
+worker outcome: normal, test outcome: survived
+[job-id] 07989f5ddd774fb7b1a84f8d53deef98
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 9
+worker outcome: normal, test outcome: survived
+[job-id] baab7107d09c4d2c83e87de8b4d20b05
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 10
+worker outcome: normal, test outcome: survived
+[job-id] 6a4148019be84e478afa9dc77a0806b4
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 11
+worker outcome: normal, test outcome: survived
+[job-id] 255b595cf59d435983f92fa1d4524bfd
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 12
+worker outcome: normal, test outcome: survived
+[job-id] 5c0fef9b85194c1e9d7e8a6615293b11
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 13
+worker outcome: normal, test outcome: survived
+[job-id] d1330a181a4546d58950df26395b414a
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 14
+worker outcome: normal, test outcome: survived
+[job-id] 329a1870e1454c1cb64a926885605c6b
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 15
+worker outcome: normal, test outcome: survived
+[job-id] 740752962b544a3296a248597798f0cd
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 16
+worker outcome: normal, test outcome: survived
+[job-id] c5b5c7d518194ac38bbd8b1e58407981
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 17
+worker outcome: normal, test outcome: survived
+[job-id] e4f0751854484c98961c04c8d3ba03b3
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 18
+worker outcome: normal, test outcome: survived
+[job-id] 94b2215869fa4e8db08e70fadc50ad99
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 19
+worker outcome: normal, test outcome: survived
+[job-id] 45d4ece6afcb49be8b5aadb07ee4a7d5
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 20
+worker outcome: normal, test outcome: survived
+[job-id] 6d8527f1a3214afa98204cd4f11a88ba
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_LShift 21
+worker outcome: normal, test outcome: survived
+[job-id] abbb4e746f4c401586a6e7624749a021
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] b23b3ad98fd04f22ae0c336d689b8a63
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] b5eabe1fe63f476d8c7d9fd345784707
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] 752e4440ece141909151d20c904b2d40
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 3
+worker outcome: normal, test outcome: survived
+[job-id] 217080c5eff545d99416d100d11d40d9
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 4
+worker outcome: normal, test outcome: survived
+[job-id] 0cf0d8dbfdcd490fb88a9c2c8da100f2
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 5
+worker outcome: normal, test outcome: survived
+[job-id] 558a2a871f794346a018c34ea3e810e8
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 6
+worker outcome: normal, test outcome: survived
+[job-id] e890a78ec4fb4443912a7193a4b11637
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 7
+worker outcome: normal, test outcome: survived
+[job-id] b30cd4311708476697f7f6768b79bed6
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 8
+worker outcome: normal, test outcome: survived
+[job-id] b4473629d6a4403d9ebedff75edf8b47
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 9
+worker outcome: normal, test outcome: survived
+[job-id] 1c83bfa408484856bf46351199fcc803
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 10
+worker outcome: normal, test outcome: survived
+[job-id] 9379d2a5d1064bd18cb9b1438ea5b1bd
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 11
+worker outcome: normal, test outcome: survived
+[job-id] da4005bc99c341c6be029107a664b5de
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 12
+worker outcome: normal, test outcome: survived
+[job-id] 73d3d15a9fa6405c8dc560fb68861fb7
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 13
+worker outcome: normal, test outcome: survived
+[job-id] ca03e4a15390459f8fac405e3f256184
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 14
+worker outcome: normal, test outcome: survived
+[job-id] 4b193106debf4b279ada19edd8defd37
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 15
+worker outcome: normal, test outcome: survived
+[job-id] c1432bba164b4a99ba599ccff4334d23
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 16
+worker outcome: normal, test outcome: survived
+[job-id] a4c35ad13e854d759f0cd3a7e7a2c70b
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 17
+worker outcome: normal, test outcome: survived
+[job-id] 035b0e1e6a5e4d66a2f085dc45228ea9
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 18
+worker outcome: normal, test outcome: survived
+[job-id] e54f8b9eb9a941d69ed27ce233d48b5e
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 19
+worker outcome: normal, test outcome: survived
+[job-id] 7ccb2ea106f5492aaadb4e8d27fce208
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 20
+worker outcome: normal, test outcome: survived
+[job-id] e1fb26d2f7984225ae8157b7fd94c078
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitOr 21
+worker outcome: normal, test outcome: survived
+[job-id] fc6bd81d02ac483bb5e98f46a4085313
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] f6b0912da40542389345dd3d08bdbb40
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] ba536f9c74e84238b16c5aebd73941f4
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] c453012a60b1415b849e5aad7edd0943
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] 777cc1622d8b431191f631b19c67dfa4
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 4
+worker outcome: normal, test outcome: survived
+[job-id] f9583249e2ea4f759977f0637472f80d
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 5
+worker outcome: normal, test outcome: survived
+[job-id] b92d0f2b4b114ebeb11d20b4ba127d1d
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 6
+worker outcome: normal, test outcome: survived
+[job-id] 9828d49b4e814a5789e91999cec081a7
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 7
+worker outcome: normal, test outcome: survived
+[job-id] 8f16435637fb48e8833ed16d98313ccf
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 8
+worker outcome: normal, test outcome: survived
+[job-id] 0df7bc3ede5746628564dbd1b7bde779
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 9
+worker outcome: normal, test outcome: survived
+[job-id] 5e5847d5c3964e5da3cbd722f66da916
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 10
+worker outcome: normal, test outcome: survived
+[job-id] 7e3bbe3e26c4474096d07accaac55c5d
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 11
+worker outcome: normal, test outcome: survived
+[job-id] 48db171da9d2484282986dfdd1517e06
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 12
+worker outcome: normal, test outcome: survived
+[job-id] 6fcb77c921ad4c2ab4f3b582e95daf19
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 13
+worker outcome: normal, test outcome: survived
+[job-id] 26a0a1bfba0e400f933fc592f7be6394
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 14
+worker outcome: normal, test outcome: survived
+[job-id] 10f2770c606e462bb59cd28287e3e34d
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 15
+worker outcome: normal, test outcome: survived
+[job-id] c5f1611572e7419eb32279fd9e871b2a
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 16
+worker outcome: normal, test outcome: survived
+[job-id] c223f578be39446bac93bf916bfa87fb
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 17
+worker outcome: normal, test outcome: survived
+[job-id] 8bdffe65c4114d6d80f9f75f3794e483
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 18
+worker outcome: normal, test outcome: survived
+[job-id] 929c8f655ac9409dbd0225d44696c3e7
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 19
+worker outcome: normal, test outcome: survived
+[job-id] 696cabf6a90e4fc1b08cf626ef8a73fb
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 20
+worker outcome: normal, test outcome: survived
+[job-id] cbfca262316341eba5f17b43ba9ce140
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitAnd 21
+worker outcome: normal, test outcome: survived
+[job-id] abafd1f703424bb481ece93d3a7e32ea
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] d86d62163713442ebf4e103d2b354098
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] 2badcec949dd4c329cde7f77a3155419
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] a98841b9c38144e7aeeec153e4df4174
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 3
+worker outcome: normal, test outcome: survived
+[job-id] 930f16156bde4260821de133a0b62c44
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 4
+worker outcome: normal, test outcome: survived
+[job-id] fa5b13e8baba43a88d7d1aa82524bf10
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 5
+worker outcome: normal, test outcome: survived
+[job-id] 9a92ee7ab6d2479f965cb87867355e71
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 6
+worker outcome: normal, test outcome: survived
+[job-id] 2b2c9f2a818d4cd283c10d696d2b5a0a
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 7
+worker outcome: normal, test outcome: survived
+[job-id] 20e702ad2991492caf37cae0945f1bbb
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 8
+worker outcome: normal, test outcome: survived
+[job-id] 37d7e9d1554a44b7b26c10234ad61381
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 9
+worker outcome: normal, test outcome: survived
+[job-id] b0e0f69cf89c4877bf7f06ecb9d9481e
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 10
+worker outcome: normal, test outcome: survived
+[job-id] 4b9451a0f8c144a7961787f29bdcf115
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 11
+worker outcome: normal, test outcome: survived
+[job-id] 11c40d59dec84918b479102715be1d4d
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 12
+worker outcome: normal, test outcome: survived
+[job-id] 8ad329d674b14adaa84b8262be9537da
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 13
+worker outcome: normal, test outcome: survived
+[job-id] 6cf36e6bc269455aac68c7d511ae35e8
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 14
+worker outcome: normal, test outcome: survived
+[job-id] d2f1d1fe5c63454d8cf5b8b45b9c3515
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 15
+worker outcome: normal, test outcome: survived
+[job-id] 81aa18917371459ab112df036841e103
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 16
+worker outcome: normal, test outcome: survived
+[job-id] 7807fc1692f74ff4a183081392d935c7
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 17
+worker outcome: normal, test outcome: survived
+[job-id] 840be10472b9444e9a1ad3bc09e69e87
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 18
+worker outcome: normal, test outcome: survived
+[job-id] 9f8e592873764baaa3a373c8d161c3a3
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 19
+worker outcome: normal, test outcome: survived
+[job-id] 7a7badfe9e59460c90b43a6d201da23a
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 20
+worker outcome: normal, test outcome: survived
+[job-id] 1a57b8f5c394494a91f39a06bfdbbe6e
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Add_BitXor 21
+worker outcome: normal, test outcome: survived
+[job-id] e340d8f83ace4a4ba3fdc12338641dce
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] dd1609c714df4f30b6d8d325b346aa54
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Add 1
+worker outcome: normal, test outcome: survived
+[job-id] 3feafbb4312743ec9ef9c54e7a7e1dc9
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Add 2
+worker outcome: normal, test outcome: survived
+[job-id] e78810812b06418fbb9a3360b63db4e8
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Add 3
+worker outcome: normal, test outcome: survived
+[job-id] fe2614a523374a71b0507bd91b203ae9
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Add 4
+worker outcome: normal, test outcome: survived
+[job-id] 84d4567bc4c54331b71a74a0bd1bd9f5
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Add 5
+worker outcome: normal, test outcome: survived
+[job-id] a9e3dda75d0648d092d2f9c94623350f
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Add 6
+worker outcome: normal, test outcome: survived
+[job-id] dedf3b19e4874e6f9207c2ed123e2f82
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Add 7
+worker outcome: normal, test outcome: survived
+[job-id] 09ff242b7d714cdebf03951b3ad190a2
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Add 8
+worker outcome: normal, test outcome: survived
+[job-id] 6e567ffc268d4b20af7c995958431046
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] 3ec18f34b2854bf2b956748ec42b2ec7
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] d531462d3bc1481b8da49230cc893a82
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] 5174c0a73d9e480baa55c6462a349e76
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Mul 3
+worker outcome: normal, test outcome: survived
+[job-id] 74311762c85544289770350a36eac3bd
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Mul 4
+worker outcome: normal, test outcome: survived
+[job-id] fe3cb3c501ce429ea8d2f520978a2cb6
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Mul 5
+worker outcome: normal, test outcome: survived
+[job-id] 8a3ef732c83d4eb1873a2872ffd99c25
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Mul 6
+worker outcome: normal, test outcome: survived
+[job-id] 49e643ae5a8c450a86314124723191b1
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Mul 7
+worker outcome: normal, test outcome: survived
+[job-id] f45695a3528547939b05cff21483be1c
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Mul 8
+worker outcome: normal, test outcome: survived
+[job-id] 838136f111ea41c18d7dc3398240719a
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] 97cbd8f9a5794ea2bbd21a2bf0815508
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] 11ec265eb24d424a9ca0a3660afcf02b
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] 28ef86caca6442e596f340f77db4c22e
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Div 3
+worker outcome: normal, test outcome: survived
+[job-id] c7b221254ed2423da584dc8463fd871a
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Div 4
+worker outcome: normal, test outcome: survived
+[job-id] 5e3e9a1b74f94ba38b911f3e8f593981
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Div 5
+worker outcome: normal, test outcome: survived
+[job-id] ac4f5daf08e44c2994cad268da830713
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Div 6
+worker outcome: normal, test outcome: survived
+[job-id] f8cd61d4695f48bba088eb9fb2481b05
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Div 7
+worker outcome: normal, test outcome: survived
+[job-id] 199080763b4846afbfe06bd0451cf963
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Div 8
+worker outcome: normal, test outcome: survived
+[job-id] 826bafe472364e4b80684f6c796354ed
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] 303d61eae5694f8ab3ea88537bb704c7
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] bc98b5d6af9f402abfb305f2d3c23f16
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] bb37de8efed1432da30afa61f57cffdc
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_FloorDiv 3
+worker outcome: normal, test outcome: survived
+[job-id] a5ffff26eab84d6aa924053d6b5b7187
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_FloorDiv 4
+worker outcome: normal, test outcome: survived
+[job-id] cd87a65c37114bb1975e43f7c9713c53
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_FloorDiv 5
+worker outcome: normal, test outcome: survived
+[job-id] d8c8a7ae090243eb91b83260da021b35
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_FloorDiv 6
+worker outcome: normal, test outcome: survived
+[job-id] 33ce7d57eb9048d5acbda2f72a89c742
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_FloorDiv 7
+worker outcome: normal, test outcome: survived
+[job-id] 2d94de6cd9314d10a31d6f2532a8f0ec
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_FloorDiv 8
+worker outcome: normal, test outcome: survived
+[job-id] 904ba3ceef754f77bbc335e0cee4402b
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Mod 0
+worker outcome: normal, test outcome: killed
+[job-id] 429452f1bc9d472fbf6dccb527a7826d
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Mod 1
+worker outcome: normal, test outcome: survived
+[job-id] a6907a2a870a492784eca7b7e57bbc89
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Mod 2
+worker outcome: normal, test outcome: survived
+[job-id] 4b858910795c49d2b4711002e474b563
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Mod 3
+worker outcome: normal, test outcome: survived
+[job-id] d2ee6bb1ad9448eb9f105084e1c954c4
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Mod 4
+worker outcome: normal, test outcome: survived
+[job-id] f8dacba528cb47cf97c525bfd7e1a1e9
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Mod 5
+worker outcome: normal, test outcome: survived
+[job-id] cd16b255e61f4e44b54b60d930962910
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Mod 6
+worker outcome: normal, test outcome: survived
+[job-id] 831279b8194147919e32b3e229ee4a39
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Mod 7
+worker outcome: normal, test outcome: survived
+[job-id] babaa594551045e991a073d47b240c26
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Mod 8
+worker outcome: normal, test outcome: survived
+[job-id] 38dd696de0dd4dc09b045c1a7e968679
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] 3a40254583474778af49734eed304424
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 605d5b24b249436b9fa7df0837407dcd
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] db775e75467f4c53aab8b6543ce51710
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Pow 3
+worker outcome: normal, test outcome: survived
+[job-id] e963447f535f4ab6b576b10e98a00175
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Pow 4
+worker outcome: normal, test outcome: survived
+[job-id] 5c4e5be07c684c87baa7b8ce58d3bb16
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Pow 5
+worker outcome: normal, test outcome: survived
+[job-id] 6c451b222c8a49cbb8d03b9d15ac4935
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Pow 6
+worker outcome: normal, test outcome: survived
+[job-id] 7a9071ec397c48ddbbd8697dece63f40
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Pow 7
+worker outcome: normal, test outcome: survived
+[job-id] b513cb46c5c94a8c9f6f8151232475a8
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_Pow 8
+worker outcome: normal, test outcome: survived
+[job-id] 7a347f7515df4f3ab88a5941308f4736
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 95d27f5c1e6146579e85e64c2598d5a5
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 21cafeff97644c42a1de1ebee4bf02ee
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] 7a12ef0e9ee44337acfc277924ec7656
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_RShift 3
+worker outcome: normal, test outcome: survived
+[job-id] 8542994662704e71aa0735a161b5aa92
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_RShift 4
+worker outcome: normal, test outcome: survived
+[job-id] 4f2997b128564edeb2269d7e97beab4f
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_RShift 5
+worker outcome: normal, test outcome: survived
+[job-id] be3ee588549d428e9f36cafdacdc486a
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_RShift 6
+worker outcome: normal, test outcome: survived
+[job-id] d9af0379870e48e193f7397ba855e3d7
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_RShift 7
+worker outcome: normal, test outcome: survived
+[job-id] 183bb640de624c83a031ba9b50120972
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_RShift 8
+worker outcome: normal, test outcome: survived
+[job-id] c8024ee67f7d4721bd3b09f53a1b7760
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] a1d104c73fce4289b13bb89347c8bbd8
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 5baf3ee995f744e288cee743dd9bb615
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] e9140b48934245cda90f2c6d94d93985
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_LShift 3
+worker outcome: normal, test outcome: survived
+[job-id] 84279a908fdb438fb5867f05f1685071
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_LShift 4
+worker outcome: normal, test outcome: survived
+[job-id] 0835e9bb6b394d2b8c33c3fc14792acb
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_LShift 5
+worker outcome: normal, test outcome: survived
+[job-id] 00650ffb7fa0476f921a103301f372ff
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_LShift 6
+worker outcome: normal, test outcome: survived
+[job-id] a65c765066644183bbae52056954666e
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_LShift 7
+worker outcome: normal, test outcome: survived
+[job-id] 10aa1d98af954c70b270864c8a503ee5
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_LShift 8
+worker outcome: normal, test outcome: survived
+[job-id] 86f244c253b647f69475f955689a4dd3
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 93040cf7383b4aa5a0d2dcec4938ae50
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 731379add46b48deb5bc3210cd690710
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] 04c5fa3f8fea4c60af83bc43223711e0
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitOr 3
+worker outcome: normal, test outcome: survived
+[job-id] 23c4a0410c8a4b7aaea5e796b43cdb52
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitOr 4
+worker outcome: normal, test outcome: survived
+[job-id] d0c5b68f3e9d4291be2915a91bd0d595
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitOr 5
+worker outcome: normal, test outcome: survived
+[job-id] 0a17c53b99a549f5b9387d4398ee187b
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitOr 6
+worker outcome: normal, test outcome: survived
+[job-id] 4e82edf6a0c640b0bbbafe0b9fe2933d
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitOr 7
+worker outcome: normal, test outcome: survived
+[job-id] 1289c72b150042218ab869f98954776e
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitOr 8
+worker outcome: normal, test outcome: survived
+[job-id] 45d752aa5b2f41f8bd956017604a2eb0
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 81f3f456cb30498a9ab7d0c338677f43
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 3261d031ade945b78b3a6b70c7746c7e
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] 919d992feb5b4426a45c3cec34f1fbb4
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] 8bec36ee892b49d5b93fcbc41a12c318
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitAnd 4
+worker outcome: normal, test outcome: survived
+[job-id] d98c22ce9b1f4a62b1524eaa4d523091
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitAnd 5
+worker outcome: normal, test outcome: survived
+[job-id] 4cdf0adb5d774d1abede686eb7e8d533
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitAnd 6
+worker outcome: normal, test outcome: survived
+[job-id] de8a09c9c1f54fd59e15eddce60b435c
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitAnd 7
+worker outcome: normal, test outcome: survived
+[job-id] 124cec8ed04b4088a2e449b3a800fb87
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitAnd 8
+worker outcome: normal, test outcome: survived
+[job-id] e802c6beab0447098ba00af450f301d5
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] 601f005a5f4d448abedc19e8ae330093
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] de316182a9eb4696a302559c3c6c2b48
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] ae51b5ee15234e669948987def9b3128
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitXor 3
+worker outcome: normal, test outcome: survived
+[job-id] d437d306524041e58e86cecf0bf6356a
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitXor 4
+worker outcome: normal, test outcome: survived
+[job-id] 367bda4d5ab1452e8fa8d71fc9199176
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitXor 5
+worker outcome: normal, test outcome: survived
+[job-id] 581607fcb0aa40848e4b0901744d630f
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitXor 6
+worker outcome: normal, test outcome: survived
+[job-id] 4b1d1715045644b2bea68812e2a1a2cb
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitXor 7
+worker outcome: normal, test outcome: survived
+[job-id] 9a88a8255f854b0783a890df3e015d41
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Sub_BitXor 8
+worker outcome: normal, test outcome: survived
+[job-id] 3d2d6cdebf2e4de49269b9d3f72c35f7
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] d171f0026d7c4c7384c836730b296a09
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_Add 1
+worker outcome: normal, test outcome: survived
+[job-id] 660f63386efd48ef89c7d44568bd1291
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] cf640def71dd42839822398b11ef3fd1
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] e7972dea3f2c4491b236d06402cd8397
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] b0e7f688654d473c84eeab48fea0e3d8
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] cccbef450a644d79b9fb2eb3c3fc5e25
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 41b6812be93b4c40a67e12367a29b0a7
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] 0a775ab419644af1ad5aab023adfb76b
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] c2d0df54d91944ce899991101add5b4f
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_Mod 1
+worker outcome: normal, test outcome: survived
+[job-id] 33adc64752324c31960d4d3590fc022e
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] e6f856aca43a4f0eaff055e8e6eb5123
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 33d7b6e22beb47c587027834823a4238
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 84571cc3ea0e43ec96ebc521b7af5fe7
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] f8293428aeb3450f832c553f1297b048
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] cfe89a6a36824841922f57afb807356c
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 70c875d7a4f940a5bb2341a527b58d27
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 05d788bd352f4de98019075546ff6487
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 459f812d30d74470b12c8ca350c215e2
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 4ed9f8aef0ce42d8b1afe91ed0312029
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 94d15e81076e4cb7a9ec9ada34b13a36
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] abbfc5e3dc4249f1963a9124364d709c
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mul_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] 3c7edd3a4022435cab1dde8e3736f5a4
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] 449c09fb91a343e2905fe06e6bd161db
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_Add 1
+worker outcome: normal, test outcome: survived
+[job-id] 74c2a76f510a4a0eb232714723ab5c2c
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_Add 2
+worker outcome: normal, test outcome: survived
+[job-id] 99ae283669fa497b8d8e267305b9e8eb
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] 098c898e37ce44478e2920f505627fdf
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] c7cc2ef7cc194690a9ff54ae37f9a8fb
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_Sub 2
+worker outcome: normal, test outcome: survived
+[job-id] 2a3a91a22ba04896926bd5eebf9acc48
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] e311a31f99ce47f9b0d2915ccfb1a292
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] cbed7b860a454caca1a4caffdb6b3c55
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] eb192f94ea1745059e9bf703d47db92d
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 3e65333530b146a3b104db0d3160dfc7
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] 6a023c58ce6c4046ba32ea426ebf5269
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] f8b84d2d0d6247d8bc96c6317f7b574e
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 080097a90fe14b55936ab47014a6c64e
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] c5598d1705674485a2d7695e633a9c36
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] 5210b10118f2471399477712178575c2
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 8a25f05c7b9944dc96bf6402705e61fd
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 382ee46583be47d48c69e898e9b71b36
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] cc0fc76b066b44828029352db6eb25bd
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 3162bb17e9784305b3ecd1bdeecab2d9
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 5d739756b91144cc87f5f3d22e7b3a63
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] 2098ead0cf944a86ab7e50176491fad5
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 26f3b0f2aaad49c0b93273c071f4ae29
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] d77a2296d4914bfc9b7099e9978b60f9
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] 1e94d6e211ee4065ac0ac333216908a9
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] ebc45af8061e46089d926ac3410fa145
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 857202d8281548ef8a3ef449044f4005
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] adcbb4844b714fb2966397409f24585e
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] fd2bb8aec6754d84aeec27ff1e2f05a3
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 7072b89b4d51481eb159c574767a4146
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] 8ceb5a4156a74b718b236aeec227bb12
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] fdd292925b9240f6a25b03236d068dbb
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] 511403a6dd7945a4b90ef8a331a53954
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_Mod_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] ac107d6a17864cd290320bd5ec27649a
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] e6a3f26e9ad04b2492c021b86fce4f95
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_Add 1
+worker outcome: normal, test outcome: survived
+[job-id] e1e908bfa2654a7496a5e9a97e8bce43
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] cef74b0e5cb546819ad37d0ac363241f
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] b8109186d3e94babb4eb046c0ca786c0
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] d16713a4a934421eb30723c4f9e7df8e
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] 8b10fa14e993454e8955481cc87f56f3
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 86eafd99253e41e2b6b75814ee1cf501
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] 15bbf26cf5a74d2b8ef3e00f5f0ace60
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] e0eecc33d62b4753b8feadc4fc3d61dc
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] 9d1b6fc84976408fa93f24aad2aeba65
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] d6cbd57abbc544f2a7af993c204c4c30
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_Mod 1
+worker outcome: normal, test outcome: survived
+[job-id] d5ae8d0de61643a8917dd2d520d063a7
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 03edb194b0d546be8d9b85433025441f
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 9b88fcd6c8fa4415a20a847ea6ab8ab6
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 0641b94ec176461ea5571284f5404282
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] b5de8c3263414c809df4cd8170aaae18
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 7189b6b8548747fdad45474ccf21af2d
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 0e59e7d5a3694cc38d8767edfbffbef0
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 05cdc2fe5d6c4f60ade4a535b8d00edc
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 68ab76e06c4545c7bcb1d3f377ae8709
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] df8b0e5bd4a84c1fbc690cedfc36066f
+src/_pytest/_code/code.py core/ReplaceBinaryOperator_BitAnd_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] 66405a9131a84a20801e2d57b0c03f31
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] ac23bd84820d4ceabb3ecf1a926a7baf
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_NotEq 1
+worker outcome: normal, test outcome: survived
+[job-id] 62f6376d85be4e4ebf539d8816293c11
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_NotEq 2
+worker outcome: normal, test outcome: survived
+[job-id] cd57b9ce6322455ca903602f13687fb9
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_NotEq 3
+worker outcome: normal, test outcome: survived
+[job-id] 1123e680507f4d5fb20944ec431f0cf8
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_NotEq 4
+worker outcome: normal, test outcome: survived
+[job-id] 08317c824ca64761a3c9a62780e30c87
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_NotEq 5
+worker outcome: normal, test outcome: survived
+[job-id] 060d479442b94d5b8aa99a9cb0bc6b0a
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_NotEq 6
+worker outcome: normal, test outcome: survived
+[job-id] f11d703b1ad7442fb45d5b29fdff0fd8
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_NotEq 7
+worker outcome: normal, test outcome: survived
+[job-id] 8f6df37a68a84b8babfb11a0c29a0708
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_NotEq 8
+worker outcome: normal, test outcome: survived
+[job-id] 071e4d0697394f8ab81de7da4221a161
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_NotEq 9
+worker outcome: normal, test outcome: survived
+[job-id] a539b869c0c34953bf6df7a501bbced6
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_NotEq 10
+worker outcome: normal, test outcome: survived
+[job-id] 6281bad433f4477780a8d0dcbf9ef0ce
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_NotEq 11
+worker outcome: normal, test outcome: survived
+[job-id] 68e5f9505ccf4dfe9c60f0b91fd210ca
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_NotEq 12
+worker outcome: normal, test outcome: survived
+[job-id] fca257c0a18b45d999633225f7aae8b8
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_NotEq 13
+worker outcome: normal, test outcome: survived
+[job-id] db76f39fdf62491c83a8eea60955bef8
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_NotEq 14
+worker outcome: normal, test outcome: survived
+[job-id] cf79d3b40e884e21a6e0d0abe3a8b34b
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_NotEq 15
+worker outcome: normal, test outcome: survived
+[job-id] 3e2c1f885e78434e8201aa54aac44f7d
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_NotEq 16
+worker outcome: normal, test outcome: survived
+[job-id] 3902ba264f544b818dd1b2fee0708b8f
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_NotEq 17
+worker outcome: normal, test outcome: survived
+[job-id] 8fab6bb547fb47e7a4b93048e8156a03
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 62716ef126694b70ac6b01fc4a0cec3e
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] 0eb16ee26c9e491c94d65f68344fa3fd
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Lt 2
+worker outcome: normal, test outcome: survived
+[job-id] d3f168b7317d41c2817f48e4af217a91
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Lt 3
+worker outcome: normal, test outcome: survived
+[job-id] 5c6213b60631492c8cdfcaea73cf5abe
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Lt 4
+worker outcome: normal, test outcome: survived
+[job-id] 47b9393fa206492088a88728cee689cc
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Lt 5
+worker outcome: normal, test outcome: survived
+[job-id] 0d3ec921343c4ab9bf353dd4bbecfcfb
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Lt 6
+worker outcome: normal, test outcome: survived
+[job-id] f6639acc7aca449287b3feb8f364da7a
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Lt 7
+worker outcome: normal, test outcome: survived
+[job-id] a34a87ce97134e1684a831667b9b8ba9
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Lt 8
+worker outcome: normal, test outcome: survived
+[job-id] 8a1b53de010d417c823ed33878dcc6b6
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Lt 9
+worker outcome: normal, test outcome: survived
+[job-id] 3b720bc562b74251a4942ae57f811b26
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Lt 10
+worker outcome: normal, test outcome: survived
+[job-id] d803dbc037194a2380606d32d99eec30
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Lt 11
+worker outcome: normal, test outcome: survived
+[job-id] d1611ae58c6f4453905a8acfd9be65eb
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Lt 12
+worker outcome: normal, test outcome: survived
+[job-id] 3356873f374547a9962967fe0f6ef1d3
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Lt 13
+worker outcome: normal, test outcome: survived
+[job-id] 377eae71c6c248508b50bb68ebde3d79
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Lt 14
+worker outcome: normal, test outcome: survived
+[job-id] 81917cf9765d485aa8d4b19e030c5214
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Lt 15
+worker outcome: normal, test outcome: survived
+[job-id] 36e5f4ab4e29475e886a288c79f349fd
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Lt 16
+worker outcome: normal, test outcome: survived
+[job-id] 549f72da90934479bacf2f2eacfdcf60
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Lt 17
+worker outcome: normal, test outcome: survived
+[job-id] 7b95333ee23d4bb6ae5c568f24febd16
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 7083edcd06de4d9ba94e753da4041f6a
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] beaa0a2fbc2f40cb87920a56bd5b41f2
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_LtE 2
+worker outcome: normal, test outcome: survived
+[job-id] b7cf25bf56e4420e88111bc247b7d398
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_LtE 3
+worker outcome: normal, test outcome: survived
+[job-id] 17118796019749c1bd5ca894ccb3cf49
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_LtE 4
+worker outcome: normal, test outcome: survived
+[job-id] 3d615cdad22f4a2ab28b854ecf99e6c2
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_LtE 5
+worker outcome: normal, test outcome: survived
+[job-id] c4a66397046f47b0a7a0fa2089455805
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_LtE 6
+worker outcome: normal, test outcome: survived
+[job-id] ab51832cf8954e76acaabccd18a22948
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_LtE 7
+worker outcome: normal, test outcome: survived
+[job-id] 29107184bd554f258eff985290b53c96
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_LtE 8
+worker outcome: normal, test outcome: survived
+[job-id] 27170f60515d4cb0bb6032157cb567fb
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_LtE 9
+worker outcome: normal, test outcome: survived
+[job-id] 2eaffca238524d7ca99e295b3387ad9d
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_LtE 10
+worker outcome: normal, test outcome: survived
+[job-id] 25ecea141335455fbeed3f96c04f3284
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_LtE 11
+worker outcome: normal, test outcome: survived
+[job-id] 0344c61c040546d7a765ccda57c1d6c8
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_LtE 12
+worker outcome: normal, test outcome: survived
+[job-id] e820ceddb8b24232a05c966e5a53e840
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_LtE 13
+worker outcome: normal, test outcome: survived
+[job-id] 606c6d884ce54cad9ba4231650616ee0
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_LtE 14
+worker outcome: normal, test outcome: survived
+[job-id] 707c0d671c2f4c95abcfbf0484d5fc15
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_LtE 15
+worker outcome: normal, test outcome: survived
+[job-id] ff91b5d331d94447aa27984350894eaf
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_LtE 16
+worker outcome: normal, test outcome: survived
+[job-id] 56b18bbb6f594e92a1d16641355a509c
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_LtE 17
+worker outcome: normal, test outcome: survived
+[job-id] 1fa972969fbf44a5a8762931ffd1e7db
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] fd3f1177229a476190379d6122fb757b
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] 56990fc0c3d84304bf6f9162097cbee0
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Gt 2
+worker outcome: normal, test outcome: survived
+[job-id] 99e04a7ae863420986ce19b0fcb12c3c
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Gt 3
+worker outcome: normal, test outcome: survived
+[job-id] 4d15392117814406ac4ce41337aff74d
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Gt 4
+worker outcome: normal, test outcome: survived
+[job-id] f8880dd75899489da053706027b6c316
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Gt 5
+worker outcome: normal, test outcome: survived
+[job-id] becfe52711ed4cfe8afbfbab5332b7d7
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Gt 6
+worker outcome: normal, test outcome: survived
+[job-id] a436de7890b244a9a56e52203758f606
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Gt 7
+worker outcome: normal, test outcome: survived
+[job-id] f1c0ded960fb4c5abd68e741584813b4
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Gt 8
+worker outcome: normal, test outcome: survived
+[job-id] da66a67cdb6c42f69d7fe65c7fe85faf
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Gt 9
+worker outcome: normal, test outcome: survived
+[job-id] 4fe4616119bc4b0684195acd4bd6a824
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Gt 10
+worker outcome: normal, test outcome: survived
+[job-id] 94f74dbd91d24a27a80eb14184a9c897
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Gt 11
+worker outcome: normal, test outcome: survived
+[job-id] d9b532516e2d40a8813d38ead16279b6
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Gt 12
+worker outcome: normal, test outcome: survived
+[job-id] ddecc22a99284d9aa7c6773ef38560a2
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Gt 13
+worker outcome: normal, test outcome: survived
+[job-id] c458d8719b9243759fda038ad16fefac
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Gt 14
+worker outcome: normal, test outcome: survived
+[job-id] d1ef6cd3fb1d4150a29b52d02ac666d5
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Gt 15
+worker outcome: normal, test outcome: survived
+[job-id] 4b92d14641534ac29b79d62b202d4ec5
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Gt 16
+worker outcome: normal, test outcome: survived
+[job-id] 5aebf72bdab2494a8a3b738ba8dec8d1
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Gt 17
+worker outcome: normal, test outcome: survived
+[job-id] b973fdee36b549b5b4c26d0d490446c2
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] cad4e33b589f48d39f36fd877bbcfc06
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 5bd0bf7b1be049eb85a8dae418bd37ff
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_GtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 4fc69de55986424cacdd4a5074c61050
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_GtE 3
+worker outcome: normal, test outcome: survived
+[job-id] 81811a2e4fb74145b766c701c84697a6
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_GtE 4
+worker outcome: normal, test outcome: survived
+[job-id] 6832cf408f3a49088211ec357a3e1394
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_GtE 5
+worker outcome: normal, test outcome: survived
+[job-id] b3aceb13c6524d1e971b35a635cadf7f
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_GtE 6
+worker outcome: normal, test outcome: survived
+[job-id] d265bd119bec4018bcfdbad8cc816841
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_GtE 7
+worker outcome: normal, test outcome: survived
+[job-id] 94eb2190582d46e2b3465fc3df247a36
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_GtE 8
+worker outcome: normal, test outcome: survived
+[job-id] 4c5ea9ac186b4dc6aae3bcff7cc493bf
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_GtE 9
+worker outcome: normal, test outcome: survived
+[job-id] 94bd569e47c645609933986ccd2f257e
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_GtE 10
+worker outcome: normal, test outcome: survived
+[job-id] 62fc9cedb1a6464f9b9492d2ae91f329
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_GtE 11
+worker outcome: normal, test outcome: survived
+[job-id] 7de714b6d9d14eadad2aac349eab48cd
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_GtE 12
+worker outcome: normal, test outcome: survived
+[job-id] 777a287dcc074b53be619f09020d0527
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_GtE 13
+worker outcome: normal, test outcome: survived
+[job-id] ddbe0c56833d472ca73ea4948a296384
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_GtE 14
+worker outcome: normal, test outcome: survived
+[job-id] 5b027708a721442f8ec1556ab09fe297
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_GtE 15
+worker outcome: normal, test outcome: survived
+[job-id] f1e80b21370e4ef3896502f0332c7406
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_GtE 16
+worker outcome: normal, test outcome: survived
+[job-id] 3567ae5f4a5a498cb17c80113114b42e
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_GtE 17
+worker outcome: normal, test outcome: survived
+[job-id] 38a622afdfd846d490c029266747a6de
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] d8bef5ed57db4aed8ba0996934711f58
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 56d805876700493a998a1551c719306b
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] 4f4c4b429b514d65b11d6ae160b9a5cd
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Is 3
+worker outcome: normal, test outcome: survived
+[job-id] 74908461bb3240e9afe4b6938d4629e1
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Is 4
+worker outcome: normal, test outcome: survived
+[job-id] b9e22791be054362ac89b51e8d896c0c
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Is 5
+worker outcome: normal, test outcome: survived
+[job-id] 6a8fabac3fc84f95877716938a131ed8
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Is 6
+worker outcome: normal, test outcome: survived
+[job-id] a8d2a04898434800b235554d8668ea4c
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Is 7
+worker outcome: normal, test outcome: survived
+[job-id] 851273cbc06145c1895d2f5af07d6abc
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Is 8
+worker outcome: normal, test outcome: survived
+[job-id] 16291c6a70294cb889a27bdd0c5ddaa8
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Is 9
+worker outcome: normal, test outcome: survived
+[job-id] 225d543a9023404785db970a3455f17a
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Is 10
+worker outcome: normal, test outcome: survived
+[job-id] d3b9e7488d7d4ff5bd27624ac57f6736
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Is 11
+worker outcome: normal, test outcome: survived
+[job-id] bbd0fbd591684f038f22e8207aada068
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Is 12
+worker outcome: normal, test outcome: survived
+[job-id] 9b181a86f5e345a88c40ce1c3a64aa68
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Is 13
+worker outcome: normal, test outcome: survived
+[job-id] 1f42d0a4fe544b6ca6bb5d34ea5e62bf
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Is 14
+worker outcome: normal, test outcome: survived
+[job-id] 9aa16ca4d924430c90bc222b39f4c16a
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Is 15
+worker outcome: normal, test outcome: survived
+[job-id] 518a8f78b906420dae15b9f82d6c0dc0
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Is 16
+worker outcome: normal, test outcome: survived
+[job-id] da68df00db184f7ca809484f3619ef9b
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_Is 17
+worker outcome: normal, test outcome: survived
+[job-id] 1d454f3d43294ab3abab77ad39aec0b1
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 26abee275ce7468ab2edae0146a29a39
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 82a00e090dbb4bfba978b017b72fad9b
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 0d90a3bbd6dc4ca29bbb24bd415536fc
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_IsNot 3
+worker outcome: normal, test outcome: survived
+[job-id] 23dde2e31d16440f825163263f876dfb
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_IsNot 4
+worker outcome: normal, test outcome: survived
+[job-id] 78ccf6dc10c04bd0aef7dac295ac3d13
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_IsNot 5
+worker outcome: normal, test outcome: survived
+[job-id] b5598ff170a14d50a8ca4b8929e1d718
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_IsNot 6
+worker outcome: normal, test outcome: survived
+[job-id] d9e72997111a43baa91ede4ecab4ae85
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_IsNot 7
+worker outcome: normal, test outcome: survived
+[job-id] a03a7b6394a64114bf1b306681c66fee
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_IsNot 8
+worker outcome: normal, test outcome: survived
+[job-id] 1577895c97aa4fb29824f0a3c245f2ef
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_IsNot 9
+worker outcome: normal, test outcome: survived
+[job-id] da16ef45e38f4c58893f313a6e76b316
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_IsNot 10
+worker outcome: normal, test outcome: survived
+[job-id] 5c924da48b6d4df7ac446a5de995ced1
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_IsNot 11
+worker outcome: normal, test outcome: survived
+[job-id] 1bd238cb533146429e00cf9487c4c127
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_IsNot 12
+worker outcome: normal, test outcome: survived
+[job-id] 4bfee27460954846a8fdf97ed07894b9
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_IsNot 13
+worker outcome: normal, test outcome: survived
+[job-id] 7dc0a4ecd79a47ddaa32217455ec80ee
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_IsNot 14
+worker outcome: normal, test outcome: survived
+[job-id] 90a9c09f036d4d0d86e134d4eda92f72
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_IsNot 15
+worker outcome: normal, test outcome: survived
+[job-id] 3d4ee04f0182422db5eae7c02a459f4e
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_IsNot 16
+worker outcome: normal, test outcome: survived
+[job-id] 8360e4569ffe4fc6b7e7a266868829f8
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Eq_IsNot 17
+worker outcome: normal, test outcome: survived
+[job-id] 2648a3bd9054427a91ab9c12a48a9dc4
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] 96ce44f24c304def8bff9f7e9ca0c3e5
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_Eq 1
+worker outcome: normal, test outcome: survived
+[job-id] 5a2f909f6ecc4046b1e963186c7bda5c
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_Eq 2
+worker outcome: normal, test outcome: survived
+[job-id] c0c45dc4c7624a818dce7bae04a1a3f4
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 614c3a618517445caa6a820b4ffcb264
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] 86a03664e6c54524b0991c99e20cced0
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_Lt 2
+worker outcome: normal, test outcome: survived
+[job-id] 425ee7a574a142a7ac823a5a1c327d8e
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 27aae1a6056c439e90343ff88862a807
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 801801a8032048159a7a4e2f32168270
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_LtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 5216184bbfc14de8a3e54e27a8e4af41
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] a12863828a0542f19cd98c92b6411cc4
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] ccc2bab11a7e4da9ae2bcaa1cced5a09
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_Gt 2
+worker outcome: normal, test outcome: survived
+[job-id] c6a66012092a43efa5e5aabc60399181
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 6b7e3d7fae994f3a9637ce837faecfc2
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] ecc5fe8df2194887bd0614f451ef8d74
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_GtE 2
+worker outcome: normal, test outcome: survived
+[job-id] ed042bab1e68494da9df4ad1d10c24a4
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 437ce10d6fea48cf9e0f8c55dd5d8cbd
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] ab0feae6bd39420f90045b7204cacb79
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] 88f2a99b0fc5476c962471d54116527f
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] c43d425757e54147b6774e1d879374a0
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 1881440394394db49bc35cdd0811e65d
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_NotEq_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] d770e539ed1e48feafa8cb120bcd1185
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Lt_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] 7767b38c8d2c44358d9ef87d023253ec
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Lt_Eq 1
+worker outcome: normal, test outcome: survived
+[job-id] c443281d5c3741449efe6ccdb6615647
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Lt_Eq 2
+worker outcome: normal, test outcome: survived
+[job-id] 1ded55615ba146319c2d657c2b6f081f
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Lt_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 02187b8378c6416facb4f6c9e61303d8
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Lt_NotEq 1
+worker outcome: normal, test outcome: survived
+[job-id] fa4d70489a094fa39faaf23d17e95d72
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Lt_NotEq 2
+worker outcome: normal, test outcome: survived
+[job-id] 9f63dfb574934bbc81515993b34423f2
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Lt_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] ca95d13e7ebd47218d2aae43c4bd7019
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Lt_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] a698b2bef1bf485fb4fcce990620b769
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Lt_LtE 2
+worker outcome: normal, test outcome: survived
+[job-id] b321c5caa7c54168a22c3decccd7cdcb
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Lt_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] b8a523db02684fc7957ee7eebff1acad
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Lt_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] 79ab07344d39486892099a6e5c5631ff
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Lt_Gt 2
+worker outcome: normal, test outcome: survived
+[job-id] 739b712decdb4a9a8174a09f8a9d1a8f
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Lt_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 0035b71a55ea49a49313e9144219062a
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Lt_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] bb22a53a7046492897c817aaf2e41c5b
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Lt_GtE 2
+worker outcome: normal, test outcome: survived
+[job-id] f34009cc16a346f4a84bebe5f0ad378d
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Lt_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] c55bbe07479e486e901b0ff197e1d302
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Lt_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 28f91cd57afb414f968e513428064e52
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Lt_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 6747178246d445848a8b9e00881a6a00
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Lt_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 1aec60f5354d459c8a4e8b0d3b31b8ae
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Gt_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] 781a08704d7547a7bff95cc47dc08fee
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Gt_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 113c13749c0a4d9cb4ce8cc7860232cc
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Gt_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 4f7bff8406914718be9903ed297f7c3c
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Gt_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] a2547e217bb54151a1735c304feb8992
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Gt_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] bbb737afa5e44ee5880967b7b03e288a
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Gt_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 036a457b927542a7b1642a74e4f7ec74
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Gt_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] e6a711e242d142e69180af5ad41ff804
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_GtE_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] f6f66bca2aef48349f2c1179c4ae9004
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_GtE_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 88f2e4c9f5ad419090591380b7320cf2
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_GtE_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 136299b206c94cdcbc4776a584d45b9c
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_GtE_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 00e66d7cc5af4b6aa3f3a260fa8fd8a9
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_GtE_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 7179c986aeec45d39bd81e7a59338ed4
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_GtE_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] ae0a550fa3bc4d9a8faa5db4d802849d
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_GtE_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 8007ba83f9b241dda7f5835574f5c0e1
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 29bb3816c6274cbbb0c59ec7f88077c2
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Is_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 56273e4ceea14e72957031ba6d81bae6
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Is_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] fcc3425c93a94ce8a8df2db2eadacaca
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Is_IsNot 3
+worker outcome: normal, test outcome: survived
+[job-id] 91d85262020d48fda5c2e2a9213a30e3
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Is_IsNot 4
+worker outcome: normal, test outcome: survived
+[job-id] 041341a552f54306a399bfc6f33865e9
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Is_IsNot 5
+worker outcome: normal, test outcome: survived
+[job-id] 498ea5fec72c4f339afa3c7ea607b108
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Is_IsNot 6
+worker outcome: normal, test outcome: survived
+[job-id] 3972e1738e3949d795825aacad0a0e38
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Is_IsNot 7
+worker outcome: normal, test outcome: survived
+[job-id] 568326be18be4718b1c942d31fd9f0bd
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Is_IsNot 8
+worker outcome: normal, test outcome: survived
+[job-id] 50fbb48ba0744733ba52f6cafa5e4b6c
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Is_IsNot 9
+worker outcome: normal, test outcome: survived
+[job-id] b358baa7475c47feb1c872e98b909e38
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Is_IsNot 10
+worker outcome: normal, test outcome: survived
+[job-id] e81d692c028845ccbb3e1a0732b02ee5
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Is_IsNot 11
+worker outcome: normal, test outcome: survived
+[job-id] 34a1835549cd470ab16e98aee4d4e6fd
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Is_IsNot 12
+worker outcome: normal, test outcome: survived
+[job-id] d137f02be8df4e9485bc9934af613137
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_Is_IsNot 13
+worker outcome: normal, test outcome: survived
+[job-id] 72ec9891e6d84a21ab1fe7f5f7eb8292
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] f86a6f9b27964bac9b8503e8727e2883
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 7f443b55d35f454aa73e5c980bf3c672
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] ddcf3c1e54274c35a876987609e922f8
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 3
+worker outcome: normal, test outcome: survived
+[job-id] 3b48036f1efe4fc7abab64747588df93
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 4
+worker outcome: normal, test outcome: survived
+[job-id] c33f69363abf45999ef5321369e6d4b3
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 5
+worker outcome: normal, test outcome: survived
+[job-id] 65757475ee8842c1bd970f4e7ec14a56
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 6
+worker outcome: normal, test outcome: survived
+[job-id] 636f79b1dbb547c28a8f93079a9a610e
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 7
+worker outcome: normal, test outcome: survived
+[job-id] fcf8c01b7f014e6dbd44a8d7149cbee5
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 8
+worker outcome: normal, test outcome: survived
+[job-id] 791ad1f7785f4fd09559d38e0e894671
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 9
+worker outcome: normal, test outcome: survived
+[job-id] b7854e6eeea74d4dbab57c33035af91a
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 10
+worker outcome: normal, test outcome: survived
+[job-id] 4cded9a82aea48249e47a8a04cfedb5f
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 11
+worker outcome: normal, test outcome: survived
+[job-id] 042ce2c6a0c14943a7497ccc1d2ae073
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 12
+worker outcome: normal, test outcome: survived
+[job-id] 051c4d881bbe4996ad040addddc9645e
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 13
+worker outcome: normal, test outcome: survived
+[job-id] 9b10532391584644b331694c4f6ab316
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 14
+worker outcome: normal, test outcome: survived
+[job-id] 823288fe8f1a4abaa77b7a607af13af1
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 15
+worker outcome: normal, test outcome: survived
+[job-id] 4dcb5b501ddf49fe9a67e3681fdcdfff
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 16
+worker outcome: normal, test outcome: survived
+[job-id] 657a95a09d4849f892e66df94f31cc10
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 17
+worker outcome: normal, test outcome: survived
+[job-id] ce24a4a81d5b4e6e862984bffe9d022b
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 18
+worker outcome: normal, test outcome: survived
+[job-id] f85dd1eb21c24233a56313090278a2fa
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 19
+worker outcome: normal, test outcome: survived
+[job-id] 4c3ca7a6ef8f45b79ff7ce99fd7f3775
+src/_pytest/_code/code.py core/ReplaceComparisonOperator_IsNot_Is 20
+worker outcome: normal, test outcome: survived
+[job-id] fda2200931cc4f35bb1f640f502aafbc
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_UAdd 0
+worker outcome: normal, test outcome: survived
+[job-id] 0f2e23c2f5a246238c25132698b3e39f
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_UAdd 1
+worker outcome: normal, test outcome: survived
+[job-id] 6833ebb5523841a1b7a1251d8498dce9
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_UAdd 2
+worker outcome: normal, test outcome: survived
+[job-id] 4d4d29fca623499a8feb71fdec1c98b6
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_UAdd 3
+worker outcome: normal, test outcome: survived
+[job-id] c38ba6acac174c738c18123c86fd0aee
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_UAdd 4
+worker outcome: normal, test outcome: survived
+[job-id] 6a4efc66c5d4480faba2f5ab52cc77f5
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_UAdd 5
+worker outcome: normal, test outcome: survived
+[job-id] 1b3c2f2e76dd4ef393d9656eb5df6f4f
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_UAdd 6
+worker outcome: normal, test outcome: survived
+[job-id] 449fb517dcf54b27b17c9017fba5e94a
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_UAdd 7
+worker outcome: normal, test outcome: survived
+[job-id] 2b8b3172570c43abbcd4236a08452886
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_UAdd 8
+worker outcome: normal, test outcome: survived
+[job-id] 53fb115624db45b7a25091665a1ff101
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_UAdd 9
+worker outcome: normal, test outcome: survived
+[job-id] 71cdd60488db4765b60536fc0c2009ef
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_UAdd 10
+worker outcome: normal, test outcome: survived
+[job-id] b9a6302d1db4408bbe3250df9dbe28c1
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_UAdd 11
+worker outcome: normal, test outcome: survived
+[job-id] f88f98603a6b430b95f0f82f24a16859
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_UAdd 12
+worker outcome: normal, test outcome: survived
+[job-id] 00f6507f8d0a44278393902a73636215
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Invert 0
+worker outcome: normal, test outcome: survived
+[job-id] ea18df6407df42f6b1e0e0ce93425db8
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Invert 1
+worker outcome: normal, test outcome: survived
+[job-id] 64ecb941cc204ac99610c1badc02c243
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Invert 2
+worker outcome: normal, test outcome: survived
+[job-id] bfac0cd1c4a84e73bb953e485389230e
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Invert 3
+worker outcome: normal, test outcome: survived
+[job-id] 6309fb2a9ada4eab83d6ba6d953655ad
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Invert 4
+worker outcome: normal, test outcome: survived
+[job-id] 696198712b07445f8f4d4d545250f1f1
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Invert 5
+worker outcome: normal, test outcome: survived
+[job-id] 1c9dd49eabc04f489aa938601461b693
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Invert 6
+worker outcome: normal, test outcome: survived
+[job-id] ac7bfe487b7f46a5a3d36adff4e32237
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Invert 7
+worker outcome: normal, test outcome: survived
+[job-id] 0d76e4d3c8b14c22a824b4e2a1b242c8
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Invert 8
+worker outcome: normal, test outcome: survived
+[job-id] bb16982473034726bd27d2184dc3880f
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Invert 9
+worker outcome: normal, test outcome: survived
+[job-id] 94c010d0942a4c8989e4d3a4555b3841
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Invert 10
+worker outcome: normal, test outcome: survived
+[job-id] 9b17fdfa49954bb48bb4fb33fa9b2418
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Invert 11
+worker outcome: normal, test outcome: survived
+[job-id] db75d473abfd4020807c9a72f2e54680
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Invert 12
+worker outcome: normal, test outcome: survived
+[job-id] 72e4e17442264ed6adde041e12412551
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] 8bd8fa8dfb954880a3e31d05c6e8c0f6
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] db1abb74b8674be58debf827f91bf937
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Not 2
+worker outcome: normal, test outcome: survived
+[job-id] 4b3d1903f5bb4414afba8da7d02a93ba
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Not 3
+worker outcome: normal, test outcome: survived
+[job-id] febe9c9df77c4b399067f1f636a49845
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Not 4
+worker outcome: normal, test outcome: survived
+[job-id] baa134b9e8184b8a9836e41ee74134ee
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Not 5
+worker outcome: normal, test outcome: survived
+[job-id] 0bd47239f26941f1ad7bf4317e520771
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Not 6
+worker outcome: normal, test outcome: survived
+[job-id] adb48df87b0f410385e350c864fe17e1
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Not 7
+worker outcome: normal, test outcome: survived
+[job-id] c85f7027e78c4269a0b8d10296c4e2f4
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Not 8
+worker outcome: normal, test outcome: survived
+[job-id] 16bd5bfe450b45b3a59800ccb1b22ca0
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Not 9
+worker outcome: normal, test outcome: survived
+[job-id] b4a0f2866691496d8919367797c7a6d8
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Not 10
+worker outcome: normal, test outcome: killed
+[job-id] 5f44c80b5d984d75a4ddb7f151ba5e52
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Not 11
+worker outcome: normal, test outcome: survived
+[job-id] 2160fb3aeb4a46138c3435c19513b3d7
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_USub_Not 12
+worker outcome: normal, test outcome: survived
+[job-id] c67e6677668b470799c9e553275e76ea
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_USub 0
+worker outcome: normal, test outcome: survived
+[job-id] fa244fe1aa81442886f5394944a11cda
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_USub 1
+worker outcome: normal, test outcome: survived
+[job-id] cac669065c6242a2ba5e4d3410dde5dd
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_USub 2
+worker outcome: normal, test outcome: survived
+[job-id] 55b5bc578d9147859ce8f0222e321a52
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_USub 3
+worker outcome: normal, test outcome: survived
+[job-id] 78df0b7a97d54ef6931deaf3b0095310
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_USub 4
+worker outcome: normal, test outcome: survived
+[job-id] 597b7681261b45d591d995f890f00558
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_USub 5
+worker outcome: normal, test outcome: survived
+[job-id] e329cd9e4e0b4b54a4776068d7807757
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_USub 6
+worker outcome: normal, test outcome: survived
+[job-id] 470cbbca547340d794195184db0ef22a
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_USub 7
+worker outcome: normal, test outcome: survived
+[job-id] ad2a8d4b9f0d41aa8ab4975f8ed9b3b7
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_USub 8
+worker outcome: normal, test outcome: survived
+[job-id] 7e98c7f193514f248abec1f8abaa3f62
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_USub 9
+worker outcome: normal, test outcome: survived
+[job-id] ce2bd64c595944769cee8d9387bb5e2f
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_USub 10
+worker outcome: normal, test outcome: survived
+[job-id] 6bbd373540a640b48d36b5010eb47800
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_USub 11
+worker outcome: normal, test outcome: survived
+[job-id] bdcf5deaa3e44f0ca71dabeb7978852c
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_USub 12
+worker outcome: normal, test outcome: survived
+[job-id] 0e8c263418134ef0bb83b72be6bf1bf5
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] ac4baaeabeab453289488ee2ee92ba12
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: killed
+[job-id] c5834bb759f04b9a86a6546b14d74866
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: normal, test outcome: survived
+[job-id] 48aaa31fa2df41c0b88d8a1dea819a1f
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_Not 3
+worker outcome: normal, test outcome: survived
+[job-id] da3acdc377bd4e17b57c22d6991a82a6
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_Not 4
+worker outcome: normal, test outcome: survived
+[job-id] 363ce5dfd9ee49108298785d596e2694
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_Not 5
+worker outcome: normal, test outcome: survived
+[job-id] d46cfae5ac4249c28a261bed28fd75e6
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_Not 6
+worker outcome: normal, test outcome: survived
+[job-id] d494ef495ddd459f9782c38d82b2d1f7
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_Not 7
+worker outcome: normal, test outcome: survived
+[job-id] 8d00be0f8e0f4331ae07f80c65e72f88
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_Not 8
+worker outcome: normal, test outcome: survived
+[job-id] 51b61d79f4e3429aa90d006e9799787b
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_Not 9
+worker outcome: normal, test outcome: survived
+[job-id] 145bbaff1caa4287b19bee382049456b
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_Not 10
+worker outcome: normal, test outcome: survived
+[job-id] 9e35e8994f4e412f83eebcfa9f7afa7d
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_Not 11
+worker outcome: normal, test outcome: survived
+[job-id] 2bf92c15ffd244c5ba026902275b8750
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_Not 12
+worker outcome: normal, test outcome: survived
+[job-id] 1c27944ef96f47369dd67a7ea2fe57af
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_Not 13
+worker outcome: normal, test outcome: survived
+[job-id] ae07000f3fd04c738a0bb65a54f3c319
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_Not 14
+worker outcome: normal, test outcome: survived
+[job-id] e9683d1c0aea42c78e62d0d9f40bca8a
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_Not 15
+worker outcome: normal, test outcome: survived
+[job-id] 679e950b4d944206bf55a66c0c3bd79d
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_Not 16
+worker outcome: normal, test outcome: survived
+[job-id] f392d70a7e5241709202ce238234a975
+src/_pytest/_code/code.py core/ReplaceUnaryOperator_Delete_Not 17
+worker outcome: normal, test outcome: survived
+[job-id] c3d05b6007494509adeaf3231cd99751
+src/_pytest/_code/code.py core/AddNot 0
+worker outcome: normal, test outcome: survived
+[job-id] a9c4d77a918140b7850ec8d74923dc79
+src/_pytest/_code/code.py core/AddNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 2729173143584823817aaad0964fe5fb
+src/_pytest/_code/code.py core/AddNot 2
+worker outcome: normal, test outcome: killed
+[job-id] 5cb03a2d5e8a4744a9d5e2cb95ed1b2f
+src/_pytest/_code/code.py core/AddNot 3
+worker outcome: normal, test outcome: survived
+[job-id] 3c0fcc6248dd4aae973cfcec9f71a338
+src/_pytest/_code/code.py core/AddNot 4
+worker outcome: normal, test outcome: survived
+[job-id] c321bc304a404747afdde46cbffa6284
+src/_pytest/_code/code.py core/AddNot 5
+worker outcome: normal, test outcome: survived
+[job-id] ee050d3b231a4b17acde1139c70da057
+src/_pytest/_code/code.py core/AddNot 6
+worker outcome: normal, test outcome: survived
+[job-id] 937c76e6a96c411ea632f8bedf9c3f63
+src/_pytest/_code/code.py core/AddNot 7
+worker outcome: normal, test outcome: survived
+[job-id] e97f9bdf91a14ee3bef90c0424cf0445
+src/_pytest/_code/code.py core/AddNot 8
+worker outcome: normal, test outcome: survived
+[job-id] 082a136d44e64de285ee8c50d3c98edb
+src/_pytest/_code/code.py core/AddNot 9
+worker outcome: normal, test outcome: survived
+[job-id] 704a9ebf9fa8473cb154558f693cb108
+src/_pytest/_code/code.py core/AddNot 10
+worker outcome: normal, test outcome: survived
+[job-id] 4814f9a416104a1c92595b37ef59e5e9
+src/_pytest/_code/code.py core/AddNot 11
+worker outcome: normal, test outcome: survived
+[job-id] 70b29be1836a4c13a57fbab8f82f6166
+src/_pytest/_code/code.py core/AddNot 12
+worker outcome: normal, test outcome: survived
+[job-id] c609c60a0ce8409ab3e0ca1b3c609d77
+src/_pytest/_code/code.py core/AddNot 13
+worker outcome: normal, test outcome: survived
+[job-id] 72ad8024aa47457e8f687f9fd9d76ef1
+src/_pytest/_code/code.py core/AddNot 14
+worker outcome: normal, test outcome: survived
+[job-id] 06580f95578e4ba6aaebba4ec5d12de4
+src/_pytest/_code/code.py core/AddNot 15
+worker outcome: normal, test outcome: survived
+[job-id] 0dc3fcdd863547c1bc6b2ef1b4a32e62
+src/_pytest/_code/code.py core/AddNot 16
+worker outcome: normal, test outcome: survived
+[job-id] a4b6da2ecf8e44a5894d9c6f483ed6dd
+src/_pytest/_code/code.py core/AddNot 17
+worker outcome: normal, test outcome: survived
+[job-id] 4403c20f8bba4a3e9bfce95b0b87be4d
+src/_pytest/_code/code.py core/AddNot 18
+worker outcome: normal, test outcome: survived
+[job-id] b60e09a80f6d47bcbf8b53f9b90fd677
+src/_pytest/_code/code.py core/AddNot 19
+worker outcome: normal, test outcome: survived
+[job-id] 7022b8504bdc499db3b0a3916e337bb3
+src/_pytest/_code/code.py core/AddNot 20
+worker outcome: normal, test outcome: survived
+[job-id] 07122ebd87834247ada53f33dcc8ae96
+src/_pytest/_code/code.py core/AddNot 21
+worker outcome: normal, test outcome: survived
+[job-id] aede6054a4d74924b03728017dee7c26
+src/_pytest/_code/code.py core/AddNot 22
+worker outcome: normal, test outcome: survived
+[job-id] 7c3c460b51074e5a891f857b32327e61
+src/_pytest/_code/code.py core/AddNot 23
+worker outcome: normal, test outcome: survived
+[job-id] b4e8441b6d96410f931caa875225d1d7
+src/_pytest/_code/code.py core/AddNot 24
+worker outcome: normal, test outcome: survived
+[job-id] d6058f01cd324f06a0409debd1cddc45
+src/_pytest/_code/code.py core/AddNot 25
+worker outcome: normal, test outcome: survived
+[job-id] 5b2462145dc04fdc925ec1704ba2cefe
+src/_pytest/_code/code.py core/AddNot 26
+worker outcome: normal, test outcome: survived
+[job-id] 78dc8079b2bf4477ba325fc1b045a86e
+src/_pytest/_code/code.py core/AddNot 27
+worker outcome: normal, test outcome: survived
+[job-id] 25fb7b9a43db40a79939108ace4f9f51
+src/_pytest/_code/code.py core/AddNot 28
+worker outcome: normal, test outcome: survived
+[job-id] a979f4a4e5834ab993f3561b0741a648
+src/_pytest/_code/code.py core/AddNot 29
+worker outcome: normal, test outcome: survived
+[job-id] 08ea25476c054859b6faab83b2e53f51
+src/_pytest/_code/code.py core/AddNot 30
+worker outcome: normal, test outcome: survived
+[job-id] e5fd6f3760f94f50bec14322c3dabb24
+src/_pytest/_code/code.py core/AddNot 31
+worker outcome: normal, test outcome: survived
+[job-id] a7bf62ad55314f08a1f940572ef8965a
+src/_pytest/_code/code.py core/AddNot 32
+worker outcome: normal, test outcome: survived
+[job-id] 00c969b077594fdda0ce3005ce6b0545
+src/_pytest/_code/code.py core/AddNot 33
+worker outcome: normal, test outcome: survived
+[job-id] 71a663da704a4c958732cfbb823578cc
+src/_pytest/_code/code.py core/AddNot 34
+worker outcome: normal, test outcome: survived
+[job-id] 462407796301462b8a353f9fa01a2704
+src/_pytest/_code/code.py core/AddNot 35
+worker outcome: normal, test outcome: survived
+[job-id] 664bb47d32a84d32a67c2bfb8032c3b8
+src/_pytest/_code/code.py core/AddNot 36
+worker outcome: normal, test outcome: survived
+[job-id] d5b62c46c90a40c096146edde1bedd82
+src/_pytest/_code/code.py core/AddNot 37
+worker outcome: normal, test outcome: survived
+[job-id] b514edc1df7548b2b4f7be63666875af
+src/_pytest/_code/code.py core/AddNot 38
+worker outcome: normal, test outcome: survived
+[job-id] 5703596bc77246ce8a30b61c211f1d04
+src/_pytest/_code/code.py core/AddNot 39
+worker outcome: normal, test outcome: survived
+[job-id] 6212ca3d578f48f1afddc67fe612b160
+src/_pytest/_code/code.py core/AddNot 40
+worker outcome: normal, test outcome: survived
+[job-id] 09aa03978b584d68a3467d08d9d6d1b5
+src/_pytest/_code/code.py core/AddNot 41
+worker outcome: normal, test outcome: survived
+[job-id] 2d61cb8f9f71468192f94db8d02a746f
+src/_pytest/_code/code.py core/AddNot 42
+worker outcome: normal, test outcome: survived
+[job-id] b32babdfc41f4979a973eb1a8d6d0f98
+src/_pytest/_code/code.py core/AddNot 43
+worker outcome: normal, test outcome: survived
+[job-id] fa9219f6ffd647d481ee742a5735f878
+src/_pytest/_code/code.py core/AddNot 44
+worker outcome: normal, test outcome: survived
+[job-id] 2eabd10e3e654faa85696359a07b8750
+src/_pytest/_code/code.py core/AddNot 45
+worker outcome: normal, test outcome: survived
+[job-id] 1f17590cdaaf442798b232b46402cd20
+src/_pytest/_code/code.py core/AddNot 46
+worker outcome: normal, test outcome: survived
+[job-id] 0cb83227cbf44fe49be01609f3776632
+src/_pytest/_code/code.py core/AddNot 47
+worker outcome: normal, test outcome: survived
+[job-id] e0aec04cadce450fb16a82dc1d92c251
+src/_pytest/_code/code.py core/AddNot 48
+worker outcome: normal, test outcome: survived
+[job-id] 57cd50c72cbc4203b7505dae273beddd
+src/_pytest/_code/code.py core/AddNot 49
+worker outcome: normal, test outcome: survived
+[job-id] dbc6b89f95b04f44aa92e4f1fbd7f4f2
+src/_pytest/_code/code.py core/AddNot 50
+worker outcome: normal, test outcome: survived
+[job-id] 9a776f586db743f380c771d2c33aff5d
+src/_pytest/_code/code.py core/AddNot 51
+worker outcome: normal, test outcome: survived
+[job-id] 9e9079533f7b4fbc90a76adf9de1905c
+src/_pytest/_code/code.py core/AddNot 52
+worker outcome: normal, test outcome: survived
+[job-id] 3d6588b06ec64044a87ed69efa27511c
+src/_pytest/_code/code.py core/AddNot 53
+worker outcome: normal, test outcome: survived
+[job-id] a235eb4d9a174406928c0d0c8ab41ce0
+src/_pytest/_code/code.py core/AddNot 54
+worker outcome: normal, test outcome: survived
+[job-id] 526a893fb0864666956f19efff8b203d
+src/_pytest/_code/code.py core/AddNot 55
+worker outcome: normal, test outcome: survived
+[job-id] 47dae0ae3aea4b8baf09408044cbed93
+src/_pytest/_code/code.py core/AddNot 56
+worker outcome: normal, test outcome: survived
+[job-id] 1c63a6e151a3450798f766a45ef3e155
+src/_pytest/_code/code.py core/AddNot 57
+worker outcome: normal, test outcome: survived
+[job-id] 4224d355f61c4253a9636f1bd125e850
+src/_pytest/_code/code.py core/AddNot 58
+worker outcome: normal, test outcome: survived
+[job-id] c1b1d431c6d445ba86a038190e624116
+src/_pytest/_code/code.py core/AddNot 59
+worker outcome: normal, test outcome: survived
+[job-id] 3961a38741ce45109da014bedab17cfa
+src/_pytest/_code/code.py core/AddNot 60
+worker outcome: normal, test outcome: survived
+[job-id] 4c01f1c5a4664ec4981f5d8425c3ad0b
+src/_pytest/_code/code.py core/AddNot 61
+worker outcome: normal, test outcome: survived
+[job-id] 7586de4aad414adf83dee4878779142d
+src/_pytest/_code/code.py core/AddNot 62
+worker outcome: normal, test outcome: survived
+[job-id] a880a54d3dce4966b867acd14a83bd0a
+src/_pytest/_code/code.py core/AddNot 63
+worker outcome: normal, test outcome: survived
+[job-id] 5244d601452649ae9f041f30577d22d7
+src/_pytest/_code/code.py core/AddNot 64
+worker outcome: normal, test outcome: survived
+[job-id] 1fa7823375144260a2fc624eb0d6acee
+src/_pytest/_code/code.py core/AddNot 65
+worker outcome: normal, test outcome: survived
+[job-id] 85e0c2cabc75434b95344b25b0c5edd6
+src/_pytest/_code/code.py core/AddNot 66
+worker outcome: normal, test outcome: survived
+[job-id] b40314e60a004c728099cce4623c59b5
+src/_pytest/_code/code.py core/AddNot 67
+worker outcome: normal, test outcome: survived
+[job-id] 17ccbee4ec36490d8f9c1c54e545bd04
+src/_pytest/_code/code.py core/AddNot 68
+worker outcome: normal, test outcome: survived
+[job-id] 0204fbc8186946f7b8e4a70a6635298b
+src/_pytest/_code/code.py core/AddNot 69
+worker outcome: normal, test outcome: survived
+[job-id] b3d279cbf86f48dd858eef6539538aae
+src/_pytest/_code/code.py core/AddNot 70
+worker outcome: normal, test outcome: survived
+[job-id] 90800a4f0cc44c26bd3dd71932825c6a
+src/_pytest/_code/code.py core/AddNot 71
+worker outcome: normal, test outcome: survived
+[job-id] ba3b1977399f48ab81d6aa2585f40913
+src/_pytest/_code/code.py core/AddNot 72
+worker outcome: normal, test outcome: survived
+[job-id] 65277fcbf1e640b387b94c363e91b4d9
+src/_pytest/_code/code.py core/AddNot 73
+worker outcome: normal, test outcome: survived
+[job-id] 84e9a4f6fb684852800f3c359908bfcf
+src/_pytest/_code/code.py core/AddNot 74
+worker outcome: normal, test outcome: survived
+[job-id] 2f143ae749b9448e81da3ec41e6b5710
+src/_pytest/_code/code.py core/AddNot 75
+worker outcome: normal, test outcome: survived
+[job-id] abcb7925c8c34a6184606ebb0a999479
+src/_pytest/_code/code.py core/AddNot 76
+worker outcome: normal, test outcome: survived
+[job-id] ae0e0a087e004639805d73758cc1fe3f
+src/_pytest/_code/code.py core/AddNot 77
+worker outcome: normal, test outcome: survived
+[job-id] be329cd0c0af46b0b05466ee34374f98
+src/_pytest/_code/code.py core/AddNot 78
+worker outcome: normal, test outcome: survived
+[job-id] d2d4a430c2f54240b7c40a6fb657ab52
+src/_pytest/_code/code.py core/AddNot 79
+worker outcome: normal, test outcome: survived
+[job-id] 3738336fdaa34b9e9729fad8a66fda20
+src/_pytest/_code/code.py core/AddNot 80
+worker outcome: normal, test outcome: survived
+[job-id] daacc2d9a19744c3be37f1575e36b7cb
+src/_pytest/_code/code.py core/AddNot 81
+worker outcome: normal, test outcome: survived
+[job-id] 8218a5d2a919414cbfc7a2255847eea5
+src/_pytest/_code/code.py core/AddNot 82
+worker outcome: normal, test outcome: survived
+[job-id] ec0a916425064f8d85246f389f7e648f
+src/_pytest/_code/code.py core/AddNot 83
+worker outcome: normal, test outcome: survived
+[job-id] 4ec872a22d7c4716bb20cade1cbe1e2c
+src/_pytest/_code/code.py core/AddNot 84
+worker outcome: normal, test outcome: survived
+[job-id] b4659a9fb4d945b4b18c2d3dc7014eaf
+src/_pytest/_code/code.py core/AddNot 85
+worker outcome: normal, test outcome: survived
+[job-id] 81fe95a8b8d745fda713642c10217c4f
+src/_pytest/_code/code.py core/AddNot 86
+worker outcome: normal, test outcome: survived
+[job-id] be04415bc03f4b1081ccc30457717159
+src/_pytest/_code/code.py core/AddNot 87
+worker outcome: normal, test outcome: survived
+[job-id] 4733d7517f104409bb899ebfefec959f
+src/_pytest/_code/code.py core/AddNot 88
+worker outcome: normal, test outcome: survived
+[job-id] 6d92d327d6e94752b2771437c1a84314
+src/_pytest/_code/code.py core/AddNot 89
+worker outcome: normal, test outcome: survived
+[job-id] ade600a853de42e2adbf5627e56e49d0
+src/_pytest/_code/code.py core/AddNot 90
+worker outcome: normal, test outcome: survived
+[job-id] 4e1040afae904589add86fc4608e8828
+src/_pytest/_code/code.py core/AddNot 91
+worker outcome: normal, test outcome: survived
+[job-id] b85dfff0bfb54615b807d7e5bde31b5a
+src/_pytest/_code/code.py core/AddNot 92
+worker outcome: normal, test outcome: killed
+[job-id] 1fca39812c8b4e5584b6b8c0d38d371f
+src/_pytest/_code/code.py core/AddNot 93
+worker outcome: normal, test outcome: survived
+[job-id] 201c24bac4d145e6b94e5058ce9d644e
+src/_pytest/_code/code.py core/AddNot 94
+worker outcome: normal, test outcome: survived
+[job-id] 8d6d913188514fba917dff0969ce5e2c
+src/_pytest/_code/code.py core/AddNot 95
+worker outcome: normal, test outcome: survived
+[job-id] 791d211575544a39817c5179b117ea4b
+src/_pytest/_code/code.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: survived
+[job-id] 9b1f177c8e0642fbbc958b4a9aee7f1d
+src/_pytest/_code/code.py core/ReplaceTrueWithFalse 1
+worker outcome: normal, test outcome: survived
+[job-id] e26d287cfc5c4d7d9b01aca20ca1fe6d
+src/_pytest/_code/code.py core/ReplaceTrueWithFalse 2
+worker outcome: normal, test outcome: survived
+[job-id] 6f1d1a6108f7458b95f3da931a8d7337
+src/_pytest/_code/code.py core/ReplaceTrueWithFalse 3
+worker outcome: normal, test outcome: survived
+[job-id] d25d89fe4fb74a7f9b4458cbe430d660
+src/_pytest/_code/code.py core/ReplaceTrueWithFalse 4
+worker outcome: normal, test outcome: survived
+[job-id] 2d66c1cbb6c74f22b0a96a07743a6501
+src/_pytest/_code/code.py core/ReplaceTrueWithFalse 5
+worker outcome: normal, test outcome: survived
+[job-id] 562e3fa54a8d400d80c54a4625670fbd
+src/_pytest/_code/code.py core/ReplaceTrueWithFalse 6
+worker outcome: normal, test outcome: survived
+[job-id] 9c529cc9cb6b47cdb7d9542c01bf4e22
+src/_pytest/_code/code.py core/ReplaceTrueWithFalse 7
+worker outcome: normal, test outcome: survived
+[job-id] 2778bf786a6749e4896105886df2cc43
+src/_pytest/_code/code.py core/ReplaceTrueWithFalse 8
+worker outcome: normal, test outcome: survived
+[job-id] cbae8c36a6fb480fa0a82c741eecc52f
+src/_pytest/_code/code.py core/ReplaceTrueWithFalse 9
+worker outcome: normal, test outcome: survived
+[job-id] 4c9931c254bd4774adcba119833d8f98
+src/_pytest/_code/code.py core/ReplaceTrueWithFalse 10
+worker outcome: normal, test outcome: survived
+[job-id] 237974e677d74c2291c84823356ef522
+src/_pytest/_code/code.py core/ReplaceTrueWithFalse 11
+worker outcome: normal, test outcome: survived
+[job-id] 26bc96b7aba24f6e815897681f4e624b
+src/_pytest/_code/code.py core/ReplaceTrueWithFalse 12
+worker outcome: normal, test outcome: survived
+[job-id] d8ab1e449218483fbd4c945bbedeb307
+src/_pytest/_code/code.py core/ReplaceTrueWithFalse 13
+worker outcome: normal, test outcome: survived
+[job-id] 25b7dca70b71449a9811fdceb52f2daf
+src/_pytest/_code/code.py core/ReplaceTrueWithFalse 14
+worker outcome: normal, test outcome: survived
+[job-id] d80bc843941649f0b1c383b04e5df26f
+src/_pytest/_code/code.py core/ReplaceTrueWithFalse 15
+worker outcome: normal, test outcome: survived
+[job-id] 483f43cd9c1e40b1aabd6a10ed68ef00
+src/_pytest/_code/code.py core/ReplaceTrueWithFalse 16
+worker outcome: normal, test outcome: survived
+[job-id] ea63729fe2ab4ccbba8f72e221413b47
+src/_pytest/_code/code.py core/ReplaceTrueWithFalse 17
+worker outcome: normal, test outcome: survived
+[job-id] d94f3b6ebf1040e6ad95a5af2f7264d5
+src/_pytest/_code/code.py core/ReplaceTrueWithFalse 18
+worker outcome: normal, test outcome: survived
+[job-id] 47bb797e12bb4e2982467a91bfe934e5
+src/_pytest/_code/code.py core/ReplaceTrueWithFalse 19
+worker outcome: normal, test outcome: survived
+[job-id] ddea90b5f3ea407e8c7fe0ecf17b80d4
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: survived
+[job-id] d287e84a7ec841c89563b1ad96a457c0
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 1
+worker outcome: normal, test outcome: survived
+[job-id] e8e474fc3658400089af3532fb653e31
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 2
+worker outcome: normal, test outcome: survived
+[job-id] f10ae6396e1d4e41a6e0a8832c953aaa
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 3
+worker outcome: normal, test outcome: survived
+[job-id] c36f0aa3158848dfafd21a64bbfbc7f4
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 4
+worker outcome: normal, test outcome: survived
+[job-id] 23b5974c77574d8fb4bd9944572b3b63
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 5
+worker outcome: normal, test outcome: survived
+[job-id] f048a0545d34427185c6530765158c5e
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 6
+worker outcome: normal, test outcome: survived
+[job-id] 736ac9bfe6fa41bf85db3796cbfb4f03
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 7
+worker outcome: normal, test outcome: survived
+[job-id] b1f344e69ff345c6aecf7c7de5b727fb
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 8
+worker outcome: normal, test outcome: survived
+[job-id] fdf5c946c75746a3bee292fa91d5bd3d
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 9
+worker outcome: normal, test outcome: survived
+[job-id] 5a92b2e3db414bf4856070ab0a814e7e
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 10
+worker outcome: normal, test outcome: survived
+[job-id] 9d326b717fa34bacb3f9d65afcca4b8d
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 11
+worker outcome: normal, test outcome: survived
+[job-id] bd35f07c386e428896399bd95f2d8bdb
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 12
+worker outcome: normal, test outcome: survived
+[job-id] 74f6061de17f4cac8325f765c7e2e222
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 13
+worker outcome: normal, test outcome: survived
+[job-id] 9ae610f3e3d54bf4bfe698b33309d723
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 14
+worker outcome: normal, test outcome: survived
+[job-id] 95144e62a5c44a05937051f29709e19f
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 15
+worker outcome: normal, test outcome: survived
+[job-id] b21b4b3839ac4923a85f45d4b2add0df
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 16
+worker outcome: normal, test outcome: survived
+[job-id] 913c1986b0b541918b49262f36d49961
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 17
+worker outcome: normal, test outcome: survived
+[job-id] 251bd57113f84647932124e9c982efd6
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 18
+worker outcome: normal, test outcome: survived
+[job-id] ac3752370bee4b288bbae590d908633b
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 19
+worker outcome: normal, test outcome: survived
+[job-id] 49c1a9d003844aafad68e85addc9c824
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 20
+worker outcome: normal, test outcome: survived
+[job-id] 0211d574370c4ec39809506a4a1a11c6
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 21
+worker outcome: normal, test outcome: survived
+[job-id] b5d04234f10546cba1b31389b6558405
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 22
+worker outcome: normal, test outcome: survived
+[job-id] 7715f004389446779059bcf96e7666be
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 23
+worker outcome: normal, test outcome: survived
+[job-id] 69372c0f67f446ffb91eab200eb666c7
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 24
+worker outcome: normal, test outcome: survived
+[job-id] cbc446b4cd7245f28fe676318ba6a637
+src/_pytest/_code/code.py core/ReplaceFalseWithTrue 25
+worker outcome: normal, test outcome: survived
+[job-id] ace12e748dbb4ba2a70644b21bc96a6b
+src/_pytest/_code/code.py core/ReplaceAndWithOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 3042e0297c1b443fb2c388b399ff0e14
+src/_pytest/_code/code.py core/ReplaceAndWithOr 1
+worker outcome: normal, test outcome: survived
+[job-id] c34d5e9a0e0a4c048ac2ea2b405099a5
+src/_pytest/_code/code.py core/ReplaceAndWithOr 2
+worker outcome: normal, test outcome: survived
+[job-id] 6211aec9777048bd89bdf8a3a8a296d3
+src/_pytest/_code/code.py core/ReplaceAndWithOr 3
+worker outcome: normal, test outcome: survived
+[job-id] 3b2db828683e434c836c3e25d9733f9d
+src/_pytest/_code/code.py core/ReplaceAndWithOr 4
+worker outcome: normal, test outcome: survived
+[job-id] 2df47d7c87ea422f851db7a7c72a5beb
+src/_pytest/_code/code.py core/ReplaceAndWithOr 5
+worker outcome: normal, test outcome: survived
+[job-id] df2db53152d34a4fa8e09bbc45adb043
+src/_pytest/_code/code.py core/ReplaceAndWithOr 6
+worker outcome: normal, test outcome: survived
+[job-id] c001460cb542452288d796f3010676d3
+src/_pytest/_code/code.py core/ReplaceAndWithOr 7
+worker outcome: normal, test outcome: survived
+[job-id] 2b3234150a5b499a9220230b9d63c200
+src/_pytest/_code/code.py core/ReplaceAndWithOr 8
+worker outcome: normal, test outcome: survived
+[job-id] bd5c8c310a16476ebe6faae6ba2b5407
+src/_pytest/_code/code.py core/ReplaceAndWithOr 9
+worker outcome: normal, test outcome: survived
+[job-id] 44980d808a8f47c282cbcf8b9d6558ab
+src/_pytest/_code/code.py core/ReplaceAndWithOr 10
+worker outcome: normal, test outcome: survived
+[job-id] 3c49fbeed85f4a1f8580dcca1233c228
+src/_pytest/_code/code.py core/ReplaceAndWithOr 11
+worker outcome: normal, test outcome: survived
+[job-id] 029e8ca8e9834f93a1a2bf338e3fa4b3
+src/_pytest/_code/code.py core/ReplaceAndWithOr 12
+worker outcome: normal, test outcome: survived
+[job-id] c996ef8a64a3496e810c48b466079cbe
+src/_pytest/_code/code.py core/ReplaceAndWithOr 13
+worker outcome: normal, test outcome: survived
+[job-id] 31e557d589024362a73cb5c13611fba3
+src/_pytest/_code/code.py core/ReplaceAndWithOr 14
+worker outcome: normal, test outcome: survived
+[job-id] 169d98a65bae48e29e8b8c77a8fcd4ef
+src/_pytest/_code/code.py core/ReplaceAndWithOr 15
+worker outcome: normal, test outcome: survived
+[job-id] 0c72985b28cd49019cfa545a50b058c2
+src/_pytest/_code/code.py core/ReplaceAndWithOr 16
+worker outcome: normal, test outcome: survived
+[job-id] dc559958b0c84bf5be4816b9aa4a06a9
+src/_pytest/_code/code.py core/ReplaceOrWithAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 29ca4e2b384041059bcd3c2946eec7f5
+src/_pytest/_code/code.py core/ReplaceOrWithAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] d7724d4d993f4443b857770b39832e5e
+src/_pytest/_code/code.py core/ReplaceOrWithAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] 05ffe9b19579402b8498aded63fb06bd
+src/_pytest/_code/code.py core/ReplaceOrWithAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] 098476cb1bb3468096ae1c13fc51bbf2
+src/_pytest/_code/code.py core/ReplaceOrWithAnd 4
+worker outcome: normal, test outcome: survived
+[job-id] 32ab1b04b57d460a813a0210d5cf6a52
+src/_pytest/_code/code.py core/ReplaceOrWithAnd 5
+worker outcome: normal, test outcome: survived
+[job-id] 8b14fdb2135b48a3a04467642e7534d4
+src/_pytest/_code/code.py core/ReplaceOrWithAnd 6
+worker outcome: normal, test outcome: survived
+[job-id] fdc1440a3a904dc592e79300dceba25f
+src/_pytest/_code/code.py core/ReplaceOrWithAnd 7
+worker outcome: normal, test outcome: survived
+[job-id] f6d3750a7cbf44609aae0209e9fbd322
+src/_pytest/_code/code.py core/ReplaceOrWithAnd 8
+worker outcome: normal, test outcome: survived
+[job-id] 0ab123579d874c5db3e6bfaf611894e5
+src/_pytest/_code/code.py core/ReplaceOrWithAnd 9
+worker outcome: normal, test outcome: survived
+[job-id] 953e4335446943a28878e910d124709e
+src/_pytest/_code/code.py core/ReplaceOrWithAnd 10
+worker outcome: normal, test outcome: survived
+[job-id] 49df65cc760c461b8551634b785ff7af
+src/_pytest/_code/code.py core/ExceptionReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] 6211edf08cb14d31b1a30e70998e2eb1
+src/_pytest/_code/code.py core/ExceptionReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] 4cbdceef6e654fd898ef2d9597051993
+src/_pytest/_code/code.py core/ExceptionReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] 7d5717a2a0d04aa198f508a9c0bd12ef
+src/_pytest/_code/code.py core/ExceptionReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] 525a2d7748fc4d7d81272ce8095b48f9
+src/_pytest/_code/code.py core/ExceptionReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] fdd629eeaecf47fcb7e33106753fd0f7
+src/_pytest/_code/code.py core/ExceptionReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] f8d68f1856e24c0d93e5c9d6875f0591
+src/_pytest/_code/code.py core/ExceptionReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] 27f165cb26ac43cda193a62c99aff5a0
+src/_pytest/_code/code.py core/ExceptionReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] 9aeb09427f524fd8913b1d18de5c283a
+src/_pytest/_code/code.py core/ExceptionReplacer 8
+worker outcome: normal, test outcome: survived
+[job-id] 7470c6cb681f4a6485ece5f7d507c63d
+src/_pytest/_code/code.py core/ExceptionReplacer 9
+worker outcome: normal, test outcome: survived
+[job-id] 74aad1dc86774ac7afa218eb83f2f9ad
+src/_pytest/_code/code.py core/ExceptionReplacer 10
+worker outcome: normal, test outcome: survived
+[job-id] e9b8a073f25144cca6576c14a65be022
+src/_pytest/_code/code.py core/ExceptionReplacer 11
+worker outcome: normal, test outcome: survived
+[job-id] a2f3e08e778149589537567844219c47
+src/_pytest/_code/code.py core/ExceptionReplacer 12
+worker outcome: normal, test outcome: survived
+[job-id] 5281f70b19e44d339cca68bcda709c90
+src/_pytest/_code/code.py core/ExceptionReplacer 13
+worker outcome: normal, test outcome: survived
+[job-id] 828c50794af74d24bbb475f45b0354cb
+src/_pytest/_code/code.py core/NumberReplacer 0
+worker outcome: normal, test outcome: killed
+[job-id] 7523f20c2bdb4a5ab3b6489c1f6d5958
+src/_pytest/_code/code.py core/NumberReplacer 1
+worker outcome: normal, test outcome: killed
+[job-id] 02a6f1d9a18a4ea0a7b2aa84c0d82545
+src/_pytest/_code/code.py core/NumberReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] 5f88d610545d4aa285d3288b0cedc11a
+src/_pytest/_code/code.py core/NumberReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] 25bac61c0c334452bd0dd16923739086
+src/_pytest/_code/code.py core/NumberReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] ed719aa50b0b4f518c9aa544f0c08c29
+src/_pytest/_code/code.py core/NumberReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] 39a19df4c1d84e79bb6d33c23b8fe15a
+src/_pytest/_code/code.py core/NumberReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] 80c500c78884461ba62f3eaafd577e81
+src/_pytest/_code/code.py core/NumberReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] a609035625d1478e90a714d2ea2b420a
+src/_pytest/_code/code.py core/NumberReplacer 8
+worker outcome: normal, test outcome: survived
+[job-id] 48836275f9fc4fc085663f53cb8a0dfc
+src/_pytest/_code/code.py core/NumberReplacer 9
+worker outcome: normal, test outcome: survived
+[job-id] 9b5d8a1751634653a45ba61a043b86dd
+src/_pytest/_code/code.py core/NumberReplacer 10
+worker outcome: normal, test outcome: survived
+[job-id] d18504bccc0044878a396bc931bc6d30
+src/_pytest/_code/code.py core/NumberReplacer 11
+worker outcome: normal, test outcome: survived
+[job-id] bf283c96928d4a589a6a95b339271d72
+src/_pytest/_code/code.py core/NumberReplacer 12
+worker outcome: normal, test outcome: survived
+[job-id] 922ff3c7626a4fb094ca5e1413cd74e9
+src/_pytest/_code/code.py core/NumberReplacer 13
+worker outcome: normal, test outcome: survived
+[job-id] 9acc7246a726496f8cd2d3bb9ce125dd
+src/_pytest/_code/code.py core/NumberReplacer 14
+worker outcome: normal, test outcome: survived
+[job-id] de41a49cb0004ff6886f23b6821bebfa
+src/_pytest/_code/code.py core/NumberReplacer 15
+worker outcome: normal, test outcome: survived
+[job-id] 58487866905f4d128f8fd6200a7c6d32
+src/_pytest/_code/code.py core/NumberReplacer 16
+worker outcome: normal, test outcome: survived
+[job-id] 145d8191c2ae4aa38fbf36d494add44e
+src/_pytest/_code/code.py core/NumberReplacer 17
+worker outcome: normal, test outcome: survived
+[job-id] b368f5b31b3d468c9fd5dc0ff9a0e903
+src/_pytest/_code/code.py core/NumberReplacer 18
+worker outcome: normal, test outcome: survived
+[job-id] b7c952e751ba4fc2b65521756e49defa
+src/_pytest/_code/code.py core/NumberReplacer 19
+worker outcome: normal, test outcome: survived
+[job-id] 86ea8c6e259341a7872bdb340a6790cb
+src/_pytest/_code/code.py core/NumberReplacer 20
+worker outcome: normal, test outcome: survived
+[job-id] a90604ae123647cd8a8b253623709986
+src/_pytest/_code/code.py core/NumberReplacer 21
+worker outcome: normal, test outcome: survived
+[job-id] 6fd956700c1f4495acbe0577705f2a7c
+src/_pytest/_code/code.py core/NumberReplacer 22
+worker outcome: normal, test outcome: survived
+[job-id] 6364d1f7bac641c3bf733d3e1ccd1b12
+src/_pytest/_code/code.py core/NumberReplacer 23
+worker outcome: normal, test outcome: survived
+[job-id] 8997aecdc6724bfca3848eedeedcd59b
+src/_pytest/_code/code.py core/NumberReplacer 24
+worker outcome: normal, test outcome: survived
+[job-id] 2075e00a5b3f49f289336e6c5ebe2ba8
+src/_pytest/_code/code.py core/NumberReplacer 25
+worker outcome: normal, test outcome: survived
+[job-id] 297857ce5e5245299b2c2dceaf2b8f56
+src/_pytest/_code/code.py core/NumberReplacer 26
+worker outcome: normal, test outcome: survived
+[job-id] c36628e9ce074f9ba9cd89a01829eead
+src/_pytest/_code/code.py core/NumberReplacer 27
+worker outcome: normal, test outcome: survived
+[job-id] c89f55c868a44ba4a0320e00ead203f7
+src/_pytest/_code/code.py core/NumberReplacer 28
+worker outcome: normal, test outcome: survived
+[job-id] d6d6595f0fb8429e91d6f1a67a75d9fe
+src/_pytest/_code/code.py core/NumberReplacer 29
+worker outcome: normal, test outcome: survived
+[job-id] e526e257fc5e48f18dccb5160630371b
+src/_pytest/_code/code.py core/NumberReplacer 30
+worker outcome: normal, test outcome: survived
+[job-id] 623e551fe50b4828a33b4883c0dfa40e
+src/_pytest/_code/code.py core/NumberReplacer 31
+worker outcome: normal, test outcome: survived
+[job-id] 55429ef19ead462d93523f9868a4cf4c
+src/_pytest/_code/code.py core/NumberReplacer 32
+worker outcome: normal, test outcome: survived
+[job-id] 8b557397afbd4d8c91e194181c240679
+src/_pytest/_code/code.py core/NumberReplacer 33
+worker outcome: normal, test outcome: survived
+[job-id] d0255a087d8e46268c9060541365bb75
+src/_pytest/_code/code.py core/NumberReplacer 34
+worker outcome: normal, test outcome: survived
+[job-id] 596a90e0acba45c4919e19b8843c497a
+src/_pytest/_code/code.py core/NumberReplacer 35
+worker outcome: normal, test outcome: survived
+[job-id] 4fbb95a49f4343c1b100537f14a132cc
+src/_pytest/_code/code.py core/NumberReplacer 36
+worker outcome: normal, test outcome: survived
+[job-id] 58e73b190d984385afd487de47742421
+src/_pytest/_code/code.py core/NumberReplacer 37
+worker outcome: normal, test outcome: survived
+[job-id] 3dad6c9782774b5793cc27ac9e8850a0
+src/_pytest/_code/code.py core/NumberReplacer 38
+worker outcome: normal, test outcome: survived
+[job-id] e16c43589c344f0dbccb94248d069bea
+src/_pytest/_code/code.py core/NumberReplacer 39
+worker outcome: normal, test outcome: survived
+[job-id] 6f08d1f95ae442d6bfb9d6c1b007008e
+src/_pytest/_code/code.py core/NumberReplacer 40
+worker outcome: normal, test outcome: survived
+[job-id] ac23987a685c436ca80f7bb6a1098834
+src/_pytest/_code/code.py core/NumberReplacer 41
+worker outcome: normal, test outcome: survived
+[job-id] b2abd9578454420aa4d094e9334e7134
+src/_pytest/_code/code.py core/NumberReplacer 42
+worker outcome: normal, test outcome: survived
+[job-id] 7f4d8506e7e54e10bf6e542bf7174cbd
+src/_pytest/_code/code.py core/NumberReplacer 43
+worker outcome: normal, test outcome: survived
+[job-id] c2bd57c201e94085a98ec34dfc75242a
+src/_pytest/_code/code.py core/NumberReplacer 44
+worker outcome: normal, test outcome: survived
+[job-id] 6de32e2200b84d1cb58ca64d853d770a
+src/_pytest/_code/code.py core/NumberReplacer 45
+worker outcome: normal, test outcome: survived
+[job-id] 399951e4a4174243a86b63ed508d474f
+src/_pytest/_code/code.py core/NumberReplacer 46
+worker outcome: normal, test outcome: survived
+[job-id] 79c7c4f4747c4fd39fcb1d84fdedd3ca
+src/_pytest/_code/code.py core/NumberReplacer 47
+worker outcome: normal, test outcome: survived
+[job-id] 8718db13b51e46cc83b07bde3b21a03a
+src/_pytest/_code/code.py core/NumberReplacer 48
+worker outcome: normal, test outcome: survived
+[job-id] 13e6be49df2f45b7a18fc2bbc799dcf2
+src/_pytest/_code/code.py core/NumberReplacer 49
+worker outcome: normal, test outcome: survived
+[job-id] 78f7f862caab4ed5b466d5dd23fe7ad9
+src/_pytest/_code/code.py core/NumberReplacer 50
+worker outcome: normal, test outcome: survived
+[job-id] 24dfe8ecd172472d876d816151f9565a
+src/_pytest/_code/code.py core/NumberReplacer 51
+worker outcome: normal, test outcome: survived
+[job-id] 1fe12d6ea7464dd5b79af8de0c9037e4
+src/_pytest/_code/code.py core/NumberReplacer 52
+worker outcome: normal, test outcome: survived
+[job-id] 266f69a59c954cb69e63345d32c9e05f
+src/_pytest/_code/code.py core/NumberReplacer 53
+worker outcome: normal, test outcome: survived
+[job-id] 9771566191234b879cc888a7e852d8c2
+src/_pytest/_code/code.py core/NumberReplacer 54
+worker outcome: normal, test outcome: survived
+[job-id] 402d0cb9354647cf9807407e1a388f94
+src/_pytest/_code/code.py core/NumberReplacer 55
+worker outcome: normal, test outcome: survived
+[job-id] 235779dc780048da8f673ff9d867d119
+src/_pytest/_code/code.py core/NumberReplacer 56
+worker outcome: normal, test outcome: survived
+[job-id] 1bb65516617841d581195526b0e79829
+src/_pytest/_code/code.py core/NumberReplacer 57
+worker outcome: normal, test outcome: survived
+[job-id] 058420a170ca4dbfa4a6ebd493cc4e12
+src/_pytest/_code/code.py core/NumberReplacer 58
+worker outcome: normal, test outcome: survived
+[job-id] 635f8bb2da2e45e4abe73fcc67884f83
+src/_pytest/_code/code.py core/NumberReplacer 59
+worker outcome: normal, test outcome: survived
+[job-id] 0e49743b2bb14f8e9a0d9fad763514b0
+src/_pytest/_code/code.py core/NumberReplacer 60
+worker outcome: normal, test outcome: survived
+[job-id] 849ef488ce1445fba9218dd1a9b21dfa
+src/_pytest/_code/code.py core/NumberReplacer 61
+worker outcome: normal, test outcome: survived
+[job-id] 518506ff0c654cf1864598e8eb408108
+src/_pytest/_code/code.py core/NumberReplacer 62
+worker outcome: normal, test outcome: survived
+[job-id] d0325faceba147098de508632ddda650
+src/_pytest/_code/code.py core/NumberReplacer 63
+worker outcome: normal, test outcome: survived
+[job-id] c3b2e7639f04481c99a0b1a9a56f7461
+src/_pytest/_code/code.py core/NumberReplacer 64
+worker outcome: normal, test outcome: survived
+[job-id] 5503bc1ff53b46ee8abe247bf3b18ab4
+src/_pytest/_code/code.py core/NumberReplacer 65
+worker outcome: normal, test outcome: survived
+[job-id] 06dc66238fdb4b489c2463e006dc1604
+src/_pytest/_code/code.py core/NumberReplacer 66
+worker outcome: normal, test outcome: survived
+[job-id] 75383b8f9c2d4358906bf2d9127711a8
+src/_pytest/_code/code.py core/NumberReplacer 67
+worker outcome: normal, test outcome: survived
+[job-id] 4c285ca1cade438d9c20e9d3a7170a8a
+src/_pytest/_code/code.py core/NumberReplacer 68
+worker outcome: normal, test outcome: survived
+[job-id] 429df1e6e3954d8e9a7380f29ec04ba2
+src/_pytest/_code/code.py core/NumberReplacer 69
+worker outcome: normal, test outcome: survived
+[job-id] aa54292df1524a218b4d08cfad7124cc
+src/_pytest/_code/code.py core/NumberReplacer 70
+worker outcome: normal, test outcome: survived
+[job-id] 9836d682f51e4a5bbce5391e1819c88a
+src/_pytest/_code/code.py core/NumberReplacer 71
+worker outcome: normal, test outcome: survived
+[job-id] 0c1e64d9632b4516974e7445018e2929
+src/_pytest/_code/code.py core/NumberReplacer 72
+worker outcome: normal, test outcome: survived
+[job-id] 9105f6dfc08d464c9fff0dca0c13540d
+src/_pytest/_code/code.py core/NumberReplacer 73
+worker outcome: normal, test outcome: survived
+[job-id] bef0d1c49b6943c1819ef6bf438ea41b
+src/_pytest/_code/code.py core/NumberReplacer 74
+worker outcome: normal, test outcome: survived
+[job-id] 7536f0bd3e08424eb0c75dc0f362e30f
+src/_pytest/_code/code.py core/NumberReplacer 75
+worker outcome: normal, test outcome: survived
+[job-id] 8db64e677b0d4e79a448f0301f969939
+src/_pytest/_code/code.py core/NumberReplacer 76
+worker outcome: normal, test outcome: survived
+[job-id] a1ea7441b1564975ae6086b997819adc
+src/_pytest/_code/code.py core/NumberReplacer 77
+worker outcome: normal, test outcome: survived
+[job-id] 946215f7a6be4a418107c637f6f48ff1
+src/_pytest/_code/code.py core/NumberReplacer 78
+worker outcome: normal, test outcome: survived
+[job-id] 72dfa22e16ed46f6910e2a76e07505a2
+src/_pytest/_code/code.py core/NumberReplacer 79
+worker outcome: normal, test outcome: survived
+[job-id] d3e48dd4c1554715b9037a354b25c5f1
+src/_pytest/_code/code.py core/NumberReplacer 80
+worker outcome: normal, test outcome: survived
+[job-id] aea72e9fd4124a5fb6f1079c69834706
+src/_pytest/_code/code.py core/NumberReplacer 81
+worker outcome: normal, test outcome: survived
+[job-id] 1cd29a2e452a468db3d82f0e39c8435a
+src/_pytest/_code/code.py core/NumberReplacer 82
+worker outcome: normal, test outcome: survived
+[job-id] bdf11022198a4daabba927f9e7e1731a
+src/_pytest/_code/code.py core/NumberReplacer 83
+worker outcome: normal, test outcome: survived
+[job-id] e27d64f6cb0b44748c1d0029f5e94e52
+src/_pytest/_code/code.py core/NumberReplacer 84
+worker outcome: normal, test outcome: survived
+[job-id] 2b4dcf74737544348caf76d2ef7242d2
+src/_pytest/_code/code.py core/NumberReplacer 85
+worker outcome: normal, test outcome: survived
+[job-id] ad03f6a7bbfe4c4aa8c4552e7d595dba
+src/_pytest/_code/code.py core/NumberReplacer 86
+worker outcome: normal, test outcome: survived
+[job-id] 35c24e52b21f46698e5beca8dce13565
+src/_pytest/_code/code.py core/NumberReplacer 87
+worker outcome: normal, test outcome: survived
+[job-id] aad25c22cf0b4b889b88c7792439dd6f
+src/_pytest/_code/code.py core/NumberReplacer 88
+worker outcome: normal, test outcome: survived
+[job-id] 97b51a5d7deb4f8fa19752a9fa7205e2
+src/_pytest/_code/code.py core/NumberReplacer 89
+worker outcome: normal, test outcome: survived
+[job-id] a76132374d9746028de2cbd7a29b0048
+src/_pytest/_code/code.py core/NumberReplacer 90
+worker outcome: normal, test outcome: survived
+[job-id] bc54c47a9b674ac2871426bcdbc9f0e5
+src/_pytest/_code/code.py core/NumberReplacer 91
+worker outcome: normal, test outcome: survived
+[job-id] 34c248252b5048fd9cc05a293b3d7f59
+src/_pytest/_code/code.py core/NumberReplacer 92
+worker outcome: normal, test outcome: survived
+[job-id] def6603613bd4bb195715dffdae5b228
+src/_pytest/_code/code.py core/NumberReplacer 93
+worker outcome: normal, test outcome: survived
+[job-id] ce86b87fbbce40bebc1318f0333c2c1e
+src/_pytest/_code/code.py core/NumberReplacer 94
+worker outcome: normal, test outcome: survived
+[job-id] 3dc0cd1e73a4499889514da0256af81b
+src/_pytest/_code/code.py core/NumberReplacer 95
+worker outcome: normal, test outcome: survived
+[job-id] 5f5dfc089e36495eb675e30afd5d1ab6
+src/_pytest/_code/code.py core/NumberReplacer 96
+worker outcome: normal, test outcome: survived
+[job-id] e4fe0eda5bdb4507959060b86b0a646f
+src/_pytest/_code/code.py core/NumberReplacer 97
+worker outcome: normal, test outcome: survived
+[job-id] af124b1063034655a25f9f7d1b65b7ab
+src/_pytest/_code/code.py core/NumberReplacer 98
+worker outcome: normal, test outcome: survived
+[job-id] 89522aa439d94ec0873a22753a9b99ca
+src/_pytest/_code/code.py core/NumberReplacer 99
+worker outcome: normal, test outcome: survived
+[job-id] 04c22a54f48044f8a3ebe9b845e83219
+src/_pytest/_code/code.py core/NumberReplacer 100
+worker outcome: normal, test outcome: survived
+[job-id] fa1916017b89479d81735953e4c0f4d0
+src/_pytest/_code/code.py core/NumberReplacer 101
+worker outcome: normal, test outcome: survived
+[job-id] 19a736969f9141c0aabbec7a9e2fdecf
+src/_pytest/_code/code.py core/NumberReplacer 102
+worker outcome: normal, test outcome: survived
+[job-id] 9238f86b307d402fae298f6ff730d22e
+src/_pytest/_code/code.py core/NumberReplacer 103
+worker outcome: normal, test outcome: survived
+[job-id] 03bd1dc4ce754477894dd4e902262fd7
+src/_pytest/_code/code.py core/NumberReplacer 104
+worker outcome: normal, test outcome: survived
+[job-id] d0ce128f5eb84440ab778a405283c157
+src/_pytest/_code/code.py core/NumberReplacer 105
+worker outcome: normal, test outcome: survived
+[job-id] eccfb31fa3ac48c7870bd0adbd0526d2
+src/_pytest/_code/code.py core/NumberReplacer 106
+worker outcome: normal, test outcome: survived
+[job-id] dc0043e30b8b4233b36a0a01535e333b
+src/_pytest/_code/code.py core/NumberReplacer 107
+worker outcome: normal, test outcome: survived
+[job-id] 08882355ecab4114bad4dca28ae04e46
+src/_pytest/_code/code.py core/NumberReplacer 108
+worker outcome: normal, test outcome: survived
+[job-id] 5aa91fc1e0f84415a6ae60659ccd652f
+src/_pytest/_code/code.py core/NumberReplacer 109
+worker outcome: normal, test outcome: survived
+[job-id] 11f3884727c1471984ebd6a5a077de6e
+src/_pytest/_code/code.py core/NumberReplacer 110
+worker outcome: normal, test outcome: survived
+[job-id] 9fd27a90a8de451ab6003720675efea0
+src/_pytest/_code/code.py core/NumberReplacer 111
+worker outcome: normal, test outcome: survived
+[job-id] 94518899b9ed410fb2b370b18ed1bf0f
+src/_pytest/_code/code.py core/NumberReplacer 112
+worker outcome: normal, test outcome: survived
+[job-id] 3243d6d2b7474e1ea43aba01e5c034e1
+src/_pytest/_code/code.py core/NumberReplacer 113
+worker outcome: normal, test outcome: survived
+[job-id] c12397870ec943499ba743da44bc0091
+src/_pytest/_code/code.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: killed
+[job-id] 9b7a326e892847398832964682104007
+src/_pytest/_code/code.py core/RemoveDecorator 1
+worker outcome: normal, test outcome: survived
+[job-id] f3f5b145240a4a6a9ebcca580f98b025
+src/_pytest/_code/code.py core/RemoveDecorator 2
+worker outcome: normal, test outcome: survived
+[job-id] b2466a74c5f149fdbd8bc4df3270b451
+src/_pytest/_code/code.py core/RemoveDecorator 3
+worker outcome: normal, test outcome: survived
+[job-id] 3941f7708c4b4ce0b10545f6221b4d6f
+src/_pytest/_code/code.py core/RemoveDecorator 4
+worker outcome: normal, test outcome: survived
+[job-id] 86b935a6b34d4f17b35328a854205605
+src/_pytest/_code/code.py core/RemoveDecorator 5
+worker outcome: normal, test outcome: survived
+[job-id] 84e25fd07a714e299a7abe7316b06763
+src/_pytest/_code/code.py core/RemoveDecorator 6
+worker outcome: normal, test outcome: survived
+[job-id] 28072f80adb143809105bcd451375a3b
+src/_pytest/_code/code.py core/RemoveDecorator 7
+worker outcome: normal, test outcome: survived
+[job-id] d2c9ed0e076e4a789db98e69a7816056
+src/_pytest/_code/code.py core/RemoveDecorator 8
+worker outcome: normal, test outcome: survived
+[job-id] 348f01d360d1419e9a1f2473d12052b8
+src/_pytest/_code/code.py core/RemoveDecorator 9
+worker outcome: normal, test outcome: survived
+[job-id] 1ef70e2a8b6d4ef2bef4fc5169ae9663
+src/_pytest/_code/code.py core/RemoveDecorator 10
+worker outcome: normal, test outcome: survived
+[job-id] 13fda9b1a59743efa63b18d09a6030b1
+src/_pytest/_code/code.py core/RemoveDecorator 11
+worker outcome: normal, test outcome: survived
+[job-id] 44a7e9c693a244b6a153f5210813fa6d
+src/_pytest/_code/code.py core/RemoveDecorator 12
+worker outcome: normal, test outcome: survived
+[job-id] fb329b4401754920bc248697438f585c
+src/_pytest/_code/code.py core/RemoveDecorator 13
+worker outcome: normal, test outcome: survived
+[job-id] abbfcb86e1ff4208b032993ddb087148
+src/_pytest/_code/code.py core/RemoveDecorator 14
+worker outcome: normal, test outcome: survived
+[job-id] 4fc9bdffd7a24630afa1e575817aacd1
+src/_pytest/_code/code.py core/RemoveDecorator 15
+worker outcome: normal, test outcome: survived
+[job-id] e41f0085699e47718e3cb78f9ec850fe
+src/_pytest/_code/code.py core/RemoveDecorator 16
+worker outcome: normal, test outcome: survived
+[job-id] e1e155587fe946ee8531fc111580424d
+src/_pytest/_code/code.py core/RemoveDecorator 17
+worker outcome: normal, test outcome: survived
+[job-id] c0f2d2db2b2944d290c7774db0c07918
+src/_pytest/_code/code.py core/RemoveDecorator 18
+worker outcome: normal, test outcome: survived
+[job-id] 19d7274cae11438a9850e8f311555f20
+src/_pytest/_code/code.py core/RemoveDecorator 19
+worker outcome: normal, test outcome: killed
+[job-id] 252eb1562aa84642b0379bae5de24e02
+src/_pytest/_code/code.py core/RemoveDecorator 20
+worker outcome: normal, test outcome: survived
+[job-id] e659c0ef48774c14a9242ec04019e103
+src/_pytest/_code/code.py core/RemoveDecorator 21
+worker outcome: normal, test outcome: survived
+[job-id] b5f55b68245e49daaa13fdfed596d468
+src/_pytest/_code/code.py core/RemoveDecorator 22
+worker outcome: normal, test outcome: survived
+[job-id] ec15d0e92a85457f8f7de79536180e26
+src/_pytest/_code/code.py core/RemoveDecorator 23
+worker outcome: normal, test outcome: survived
+[job-id] 6e745f72f8904a4e979d6fd755bf9d8d
+src/_pytest/_code/code.py core/RemoveDecorator 24
+worker outcome: normal, test outcome: survived
+[job-id] 18d24dab7c684d488a26d39febe8f33c
+src/_pytest/_code/code.py core/RemoveDecorator 25
+worker outcome: normal, test outcome: survived
+[job-id] d6e6b5138ed144b18edc0553772dcae7
+src/_pytest/_code/code.py core/RemoveDecorator 26
+worker outcome: normal, test outcome: survived
+[job-id] 626bf9b0ff5245099f523f2027066a92
+src/_pytest/_code/code.py core/RemoveDecorator 27
+worker outcome: normal, test outcome: survived
+[job-id] 59782038c54a4aa1b5651d3dce02321c
+src/_pytest/_code/code.py core/RemoveDecorator 28
+worker outcome: normal, test outcome: survived
+[job-id] 4b85864547424c098b5d414cf5965cde
+src/_pytest/_code/code.py core/RemoveDecorator 29
+worker outcome: normal, test outcome: survived
+[job-id] 75751b2700b6401a905e442471e7fc51
+src/_pytest/_code/code.py core/RemoveDecorator 30
+worker outcome: normal, test outcome: survived
+[job-id] 3d72f4795fd54d8d886bd80ab7a5bb63
+src/_pytest/_code/code.py core/RemoveDecorator 31
+worker outcome: normal, test outcome: survived
+[job-id] d93e9f3d435141a786c30d11f2b59f35
+src/_pytest/_code/code.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: survived
+[job-id] 9027d5e982904638a70694d15c2e13b2
+src/_pytest/_code/code.py core/ZeroIterationForLoop 1
+worker outcome: normal, test outcome: survived
+[job-id] cb6beff3cdec4eef903ac3f42f66f200
+src/_pytest/_code/code.py core/ZeroIterationForLoop 2
+worker outcome: normal, test outcome: survived
+[job-id] 12dfb4b040c14e16a3867ef1024aba29
+src/_pytest/_code/code.py core/ZeroIterationForLoop 3
+worker outcome: normal, test outcome: survived
+[job-id] 6b4b828fd6954026a37b6238360329af
+src/_pytest/_code/code.py core/ZeroIterationForLoop 4
+worker outcome: normal, test outcome: survived
+[job-id] fce1cd25cc374c128bca4fc54fa3db0f
+src/_pytest/_code/code.py core/ZeroIterationForLoop 5
+worker outcome: normal, test outcome: survived
+[job-id] c41f6c805d434b0a812586dbe86da293
+src/_pytest/_code/code.py core/ZeroIterationForLoop 6
+worker outcome: normal, test outcome: survived
+[job-id] 79cb9ad6f2324e19b06b4f4b4fd48c2d
+src/_pytest/_code/code.py core/ZeroIterationForLoop 7
+worker outcome: normal, test outcome: survived
+[job-id] bfb3454df98341f68f98d9b0be7b3fd8
+src/_pytest/_code/code.py core/ZeroIterationForLoop 8
+worker outcome: normal, test outcome: survived
+[job-id] 8271f428a1d94346a69683b8ff88e395
+src/_pytest/_code/code.py core/ZeroIterationForLoop 9
+worker outcome: normal, test outcome: survived
+[job-id] 5c99e70bc1b54cffa819e986e18c28d9
+src/_pytest/_code/code.py core/ZeroIterationForLoop 10
+worker outcome: normal, test outcome: survived
+[job-id] c9a9fd60c10a46b1a5c8f78df3535653
+src/_pytest/_code/code.py core/ZeroIterationForLoop 11
+worker outcome: normal, test outcome: survived
+[job-id] 16eea95d170943aaa75314c3c74b2ab3
+src/_pytest/_code/code.py core/ZeroIterationForLoop 12
+worker outcome: normal, test outcome: survived
+[job-id] c45ea428998d49cbaaaea3ff3007c7d5
+src/_pytest/_code/code.py core/ZeroIterationForLoop 13
+worker outcome: normal, test outcome: survived
+[job-id] 664d862930ab4142891152abdcf16a42
+src/_pytest/_code/code.py core/ZeroIterationForLoop 14
+worker outcome: normal, test outcome: survived
+[job-id] c3fb1b7f6e384c8e8879e529f4c60aa4
+src/_pytest/_code/code.py core/ZeroIterationForLoop 15
+worker outcome: normal, test outcome: survived
+[job-id] bd69a41b3b874e679b1757a8cda3b528
+src/_pytest/_code/code.py core/ZeroIterationForLoop 16
+worker outcome: normal, test outcome: survived
+[job-id] 29b66cbfb9214785a1eea0acdeb83556
+src/_pytest/_code/code.py core/ZeroIterationForLoop 17
+worker outcome: normal, test outcome: survived
+total jobs: 1051
+complete: 1051 (100.00%)
+surviving mutants: 1033 (98.29%)
+
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] 
+MutationNum: 1051 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] 
+MutationLOG: 1.7099999999999937% 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] 
+MutationUncertainty: 0.0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Command: conda run -n pytest-dev__pytest__6.0 python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'src/_pytest/_code/code.py'
+        and ((257 <= spec.start_pos[0] <= 273))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Std. Output:
+FUNC_MUTATION_RESULT 0.0 26
+
+ 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Return Code: 0 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] 
+FunctionMutationLOG: 0.0% 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] 
+FunctionMutationNum: 26 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Test script run successful 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Removing coverage 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] Removing cache 
+[pytest-dev__pytest__6.0] [pytest-dev__pytest-7535] >>>>> Unfiltered Tests Failed 

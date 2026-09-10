@@ -1,0 +1,1921 @@
+[django__django__4.0] [django__django-14411] Task Metadata:
+	- Instance ID: django__django-14411
+	- Testbed: django__django__4.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.8.19
+ 
+[django__django__4.0] [django__django-14411] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14411] Std. Output:
+ 
+[django__django__4.0] [django__django-14411] Return Code: 0 
+[django__django__4.0] [django__django-14411] Command: git -c advice.detachedHead=false checkout fa4e963ee7e6876581b5432363603571839ba00c 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Previous HEAD position was 475cffd1d6 Fixed typo in docs/intro/reusable-apps.txt.
+HEAD is now at fa4e963ee7 Doc'd that HttpRequest.path doesn't contain a query string.
+ 
+[django__django__4.0] [django__django-14411] Return Code: 0 
+[django__django__4.0] [django__django-14411] Command: git diff > /opt/temp_django__django-14411_gold_init.patch 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14411] Std. Output:
+ 
+[django__django__4.0] [django__django-14411] Return Code: 0 
+[django__django__4.0] [django__django-14411] Command: git apply -v /opt/temp_django__django-14411_gold.patch 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Checking patch django/contrib/auth/forms.py...
+Applied patch django/contrib/auth/forms.py cleanly.
+ 
+[django__django__4.0] [django__django-14411] Return Code: 0 
+[django__django__4.0] [django__django-14411] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__4.0] [django__django-14411] Command: git diff > /opt/temp_django__django-14411_test_init.patch 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14411] Std. Output:
+ 
+[django__django__4.0] [django__django-14411] Return Code: 0 
+[django__django__4.0] [django__django-14411] Command: git restore tests/auth_tests/test_forms.py 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14411] Std. Output:
+ 
+[django__django__4.0] [django__django-14411] Return Code: 0 
+[django__django__4.0] [django__django-14411] Command: git apply -v /opt/temp_django__django-14411_test.patch 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Checking patch tests/auth_tests/test_forms.py...
+Applied patch tests/auth_tests/test_forms.py cleanly.
+ 
+[django__django__4.0] [django__django-14411] Return Code: 0 
+[django__django__4.0] [django__django-14411] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 tests.
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_customemailfield
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Creating table auth_tests_organization
+    Creating table auth_tests_customuserwithm2m
+    Creating table auth_tests_customuserwithm2mthrough
+    Creating table auth_tests_membership
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_context_no_password (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests)
+When value is empty or unusable, summary contains a single label. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14411] Return Code: 0 
+[django__django__4.0] [django__django-14411] TestsTime: 1.045470952987671 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 tests.
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_customemailfield
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Creating table auth_tests_organization
+    Creating table auth_tests_customuserwithm2m
+    Creating table auth_tests_customuserwithm2mthrough
+    Creating table auth_tests_membership
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_context_invalid_hash (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests)
+When the hash cannot be identified, an appropriate message appears. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14411] Return Code: 0 
+[django__django__4.0] [django__django-14411] TestsTime: 0.5770258903503418 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 596, in <module>
+    failures = django_tests(
+  File "./tests/runtests.py", line 332, in django_tests
+    failures = test_runner.run_tests(test_labels or get_installed())
+  File "/opt/django__django/django/test/runner.py", line 758, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 636, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 594, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 71
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+ 
+[django__django__4.0] [django__django-14411] Return Code: 1 
+[django__django__4.0] [django__django-14411] TestsTime: 0.45253753662109375 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 596, in <module>
+    failures = django_tests(
+  File "./tests/runtests.py", line 332, in django_tests
+    failures = test_runner.run_tests(test_labels or get_installed())
+  File "/opt/django__django/django/test/runner.py", line 758, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 636, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 594, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 66
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+ 
+[django__django__4.0] [django__django-14411] Return Code: 1 
+[django__django__4.0] [django__django-14411] TestsTime: 0.3072025775909424 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 tests.
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_customemailfield
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Creating table auth_tests_organization
+    Creating table auth_tests_customuserwithm2m
+    Creating table auth_tests_customuserwithm2mthrough
+    Creating table auth_tests_membership
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_normalization (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests) ... ERROR
+
+======================================================================
+ERROR: test_normalization (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 60, in test_normalization
+    field = UsernameField()
+NameError: name 'UsernameField' is not defined
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14411] Return Code: 1 
+[django__django__4.0] [django__django-14411] TestsTime: 0.5975508689880371 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 596, in <module>
+    failures = django_tests(
+  File "./tests/runtests.py", line 332, in django_tests
+    failures = test_runner.run_tests(test_labels or get_installed())
+  File "/opt/django__django/django/test/runner.py", line 758, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 636, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 594, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 68
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+ 
+[django__django__4.0] [django__django-14411] Return Code: 1 
+[django__django__4.0] [django__django-14411] TestsTime: 0.3317251205444336 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 tests.
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_customemailfield
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Creating table auth_tests_organization
+    Creating table auth_tests_customuserwithm2m
+    Creating table auth_tests_customuserwithm2mthrough
+    Creating table auth_tests_membership
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_password_mismatch_raises (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14411] Return Code: 0 
+[django__django__4.0] [django__django-14411] TestsTime: 0.5883517265319824 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Traceback (most recent call last):
+  File "./tests/runtests.py", line 596, in <module>
+    failures = django_tests(
+  File "./tests/runtests.py", line 332, in django_tests
+    failures = test_runner.run_tests(test_labels or get_installed())
+  File "/opt/django__django/django/test/runner.py", line 758, in run_tests
+    suite = self.build_suite(test_labels, extra_tests)
+  File "/opt/django__django/django/test/runner.py", line 636, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+  File "/opt/django__django/django/test/runner.py", line 594, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 71
+    
+    ^
+SyntaxError: unexpected EOF while parsing
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+ 
+[django__django__4.0] [django__django-14411] Return Code: 1 
+[django__django__4.0] [django__django-14411] TestsTime: 0.30794811248779297 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 tests.
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_customemailfield
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Creating table auth_tests_organization
+    Creating table auth_tests_customuserwithm2m
+    Creating table auth_tests_customuserwithm2mthrough
+    Creating table auth_tests_membership
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_password_help_text_is_formatted (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14411] Return Code: 0 
+[django__django__4.0] [django__django-14411] TestsTime: 0.6885392665863037 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 tests.
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_customemailfield
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Creating table auth_tests_organization
+    Creating table auth_tests_customuserwithm2m
+    Creating table auth_tests_customuserwithm2mthrough
+    Creating table auth_tests_membership
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_user_permissions_queryset_is_optimized (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14411] Return Code: 0 
+[django__django__4.0] [django__django-14411] TestsTime: 0.5168607234954834 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 tests.
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_customemailfield
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Creating table auth_tests_organization
+    Creating table auth_tests_customuserwithm2m
+    Creating table auth_tests_customuserwithm2mthrough
+    Creating table auth_tests_membership
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_max_length_and_label_are_set (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14411] Return Code: 0 
+[django__django__4.0] [django__django-14411] TestsTime: 0.6082925796508789 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 tests.
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_customemailfield
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Creating table auth_tests_organization
+    Creating table auth_tests_customuserwithm2m
+    Creating table auth_tests_customuserwithm2mthrough
+    Creating table auth_tests_membership
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_successful_authentication (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests) ... ERROR
+
+======================================================================
+ERROR: test_successful_authentication (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 61, in test_successful_authentication
+    form = AuthenticationForm(data={"username": self.user.username, "password": "s3cr3t"})
+AttributeError: 'ReadOnlyPasswordHashWidgetTests' object has no attribute 'user'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14411] Return Code: 1 
+[django__django__4.0] [django__django-14411] TestsTime: 0.7225682735443115 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 tests.
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_customemailfield
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Creating table auth_tests_organization
+    Creating table auth_tests_customuserwithm2m
+    Creating table auth_tests_customuserwithm2mthrough
+    Creating table auth_tests_membership
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_invalid_credentials (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests) ... ERROR
+
+======================================================================
+ERROR: test_invalid_credentials (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 61, in test_invalid_credentials
+    form = AuthenticationForm(data={"username": self.user.username, "password": "wrong"})
+AttributeError: 'ReadOnlyPasswordHashWidgetTests' object has no attribute 'user'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14411] Return Code: 1 
+[django__django__4.0] [django__django-14411] TestsTime: 0.6435377597808838 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 tests.
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_customemailfield
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Creating table auth_tests_organization
+    Creating table auth_tests_customuserwithm2m
+    Creating table auth_tests_customuserwithm2mthrough
+    Creating table auth_tests_membership
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_inactive_user (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests) ... ERROR
+
+======================================================================
+ERROR: test_inactive_user (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 61, in test_inactive_user
+    self.user.is_active = False
+AttributeError: 'ReadOnlyPasswordHashWidgetTests' object has no attribute 'user'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14411] Return Code: 1 
+[django__django__4.0] [django__django-14411] TestsTime: 0.615464448928833 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 tests.
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_customemailfield
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Creating table auth_tests_organization
+    Creating table auth_tests_customuserwithm2m
+    Creating table auth_tests_customuserwithm2mthrough
+    Creating table auth_tests_membership
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_get_users_filters_correctly (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests) ... ERROR
+
+======================================================================
+ERROR: test_get_users_filters_correctly (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 63, in test_get_users_filters_correctly
+    self.assertIn(self.active_user, users)
+AttributeError: 'ReadOnlyPasswordHashWidgetTests' object has no attribute 'active_user'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14411] Return Code: 1 
+[django__django__4.0] [django__django-14411] TestsTime: 0.6848726272583008 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 tests.
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_customemailfield
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Creating table auth_tests_organization
+    Creating table auth_tests_customuserwithm2m
+    Creating table auth_tests_customuserwithm2mthrough
+    Creating table auth_tests_membership
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_save_sends_email (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests) ... ERROR
+
+======================================================================
+ERROR: test_save_sends_email (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/mock.py", line 1325, in patched
+    return func(*newargs, **newkeywargs)
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 62, in test_save_sends_email
+    form = PasswordResetForm(data={"email": self.active_user.email})
+AttributeError: 'ReadOnlyPasswordHashWidgetTests' object has no attribute 'active_user'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14411] Return Code: 1 
+[django__django__4.0] [django__django-14411] TestsTime: 0.572033166885376 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 tests.
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_customemailfield
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Creating table auth_tests_organization
+    Creating table auth_tests_customuserwithm2m
+    Creating table auth_tests_customuserwithm2mthrough
+    Creating table auth_tests_membership
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_password_mismatch (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests) ... ERROR
+
+======================================================================
+ERROR: test_password_mismatch (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 61, in test_password_mismatch
+    form = SetPasswordForm(self.user, data={"new_password1": "foo", "new_password2": "bar"})
+AttributeError: 'ReadOnlyPasswordHashWidgetTests' object has no attribute 'user'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14411] Return Code: 1 
+[django__django__4.0] [django__django-14411] TestsTime: 0.634810209274292 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 tests.
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_customemailfield
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Creating table auth_tests_organization
+    Creating table auth_tests_customuserwithm2m
+    Creating table auth_tests_customuserwithm2mthrough
+    Creating table auth_tests_membership
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_successful_password_change (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests) ... ERROR
+
+======================================================================
+ERROR: test_successful_password_change (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 62, in test_successful_password_change
+    self.user,
+AttributeError: 'ReadOnlyPasswordHashWidgetTests' object has no attribute 'user'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14411] Return Code: 1 
+[django__django__4.0] [django__django-14411] TestsTime: 0.5070383548736572 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 tests.
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_customemailfield
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Creating table auth_tests_organization
+    Creating table auth_tests_customuserwithm2m
+    Creating table auth_tests_customuserwithm2mthrough
+    Creating table auth_tests_membership
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_invalid_old_password (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests) ... ERROR
+
+======================================================================
+ERROR: test_invalid_old_password (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 62, in test_invalid_old_password
+    self.user,
+AttributeError: 'ReadOnlyPasswordHashWidgetTests' object has no attribute 'user'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14411] Return Code: 1 
+[django__django__4.0] [django__django-14411] TestsTime: 0.5744683742523193 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 tests.
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_customemailfield
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Creating table auth_tests_organization
+    Creating table auth_tests_customuserwithm2m
+    Creating table auth_tests_customuserwithm2mthrough
+    Creating table auth_tests_membership
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_successful_change (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests) ... ERROR
+
+======================================================================
+ERROR: test_successful_change (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 62, in test_successful_change
+    self.user,
+AttributeError: 'ReadOnlyPasswordHashWidgetTests' object has no attribute 'user'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14411] Return Code: 1 
+[django__django__4.0] [django__django-14411] TestsTime: 0.5735673904418945 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 tests.
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_customemailfield
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Creating table auth_tests_organization
+    Creating table auth_tests_customuserwithm2m
+    Creating table auth_tests_customuserwithm2mthrough
+    Creating table auth_tests_membership
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_changed_data_property (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests) ... ERROR
+
+======================================================================
+ERROR: test_changed_data_property (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 64, in test_changed_data_property
+    self.user,
+AttributeError: 'ReadOnlyPasswordHashWidgetTests' object has no attribute 'user'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14411] Return Code: 1 
+[django__django__4.0] [django__django-14411] TestsTime: 0.4880082607269287 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 tests.
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_customemailfield
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Creating table auth_tests_organization
+    Creating table auth_tests_customuserwithm2m
+    Creating table auth_tests_customuserwithm2mthrough
+    Creating table auth_tests_membership
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_mismatch_error (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests) ... ERROR
+
+======================================================================
+ERROR: test_mismatch_error (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 62, in test_mismatch_error
+    self.user,
+AttributeError: 'ReadOnlyPasswordHashWidgetTests' object has no attribute 'user'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14411] Return Code: 1 
+[django__django__4.0] [django__django-14411] TestsTime: 0.6543424129486084 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 tests.
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_customemailfield
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Creating table auth_tests_organization
+    Creating table auth_tests_customuserwithm2m
+    Creating table auth_tests_customuserwithm2mthrough
+    Creating table auth_tests_membership
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_successful_save (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests) ... ERROR
+
+======================================================================
+ERROR: test_successful_save (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/auth_tests/test_forms.py", line 62, in test_successful_save
+    self.user,
+AttributeError: 'ReadOnlyPasswordHashWidgetTests' object has no attribute 'user'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14411] Return Code: 1 
+[django__django__4.0] [django__django-14411] TestsTime: 0.6075000762939453 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] >>>>> Tests configfull pred
+ 
+[django__django__4.0] [django__django-14411] Test Script:  coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms;
+ 
+[django__django__4.0] [django__django-14411] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_forms 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 6 tests.
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table auth_tests_customuser
+    Creating table auth_tests_customuserwithoutisactivefield
+    Creating table auth_tests_extensionuser
+    Creating table auth_tests_custompermissionsuser
+    Creating table auth_tests_customusernonuniqueusername
+    Creating table auth_tests_isactivetestuser1
+    Creating table auth_tests_minimaluser
+    Creating table auth_tests_nopassworduser
+    Creating table auth_tests_concrete
+    Creating table auth_tests_uuiduser
+    Creating table auth_tests_customemailfield
+    Creating table auth_tests_email
+    Creating table auth_tests_customuserwithfk
+    Creating table auth_tests_integerusernameuser
+    Creating table auth_tests_userwithdisabledlastloginfield
+    Creating table auth_tests_organization
+    Creating table auth_tests_customuserwithm2m
+    Creating table auth_tests_customuserwithm2mthrough
+    Creating table auth_tests_membership
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+test_max_length_and_label_are_set (auth_tests.test_forms.AuthenticationFormTests) ... ok
+test_context_invalid_hash (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests)
+When the hash cannot be identified, an appropriate message appears. ... ok
+test_context_no_password (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests)
+When value is empty or unusable, summary contains a single label. ... ok
+test_password_help_text_is_formatted (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests) ... ok
+test_password_mismatch_raises (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests) ... ok
+test_user_permissions_queryset_is_optimized (auth_tests.test_forms.ReadOnlyPasswordHashWidgetTests) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.046s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__4.0] [django__django-14411] Return Code: 0 
+[django__django__4.0] [django__django-14411] TestsTime: 0.5848956108093262 
+[django__django__4.0] [django__django-14411] 
+>>>>> All Tests Passed
+ 
+[django__django__4.0] [django__django-14411] Current Working Directory: /opt/django__django 
+[django__django__4.0] [django__django-14411] Command: coverage json -o coverage.json 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14411] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__4.0] [django__django-14411] Return Code: 0 
+[django__django__4.0] [django__django-14411] 
+CoverageLOG: 41.54589371980676%
+ 
+[django__django__4.0] [django__django-14411] 
+FunctionCoverageLOG: 50.0%
+ 
+[django__django__4.0] [django__django-14411] Running mutation testing 
+[django__django__4.0] [django__django-14411] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14411] Std. Output:
+ 
+[django__django__4.0] [django__django-14411] Return Code: 0 
+[django__django__4.0] [django__django-14411] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__4.0] [django__django-14411] Std. Output:
+ 
+[django__django__4.0] [django__django-14411] Return Code: 0 
+[django__django__4.0] [django__django-14411] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14411] Std. Output:
+67.61 67.61 67.61
+ 
+[django__django__4.0] [django__django-14411] Return Code: 0 
+[django__django__4.0] [django__django-14411] Command: cr-report mutation.sqlite 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14411] Std. Output:
+[job-id] a986cc8b1209422988493bc74803c1df
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] aa2ea627f4a54c079e15a91ef4c32c89
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] cfbc9a0095f74c72bb2603c1f7c33176
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] 2722f84f722042d0b626dd4da1cb14ae
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 14d165f9ee374df18a69b96547069372
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 1868dd85d32d4c6a80f28b957910fcff
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] d788ce268f2841718b86e6385eb899a3
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 1e0282fecbb54ab4816f7d243b4e105c
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] cf4e36233019451c8ab6302a7688d3ff
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 21a875ed2802404e9ceb3890cd700ad4
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 98a1a2dba6844e1ca38d31102e6a3271
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] 4343403171134f868f3ab1d63a508cff
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] bfff5eb64aac4631a2055c65db502016
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_Add 1
+worker outcome: normal, test outcome: killed
+[job-id] 9ec9cb4822fe48d4ae76a6118ffc085b
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_Add 2
+worker outcome: normal, test outcome: killed
+[job-id] 483ee9bd310b45eab8e2490c3d4b93e7
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 226fc8e031944e1ebc2ae4b02c605091
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_Sub 1
+worker outcome: normal, test outcome: killed
+[job-id] d8527f295b3946fe9dd6b9779bb31e61
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_Sub 2
+worker outcome: normal, test outcome: killed
+[job-id] 24cb667b82c24d48a7ea2454d20b2478
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] 9dddcd96bee149209e7e77cd522d3553
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_Mul 1
+worker outcome: normal, test outcome: killed
+[job-id] 7cce10187c7442639dcbb5477590b3e8
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_Mul 2
+worker outcome: normal, test outcome: killed
+[job-id] 95c21215b24d4cbdb5609d25bbf3db08
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] d45c2840e5f14bee99e4112e7b8fe614
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_Div 1
+worker outcome: normal, test outcome: killed
+[job-id] cfc87362023a47319af9a2465ff4b7d4
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_Div 2
+worker outcome: normal, test outcome: killed
+[job-id] 9a2fddb03118448796a114d51b04c1e9
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] 245cab47eab846d1a0ff2b87a74917c3
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_FloorDiv 1
+worker outcome: normal, test outcome: killed
+[job-id] dc77ca697aad40babd76b5e5abe90f29
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_FloorDiv 2
+worker outcome: normal, test outcome: killed
+[job-id] 1d433dc818ff45a5904145d04a059c64
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_Mod 0
+worker outcome: normal, test outcome: killed
+[job-id] 9c907df914464c8eb8829c17fff6b465
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_Mod 1
+worker outcome: normal, test outcome: killed
+[job-id] 9b0aa1ec34be485087731934338e5241
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_Mod 2
+worker outcome: normal, test outcome: killed
+[job-id] eadfe4ed62cf44acb7f7b008c605ef37
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] e06777e3d4124b489c2be08013840cd0
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_RShift 1
+worker outcome: normal, test outcome: killed
+[job-id] b114f3b288cf48049ca068d6551dec0e
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_RShift 2
+worker outcome: normal, test outcome: killed
+[job-id] ac2fe959d0234d048420800797c2198b
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] aa267257a9d44b46b9eadad5cd8eb918
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_LShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 361de08c5a314babb11c15732dbcf219
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_LShift 2
+worker outcome: normal, test outcome: killed
+[job-id] 224df4452bd64aab99ec71a760ff33b3
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 9f27874ff26947abb9a54e40e2f81aff
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_BitOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 76ad4964e10c4ed49d12139789172915
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_BitOr 2
+worker outcome: normal, test outcome: killed
+[job-id] dac9edcb6ac449f5b6663924bb544d48
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 521acc1b7ced4a28bc8c574c21b4b896
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_BitAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] c5c26044d58745b98cf9c2bc6d1064c7
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_BitAnd 2
+worker outcome: normal, test outcome: killed
+[job-id] ac76af4de2fa47b29d323434f2d41010
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] 3c2b21dcb5434320ae9d0f07a58de9d9
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_BitXor 1
+worker outcome: normal, test outcome: killed
+[job-id] e05f69ff5446421381940c70d25fa907
+django/contrib/auth/forms.py core/ReplaceBinaryOperator_Pow_BitXor 2
+worker outcome: normal, test outcome: killed
+[job-id] 9346ca42accc455dabed6a890f8fe34c
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 631d132d8be541f0bcf220b0fbe7efb4
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 77b72ae8f2d647e39694ab0e6136a904
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 014b6ab132664ea99684fc614da7e77a
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 98cef311a252408d9f0b772eb1fd8835
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] b76538405cb94c1793502fe75789e4cb
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_Eq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 20301b34ea7c4b1b825eb651fb27164a
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_Eq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] f2e2046ef6474728b5437711522a72f6
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_Eq 0
+worker outcome: normal, test outcome: killed
+[job-id] f31985105db54b16b289025411e7ed2d
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_Eq 1
+worker outcome: normal, test outcome: survived
+[job-id] 4ee590f8117742aabf3e05620badc8a2
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_Eq 2
+worker outcome: normal, test outcome: survived
+[job-id] dbc3f120541649b0abe4e80dd2af314c
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_Lt 0
+worker outcome: normal, test outcome: killed
+[job-id] 294c6da962804101b2197348d5a799a9
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] 8c62cd7d23bc42f49ace81553390b12f
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_Lt 2
+worker outcome: normal, test outcome: survived
+[job-id] d0fc3545595e4243b6101f5ae35ca676
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_LtE 0
+worker outcome: normal, test outcome: killed
+[job-id] 04fbb5e1d8a54f98a056209ce891819f
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] ea1fb60517ae433abac026a8d4689a28
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_LtE 2
+worker outcome: normal, test outcome: survived
+[job-id] e087f6acc9bc495dba48902724a5e016
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 0e59ae5279fa48b4819b03e42285ab88
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] f2bd9b60bc114295ae7df4a6c1d864b9
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_Gt 2
+worker outcome: normal, test outcome: survived
+[job-id] 4e4604f98bc045fdadfc1f0a2019c74a
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 75594a06a0394f809cd4ecc84bd435bd
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] d8f5af58e644444b890d50d3c4cc26b6
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_GtE 2
+worker outcome: normal, test outcome: survived
+[job-id] dc86903cc81d4f95975f004a12ace06c
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] f9833e327b854079a2963fb9f1f3f2b8
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 5b574035cb364e6fa01fc6e67e2170d2
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] 50f71fcdc13346c5b94c98727e6fcc50
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] b9057727fcf04970a92dd2c65fa1bb08
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 65c90f35e14e41daa33ed2f49d093e44
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_NotEq_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] a2539153173b409aa6f5e0288bb06448
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: killed
+[job-id] 10b5239b686e41b989ce3328e2fd08f1
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_Is_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 4aca1d399cff482f83902bfecbed9c75
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 11600001c5434bd6b5bf001dce725fa9
+django/contrib/auth/forms.py core/ReplaceComparisonOperator_IsNot_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 6d7a95859ba1485ab5384542fe12e77f
+django/contrib/auth/forms.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: killed
+[job-id] fcee15a6bf224b7989e0629e17fc23b7
+django/contrib/auth/forms.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] 49aac2f897fe4e89bc8c9a26ead61fc4
+django/contrib/auth/forms.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: normal, test outcome: survived
+[job-id] 1997683271c34a4d9e2fc57e414aef49
+django/contrib/auth/forms.py core/ReplaceUnaryOperator_Delete_Not 3
+worker outcome: normal, test outcome: survived
+[job-id] d66fd9bbfa744f1a86b0eed8d444ef02
+django/contrib/auth/forms.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] ba38b9be49c44f1a966a5b72aa15e5b3
+django/contrib/auth/forms.py core/AddNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 51f706964a684737abd1e6ba0667c5bb
+django/contrib/auth/forms.py core/AddNot 2
+worker outcome: normal, test outcome: killed
+[job-id] e368126f10d14acbace0d457ee62b932
+django/contrib/auth/forms.py core/AddNot 3
+worker outcome: normal, test outcome: survived
+[job-id] 4bbf1eacd4d84a89877a1c8d84a0571e
+django/contrib/auth/forms.py core/AddNot 4
+worker outcome: normal, test outcome: survived
+[job-id] fd1290a4566c451b849761f7c464338c
+django/contrib/auth/forms.py core/AddNot 5
+worker outcome: normal, test outcome: killed
+[job-id] 052506d3241542db86aa28d4a535a0c9
+django/contrib/auth/forms.py core/AddNot 6
+worker outcome: normal, test outcome: survived
+[job-id] c3e0cbcc58f546e9b190971b86568033
+django/contrib/auth/forms.py core/AddNot 7
+worker outcome: normal, test outcome: killed
+[job-id] 2c5d8738fd474201913fd8e32fcc61a9
+django/contrib/auth/forms.py core/AddNot 8
+worker outcome: normal, test outcome: survived
+[job-id] 1f83a238ff974c29af0ed071183e73c4
+django/contrib/auth/forms.py core/AddNot 9
+worker outcome: normal, test outcome: survived
+[job-id] 94740838e1a44b8eab52ffeb661b7c15
+django/contrib/auth/forms.py core/AddNot 10
+worker outcome: normal, test outcome: survived
+[job-id] e6fa99b9de77422486021364d780e0d5
+django/contrib/auth/forms.py core/AddNot 11
+worker outcome: normal, test outcome: survived
+[job-id] fec13d2f62214f3992be2a01b1fa66f9
+django/contrib/auth/forms.py core/AddNot 12
+worker outcome: normal, test outcome: survived
+[job-id] 2dacef515904499597763c97d3699246
+django/contrib/auth/forms.py core/AddNot 13
+worker outcome: normal, test outcome: survived
+[job-id] d2fa268b88e345518500478d30dda27d
+django/contrib/auth/forms.py core/AddNot 14
+worker outcome: normal, test outcome: survived
+[job-id] b60fed88c9e74e8283f549fdfd77f9fb
+django/contrib/auth/forms.py core/AddNot 15
+worker outcome: normal, test outcome: survived
+[job-id] dbfbdacd155946aca36600183746fbc1
+django/contrib/auth/forms.py core/AddNot 16
+worker outcome: normal, test outcome: survived
+[job-id] f760afda1cf249fa8f25c6a0394921db
+django/contrib/auth/forms.py core/AddNot 17
+worker outcome: normal, test outcome: survived
+[job-id] 1cdb76b200e7408e837ddb608ba7b898
+django/contrib/auth/forms.py core/AddNot 18
+worker outcome: normal, test outcome: survived
+[job-id] 91230e0229af4862a521fbf8ead36beb
+django/contrib/auth/forms.py core/AddNot 19
+worker outcome: normal, test outcome: survived
+[job-id] 0b2203aad4054ec8afd85fd6d29eb6f1
+django/contrib/auth/forms.py core/AddNot 20
+worker outcome: normal, test outcome: survived
+[job-id] bfde832174b14f0989babefd28a09064
+django/contrib/auth/forms.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: survived
+[job-id] a6519efa97554055a7331221af83eade
+django/contrib/auth/forms.py core/ReplaceTrueWithFalse 1
+worker outcome: normal, test outcome: survived
+[job-id] cfcfd2199444415e818759a234796729
+django/contrib/auth/forms.py core/ReplaceTrueWithFalse 2
+worker outcome: normal, test outcome: survived
+[job-id] b0c1d3b0023349ea9c60d3ce0071b905
+django/contrib/auth/forms.py core/ReplaceTrueWithFalse 3
+worker outcome: normal, test outcome: survived
+[job-id] 33eb9b2c9d4c44509e8082678e6ef15f
+django/contrib/auth/forms.py core/ReplaceTrueWithFalse 4
+worker outcome: normal, test outcome: survived
+[job-id] 7c5ceaacd82944acb724d35b59090be5
+django/contrib/auth/forms.py core/ReplaceTrueWithFalse 5
+worker outcome: normal, test outcome: survived
+[job-id] 4f6edbfe75cb4905ac3cd018df1962ec
+django/contrib/auth/forms.py core/ReplaceTrueWithFalse 6
+worker outcome: normal, test outcome: survived
+[job-id] 030af507a8ae446b9df39dac66e20f9c
+django/contrib/auth/forms.py core/ReplaceTrueWithFalse 7
+worker outcome: normal, test outcome: survived
+[job-id] 4f918940263a49ed89c687dbbedfd0cf
+django/contrib/auth/forms.py core/ReplaceTrueWithFalse 8
+worker outcome: normal, test outcome: survived
+[job-id] 30e42d5e457a4787aeeb43d40a95460a
+django/contrib/auth/forms.py core/ReplaceTrueWithFalse 9
+worker outcome: normal, test outcome: survived
+[job-id] 47fe1417c0504e06b4a7feefce718ffe
+django/contrib/auth/forms.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: survived
+[job-id] f6235d861ebf4205b822ec02810da37c
+django/contrib/auth/forms.py core/ReplaceFalseWithTrue 1
+worker outcome: normal, test outcome: survived
+[job-id] a7c01e74a8924b6c87db2c239b983b53
+django/contrib/auth/forms.py core/ReplaceFalseWithTrue 2
+worker outcome: normal, test outcome: survived
+[job-id] 98bc59eb9d8f48a3b7f02ef17e22cb49
+django/contrib/auth/forms.py core/ReplaceFalseWithTrue 3
+worker outcome: normal, test outcome: survived
+[job-id] a0007427eac34ce3b507b2b466dbedb4
+django/contrib/auth/forms.py core/ReplaceFalseWithTrue 4
+worker outcome: normal, test outcome: survived
+[job-id] d33380daeaab4832a1923a151ad1db87
+django/contrib/auth/forms.py core/ReplaceFalseWithTrue 5
+worker outcome: normal, test outcome: survived
+[job-id] 1c4dca99c54a431aa402c588bbde9134
+django/contrib/auth/forms.py core/ReplaceFalseWithTrue 6
+worker outcome: normal, test outcome: survived
+[job-id] d9b29da8acd64f3998cc4ca1a328011d
+django/contrib/auth/forms.py core/ReplaceFalseWithTrue 7
+worker outcome: normal, test outcome: survived
+[job-id] bd887ab214f941b6b48f0c2320865d4f
+django/contrib/auth/forms.py core/ReplaceFalseWithTrue 8
+worker outcome: normal, test outcome: survived
+[job-id] 64d93a25e2b1463f8372ec23021d6c1b
+django/contrib/auth/forms.py core/ReplaceFalseWithTrue 9
+worker outcome: normal, test outcome: survived
+[job-id] f0cb25df7c6e44e2b38aac9983cd4ef8
+django/contrib/auth/forms.py core/ReplaceFalseWithTrue 10
+worker outcome: normal, test outcome: survived
+[job-id] 212c25d1c76f4463ba23498298abf8ec
+django/contrib/auth/forms.py core/ReplaceAndWithOr 0
+worker outcome: normal, test outcome: survived
+[job-id] e7b37b7290e34870ade827b45832f635
+django/contrib/auth/forms.py core/ReplaceAndWithOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 4b51cf17b80a42bea76e566e1c8bb782
+django/contrib/auth/forms.py core/ReplaceAndWithOr 2
+worker outcome: normal, test outcome: survived
+[job-id] 2d7600356ca5457ab0f4bc16b541d9da
+django/contrib/auth/forms.py core/ReplaceAndWithOr 3
+worker outcome: normal, test outcome: survived
+[job-id] 6d87e86ada2442b3af5deb25f3d13721
+django/contrib/auth/forms.py core/ReplaceAndWithOr 4
+worker outcome: normal, test outcome: survived
+[job-id] db1e7058a22944ba8f71a2ab1348ba22
+django/contrib/auth/forms.py core/ReplaceAndWithOr 5
+worker outcome: normal, test outcome: survived
+[job-id] 17fa22048f2d40fa9e02e673f6890230
+django/contrib/auth/forms.py core/ReplaceAndWithOr 6
+worker outcome: normal, test outcome: survived
+[job-id] 4b140bb8a72a4f869c286a6d8297f6b7
+django/contrib/auth/forms.py core/ReplaceOrWithAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] be209ee5fa2c4cb6b89fe7285ae593ee
+django/contrib/auth/forms.py core/ReplaceOrWithAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] 8956aecb1b0747d9b50f416155e2d8f0
+django/contrib/auth/forms.py core/ReplaceOrWithAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] c7ccd5519a9d4bc1bd57a1b211e52522
+django/contrib/auth/forms.py core/ExceptionReplacer 0
+worker outcome: normal, test outcome: killed
+[job-id] 7e0e42454c064d12815be9b13f0202aa
+django/contrib/auth/forms.py core/ExceptionReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] c7ae0b8d92074a75a4b701b367475266
+django/contrib/auth/forms.py core/NumberReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] b3ba5f5f5b934140b5960d115ed0acf3
+django/contrib/auth/forms.py core/NumberReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] 77c7ca56af3147e3ac535572565ddefe
+django/contrib/auth/forms.py core/NumberReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] f8285685a9024abb9033405f169d7183
+django/contrib/auth/forms.py core/NumberReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] a0101b5a5ff645fa808ae7b767cff533
+django/contrib/auth/forms.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: survived
+[job-id] 7c2b3bfd1fe64428a26c42d8efa0ce44
+django/contrib/auth/forms.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: survived
+[job-id] 1fe9bb1e275144c08fcb2ce3c388b312
+django/contrib/auth/forms.py core/ZeroIterationForLoop 1
+worker outcome: normal, test outcome: survived
+[job-id] d70684f045aa45e4884af422d5616a16
+django/contrib/auth/forms.py core/ZeroIterationForLoop 2
+worker outcome: normal, test outcome: survived
+total jobs: 142
+complete: 142 (100.00%)
+surviving mutants: 96 (67.61%)
+ 
+[django__django__4.0] [django__django-14411] Return Code: 0 
+[django__django__4.0] [django__django-14411] 
+MutationNum: 142 
+[django__django__4.0] [django__django-14411] 
+MutationLOG: 32.39% 
+[django__django__4.0] [django__django-14411] 
+MutationUncertainty: 0.0 
+[django__django__4.0] [django__django-14411] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/contrib/auth/forms.py'
+        and ((53 <= spec.start_pos[0] <= 54))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__4.0] [django__django-14411] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14411] Std. Output:
+FUNC_MUTATION_NO_MUTANTS_IN_RANGE
+ 
+[django__django__4.0] [django__django-14411] Return Code: 0 
+[django__django__4.0] [django__django-14411] Test script run successful 
+[django__django__4.0] [django__django-14411] Removing coverage 
+[django__django__4.0] [django__django-14411] >>>>> Unfiltered Tests Failed 

@@ -1,0 +1,87 @@
+[django__django__4.0] [django__django-14500] Task Metadata:
+	- Instance ID: django__django-14500
+	- Testbed: django__django__4.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.8.19
+ 
+[django__django__4.0] [django__django-14500] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14500] Std. Output:
+ 
+[django__django__4.0] [django__django-14500] Return Code: 0 
+[django__django__4.0] [django__django-14500] Command: git -c advice.detachedHead=false checkout 8c3bd0b708b488a1f6e8bd8cc6b96569904605be 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14500] Std. Output:
+Previous HEAD position was 475cffd1d6 Fixed typo in docs/intro/reusable-apps.txt.
+HEAD is now at 8c3bd0b708 Fixed #31653 -- Added AddConstraintNotValid()/ValidateConstraint() operations for PostgreSQL.
+ 
+[django__django__4.0] [django__django-14500] Return Code: 0 
+[django__django__4.0] [django__django-14500] Command: git diff > /opt/temp_django__django-14500_gold_init.patch 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14500] Std. Output:
+ 
+[django__django__4.0] [django__django-14500] Return Code: 0 
+[django__django__4.0] [django__django-14500] Command: git apply -v /opt/temp_django__django-14500_gold.patch 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14500] Std. Output:
+Checking patch django/db/migrations/executor.py...
+Applied patch django/db/migrations/executor.py cleanly.
+ 
+[django__django__4.0] [django__django-14500] Return Code: 0 
+[django__django__4.0] [django__django-14500] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__4.0] [django__django-14500] Command: git diff > /opt/temp_django__django-14500_test_init.patch 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14500] Std. Output:
+ 
+[django__django__4.0] [django__django-14500] Return Code: 0 
+[django__django__4.0] [django__django-14500] Command: git restore tests/migrations/test_executor.py 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14500] Std. Output:
+ 
+[django__django__4.0] [django__django-14500] Return Code: 0 
+[django__django__4.0] [django__django-14500] Command: git apply -v /opt/temp_django__django-14500_test.patch 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14500] Std. Output:
+Checking patch tests/migrations/test_executor.py...
+Applied patch tests/migrations/test_executor.py cleanly.
+ 
+[django__django__4.0] [django__django-14500] Return Code: 0 
+[django__django__4.0] [django__django-14500] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__4.0] [django__django-14500] Command: coverage run ./tests/runtests.py --verbosity 2 migrations.test_executor 
+[django__django__4.0] [django__django-14500] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14500] Std. Output:
+test_executor (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_executor (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_executor
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.8.19/lib/python3.8/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/migrations/test_executor.py", line 19, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application migrations
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14500] Return Code: 1 
+[django__django__4.0] [django__django-14500] TestsTime: 0.6117386817932129 
+[django__django__4.0] [django__django-14500] Test script run successful 
+[django__django__4.0] [django__django-14500] Removing coverage 
+[django__django__4.0] [django__django-14500] >>>>> Tests configfull pred
+ 
+[django__django__4.0] [django__django-14500] TestsTime: 0.0 
+[django__django__4.0] [django__django-14500] >>>>> Some Tests Failed 
+[django__django__4.0] [django__django-14500] >>>>> Unfiltered Tests Failed 

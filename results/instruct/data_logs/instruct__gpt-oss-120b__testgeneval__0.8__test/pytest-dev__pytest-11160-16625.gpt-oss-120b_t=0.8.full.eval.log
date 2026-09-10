@@ -1,0 +1,989 @@
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Task Metadata:
+	- Instance ID: pytest-dev__pytest-11160
+	- Testbed: pytest-dev__pytest__8.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.11.8
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: git config --global --add safe.directory /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: git -c advice.detachedHead=false checkout 6995257cf470d2143ad1683824962de4071c0eb7 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+Previous HEAD position was 10056865d Merge pull request #11309 from bluetech/docs-xfail
+HEAD is now at 6995257cf [pre-commit.ci] pre-commit autoupdate (#11165)
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-11160_gold_init.patch 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-11160_gold.patch 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+Checking patch src/_pytest/recwarn.py...
+Applied patch src/_pytest/recwarn.py cleanly.
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-11160_test_init.patch 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: git restore testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-11160_test.patch 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+Checking patch testing/test_recwarn.py...
+Applied patch testing/test_recwarn.py cleanly.
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_recwarn.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/test_recwarn.py F                                                [100%]
+
+=================================== FAILURES ===================================
+_____________________________ test_pop_exact_match _____________________________
+
+    def test_pop_exact_match():
+        """pop should return the exact class match before considering subclasses."""
+>       with WarningsRecorder() as rec:
+
+testing/test_recwarn.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/_pytest/recwarn.py:185: in __init__
+    check_ispytest(_ispytest)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ispytest = False
+
+    def check_ispytest(ispytest: bool) -> None:
+        if not ispytest:
+>           warn(PRIVATE, stacklevel=3)
+E           pytest.PytestDeprecationWarning: A private pytest class or function was used.
+
+src/_pytest/deprecated.py:151: PytestDeprecationWarning
+=========================== short test summary info ============================
+FAILED testing/test_recwarn.py::test_pop_exact_match - pytest.PytestDeprecati...
+============================== 1 failed in 0.02s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 1 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] TestsTime: 3.4592666625976562 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_recwarn.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/test_recwarn.py F                                                [100%]
+
+=================================== FAILURES ===================================
+___________________________ test_pop_subclass_match ____________________________
+
+    def test_pop_subclass_match():
+        """pop should correctly match subclasses when exact class is not present."""
+>       with WarningsRecorder() as rec:
+
+testing/test_recwarn.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/_pytest/recwarn.py:185: in __init__
+    check_ispytest(_ispytest)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ispytest = False
+
+    def check_ispytest(ispytest: bool) -> None:
+        if not ispytest:
+>           warn(PRIVATE, stacklevel=3)
+E           pytest.PytestDeprecationWarning: A private pytest class or function was used.
+
+src/_pytest/deprecated.py:151: PytestDeprecationWarning
+=========================== short test summary info ============================
+FAILED testing/test_recwarn.py::test_pop_subclass_match - pytest.PytestDeprec...
+============================== 1 failed in 0.02s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 1 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] TestsTime: 0.48906803131103516 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_recwarn.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/test_recwarn.py F                                                [100%]
+
+=================================== FAILURES ===================================
+____________________ test_pop_default_returns_most_specific ____________________
+
+    def test_pop_default_returns_most_specific():
+        """
+        When no class is supplied, pop should return the most specific warning
+        (i.e., the one that is not a subclass of any previously seen warning).
+        """
+>       with WarningsRecorder() as rec:
+
+testing/test_recwarn.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/_pytest/recwarn.py:185: in __init__
+    check_ispytest(_ispytest)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ispytest = False
+
+    def check_ispytest(ispytest: bool) -> None:
+        if not ispytest:
+>           warn(PRIVATE, stacklevel=3)
+E           pytest.PytestDeprecationWarning: A private pytest class or function was used.
+
+src/_pytest/deprecated.py:151: PytestDeprecationWarning
+=========================== short test summary info ============================
+FAILED testing/test_recwarn.py::test_pop_default_returns_most_specific - pyte...
+============================== 1 failed in 0.02s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 1 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] TestsTime: 0.501948356628418 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_recwarn.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/test_recwarn.py F                                                [100%]
+
+=================================== FAILURES ===================================
+___________________________ test_pop_no_match_raises ___________________________
+
+    def test_pop_no_match_raises():
+        """pop should raise AssertionError when the requested class is not present."""
+>       with WarningsRecorder() as rec:
+
+testing/test_recwarn.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/_pytest/recwarn.py:185: in __init__
+    check_ispytest(_ispytest)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ispytest = False
+
+    def check_ispytest(ispytest: bool) -> None:
+        if not ispytest:
+>           warn(PRIVATE, stacklevel=3)
+E           pytest.PytestDeprecationWarning: A private pytest class or function was used.
+
+src/_pytest/deprecated.py:151: PytestDeprecationWarning
+=========================== short test summary info ============================
+FAILED testing/test_recwarn.py::test_pop_no_match_raises - pytest.PytestDepre...
+============================== 1 failed in 0.02s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 1 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] TestsTime: 0.5163326263427734 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_recwarn.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/test_recwarn.py F                                                [100%]
+
+=================================== FAILURES ===================================
+___________________________ test_enter_twice_raises ____________________________
+
+    def test_enter_twice_raises():
+        """Entering a WarningsRecorder twice should raise RuntimeError."""
+>       rec = WarningsRecorder()
+
+testing/test_recwarn.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/_pytest/recwarn.py:185: in __init__
+    check_ispytest(_ispytest)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+ispytest = False
+
+    def check_ispytest(ispytest: bool) -> None:
+        if not ispytest:
+>           warn(PRIVATE, stacklevel=3)
+E           pytest.PytestDeprecationWarning: A private pytest class or function was used.
+
+src/_pytest/deprecated.py:151: PytestDeprecationWarning
+=========================== short test summary info ============================
+FAILED testing/test_recwarn.py::test_enter_twice_raises - pytest.PytestDeprec...
+============================== 1 failed in 0.02s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 1 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] TestsTime: 0.49234604835510254 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/test_recwarn.py .                                                [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/test_recwarn.py::test_warningschecker_success_and_unmatched_reemit
+============================== 1 passed in 0.07s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] TestsTime: 0.566460132598877 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/test_recwarn.py .                                                [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/test_recwarn.py::test_warningschecker_fail_no_warning
+============================== 1 passed in 0.19s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] TestsTime: 0.7393736839294434 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_recwarn.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/test_recwarn.py F                                                [100%]
+
+=================================== FAILURES ===================================
+___________________ test_warningschecker_fail_regex_mismatch ___________________
+
+E   Failed: DID NOT WARN. No warnings of type (<class 'UserWarning'>,) matching the regex were emitted.
+     Regex: must be \d+$
+     Emitted warnings: [UserWarning('value must be zero or None')].
+All traceback entries are hidden. Pass `--full-trace` to see hidden and internal frames.
+
+During handling of the above exception, another exception occurred:
+
+    def test_warningschecker_fail_regex_mismatch():
+        """If warnings are emitted but none match the regex, it should fail."""
+        with pytest.raises(Failed) as exc:
+            with warns(UserWarning, match=r"must be \d+$"):
+>               warnings.warn("value must be zero or None", UserWarning)
+E               UserWarning: value must be zero or None
+
+testing/test_recwarn.py:20: UserWarning
+=========================== short test summary info ============================
+FAILED testing/test_recwarn.py::test_warningschecker_fail_regex_mismatch - Us...
+============================== 1 failed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 1 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] TestsTime: 0.6604421138763428 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/test_recwarn.py .                                                [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/test_recwarn.py::test_warns_invalid_kwargs
+============================== 1 passed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] TestsTime: 0.6013369560241699 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/test_recwarn.py .                                                [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/test_recwarn.py::test_deprecated_call_context_manager
+============================== 1 passed in 0.00s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] TestsTime: 0.4939448833465576 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 1 item
+
+testing/test_recwarn.py .                                                [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/test_recwarn.py::test_deprecated_call_function_mode
+============================== 1 passed in 0.21s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] TestsTime: 0.6793498992919922 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] >>>>> Tests configfull pred
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Test Script: conda run -n pytest-dev__pytest__8.0  coverage run -m pytest -rA testing/test_recwarn.py;
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 coverage run -m pytest -rA testing/test_recwarn.py 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-8.0.0.dev160+g10056865d, pluggy-1.3.0
+rootdir: /home/swe-bench/pytest-dev__pytest
+configfile: pyproject.toml
+collected 5 items
+
+testing/test_recwarn.py .....                                            [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/test_recwarn.py::test_warningschecker_success_and_unmatched_reemit
+PASSED testing/test_recwarn.py::test_warningschecker_fail_no_warning
+PASSED testing/test_recwarn.py::test_warns_invalid_kwargs
+PASSED testing/test_recwarn.py::test_deprecated_call_context_manager
+PASSED testing/test_recwarn.py::test_deprecated_call_function_mode
+============================== 5 passed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] TestsTime: 0.4984557628631592 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] 
+>>>>> All Tests Passed
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Current Working Directory: /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 coverage json -o coverage.json 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+Wrote JSON report to coverage.json
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] 
+CoverageLOG: 75.91240875912409%
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] 
+FunctionCoverageLOG: 9.090909090909092%
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Running mutation testing 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 cosmic-ray init mutation.toml mutation.sqlite 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 cosmic-ray exec mutation.toml mutation.sqlite 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 cr-rate mutation.sqlite --estimate --confidence 95.0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+40.52 40.52 40.52
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 cr-report mutation.sqlite 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+[job-id] 6ac91106457740b9b7f4271e698aec22
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Add_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 106581aed9284073b037767df176fba5
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Add_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] aafb1267203a46e481f096ce6e877f93
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Add_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] 72fe016582b14e68877ef2f0ff65d348
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Add_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] 702e398d82e349228591d2745cee22a7
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Add_Mod 0
+worker outcome: normal, test outcome: killed
+[job-id] 036b9b175c1a452faffeacf1d977311c
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Add_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] 47fad652870c43199f53d1ace29bea91
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Add_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] c6cc87e0f0e34b0096dfaa1446404971
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Add_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 05a77c59f29540ad80e86ae5e88afd82
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Add_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] c3b2df2aca644ed3be91063f53f16e16
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Add_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] c0865ddcafb2469f93e04b7a81830c10
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Add_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] 362e7f772c6c49f183996c2bc1beb913
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] 6358512882c3455280151c36fd414c5d
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_Add 1
+worker outcome: normal, test outcome: killed
+[job-id] c0ed1f679d6c44b6b815b045949c13ee
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_Add 2
+worker outcome: normal, test outcome: killed
+[job-id] 04f92ce176564bcfb03fdd9afb5af118
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_Add 3
+worker outcome: normal, test outcome: killed
+[job-id] e75e2d9a984c45cfb465d336b8e6a88b
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] d0b38dcf7a8a4c7f8a70ef73210257fb
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_Sub 1
+worker outcome: normal, test outcome: killed
+[job-id] 0a1c719a60a442d7813f4583090ea99b
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_Sub 2
+worker outcome: normal, test outcome: killed
+[job-id] 5174a2f943634488ab267ba0c9de2311
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_Sub 3
+worker outcome: normal, test outcome: killed
+[job-id] e3b6e952513542e4a3e7496716fdf870
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] de7a34f9e25044b5abda98ccc897e548
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] 65cfbc27832449a1b8d1ea9185852440
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] 771edfb7fcd24c6cb048e766edbef4a7
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_Div 3
+worker outcome: normal, test outcome: killed
+[job-id] 4054ec90a7224eaf8f37f03306805b7b
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] 8e7dcf7809674cdfb309f3f0c53acac4
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_FloorDiv 1
+worker outcome: normal, test outcome: killed
+[job-id] 8148a76d93f54255845cfbc9378b9332
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_FloorDiv 2
+worker outcome: normal, test outcome: killed
+[job-id] e9b16d6d87b843cb8786c3b4b6ab0cab
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_FloorDiv 3
+worker outcome: normal, test outcome: killed
+[job-id] d36cfc6c8cbd487587ad262982af8169
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_Mod 0
+worker outcome: normal, test outcome: killed
+[job-id] faf2d3137c0544f39580a73b43213645
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_Mod 1
+worker outcome: normal, test outcome: killed
+[job-id] beb7dc5ca13a4b8dad0b6229494c759f
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_Mod 2
+worker outcome: normal, test outcome: killed
+[job-id] 5f753d361cc14ebfa87ea6f8c2c8e269
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_Mod 3
+worker outcome: normal, test outcome: killed
+[job-id] 5dda6b1df6094678b44089a7fd528679
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] 22a46fd3abe24ca2bc3416278cc14580
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_Pow 1
+worker outcome: normal, test outcome: killed
+[job-id] cebd216274e744528a1065e11aa8b607
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_Pow 2
+worker outcome: normal, test outcome: killed
+[job-id] 97c3e6272dff4645a0c5706a8c706cb0
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_Pow 3
+worker outcome: normal, test outcome: killed
+[job-id] dc0a1c127c744d5d9198afcdcff1081b
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 193e28941aaf4a4f80cbc60bc19ffe78
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_RShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 728a403d995c44a88ba178765678eada
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_RShift 2
+worker outcome: normal, test outcome: killed
+[job-id] 8ef21be6d2cc4f9f8d3444ce4d8f50ac
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_RShift 3
+worker outcome: normal, test outcome: killed
+[job-id] 8ee4ac6d14884944b31a2e88679ccbff
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 10d84f877cd84c33a7fe8fc6c07140d4
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_LShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 5928e74d3ae1478dadcb64a3030707a5
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_LShift 2
+worker outcome: normal, test outcome: killed
+[job-id] d86b44272b0e45a5a36e696fab043a6a
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_LShift 3
+worker outcome: normal, test outcome: killed
+[job-id] 1384f3b7cc094ca69626ca64cd7391d0
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 30c8fefcd99144b3b334ea3731c8cee3
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_BitOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 771afe30f5114698ba212e295b2e327a
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_BitOr 2
+worker outcome: normal, test outcome: killed
+[job-id] d9cfdf62ac7f48c28ba91c355bfe1170
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_BitOr 3
+worker outcome: normal, test outcome: killed
+[job-id] 704d834b70704e2d82561bf0b0156f86
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 3f6153a2316b4f6686da7f760e5a1f52
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_BitAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] b09e9fcc2c80420a8c17438766058d42
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_BitAnd 2
+worker outcome: normal, test outcome: killed
+[job-id] 2827fec42b464e81bb5392021530784d
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_BitAnd 3
+worker outcome: normal, test outcome: killed
+[job-id] a193602bddfb4c7ca4f96b0d9f0c4002
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] d3f78d629a6c4938bb82e6d3c25769f8
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_BitXor 1
+worker outcome: normal, test outcome: killed
+[job-id] 4857cfc67cb946059ee28aa62f448d06
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_BitXor 2
+worker outcome: normal, test outcome: killed
+[job-id] ad9dd40e3d6d420787d97acb70a3aa0f
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mul_BitXor 3
+worker outcome: normal, test outcome: killed
+[job-id] cfcd4a592f5846ff8d8f075378b185f5
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] 79d008b8fe92445bae6570eea2a19b08
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_Add 1
+worker outcome: normal, test outcome: survived
+[job-id] 93354439777b4982845b67adeebf1b3c
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] e4b6ba017ce34b4391476803718a7d8a
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] a6eaeb1d0f3c4aa6a8548f1e703b4884
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] 02a097a9d2a34e4e85443a6214a994b8
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] 84e6ba0491db452e99291c931052dd14
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 52c7975b94134c69bffa237cf5f3f1ca
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] 973557e93c37490383fd649a0b937854
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] f768a79c237c47dcb28d2586d566df26
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] b311051a423b46efaadada79f74755f1
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 09a4774c08514ed4933df2a4d5a9295d
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 4f2e11e4f19c4e6983d2b96f110c70d4
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 96e9115008184b60a814e92d70a73039
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 2df23b702d07483390466e9fe6d5309f
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 3d36f115f28448768d65ed60609978f3
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 45cda074b01646d08b5872768a7f171a
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] dc047f2cd5294413b3cfb7d76499df37
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 30ba1f949c55442d8317b5559add4966
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] bc6ba3a39d9644abaa1efc3ac202982c
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 07a27b5980b1460eb7af3bbc0a32a950
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] 60f6e109cd1149b6b9b7e5e36634e0c6
+src/_pytest/recwarn.py core/ReplaceBinaryOperator_Mod_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] e232e4c976a74bf2938391886763b804
+src/_pytest/recwarn.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] e8ddf90622b6468ca17ae28de8c006d7
+src/_pytest/recwarn.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 51a14afbefba41d797428dc34308ccf6
+src/_pytest/recwarn.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] a22ce7ddab934f4d8ebefb993e246075
+src/_pytest/recwarn.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] e43b07b74fee48fa831d286ba120c0bb
+src/_pytest/recwarn.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 60b5d74dbb9349299ad0fb5d95244367
+src/_pytest/recwarn.py core/ReplaceComparisonOperator_Eq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 0e854814371044c380e5411a78e5c8fe
+src/_pytest/recwarn.py core/ReplaceComparisonOperator_Eq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] bdd3783f7e28493ba54ee94b972fc8a0
+src/_pytest/recwarn.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] afd2175b1e224b9fb39a1290aa370088
+src/_pytest/recwarn.py core/ReplaceComparisonOperator_Is_IsNot 1
+worker outcome: normal, test outcome: killed
+[job-id] 0edbc80744b9421d89f70d8236845067
+src/_pytest/recwarn.py core/ReplaceComparisonOperator_Is_IsNot 2
+worker outcome: normal, test outcome: killed
+[job-id] 2eb69d11d9014481b582993174d70f26
+src/_pytest/recwarn.py core/ReplaceComparisonOperator_Is_IsNot 3
+worker outcome: normal, test outcome: killed
+[job-id] 597db8fe65cc4ec7b8069dbdd3677170
+src/_pytest/recwarn.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] 22794f80e0724dc7944685b453a5bbbd
+src/_pytest/recwarn.py core/ReplaceComparisonOperator_IsNot_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 58356adb9462415d98ee929be3b3b658
+src/_pytest/recwarn.py core/ReplaceComparisonOperator_IsNot_Is 2
+worker outcome: normal, test outcome: killed
+[job-id] d4dcb866f8f5473a8a5f37ee1604a49a
+src/_pytest/recwarn.py core/ReplaceComparisonOperator_IsNot_Is 3
+worker outcome: normal, test outcome: killed
+[job-id] c4d106f184a1474ca6a3385e86981712
+src/_pytest/recwarn.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: killed
+[job-id] 4551365974c041df925f65dce4549951
+src/_pytest/recwarn.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: killed
+[job-id] f55b62691d4142c39fe57656eda02c62
+src/_pytest/recwarn.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: normal, test outcome: survived
+[job-id] 8d721ba9129d4b74b548aafddd4ee95e
+src/_pytest/recwarn.py core/ReplaceUnaryOperator_Delete_Not 3
+worker outcome: normal, test outcome: killed
+[job-id] f8effa74581b45328d15b391df4fb46d
+src/_pytest/recwarn.py core/ReplaceUnaryOperator_Delete_Not 4
+worker outcome: normal, test outcome: killed
+[job-id] 4edd2cf70dc44827bf8a038aa7120c47
+src/_pytest/recwarn.py core/ReplaceUnaryOperator_Delete_Not 5
+worker outcome: normal, test outcome: killed
+[job-id] 353fdb0346494a9abfe66b9ef1a89844
+src/_pytest/recwarn.py core/ReplaceUnaryOperator_Delete_Not 6
+worker outcome: normal, test outcome: killed
+[job-id] 9596f90d27874f57be9773ca1cfd3104
+src/_pytest/recwarn.py core/ReplaceUnaryOperator_Delete_Not 7
+worker outcome: normal, test outcome: killed
+[job-id] 48dd158136894ff99fbdaf409efd7557
+src/_pytest/recwarn.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] 39be696badbc41deb822ab86cdf0b752
+src/_pytest/recwarn.py core/AddNot 1
+worker outcome: normal, test outcome: killed
+[job-id] 5fb83eec0d434953a37ce6186b323c25
+src/_pytest/recwarn.py core/AddNot 2
+worker outcome: normal, test outcome: killed
+[job-id] 71da2b25173246f09b2af028a1e299a1
+src/_pytest/recwarn.py core/AddNot 3
+worker outcome: normal, test outcome: killed
+[job-id] c66bdc0905f649199f4e25fae0f766c7
+src/_pytest/recwarn.py core/AddNot 4
+worker outcome: normal, test outcome: survived
+[job-id] 8dae987411e948a187e3179e204b1173
+src/_pytest/recwarn.py core/AddNot 5
+worker outcome: normal, test outcome: survived
+[job-id] e3ff523c4faa44258a49140e95a546ee
+src/_pytest/recwarn.py core/AddNot 6
+worker outcome: normal, test outcome: survived
+[job-id] b9ccdbb2d4dc4914bfab573b88b0c770
+src/_pytest/recwarn.py core/AddNot 7
+worker outcome: normal, test outcome: killed
+[job-id] eed945f67652461cb3d685b96b22aadd
+src/_pytest/recwarn.py core/AddNot 8
+worker outcome: normal, test outcome: killed
+[job-id] 4248a433332743548db3363c5bb8d0bf
+src/_pytest/recwarn.py core/AddNot 9
+worker outcome: normal, test outcome: killed
+[job-id] 8f00fe2140dd4fc59b8611a31a032b8c
+src/_pytest/recwarn.py core/AddNot 10
+worker outcome: normal, test outcome: killed
+[job-id] bce3185cc4dc4c718d00a676c154331a
+src/_pytest/recwarn.py core/AddNot 11
+worker outcome: normal, test outcome: killed
+[job-id] 2366a3101c2f4bbdb9678cad28c8ee25
+src/_pytest/recwarn.py core/AddNot 12
+worker outcome: normal, test outcome: killed
+[job-id] fdbd29f1b23a498b9a6e8f273e78aa2e
+src/_pytest/recwarn.py core/AddNot 13
+worker outcome: normal, test outcome: killed
+[job-id] 94039d73c50e4ae89a294b3f8d8109b9
+src/_pytest/recwarn.py core/AddNot 14
+worker outcome: normal, test outcome: killed
+[job-id] 3cb09c81f5e442b1aab7e9756a14f131
+src/_pytest/recwarn.py core/AddNot 15
+worker outcome: normal, test outcome: killed
+[job-id] 1571f9aa8f7c49758a2aa9282237e0b1
+src/_pytest/recwarn.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: survived
+[job-id] c7a0034d50c148349dd3de1d02604f0f
+src/_pytest/recwarn.py core/ReplaceTrueWithFalse 1
+worker outcome: normal, test outcome: survived
+[job-id] 1f585d7e72fa48188b85d24276c5f65a
+src/_pytest/recwarn.py core/ReplaceTrueWithFalse 2
+worker outcome: normal, test outcome: survived
+[job-id] 5e83e6ba94d945eabd9a86059a7ab37a
+src/_pytest/recwarn.py core/ReplaceTrueWithFalse 3
+worker outcome: normal, test outcome: killed
+[job-id] 8e2019b58d2c4b1e9a3b3a5f0d763a36
+src/_pytest/recwarn.py core/ReplaceTrueWithFalse 4
+worker outcome: normal, test outcome: killed
+[job-id] 5d58973d663a4b289c310807dbf4de80
+src/_pytest/recwarn.py core/ReplaceTrueWithFalse 5
+worker outcome: normal, test outcome: killed
+[job-id] fe02fa747b3e4582ab0c815ab18498fc
+src/_pytest/recwarn.py core/ReplaceTrueWithFalse 6
+worker outcome: normal, test outcome: survived
+[job-id] 719abf01a67d4876b452a85d809bf842
+src/_pytest/recwarn.py core/ReplaceTrueWithFalse 7
+worker outcome: normal, test outcome: survived
+[job-id] 41b81b3d3a2c4dc69343a399a1a71295
+src/_pytest/recwarn.py core/ReplaceTrueWithFalse 8
+worker outcome: normal, test outcome: survived
+[job-id] 4d21ea493ae1472488f71e1d3f57e873
+src/_pytest/recwarn.py core/ReplaceTrueWithFalse 9
+worker outcome: normal, test outcome: killed
+[job-id] 6d04b0f2afbe4338a52c6c5722a1829a
+src/_pytest/recwarn.py core/ReplaceTrueWithFalse 10
+worker outcome: normal, test outcome: survived
+[job-id] 041e1bc46ce14734a32f111e68e41bd6
+src/_pytest/recwarn.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: survived
+[job-id] 472a28f82b144ca6b2d1bdf82317849f
+src/_pytest/recwarn.py core/ReplaceFalseWithTrue 1
+worker outcome: normal, test outcome: killed
+[job-id] 4e56efe2b613429f976824be241b970f
+src/_pytest/recwarn.py core/ReplaceFalseWithTrue 2
+worker outcome: normal, test outcome: survived
+[job-id] e0380b68f0b841b882ace9a54015c4b4
+src/_pytest/recwarn.py core/ReplaceFalseWithTrue 3
+worker outcome: normal, test outcome: survived
+[job-id] 3ee45c573e0342d0a89bd877d1dd75d7
+src/_pytest/recwarn.py core/ReplaceAndWithOr 0
+worker outcome: normal, test outcome: survived
+[job-id] bdbfe03ed4224a6e967aa77b4089a181
+src/_pytest/recwarn.py core/ReplaceAndWithOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 436b33ee5c5846fc930711a99c150e20
+src/_pytest/recwarn.py core/ReplaceOrWithAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 155ab8c5cbe94b35ad3e42e41b905ef2
+src/_pytest/recwarn.py core/ReplaceOrWithAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] dd85aa2f4aa7452ba27810ef45760941
+src/_pytest/recwarn.py core/NumberReplacer 0
+worker outcome: normal, test outcome: killed
+[job-id] f84e0074a8b14451b2ea85a0e43b9c08
+src/_pytest/recwarn.py core/NumberReplacer 1
+worker outcome: normal, test outcome: killed
+[job-id] 5422fe2ab707418f89ee83c6f87201f7
+src/_pytest/recwarn.py core/NumberReplacer 2
+worker outcome: normal, test outcome: killed
+[job-id] efe8411a229142418fd20a029dc37b30
+src/_pytest/recwarn.py core/NumberReplacer 3
+worker outcome: normal, test outcome: killed
+[job-id] f39d418b57824014b9be2a292d7a68b1
+src/_pytest/recwarn.py core/NumberReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] b27f6da66c914821b6fd836310d4e571
+src/_pytest/recwarn.py core/NumberReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] e6b58c4602d3459b90f75de94a49ed91
+src/_pytest/recwarn.py core/NumberReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] e1812f4be58643c78d3a74063a5729db
+src/_pytest/recwarn.py core/NumberReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] 9de8b643d8294d749737d9417576af34
+src/_pytest/recwarn.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: survived
+[job-id] c1008fe0fac84c888ee9771860dedb3a
+src/_pytest/recwarn.py core/RemoveDecorator 1
+worker outcome: normal, test outcome: survived
+[job-id] 1779e7d738574c028b32487cde4fb80c
+src/_pytest/recwarn.py core/RemoveDecorator 2
+worker outcome: normal, test outcome: survived
+[job-id] bdc42dbb154143019cc2883bafe1d7a0
+src/_pytest/recwarn.py core/RemoveDecorator 3
+worker outcome: normal, test outcome: survived
+[job-id] 5015048ef2734b14a92562e5d993777a
+src/_pytest/recwarn.py core/RemoveDecorator 4
+worker outcome: normal, test outcome: survived
+[job-id] 0aba7c0475bd46f8835f3c64fffb4661
+src/_pytest/recwarn.py core/RemoveDecorator 5
+worker outcome: normal, test outcome: survived
+[job-id] 27a0e3bc67104c21b5dfcfd3acf67936
+src/_pytest/recwarn.py core/RemoveDecorator 6
+worker outcome: normal, test outcome: survived
+[job-id] e174a7ad62124d0ba4f5714a7b73d446
+src/_pytest/recwarn.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: survived
+[job-id] cb5ae75145ed444c82fb0b8030bb1f2d
+src/_pytest/recwarn.py core/ZeroIterationForLoop 1
+worker outcome: normal, test outcome: survived
+[job-id] 196406d5a9ed4cb6a909d1d4e15ad224
+src/_pytest/recwarn.py core/ZeroIterationForLoop 2
+worker outcome: normal, test outcome: killed
+total jobs: 153
+complete: 153 (100.00%)
+surviving mutants: 62 (40.52%)
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] 
+MutationNum: 153 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] 
+MutationLOG: 59.48% 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] 
+MutationUncertainty: 0.0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Command: conda run -n pytest-dev__pytest__8.0 python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'src/_pytest/recwarn.py'
+        and ((208 <= spec.start_pos[0] <= 225))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Std. Output:
+FUNC_MUTATION_RESULT 0.0 17
+
+ 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Return Code: 0 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] 
+FunctionMutationLOG: 0.0% 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] 
+FunctionMutationNum: 17 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Test script run successful 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing coverage 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] Removing cache 
+[pytest-dev__pytest__8.0] [pytest-dev__pytest-11160] >>>>> Unfiltered Tests Failed 

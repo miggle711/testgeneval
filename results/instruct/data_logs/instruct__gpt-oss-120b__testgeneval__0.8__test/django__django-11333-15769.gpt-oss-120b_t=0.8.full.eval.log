@@ -1,0 +1,448 @@
+[django__django__3.0] [django__django-11333] Task Metadata:
+	- Instance ID: django__django-11333
+	- Testbed: django__django__3.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.0] [django__django-11333] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11333] Std. Output:
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] Command: git -c advice.detachedHead=false checkout 55b68de643b5c2d5f0a8ea7587ab3b2966021ccc 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11333] Std. Output:
+Previous HEAD position was 419a78300f [3.0.x] Fixed typo in docs/ref/contrib/postgres/forms.txt.
+HEAD is now at 55b68de643 Fixed #30608 -- Fixed non-unicode EmailMessage crash when domain name for localhost is non-ASCII.
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] Command: git diff > /opt/temp_django__django-11333_gold_init.patch 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11333] Std. Output:
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] Command: git apply -v /opt/temp_django__django-11333_gold.patch 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11333] Std. Output:
+Checking patch django/urls/base.py...
+Checking patch django/urls/resolvers.py...
+Applied patch django/urls/base.py cleanly.
+Applied patch django/urls/resolvers.py cleanly.
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.0] [django__django-11333] Command: git diff > /opt/temp_django__django-11333_test_init.patch 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11333] Std. Output:
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] Command: git restore tests/urlpatterns/test_resolvers.py 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11333] Std. Output:
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] Command: git apply -v /opt/temp_django__django-11333_test.patch 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.0] [django__django-11333] Std. Output:
+Checking patch tests/urlpatterns/test_resolvers.py...
+Applied patch tests/urlpatterns/test_resolvers.py cleanly.
+ 
+[django__django__3.0] [django__django-11333] Return Code: 0 
+[django__django__3.0] [django__django-11333] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 15, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.879094123840332 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 15, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.3993260860443115 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 15, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.4844951629638672 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 15, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.40816235542297363 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 15, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.33301615715026855 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 15, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.5022311210632324 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 15, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.36855506896972656 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 15, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.4525611400604248 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 15, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.4092693328857422 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 15, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.3818018436431885 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 15, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.31507420539855957 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 15, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.46961498260498047 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] Command: coverage run ./tests/runtests.py --verbosity 2 urlpatterns.test_resolvers 
+[django__django__3.0] [django__django-11333] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.0] [django__django-11333] Std. Output:
+test_resolvers (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_resolvers (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_resolvers
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/urlpatterns/test_resolvers.py", line 15, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application urlpatterns
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__3.0] [django__django-11333] Return Code: 1 
+[django__django__3.0] [django__django-11333] TestsTime: 0.37085747718811035 
+[django__django__3.0] [django__django-11333] Test script run successful 
+[django__django__3.0] [django__django-11333] Removing coverage 
+[django__django__3.0] [django__django-11333] >>>>> Tests configfull pred
+ 
+[django__django__3.0] [django__django-11333] TestsTime: 0.0 
+[django__django__3.0] [django__django-11333] >>>>> Some Tests Failed 
+[django__django__3.0] [django__django-11333] >>>>> Unfiltered Tests Failed 

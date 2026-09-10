@@ -1,0 +1,306 @@
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Task Metadata:
+	- Instance ID: pytest-dev__pytest-8365
+	- Testbed: pytest-dev__pytest__6.3
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.11.8
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Command: git config --global --add safe.directory /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Std. Output:
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Command: git -c advice.detachedHead=false checkout 4964b468c83c06971eb743fbc57cc404f760c573 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Std. Output:
+Previous HEAD position was 634312b14 Merge pull request #8633 from The-Compiler/ci-colors
+HEAD is now at 4964b468c Merge pull request #8354 from feanil/patch-1
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-8365_gold_init.patch 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Std. Output:
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-8365_gold.patch 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Std. Output:
+Checking patch src/_pytest/tmpdir.py...
+Applied patch src/_pytest/tmpdir.py cleanly.
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-8365_test_init.patch 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Std. Output:
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Command: git restore testing/test_tmpdir.py 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Std. Output:
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-8365_test.patch 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Std. Output:
+Checking patch testing/test_tmpdir.py...
+Applied patch testing/test_tmpdir.py cleanly.
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Return Code: 0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Command: conda run -n pytest-dev__pytest__6.3 coverage run -m pytest -rA testing/test_tmpdir.py 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_tmpdir.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.3.0.dev425+g634312b14, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+___________________ ERROR collecting testing/test_tmpdir.py ____________________
+testing/test_tmpdir.py:37: in <module>
+    given_basetemp: Path | None = None,
+E   TypeError: unsupported operand type(s) for |: 'type' and 'NoneType'
+=========================== short test summary info ============================
+ERROR testing/test_tmpdir.py - TypeError: unsupported operand type(s) for |: ...
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.04s ===============================
+
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Return Code: 2 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] TestsTime: 0.6521031856536865 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Test script run successful 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Removing coverage 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Removing cache 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Command: conda run -n pytest-dev__pytest__6.3 coverage run -m pytest -rA testing/test_tmpdir.py 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_tmpdir.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.3.0.dev425+g634312b14, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+___________________ ERROR collecting testing/test_tmpdir.py ____________________
+testing/test_tmpdir.py:37: in <module>
+    given_basetemp: Path | None = None,
+E   TypeError: unsupported operand type(s) for |: 'type' and 'NoneType'
+=========================== short test summary info ============================
+ERROR testing/test_tmpdir.py - TypeError: unsupported operand type(s) for |: ...
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.04s ===============================
+
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Return Code: 2 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] TestsTime: 0.5107502937316895 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Test script run successful 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Removing coverage 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Removing cache 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Command: conda run -n pytest-dev__pytest__6.3 coverage run -m pytest -rA testing/test_tmpdir.py 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_tmpdir.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.3.0.dev425+g634312b14, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+___________________ ERROR collecting testing/test_tmpdir.py ____________________
+testing/test_tmpdir.py:37: in <module>
+    given_basetemp: Path | None = None,
+E   TypeError: unsupported operand type(s) for |: 'type' and 'NoneType'
+=========================== short test summary info ============================
+ERROR testing/test_tmpdir.py - TypeError: unsupported operand type(s) for |: ...
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.04s ===============================
+
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Return Code: 2 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] TestsTime: 0.5318899154663086 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Test script run successful 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Removing coverage 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Removing cache 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Command: conda run -n pytest-dev__pytest__6.3 coverage run -m pytest -rA testing/test_tmpdir.py 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_tmpdir.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.3.0.dev425+g634312b14, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+___________________ ERROR collecting testing/test_tmpdir.py ____________________
+testing/test_tmpdir.py:37: in <module>
+    given_basetemp: Path | None = None,
+E   TypeError: unsupported operand type(s) for |: 'type' and 'NoneType'
+=========================== short test summary info ============================
+ERROR testing/test_tmpdir.py - TypeError: unsupported operand type(s) for |: ...
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.04s ===============================
+
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Return Code: 2 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] TestsTime: 0.5264503955841064 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Test script run successful 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Removing coverage 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Removing cache 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Command: conda run -n pytest-dev__pytest__6.3 coverage run -m pytest -rA testing/test_tmpdir.py 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_tmpdir.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.3.0.dev425+g634312b14, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+___________________ ERROR collecting testing/test_tmpdir.py ____________________
+testing/test_tmpdir.py:37: in <module>
+    given_basetemp: Path | None = None,
+E   TypeError: unsupported operand type(s) for |: 'type' and 'NoneType'
+=========================== short test summary info ============================
+ERROR testing/test_tmpdir.py - TypeError: unsupported operand type(s) for |: ...
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.04s ===============================
+
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Return Code: 2 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] TestsTime: 0.5152616500854492 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Test script run successful 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Removing coverage 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Removing cache 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Command: conda run -n pytest-dev__pytest__6.3 coverage run -m pytest -rA testing/test_tmpdir.py 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_tmpdir.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.3.0.dev425+g634312b14, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+___________________ ERROR collecting testing/test_tmpdir.py ____________________
+testing/test_tmpdir.py:37: in <module>
+    given_basetemp: Path | None = None,
+E   TypeError: unsupported operand type(s) for |: 'type' and 'NoneType'
+=========================== short test summary info ============================
+ERROR testing/test_tmpdir.py - TypeError: unsupported operand type(s) for |: ...
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.04s ===============================
+
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Return Code: 2 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] TestsTime: 0.5528852939605713 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Test script run successful 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Removing coverage 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Removing cache 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Command: conda run -n pytest-dev__pytest__6.3 coverage run -m pytest -rA testing/test_tmpdir.py 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_tmpdir.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.3.0.dev425+g634312b14, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+___________________ ERROR collecting testing/test_tmpdir.py ____________________
+testing/test_tmpdir.py:37: in <module>
+    given_basetemp: Path | None = None,
+E   TypeError: unsupported operand type(s) for |: 'type' and 'NoneType'
+=========================== short test summary info ============================
+ERROR testing/test_tmpdir.py - TypeError: unsupported operand type(s) for |: ...
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.04s ===============================
+
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Return Code: 2 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] TestsTime: 0.5472931861877441 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Test script run successful 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Removing coverage 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Removing cache 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Command: conda run -n pytest-dev__pytest__6.3 coverage run -m pytest -rA testing/test_tmpdir.py 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_tmpdir.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.3.0.dev425+g634312b14, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+___________________ ERROR collecting testing/test_tmpdir.py ____________________
+testing/test_tmpdir.py:37: in <module>
+    given_basetemp: Path | None = None,
+E   TypeError: unsupported operand type(s) for |: 'type' and 'NoneType'
+=========================== short test summary info ============================
+ERROR testing/test_tmpdir.py - TypeError: unsupported operand type(s) for |: ...
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.04s ===============================
+
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Return Code: 2 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] TestsTime: 0.5506141185760498 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Test script run successful 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Removing coverage 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Removing cache 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Command: conda run -n pytest-dev__pytest__6.3 coverage run -m pytest -rA testing/test_tmpdir.py 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_tmpdir.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.3.0.dev425+g634312b14, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+___________________ ERROR collecting testing/test_tmpdir.py ____________________
+testing/test_tmpdir.py:37: in <module>
+    given_basetemp: Path | None = None,
+E   TypeError: unsupported operand type(s) for |: 'type' and 'NoneType'
+=========================== short test summary info ============================
+ERROR testing/test_tmpdir.py - TypeError: unsupported operand type(s) for |: ...
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.04s ===============================
+
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Return Code: 2 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] TestsTime: 0.6212177276611328 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Test script run successful 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Removing coverage 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Removing cache 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Command: conda run -n pytest-dev__pytest__6.3 coverage run -m pytest -rA testing/test_tmpdir.py 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_tmpdir.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-6.3.0.dev425+g634312b14, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+___________________ ERROR collecting testing/test_tmpdir.py ____________________
+testing/test_tmpdir.py:37: in <module>
+    given_basetemp: Path | None = None,
+E   TypeError: unsupported operand type(s) for |: 'type' and 'NoneType'
+=========================== short test summary info ============================
+ERROR testing/test_tmpdir.py - TypeError: unsupported operand type(s) for |: ...
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.04s ===============================
+
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Return Code: 2 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] TestsTime: 0.5181190967559814 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Test script run successful 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Removing coverage 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] Removing cache 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] >>>>> Tests configfull pred
+ 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] TestsTime: 0.0 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] >>>>> Some Tests Failed 
+[pytest-dev__pytest__6.3] [pytest-dev__pytest-8365] >>>>> Unfiltered Tests Failed 

@@ -1,0 +1,739 @@
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Task Metadata:
+	- Instance ID: pytest-dev__pytest-10081
+	- Testbed: pytest-dev__pytest__7.2
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.11.8
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: git config --global --add safe.directory /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: git -c advice.detachedHead=false checkout da9a2b584eb7a6c7e924b2621ed0ddaeca0a7bea 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+Previous HEAD position was 572b5657d Merge pull request #10767 from alexhad6/fix-typo-in-python_api.py
+HEAD is now at da9a2b584 Merge pull request #10078 from nicoddemus/pathsep-9791
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-10081_gold_init.patch 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-10081_gold.patch 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+Checking patch src/_pytest/unittest.py...
+Applied patch src/_pytest/unittest.py cleanly.
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-10081_test_init.patch 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: git restore testing/test_unittest.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-10081_test.patch 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+Checking patch testing/test_unittest.py...
+Applied patch testing/test_unittest.py cleanly.
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/test_unittest.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_unittest.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+__________________ ERROR collecting testing/test_unittest.py ___________________
+testing/test_unittest.py:24: in <module>
+    class DummyRequest:
+testing/test_unittest.py:33: in DummyRequest
+    class MyTest(unittest.TestCase):
+E   NameError: name 'unittest' is not defined
+=========================== short test summary info ============================
+ERROR testing/test_unittest.py - NameError: name 'unittest' is not defined
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.13s ===============================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 2 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] TestsTime: 0.92598557472229 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/test_unittest.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_unittest.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+__________________ ERROR collecting testing/test_unittest.py ___________________
+testing/test_unittest.py:24: in <module>
+    class DummyRequest:
+testing/test_unittest.py:33: in DummyRequest
+    class MyTest(unittest.TestCase):
+E   NameError: name 'unittest' is not defined
+=========================== short test summary info ============================
+ERROR testing/test_unittest.py - NameError: name 'unittest' is not defined
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.05s ===============================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 2 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] TestsTime: 0.5765671730041504 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/test_unittest.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_unittest.py .                                               [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/test_unittest.py::test_is_skipped_detects_unittest_skip_marker
+============================== 1 passed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] TestsTime: 0.567155122756958 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/test_unittest.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_unittest.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_unittest.py F                                               [100%]
+
+=================================== FAILURES ===================================
+_________ test_make_xunit_fixture_calls_setup_and_teardown_and_cleanup _________
+Fixture "_unittest_setUpClass_fixture_test_make_xunit_fixture_calls_setup_and_teardown_and_cleanup.<locals>.Dummy" called directly. Fixtures are not meant to be called directly,
+but are created automatically when test functions request them as parameters.
+See https://docs.pytest.org/en/stable/explanation/fixtures.html for more information about fixtures, and
+https://docs.pytest.org/en/stable/deprecations.html#calling-fixtures-directly about how to update your code.
+=========================== short test summary info ============================
+FAILED testing/test_unittest.py::test_make_xunit_fixture_calls_setup_and_teardown_and_cleanup
+============================== 1 failed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 1 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] TestsTime: 0.5275804996490479 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/test_unittest.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_unittest.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_unittest.py F                                               [100%]
+
+=================================== FAILURES ===================================
+_________ test_make_xunit_fixture_handles_setup_exception_and_cleanup __________
+Fixture "_unittest_setup_method_fixture_test_make_xunit_fixture_handles_setup_exception_and_cleanup.<locals>.Dummy" called directly. Fixtures are not meant to be called directly,
+but are created automatically when test functions request them as parameters.
+See https://docs.pytest.org/en/stable/explanation/fixtures.html for more information about fixtures, and
+https://docs.pytest.org/en/stable/deprecations.html#calling-fixtures-directly about how to update your code.
+=========================== short test summary info ============================
+FAILED testing/test_unittest.py::test_make_xunit_fixture_handles_setup_exception_and_cleanup
+============================== 1 failed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 1 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] TestsTime: 0.5532124042510986 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/test_unittest.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_unittest.py .                                               [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/test_unittest.py::test_testcasefunction_runtest_sync_success
+============================== 1 passed in 0.23s ===============================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] TestsTime: 0.763986349105835 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/test_unittest.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_unittest.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_unittest.py F                                               [100%]
+
+=================================== FAILURES ===================================
+___________________ test_testcasefunction_runtest_async_path ___________________
+Direct construction of _pytest.unittest.TestCaseFunction has been deprecated, please use _pytest.unittest.TestCaseFunction.from_parent.
+See https://docs.pytest.org/en/stable/deprecations.html#node-construction-changed-to-node-from-parent for more details.
+=========================== short test summary info ============================
+FAILED testing/test_unittest.py::test_testcasefunction_runtest_async_path
+============================== 1 failed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 1 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] TestsTime: 0.5695834159851074 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/test_unittest.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_unittest.py .                                               [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/test_unittest.py::test_testcasefunction_runtest_usepdb_option
+============================== 1 passed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] TestsTime: 0.570451021194458 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] >>>>> Tests configfull pred
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Test Script: conda run -n pytest-dev__pytest__7.2  coverage run -m pytest -rA testing/test_unittest.py;
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/test_unittest.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 3 items
+
+testing/test_unittest.py ...                                             [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/test_unittest.py::test_is_skipped_detects_unittest_skip_marker
+PASSED testing/test_unittest.py::test_testcasefunction_runtest_sync_success
+PASSED testing/test_unittest.py::test_testcasefunction_runtest_usepdb_option
+============================== 3 passed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] TestsTime: 0.5462141036987305 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] 
+>>>>> All Tests Passed
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Current Working Directory: /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: conda run -n pytest-dev__pytest__7.2 coverage json -o coverage.json 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+Wrote JSON report to coverage.json
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] 
+CoverageLOG: 28.629032258064516%
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] 
+FunctionCoverageLOG: 6.666666666666667%
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Running mutation testing 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: conda run -n pytest-dev__pytest__7.2 cosmic-ray init mutation.toml mutation.sqlite 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: conda run -n pytest-dev__pytest__7.2 cosmic-ray exec mutation.toml mutation.sqlite 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: conda run -n pytest-dev__pytest__7.2 cr-rate mutation.sqlite --estimate --confidence 95.0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+93.75 93.75 93.75
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: conda run -n pytest-dev__pytest__7.2 cr-report mutation.sqlite 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+[job-id] d8dff8e55e9b4c0dbab8e20da89563b5
+src/_pytest/unittest.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] fb61c41b48c24c30af5adeb2b778a726
+src/_pytest/unittest.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] fde305b6c9be4317b7366e1b76bf5dca
+src/_pytest/unittest.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] 35e38f990aef40c58ab2297d6953a5d2
+src/_pytest/unittest.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 4954e61bb3ed4210b737e2d2230755f5
+src/_pytest/unittest.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 10ac499397fd402aa154f52f7ab9730a
+src/_pytest/unittest.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] cf9dc531190543c984ae1d3d46106b07
+src/_pytest/unittest.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] cdefb9b948a6456aa1a06ff8d9ae8b61
+src/_pytest/unittest.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 43cb4d12d77a47728c8c0c6cf0a15bfa
+src/_pytest/unittest.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] ac880de97a5a4e56bc68b74651a9ee55
+src/_pytest/unittest.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] cbb5c3f381c54d5c8985fb88b63a63ba
+src/_pytest/unittest.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] 6e6d20a3f7294cd8b5b67cbd245bd6d8
+src/_pytest/unittest.py core/ReplaceComparisonOperator_NotEq_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] f576456d0be64501a6be4747e06b2517
+src/_pytest/unittest.py core/ReplaceComparisonOperator_NotEq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 752e3793ea7b447988dac50421c9185d
+src/_pytest/unittest.py core/ReplaceComparisonOperator_NotEq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 8c40a4e6bffa440899e5d4c7d3571f29
+src/_pytest/unittest.py core/ReplaceComparisonOperator_NotEq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 908a9f85db92468b9e0c7a99092b2f0d
+src/_pytest/unittest.py core/ReplaceComparisonOperator_NotEq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 67bc3730e46b462b93cfe7e196498de3
+src/_pytest/unittest.py core/ReplaceComparisonOperator_NotEq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 1dc99ddb8fe44ff4a346d4a805419e8c
+src/_pytest/unittest.py core/ReplaceComparisonOperator_NotEq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] b8fab0d259c94434803ca2030042b4a0
+src/_pytest/unittest.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] a7cd9cac664f47ec8010f19ceb32ec48
+src/_pytest/unittest.py core/ReplaceComparisonOperator_Is_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 01bf97b954f3488bbfa9ed2e6d2d14e3
+src/_pytest/unittest.py core/ReplaceComparisonOperator_Is_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 4d930f723ae04eb0a9a03d3e2f67054c
+src/_pytest/unittest.py core/ReplaceComparisonOperator_Is_IsNot 3
+worker outcome: normal, test outcome: survived
+[job-id] d35b92ea98f14e298ca51281820ab9d0
+src/_pytest/unittest.py core/ReplaceComparisonOperator_Is_IsNot 4
+worker outcome: normal, test outcome: survived
+[job-id] 427c5dcb34ae432b972879e5a975cdbd
+src/_pytest/unittest.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 25a800027ecb43dcb8c663f77578b830
+src/_pytest/unittest.py core/ReplaceComparisonOperator_IsNot_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] d494a6d9528f4d3589ba8b5dd5e76d6c
+src/_pytest/unittest.py core/ReplaceComparisonOperator_IsNot_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] 711bfcb4f44b4fdeb5669fc694ff9fc4
+src/_pytest/unittest.py core/ReplaceComparisonOperator_IsNot_Is 3
+worker outcome: normal, test outcome: survived
+[job-id] ee39b5ef46a94352ad3bafe4fd411557
+src/_pytest/unittest.py core/ReplaceComparisonOperator_IsNot_Is 4
+worker outcome: normal, test outcome: survived
+[job-id] 1718c46b84b748a3a1edacf47248e4f4
+src/_pytest/unittest.py core/ReplaceComparisonOperator_IsNot_Is 5
+worker outcome: normal, test outcome: survived
+[job-id] 9031a73fade24b59a70c39450ebd2773
+src/_pytest/unittest.py core/ReplaceComparisonOperator_IsNot_Is 6
+worker outcome: normal, test outcome: survived
+[job-id] d2bfd4f56bdb4c78a1499303cc6210d6
+src/_pytest/unittest.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] 1b785fa5259047d1993e8d05cf38f9de
+src/_pytest/unittest.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] 42240499127c45e6bdcd0802265ab97a
+src/_pytest/unittest.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: normal, test outcome: survived
+[job-id] 99639e0536b14133b79e4c9be63b837d
+src/_pytest/unittest.py core/ReplaceUnaryOperator_Delete_Not 3
+worker outcome: normal, test outcome: survived
+[job-id] d60877bfc1b44ed5b12fc10a879ba4ba
+src/_pytest/unittest.py core/ReplaceUnaryOperator_Delete_Not 4
+worker outcome: normal, test outcome: survived
+[job-id] 314e4f2de89248229473316392fc858c
+src/_pytest/unittest.py core/ReplaceUnaryOperator_Delete_Not 5
+worker outcome: normal, test outcome: survived
+[job-id] 44f0e7ef8efe491aa87c41a3f366e12e
+src/_pytest/unittest.py core/ReplaceUnaryOperator_Delete_Not 6
+worker outcome: normal, test outcome: survived
+[job-id] c963f939c71e4ba3b1b9bf8e8eb89f69
+src/_pytest/unittest.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] 28f9312586604526bf7ddddb21a3435c
+src/_pytest/unittest.py core/AddNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 08f01f3bb30140c38e0dacc47beed87c
+src/_pytest/unittest.py core/AddNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 333514ef89fa4208b64531ce9ab96f7d
+src/_pytest/unittest.py core/AddNot 3
+worker outcome: normal, test outcome: survived
+[job-id] e98673b9526448d7badb6296ca4e36f3
+src/_pytest/unittest.py core/AddNot 4
+worker outcome: normal, test outcome: survived
+[job-id] c428a21802d84586b38b02515dd86907
+src/_pytest/unittest.py core/AddNot 5
+worker outcome: normal, test outcome: survived
+[job-id] be141b809b664682b7f443fec45d92b5
+src/_pytest/unittest.py core/AddNot 6
+worker outcome: normal, test outcome: survived
+[job-id] ab9dc578e3a545108dd8a945367dcc50
+src/_pytest/unittest.py core/AddNot 7
+worker outcome: normal, test outcome: survived
+[job-id] 482191a1e33f41b5b1c87f6ebabe5e00
+src/_pytest/unittest.py core/AddNot 8
+worker outcome: normal, test outcome: survived
+[job-id] b25221514c7e47b4a995ae1ee377c696
+src/_pytest/unittest.py core/AddNot 9
+worker outcome: normal, test outcome: survived
+[job-id] 10a7a06626754220a81a1287f6a58c42
+src/_pytest/unittest.py core/AddNot 10
+worker outcome: normal, test outcome: survived
+[job-id] df63a947af434750923b395d1ab32366
+src/_pytest/unittest.py core/AddNot 11
+worker outcome: normal, test outcome: survived
+[job-id] 725a34bcbf9f493d9b16335208d3cc72
+src/_pytest/unittest.py core/AddNot 12
+worker outcome: normal, test outcome: survived
+[job-id] f385f39cf830466e88744403d29ee681
+src/_pytest/unittest.py core/AddNot 13
+worker outcome: normal, test outcome: survived
+[job-id] d0db694a9a0a487b8cab97d7a56cdbf0
+src/_pytest/unittest.py core/AddNot 14
+worker outcome: normal, test outcome: survived
+[job-id] adcb446b1f2b42989a8ad8208523d95e
+src/_pytest/unittest.py core/AddNot 15
+worker outcome: normal, test outcome: survived
+[job-id] 818eff809c464b8a8f1ee3bbed47fa62
+src/_pytest/unittest.py core/AddNot 16
+worker outcome: normal, test outcome: survived
+[job-id] acd26d62cd0645a9889ad3f69daef22a
+src/_pytest/unittest.py core/AddNot 17
+worker outcome: normal, test outcome: survived
+[job-id] 80d8fe5c7acc4a24859a1c2f9abd2a94
+src/_pytest/unittest.py core/AddNot 18
+worker outcome: normal, test outcome: survived
+[job-id] 88b4ada52e894eaf974876c5423bfae5
+src/_pytest/unittest.py core/AddNot 19
+worker outcome: normal, test outcome: survived
+[job-id] f2d6e26c4317437b81dba926a3824817
+src/_pytest/unittest.py core/AddNot 20
+worker outcome: normal, test outcome: survived
+[job-id] 7e72e26b10e14acbb0624a854ad0eed9
+src/_pytest/unittest.py core/AddNot 21
+worker outcome: normal, test outcome: survived
+[job-id] da9156fef01d4d70aee6b049ba26dab0
+src/_pytest/unittest.py core/AddNot 22
+worker outcome: normal, test outcome: survived
+[job-id] 727aa4eea64a4f22882997aebdcb700a
+src/_pytest/unittest.py core/AddNot 23
+worker outcome: normal, test outcome: survived
+[job-id] 1682515161014f78b75e1ae25fd00b01
+src/_pytest/unittest.py core/AddNot 24
+worker outcome: normal, test outcome: survived
+[job-id] 47729077bfe643d4be01edf0d5415787
+src/_pytest/unittest.py core/AddNot 25
+worker outcome: normal, test outcome: survived
+[job-id] 5343aad6cc4f4b3e9eccd09a4a3f1fcd
+src/_pytest/unittest.py core/AddNot 26
+worker outcome: normal, test outcome: survived
+[job-id] f3dc094ef0ae47039b06f3ab69e7f60d
+src/_pytest/unittest.py core/AddNot 27
+worker outcome: normal, test outcome: survived
+[job-id] 96b8ed4e17c743bd952759e165891a05
+src/_pytest/unittest.py core/AddNot 28
+worker outcome: normal, test outcome: survived
+[job-id] b4ea6a8b080e40968e2ddeaad1a33dc9
+src/_pytest/unittest.py core/AddNot 29
+worker outcome: normal, test outcome: survived
+[job-id] 01d9893ec48940eaa953c5da237ff2ff
+src/_pytest/unittest.py core/AddNot 30
+worker outcome: normal, test outcome: killed
+[job-id] bbd576555ba44f7e978f67f3f2ea07cd
+src/_pytest/unittest.py core/AddNot 31
+worker outcome: normal, test outcome: survived
+[job-id] 93ae02e3195d4fd482eab1ef74dcb4c3
+src/_pytest/unittest.py core/AddNot 32
+worker outcome: normal, test outcome: killed
+[job-id] 5972caef02b845758424b66c676ff30c
+src/_pytest/unittest.py core/AddNot 33
+worker outcome: normal, test outcome: survived
+[job-id] d4cb9353674643aab92d5e05398de237
+src/_pytest/unittest.py core/AddNot 34
+worker outcome: normal, test outcome: survived
+[job-id] 537ba00aa25148a392953535dccffbe2
+src/_pytest/unittest.py core/AddNot 35
+worker outcome: normal, test outcome: survived
+[job-id] bdbca99e28df40b087690dbf1cf96538
+src/_pytest/unittest.py core/AddNot 36
+worker outcome: normal, test outcome: survived
+[job-id] 305e953559e44307bcd200dca08b2ec5
+src/_pytest/unittest.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: survived
+[job-id] b016ab4b0ea149eb94d3ce64995e0d13
+src/_pytest/unittest.py core/ReplaceTrueWithFalse 1
+worker outcome: normal, test outcome: survived
+[job-id] 2107fab845c343459d72934709683e3e
+src/_pytest/unittest.py core/ReplaceTrueWithFalse 2
+worker outcome: normal, test outcome: survived
+[job-id] 55e7652fe7ce425aadbe20e68687c786
+src/_pytest/unittest.py core/ReplaceTrueWithFalse 3
+worker outcome: normal, test outcome: survived
+[job-id] 1a74be2a76bf49fa821afe90b1214ed5
+src/_pytest/unittest.py core/ReplaceTrueWithFalse 4
+worker outcome: normal, test outcome: survived
+[job-id] 5ad616c5b3ac4626bf4bb6a4f54424ed
+src/_pytest/unittest.py core/ReplaceTrueWithFalse 5
+worker outcome: normal, test outcome: survived
+[job-id] 86b8bee62f4c48a8a970bacad70724f0
+src/_pytest/unittest.py core/ReplaceTrueWithFalse 6
+worker outcome: normal, test outcome: survived
+[job-id] 2b639e35743744e584814ba4ef5d52a0
+src/_pytest/unittest.py core/ReplaceTrueWithFalse 7
+worker outcome: normal, test outcome: survived
+[job-id] 0e7f4c0f0d7548c4b68ede2c334c218a
+src/_pytest/unittest.py core/ReplaceTrueWithFalse 8
+worker outcome: normal, test outcome: survived
+[job-id] 27adb72a57b24e0a86bcdcff517ed8c9
+src/_pytest/unittest.py core/ReplaceTrueWithFalse 9
+worker outcome: normal, test outcome: survived
+[job-id] 90fa039088bf4091bd8ba8aa986a2e46
+src/_pytest/unittest.py core/ReplaceTrueWithFalse 10
+worker outcome: normal, test outcome: survived
+[job-id] a72c8caba5b64990bc1d23d0b1e38632
+src/_pytest/unittest.py core/ReplaceTrueWithFalse 11
+worker outcome: normal, test outcome: survived
+[job-id] 9280899468d74b148b728c05c32657bc
+src/_pytest/unittest.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: survived
+[job-id] b42270a05c05499a9c91f1c1d9489ff4
+src/_pytest/unittest.py core/ReplaceFalseWithTrue 1
+worker outcome: normal, test outcome: survived
+[job-id] baf5c027923846dc822a4ca129ebd14c
+src/_pytest/unittest.py core/ReplaceFalseWithTrue 2
+worker outcome: normal, test outcome: survived
+[job-id] 59a7433ca8dc4d3fb7de6469d151a585
+src/_pytest/unittest.py core/ReplaceFalseWithTrue 3
+worker outcome: normal, test outcome: survived
+[job-id] 0bf5ca22ed9a427c8a91f6ac02e3adbf
+src/_pytest/unittest.py core/ReplaceFalseWithTrue 4
+worker outcome: normal, test outcome: survived
+[job-id] c692ccd10ee0490aabc68d3dcf41f1e6
+src/_pytest/unittest.py core/ReplaceFalseWithTrue 5
+worker outcome: normal, test outcome: killed
+[job-id] c52c53699fa24723a6c7d843f0d29b12
+src/_pytest/unittest.py core/ReplaceAndWithOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 4d0e782db1d04e15ae0964b22400e56f
+src/_pytest/unittest.py core/ReplaceAndWithOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 65d4e394947440628c15ccb2ddb172c5
+src/_pytest/unittest.py core/ReplaceAndWithOr 2
+worker outcome: normal, test outcome: killed
+[job-id] 81843629f8dd46b199225a65544117ac
+src/_pytest/unittest.py core/ReplaceAndWithOr 3
+worker outcome: normal, test outcome: killed
+[job-id] a8428603659842c2b869488e4380ec66
+src/_pytest/unittest.py core/ReplaceAndWithOr 4
+worker outcome: normal, test outcome: survived
+[job-id] 62fcf2701ef2445b9523f504cd285d10
+src/_pytest/unittest.py core/ReplaceOrWithAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 58085f79650e47fea27ada255a16e64b
+src/_pytest/unittest.py core/ReplaceOrWithAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] bdd008045075419c976af41eed08ae4d
+src/_pytest/unittest.py core/ReplaceContinueWithBreak 0
+worker outcome: normal, test outcome: survived
+[job-id] 570d79901d9e4b70bae44ee0cb257de2
+src/_pytest/unittest.py core/ExceptionReplacer 0
+worker outcome: normal, test outcome: killed
+[job-id] 758a2af6dd094eebb616d32b879bb5b1
+src/_pytest/unittest.py core/ExceptionReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] 730323c11ec24871a1aa5dd5bb3d2d28
+src/_pytest/unittest.py core/ExceptionReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] 9c57da11c4044dad8d5151c37a49ddbc
+src/_pytest/unittest.py core/ExceptionReplacer 3
+worker outcome: exception, test outcome: incompetent
+[job-id] 40a65d377a9849bdb7bbaee38365d1d3
+src/_pytest/unittest.py core/ExceptionReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] 8733c4a0c30c452090dbb52d5b28d29b
+src/_pytest/unittest.py core/ExceptionReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] ecc912eb41b14f9b9f0dad21b828e0e2
+src/_pytest/unittest.py core/ExceptionReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] 61b6321677d6418496a79eabc6983c3d
+src/_pytest/unittest.py core/ExceptionReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] 1a11a8add1944211a10f6586aa0f4f70
+src/_pytest/unittest.py core/ExceptionReplacer 8
+worker outcome: normal, test outcome: survived
+[job-id] a8f91df17e024ef19a279080fd39ff6f
+src/_pytest/unittest.py core/ExceptionReplacer 9
+worker outcome: normal, test outcome: survived
+[job-id] d8583ad2cbd94627b62420c69fcdb3f5
+src/_pytest/unittest.py core/ExceptionReplacer 10
+worker outcome: normal, test outcome: survived
+[job-id] ff6bdf26f0ee407caa38f5f684e0985b
+src/_pytest/unittest.py core/ExceptionReplacer 11
+worker outcome: normal, test outcome: survived
+[job-id] 3aa0ee282b46488993e5ca2ecd8be30d
+src/_pytest/unittest.py core/ExceptionReplacer 12
+worker outcome: normal, test outcome: survived
+[job-id] 546412a3f7df412ba56882bc575a976f
+src/_pytest/unittest.py core/ExceptionReplacer 13
+worker outcome: normal, test outcome: survived
+[job-id] 9359b023504641cf8e54d082d1ee7b05
+src/_pytest/unittest.py core/NumberReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] 62b59407fb5c455c97816deebfd61c84
+src/_pytest/unittest.py core/NumberReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] 3f0101e152d64173a7699dcebc42f335
+src/_pytest/unittest.py core/NumberReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] f245b5e9578b497eb7153b1527331a8e
+src/_pytest/unittest.py core/NumberReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] 9a926f8ff40146f7bab7b7b3119e131a
+src/_pytest/unittest.py core/NumberReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] 8c421a705f10404e8777ac1a6bc694cc
+src/_pytest/unittest.py core/NumberReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] 10144df5d36a48aba7e1735192b1f84f
+src/_pytest/unittest.py core/NumberReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] 62f678c824114e7898df6aeb7cbb43b2
+src/_pytest/unittest.py core/NumberReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] 459abe28334745d3861c020509a63596
+src/_pytest/unittest.py core/NumberReplacer 8
+worker outcome: normal, test outcome: survived
+[job-id] c8b24dcdd21d4ce7abbb802ed72034d1
+src/_pytest/unittest.py core/NumberReplacer 9
+worker outcome: normal, test outcome: survived
+[job-id] 250fc1974f6d42348b77d3675cdf65b4
+src/_pytest/unittest.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: survived
+[job-id] 3d574f55ba7c4d05be9207fc06709a40
+src/_pytest/unittest.py core/RemoveDecorator 1
+worker outcome: normal, test outcome: survived
+[job-id] 2d506230b6e943c38db843d85de6c614
+src/_pytest/unittest.py core/RemoveDecorator 2
+worker outcome: normal, test outcome: survived
+[job-id] 342637c965d94dfcb8467e7440fbefff
+src/_pytest/unittest.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: survived
+total jobs: 128
+complete: 128 (100.00%)
+surviving mutants: 120 (93.75%)
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] 
+MutationNum: 128 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] 
+MutationLOG: 6.25% 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] 
+MutationUncertainty: 0.0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Command: conda run -n pytest-dev__pytest__7.2 python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'src/_pytest/unittest.py'
+        and ((301 <= spec.start_pos[0] <= 332))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Std. Output:
+FUNC_MUTATION_RESULT 0.0 8
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] 
+FunctionMutationLOG: 0.0% 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] 
+FunctionMutationNum: 8 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10081] >>>>> Unfiltered Tests Failed 

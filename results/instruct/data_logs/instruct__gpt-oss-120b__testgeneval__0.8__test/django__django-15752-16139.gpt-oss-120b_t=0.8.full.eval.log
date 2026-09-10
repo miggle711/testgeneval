@@ -1,0 +1,488 @@
+[django__django__4.2] [django__django-15752] Task Metadata:
+	- Instance ID: django__django-15752
+	- Testbed: django__django__4.2
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.9.19
+ 
+[django__django__4.2] [django__django-15752] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__4.2] [django__django-15752] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15752] Std. Output:
+ 
+[django__django__4.2] [django__django-15752] Return Code: 0 
+[django__django__4.2] [django__django-15752] Command: git -c advice.detachedHead=false checkout a3a1290d47326c3f87824b3cf7ca969cb0d364aa 
+[django__django__4.2] [django__django-15752] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15752] Std. Output:
+Previous HEAD position was 0fbdb9784d Fixed #23718 -- Doc'd that test mirrors require TransactionTestCase.
+HEAD is now at a3a1290d47 Refs #27236 -- Moved models with Meta.index_together inside of test methods.
+ 
+[django__django__4.2] [django__django-15752] Return Code: 0 
+[django__django__4.2] [django__django-15752] Command: git diff > /opt/temp_django__django-15752_gold_init.patch 
+[django__django__4.2] [django__django-15752] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15752] Std. Output:
+ 
+[django__django__4.2] [django__django-15752] Return Code: 0 
+[django__django__4.2] [django__django-15752] Command: git apply -v /opt/temp_django__django-15752_gold.patch 
+[django__django__4.2] [django__django-15752] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15752] Std. Output:
+Checking patch django/contrib/auth/base_user.py...
+Applied patch django/contrib/auth/base_user.py cleanly.
+ 
+[django__django__4.2] [django__django-15752] Return Code: 0 
+[django__django__4.2] [django__django-15752] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__4.2] [django__django-15752] Command: git diff > /opt/temp_django__django-15752_test_init.patch 
+[django__django__4.2] [django__django-15752] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15752] Std. Output:
+ 
+[django__django__4.2] [django__django-15752] Return Code: 0 
+[django__django__4.2] [django__django-15752] Command: git restore tests/auth_tests/test_models.py 
+[django__django__4.2] [django__django-15752] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15752] Std. Output:
+ 
+[django__django__4.2] [django__django-15752] Return Code: 0 
+[django__django__4.2] [django__django-15752] Command: git apply -v /opt/temp_django__django-15752_test.patch 
+[django__django__4.2] [django__django-15752] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.2] [django__django-15752] Std. Output:
+Checking patch tests/auth_tests/test_models.py...
+Applied patch tests/auth_tests/test_models.py cleanly.
+ 
+[django__django__4.2] [django__django-15752] Return Code: 0 
+[django__django__4.2] [django__django-15752] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__4.2] [django__django-15752] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_models 
+[django__django__4.2] [django__django-15752] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.2] [django__django-15752] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 766, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 425, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 1052, in run_tests
+    old_config = self.setup_databases(
+  File "/opt/django__django/django/test/runner.py", line 948, in setup_databases
+    return _setup_databases(
+  File "/opt/django__django/django/test/utils.py", line 220, in setup_databases
+    connection.creation.create_test_db(
+  File "/opt/django__django/django/db/backends/base/creation.py", line 78, in create_test_db
+    call_command(
+  File "/opt/django__django/django/core/management/__init__.py", line 198, in call_command
+    return command.execute(*args, **defaults)
+  File "/opt/django__django/django/core/management/base.py", line 448, in execute
+    output = self.handle(*args, **options)
+  File "/opt/django__django/django/core/management/base.py", line 96, in wrapper
+    res = handle_func(*args, **kwargs)
+  File "/opt/django__django/django/core/management/commands/migrate.py", line 295, in handle
+    pre_migrate_apps = pre_migrate_state.apps
+  File "/opt/django__django/django/utils/functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/opt/django__django/django/db/migrations/state.py", line 566, in apps
+    return StateApps(self.real_apps, self.models)
+  File "/opt/django__django/django/db/migrations/state.py", line 627, in __init__
+    self.render_multiple([*models.values(), *self.real_models])
+  File "/opt/django__django/django/db/migrations/state.py", line 669, in render_multiple
+    raise InvalidBasesError(
+django.db.migrations.exceptions.InvalidBasesError: Cannot resolve bases for [<ModelState: 'auth_tests.ConcreteUserWithEmailField'>]
+This can happen if you are inheriting models from an app with migrations (e.g. contrib.auth)
+ in an app with no migrations; see https://docs.djangoproject.com/en/dev/topics/migrations/#dependencies for more
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+ 
+[django__django__4.2] [django__django-15752] Return Code: 1 
+[django__django__4.2] [django__django-15752] TestsTime: 0.8186805248260498 
+[django__django__4.2] [django__django-15752] Test script run successful 
+[django__django__4.2] [django__django-15752] Removing coverage 
+[django__django__4.2] [django__django-15752] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_models 
+[django__django__4.2] [django__django-15752] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.2] [django__django-15752] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 766, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 425, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 1052, in run_tests
+    old_config = self.setup_databases(
+  File "/opt/django__django/django/test/runner.py", line 948, in setup_databases
+    return _setup_databases(
+  File "/opt/django__django/django/test/utils.py", line 220, in setup_databases
+    connection.creation.create_test_db(
+  File "/opt/django__django/django/db/backends/base/creation.py", line 78, in create_test_db
+    call_command(
+  File "/opt/django__django/django/core/management/__init__.py", line 198, in call_command
+    return command.execute(*args, **defaults)
+  File "/opt/django__django/django/core/management/base.py", line 448, in execute
+    output = self.handle(*args, **options)
+  File "/opt/django__django/django/core/management/base.py", line 96, in wrapper
+    res = handle_func(*args, **kwargs)
+  File "/opt/django__django/django/core/management/commands/migrate.py", line 295, in handle
+    pre_migrate_apps = pre_migrate_state.apps
+  File "/opt/django__django/django/utils/functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/opt/django__django/django/db/migrations/state.py", line 566, in apps
+    return StateApps(self.real_apps, self.models)
+  File "/opt/django__django/django/db/migrations/state.py", line 627, in __init__
+    self.render_multiple([*models.values(), *self.real_models])
+  File "/opt/django__django/django/db/migrations/state.py", line 669, in render_multiple
+    raise InvalidBasesError(
+django.db.migrations.exceptions.InvalidBasesError: Cannot resolve bases for [<ModelState: 'auth_tests.ConcreteUserWithEmailField'>]
+This can happen if you are inheriting models from an app with migrations (e.g. contrib.auth)
+ in an app with no migrations; see https://docs.djangoproject.com/en/dev/topics/migrations/#dependencies for more
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+ 
+[django__django__4.2] [django__django-15752] Return Code: 1 
+[django__django__4.2] [django__django-15752] TestsTime: 0.41969799995422363 
+[django__django__4.2] [django__django-15752] Test script run successful 
+[django__django__4.2] [django__django-15752] Removing coverage 
+[django__django__4.2] [django__django-15752] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_models 
+[django__django__4.2] [django__django-15752] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.2] [django__django-15752] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 766, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 425, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 1052, in run_tests
+    old_config = self.setup_databases(
+  File "/opt/django__django/django/test/runner.py", line 948, in setup_databases
+    return _setup_databases(
+  File "/opt/django__django/django/test/utils.py", line 220, in setup_databases
+    connection.creation.create_test_db(
+  File "/opt/django__django/django/db/backends/base/creation.py", line 78, in create_test_db
+    call_command(
+  File "/opt/django__django/django/core/management/__init__.py", line 198, in call_command
+    return command.execute(*args, **defaults)
+  File "/opt/django__django/django/core/management/base.py", line 448, in execute
+    output = self.handle(*args, **options)
+  File "/opt/django__django/django/core/management/base.py", line 96, in wrapper
+    res = handle_func(*args, **kwargs)
+  File "/opt/django__django/django/core/management/commands/migrate.py", line 295, in handle
+    pre_migrate_apps = pre_migrate_state.apps
+  File "/opt/django__django/django/utils/functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/opt/django__django/django/db/migrations/state.py", line 566, in apps
+    return StateApps(self.real_apps, self.models)
+  File "/opt/django__django/django/db/migrations/state.py", line 627, in __init__
+    self.render_multiple([*models.values(), *self.real_models])
+  File "/opt/django__django/django/db/migrations/state.py", line 669, in render_multiple
+    raise InvalidBasesError(
+django.db.migrations.exceptions.InvalidBasesError: Cannot resolve bases for [<ModelState: 'auth_tests.ConcreteUserWithEmailField'>]
+This can happen if you are inheriting models from an app with migrations (e.g. contrib.auth)
+ in an app with no migrations; see https://docs.djangoproject.com/en/dev/topics/migrations/#dependencies for more
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+ 
+[django__django__4.2] [django__django-15752] Return Code: 1 
+[django__django__4.2] [django__django-15752] TestsTime: 0.4459810256958008 
+[django__django__4.2] [django__django-15752] Test script run successful 
+[django__django__4.2] [django__django-15752] Removing coverage 
+[django__django__4.2] [django__django-15752] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_models 
+[django__django__4.2] [django__django-15752] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.2] [django__django-15752] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 766, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 425, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 1052, in run_tests
+    old_config = self.setup_databases(
+  File "/opt/django__django/django/test/runner.py", line 948, in setup_databases
+    return _setup_databases(
+  File "/opt/django__django/django/test/utils.py", line 220, in setup_databases
+    connection.creation.create_test_db(
+  File "/opt/django__django/django/db/backends/base/creation.py", line 78, in create_test_db
+    call_command(
+  File "/opt/django__django/django/core/management/__init__.py", line 198, in call_command
+    return command.execute(*args, **defaults)
+  File "/opt/django__django/django/core/management/base.py", line 448, in execute
+    output = self.handle(*args, **options)
+  File "/opt/django__django/django/core/management/base.py", line 96, in wrapper
+    res = handle_func(*args, **kwargs)
+  File "/opt/django__django/django/core/management/commands/migrate.py", line 295, in handle
+    pre_migrate_apps = pre_migrate_state.apps
+  File "/opt/django__django/django/utils/functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/opt/django__django/django/db/migrations/state.py", line 566, in apps
+    return StateApps(self.real_apps, self.models)
+  File "/opt/django__django/django/db/migrations/state.py", line 627, in __init__
+    self.render_multiple([*models.values(), *self.real_models])
+  File "/opt/django__django/django/db/migrations/state.py", line 669, in render_multiple
+    raise InvalidBasesError(
+django.db.migrations.exceptions.InvalidBasesError: Cannot resolve bases for [<ModelState: 'auth_tests.ConcreteUserWithEmailField'>]
+This can happen if you are inheriting models from an app with migrations (e.g. contrib.auth)
+ in an app with no migrations; see https://docs.djangoproject.com/en/dev/topics/migrations/#dependencies for more
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+ 
+[django__django__4.2] [django__django-15752] Return Code: 1 
+[django__django__4.2] [django__django-15752] TestsTime: 0.41167354583740234 
+[django__django__4.2] [django__django-15752] Test script run successful 
+[django__django__4.2] [django__django-15752] Removing coverage 
+[django__django__4.2] [django__django-15752] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_models 
+[django__django__4.2] [django__django-15752] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.2] [django__django-15752] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 766, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 425, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 1052, in run_tests
+    old_config = self.setup_databases(
+  File "/opt/django__django/django/test/runner.py", line 948, in setup_databases
+    return _setup_databases(
+  File "/opt/django__django/django/test/utils.py", line 220, in setup_databases
+    connection.creation.create_test_db(
+  File "/opt/django__django/django/db/backends/base/creation.py", line 78, in create_test_db
+    call_command(
+  File "/opt/django__django/django/core/management/__init__.py", line 198, in call_command
+    return command.execute(*args, **defaults)
+  File "/opt/django__django/django/core/management/base.py", line 448, in execute
+    output = self.handle(*args, **options)
+  File "/opt/django__django/django/core/management/base.py", line 96, in wrapper
+    res = handle_func(*args, **kwargs)
+  File "/opt/django__django/django/core/management/commands/migrate.py", line 295, in handle
+    pre_migrate_apps = pre_migrate_state.apps
+  File "/opt/django__django/django/utils/functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/opt/django__django/django/db/migrations/state.py", line 566, in apps
+    return StateApps(self.real_apps, self.models)
+  File "/opt/django__django/django/db/migrations/state.py", line 627, in __init__
+    self.render_multiple([*models.values(), *self.real_models])
+  File "/opt/django__django/django/db/migrations/state.py", line 669, in render_multiple
+    raise InvalidBasesError(
+django.db.migrations.exceptions.InvalidBasesError: Cannot resolve bases for [<ModelState: 'auth_tests.ConcreteUserWithEmailField'>]
+This can happen if you are inheriting models from an app with migrations (e.g. contrib.auth)
+ in an app with no migrations; see https://docs.djangoproject.com/en/dev/topics/migrations/#dependencies for more
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+ 
+[django__django__4.2] [django__django-15752] Return Code: 1 
+[django__django__4.2] [django__django-15752] TestsTime: 0.44431138038635254 
+[django__django__4.2] [django__django-15752] Test script run successful 
+[django__django__4.2] [django__django-15752] Removing coverage 
+[django__django__4.2] [django__django-15752] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_models 
+[django__django__4.2] [django__django-15752] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.2] [django__django-15752] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 766, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 425, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 1052, in run_tests
+    old_config = self.setup_databases(
+  File "/opt/django__django/django/test/runner.py", line 948, in setup_databases
+    return _setup_databases(
+  File "/opt/django__django/django/test/utils.py", line 220, in setup_databases
+    connection.creation.create_test_db(
+  File "/opt/django__django/django/db/backends/base/creation.py", line 78, in create_test_db
+    call_command(
+  File "/opt/django__django/django/core/management/__init__.py", line 198, in call_command
+    return command.execute(*args, **defaults)
+  File "/opt/django__django/django/core/management/base.py", line 448, in execute
+    output = self.handle(*args, **options)
+  File "/opt/django__django/django/core/management/base.py", line 96, in wrapper
+    res = handle_func(*args, **kwargs)
+  File "/opt/django__django/django/core/management/commands/migrate.py", line 295, in handle
+    pre_migrate_apps = pre_migrate_state.apps
+  File "/opt/django__django/django/utils/functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/opt/django__django/django/db/migrations/state.py", line 566, in apps
+    return StateApps(self.real_apps, self.models)
+  File "/opt/django__django/django/db/migrations/state.py", line 627, in __init__
+    self.render_multiple([*models.values(), *self.real_models])
+  File "/opt/django__django/django/db/migrations/state.py", line 669, in render_multiple
+    raise InvalidBasesError(
+django.db.migrations.exceptions.InvalidBasesError: Cannot resolve bases for [<ModelState: 'auth_tests.ConcreteUserWithEmailField'>]
+This can happen if you are inheriting models from an app with migrations (e.g. contrib.auth)
+ in an app with no migrations; see https://docs.djangoproject.com/en/dev/topics/migrations/#dependencies for more
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+ 
+[django__django__4.2] [django__django-15752] Return Code: 1 
+[django__django__4.2] [django__django-15752] TestsTime: 0.40938496589660645 
+[django__django__4.2] [django__django-15752] Test script run successful 
+[django__django__4.2] [django__django-15752] Removing coverage 
+[django__django__4.2] [django__django-15752] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_models 
+[django__django__4.2] [django__django-15752] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.2] [django__django-15752] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 766, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 425, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 1052, in run_tests
+    old_config = self.setup_databases(
+  File "/opt/django__django/django/test/runner.py", line 948, in setup_databases
+    return _setup_databases(
+  File "/opt/django__django/django/test/utils.py", line 220, in setup_databases
+    connection.creation.create_test_db(
+  File "/opt/django__django/django/db/backends/base/creation.py", line 78, in create_test_db
+    call_command(
+  File "/opt/django__django/django/core/management/__init__.py", line 198, in call_command
+    return command.execute(*args, **defaults)
+  File "/opt/django__django/django/core/management/base.py", line 448, in execute
+    output = self.handle(*args, **options)
+  File "/opt/django__django/django/core/management/base.py", line 96, in wrapper
+    res = handle_func(*args, **kwargs)
+  File "/opt/django__django/django/core/management/commands/migrate.py", line 295, in handle
+    pre_migrate_apps = pre_migrate_state.apps
+  File "/opt/django__django/django/utils/functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/opt/django__django/django/db/migrations/state.py", line 566, in apps
+    return StateApps(self.real_apps, self.models)
+  File "/opt/django__django/django/db/migrations/state.py", line 627, in __init__
+    self.render_multiple([*models.values(), *self.real_models])
+  File "/opt/django__django/django/db/migrations/state.py", line 669, in render_multiple
+    raise InvalidBasesError(
+django.db.migrations.exceptions.InvalidBasesError: Cannot resolve bases for [<ModelState: 'auth_tests.ConcreteUserWithEmailField'>]
+This can happen if you are inheriting models from an app with migrations (e.g. contrib.auth)
+ in an app with no migrations; see https://docs.djangoproject.com/en/dev/topics/migrations/#dependencies for more
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+ 
+[django__django__4.2] [django__django-15752] Return Code: 1 
+[django__django__4.2] [django__django-15752] TestsTime: 0.33412909507751465 
+[django__django__4.2] [django__django-15752] Test script run successful 
+[django__django__4.2] [django__django-15752] Removing coverage 
+[django__django__4.2] [django__django-15752] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_models 
+[django__django__4.2] [django__django-15752] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.2] [django__django-15752] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 766, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 425, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 1052, in run_tests
+    old_config = self.setup_databases(
+  File "/opt/django__django/django/test/runner.py", line 948, in setup_databases
+    return _setup_databases(
+  File "/opt/django__django/django/test/utils.py", line 220, in setup_databases
+    connection.creation.create_test_db(
+  File "/opt/django__django/django/db/backends/base/creation.py", line 78, in create_test_db
+    call_command(
+  File "/opt/django__django/django/core/management/__init__.py", line 198, in call_command
+    return command.execute(*args, **defaults)
+  File "/opt/django__django/django/core/management/base.py", line 448, in execute
+    output = self.handle(*args, **options)
+  File "/opt/django__django/django/core/management/base.py", line 96, in wrapper
+    res = handle_func(*args, **kwargs)
+  File "/opt/django__django/django/core/management/commands/migrate.py", line 295, in handle
+    pre_migrate_apps = pre_migrate_state.apps
+  File "/opt/django__django/django/utils/functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/opt/django__django/django/db/migrations/state.py", line 566, in apps
+    return StateApps(self.real_apps, self.models)
+  File "/opt/django__django/django/db/migrations/state.py", line 627, in __init__
+    self.render_multiple([*models.values(), *self.real_models])
+  File "/opt/django__django/django/db/migrations/state.py", line 669, in render_multiple
+    raise InvalidBasesError(
+django.db.migrations.exceptions.InvalidBasesError: Cannot resolve bases for [<ModelState: 'auth_tests.ConcreteUserWithEmailField'>]
+This can happen if you are inheriting models from an app with migrations (e.g. contrib.auth)
+ in an app with no migrations; see https://docs.djangoproject.com/en/dev/topics/migrations/#dependencies for more
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+ 
+[django__django__4.2] [django__django-15752] Return Code: 1 
+[django__django__4.2] [django__django-15752] TestsTime: 0.3896489143371582 
+[django__django__4.2] [django__django-15752] Test script run successful 
+[django__django__4.2] [django__django-15752] Removing coverage 
+[django__django__4.2] [django__django-15752] Command: coverage run ./tests/runtests.py --verbosity 2 auth_tests.test_models 
+[django__django__4.2] [django__django-15752] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.2] [django__django-15752] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 766, in <module>
+    failures = django_tests(
+  File "/opt/django__django/tests/runtests.py", line 425, in django_tests
+    failures = test_runner.run_tests(test_labels)
+  File "/opt/django__django/django/test/runner.py", line 1052, in run_tests
+    old_config = self.setup_databases(
+  File "/opt/django__django/django/test/runner.py", line 948, in setup_databases
+    return _setup_databases(
+  File "/opt/django__django/django/test/utils.py", line 220, in setup_databases
+    connection.creation.create_test_db(
+  File "/opt/django__django/django/db/backends/base/creation.py", line 78, in create_test_db
+    call_command(
+  File "/opt/django__django/django/core/management/__init__.py", line 198, in call_command
+    return command.execute(*args, **defaults)
+  File "/opt/django__django/django/core/management/base.py", line 448, in execute
+    output = self.handle(*args, **options)
+  File "/opt/django__django/django/core/management/base.py", line 96, in wrapper
+    res = handle_func(*args, **kwargs)
+  File "/opt/django__django/django/core/management/commands/migrate.py", line 295, in handle
+    pre_migrate_apps = pre_migrate_state.apps
+  File "/opt/django__django/django/utils/functional.py", line 57, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/opt/django__django/django/db/migrations/state.py", line 566, in apps
+    return StateApps(self.real_apps, self.models)
+  File "/opt/django__django/django/db/migrations/state.py", line 627, in __init__
+    self.render_multiple([*models.values(), *self.real_models])
+  File "/opt/django__django/django/db/migrations/state.py", line 669, in render_multiple
+    raise InvalidBasesError(
+django.db.migrations.exceptions.InvalidBasesError: Cannot resolve bases for [<ModelState: 'auth_tests.ConcreteUserWithEmailField'>]
+This can happen if you are inheriting models from an app with migrations (e.g. contrib.auth)
+ in an app with no migrations; see https://docs.djangoproject.com/en/dev/topics/migrations/#dependencies for more
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application auth_tests
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, auth_tests, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, sites
+ 
+[django__django__4.2] [django__django-15752] Return Code: 1 
+[django__django__4.2] [django__django-15752] TestsTime: 0.4301013946533203 
+[django__django__4.2] [django__django-15752] Test script run successful 
+[django__django__4.2] [django__django-15752] Removing coverage 
+[django__django__4.2] [django__django-15752] >>>>> Tests configfull pred
+ 
+[django__django__4.2] [django__django-15752] TestsTime: 0.0 
+[django__django__4.2] [django__django-15752] >>>>> Some Tests Failed 
+[django__django__4.2] [django__django-15752] >>>>> Unfiltered Tests Failed 

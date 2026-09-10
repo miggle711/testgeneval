@@ -1,0 +1,1053 @@
+[django__django__4.0] [django__django-14792] Task Metadata:
+	- Instance ID: django__django-14792
+	- Testbed: django__django__4.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.8.19
+ 
+[django__django__4.0] [django__django-14792] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14792] Std. Output:
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] Command: git -c advice.detachedHead=false checkout d89f976bddb49fb168334960acc8979c3de991fa 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14792] Std. Output:
+Previous HEAD position was 475cffd1d6 Fixed typo in docs/intro/reusable-apps.txt.
+HEAD is now at d89f976bdd Fixed #33054 -- Made TestCase.captureOnCommitCallbacks() capture callbacks recursively.
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] Command: git diff > /opt/temp_django__django-14792_gold_init.patch 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14792] Std. Output:
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] Command: git apply -v /opt/temp_django__django-14792_gold.patch 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14792] Std. Output:
+Checking patch django/utils/timezone.py...
+Applied patch django/utils/timezone.py cleanly.
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__4.0] [django__django-14792] Command: git diff > /opt/temp_django__django-14792_test_init.patch 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14792] Std. Output:
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] Command: git restore tests/utils_tests/test_timezone.py 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14792] Std. Output:
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] Command: git apply -v /opt/temp_django__django-14792_test.patch 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14792] Std. Output:
+Checking patch tests/utils_tests/test_timezone.py...
+Applied patch tests/utils_tests/test_timezone.py cleanly.
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_get_timezone_name_fixed_offset (utils_tests.test_timezone.TimezoneUtilsTests)
+``_get_timezone_name`` should return the name of a fixed‑offset timezone ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 0.6440024375915527 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_get_timezone_name_pytz_zone (utils_tests.test_timezone.TimezoneUtilsTests)
+For a pytz zone ``_get_timezone_name`` should return its tzname. ... FAIL
+
+======================================================================
+FAIL: test_get_timezone_name_pytz_zone (utils_tests.test_timezone.TimezoneUtilsTests)
+For a pytz zone ``_get_timezone_name`` should return its tzname.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/tests/utils_tests/test_timezone.py", line 36, in test_get_timezone_name_pytz_zone
+    self.assertEqual(tz._get_timezone_name(ny), ny.tzname(dt))
+AssertionError: 'America/New_York' != 'LMT'
+- America/New_York
++ LMT
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.066s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 1 
+[django__django__4.0] [django__django-14792] TestsTime: 0.5197734832763672 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_get_fixed_timezone_from_minutes_and_timedelta (utils_tests.test_timezone.TimezoneUtilsTests)
+``get_fixed_timezone`` must accept both integer minutes and ``timedelta``. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 0.35958337783813477 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_get_default_timezone_respects_settings (utils_tests.test_timezone.TimezoneUtilsTests)
+``get_default_timezone`` should reflect ``settings.TIME_ZONE``. ... FAIL
+
+======================================================================
+FAIL: test_get_default_timezone_respects_settings (utils_tests.test_timezone.TimezoneUtilsTests)
+``get_default_timezone`` should reflect ``settings.TIME_ZONE``.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/utils.py", line 437, in inner
+    return func(*args, **kwargs)
+  File "/opt/django__django/tests/utils_tests/test_timezone.py", line 37, in test_get_default_timezone_respects_settings
+    self.assertEqual(tz.get_default_timezone_name(), "IST")  # IST is the tzname for Kolkata
+AssertionError: 'Asia/Kolkata' != 'IST'
+- Asia/Kolkata
++ IST
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.131s
+
+FAILED (failures=1)
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 1 
+[django__django__4.0] [django__django-14792] TestsTime: 0.6218805313110352 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_activate_deactivate_with_tzinfo_and_string (utils_tests.test_timezone.TimezoneUtilsTests)
+``activate`` should accept both tzinfo objects and zone names. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.016s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 0.48279905319213867 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_activate_invalid_argument_raises (utils_tests.test_timezone.TimezoneUtilsTests)
+Providing a non‑tzinfo, non‑string raises ``ValueError``. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 0.39183568954467773 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_override_context_manager_restores_previous (utils_tests.test_timezone.TimezoneUtilsTests)
+``override`` must restore the previous timezone after exit. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 0.368823766708374 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_now_aware_when_use_tz_true (utils_tests.test_timezone.TimezoneUtilsTests)
+When ``USE_TZ`` is True, ``now`` returns an aware datetime in UTC. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 0.3611879348754883 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_now_naive_when_use_tz_false (utils_tests.test_timezone.TimezoneUtilsTests)
+When ``USE_TZ`` is False, ``now`` returns a naive datetime. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 0.6784446239471436 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_localtime_converts_aware_datetime (utils_tests.test_timezone.TimezoneUtilsTests)
+``localtime`` should convert an aware datetime to the active timezone. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 1.112s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 1.918064832687378 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_localtime_raises_on_naive (utils_tests.test_timezone.TimezoneUtilsTests)
+Calling ``localtime`` with a naive datetime raises ``ValueError``. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 1.025224208831787 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_localdate_returns_date_component (utils_tests.test_timezone.TimezoneUtilsTests)
+``localdate`` returns the date part of the localized datetime. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 0.3500988483428955 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_make_aware_with_pytz_zone (utils_tests.test_timezone.TimezoneUtilsTests)
+``make_aware`` should correctly localize a naive datetime using a pytz zone. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.293s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 1.052297830581665 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_make_aware_with_fixed_offset (utils_tests.test_timezone.TimezoneUtilsTests)
+``make_aware`` should work with a non‑pytz fixed offset timezone. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 0.4041266441345215 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_make_aware_raises_on_already_aware (utils_tests.test_timezone.TimezoneUtilsTests)
+Providing an aware datetime to ``make_aware`` raises ``ValueError``. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.009s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 0.40654540061950684 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_make_naive_converts_to_naive (utils_tests.test_timezone.TimezoneUtilsTests)
+``make_naive`` should convert an aware datetime to naive in the given tz. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.690s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 1.2473962306976318 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_make_naive_raises_on_naive_input (utils_tests.test_timezone.TimezoneUtilsTests)
+Calling ``make_naive`` with a naive datetime raises ``ValueError``. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 0.3111734390258789 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_template_localtime_converts_when_needed (utils_tests.test_timezone.TimezoneUtilsTests)
+``template_localtime`` should convert aware datetimes when USE_TZ is True. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 0.32894229888916016 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_template_localtime_passes_through_when_use_tz_false (utils_tests.test_timezone.TimezoneUtilsTests)
+When ``USE_TZ`` is False, ``template_localtime`` returns the original value. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 1.0201935768127441 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_template_localtime_respects_use_tz_override (utils_tests.test_timezone.TimezoneUtilsTests)
+The ``use_tz`` argument forces conversion behaviour regardless of settings. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 0.3313279151916504 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_is_pytz_zone_detection (utils_tests.test_timezone.TimezoneUtilsTests)
+``_is_pytz_zone`` correctly distinguishes pytz zones from fixed offsets. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.150s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 0.5101613998413086 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_datetime_ambiguous_or_imaginary_with_pytz (utils_tests.test_timezone.TimezoneUtilsTests)
+``_datetime_ambiguous_or_imaginary`` flags ambiguous times for pytz zones. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 0.4271411895751953 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_datetime_ambiguous_or_imaginary_with_pytz (utils_tests.test_timezone.TimezoneUtilsTests)
+``_datetime_ambiguous_or_imaginary`` flags ambiguous times for pytz zones. ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.014s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 1 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 0.48040318489074707 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] >>>>> Tests configfull pred
+ 
+[django__django__4.0] [django__django-14792] Test Script:  coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone;
+ 
+[django__django__4.0] [django__django-14792] Command: coverage run ./tests/runtests.py --verbosity 2 utils_tests.test_timezone 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+test_activate_deactivate_with_tzinfo_and_string (utils_tests.test_timezone.TimezoneUtilsTests)
+``activate`` should accept both tzinfo objects and zone names. ... ok
+test_activate_invalid_argument_raises (utils_tests.test_timezone.TimezoneUtilsTests)
+Providing a non‑tzinfo, non‑string raises ``ValueError``. ... ok
+test_datetime_ambiguous_or_imaginary_with_fixed_offset (utils_tests.test_timezone.TimezoneUtilsTests)
+For non‑pytz zones the function compares offsets with fold handling. ... ok
+test_datetime_ambiguous_or_imaginary_with_pytz (utils_tests.test_timezone.TimezoneUtilsTests)
+``_datetime_ambiguous_or_imaginary`` flags ambiguous times for pytz zones. ... ok
+test_get_fixed_timezone_from_minutes_and_timedelta (utils_tests.test_timezone.TimezoneUtilsTests)
+``get_fixed_timezone`` must accept both integer minutes and ``timedelta``. ... ok
+test_get_timezone_name_fixed_offset (utils_tests.test_timezone.TimezoneUtilsTests)
+``_get_timezone_name`` should return the name of a fixed‑offset timezone ... ok
+test_is_pytz_zone_detection (utils_tests.test_timezone.TimezoneUtilsTests)
+``_is_pytz_zone`` correctly distinguishes pytz zones from fixed offsets. ... ok
+test_localdate_returns_date_component (utils_tests.test_timezone.TimezoneUtilsTests)
+``localdate`` returns the date part of the localized datetime. ... ok
+test_localtime_converts_aware_datetime (utils_tests.test_timezone.TimezoneUtilsTests)
+``localtime`` should convert an aware datetime to the active timezone. ... ok
+test_localtime_raises_on_naive (utils_tests.test_timezone.TimezoneUtilsTests)
+Calling ``localtime`` with a naive datetime raises ``ValueError``. ... ok
+test_make_aware_raises_on_already_aware (utils_tests.test_timezone.TimezoneUtilsTests)
+Providing an aware datetime to ``make_aware`` raises ``ValueError``. ... ok
+test_make_aware_with_fixed_offset (utils_tests.test_timezone.TimezoneUtilsTests)
+``make_aware`` should work with a non‑pytz fixed offset timezone. ... ok
+test_make_aware_with_pytz_zone (utils_tests.test_timezone.TimezoneUtilsTests)
+``make_aware`` should correctly localize a naive datetime using a pytz zone. ... ok
+test_make_naive_converts_to_naive (utils_tests.test_timezone.TimezoneUtilsTests)
+``make_naive`` should convert an aware datetime to naive in the given tz. ... ok
+test_make_naive_raises_on_naive_input (utils_tests.test_timezone.TimezoneUtilsTests)
+Calling ``make_naive`` with a naive datetime raises ``ValueError``. ... ok
+test_now_aware_when_use_tz_true (utils_tests.test_timezone.TimezoneUtilsTests)
+When ``USE_TZ`` is True, ``now`` returns an aware datetime in UTC. ... ok
+test_now_naive_when_use_tz_false (utils_tests.test_timezone.TimezoneUtilsTests)
+When ``USE_TZ`` is False, ``now`` returns a naive datetime. ... ok
+test_override_context_manager_restores_previous (utils_tests.test_timezone.TimezoneUtilsTests)
+``override`` must restore the previous timezone after exit. ... ok
+test_template_localtime_converts_when_needed (utils_tests.test_timezone.TimezoneUtilsTests)
+``template_localtime`` should convert aware datetimes when USE_TZ is True. ... ok
+test_template_localtime_passes_through_when_use_tz_false (utils_tests.test_timezone.TimezoneUtilsTests)
+When ``USE_TZ`` is False, ``template_localtime`` returns the original value. ... ok
+test_template_localtime_respects_use_tz_override (utils_tests.test_timezone.TimezoneUtilsTests)
+The ``use_tz`` argument forces conversion behaviour regardless of settings. ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 0.013s
+
+OK
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application utils_tests
+Found 21 test(s).
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] TestsTime: 0.40221118927001953 
+[django__django__4.0] [django__django-14792] 
+>>>>> All Tests Passed
+ 
+[django__django__4.0] [django__django-14792] Current Working Directory: /opt/django__django 
+[django__django__4.0] [django__django-14792] Command: coverage json -o coverage.json 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14792] Std. Output:
+Wrote JSON report to coverage.json
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] 
+CoverageLOG: 94.68085106382979%
+ 
+[django__django__4.0] [django__django-14792] 
+FunctionCoverageLOG: 100.0%
+ 
+[django__django__4.0] [django__django-14792] Running mutation testing 
+[django__django__4.0] [django__django-14792] Command: cosmic-ray init mutation.toml mutation.sqlite 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__4.0] [django__django-14792] Std. Output:
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] Command: cosmic-ray exec mutation.toml mutation.sqlite 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[django__django__4.0] [django__django-14792] Std. Output:
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] Command: cr-rate mutation.sqlite --estimate --confidence 95.0 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14792] Std. Output:
+21.60 21.60 21.60
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] Command: cr-report mutation.sqlite 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14792] Std. Output:
+[job-id] a00dce74247d48ce8da92f5725fd47d2
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 9c7e068dea5e4ef282672b61c6a52d35
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_Sub 1
+worker outcome: normal, test outcome: killed
+[job-id] 0f685cb7f2df44389355b3a7c51d6c41
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] 5b38e71155ad4ad0b42277901ec7dc5d
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_Mul 1
+worker outcome: normal, test outcome: killed
+[job-id] d6eb003d0190459a9aadd676efa753ca
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] 2816ad05d33648ef90e50440d49eb5f3
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_Div 1
+worker outcome: normal, test outcome: killed
+[job-id] 2a08f72423484cb788747f5ff3d56c85
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] 7801f3e235b941509190a89b25337bc1
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_FloorDiv 1
+worker outcome: normal, test outcome: killed
+[job-id] 2fcb98368ae843a1aec6f8564d6d27b8
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_Mod 0
+worker outcome: normal, test outcome: killed
+[job-id] 7e77b96c0678423ca2729018816ab650
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_Mod 1
+worker outcome: normal, test outcome: killed
+[job-id] 09d4a022e3184cf58f06106ff4aca3a9
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] 4ab4bd4ef5f8429dbe58cc5c4a5a5ed0
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_Pow 1
+worker outcome: normal, test outcome: killed
+[job-id] 5e6f0e5b859b4f979591c36f03be3c55
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 7fd48d01c09548deb464e161da62c90a
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_RShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 6af1623768554269a568dae3597a433c
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] cb434759f3184de7901ef67acffa4ef4
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_LShift 1
+worker outcome: normal, test outcome: killed
+[job-id] e0a8b84f1c4d4fc79b117fe20575d67f
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 9a98f8cc734b42aabf1d15d6fd11d425
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_BitOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 7fdc5a0d1cd84d388c5d2d3015af6416
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] ce19872774604c2a90c98f047caa3eac
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_BitAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] 0558df1ef2fe403594b11a1a7f945c0d
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] df6252b085074f74b9d1456e3d4b0d69
+django/utils/timezone.py core/ReplaceBinaryOperator_Add_BitXor 1
+worker outcome: normal, test outcome: killed
+[job-id] c262baff01eb401d928dc2b2d877a4f0
+django/utils/timezone.py core/ReplaceBinaryOperator_FloorDiv_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] 662def8e14cd441d85e1ab5f993d6dcb
+django/utils/timezone.py core/ReplaceBinaryOperator_FloorDiv_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 6a1415110c1d437ba2b612add50e5608
+django/utils/timezone.py core/ReplaceBinaryOperator_FloorDiv_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] 1d56854f44074b56acfa976768a97d68
+django/utils/timezone.py core/ReplaceBinaryOperator_FloorDiv_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 485f4a91635d4d23a01b54186d706590
+django/utils/timezone.py core/ReplaceBinaryOperator_FloorDiv_Mod 0
+worker outcome: normal, test outcome: killed
+[job-id] d428f01adff34e43a7257750de06647b
+django/utils/timezone.py core/ReplaceBinaryOperator_FloorDiv_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] de96580bc63d4819a37646e003eef602
+django/utils/timezone.py core/ReplaceBinaryOperator_FloorDiv_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 25b083a9e35840a6a5a5c8a10fadf74c
+django/utils/timezone.py core/ReplaceBinaryOperator_FloorDiv_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] b405eb025814490691a27929278b9944
+django/utils/timezone.py core/ReplaceBinaryOperator_FloorDiv_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 63f0be2ff6a540709bc746ed758f1b3c
+django/utils/timezone.py core/ReplaceBinaryOperator_FloorDiv_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 30f6db7b023747619a619dad412ae5bf
+django/utils/timezone.py core/ReplaceBinaryOperator_FloorDiv_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] 03101e371e414a8fa5a3eaa55d46b51f
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] 7eae5af12cde4d0199c1b8112846e201
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_Add 1
+worker outcome: normal, test outcome: killed
+[job-id] 5be6ffa4ba8b4e858326509b00bdfebf
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_Add 2
+worker outcome: normal, test outcome: survived
+[job-id] f0768ac629cb4460b1d35d3af7fe8d75
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] d8774e2cce414b7194b49806c3bb0617
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_Sub 1
+worker outcome: normal, test outcome: killed
+[job-id] 3213038643624eab88805513151f1c6a
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_Sub 2
+worker outcome: normal, test outcome: survived
+[job-id] 864150131f524de1836cc66b174b69c1
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] db8248f6b96a4dd18b652b6490e129f4
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] d48d7a6dcda34268825eac711a71e0d9
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] 3b4fae7fee40458681d59bfb6a0812cb
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] 0e901a55d4264b91b23aa363bf4deab6
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_Div 1
+worker outcome: normal, test outcome: killed
+[job-id] 4e7ca5ff00e94fc8a9296ca146f9375e
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] eda2222dc3414d84a8254cc7dcea176f
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] c00f75baeec342c69c27b9c7e58531cf
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_FloorDiv 1
+worker outcome: normal, test outcome: killed
+[job-id] 5055685cddae44e49b780a3c3a4c914c
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] 9bf61e9ef0d443ee900f81828d297bb7
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] 2e94dcad89a64180ad95d4adc742fd57
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_Pow 1
+worker outcome: normal, test outcome: killed
+[job-id] 1ce072ca12264ebea87f61fdf5e9a1e6
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] 1d98ae1eca44458db630922fb648d6f9
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] fcc0bcddbc964bc592e846ec13b5ef6d
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_RShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 7e6e98ca5a604d879cedc58b8bec5d03
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] a032047d48ac4222b3cabfb6aed4687c
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 09fb2d799502465abb83279446298373
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_LShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 4275cf0ef87f42c98b2e57f916f15fad
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] 7544d4f146b543aaa8dcab8722955e46
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] ea3af570c1a54f83a4a1dc3675a64dae
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_BitOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 70b3931e4c5543b49a925265dc439b1c
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] d2f9ec57b9444b48a8baf8486b9f52c3
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] e0a88bc89c2e41108826df99f61440b7
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_BitAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] 43488ec909ea4e9b81920fec7a8f9597
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] a8d2c5e751e74a58a0c35d23fb8bc238
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] 20bff3a08d704d2b94b8bf96a1b208b3
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_BitXor 1
+worker outcome: normal, test outcome: killed
+[job-id] a7c9f944872e4f9fab860cb74675e232
+django/utils/timezone.py core/ReplaceBinaryOperator_Mod_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] 974f1844879846b283f7c10a49e5dda0
+django/utils/timezone.py core/ReplaceComparisonOperator_NotEq_Eq 0
+worker outcome: normal, test outcome: killed
+[job-id] 1828855ac9404bc4a95021aed2af7ac5
+django/utils/timezone.py core/ReplaceComparisonOperator_NotEq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 5b08a50b363e439f8a2a9e5b21ba0673
+django/utils/timezone.py core/ReplaceComparisonOperator_NotEq_LtE 0
+worker outcome: normal, test outcome: killed
+[job-id] 48983a8a189a4d46929731d5bf104000
+django/utils/timezone.py core/ReplaceComparisonOperator_NotEq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] a0b833b113a045148279955bebb70bc7
+django/utils/timezone.py core/ReplaceComparisonOperator_NotEq_GtE 0
+worker outcome: normal, test outcome: killed
+[job-id] 7f6a559233ad4f84a769b086bf7b5b92
+django/utils/timezone.py core/ReplaceComparisonOperator_NotEq_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] 905ccbe51f5a4f8c80d3cc181672df42
+django/utils/timezone.py core/ReplaceComparisonOperator_NotEq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] f1a07d52ca2f4850ac7879da10277ee4
+django/utils/timezone.py core/ReplaceComparisonOperator_Lt_Eq 0
+worker outcome: normal, test outcome: killed
+[job-id] 2aaaaeef1b614f48b322905587cb9f1a
+django/utils/timezone.py core/ReplaceComparisonOperator_Lt_NotEq 0
+worker outcome: normal, test outcome: killed
+[job-id] 606646924aa243a29f088ad7e6968b51
+django/utils/timezone.py core/ReplaceComparisonOperator_Lt_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] d27bf8b6945f4b6b9e9c6f05145b7483
+django/utils/timezone.py core/ReplaceComparisonOperator_Lt_Gt 0
+worker outcome: normal, test outcome: killed
+[job-id] d5ab26e227be4a72a7bc6cf8fe362923
+django/utils/timezone.py core/ReplaceComparisonOperator_Lt_GtE 0
+worker outcome: normal, test outcome: killed
+[job-id] 2ed11d5f4f244f14babfa34ab46c4b2f
+django/utils/timezone.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: killed
+[job-id] b2e306cb416f43faa120a7819318741b
+django/utils/timezone.py core/ReplaceComparisonOperator_Is_IsNot 1
+worker outcome: normal, test outcome: killed
+[job-id] b0ea63a4c1244378806f0b0505ad368b
+django/utils/timezone.py core/ReplaceComparisonOperator_Is_IsNot 2
+worker outcome: normal, test outcome: killed
+[job-id] 915661262a46441a8a59deac62db819c
+django/utils/timezone.py core/ReplaceComparisonOperator_Is_IsNot 3
+worker outcome: normal, test outcome: killed
+[job-id] 7aa725bd2aa64b4eb76110b19435d33b
+django/utils/timezone.py core/ReplaceComparisonOperator_Is_IsNot 4
+worker outcome: normal, test outcome: survived
+[job-id] bec71329fddd42f7a282ecf64ebd89cc
+django/utils/timezone.py core/ReplaceComparisonOperator_Is_IsNot 5
+worker outcome: normal, test outcome: killed
+[job-id] 1d18837f523e4d2dbeeb900fc8bb67fd
+django/utils/timezone.py core/ReplaceComparisonOperator_Is_IsNot 6
+worker outcome: normal, test outcome: killed
+[job-id] 497c279cb3f440e8b3b72072f30ac17a
+django/utils/timezone.py core/ReplaceComparisonOperator_Is_IsNot 7
+worker outcome: normal, test outcome: killed
+[job-id] 639a73bcdb5b4432999e03e67cd103a0
+django/utils/timezone.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] 918ea87e699e43f9966979c1b57f2368
+django/utils/timezone.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] 64967ed4924846c3857a57c0170381eb
+django/utils/timezone.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] 9de5134efef9470590ca5de355f935ad
+django/utils/timezone.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: normal, test outcome: survived
+[job-id] a87c66eb51884e32a95b7f9f64a7e4f4
+django/utils/timezone.py core/AddNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 32f358d68b0244f58d36f6d05986febf
+django/utils/timezone.py core/AddNot 1
+worker outcome: normal, test outcome: killed
+[job-id] a4f6d29e10f6405c8a894ddfdffcbfad
+django/utils/timezone.py core/AddNot 2
+worker outcome: normal, test outcome: killed
+[job-id] 9670ec892e5649a1949e3d6df98fdd10
+django/utils/timezone.py core/AddNot 3
+worker outcome: normal, test outcome: killed
+[job-id] 9f4654404b0141518f704068ce7c8beb
+django/utils/timezone.py core/AddNot 4
+worker outcome: normal, test outcome: killed
+[job-id] a861ca38d8734f95b0c4b7bbf3f65415
+django/utils/timezone.py core/AddNot 5
+worker outcome: normal, test outcome: killed
+[job-id] 2ea0902214e84b2f8dd7f2e56dd3af70
+django/utils/timezone.py core/AddNot 6
+worker outcome: normal, test outcome: killed
+[job-id] 2ceee7b67636402cb32e3b11bedf0861
+django/utils/timezone.py core/AddNot 7
+worker outcome: normal, test outcome: killed
+[job-id] 34cbd50712fb40d381d5eacfd40814b0
+django/utils/timezone.py core/AddNot 8
+worker outcome: normal, test outcome: killed
+[job-id] 4d4936825c62413888dbef612d41ef9f
+django/utils/timezone.py core/AddNot 9
+worker outcome: normal, test outcome: killed
+[job-id] 20a40886c75e4d6ea4c2d4d1e9ec5af5
+django/utils/timezone.py core/AddNot 10
+worker outcome: normal, test outcome: survived
+[job-id] 152c038294e147f494e1b5388622f4eb
+django/utils/timezone.py core/AddNot 11
+worker outcome: normal, test outcome: killed
+[job-id] 8acecc65818645f5983c8fa21e33f90d
+django/utils/timezone.py core/AddNot 12
+worker outcome: normal, test outcome: killed
+[job-id] 44a16f27b24741c8b5ce75c00920248b
+django/utils/timezone.py core/AddNot 13
+worker outcome: normal, test outcome: killed
+[job-id] 75ea07c26c03455e966c347f9594b2b5
+django/utils/timezone.py core/AddNot 14
+worker outcome: normal, test outcome: killed
+[job-id] 8a946fbda12b42718db18824fb234049
+django/utils/timezone.py core/AddNot 15
+worker outcome: normal, test outcome: killed
+[job-id] eba46594b13843e1b4a67ccb48addfd6
+django/utils/timezone.py core/AddNot 16
+worker outcome: normal, test outcome: killed
+[job-id] a483436aea9d46e099f2c340e70531e7
+django/utils/timezone.py core/AddNot 17
+worker outcome: normal, test outcome: killed
+[job-id] 15675c2e92734eceb62e719ca9117993
+django/utils/timezone.py core/AddNot 18
+worker outcome: normal, test outcome: killed
+[job-id] a3aadd369ff840c09c3cea785d2029bb
+django/utils/timezone.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: survived
+[job-id] ea1dd08d5c6042adaa39f494eb00d7d9
+django/utils/timezone.py core/ReplaceTrueWithFalse 1
+worker outcome: normal, test outcome: killed
+[job-id] 3284fbe62e2d4e9089b84e50f52c6040
+django/utils/timezone.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: killed
+[job-id] f97ff4b7e34b4539992a375470671238
+django/utils/timezone.py core/ReplaceAndWithOr 0
+worker outcome: normal, test outcome: killed
+[job-id] c47486ec2ffc4c648638c7c8ac6ec7ae
+django/utils/timezone.py core/ReplaceAndWithOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 187c378fc41c4cec8b71742aeda877d1
+django/utils/timezone.py core/ReplaceAndWithOr 2
+worker outcome: normal, test outcome: killed
+[job-id] 20a90573384d4a6d941f60534c8fae9c
+django/utils/timezone.py core/ReplaceOrWithAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 5ebe4e83907745c0b0b436a4db592473
+django/utils/timezone.py core/ExceptionReplacer 0
+worker outcome: exception, test outcome: incompetent
+[job-id] 0188c03d178f4a9882c8f1e2b30c827d
+django/utils/timezone.py core/ExceptionReplacer 1
+worker outcome: exception, test outcome: incompetent
+[job-id] a88a758c482340c893c376fd4e8d467d
+django/utils/timezone.py core/NumberReplacer 0
+worker outcome: normal, test outcome: killed
+[job-id] ff312a6c81c34a918a89bfe93a299681
+django/utils/timezone.py core/NumberReplacer 1
+worker outcome: normal, test outcome: killed
+[job-id] 348865168bbd4f28a34cc86e4d3f4797
+django/utils/timezone.py core/NumberReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] 83bc47ec272c4202b72dcd3af92c83cd
+django/utils/timezone.py core/NumberReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] 038e62b718494cd79d6172dc87a0cd82
+django/utils/timezone.py core/NumberReplacer 4
+worker outcome: normal, test outcome: killed
+[job-id] eb11882d277e431ca144a51541fca796
+django/utils/timezone.py core/NumberReplacer 5
+worker outcome: normal, test outcome: killed
+[job-id] aebec896b0754046a7ab3f8414ea0f34
+django/utils/timezone.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: killed
+total jobs: 125
+complete: 125 (100.00%)
+surviving mutants: 27 (21.60%)
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] 
+MutationNum: 125 
+[django__django__4.0] [django__django-14792] 
+MutationLOG: 78.4% 
+[django__django__4.0] [django__django-14792] 
+MutationUncertainty: 0.0 
+[django__django__4.0] [django__django-14792] Command: python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'django/utils/timezone.py'
+        and ((74 <= spec.start_pos[0] <= 79))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[django__django__4.0] [django__django-14792] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__4.0] [django__django-14792] Std. Output:
+FUNC_MUTATION_RESULT 0.0 1
+ 
+[django__django__4.0] [django__django-14792] Return Code: 0 
+[django__django__4.0] [django__django-14792] 
+FunctionMutationLOG: 0.0% 
+[django__django__4.0] [django__django-14792] 
+FunctionMutationNum: 1 
+[django__django__4.0] [django__django-14792] Test script run successful 
+[django__django__4.0] [django__django-14792] Removing coverage 
+[django__django__4.0] [django__django-14792] >>>>> Unfiltered Tests Failed 

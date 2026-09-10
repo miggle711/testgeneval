@@ -1,0 +1,1626 @@
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Task Metadata:
+	- Instance ID: pytest-dev__pytest-5262
+	- Testbed: pytest-dev__pytest__4.5
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.11.8
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: git config --global --add safe.directory /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: git -c advice.detachedHead=false checkout 58e6a09db49f34886ff13f3b7520dd0bcd7063cd 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+Previous HEAD position was 693c3b7f6 Merge pull request #5349 from asottile/mm
+HEAD is now at 58e6a09db Merge pull request #5261 from blueyed/fix-py37-freeze-remove-no-use-pep517
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-5262_gold_init.patch 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-5262_gold.patch 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+Checking patch src/_pytest/capture.py...
+Applied patch src/_pytest/capture.py cleanly.
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-5262_test_init.patch 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: git restore testing/test_capture.py 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-5262_test.patch 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+Checking patch testing/test_capture.py...
+Applied patch testing/test_capture.py cleanly.
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: conda run -n pytest-dev__pytest__4.5 coverage run -m pytest -rA testing/test_capture.py 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_capture.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-4.5.1.dev148+g693c3b7f6, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/test_capture.py F                                                [100%]
+
+=================================== FAILURES ===================================
+_____________________ test_encoded_file_write_and_writeorg _____________________
+
+    def test_encoded_file_write_and_writeorg():
+        """EncodedFile should encode text, reject bytes on Python 3, and forward writes."""
+        # Use a BytesIO buffer to capture the low‑level writes.
+        raw = io.BytesIO()
+        ef = capmod.EncodedFile(buffer=raw, encoding="utf-8")
+    
+        # Write a unicode string – should be encoded to UTF‑8.
+        ef.write("héllo")
+        raw.seek(0)
+        assert raw.read() == "héllo".encode("utf-8")
+    
+        # ``writeorg`` writes directly to the original buffer without encoding.
+        raw2 = io.BytesIO()
+        ef2 = capmod.EncodedFile(buffer=raw2, encoding="utf-8")
+>       ef2.writeorg(b"rawbytes")
+
+testing/test_capture.py:98: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_pytest.capture.EncodedFile object at 0x73532b4a1880>, name = 'writeorg'
+
+    def __getattr__(self, name):
+>       return getattr(object.__getattribute__(self, "buffer"), name)
+E       AttributeError: '_io.BytesIO' object has no attribute 'writeorg'
+
+src/_pytest/capture.py:455: AttributeError
+=========================== short test summary info ============================
+FAILED testing/test_capture.py::test_encoded_file_write_and_writeorg - Attrib...
+=========================== 1 failed in 0.10 seconds ===========================
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 1 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] TestsTime: 0.9832451343536377 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Test script run successful 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Removing coverage 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Removing cache 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: conda run -n pytest-dev__pytest__4.5 coverage run -m pytest -rA testing/test_capture.py 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-4.5.1.dev148+g693c3b7f6, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/test_capture.py .                                                [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/test_capture.py::test_encoded_file_writelines_and_properties
+=========================== 1 passed in 0.08 seconds ===========================
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] TestsTime: 0.6052751541137695 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Test script run successful 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Removing coverage 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Removing cache 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: conda run -n pytest-dev__pytest__4.5 coverage run -m pytest -rA testing/test_capture.py 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_capture.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-4.5.1.dev148+g693c3b7f6, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/test_capture.py F                                                [100%]
+
+=================================== FAILURES ===================================
+_______________ test_safe_text_dupfile_fallback_and_duplication ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-swe-bench/pytest-0/test_safe_text_dupfile_fallbac0')
+
+    def test_safe_text_dupfile_fallback_and_duplication(tmp_path):
+        """When ``fileno`` fails, ``safe_text_dupfile`` should return the original object."""
+        # Create a file‑like object without a fileno (e.g., StringIO)
+        f = io.StringIO("hello")
+        duped = capmod.safe_text_dupfile(f, mode="r")
+        assert duped is f
+    
+        # For a real file, we expect a duplicate file descriptor.
+        real_file = tmp_path / "real.txt"
+        real_file.write_text("data")
+        with open(real_file, "r", encoding="utf-8") as real:
+            duped2 = capmod.safe_text_dupfile(real, mode="r")
+            # The duplicated file should be a separate object (different id)
+            assert duped2 is not real
+            # Reading from the duplicate should yield the same content.
+>           assert duped2.read() == "data"
+E           AssertionError: assert b'data' == 'data'
+E            +  where b'data' = <built-in method read of _io.FileIO object at 0x7c96ee538280>()
+E            +    where <built-in method read of _io.FileIO object at 0x7c96ee538280> = <_pytest.capture.EncodedFile object at 0x7c96ee6a9a90>.read
+
+testing/test_capture.py:97: AssertionError
+=========================== short test summary info ============================
+FAILED testing/test_capture.py::test_safe_text_dupfile_fallback_and_duplication
+=========================== 1 failed in 0.13 seconds ===========================
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 1 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] TestsTime: 0.6754758358001709 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Test script run successful 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Removing coverage 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Removing cache 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: conda run -n pytest-dev__pytest__4.5 coverage run -m pytest -rA testing/test_capture.py 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_capture.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-4.5.1.dev148+g693c3b7f6, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/test_capture.py F                                                [100%]
+
+=================================== FAILURES ===================================
+________________________ test_multi_capture_basic_flow _________________________
+
+dummy_capture_manager = <CaptureManager _method='sys' _global_capturing=<MultiCapture out=<test_capture.DummyCapture object at 0x71b12371ea00>...capture.DummyCapture object at 0x71b12371ea60> in_=None _state='suspended' _in_suspended='<UNSET>'> _current_item=None>
+
+    def test_multi_capture_basic_flow(dummy_capture_manager):
+        """MultiCapture should correctly start, capture, suspend, resume and stop."""
+        mgr = dummy_capture_manager
+        # Start global capturing – this will create a MultiCapture with DummyCapture.
+        mgr.start_global_capturing()
+        cap = mgr._global_capturing
+        # The underlying dummy captures should have been started.
+        assert cap.out._started
+        assert cap.err._started
+    
+        # Simulate writes via the dummy capture objects.
+        cap.out.write("out1")
+        cap.err.write("err1")
+        # Read captured output – should reset internal buffers.
+        out, err = mgr.read_global_capture()
+        assert out == "out1"
+        assert err == "err1"
+    
+        # Subsequent reads without new writes should be empty.
+        out2, err2 = mgr.read_global_capture()
+        assert out2 == ""
+        assert err2 == ""
+    
+        # Suspend capture – after suspension, writes should not be recorded.
+        mgr.suspend_global_capture(in_=False)
+        cap.out.write("out2")
+        cap.err.write("err2")
+        out3, err3 = mgr.read_global_capture()
+>       assert out3 == "" and err3 == ""
+E       AssertionError: assert ('out2' == ''
+E         - out2)
+
+testing/test_capture.py:112: AssertionError
+=========================== short test summary info ============================
+FAILED testing/test_capture.py::test_multi_capture_basic_flow - AssertionErro...
+=========================== 1 failed in 0.10 seconds ===========================
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 1 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] TestsTime: 0.6173267364501953 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Test script run successful 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Removing coverage 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Removing cache 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: conda run -n pytest-dev__pytest__4.5 coverage run -m pytest -rA testing/test_capture.py 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_capture.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-4.5.1.dev148+g693c3b7f6, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/test_capture.py F                                                [100%]
+
+=================================== FAILURES ===================================
+_____________ test_capture_manager_is_capturing_and_fixture_logic ______________
+
+dummy_capture_manager = <CaptureManager _method='sys' _global_capturing=None _current_item=<test_capture.test_capture_manager_is_capturing_and_fixture_logic.<locals>.DummyItem object at 0x7071b7daa190>>
+
+    def test_capture_manager_is_capturing_and_fixture_logic(dummy_capture_manager):
+        """``is_capturing`` should reflect global state and fixture presence."""
+        mgr = dummy_capture_manager
+        # No global capture yet – method is 'sys' which is not 'no'.
+        assert mgr.is_globally_capturing() is True
+        # Without a current item, ``is_capturing`` reports "global".
+        assert mgr.is_capturing() == "global"
+    
+        # Simulate a test item with a capture fixture.
+        class DummyItem:
+            _capture_fixture = types.SimpleNamespace(
+                request=types.SimpleNamespace(fixturename="capsys")
+            )
+    
+        mgr._current_item = DummyItem()
+>       assert mgr.is_capturing() == "fixture capsys"
+E       AssertionError: assert 'global' == 'fixture capsys'
+E         - global
+E         + fixture capsys
+
+testing/test_capture.py:99: AssertionError
+=========================== short test summary info ============================
+FAILED testing/test_capture.py::test_capture_manager_is_capturing_and_fixture_logic
+=========================== 1 failed in 0.14 seconds ===========================
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 1 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] TestsTime: 0.6557352542877197 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Test script run successful 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Removing coverage 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Removing cache 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: conda run -n pytest-dev__pytest__4.5 coverage run -m pytest -rA testing/test_capture.py 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_capture.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-4.5.1.dev148+g693c3b7f6, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/test_capture.py F                                                [100%]
+
+=================================== FAILURES ===================================
+_________________ test_ensure_only_one_capture_fixture_raises __________________
+
+    def test_ensure_only_one_capture_fixture_raises():
+        """``_ensure_only_one_capture_fixture`` should raise when conflicting fixtures are used."""
+        class DummyRequest:
+            def __init__(self, fixturenames):
+                self.fixturenames = fixturenames
+    
+            def raiseerror(self, msg):
+                return RuntimeError(msg)
+    
+        # No conflict – should not raise.
+        req = DummyRequest(fixturenames=["capsys"])
+>       capmod._ensure_only_one_capture_fixture(req, "capfd")  # no exception
+
+testing/test_capture.py:95: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+request = <test_capture.test_ensure_only_one_capture_fixture_raises.<locals>.DummyRequest object at 0x78043de31940>
+name = 'capfd'
+
+    def _ensure_only_one_capture_fixture(request, name):
+        fixtures = set(request.fixturenames) & capture_fixtures - {name}
+        if fixtures:
+            fixtures = sorted(fixtures)
+            fixtures = fixtures[0] if len(fixtures) == 1 else fixtures
+>           raise request.raiseerror(
+                "cannot use {} and {} at the same time".format(fixtures, name)
+            )
+E           RuntimeError: cannot use capsys and capfd at the same time
+
+src/_pytest/capture.py:258: RuntimeError
+=========================== short test summary info ============================
+FAILED testing/test_capture.py::test_ensure_only_one_capture_fixture_raises
+=========================== 1 failed in 0.92 seconds ===========================
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 1 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] TestsTime: 1.4292244911193848 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Test script run successful 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Removing coverage 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Removing cache 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: conda run -n pytest-dev__pytest__4.5 coverage run -m pytest -rA testing/test_capture.py 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-4.5.1.dev148+g693c3b7f6, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/test_capture.py .                                                [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/test_capture.py::test_dont_read_from_input_behaviour
+=========================== 1 passed in 0.11 seconds ===========================
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] TestsTime: 0.6015968322753906 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Test script run successful 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Removing coverage 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Removing cache 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: conda run -n pytest-dev__pytest__4.5 coverage run -m pytest -rA testing/test_capture.py 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_capture.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-4.5.1.dev148+g693c3b7f6, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 1 item
+
+testing/test_capture.py F                                                [100%]
+
+=================================== FAILURES ===================================
+_____________________ test_capture_fixture_context_manager _____________________
+
+dummy_capture_manager = <CaptureManager _method='sys' _global_capturing=None _current_item=None>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x740dc7850760>
+
+    def test_capture_fixture_context_manager(dummy_capture_manager, monkeypatch):
+        """Test that the ``CaptureFixture.disabled`` context manager temporarily disables capture."""
+        # Use the real CaptureFixture with a dummy capture class.
+        fixture = capmod.CaptureFixture(captureclass=DummyCapture, request=types.SimpleNamespace(
+            config=types.SimpleNamespace(pluginmanager=types.SimpleNamespace(
+                getplugin=lambda name: dummy_capture_manager
+            ))
+        ))
+        # Start capture explicitly.
+        fixture._start()
+        # Ensure capture is active.
+        assert fixture._capture is not None
+    
+        # Within the disabled context, global capture should be suspended.
+        with fixture.disabled():
+            # The underlying dummy capture should be suspended.
+>           assert fixture._capture._suspended is True
+E           AttributeError: 'MultiCapture' object has no attribute '_suspended'
+
+testing/test_capture.py:100: AttributeError
+=========================== short test summary info ============================
+FAILED testing/test_capture.py::test_capture_fixture_context_manager - Attrib...
+=========================== 1 failed in 0.14 seconds ===========================
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 1 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] TestsTime: 0.6609771251678467 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Test script run successful 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Removing coverage 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Removing cache 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] >>>>> Tests configfull pred
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Test Script: conda run -n pytest-dev__pytest__4.5  coverage run -m pytest -rA testing/test_capture.py;
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: conda run -n pytest-dev__pytest__4.5 coverage run -m pytest -rA testing/test_capture.py 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-4.5.1.dev148+g693c3b7f6, py-1.11.0, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, inifile: tox.ini
+collected 2 items
+
+testing/test_capture.py ..                                               [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/test_capture.py::test_encoded_file_writelines_and_properties
+PASSED testing/test_capture.py::test_dont_read_from_input_behaviour
+=========================== 2 passed in 0.10 seconds ===========================
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] TestsTime: 0.6136231422424316 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] 
+>>>>> All Tests Passed
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Current Working Directory: /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: conda run -n pytest-dev__pytest__4.5 coverage json -o coverage.json 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+Wrote JSON report to coverage.json
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] 
+CoverageLOG: 68.36734693877551%
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] 
+FunctionCoverageLOG: 100.0%
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Running mutation testing 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: conda run -n pytest-dev__pytest__4.5 cosmic-ray init mutation.toml mutation.sqlite 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: conda run -n pytest-dev__pytest__4.5 cosmic-ray exec mutation.toml mutation.sqlite 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: conda run -n pytest-dev__pytest__4.5 cr-rate mutation.sqlite --estimate --confidence 95.0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+86.36 86.36 86.36
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: conda run -n pytest-dev__pytest__4.5 cr-report mutation.sqlite 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+[job-id] c6b03fe2112048598d196656865fbe6a
+src/_pytest/capture.py core/ReplaceBinaryOperator_Sub_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] 6d4aaeb157c84f4cb58f6f1c57b53576
+src/_pytest/capture.py core/ReplaceBinaryOperator_Sub_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] d33cffb27c1b44a7951596b0513ecd2f
+src/_pytest/capture.py core/ReplaceBinaryOperator_Sub_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 926c54b34f8549af957498974d6c97ce
+src/_pytest/capture.py core/ReplaceBinaryOperator_Sub_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] a31e6beca3be48728cbc59e52e8e44c8
+src/_pytest/capture.py core/ReplaceBinaryOperator_Sub_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] d4a0f9a1364645f281a6965a7d7945ae
+src/_pytest/capture.py core/ReplaceBinaryOperator_Sub_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 654c87e25ef744fbb115b7981f4313fd
+src/_pytest/capture.py core/ReplaceBinaryOperator_Sub_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 66c18c2b842045e9876712a9fb3c8224
+src/_pytest/capture.py core/ReplaceBinaryOperator_Sub_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] c858a525ea054f57a6d5ae6d270785e6
+src/_pytest/capture.py core/ReplaceBinaryOperator_Sub_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 72fb8417e53b4fd59ae2775f9515d5da
+src/_pytest/capture.py core/ReplaceBinaryOperator_Sub_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 6472f085039d4c098e6436603a4edb28
+src/_pytest/capture.py core/ReplaceBinaryOperator_Sub_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] c92ff1ae6a0f4e1c845637f38c37e714
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] 2da9545367134935842c71de0cb37205
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Add 1
+worker outcome: normal, test outcome: survived
+[job-id] c34dd0d7f4a54cd7b1117f7def85163a
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Add 2
+worker outcome: normal, test outcome: survived
+[job-id] 49d95ebb16f046b59c3915255a8a13e1
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Add 3
+worker outcome: normal, test outcome: survived
+[job-id] fb2a9716a21c4568b2973b1550e18d26
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Add 4
+worker outcome: normal, test outcome: survived
+[job-id] c23254011a914c759600bd79b673f9e2
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Add 5
+worker outcome: normal, test outcome: survived
+[job-id] 0eaec797c700472e968a7a702c7bb7ba
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] 707aedc585a94785bcd6c945fa83fd1d
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] d7cf44b3968b465ba31fcab631ea3c61
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Sub 2
+worker outcome: normal, test outcome: survived
+[job-id] 6407d02c6b82402e9412c121cfff0ac0
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Sub 3
+worker outcome: normal, test outcome: survived
+[job-id] 2233277b30ca4fbebf71547a30dca404
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Sub 4
+worker outcome: normal, test outcome: survived
+[job-id] 8d10e3aab828409a84de3b7d853b42c8
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Sub 5
+worker outcome: normal, test outcome: survived
+[job-id] 6de4352c2bf44e45acbd2cb9894b5f35
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] 833783bf3eb143978ae0b4dfea5f4fca
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] a0765116ed02429a89b996fb62fcda25
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Mul 2
+worker outcome: normal, test outcome: survived
+[job-id] b60d7bcb7139409d872083b26b488abb
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Mul 3
+worker outcome: normal, test outcome: survived
+[job-id] 4ccdad095d064fca90a01e7ff1874e9a
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Mul 4
+worker outcome: normal, test outcome: survived
+[job-id] 080c2f482ff748d9809171409ab57f0d
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Mul 5
+worker outcome: normal, test outcome: survived
+[job-id] 36e1d2e8bb974f6589895c88323465f1
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] b4180bd008e349f18670c0e981121ebf
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] 602975a96985446aab741f63b077d783
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] 0b54eadd936a430e84f19b4e4e22826f
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Div 3
+worker outcome: normal, test outcome: survived
+[job-id] 9a147e49e465421799884b1edd725c9a
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Div 4
+worker outcome: normal, test outcome: survived
+[job-id] 8490855401ff4b4facd72591b9d0206b
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Div 5
+worker outcome: normal, test outcome: survived
+[job-id] cda98a129a8145a1af6b7ff44803e82d
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] e746098e7ef74b7aa1eac646d8c0d004
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] c59d04bc90604bf6abf522fc6f1b0b7d
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_FloorDiv 2
+worker outcome: normal, test outcome: survived
+[job-id] a5a436c93d0146ecbdb743cc2d3bf92d
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_FloorDiv 3
+worker outcome: normal, test outcome: survived
+[job-id] bfdf2caa9a0c4b34a9c3c5c8ea4970af
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_FloorDiv 4
+worker outcome: normal, test outcome: survived
+[job-id] d05f6c7fe02a4ae08223346ff6b87aa3
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_FloorDiv 5
+worker outcome: normal, test outcome: survived
+[job-id] 8262c558d69947f7aa1834d9ed131b48
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 8f116e987a994b469d75889129a4c853
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 8797006c420943b9ae93de5926c1810a
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Pow 2
+worker outcome: normal, test outcome: survived
+[job-id] d826698fc96644b086076d4220ab25a1
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Pow 3
+worker outcome: normal, test outcome: survived
+[job-id] aeed8a3905164a97beba9b80bfba7ef5
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Pow 4
+worker outcome: normal, test outcome: survived
+[job-id] e298ce88ae884bc2a7ad03142ebfd794
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_Pow 5
+worker outcome: normal, test outcome: survived
+[job-id] 339e98a6b5b242a39b5e922dd75c95b2
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 9da23d1d8fea4d618528e9d3b76b0ff6
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] fe825ddbf8244f67b82ae582e9f5011b
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_RShift 2
+worker outcome: normal, test outcome: survived
+[job-id] ce9709ba88434f128b536313b1ffba9b
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_RShift 3
+worker outcome: normal, test outcome: survived
+[job-id] 7bde69f726034763bb400ee87c50ade8
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_RShift 4
+worker outcome: normal, test outcome: survived
+[job-id] cbe195ad07994f2d900c3c0230565790
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_RShift 5
+worker outcome: normal, test outcome: survived
+[job-id] 60039b82bbce406a8b4467503aef5620
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 258124746af74812a29d30048ed0b32f
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 2dd5e439438948bb91b9e713549e1650
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_LShift 2
+worker outcome: normal, test outcome: survived
+[job-id] c30fd1d5da2f4957b48e22c41add64b5
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_LShift 3
+worker outcome: normal, test outcome: survived
+[job-id] 5e5f09af249b4e9aa9de245ec3db5f67
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_LShift 4
+worker outcome: normal, test outcome: survived
+[job-id] c9a05f5d09ee4abfa45dd9adaf78ae21
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_LShift 5
+worker outcome: normal, test outcome: survived
+[job-id] a7d6de8a695543af8de7459308f9c66d
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 6511133ae4624580a3b4bc485d9ee32d
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 24e3da0cf72d420086a09ae2c4642ba1
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_BitOr 2
+worker outcome: normal, test outcome: survived
+[job-id] 50acd7c45c104fbba8b0bbb6281740c2
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_BitOr 3
+worker outcome: normal, test outcome: survived
+[job-id] 534cd5c52ab243aeb561ad5655888ce4
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_BitOr 4
+worker outcome: normal, test outcome: survived
+[job-id] 781a6a2b937f485cb746b262bc5f9e2c
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_BitOr 5
+worker outcome: normal, test outcome: survived
+[job-id] 537374bef4bc40139bb259712c84eb42
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] d3766ad88dce476cbc3308d582dcbe50
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] ce6c1fbdc94e4152a5c7637db3ebe667
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_BitAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] d762e66cefd941e99a201ccbcd4f7480
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_BitAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] 45d660bb8fb7454fb64c8dba10e6eaef
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_BitAnd 4
+worker outcome: normal, test outcome: survived
+[job-id] 449e491df808412f9abb13f5dba522c7
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_BitAnd 5
+worker outcome: normal, test outcome: survived
+[job-id] c29bb8d170424aff88a6a7b2d22bd986
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] 145f7d74607e4de88bdb197e12781273
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] ca838a78ca194281933fe385c0927182
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_BitXor 2
+worker outcome: normal, test outcome: survived
+[job-id] 5862e5c83215458e876b392e889fbf34
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_BitXor 3
+worker outcome: normal, test outcome: survived
+[job-id] bc40fdf276ac4238b5e220a91bf789ef
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_BitXor 4
+worker outcome: normal, test outcome: survived
+[job-id] bcdd59e9aa7c451684786f54649d3005
+src/_pytest/capture.py core/ReplaceBinaryOperator_Mod_BitXor 5
+worker outcome: normal, test outcome: survived
+[job-id] 3df8a1ef41ef402bb12d7a3e386ba27c
+src/_pytest/capture.py core/ReplaceBinaryOperator_BitAnd_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] 80e9d5d2280943f5a0c454e7ab6c55e9
+src/_pytest/capture.py core/ReplaceBinaryOperator_BitAnd_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] cd389144745d4a53b3c0c190e062e6c5
+src/_pytest/capture.py core/ReplaceBinaryOperator_BitAnd_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] c1e9581cdcef49b094d48e4ff4554e55
+src/_pytest/capture.py core/ReplaceBinaryOperator_BitAnd_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 1cded19def6f44c9baf262a4b6f97887
+src/_pytest/capture.py core/ReplaceBinaryOperator_BitAnd_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 2b5f6a5cec9344e2a602a5d00d03540b
+src/_pytest/capture.py core/ReplaceBinaryOperator_BitAnd_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] 283567b7b82049d7b8fde3226087f774
+src/_pytest/capture.py core/ReplaceBinaryOperator_BitAnd_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 779ee466f25046a4bbb35c8a469bcad2
+src/_pytest/capture.py core/ReplaceBinaryOperator_BitAnd_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] e0f0d75da75041fc8adf76f7cb9ed87d
+src/_pytest/capture.py core/ReplaceBinaryOperator_BitAnd_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 9add2ea26cc1483a856277f1a7d80358
+src/_pytest/capture.py core/ReplaceBinaryOperator_BitAnd_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 51e66e047d8d460c9cd8960e2a18a119
+src/_pytest/capture.py core/ReplaceBinaryOperator_BitAnd_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] 2b7d31c4096f4689bfc856b6d9491c3a
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 6f6ba39bd3a340bdbf7446857dedf8eb
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_NotEq 1
+worker outcome: normal, test outcome: killed
+[job-id] 358a0324e1c342898d986e21b968043b
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_NotEq 2
+worker outcome: normal, test outcome: survived
+[job-id] cf0a7699b4094d499f75e2730cbc8042
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_NotEq 3
+worker outcome: normal, test outcome: survived
+[job-id] 0ab45f84bd54479e97e3f003075d2675
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_NotEq 4
+worker outcome: normal, test outcome: survived
+[job-id] 6be62fffabbd4a1286c55b8297500428
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_NotEq 5
+worker outcome: normal, test outcome: killed
+[job-id] 253c092990e44e4f8e49a0b334f8c88f
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_NotEq 6
+worker outcome: normal, test outcome: killed
+[job-id] 3e12589b40ee4965b803ef8d3348209d
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_NotEq 7
+worker outcome: normal, test outcome: survived
+[job-id] b522bb00a67e4b0fa9669ac4b7a4b93b
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_NotEq 8
+worker outcome: normal, test outcome: survived
+[job-id] 4e95094aab8d4c54b7ae35c5affd3f79
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 3f63759ec0e84c14beaae3a61ade9e5f
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Lt 1
+worker outcome: normal, test outcome: killed
+[job-id] 352a8e1ca18149338123ca87b37e5fe8
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Lt 2
+worker outcome: normal, test outcome: survived
+[job-id] 1bf0145412794ae1bf3ad9e4c9de10fe
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Lt 3
+worker outcome: normal, test outcome: survived
+[job-id] 8811905749ac495681cbcb6365621b2f
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Lt 4
+worker outcome: normal, test outcome: survived
+[job-id] cddf64a0b23141caad731ab6fe4472c2
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Lt 5
+worker outcome: normal, test outcome: survived
+[job-id] 85ea4f6909e24ae79155af27a2ce6aae
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Lt 6
+worker outcome: normal, test outcome: survived
+[job-id] 864b63fa52954221a3378c352185dbe2
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Lt 7
+worker outcome: normal, test outcome: survived
+[job-id] e53f6f5945a94a7ba3a8729d01c9450b
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Lt 8
+worker outcome: normal, test outcome: survived
+[job-id] 3ca2862ebe6a40399b2bff424f211449
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 1de7295dda1b4605ba055a07d60043fb
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 00f6c3ad27c14af49f89679809870c51
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_LtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 85b08f7e7cb24b758864243b732a0322
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_LtE 3
+worker outcome: normal, test outcome: survived
+[job-id] 9385ee04c21643848e6e82cda55823db
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_LtE 4
+worker outcome: normal, test outcome: survived
+[job-id] 1e78b13c9ded4e11a460936081d482dc
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_LtE 5
+worker outcome: normal, test outcome: survived
+[job-id] ace54ca599724e1d8473314cc2883034
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_LtE 6
+worker outcome: normal, test outcome: survived
+[job-id] 74decca0a6c942efbe78ec917a0a043a
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_LtE 7
+worker outcome: normal, test outcome: survived
+[job-id] ef28a62cf89c483eb0d21bb1da9b169e
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_LtE 8
+worker outcome: normal, test outcome: survived
+[job-id] 6647c77608a44c6587bec9c5322d5820
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 715470cfd00a4ab78c143697f4b0256f
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Gt 1
+worker outcome: normal, test outcome: killed
+[job-id] 5e3a3c9751774ab2b6748321915612ce
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Gt 2
+worker outcome: normal, test outcome: survived
+[job-id] af5c4829413e4d529cadcd4e57af923b
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Gt 3
+worker outcome: normal, test outcome: survived
+[job-id] 615d976b77fb402daa55a35e5a1e6410
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Gt 4
+worker outcome: normal, test outcome: survived
+[job-id] 3b181b65adaf4708a1c6276c01d7f553
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Gt 5
+worker outcome: normal, test outcome: killed
+[job-id] b9b43de034244a95aba306162abf1916
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Gt 6
+worker outcome: normal, test outcome: killed
+[job-id] 9b1c77c1feb64247882a8acefc998e5f
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Gt 7
+worker outcome: normal, test outcome: survived
+[job-id] 2c7da9bbe58248288e7f7942fdce3c95
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Gt 8
+worker outcome: normal, test outcome: survived
+[job-id] 00e2a23e5ad14427bcfd579bdad9754e
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 9bd79f81d68d467b940f52cc78cd408d
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 9abc13c58adc4554bd6966c2d2cc6784
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_GtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 091dcc2bbf1e46e593eb034bcdf4fe38
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_GtE 3
+worker outcome: normal, test outcome: survived
+[job-id] a815cb9df8c543508e831fb4de102323
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_GtE 4
+worker outcome: normal, test outcome: survived
+[job-id] fadf8321e9f94392b1e1d546d7209c32
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_GtE 5
+worker outcome: normal, test outcome: killed
+[job-id] 574bdf6485774bb7bc3232093dd585bd
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_GtE 6
+worker outcome: normal, test outcome: killed
+[job-id] 4c8617d6fe0e46d4a0c1151382966418
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_GtE 7
+worker outcome: normal, test outcome: survived
+[job-id] 77c3ef95d4a04fa3ac812e2e0d82ced5
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_GtE 8
+worker outcome: normal, test outcome: survived
+[job-id] 83a3531b6ec44b51b3fed5b24e131de7
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] d8542c4a3bbe4ea887aa08ce5265a718
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] bf3543538547411c82e0e50122c640e3
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] b1c437ed93e3462ea5fe723a9cfc1f5a
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Is 3
+worker outcome: normal, test outcome: survived
+[job-id] 5e1984a8fb254f7fb34c5cb50c54676e
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Is 4
+worker outcome: normal, test outcome: survived
+[job-id] 08a357fa9dd1402580c0e946954f967a
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Is 5
+worker outcome: normal, test outcome: survived
+[job-id] 10c0b47b45cb42688e022a2bbc339c83
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_Is 6
+worker outcome: normal, test outcome: survived
+[job-id] 91c2c0bcdae04871b9b48c575b86887c
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] c53fb110c3a04788a8b8ee59e831955a
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_IsNot 1
+worker outcome: normal, test outcome: killed
+[job-id] 912fa5cf99084d75805f5b6dfdb56dee
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_IsNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 79f45f6416c44e7aaa84ef401bed567b
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_IsNot 3
+worker outcome: normal, test outcome: survived
+[job-id] 6f249749e3414431ad739348b2108f73
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_IsNot 4
+worker outcome: normal, test outcome: killed
+[job-id] ddf04761033b425e9c72f2cec55c4e9e
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_IsNot 5
+worker outcome: normal, test outcome: survived
+[job-id] 6a64a2640a2448b7912fd3a32c774762
+src/_pytest/capture.py core/ReplaceComparisonOperator_Eq_IsNot 6
+worker outcome: normal, test outcome: survived
+[job-id] c03558e1680d448f969e03303c6b38d4
+src/_pytest/capture.py core/ReplaceComparisonOperator_NotEq_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] 54479fc8d79a42c5801f10f6de388853
+src/_pytest/capture.py core/ReplaceComparisonOperator_NotEq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 93cb5edc6f81465dbc4c54824bba7e46
+src/_pytest/capture.py core/ReplaceComparisonOperator_NotEq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 8b8bbd1a2a6544ffa43331578be2c613
+src/_pytest/capture.py core/ReplaceComparisonOperator_NotEq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 55105cb4e595404ab41e8ae6f524ec88
+src/_pytest/capture.py core/ReplaceComparisonOperator_NotEq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 91621560d35844878cea316bb01bfe94
+src/_pytest/capture.py core/ReplaceComparisonOperator_NotEq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 1ea74e4d2af74f098ea2de4761ebdf55
+src/_pytest/capture.py core/ReplaceComparisonOperator_NotEq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] b732e162ada14bf681f68e447acefbcf
+src/_pytest/capture.py core/ReplaceComparisonOperator_Lt_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] 994a06b36b3b4b33b5c934eda290c6bb
+src/_pytest/capture.py core/ReplaceComparisonOperator_Lt_Eq 1
+worker outcome: normal, test outcome: survived
+[job-id] be13be06aa5b48ec98688ff05f3785e7
+src/_pytest/capture.py core/ReplaceComparisonOperator_Lt_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] 3a7a863631f044188fa0fb43392bbc7a
+src/_pytest/capture.py core/ReplaceComparisonOperator_Lt_NotEq 1
+worker outcome: normal, test outcome: survived
+[job-id] 78f87e9c10ff4762bdc4ec811f1faf17
+src/_pytest/capture.py core/ReplaceComparisonOperator_Lt_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] c7b6570c131e4a218a2a020416948481
+src/_pytest/capture.py core/ReplaceComparisonOperator_Lt_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 2f72340ad50e43218fae2b261aa783df
+src/_pytest/capture.py core/ReplaceComparisonOperator_Lt_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 9d2213e1f1354ebaa458a46402a6b208
+src/_pytest/capture.py core/ReplaceComparisonOperator_Lt_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] 724a64cbff0146ccbf819b752dd7fdca
+src/_pytest/capture.py core/ReplaceComparisonOperator_Lt_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 5c72b27626e14dadab783bba8b43e364
+src/_pytest/capture.py core/ReplaceComparisonOperator_Lt_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] c181441488cc41d7bd5954cfaa5e83c9
+src/_pytest/capture.py core/ReplaceComparisonOperator_Lt_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] e18a0df9302f4fac9aac80c7e0211ee4
+src/_pytest/capture.py core/ReplaceComparisonOperator_Lt_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 79eb98765cf24ef8af1b1be3bac4eebd
+src/_pytest/capture.py core/ReplaceComparisonOperator_Lt_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 5404ef962a604d4499e7e7347f906cbd
+src/_pytest/capture.py core/ReplaceComparisonOperator_Lt_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 9f42667e3f354804b6dd6403399eca07
+src/_pytest/capture.py core/ReplaceComparisonOperator_GtE_Eq 0
+worker outcome: normal, test outcome: killed
+[job-id] debbadf57d064b428f41ae704f509c9a
+src/_pytest/capture.py core/ReplaceComparisonOperator_GtE_NotEq 0
+worker outcome: normal, test outcome: survived
+[job-id] e3ec337629eb479fa79afba98c073256
+src/_pytest/capture.py core/ReplaceComparisonOperator_GtE_Lt 0
+worker outcome: normal, test outcome: killed
+[job-id] 05ecb7960c9d4d85a21353ad48681fb9
+src/_pytest/capture.py core/ReplaceComparisonOperator_GtE_LtE 0
+worker outcome: normal, test outcome: killed
+[job-id] d38d51fac57a4009bca0af9ee934d9e3
+src/_pytest/capture.py core/ReplaceComparisonOperator_GtE_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] f98a25e3e299457a933e1fb413252ffd
+src/_pytest/capture.py core/ReplaceComparisonOperator_GtE_Is 0
+worker outcome: normal, test outcome: killed
+[job-id] 8b53daafd72845d9bab9c834a87069ee
+src/_pytest/capture.py core/ReplaceComparisonOperator_GtE_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] f1bce6db142a446e97518f93ddaa3d8c
+src/_pytest/capture.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: killed
+[job-id] f25db91f38b547108247ee3ecbafe243
+src/_pytest/capture.py core/ReplaceComparisonOperator_Is_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] f1203a04b6bf4eb795e800e300dfca93
+src/_pytest/capture.py core/ReplaceComparisonOperator_Is_IsNot 2
+worker outcome: normal, test outcome: killed
+[job-id] 3daa927644ff4608af2db42431c102b6
+src/_pytest/capture.py core/ReplaceComparisonOperator_Is_IsNot 3
+worker outcome: normal, test outcome: killed
+[job-id] 1702a3e6383f4a3c87885b1b2549fe55
+src/_pytest/capture.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] fc912cf78d464d1ea87a20e43a27607f
+src/_pytest/capture.py core/ReplaceComparisonOperator_IsNot_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] cda5a725f04c4e62987bdc96b5902891
+src/_pytest/capture.py core/ReplaceComparisonOperator_IsNot_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] 46316af23f94470cade1fd62574117f1
+src/_pytest/capture.py core/ReplaceComparisonOperator_IsNot_Is 3
+worker outcome: normal, test outcome: survived
+[job-id] 2b990d0803be4f4e8366b73211d073e4
+src/_pytest/capture.py core/ReplaceComparisonOperator_IsNot_Is 4
+worker outcome: normal, test outcome: survived
+[job-id] 2bdbad019b19458087094b62d4e6a7c4
+src/_pytest/capture.py core/ReplaceComparisonOperator_IsNot_Is 5
+worker outcome: normal, test outcome: killed
+[job-id] 2281b357771142b3a1e8a7db08807b0d
+src/_pytest/capture.py core/ReplaceComparisonOperator_IsNot_Is 6
+worker outcome: normal, test outcome: killed
+[job-id] 3156322f581147b4bb4842da8f883184
+src/_pytest/capture.py core/ReplaceComparisonOperator_IsNot_Is 7
+worker outcome: normal, test outcome: survived
+[job-id] 395447db09df4071afd8580cd7ef92b8
+src/_pytest/capture.py core/ReplaceComparisonOperator_IsNot_Is 8
+worker outcome: normal, test outcome: survived
+[job-id] d323a83e96144cb4badc0687a8931a7a
+src/_pytest/capture.py core/ReplaceComparisonOperator_IsNot_Is 9
+worker outcome: normal, test outcome: survived
+[job-id] c1e058ba79c9433cb1811204314945e2
+src/_pytest/capture.py core/ReplaceComparisonOperator_IsNot_Is 10
+worker outcome: normal, test outcome: survived
+[job-id] ea752ecd3b8b4e9d9ac4679dfaaf4b1e
+src/_pytest/capture.py core/ReplaceComparisonOperator_IsNot_Is 11
+worker outcome: normal, test outcome: survived
+[job-id] d02c8bae56c74aceb84e6f620ba9475f
+src/_pytest/capture.py core/ReplaceComparisonOperator_IsNot_Is 12
+worker outcome: normal, test outcome: survived
+[job-id] 5e5ecc54ef84466ba579a4705de70ddb
+src/_pytest/capture.py core/ReplaceUnaryOperator_USub_UAdd 0
+worker outcome: normal, test outcome: survived
+[job-id] 1fc57a64267f4511a9ea41a6b46ea36b
+src/_pytest/capture.py core/ReplaceUnaryOperator_USub_Invert 0
+worker outcome: normal, test outcome: survived
+[job-id] 6db07845210f486983d0f91e041eb6e9
+src/_pytest/capture.py core/ReplaceUnaryOperator_USub_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] 6f21db89b38a4974af16833e49401ff3
+src/_pytest/capture.py core/ReplaceUnaryOperator_Delete_USub 0
+worker outcome: normal, test outcome: survived
+[job-id] 482571f62877487c9592dd3dae006c99
+src/_pytest/capture.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] f1db6d315faa46d2bb51bab000645336
+src/_pytest/capture.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] bc059f246de04156ad3d6fa1bd1f6cb0
+src/_pytest/capture.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: normal, test outcome: killed
+[job-id] dbe206fdd582498fb5be2a0aa4ebf9c2
+src/_pytest/capture.py core/ReplaceUnaryOperator_Delete_Not 3
+worker outcome: normal, test outcome: killed
+[job-id] c1a459029bf4496ab13f05e06c038644
+src/_pytest/capture.py core/ReplaceUnaryOperator_Delete_Not 4
+worker outcome: normal, test outcome: survived
+[job-id] e4237b6c0dc546689c7e27b1302b7bd4
+src/_pytest/capture.py core/ReplaceUnaryOperator_Delete_Not 5
+worker outcome: normal, test outcome: survived
+[job-id] 8292a03db18c4a3fbcdf627329533fda
+src/_pytest/capture.py core/ReplaceUnaryOperator_Delete_Not 6
+worker outcome: normal, test outcome: survived
+[job-id] 61b217a5d8d04d1eba8857495f032261
+src/_pytest/capture.py core/AddNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 0a98af437e044cb9b6a25da0a0be0f84
+src/_pytest/capture.py core/AddNot 1
+worker outcome: normal, test outcome: survived
+[job-id] a827d4c58d4c431792b9048e73906066
+src/_pytest/capture.py core/AddNot 2
+worker outcome: normal, test outcome: survived
+[job-id] 60db995d71f04cc1ae6df61defaf8d22
+src/_pytest/capture.py core/AddNot 3
+worker outcome: normal, test outcome: killed
+[job-id] 69e0c00450654d6190ae6492d28ad8ce
+src/_pytest/capture.py core/AddNot 4
+worker outcome: normal, test outcome: survived
+[job-id] 3ff1616d7a4a48c9a1a066ce6fd0527a
+src/_pytest/capture.py core/AddNot 5
+worker outcome: normal, test outcome: survived
+[job-id] d9e44e3566064f81ac8a06c5ca1bcb23
+src/_pytest/capture.py core/AddNot 6
+worker outcome: normal, test outcome: killed
+[job-id] 422ea2f082f542cbb1090dac14c7e95b
+src/_pytest/capture.py core/AddNot 7
+worker outcome: normal, test outcome: survived
+[job-id] cc6c9c9779964c16a90dd37a56c2858a
+src/_pytest/capture.py core/AddNot 8
+worker outcome: normal, test outcome: survived
+[job-id] d301b6b6a7ee4fa6a4fac1aa26ef697e
+src/_pytest/capture.py core/AddNot 9
+worker outcome: normal, test outcome: survived
+[job-id] d1cb39764e734e72bf9ce0f7c0000869
+src/_pytest/capture.py core/AddNot 10
+worker outcome: normal, test outcome: killed
+[job-id] 301df0d9a8a54e9898db79c3895d4329
+src/_pytest/capture.py core/AddNot 11
+worker outcome: normal, test outcome: killed
+[job-id] 7c298fdbc887452dbf4eae5366845745
+src/_pytest/capture.py core/AddNot 12
+worker outcome: normal, test outcome: survived
+[job-id] a4c1625189bf46bc88c10a2f0ec0eb82
+src/_pytest/capture.py core/AddNot 13
+worker outcome: normal, test outcome: survived
+[job-id] 47845e6a7e8f44bcb1e9845c28a75954
+src/_pytest/capture.py core/AddNot 14
+worker outcome: normal, test outcome: survived
+[job-id] 744925b3a9564e868bc8622ebb6fc23b
+src/_pytest/capture.py core/AddNot 15
+worker outcome: normal, test outcome: survived
+[job-id] a98f4fdfcb6747a0b3d2457305a40a37
+src/_pytest/capture.py core/AddNot 16
+worker outcome: normal, test outcome: survived
+[job-id] fec5ddf770c94da3ab01962d9dad355c
+src/_pytest/capture.py core/AddNot 17
+worker outcome: normal, test outcome: survived
+[job-id] 4f8a7951e8f94a0489ce19dcf1a7a27d
+src/_pytest/capture.py core/AddNot 18
+worker outcome: normal, test outcome: survived
+[job-id] 7bdbd341c26e4686832136dada857345
+src/_pytest/capture.py core/AddNot 19
+worker outcome: normal, test outcome: survived
+[job-id] ed29695baeca444bb5f15f659cedc8d3
+src/_pytest/capture.py core/AddNot 20
+worker outcome: normal, test outcome: survived
+[job-id] fdf6727d15574976842361b3b7378001
+src/_pytest/capture.py core/AddNot 21
+worker outcome: normal, test outcome: survived
+[job-id] 5907dc212b764ff593206d7e657a9f67
+src/_pytest/capture.py core/AddNot 22
+worker outcome: normal, test outcome: survived
+[job-id] 3377083d96974cf1aa502309a3bfaecb
+src/_pytest/capture.py core/AddNot 23
+worker outcome: normal, test outcome: survived
+[job-id] 12dc5c2e360a4259a831694416ae5c48
+src/_pytest/capture.py core/AddNot 24
+worker outcome: normal, test outcome: survived
+[job-id] 6b491baba4cd49ac972dfcedec7ff3aa
+src/_pytest/capture.py core/AddNot 25
+worker outcome: normal, test outcome: survived
+[job-id] dbeb795e1313448e88f496b9254bd75e
+src/_pytest/capture.py core/AddNot 26
+worker outcome: normal, test outcome: killed
+[job-id] e4101134cc5b4283b93b9b9cdcbace08
+src/_pytest/capture.py core/AddNot 27
+worker outcome: normal, test outcome: killed
+[job-id] 9435968753434623afdaccfb2ce6e81b
+src/_pytest/capture.py core/AddNot 28
+worker outcome: normal, test outcome: survived
+[job-id] 7c02d7a0c76746b99c8db1e7db74349c
+src/_pytest/capture.py core/AddNot 29
+worker outcome: normal, test outcome: survived
+[job-id] 407cc49e570d4fb8926e46c800a7bfe3
+src/_pytest/capture.py core/AddNot 30
+worker outcome: normal, test outcome: survived
+[job-id] 07a652a7cde745c6ba3ce63b2f7bb08e
+src/_pytest/capture.py core/AddNot 31
+worker outcome: normal, test outcome: survived
+[job-id] 8fe4a123e6154f2fa166916cb3904c92
+src/_pytest/capture.py core/AddNot 32
+worker outcome: normal, test outcome: survived
+[job-id] 97761a4aba1f4928a7a13989cdb9be47
+src/_pytest/capture.py core/AddNot 33
+worker outcome: normal, test outcome: survived
+[job-id] cdc8a17fd8e4401abb5fdbc1902300fa
+src/_pytest/capture.py core/AddNot 34
+worker outcome: normal, test outcome: survived
+[job-id] 3b565749d29b4e1d917bc713567b3fc6
+src/_pytest/capture.py core/AddNot 35
+worker outcome: normal, test outcome: survived
+[job-id] 2c08623467f145889b52f32d26b5f230
+src/_pytest/capture.py core/AddNot 36
+worker outcome: normal, test outcome: survived
+[job-id] 8e0028914fcc4a8fa336201b669a919b
+src/_pytest/capture.py core/AddNot 37
+worker outcome: normal, test outcome: survived
+[job-id] 83b707ec565c478e85d712f971c434e3
+src/_pytest/capture.py core/AddNot 38
+worker outcome: normal, test outcome: survived
+[job-id] 8e1282db8c9447ca8c1526cd5b580cee
+src/_pytest/capture.py core/AddNot 39
+worker outcome: normal, test outcome: survived
+[job-id] b4ff7f61617a4f3c9a7f0e23cc61bb0b
+src/_pytest/capture.py core/AddNot 40
+worker outcome: normal, test outcome: survived
+[job-id] daf9aea41cc14a578f204ae25628890d
+src/_pytest/capture.py core/AddNot 41
+worker outcome: normal, test outcome: killed
+[job-id] 9c248853d29544c2a9c57ea046568380
+src/_pytest/capture.py core/AddNot 42
+worker outcome: normal, test outcome: killed
+[job-id] 23db9ed74f6d4c63b24be3eaaaf51bc9
+src/_pytest/capture.py core/AddNot 43
+worker outcome: normal, test outcome: survived
+[job-id] 09be8ece55924f7395cccb5c9a0e9329
+src/_pytest/capture.py core/AddNot 44
+worker outcome: normal, test outcome: survived
+[job-id] 37df324e5ff44ddfa0b8f2a0d59b5b80
+src/_pytest/capture.py core/AddNot 45
+worker outcome: normal, test outcome: survived
+[job-id] ae5c576fee064547a7754445f5fd6104
+src/_pytest/capture.py core/AddNot 46
+worker outcome: normal, test outcome: survived
+[job-id] febadd7c3dfa4f81b2472536a9d5b6ba
+src/_pytest/capture.py core/AddNot 47
+worker outcome: normal, test outcome: survived
+[job-id] 0b23ed9349b24a9ca3a0828d66fe188b
+src/_pytest/capture.py core/AddNot 48
+worker outcome: normal, test outcome: killed
+[job-id] 1bd70966e8984de7b06d8f9cdedb16a7
+src/_pytest/capture.py core/AddNot 49
+worker outcome: normal, test outcome: killed
+[job-id] 9bbdfb2153724ab2a32f51d3793b57a4
+src/_pytest/capture.py core/AddNot 50
+worker outcome: normal, test outcome: killed
+[job-id] 049d280ccfbd478ea49a97f9fcfa2b3b
+src/_pytest/capture.py core/AddNot 51
+worker outcome: normal, test outcome: survived
+[job-id] cd7ef56ffceb4088b6b1d00f3bf2f3d5
+src/_pytest/capture.py core/AddNot 52
+worker outcome: normal, test outcome: survived
+[job-id] 6bb26ed90ef846bc99d9b4dec8d70cf5
+src/_pytest/capture.py core/AddNot 53
+worker outcome: normal, test outcome: survived
+[job-id] 34d60147371d47e3a72a20d03dcb93cc
+src/_pytest/capture.py core/AddNot 54
+worker outcome: normal, test outcome: killed
+[job-id] c0be8bb9d0ed45d7b61063a3a411ed6b
+src/_pytest/capture.py core/AddNot 55
+worker outcome: normal, test outcome: survived
+[job-id] 884739d14b2b4a29a592a8b3f295cc34
+src/_pytest/capture.py core/AddNot 56
+worker outcome: normal, test outcome: killed
+[job-id] 18d2cde6b845451fafb88d2ef2c60482
+src/_pytest/capture.py core/AddNot 57
+worker outcome: normal, test outcome: survived
+[job-id] 0358ed4fb94048529def60b909f323be
+src/_pytest/capture.py core/AddNot 58
+worker outcome: normal, test outcome: survived
+[job-id] f4ed536fa2f844edaa9d378a4f609699
+src/_pytest/capture.py core/AddNot 59
+worker outcome: normal, test outcome: killed
+[job-id] c3d97f0560d74c629c986c11f809d10b
+src/_pytest/capture.py core/AddNot 60
+worker outcome: normal, test outcome: survived
+[job-id] 70e22270c19d45deb7cd16183d2db03c
+src/_pytest/capture.py core/AddNot 61
+worker outcome: normal, test outcome: survived
+[job-id] 660e8af507094a8d913dab652389c4ac
+src/_pytest/capture.py core/AddNot 62
+worker outcome: normal, test outcome: survived
+[job-id] fd71674e3047414fa7b3947678d87890
+src/_pytest/capture.py core/AddNot 63
+worker outcome: normal, test outcome: survived
+[job-id] 440f4df713e54da6a61b05b111618c98
+src/_pytest/capture.py core/AddNot 64
+worker outcome: normal, test outcome: survived
+[job-id] 79479307432442cca3a1721d63895f70
+src/_pytest/capture.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: survived
+[job-id] 63388e329b9441e0a43fd3eca7a2ff39
+src/_pytest/capture.py core/ReplaceTrueWithFalse 1
+worker outcome: normal, test outcome: survived
+[job-id] ca1c8a6ffd814fb989f1225e8c9e1966
+src/_pytest/capture.py core/ReplaceTrueWithFalse 2
+worker outcome: normal, test outcome: survived
+[job-id] d611a2c55c55409fbd197dbbee6e5ca1
+src/_pytest/capture.py core/ReplaceTrueWithFalse 3
+worker outcome: normal, test outcome: survived
+[job-id] 09b7fbd5c7b641e8bb4291cc45461b5b
+src/_pytest/capture.py core/ReplaceTrueWithFalse 4
+worker outcome: normal, test outcome: survived
+[job-id] 80311eedda164a9eb8f1f09ae558d86e
+src/_pytest/capture.py core/ReplaceTrueWithFalse 5
+worker outcome: normal, test outcome: killed
+[job-id] 7c16b500223b4dceb9e4fceff9d21fbb
+src/_pytest/capture.py core/ReplaceTrueWithFalse 6
+worker outcome: normal, test outcome: survived
+[job-id] 6b4c7139b23b4ef6922997f87d232f57
+src/_pytest/capture.py core/ReplaceTrueWithFalse 7
+worker outcome: normal, test outcome: survived
+[job-id] 2f87933e9efa4232939cccddec7d57d7
+src/_pytest/capture.py core/ReplaceTrueWithFalse 8
+worker outcome: normal, test outcome: survived
+[job-id] 34b47d8eb668481fb5b95e60834fcdc2
+src/_pytest/capture.py core/ReplaceTrueWithFalse 9
+worker outcome: normal, test outcome: survived
+[job-id] 065e24050f7947ae9065ac310d9c26cb
+src/_pytest/capture.py core/ReplaceTrueWithFalse 10
+worker outcome: normal, test outcome: survived
+[job-id] cf404777b85c459b8327b4aad9aa52be
+src/_pytest/capture.py core/ReplaceTrueWithFalse 11
+worker outcome: normal, test outcome: survived
+[job-id] a336c0d31fc042c887cdc3b004fcaac9
+src/_pytest/capture.py core/ReplaceTrueWithFalse 12
+worker outcome: normal, test outcome: survived
+[job-id] d8f249fb4fe242b6b21ef8e6eff97afd
+src/_pytest/capture.py core/ReplaceTrueWithFalse 13
+worker outcome: normal, test outcome: survived
+[job-id] 10c1a5bc3a9246c9b3be4d7c256e2300
+src/_pytest/capture.py core/ReplaceTrueWithFalse 14
+worker outcome: normal, test outcome: survived
+[job-id] e3011c3ab42d470f91412b1f79146da7
+src/_pytest/capture.py core/ReplaceTrueWithFalse 15
+worker outcome: normal, test outcome: survived
+[job-id] a5209872160d4b68861495ad910b0937
+src/_pytest/capture.py core/ReplaceTrueWithFalse 16
+worker outcome: normal, test outcome: survived
+[job-id] a37cbc71c6f74c3b9766f503e92fbbf0
+src/_pytest/capture.py core/ReplaceTrueWithFalse 17
+worker outcome: normal, test outcome: survived
+[job-id] cbfbe83d3c4d4ba38bffdb59f5668059
+src/_pytest/capture.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: survived
+[job-id] 66c029296ac64d069f4dd038178a25d3
+src/_pytest/capture.py core/ReplaceFalseWithTrue 1
+worker outcome: normal, test outcome: survived
+[job-id] 82f656b6092f4246821afbd940da0c24
+src/_pytest/capture.py core/ReplaceFalseWithTrue 2
+worker outcome: normal, test outcome: survived
+[job-id] 0cf09610df28461ca6ba6fc490d2877a
+src/_pytest/capture.py core/ReplaceFalseWithTrue 3
+worker outcome: normal, test outcome: survived
+[job-id] 1129637d22ab4677912c4a191b1ab653
+src/_pytest/capture.py core/ReplaceFalseWithTrue 4
+worker outcome: normal, test outcome: survived
+[job-id] 9549c03e23fa4544b79394ad8eb6dbe1
+src/_pytest/capture.py core/ReplaceFalseWithTrue 5
+worker outcome: normal, test outcome: survived
+[job-id] f3c81213c59b499e9218d875f42b2be7
+src/_pytest/capture.py core/ReplaceFalseWithTrue 6
+worker outcome: normal, test outcome: survived
+[job-id] 1f860f165c3644fba345c5035ddeb9af
+src/_pytest/capture.py core/ReplaceFalseWithTrue 7
+worker outcome: normal, test outcome: survived
+[job-id] 652737f697c843c39690973379f3ab58
+src/_pytest/capture.py core/ReplaceFalseWithTrue 8
+worker outcome: normal, test outcome: survived
+[job-id] 0fd089692c574c98aa613ddaf45e080f
+src/_pytest/capture.py core/ReplaceFalseWithTrue 9
+worker outcome: normal, test outcome: killed
+[job-id] 2a67bde8f80d4dd5ab04b365f9adabd5
+src/_pytest/capture.py core/ReplaceAndWithOr 0
+worker outcome: normal, test outcome: survived
+[job-id] 120cbb81c0dd47d3bd05e610dffbb548
+src/_pytest/capture.py core/ReplaceAndWithOr 1
+worker outcome: normal, test outcome: survived
+[job-id] f102667d13f34e7096dd809cb92e28ab
+src/_pytest/capture.py core/ReplaceAndWithOr 2
+worker outcome: normal, test outcome: survived
+[job-id] 41478a37eb144f3386f384dbff3d655a
+src/_pytest/capture.py core/ReplaceAndWithOr 3
+worker outcome: normal, test outcome: survived
+[job-id] 12334ea2a99945efab345f01d6b5d902
+src/_pytest/capture.py core/ReplaceOrWithAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 88c0fe7d109947d0983e642995d4d3ab
+src/_pytest/capture.py core/ReplaceOrWithAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] 45d2e59b11d748f7b25b658f5730f6ad
+src/_pytest/capture.py core/ExceptionReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] a1bef8c0480443eeb62a53849c90fac2
+src/_pytest/capture.py core/ExceptionReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] 486c8604bbd5469caf6b8caa5aecdffc
+src/_pytest/capture.py core/ExceptionReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] e9f1776eaf01422aad22b9758c6e7240
+src/_pytest/capture.py core/ExceptionReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] e974d54e3c014714847129b13e08b338
+src/_pytest/capture.py core/ExceptionReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] 1bb5a62964f54676b33542eeb1ba478c
+src/_pytest/capture.py core/ExceptionReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] 762ae3d00136425ba922feaa90cd8319
+src/_pytest/capture.py core/ExceptionReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] edcb7543a30d4efd9e1d78d12e5e2658
+src/_pytest/capture.py core/NumberReplacer 0
+worker outcome: normal, test outcome: killed
+[job-id] 8a2064ec5c37421686695389f2d26638
+src/_pytest/capture.py core/NumberReplacer 1
+worker outcome: normal, test outcome: killed
+[job-id] 1a9a1fe6251541faaa1b6bd27c78d34d
+src/_pytest/capture.py core/NumberReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] e7441600e1a34e50b2b78f167df84145
+src/_pytest/capture.py core/NumberReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] 22979147afd44c35b06e855671481f23
+src/_pytest/capture.py core/NumberReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] e0c4d941b3a54fc2b3f8bad1430a382f
+src/_pytest/capture.py core/NumberReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] 2483f7116aa748a6bc9663835f7bbf85
+src/_pytest/capture.py core/NumberReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] 7ddf992cc0ee42598c35b30820aa0b2a
+src/_pytest/capture.py core/NumberReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] 2ca476f326cb4fb5a514754329475f5e
+src/_pytest/capture.py core/NumberReplacer 8
+worker outcome: normal, test outcome: survived
+[job-id] 90df062d6ad6438983d4a37503c3b649
+src/_pytest/capture.py core/NumberReplacer 9
+worker outcome: normal, test outcome: survived
+[job-id] 800f8bdd1e0c4182aa1698ea30f44e0c
+src/_pytest/capture.py core/NumberReplacer 10
+worker outcome: normal, test outcome: survived
+[job-id] 3e8943851df443559b1051a9966853ce
+src/_pytest/capture.py core/NumberReplacer 11
+worker outcome: normal, test outcome: survived
+[job-id] 1a26aa8e73b94e498c10fb4c963a01c9
+src/_pytest/capture.py core/NumberReplacer 12
+worker outcome: normal, test outcome: survived
+[job-id] b466b0b51249442493da84b6a9f4e6dc
+src/_pytest/capture.py core/NumberReplacer 13
+worker outcome: normal, test outcome: survived
+[job-id] 4d63ab5d2dc6430d85fe5c4efd064f2f
+src/_pytest/capture.py core/NumberReplacer 14
+worker outcome: normal, test outcome: survived
+[job-id] 1e38cd0ceede4e51945189de9409d9d0
+src/_pytest/capture.py core/NumberReplacer 15
+worker outcome: normal, test outcome: survived
+[job-id] 6c75590c89dc4d22a13cd911f4e82792
+src/_pytest/capture.py core/NumberReplacer 16
+worker outcome: normal, test outcome: survived
+[job-id] 81943af58f67461f94a3178a76f36ec0
+src/_pytest/capture.py core/NumberReplacer 17
+worker outcome: normal, test outcome: killed
+[job-id] 028be068d0e74acab5fe51131f80fa31
+src/_pytest/capture.py core/NumberReplacer 18
+worker outcome: normal, test outcome: survived
+[job-id] 2be0c317206349ce804e83cec23f6b2c
+src/_pytest/capture.py core/NumberReplacer 19
+worker outcome: normal, test outcome: survived
+[job-id] 63b9938c81284aedb54cd0eb197a3173
+src/_pytest/capture.py core/NumberReplacer 20
+worker outcome: normal, test outcome: killed
+[job-id] cccd745a78d346b0a000a987da8ee1a3
+src/_pytest/capture.py core/NumberReplacer 21
+worker outcome: normal, test outcome: survived
+[job-id] d1d45c7c8611431ca870c9b4bab73f61
+src/_pytest/capture.py core/NumberReplacer 22
+worker outcome: normal, test outcome: survived
+[job-id] e05bb42762704cbbb59c7b027ab10b13
+src/_pytest/capture.py core/NumberReplacer 23
+worker outcome: normal, test outcome: killed
+[job-id] fe22db67441844208ff69261fe7d51ce
+src/_pytest/capture.py core/NumberReplacer 24
+worker outcome: normal, test outcome: survived
+[job-id] 19980100acab43d9ad6edf00550d2de4
+src/_pytest/capture.py core/NumberReplacer 25
+worker outcome: normal, test outcome: killed
+[job-id] ebc4b11df20f4c12ac3aa1989a350cbc
+src/_pytest/capture.py core/NumberReplacer 26
+worker outcome: normal, test outcome: survived
+[job-id] ee48c0abd9864524abf08c9f0ee8cff7
+src/_pytest/capture.py core/NumberReplacer 27
+worker outcome: normal, test outcome: survived
+[job-id] cb5b4bf12fc2436a8535f432264b9d84
+src/_pytest/capture.py core/NumberReplacer 28
+worker outcome: normal, test outcome: survived
+[job-id] 1f80df28de864d86b4877191a51ae275
+src/_pytest/capture.py core/NumberReplacer 29
+worker outcome: normal, test outcome: survived
+[job-id] 0498b2d6866a459cb5584b65a07155ff
+src/_pytest/capture.py core/NumberReplacer 30
+worker outcome: normal, test outcome: killed
+[job-id] 7002eaf6ca734f2dbb3f5f4a7b6240e3
+src/_pytest/capture.py core/NumberReplacer 31
+worker outcome: normal, test outcome: survived
+[job-id] bfaf7ed160204e9abd6be56ea6035f0d
+src/_pytest/capture.py core/NumberReplacer 32
+worker outcome: normal, test outcome: survived
+[job-id] e65ad194e4cb4e5f81c5d41862f4b7da
+src/_pytest/capture.py core/NumberReplacer 33
+worker outcome: normal, test outcome: survived
+[job-id] 72d81ec65ba942f096151c8f503b3180
+src/_pytest/capture.py core/NumberReplacer 34
+worker outcome: normal, test outcome: survived
+[job-id] 3b5d68853ff64de19005ccbd13e8873a
+src/_pytest/capture.py core/NumberReplacer 35
+worker outcome: normal, test outcome: survived
+[job-id] b715a5e48ab64501b6c10ab591102360
+src/_pytest/capture.py core/NumberReplacer 36
+worker outcome: normal, test outcome: survived
+[job-id] 274189c04ae048fc8325437e18da0545
+src/_pytest/capture.py core/NumberReplacer 37
+worker outcome: normal, test outcome: survived
+[job-id] 2704b820bbd84de2ab23dce85d449a3f
+src/_pytest/capture.py core/NumberReplacer 38
+worker outcome: normal, test outcome: survived
+[job-id] 26bec508cc63493cade7d182d0b4bb84
+src/_pytest/capture.py core/NumberReplacer 39
+worker outcome: normal, test outcome: survived
+[job-id] 681994d4ca9a4d5197d5988c0b092de4
+src/_pytest/capture.py core/NumberReplacer 40
+worker outcome: normal, test outcome: survived
+[job-id] f099536c930f4c0a933aee1ffd11d290
+src/_pytest/capture.py core/NumberReplacer 41
+worker outcome: normal, test outcome: survived
+[job-id] 29d87387dc2d406da3d12b4498d956a6
+src/_pytest/capture.py core/NumberReplacer 42
+worker outcome: normal, test outcome: survived
+[job-id] 56cfa8b2b81e47ce8eb314514279dcff
+src/_pytest/capture.py core/NumberReplacer 43
+worker outcome: normal, test outcome: survived
+[job-id] 8c90cfd9672948709dfe106d3e4746e3
+src/_pytest/capture.py core/NumberReplacer 44
+worker outcome: normal, test outcome: survived
+[job-id] f869cb0201f84c78b1e323c9b7883b0f
+src/_pytest/capture.py core/NumberReplacer 45
+worker outcome: normal, test outcome: survived
+[job-id] 6a8d43ad767749e087c210a3425c8fd0
+src/_pytest/capture.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: survived
+[job-id] 07baf72efea3402c93e6c9d5da4de683
+src/_pytest/capture.py core/RemoveDecorator 1
+worker outcome: normal, test outcome: survived
+[job-id] caeb00b8f1c14b0f8abca69fca521b00
+src/_pytest/capture.py core/RemoveDecorator 2
+worker outcome: normal, test outcome: killed
+[job-id] 8ff7c9b1553c4fe095cdec9cc6c9385d
+src/_pytest/capture.py core/RemoveDecorator 3
+worker outcome: normal, test outcome: killed
+[job-id] 909c30ac82a44f70a792410e855e7db5
+src/_pytest/capture.py core/RemoveDecorator 4
+worker outcome: normal, test outcome: survived
+[job-id] 67fdbdd24ead4c51972ab8203ca58a1a
+src/_pytest/capture.py core/RemoveDecorator 5
+worker outcome: normal, test outcome: survived
+[job-id] 94454dba7f274d74bc7fb1aafcf35f0f
+src/_pytest/capture.py core/RemoveDecorator 6
+worker outcome: normal, test outcome: survived
+[job-id] a51e35f0644e4eaab24fbe92871035d7
+src/_pytest/capture.py core/RemoveDecorator 7
+worker outcome: normal, test outcome: survived
+[job-id] 3829ef6356eb4b0886d30b9261fa9788
+src/_pytest/capture.py core/RemoveDecorator 8
+worker outcome: normal, test outcome: survived
+[job-id] 19f993d7501d480caa1c01b8d43ef09d
+src/_pytest/capture.py core/RemoveDecorator 9
+worker outcome: normal, test outcome: survived
+[job-id] 4f6c1366da4d47a9b47af22f20c44c4e
+src/_pytest/capture.py core/RemoveDecorator 10
+worker outcome: normal, test outcome: survived
+[job-id] 55b50e000f5f46838060f8a1c623c71e
+src/_pytest/capture.py core/RemoveDecorator 11
+worker outcome: normal, test outcome: survived
+[job-id] b5ba76a2a7f54b2abd39c50dbe7cc28a
+src/_pytest/capture.py core/RemoveDecorator 12
+worker outcome: normal, test outcome: survived
+[job-id] 3b97154d35c74249a9881051ba7b6daf
+src/_pytest/capture.py core/RemoveDecorator 13
+worker outcome: normal, test outcome: survived
+[job-id] a06e54e965a14a81a0f0ff9b237239bd
+src/_pytest/capture.py core/RemoveDecorator 14
+worker outcome: normal, test outcome: survived
+[job-id] 40fea12eff8c483bb9ee26ddfe6ad877
+src/_pytest/capture.py core/RemoveDecorator 15
+worker outcome: normal, test outcome: survived
+[job-id] 8901b726c81641c28c52a1272fb94c0e
+src/_pytest/capture.py core/RemoveDecorator 16
+worker outcome: normal, test outcome: killed
+[job-id] 441aa981101b485091da434ba9eedec1
+src/_pytest/capture.py core/RemoveDecorator 17
+worker outcome: normal, test outcome: killed
+[job-id] 0def88acd4bf423da1f81d46b02ad925
+src/_pytest/capture.py core/RemoveDecorator 18
+worker outcome: normal, test outcome: killed
+total jobs: 374
+complete: 374 (100.00%)
+surviving mutants: 323 (86.36%)
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] 
+MutationNum: 374 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] 
+MutationLOG: 13.64% 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] 
+MutationUncertainty: 0.0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Command: conda run -n pytest-dev__pytest__4.5 python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'src/_pytest/capture.py'
+        and ((450 <= spec.start_pos[0] <= 452))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Std. Output:
+FUNC_MUTATION_RESULT 100.0 1
+
+ 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Return Code: 0 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] 
+FunctionMutationLOG: 100.0% 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] 
+FunctionMutationNum: 1 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Test script run successful 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Removing coverage 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] Removing cache 
+[pytest-dev__pytest__4.5] [pytest-dev__pytest-5262] >>>>> Unfiltered Tests Failed 

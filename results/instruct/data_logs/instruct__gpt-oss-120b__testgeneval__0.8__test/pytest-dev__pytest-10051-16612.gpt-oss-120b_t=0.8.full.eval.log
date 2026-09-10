@@ -1,0 +1,159 @@
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Task Metadata:
+	- Instance ID: pytest-dev__pytest-10051
+	- Testbed: pytest-dev__pytest__7.2
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.11.8
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Command: git config --global --add safe.directory /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Std. Output:
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Command: git -c advice.detachedHead=false checkout aa55975c7d3f6c9f6d7f68accc41bb7cadf0eb9a 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Std. Output:
+Previous HEAD position was 572b5657d Merge pull request #10767 from alexhad6/fix-typo-in-python_api.py
+HEAD is now at aa55975c7 Doc: Clear mailbox before deleting the user (#10068)
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-10051_gold_init.patch 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Std. Output:
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-10051_gold.patch 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Std. Output:
+Checking patch src/_pytest/logging.py...
+Applied patch src/_pytest/logging.py cleanly.
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-10051_test_init.patch 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Std. Output:
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Command: git restore testing/logging/test_fixture.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Std. Output:
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-10051_test.patch 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Std. Output:
+Checking patch testing/logging/test_fixture.py...
+Applied patch testing/logging/test_fixture.py cleanly.
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/logging/test_fixture.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/logging/test_fixture.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 15 items
+
+testing/logging/test_fixture.py ..F...........F                          [100%]
+
+=================================== FAILURES ===================================
+___________ test_colored_level_formatter_applies_markup_to_levelname ___________
+
+    def test_colored_level_formatter_applies_markup_to_levelname() -> None:
+        tw = DummyTerminalWriter()
+        fmt_str = "%(levelname)s - %(message)s"
+        formatter = ColoredLevelFormatter(tw, fmt_str)
+    
+        # Create a record at INFO level.
+        record = make_log_record("mylogger", logging.INFO, "hello")
+        formatted = formatter.format(record)
+    
+        # The DummyTerminalWriter.markup should have been called for the level name.
+        text, kwargs = tw.last_markup
+        # The text passed to markup should be the raw level name ("INFO").
+>       assert text == "INFO"
+E       AssertionError: assert 'NOTSET' == 'INFO'
+E         - INFO
+E         + NOTSET
+
+testing/logging/test_fixture.py:109: AssertionError
+_______ test_log_capture_fixture_set_level_and_at_level_context_manager ________
+
+    def test_log_capture_fixture_set_level_and_at_level_context_manager() -> None:
+        node = DummyNode()
+        fixture = LogCaptureFixture(node, _ispytest=True)
+    
+        logger_name = "test_logger"
+        logger = logging.getLogger(logger_name)
+        logger.setLevel(logging.DEBUG)  # start low
+    
+        # set_level should change both logger and handler levels.
+>       fixture.set_level(logging.WARNING, logger=logger_name)
+
+testing/logging/test_fixture.py:254: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <_pytest.logging.LogCaptureFixture object at 0x72a5322d6fd0>, level = 30
+logger = 'test_logger'
+
+    def set_level(self, level: Union[int, str], logger: Optional[str] = None) -> None:
+        """Set the level of a logger for the duration of a test.
+    
+        .. versionchanged:: 3.4
+            The levels of the loggers changed by this function will be
+            restored to their initial values at the end of the test.
+    
+        :param int level: The level.
+        :param str logger: The logger to update. If not given, the root logger.
+        """
+        logger_obj = logging.getLogger(logger)
+        # Save the original log-level to restore it during teardown.
+        self._initial_logger_levels.setdefault(logger, logger_obj.level)
+        logger_obj.setLevel(level)
+        if self._initial_handler_level is None:
+>           self._initial_handler_level = self.handler.level
+E           AttributeError: 'NoneType' object has no attribute 'level'
+
+src/_pytest/logging.py:463: AttributeError
+==================================== PASSES ====================================
+______________ test_log_capture_handler_collects_records_and_text ______________
+------------------------------ Captured log call -------------------------------
+INFO     test_log_capture:test_fixture.py:68 first msg
+ERROR    test_log_capture:test_fixture.py:69 second
+WARNING  test_log_capture:test_fixture.py:88 new
+_________________ test_catching_logs_adds_and_removes_handler __________________
+------------------------------ Captured log call -------------------------------
+ERROR    root:test_fixture.py:204 should appear
+=========================== short test summary info ============================
+PASSED testing/logging/test_fixture.py::test_remove_ansi_escape_sequences_strips_sequences
+PASSED testing/logging/test_fixture.py::test_log_capture_handler_collects_records_and_text
+PASSED testing/logging/test_fixture.py::test_percent_style_multiline_auto_indent_detection[False-0]
+PASSED testing/logging/test_fixture.py::test_percent_style_multiline_auto_indent_detection[True--1]
+PASSED testing/logging/test_fixture.py::test_percent_style_multiline_auto_indent_detection[4-4]
+PASSED testing/logging/test_fixture.py::test_percent_style_multiline_auto_indent_detection[on--1]
+PASSED testing/logging/test_fixture.py::test_percent_style_multiline_auto_indent_detection[off-0]
+PASSED testing/logging/test_fixture.py::test_percent_style_multiline_auto_indent_detection[5-5]
+PASSED testing/logging/test_fixture.py::test_percent_style_multiline_formats_multiline_message_with_auto_indent
+PASSED testing/logging/test_fixture.py::test_percent_style_multiline_formats_multiline_message_with_fixed_indent
+PASSED testing/logging/test_fixture.py::test_percent_style_multiline_without_newline_uses_simple_format
+PASSED testing/logging/test_fixture.py::test_catching_logs_adds_and_removes_handler
+PASSED testing/logging/test_fixture.py::test_log_capture_fixture_clear_resets_handler_and_records
+FAILED testing/logging/test_fixture.py::test_colored_level_formatter_applies_markup_to_levelname
+FAILED testing/logging/test_fixture.py::test_log_capture_fixture_set_level_and_at_level_context_manager
+========================= 2 failed, 13 passed in 0.07s =========================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Return Code: 1 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] TestsTime: 2.895287036895752 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] >>>>> Tests configfull pred
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] TestsTime: 0.0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] >>>>> Some Tests Failed 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10051] >>>>> Unfiltered Tests Failed 

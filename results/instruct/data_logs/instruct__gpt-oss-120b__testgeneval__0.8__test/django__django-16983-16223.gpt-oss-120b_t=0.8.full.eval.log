@@ -1,0 +1,254 @@
+[django__django__5.0] [django__django-16983] Task Metadata:
+	- Instance ID: django__django-16983
+	- Testbed: django__django__5.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.11.9
+ 
+[django__django__5.0] [django__django-16983] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__5.0] [django__django-16983] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16983] Std. Output:
+ 
+[django__django__5.0] [django__django-16983] Return Code: 0 
+[django__django__5.0] [django__django-16983] Command: git -c advice.detachedHead=false checkout ddb6506618ea52c6b20e97eefad03ed847a1e3de 
+[django__django__5.0] [django__django-16983] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16983] Std. Output:
+Previous HEAD position was 4a72da7100 Refs #27471 -- Made admin's filter choice arrows use cursor pointers.
+HEAD is now at ddb6506618 Corrected admin.E013 check message in docs.
+ 
+[django__django__5.0] [django__django-16983] Return Code: 0 
+[django__django__5.0] [django__django-16983] Command: git diff > /opt/temp_django__django-16983_gold_init.patch 
+[django__django__5.0] [django__django-16983] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16983] Std. Output:
+ 
+[django__django__5.0] [django__django-16983] Return Code: 0 
+[django__django__5.0] [django__django-16983] Command: git apply -v /opt/temp_django__django-16983_gold.patch 
+[django__django__5.0] [django__django-16983] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16983] Std. Output:
+Checking patch django/contrib/admin/checks.py...
+Applied patch django/contrib/admin/checks.py cleanly.
+ 
+[django__django__5.0] [django__django-16983] Return Code: 0 
+[django__django__5.0] [django__django-16983] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__5.0] [django__django-16983] Command: git diff > /opt/temp_django__django-16983_test_init.patch 
+[django__django__5.0] [django__django-16983] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16983] Std. Output:
+ 
+[django__django__5.0] [django__django-16983] Return Code: 0 
+[django__django__5.0] [django__django-16983] Command: git restore tests/modeladmin/test_checks.py 
+[django__django__5.0] [django__django-16983] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16983] Std. Output:
+ 
+[django__django__5.0] [django__django-16983] Return Code: 0 
+[django__django__5.0] [django__django-16983] Command: git apply -v /opt/temp_django__django-16983_test.patch 
+[django__django__5.0] [django__django-16983] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16983] Std. Output:
+Checking patch tests/modeladmin/test_checks.py...
+Applied patch tests/modeladmin/test_checks.py cleanly.
+ 
+[django__django__5.0] [django__django-16983] Return Code: 0 
+[django__django__5.0] [django__django-16983] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__5.0] [django__django-16983] Command: coverage run ./tests/runtests.py --verbosity 2 modeladmin.test_checks 
+[django__django__5.0] [django__django-16983] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16983] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 770, in <module>
+    failures = django_tests(
+               ^^^^^^^^^^^^^
+  File "/opt/django__django/tests/runtests.py", line 429, in django_tests
+    failures = test_runner.run_tests(test_labels)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/test/runner.py", line 1031, in run_tests
+    suite = self.build_suite(test_labels)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/test/runner.py", line 889, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/test/runner.py", line 847, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/modeladmin/test_checks.py", line 82
+    class ModelWithCustomM2M(models.Model):
+    ^
+IndentationError: expected an indented block after class definition on line 79
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application modeladmin
+ 
+[django__django__5.0] [django__django-16983] Return Code: 1 
+[django__django__5.0] [django__django-16983] TestsTime: 0.8747384548187256 
+[django__django__5.0] [django__django-16983] Test script run successful 
+[django__django__5.0] [django__django-16983] Removing coverage 
+[django__django__5.0] [django__django-16983] Command: coverage run ./tests/runtests.py --verbosity 2 modeladmin.test_checks 
+[django__django__5.0] [django__django-16983] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16983] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 770, in <module>
+    failures = django_tests(
+               ^^^^^^^^^^^^^
+  File "/opt/django__django/tests/runtests.py", line 429, in django_tests
+    failures = test_runner.run_tests(test_labels)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/test/runner.py", line 1031, in run_tests
+    suite = self.build_suite(test_labels)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/test/runner.py", line 889, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/test/runner.py", line 847, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/modeladmin/test_checks.py", line 82
+    class ModelWithCustomM2M(models.Model):
+    ^
+IndentationError: expected an indented block after class definition on line 79
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application modeladmin
+ 
+[django__django__5.0] [django__django-16983] Return Code: 1 
+[django__django__5.0] [django__django-16983] TestsTime: 0.30974698066711426 
+[django__django__5.0] [django__django-16983] Test script run successful 
+[django__django__5.0] [django__django-16983] Removing coverage 
+[django__django__5.0] [django__django-16983] Command: coverage run ./tests/runtests.py --verbosity 2 modeladmin.test_checks 
+[django__django__5.0] [django__django-16983] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16983] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 770, in <module>
+    failures = django_tests(
+               ^^^^^^^^^^^^^
+  File "/opt/django__django/tests/runtests.py", line 429, in django_tests
+    failures = test_runner.run_tests(test_labels)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/test/runner.py", line 1031, in run_tests
+    suite = self.build_suite(test_labels)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/test/runner.py", line 889, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/test/runner.py", line 847, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/modeladmin/test_checks.py", line 82
+    class ModelWithCustomM2M(models.Model):
+    ^
+IndentationError: expected an indented block after class definition on line 79
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application modeladmin
+ 
+[django__django__5.0] [django__django-16983] Return Code: 1 
+[django__django__5.0] [django__django-16983] TestsTime: 0.3961293697357178 
+[django__django__5.0] [django__django-16983] Test script run successful 
+[django__django__5.0] [django__django-16983] Removing coverage 
+[django__django__5.0] [django__django-16983] Command: coverage run ./tests/runtests.py --verbosity 2 modeladmin.test_checks 
+[django__django__5.0] [django__django-16983] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16983] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 770, in <module>
+    failures = django_tests(
+               ^^^^^^^^^^^^^
+  File "/opt/django__django/tests/runtests.py", line 429, in django_tests
+    failures = test_runner.run_tests(test_labels)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/test/runner.py", line 1031, in run_tests
+    suite = self.build_suite(test_labels)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/test/runner.py", line 889, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/test/runner.py", line 847, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/modeladmin/test_checks.py", line 82
+    class ModelWithCustomM2M(models.Model):
+    ^
+IndentationError: expected an indented block after class definition on line 79
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application modeladmin
+ 
+[django__django__5.0] [django__django-16983] Return Code: 1 
+[django__django__5.0] [django__django-16983] TestsTime: 0.43803954124450684 
+[django__django__5.0] [django__django-16983] Test script run successful 
+[django__django__5.0] [django__django-16983] Removing coverage 
+[django__django__5.0] [django__django-16983] Command: coverage run ./tests/runtests.py --verbosity 2 modeladmin.test_checks 
+[django__django__5.0] [django__django-16983] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16983] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 770, in <module>
+    failures = django_tests(
+               ^^^^^^^^^^^^^
+  File "/opt/django__django/tests/runtests.py", line 429, in django_tests
+    failures = test_runner.run_tests(test_labels)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/test/runner.py", line 1031, in run_tests
+    suite = self.build_suite(test_labels)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/test/runner.py", line 889, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/test/runner.py", line 847, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/modeladmin/test_checks.py", line 82
+    class ModelWithCustomM2M(models.Model):
+    ^
+IndentationError: expected an indented block after class definition on line 79
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application modeladmin
+ 
+[django__django__5.0] [django__django-16983] Return Code: 1 
+[django__django__5.0] [django__django-16983] TestsTime: 0.3626523017883301 
+[django__django__5.0] [django__django-16983] Test script run successful 
+[django__django__5.0] [django__django-16983] Removing coverage 
+[django__django__5.0] [django__django-16983] Command: coverage run ./tests/runtests.py --verbosity 2 modeladmin.test_checks 
+[django__django__5.0] [django__django-16983] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16983] Std. Output:
+Traceback (most recent call last):
+  File "/opt/django__django/tests/runtests.py", line 770, in <module>
+    failures = django_tests(
+               ^^^^^^^^^^^^^
+  File "/opt/django__django/tests/runtests.py", line 429, in django_tests
+    failures = test_runner.run_tests(test_labels)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/test/runner.py", line 1031, in run_tests
+    suite = self.build_suite(test_labels)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/test/runner.py", line 889, in build_suite
+    tests = self.load_tests_for_label(label, discover_kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/test/runner.py", line 847, in load_tests_for_label
+    tests = self.test_loader.loadTestsFromName(label)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/modeladmin/test_checks.py", line 82
+    class ModelWithCustomM2M(models.Model):
+    ^
+IndentationError: expected an indented block after class definition on line 79
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application modeladmin
+ 
+[django__django__5.0] [django__django-16983] Return Code: 1 
+[django__django__5.0] [django__django-16983] TestsTime: 0.41947174072265625 
+[django__django__5.0] [django__django-16983] Test script run successful 
+[django__django__5.0] [django__django-16983] Removing coverage 
+[django__django__5.0] [django__django-16983] >>>>> Tests configfull pred
+ 
+[django__django__5.0] [django__django-16983] TestsTime: 0.0 
+[django__django__5.0] [django__django-16983] >>>>> Some Tests Failed 
+[django__django__5.0] [django__django-16983] >>>>> Unfiltered Tests Failed 

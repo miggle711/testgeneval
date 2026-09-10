@@ -1,0 +1,176 @@
+[django__django__3.2] [django__django-13774] Task Metadata:
+	- Instance ID: django__django-13774
+	- Testbed: django__django__3.2
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.6.15
+ 
+[django__django__3.2] [django__django-13774] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__3.2] [django__django-13774] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.2] [django__django-13774] Std. Output:
+ 
+[django__django__3.2] [django__django-13774] Return Code: 0 
+[django__django__3.2] [django__django-13774] Command: git -c advice.detachedHead=false checkout bebd4cfa8f5e0d2dff2de5e50d86e849a40f4bb2 
+[django__django__3.2] [django__django-13774] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.2] [django__django-13774] Std. Output:
+Previous HEAD position was 65dfb06a1a [3.2.x] Fixed #32648 -- Fixed VariableDoesNotExist rendering sitemaps template.
+HEAD is now at bebd4cfa8f Fixed #32273 -- Doc'd AdminSite.unregister().
+ 
+[django__django__3.2] [django__django-13774] Return Code: 0 
+[django__django__3.2] [django__django-13774] Command: git diff > /opt/temp_django__django-13774_gold_init.patch 
+[django__django__3.2] [django__django-13774] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.2] [django__django-13774] Std. Output:
+ 
+[django__django__3.2] [django__django-13774] Return Code: 0 
+[django__django__3.2] [django__django-13774] Command: git apply -v /opt/temp_django__django-13774_gold.patch 
+[django__django__3.2] [django__django-13774] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.2] [django__django-13774] Std. Output:
+Checking patch django/db/models/query.py...
+Applied patch django/db/models/query.py cleanly.
+ 
+[django__django__3.2] [django__django-13774] Return Code: 0 
+[django__django__3.2] [django__django-13774] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__3.2] [django__django-13774] Command: git diff > /opt/temp_django__django-13774_test_init.patch 
+[django__django__3.2] [django__django-13774] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.2] [django__django-13774] Std. Output:
+ 
+[django__django__3.2] [django__django-13774] Return Code: 0 
+[django__django__3.2] [django__django-13774] Command: git restore tests/prefetch_related/test_prefetch_related_objects.py 
+[django__django__3.2] [django__django-13774] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.2] [django__django-13774] Std. Output:
+ 
+[django__django__3.2] [django__django-13774] Return Code: 0 
+[django__django__3.2] [django__django-13774] Command: git apply -v /opt/temp_django__django-13774_test.patch 
+[django__django__3.2] [django__django-13774] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__3.2] [django__django-13774] Std. Output:
+Checking patch tests/prefetch_related/test_prefetch_related_objects.py...
+Applied patch tests/prefetch_related/test_prefetch_related_objects.py cleanly.
+ 
+[django__django__3.2] [django__django-13774] Return Code: 0 
+[django__django__3.2] [django__django-13774] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__3.2] [django__django-13774] Command: coverage run ./tests/runtests.py --verbosity 2 prefetch_related.test_prefetch_related_objects 
+[django__django__3.2] [django__django-13774] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.2] [django__django-13774] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application prefetch_related
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_prefetch_related_objects (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_prefetch_related_objects (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_prefetch_related_objects
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/prefetch_related/test_prefetch_related_objects.py", line 32, in <module>
+    from django.db.models import Prefetch, prefetch_related_objects, get_prefetcher
+ImportError: cannot import name 'get_prefetcher'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+ 
+[django__django__3.2] [django__django-13774] Return Code: 1 
+[django__django__3.2] [django__django-13774] TestsTime: 0.7187783718109131 
+[django__django__3.2] [django__django-13774] Test script run successful 
+[django__django__3.2] [django__django-13774] Removing coverage 
+[django__django__3.2] [django__django-13774] Command: coverage run ./tests/runtests.py --verbosity 2 prefetch_related.test_prefetch_related_objects 
+[django__django__3.2] [django__django-13774] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.2] [django__django-13774] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application prefetch_related
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_prefetch_related_objects (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_prefetch_related_objects (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_prefetch_related_objects
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/prefetch_related/test_prefetch_related_objects.py", line 32, in <module>
+    from django.db.models import Prefetch, prefetch_related_objects, get_prefetcher
+ImportError: cannot import name 'get_prefetcher'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+ 
+[django__django__3.2] [django__django-13774] Return Code: 1 
+[django__django__3.2] [django__django-13774] TestsTime: 0.42462611198425293 
+[django__django__3.2] [django__django-13774] Test script run successful 
+[django__django__3.2] [django__django-13774] Removing coverage 
+[django__django__3.2] [django__django-13774] Command: coverage run ./tests/runtests.py --verbosity 2 prefetch_related.test_prefetch_related_objects 
+[django__django__3.2] [django__django-13774] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.2] [django__django-13774] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application prefetch_related
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_prefetch_related_objects (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_prefetch_related_objects (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_prefetch_related_objects
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/prefetch_related/test_prefetch_related_objects.py", line 32, in <module>
+    from django.db.models import Prefetch, prefetch_related_objects, get_prefetcher
+ImportError: cannot import name 'get_prefetcher'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+ 
+[django__django__3.2] [django__django-13774] Return Code: 1 
+[django__django__3.2] [django__django-13774] TestsTime: 0.517291784286499 
+[django__django__3.2] [django__django-13774] Test script run successful 
+[django__django__3.2] [django__django-13774] Removing coverage 
+[django__django__3.2] [django__django-13774] Command: coverage run ./tests/runtests.py --verbosity 2 prefetch_related.test_prefetch_related_objects 
+[django__django__3.2] [django__django-13774] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__3.2] [django__django-13774] Std. Output:
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application prefetch_related
+Skipping setup of unused database(s): default, other.
+System check identified no issues (0 silenced).
+test_prefetch_related_objects (unittest.loader._FailedTest) ... ERROR
+
+======================================================================
+ERROR: test_prefetch_related_objects (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_prefetch_related_objects
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.6.15/lib/python3.6/unittest/loader.py", line 153, in loadTestsFromName
+    module = __import__(module_name)
+  File "/opt/django__django/tests/prefetch_related/test_prefetch_related_objects.py", line 32, in <module>
+    from django.db.models import Prefetch, prefetch_related_objects, get_prefetcher
+ImportError: cannot import name 'get_prefetcher'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+ 
+[django__django__3.2] [django__django-13774] Return Code: 1 
+[django__django__3.2] [django__django-13774] TestsTime: 0.477017879486084 
+[django__django__3.2] [django__django-13774] Test script run successful 
+[django__django__3.2] [django__django-13774] Removing coverage 
+[django__django__3.2] [django__django-13774] >>>>> Tests configfull pred
+ 
+[django__django__3.2] [django__django-13774] TestsTime: 0.0 
+[django__django__3.2] [django__django-13774] >>>>> Some Tests Failed 
+[django__django__3.2] [django__django-13774] >>>>> Unfiltered Tests Failed 

@@ -1,0 +1,1106 @@
+[django__django__5.0] [django__django-16661] Task Metadata:
+	- Instance ID: django__django-16661
+	- Testbed: django__django__5.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.11.9
+ 
+[django__django__5.0] [django__django-16661] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__5.0] [django__django-16661] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16661] Std. Output:
+ 
+[django__django__5.0] [django__django-16661] Return Code: 0 
+[django__django__5.0] [django__django-16661] Command: git -c advice.detachedHead=false checkout d687febce5868545f99974d2499a91f81a32fef5 
+[django__django__5.0] [django__django-16661] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16661] Std. Output:
+Previous HEAD position was 4a72da7100 Refs #27471 -- Made admin's filter choice arrows use cursor pointers.
+HEAD is now at d687febce5 Fixed #34383 -- Fixed layout of admin fieldsets with multiple fields on the same line.
+ 
+[django__django__5.0] [django__django-16661] Return Code: 0 
+[django__django__5.0] [django__django-16661] Command: git diff > /opt/temp_django__django-16661_gold_init.patch 
+[django__django__5.0] [django__django-16661] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16661] Std. Output:
+ 
+[django__django__5.0] [django__django-16661] Return Code: 0 
+[django__django__5.0] [django__django-16661] Command: git apply -v /opt/temp_django__django-16661_gold.patch 
+[django__django__5.0] [django__django-16661] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16661] Std. Output:
+Checking patch django/contrib/admin/options.py...
+Applied patch django/contrib/admin/options.py cleanly.
+ 
+[django__django__5.0] [django__django-16661] Return Code: 0 
+[django__django__5.0] [django__django-16661] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__5.0] [django__django-16661] Command: git diff > /opt/temp_django__django-16661_test_init.patch 
+[django__django__5.0] [django__django-16661] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16661] Std. Output:
+ 
+[django__django__5.0] [django__django-16661] Return Code: 0 
+[django__django__5.0] [django__django-16661] Command: git restore tests/modeladmin/tests.py 
+[django__django__5.0] [django__django-16661] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16661] Std. Output:
+ 
+[django__django__5.0] [django__django-16661] Return Code: 0 
+[django__django__5.0] [django__django-16661] Command: git apply -v /opt/temp_django__django-16661_test.patch 
+[django__django__5.0] [django__django-16661] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16661] Std. Output:
+Checking patch tests/modeladmin/tests.py...
+Applied patch tests/modeladmin/tests.py cleanly.
+ 
+[django__django__5.0] [django__django-16661] Return Code: 0 
+[django__django__5.0] [django__django-16661] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__5.0] [django__django-16661] Command: coverage run ./tests/runtests.py --verbosity 2 modeladmin.tests 
+[django__django__5.0] [django__django-16661] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16661] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application modeladmin
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, modeladmin, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table modeladmin_band
+    Creating table modeladmin_song
+    Creating table modeladmin_concert
+    Creating table modeladmin_validationtestmodel
+    Creating table modeladmin_validationtestinlinemodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+setUpClass (modeladmin.tests.BaseModelAdminLookupAllowedTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (modeladmin.tests.BaseModelAdminLookupAllowedTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: testapp_author
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/testcases.py", line 1292, in setUpClass
+    cls.setUpTestData()
+  File "/opt/django__django/tests/modeladmin/tests.py", line 117, in setUpTestData
+    cls.author = Author.objects.create(name="John Doe")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/query.py", line 650, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/opt/django__django/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/opt/django__django/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/query.py", line 1807, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/sql/compiler.py", line 1820, in execute_sql
+    cursor.execute(sql, params)
+  File "/opt/django__django/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/opt/django__django/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/opt/django__django/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: testapp_author
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.005s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16661] Return Code: 1 
+[django__django__5.0] [django__django-16661] TestsTime: 1.641545295715332 
+[django__django__5.0] [django__django-16661] Test script run successful 
+[django__django__5.0] [django__django-16661] Removing coverage 
+[django__django__5.0] [django__django-16661] Command: coverage run ./tests/runtests.py --verbosity 2 modeladmin.tests 
+[django__django__5.0] [django__django-16661] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16661] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application modeladmin
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, modeladmin, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table modeladmin_band
+    Creating table modeladmin_song
+    Creating table modeladmin_concert
+    Creating table modeladmin_validationtestmodel
+    Creating table modeladmin_validationtestinlinemodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+setUpClass (modeladmin.tests.BaseModelAdminLookupAllowedTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (modeladmin.tests.BaseModelAdminLookupAllowedTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: testapp_author
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/testcases.py", line 1292, in setUpClass
+    cls.setUpTestData()
+  File "/opt/django__django/tests/modeladmin/tests.py", line 117, in setUpTestData
+    cls.author = Author.objects.create(name="John Doe")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/query.py", line 650, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/opt/django__django/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/opt/django__django/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/query.py", line 1807, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/sql/compiler.py", line 1820, in execute_sql
+    cursor.execute(sql, params)
+  File "/opt/django__django/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/opt/django__django/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/opt/django__django/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: testapp_author
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.004s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16661] Return Code: 1 
+[django__django__5.0] [django__django-16661] TestsTime: 0.8168509006500244 
+[django__django__5.0] [django__django-16661] Test script run successful 
+[django__django__5.0] [django__django-16661] Removing coverage 
+[django__django__5.0] [django__django-16661] Command: coverage run ./tests/runtests.py --verbosity 2 modeladmin.tests 
+[django__django__5.0] [django__django-16661] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16661] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application modeladmin
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, modeladmin, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table modeladmin_band
+    Creating table modeladmin_song
+    Creating table modeladmin_concert
+    Creating table modeladmin_validationtestmodel
+    Creating table modeladmin_validationtestinlinemodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+setUpClass (modeladmin.tests.BaseModelAdminLookupAllowedTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (modeladmin.tests.BaseModelAdminLookupAllowedTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: testapp_author
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/testcases.py", line 1292, in setUpClass
+    cls.setUpTestData()
+  File "/opt/django__django/tests/modeladmin/tests.py", line 117, in setUpTestData
+    cls.author = Author.objects.create(name="John Doe")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/query.py", line 650, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/opt/django__django/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/opt/django__django/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/query.py", line 1807, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/sql/compiler.py", line 1820, in execute_sql
+    cursor.execute(sql, params)
+  File "/opt/django__django/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/opt/django__django/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/opt/django__django/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: testapp_author
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.006s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16661] Return Code: 1 
+[django__django__5.0] [django__django-16661] TestsTime: 0.9870741367340088 
+[django__django__5.0] [django__django-16661] Test script run successful 
+[django__django__5.0] [django__django-16661] Removing coverage 
+[django__django__5.0] [django__django-16661] Command: coverage run ./tests/runtests.py --verbosity 2 modeladmin.tests 
+[django__django__5.0] [django__django-16661] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16661] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application modeladmin
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, modeladmin, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table modeladmin_band
+    Creating table modeladmin_song
+    Creating table modeladmin_concert
+    Creating table modeladmin_validationtestmodel
+    Creating table modeladmin_validationtestinlinemodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+setUpClass (modeladmin.tests.BaseModelAdminLookupAllowedTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (modeladmin.tests.BaseModelAdminLookupAllowedTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: testapp_author
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/testcases.py", line 1292, in setUpClass
+    cls.setUpTestData()
+  File "/opt/django__django/tests/modeladmin/tests.py", line 117, in setUpTestData
+    cls.author = Author.objects.create(name="John Doe")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/query.py", line 650, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/opt/django__django/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/opt/django__django/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/query.py", line 1807, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/sql/compiler.py", line 1820, in execute_sql
+    cursor.execute(sql, params)
+  File "/opt/django__django/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/opt/django__django/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/opt/django__django/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: testapp_author
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.004s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16661] Return Code: 1 
+[django__django__5.0] [django__django-16661] TestsTime: 0.6753139495849609 
+[django__django__5.0] [django__django-16661] Test script run successful 
+[django__django__5.0] [django__django-16661] Removing coverage 
+[django__django__5.0] [django__django-16661] Command: coverage run ./tests/runtests.py --verbosity 2 modeladmin.tests 
+[django__django__5.0] [django__django-16661] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16661] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application modeladmin
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, modeladmin, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table modeladmin_band
+    Creating table modeladmin_song
+    Creating table modeladmin_concert
+    Creating table modeladmin_validationtestmodel
+    Creating table modeladmin_validationtestinlinemodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+setUpClass (modeladmin.tests.BaseModelAdminLookupAllowedTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (modeladmin.tests.BaseModelAdminLookupAllowedTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: testapp_author
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/testcases.py", line 1292, in setUpClass
+    cls.setUpTestData()
+  File "/opt/django__django/tests/modeladmin/tests.py", line 117, in setUpTestData
+    cls.author = Author.objects.create(name="John Doe")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/query.py", line 650, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/opt/django__django/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/opt/django__django/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/query.py", line 1807, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/sql/compiler.py", line 1820, in execute_sql
+    cursor.execute(sql, params)
+  File "/opt/django__django/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/opt/django__django/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/opt/django__django/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: testapp_author
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.003s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16661] Return Code: 1 
+[django__django__5.0] [django__django-16661] TestsTime: 0.7010786533355713 
+[django__django__5.0] [django__django-16661] Test script run successful 
+[django__django__5.0] [django__django-16661] Removing coverage 
+[django__django__5.0] [django__django-16661] Command: coverage run ./tests/runtests.py --verbosity 2 modeladmin.tests 
+[django__django__5.0] [django__django-16661] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16661] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application modeladmin
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, modeladmin, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table modeladmin_band
+    Creating table modeladmin_song
+    Creating table modeladmin_concert
+    Creating table modeladmin_validationtestmodel
+    Creating table modeladmin_validationtestinlinemodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+setUpClass (modeladmin.tests.BaseModelAdminLookupAllowedTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (modeladmin.tests.BaseModelAdminLookupAllowedTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: testapp_author
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/testcases.py", line 1292, in setUpClass
+    cls.setUpTestData()
+  File "/opt/django__django/tests/modeladmin/tests.py", line 117, in setUpTestData
+    cls.author = Author.objects.create(name="John Doe")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/query.py", line 650, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/opt/django__django/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/opt/django__django/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/query.py", line 1807, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/sql/compiler.py", line 1820, in execute_sql
+    cursor.execute(sql, params)
+  File "/opt/django__django/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/opt/django__django/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/opt/django__django/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: testapp_author
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.004s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16661] Return Code: 1 
+[django__django__5.0] [django__django-16661] TestsTime: 0.566192626953125 
+[django__django__5.0] [django__django-16661] Test script run successful 
+[django__django__5.0] [django__django-16661] Removing coverage 
+[django__django__5.0] [django__django-16661] Command: coverage run ./tests/runtests.py --verbosity 2 modeladmin.tests 
+[django__django__5.0] [django__django-16661] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16661] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application modeladmin
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, modeladmin, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table modeladmin_band
+    Creating table modeladmin_song
+    Creating table modeladmin_concert
+    Creating table modeladmin_validationtestmodel
+    Creating table modeladmin_validationtestinlinemodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+setUpClass (modeladmin.tests.BaseModelAdminLookupAllowedTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (modeladmin.tests.BaseModelAdminLookupAllowedTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: testapp_author
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/testcases.py", line 1292, in setUpClass
+    cls.setUpTestData()
+  File "/opt/django__django/tests/modeladmin/tests.py", line 117, in setUpTestData
+    cls.author = Author.objects.create(name="John Doe")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/query.py", line 650, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/opt/django__django/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/opt/django__django/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/query.py", line 1807, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/sql/compiler.py", line 1820, in execute_sql
+    cursor.execute(sql, params)
+  File "/opt/django__django/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/opt/django__django/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/opt/django__django/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: testapp_author
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16661] Return Code: 1 
+[django__django__5.0] [django__django-16661] TestsTime: 0.5263903141021729 
+[django__django__5.0] [django__django-16661] Test script run successful 
+[django__django__5.0] [django__django-16661] Removing coverage 
+[django__django__5.0] [django__django-16661] Command: coverage run ./tests/runtests.py --verbosity 2 modeladmin.tests 
+[django__django__5.0] [django__django-16661] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16661] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application modeladmin
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, modeladmin, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table modeladmin_band
+    Creating table modeladmin_song
+    Creating table modeladmin_concert
+    Creating table modeladmin_validationtestmodel
+    Creating table modeladmin_validationtestinlinemodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+setUpClass (modeladmin.tests.BaseModelAdminLookupAllowedTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (modeladmin.tests.BaseModelAdminLookupAllowedTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: testapp_author
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/testcases.py", line 1292, in setUpClass
+    cls.setUpTestData()
+  File "/opt/django__django/tests/modeladmin/tests.py", line 117, in setUpTestData
+    cls.author = Author.objects.create(name="John Doe")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/query.py", line 650, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/opt/django__django/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/opt/django__django/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/query.py", line 1807, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/sql/compiler.py", line 1820, in execute_sql
+    cursor.execute(sql, params)
+  File "/opt/django__django/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/opt/django__django/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/opt/django__django/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: testapp_author
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.004s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16661] Return Code: 1 
+[django__django__5.0] [django__django-16661] TestsTime: 0.5044608116149902 
+[django__django__5.0] [django__django-16661] Test script run successful 
+[django__django__5.0] [django__django-16661] Removing coverage 
+[django__django__5.0] [django__django-16661] Command: coverage run ./tests/runtests.py --verbosity 2 modeladmin.tests 
+[django__django__5.0] [django__django-16661] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16661] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application modeladmin
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, modeladmin, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table modeladmin_band
+    Creating table modeladmin_song
+    Creating table modeladmin_concert
+    Creating table modeladmin_validationtestmodel
+    Creating table modeladmin_validationtestinlinemodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+setUpClass (modeladmin.tests.BaseModelAdminLookupAllowedTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (modeladmin.tests.BaseModelAdminLookupAllowedTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: testapp_author
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/testcases.py", line 1292, in setUpClass
+    cls.setUpTestData()
+  File "/opt/django__django/tests/modeladmin/tests.py", line 117, in setUpTestData
+    cls.author = Author.objects.create(name="John Doe")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/query.py", line 650, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/opt/django__django/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/opt/django__django/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/query.py", line 1807, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/sql/compiler.py", line 1820, in execute_sql
+    cursor.execute(sql, params)
+  File "/opt/django__django/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/opt/django__django/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/opt/django__django/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: testapp_author
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.002s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16661] Return Code: 1 
+[django__django__5.0] [django__django-16661] TestsTime: 0.5438196659088135 
+[django__django__5.0] [django__django-16661] Test script run successful 
+[django__django__5.0] [django__django-16661] Removing coverage 
+[django__django__5.0] [django__django-16661] Command: coverage run ./tests/runtests.py --verbosity 2 modeladmin.tests 
+[django__django__5.0] [django__django-16661] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16661] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application modeladmin
+Found 1 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, contenttypes, messages, modeladmin, sessions, staticfiles
+  Apply all migrations: admin, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table modeladmin_band
+    Creating table modeladmin_song
+    Creating table modeladmin_concert
+    Creating table modeladmin_validationtestmodel
+    Creating table modeladmin_validationtestinlinemodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+System check identified no issues (0 silenced).
+setUpClass (modeladmin.tests.BaseModelAdminLookupAllowedTests) ... ERROR
+
+======================================================================
+ERROR: setUpClass (modeladmin.tests.BaseModelAdminLookupAllowedTests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/django__django/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: testapp_author
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/django__django/django/test/testcases.py", line 1292, in setUpClass
+    cls.setUpTestData()
+  File "/opt/django__django/tests/modeladmin/tests.py", line 117, in setUpTestData
+    cls.author = Author.objects.create(name="John Doe")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/query.py", line 650, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/opt/django__django/django/db/models/base.py", line 814, in save
+    self.save_base(
+  File "/opt/django__django/django/db/models/base.py", line 877, in save_base
+    updated = self._save_table(
+              ^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/base.py", line 1020, in _save_table
+    results = self._do_insert(
+              ^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/base.py", line 1061, in _do_insert
+    return manager._insert(
+           ^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/query.py", line 1807, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/models/sql/compiler.py", line 1820, in execute_sql
+    cursor.execute(sql, params)
+  File "/opt/django__django/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "/opt/django__django/django/db/utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/opt/django__django/django/db/backends/utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/django/db/backends/sqlite3/base.py", line 328, in execute
+    return super().execute(query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: testapp_author
+
+----------------------------------------------------------------------
+Ran 0 tests in 0.004s
+
+FAILED (errors=1)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16661] Return Code: 1 
+[django__django__5.0] [django__django-16661] TestsTime: 0.4565718173980713 
+[django__django__5.0] [django__django-16661] Test script run successful 
+[django__django__5.0] [django__django-16661] Removing coverage 
+[django__django__5.0] [django__django-16661] >>>>> Tests configfull pred
+ 
+[django__django__5.0] [django__django-16661] TestsTime: 0.0 
+[django__django__5.0] [django__django-16661] >>>>> Some Tests Failed 
+[django__django__5.0] [django__django-16661] >>>>> Unfiltered Tests Failed 

@@ -1,0 +1,2097 @@
+[django__django__5.0] [django__django-16560] Task Metadata:
+	- Instance ID: django__django-16560
+	- Testbed: django__django__5.0
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.11.9
+ 
+[django__django__5.0] [django__django-16560] Command: git config --global --add safe.directory /opt/django__django 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16560] Std. Output:
+ 
+[django__django__5.0] [django__django-16560] Return Code: 0 
+[django__django__5.0] [django__django-16560] Command: git -c advice.detachedHead=false checkout 51c9bb7cd16081133af4f0ab6d06572660309730 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16560] Std. Output:
+Previous HEAD position was 4a72da7100 Refs #27471 -- Made admin's filter choice arrows use cursor pointers.
+HEAD is now at 51c9bb7cd1 Refs #33829 -- Added violation_error_message to constraints' __repr__().
+ 
+[django__django__5.0] [django__django-16560] Return Code: 0 
+[django__django__5.0] [django__django-16560] Command: git diff > /opt/temp_django__django-16560_gold_init.patch 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16560] Std. Output:
+ 
+[django__django__5.0] [django__django-16560] Return Code: 0 
+[django__django__5.0] [django__django-16560] Command: git apply -v /opt/temp_django__django-16560_gold.patch 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16560] Std. Output:
+Checking patch django/contrib/postgres/constraints.py...
+Checking patch django/db/models/constraints.py...
+Applied patch django/contrib/postgres/constraints.py cleanly.
+Applied patch django/db/models/constraints.py cleanly.
+ 
+[django__django__5.0] [django__django-16560] Return Code: 0 
+[django__django__5.0] [django__django-16560] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[django__django__5.0] [django__django-16560] Command: git diff > /opt/temp_django__django-16560_test_init.patch 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16560] Std. Output:
+ 
+[django__django__5.0] [django__django-16560] Return Code: 0 
+[django__django__5.0] [django__django-16560] Command: git restore tests/constraints/tests.py 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16560] Std. Output:
+ 
+[django__django__5.0] [django__django-16560] Return Code: 0 
+[django__django__5.0] [django__django-16560] Command: git restore tests/postgres_tests/test_constraints.py 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16560] Std. Output:
+ 
+[django__django__5.0] [django__django-16560] Return Code: 0 
+[django__django__5.0] [django__django-16560] Command: git apply -v /opt/temp_django__django-16560_test.patch 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[django__django__5.0] [django__django-16560] Std. Output:
+Checking patch tests/constraints/tests.py...
+Checking patch tests/postgres_tests/test_constraints.py...
+Applied patch tests/constraints/tests.py cleanly.
+Applied patch tests/postgres_tests/test_constraints.py cleanly.
+ 
+[django__django__5.0] [django__django-16560] Return Code: 0 
+[django__django__5.0] [django__django-16560] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[django__django__5.0] [django__django-16560] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests postgres_tests.test_constraints 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16560] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application postgres_tests
+Importing application constraints
+Found 51 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, constraints, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table constraints_product
+    Creating table constraints_uniqueconstraintproduct
+    Creating table constraints_childuniqueconstraintproduct
+    Creating table constraints_uniqueconstraintconditionproduct
+    Creating table constraints_childmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_check_constraint_array_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_array_length (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_length) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_daterange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_daterange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_datetimerange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_datetimerange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_upper (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_upper) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_with_nulls (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_with_nulls) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_value (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_value) ... skipped 'PostgreSQL specific tests'
+test_opclass (postgres_tests.test_constraints.SchemaTests.test_opclass) ... skipped 'PostgreSQL specific tests'
+test_opclass_func (postgres_tests.test_constraints.SchemaTests.test_opclass_func) ... skipped 'PostgreSQL specific tests'
+test_opclass_include (postgres_tests.test_constraints.SchemaTests.test_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_opclass_multiple_columns (postgres_tests.test_constraints.SchemaTests.test_opclass_multiple_columns) ... skipped 'PostgreSQL specific tests'
+test_opclass_partial (postgres_tests.test_constraints.SchemaTests.test_opclass_partial) ... skipped 'PostgreSQL specific tests'
+tests (unittest.loader._FailedTest.tests) ... ERROR
+test_deconstruct (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_condition) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_deferrable) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_include) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_index_type) ... skipped 'PostgreSQL specific tests'
+test_empty_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_empty_expressions) ... skipped 'PostgreSQL specific tests'
+test_eq (postgres_tests.test_constraints.ExclusionConstraintTests.test_eq) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_key_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_key_transform) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_params (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_params) ... skipped 'PostgreSQL specific tests'
+test_index_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_index_transform) ... skipped 'PostgreSQL specific tests'
+test_invalid_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_condition) ... skipped 'PostgreSQL specific tests'
+test_invalid_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_deferrable) ... skipped 'PostgreSQL specific tests'
+test_invalid_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_expressions) ... skipped 'PostgreSQL specific tests'
+test_invalid_include_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_include_type) ... skipped 'PostgreSQL specific tests'
+test_invalid_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_index_type) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred_with_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred_with_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_equal_cast (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_equal_cast) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps_custom (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps_custom) ... skipped 'PostgreSQL specific tests'
+test_repr (postgres_tests.test_constraints.ExclusionConstraintTests.test_repr) ... skipped 'PostgreSQL specific tests'
+test_spgist_include_not_supported (postgres_tests.test_constraints.ExclusionConstraintTests.test_spgist_include_not_supported) ... skipped 'PostgreSQL specific tests'
+test_table_create (postgres_tests.test_constraints.ExclusionConstraintTests.test_table_create) ... skipped 'PostgreSQL specific tests'
+test_validate_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_validate_with_custom_code_and_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_with_custom_code_and_condition) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest.tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+    ^^^^^^^^^^^^^^^^^
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/constraints/tests.py", line 11, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 51 tests in 0.029s
+
+FAILED (errors=1, skipped=50)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16560] Return Code: 1 
+[django__django__5.0] [django__django-16560] TestsTime: 1.1279680728912354 
+[django__django__5.0] [django__django-16560] Test script run successful 
+[django__django__5.0] [django__django-16560] Removing coverage 
+[django__django__5.0] [django__django-16560] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests postgres_tests.test_constraints 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16560] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application postgres_tests
+Importing application constraints
+Found 51 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, constraints, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table constraints_product
+    Creating table constraints_uniqueconstraintproduct
+    Creating table constraints_childuniqueconstraintproduct
+    Creating table constraints_uniqueconstraintconditionproduct
+    Creating table constraints_childmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+tests (unittest.loader._FailedTest.tests) ... ERROR
+test_deconstruct (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_condition) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_deferrable) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_include) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_index_type) ... skipped 'PostgreSQL specific tests'
+test_empty_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_empty_expressions) ... skipped 'PostgreSQL specific tests'
+test_eq (postgres_tests.test_constraints.ExclusionConstraintTests.test_eq) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_key_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_key_transform) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_params (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_params) ... skipped 'PostgreSQL specific tests'
+test_index_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_index_transform) ... skipped 'PostgreSQL specific tests'
+test_invalid_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_condition) ... skipped 'PostgreSQL specific tests'
+test_invalid_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_deferrable) ... skipped 'PostgreSQL specific tests'
+test_invalid_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_expressions) ... skipped 'PostgreSQL specific tests'
+test_invalid_include_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_include_type) ... skipped 'PostgreSQL specific tests'
+test_invalid_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_index_type) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred_with_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred_with_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_equal_cast (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_equal_cast) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps_custom (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps_custom) ... skipped 'PostgreSQL specific tests'
+test_repr (postgres_tests.test_constraints.ExclusionConstraintTests.test_repr) ... skipped 'PostgreSQL specific tests'
+test_spgist_include_not_supported (postgres_tests.test_constraints.ExclusionConstraintTests.test_spgist_include_not_supported) ... skipped 'PostgreSQL specific tests'
+test_table_create (postgres_tests.test_constraints.ExclusionConstraintTests.test_table_create) ... skipped 'PostgreSQL specific tests'
+test_validate_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_validate_with_custom_code_and_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_with_custom_code_and_condition) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_array_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_array_length (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_length) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_daterange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_daterange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_datetimerange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_datetimerange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_upper (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_upper) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_with_nulls (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_with_nulls) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_value (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_value) ... skipped 'PostgreSQL specific tests'
+test_opclass (postgres_tests.test_constraints.SchemaTests.test_opclass) ... skipped 'PostgreSQL specific tests'
+test_opclass_func (postgres_tests.test_constraints.SchemaTests.test_opclass_func) ... skipped 'PostgreSQL specific tests'
+test_opclass_include (postgres_tests.test_constraints.SchemaTests.test_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_opclass_multiple_columns (postgres_tests.test_constraints.SchemaTests.test_opclass_multiple_columns) ... skipped 'PostgreSQL specific tests'
+test_opclass_partial (postgres_tests.test_constraints.SchemaTests.test_opclass_partial) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest.tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+    ^^^^^^^^^^^^^^^^^
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/constraints/tests.py", line 11, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 51 tests in 0.023s
+
+FAILED (errors=1, skipped=50)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16560] Return Code: 1 
+[django__django__5.0] [django__django-16560] TestsTime: 0.6447937488555908 
+[django__django__5.0] [django__django-16560] Test script run successful 
+[django__django__5.0] [django__django-16560] Removing coverage 
+[django__django__5.0] [django__django-16560] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests postgres_tests.test_constraints 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16560] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application postgres_tests
+Importing application constraints
+Found 51 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, constraints, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table constraints_product
+    Creating table constraints_uniqueconstraintproduct
+    Creating table constraints_childuniqueconstraintproduct
+    Creating table constraints_uniqueconstraintconditionproduct
+    Creating table constraints_childmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+tests (unittest.loader._FailedTest.tests) ... ERROR
+test_check_constraint_array_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_array_length (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_length) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_daterange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_daterange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_datetimerange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_datetimerange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_upper (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_upper) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_with_nulls (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_with_nulls) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_value (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_value) ... skipped 'PostgreSQL specific tests'
+test_opclass (postgres_tests.test_constraints.SchemaTests.test_opclass) ... skipped 'PostgreSQL specific tests'
+test_opclass_func (postgres_tests.test_constraints.SchemaTests.test_opclass_func) ... skipped 'PostgreSQL specific tests'
+test_opclass_include (postgres_tests.test_constraints.SchemaTests.test_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_opclass_multiple_columns (postgres_tests.test_constraints.SchemaTests.test_opclass_multiple_columns) ... skipped 'PostgreSQL specific tests'
+test_opclass_partial (postgres_tests.test_constraints.SchemaTests.test_opclass_partial) ... skipped 'PostgreSQL specific tests'
+test_deconstruct (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_condition) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_deferrable) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_include) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_index_type) ... skipped 'PostgreSQL specific tests'
+test_empty_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_empty_expressions) ... skipped 'PostgreSQL specific tests'
+test_eq (postgres_tests.test_constraints.ExclusionConstraintTests.test_eq) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_key_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_key_transform) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_params (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_params) ... skipped 'PostgreSQL specific tests'
+test_index_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_index_transform) ... skipped 'PostgreSQL specific tests'
+test_invalid_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_condition) ... skipped 'PostgreSQL specific tests'
+test_invalid_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_deferrable) ... skipped 'PostgreSQL specific tests'
+test_invalid_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_expressions) ... skipped 'PostgreSQL specific tests'
+test_invalid_include_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_include_type) ... skipped 'PostgreSQL specific tests'
+test_invalid_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_index_type) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred_with_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred_with_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_equal_cast (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_equal_cast) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps_custom (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps_custom) ... skipped 'PostgreSQL specific tests'
+test_repr (postgres_tests.test_constraints.ExclusionConstraintTests.test_repr) ... skipped 'PostgreSQL specific tests'
+test_spgist_include_not_supported (postgres_tests.test_constraints.ExclusionConstraintTests.test_spgist_include_not_supported) ... skipped 'PostgreSQL specific tests'
+test_table_create (postgres_tests.test_constraints.ExclusionConstraintTests.test_table_create) ... skipped 'PostgreSQL specific tests'
+test_validate_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_validate_with_custom_code_and_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_with_custom_code_and_condition) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest.tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+    ^^^^^^^^^^^^^^^^^
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/constraints/tests.py", line 11, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 51 tests in 0.024s
+
+FAILED (errors=1, skipped=50)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16560] Return Code: 1 
+[django__django__5.0] [django__django-16560] TestsTime: 0.603039026260376 
+[django__django__5.0] [django__django-16560] Test script run successful 
+[django__django__5.0] [django__django-16560] Removing coverage 
+[django__django__5.0] [django__django-16560] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests postgres_tests.test_constraints 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16560] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application postgres_tests
+Importing application constraints
+Found 51 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, constraints, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table constraints_product
+    Creating table constraints_uniqueconstraintproduct
+    Creating table constraints_childuniqueconstraintproduct
+    Creating table constraints_uniqueconstraintconditionproduct
+    Creating table constraints_childmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_check_constraint_array_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_array_length (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_length) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_daterange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_daterange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_datetimerange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_datetimerange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_upper (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_upper) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_with_nulls (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_with_nulls) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_value (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_value) ... skipped 'PostgreSQL specific tests'
+test_opclass (postgres_tests.test_constraints.SchemaTests.test_opclass) ... skipped 'PostgreSQL specific tests'
+test_opclass_func (postgres_tests.test_constraints.SchemaTests.test_opclass_func) ... skipped 'PostgreSQL specific tests'
+test_opclass_include (postgres_tests.test_constraints.SchemaTests.test_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_opclass_multiple_columns (postgres_tests.test_constraints.SchemaTests.test_opclass_multiple_columns) ... skipped 'PostgreSQL specific tests'
+test_opclass_partial (postgres_tests.test_constraints.SchemaTests.test_opclass_partial) ... skipped 'PostgreSQL specific tests'
+tests (unittest.loader._FailedTest.tests) ... ERROR
+test_deconstruct (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_condition) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_deferrable) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_include) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_index_type) ... skipped 'PostgreSQL specific tests'
+test_empty_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_empty_expressions) ... skipped 'PostgreSQL specific tests'
+test_eq (postgres_tests.test_constraints.ExclusionConstraintTests.test_eq) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_key_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_key_transform) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_params (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_params) ... skipped 'PostgreSQL specific tests'
+test_index_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_index_transform) ... skipped 'PostgreSQL specific tests'
+test_invalid_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_condition) ... skipped 'PostgreSQL specific tests'
+test_invalid_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_deferrable) ... skipped 'PostgreSQL specific tests'
+test_invalid_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_expressions) ... skipped 'PostgreSQL specific tests'
+test_invalid_include_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_include_type) ... skipped 'PostgreSQL specific tests'
+test_invalid_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_index_type) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred_with_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred_with_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_equal_cast (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_equal_cast) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps_custom (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps_custom) ... skipped 'PostgreSQL specific tests'
+test_repr (postgres_tests.test_constraints.ExclusionConstraintTests.test_repr) ... skipped 'PostgreSQL specific tests'
+test_spgist_include_not_supported (postgres_tests.test_constraints.ExclusionConstraintTests.test_spgist_include_not_supported) ... skipped 'PostgreSQL specific tests'
+test_table_create (postgres_tests.test_constraints.ExclusionConstraintTests.test_table_create) ... skipped 'PostgreSQL specific tests'
+test_validate_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_validate_with_custom_code_and_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_with_custom_code_and_condition) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest.tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+    ^^^^^^^^^^^^^^^^^
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/constraints/tests.py", line 11, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 51 tests in 0.025s
+
+FAILED (errors=1, skipped=50)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16560] Return Code: 1 
+[django__django__5.0] [django__django-16560] TestsTime: 0.6823570728302002 
+[django__django__5.0] [django__django-16560] Test script run successful 
+[django__django__5.0] [django__django-16560] Removing coverage 
+[django__django__5.0] [django__django-16560] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests postgres_tests.test_constraints 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16560] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application postgres_tests
+Importing application constraints
+Found 51 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, constraints, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table constraints_product
+    Creating table constraints_uniqueconstraintproduct
+    Creating table constraints_childuniqueconstraintproduct
+    Creating table constraints_uniqueconstraintconditionproduct
+    Creating table constraints_childmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_check_constraint_array_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_array_length (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_length) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_daterange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_daterange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_datetimerange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_datetimerange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_upper (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_upper) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_with_nulls (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_with_nulls) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_value (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_value) ... skipped 'PostgreSQL specific tests'
+test_opclass (postgres_tests.test_constraints.SchemaTests.test_opclass) ... skipped 'PostgreSQL specific tests'
+test_opclass_func (postgres_tests.test_constraints.SchemaTests.test_opclass_func) ... skipped 'PostgreSQL specific tests'
+test_opclass_include (postgres_tests.test_constraints.SchemaTests.test_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_opclass_multiple_columns (postgres_tests.test_constraints.SchemaTests.test_opclass_multiple_columns) ... skipped 'PostgreSQL specific tests'
+test_opclass_partial (postgres_tests.test_constraints.SchemaTests.test_opclass_partial) ... skipped 'PostgreSQL specific tests'
+tests (unittest.loader._FailedTest.tests) ... ERROR
+test_deconstruct (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_condition) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_deferrable) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_include) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_index_type) ... skipped 'PostgreSQL specific tests'
+test_empty_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_empty_expressions) ... skipped 'PostgreSQL specific tests'
+test_eq (postgres_tests.test_constraints.ExclusionConstraintTests.test_eq) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_key_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_key_transform) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_params (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_params) ... skipped 'PostgreSQL specific tests'
+test_index_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_index_transform) ... skipped 'PostgreSQL specific tests'
+test_invalid_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_condition) ... skipped 'PostgreSQL specific tests'
+test_invalid_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_deferrable) ... skipped 'PostgreSQL specific tests'
+test_invalid_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_expressions) ... skipped 'PostgreSQL specific tests'
+test_invalid_include_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_include_type) ... skipped 'PostgreSQL specific tests'
+test_invalid_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_index_type) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred_with_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred_with_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_equal_cast (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_equal_cast) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps_custom (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps_custom) ... skipped 'PostgreSQL specific tests'
+test_repr (postgres_tests.test_constraints.ExclusionConstraintTests.test_repr) ... skipped 'PostgreSQL specific tests'
+test_spgist_include_not_supported (postgres_tests.test_constraints.ExclusionConstraintTests.test_spgist_include_not_supported) ... skipped 'PostgreSQL specific tests'
+test_table_create (postgres_tests.test_constraints.ExclusionConstraintTests.test_table_create) ... skipped 'PostgreSQL specific tests'
+test_validate_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_validate_with_custom_code_and_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_with_custom_code_and_condition) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest.tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+    ^^^^^^^^^^^^^^^^^
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/constraints/tests.py", line 11, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 51 tests in 0.016s
+
+FAILED (errors=1, skipped=50)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16560] Return Code: 1 
+[django__django__5.0] [django__django-16560] TestsTime: 0.6359362602233887 
+[django__django__5.0] [django__django-16560] Test script run successful 
+[django__django__5.0] [django__django-16560] Removing coverage 
+[django__django__5.0] [django__django-16560] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests postgres_tests.test_constraints 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16560] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application postgres_tests
+Importing application constraints
+Found 51 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, constraints, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table constraints_product
+    Creating table constraints_uniqueconstraintproduct
+    Creating table constraints_childuniqueconstraintproduct
+    Creating table constraints_uniqueconstraintconditionproduct
+    Creating table constraints_childmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+tests (unittest.loader._FailedTest.tests) ... ERROR
+test_check_constraint_array_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_array_length (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_length) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_daterange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_daterange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_datetimerange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_datetimerange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_upper (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_upper) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_with_nulls (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_with_nulls) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_value (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_value) ... skipped 'PostgreSQL specific tests'
+test_opclass (postgres_tests.test_constraints.SchemaTests.test_opclass) ... skipped 'PostgreSQL specific tests'
+test_opclass_func (postgres_tests.test_constraints.SchemaTests.test_opclass_func) ... skipped 'PostgreSQL specific tests'
+test_opclass_include (postgres_tests.test_constraints.SchemaTests.test_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_opclass_multiple_columns (postgres_tests.test_constraints.SchemaTests.test_opclass_multiple_columns) ... skipped 'PostgreSQL specific tests'
+test_opclass_partial (postgres_tests.test_constraints.SchemaTests.test_opclass_partial) ... skipped 'PostgreSQL specific tests'
+test_deconstruct (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_condition) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_deferrable) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_include) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_index_type) ... skipped 'PostgreSQL specific tests'
+test_empty_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_empty_expressions) ... skipped 'PostgreSQL specific tests'
+test_eq (postgres_tests.test_constraints.ExclusionConstraintTests.test_eq) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_key_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_key_transform) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_params (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_params) ... skipped 'PostgreSQL specific tests'
+test_index_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_index_transform) ... skipped 'PostgreSQL specific tests'
+test_invalid_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_condition) ... skipped 'PostgreSQL specific tests'
+test_invalid_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_deferrable) ... skipped 'PostgreSQL specific tests'
+test_invalid_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_expressions) ... skipped 'PostgreSQL specific tests'
+test_invalid_include_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_include_type) ... skipped 'PostgreSQL specific tests'
+test_invalid_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_index_type) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred_with_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred_with_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_equal_cast (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_equal_cast) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps_custom (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps_custom) ... skipped 'PostgreSQL specific tests'
+test_repr (postgres_tests.test_constraints.ExclusionConstraintTests.test_repr) ... skipped 'PostgreSQL specific tests'
+test_spgist_include_not_supported (postgres_tests.test_constraints.ExclusionConstraintTests.test_spgist_include_not_supported) ... skipped 'PostgreSQL specific tests'
+test_table_create (postgres_tests.test_constraints.ExclusionConstraintTests.test_table_create) ... skipped 'PostgreSQL specific tests'
+test_validate_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_validate_with_custom_code_and_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_with_custom_code_and_condition) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest.tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+    ^^^^^^^^^^^^^^^^^
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/constraints/tests.py", line 11, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 51 tests in 0.026s
+
+FAILED (errors=1, skipped=50)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16560] Return Code: 1 
+[django__django__5.0] [django__django-16560] TestsTime: 0.6775469779968262 
+[django__django__5.0] [django__django-16560] Test script run successful 
+[django__django__5.0] [django__django-16560] Removing coverage 
+[django__django__5.0] [django__django-16560] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests postgres_tests.test_constraints 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16560] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application postgres_tests
+Importing application constraints
+Found 51 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, constraints, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table constraints_product
+    Creating table constraints_uniqueconstraintproduct
+    Creating table constraints_childuniqueconstraintproduct
+    Creating table constraints_uniqueconstraintconditionproduct
+    Creating table constraints_childmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_check_constraint_array_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_array_length (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_length) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_daterange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_daterange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_datetimerange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_datetimerange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_upper (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_upper) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_with_nulls (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_with_nulls) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_value (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_value) ... skipped 'PostgreSQL specific tests'
+test_opclass (postgres_tests.test_constraints.SchemaTests.test_opclass) ... skipped 'PostgreSQL specific tests'
+test_opclass_func (postgres_tests.test_constraints.SchemaTests.test_opclass_func) ... skipped 'PostgreSQL specific tests'
+test_opclass_include (postgres_tests.test_constraints.SchemaTests.test_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_opclass_multiple_columns (postgres_tests.test_constraints.SchemaTests.test_opclass_multiple_columns) ... skipped 'PostgreSQL specific tests'
+test_opclass_partial (postgres_tests.test_constraints.SchemaTests.test_opclass_partial) ... skipped 'PostgreSQL specific tests'
+tests (unittest.loader._FailedTest.tests) ... ERROR
+test_deconstruct (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_condition) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_deferrable) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_include) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_index_type) ... skipped 'PostgreSQL specific tests'
+test_empty_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_empty_expressions) ... skipped 'PostgreSQL specific tests'
+test_eq (postgres_tests.test_constraints.ExclusionConstraintTests.test_eq) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_key_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_key_transform) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_params (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_params) ... skipped 'PostgreSQL specific tests'
+test_index_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_index_transform) ... skipped 'PostgreSQL specific tests'
+test_invalid_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_condition) ... skipped 'PostgreSQL specific tests'
+test_invalid_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_deferrable) ... skipped 'PostgreSQL specific tests'
+test_invalid_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_expressions) ... skipped 'PostgreSQL specific tests'
+test_invalid_include_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_include_type) ... skipped 'PostgreSQL specific tests'
+test_invalid_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_index_type) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred_with_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred_with_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_equal_cast (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_equal_cast) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps_custom (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps_custom) ... skipped 'PostgreSQL specific tests'
+test_repr (postgres_tests.test_constraints.ExclusionConstraintTests.test_repr) ... skipped 'PostgreSQL specific tests'
+test_spgist_include_not_supported (postgres_tests.test_constraints.ExclusionConstraintTests.test_spgist_include_not_supported) ... skipped 'PostgreSQL specific tests'
+test_table_create (postgres_tests.test_constraints.ExclusionConstraintTests.test_table_create) ... skipped 'PostgreSQL specific tests'
+test_validate_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_validate_with_custom_code_and_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_with_custom_code_and_condition) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest.tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+    ^^^^^^^^^^^^^^^^^
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/constraints/tests.py", line 11, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 51 tests in 0.016s
+
+FAILED (errors=1, skipped=50)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16560] Return Code: 1 
+[django__django__5.0] [django__django-16560] TestsTime: 0.5951917171478271 
+[django__django__5.0] [django__django-16560] Test script run successful 
+[django__django__5.0] [django__django-16560] Removing coverage 
+[django__django__5.0] [django__django-16560] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests postgres_tests.test_constraints 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16560] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application postgres_tests
+Importing application constraints
+Found 51 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, constraints, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table constraints_product
+    Creating table constraints_uniqueconstraintproduct
+    Creating table constraints_childuniqueconstraintproduct
+    Creating table constraints_uniqueconstraintconditionproduct
+    Creating table constraints_childmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_check_constraint_array_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_array_length (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_length) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_daterange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_daterange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_datetimerange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_datetimerange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_upper (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_upper) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_with_nulls (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_with_nulls) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_value (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_value) ... skipped 'PostgreSQL specific tests'
+test_opclass (postgres_tests.test_constraints.SchemaTests.test_opclass) ... skipped 'PostgreSQL specific tests'
+test_opclass_func (postgres_tests.test_constraints.SchemaTests.test_opclass_func) ... skipped 'PostgreSQL specific tests'
+test_opclass_include (postgres_tests.test_constraints.SchemaTests.test_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_opclass_multiple_columns (postgres_tests.test_constraints.SchemaTests.test_opclass_multiple_columns) ... skipped 'PostgreSQL specific tests'
+test_opclass_partial (postgres_tests.test_constraints.SchemaTests.test_opclass_partial) ... skipped 'PostgreSQL specific tests'
+tests (unittest.loader._FailedTest.tests) ... ERROR
+test_deconstruct (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_condition) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_deferrable) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_include) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_index_type) ... skipped 'PostgreSQL specific tests'
+test_empty_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_empty_expressions) ... skipped 'PostgreSQL specific tests'
+test_eq (postgres_tests.test_constraints.ExclusionConstraintTests.test_eq) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_key_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_key_transform) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_params (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_params) ... skipped 'PostgreSQL specific tests'
+test_index_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_index_transform) ... skipped 'PostgreSQL specific tests'
+test_invalid_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_condition) ... skipped 'PostgreSQL specific tests'
+test_invalid_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_deferrable) ... skipped 'PostgreSQL specific tests'
+test_invalid_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_expressions) ... skipped 'PostgreSQL specific tests'
+test_invalid_include_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_include_type) ... skipped 'PostgreSQL specific tests'
+test_invalid_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_index_type) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred_with_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred_with_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_equal_cast (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_equal_cast) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps_custom (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps_custom) ... skipped 'PostgreSQL specific tests'
+test_repr (postgres_tests.test_constraints.ExclusionConstraintTests.test_repr) ... skipped 'PostgreSQL specific tests'
+test_spgist_include_not_supported (postgres_tests.test_constraints.ExclusionConstraintTests.test_spgist_include_not_supported) ... skipped 'PostgreSQL specific tests'
+test_table_create (postgres_tests.test_constraints.ExclusionConstraintTests.test_table_create) ... skipped 'PostgreSQL specific tests'
+test_validate_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_validate_with_custom_code_and_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_with_custom_code_and_condition) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest.tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+    ^^^^^^^^^^^^^^^^^
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/constraints/tests.py", line 11, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 51 tests in 0.016s
+
+FAILED (errors=1, skipped=50)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16560] Return Code: 1 
+[django__django__5.0] [django__django-16560] TestsTime: 1.8011417388916016 
+[django__django__5.0] [django__django-16560] Test script run successful 
+[django__django__5.0] [django__django-16560] Removing coverage 
+[django__django__5.0] [django__django-16560] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests postgres_tests.test_constraints 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16560] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application postgres_tests
+Importing application constraints
+Found 51 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, constraints, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table constraints_product
+    Creating table constraints_uniqueconstraintproduct
+    Creating table constraints_childuniqueconstraintproduct
+    Creating table constraints_uniqueconstraintconditionproduct
+    Creating table constraints_childmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_check_constraint_array_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_array_length (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_length) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_daterange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_daterange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_datetimerange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_datetimerange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_upper (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_upper) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_with_nulls (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_with_nulls) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_value (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_value) ... skipped 'PostgreSQL specific tests'
+test_opclass (postgres_tests.test_constraints.SchemaTests.test_opclass) ... skipped 'PostgreSQL specific tests'
+test_opclass_func (postgres_tests.test_constraints.SchemaTests.test_opclass_func) ... skipped 'PostgreSQL specific tests'
+test_opclass_include (postgres_tests.test_constraints.SchemaTests.test_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_opclass_multiple_columns (postgres_tests.test_constraints.SchemaTests.test_opclass_multiple_columns) ... skipped 'PostgreSQL specific tests'
+test_opclass_partial (postgres_tests.test_constraints.SchemaTests.test_opclass_partial) ... skipped 'PostgreSQL specific tests'
+tests (unittest.loader._FailedTest.tests) ... ERROR
+test_deconstruct (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_condition) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_deferrable) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_include) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_index_type) ... skipped 'PostgreSQL specific tests'
+test_empty_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_empty_expressions) ... skipped 'PostgreSQL specific tests'
+test_eq (postgres_tests.test_constraints.ExclusionConstraintTests.test_eq) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_key_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_key_transform) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_params (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_params) ... skipped 'PostgreSQL specific tests'
+test_index_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_index_transform) ... skipped 'PostgreSQL specific tests'
+test_invalid_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_condition) ... skipped 'PostgreSQL specific tests'
+test_invalid_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_deferrable) ... skipped 'PostgreSQL specific tests'
+test_invalid_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_expressions) ... skipped 'PostgreSQL specific tests'
+test_invalid_include_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_include_type) ... skipped 'PostgreSQL specific tests'
+test_invalid_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_index_type) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred_with_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred_with_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_equal_cast (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_equal_cast) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps_custom (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps_custom) ... skipped 'PostgreSQL specific tests'
+test_repr (postgres_tests.test_constraints.ExclusionConstraintTests.test_repr) ... skipped 'PostgreSQL specific tests'
+test_spgist_include_not_supported (postgres_tests.test_constraints.ExclusionConstraintTests.test_spgist_include_not_supported) ... skipped 'PostgreSQL specific tests'
+test_table_create (postgres_tests.test_constraints.ExclusionConstraintTests.test_table_create) ... skipped 'PostgreSQL specific tests'
+test_validate_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_validate_with_custom_code_and_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_with_custom_code_and_condition) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest.tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+    ^^^^^^^^^^^^^^^^^
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/constraints/tests.py", line 11, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 51 tests in 0.022s
+
+FAILED (errors=1, skipped=50)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16560] Return Code: 1 
+[django__django__5.0] [django__django-16560] TestsTime: 1.0427043437957764 
+[django__django__5.0] [django__django-16560] Test script run successful 
+[django__django__5.0] [django__django-16560] Removing coverage 
+[django__django__5.0] [django__django-16560] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests postgres_tests.test_constraints 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16560] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application postgres_tests
+Importing application constraints
+Found 51 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, constraints, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table constraints_product
+    Creating table constraints_uniqueconstraintproduct
+    Creating table constraints_childuniqueconstraintproduct
+    Creating table constraints_uniqueconstraintconditionproduct
+    Creating table constraints_childmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+tests (unittest.loader._FailedTest.tests) ... ERROR
+test_check_constraint_array_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_array_length (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_length) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_daterange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_daterange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_datetimerange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_datetimerange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_upper (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_upper) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_with_nulls (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_with_nulls) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_value (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_value) ... skipped 'PostgreSQL specific tests'
+test_opclass (postgres_tests.test_constraints.SchemaTests.test_opclass) ... skipped 'PostgreSQL specific tests'
+test_opclass_func (postgres_tests.test_constraints.SchemaTests.test_opclass_func) ... skipped 'PostgreSQL specific tests'
+test_opclass_include (postgres_tests.test_constraints.SchemaTests.test_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_opclass_multiple_columns (postgres_tests.test_constraints.SchemaTests.test_opclass_multiple_columns) ... skipped 'PostgreSQL specific tests'
+test_opclass_partial (postgres_tests.test_constraints.SchemaTests.test_opclass_partial) ... skipped 'PostgreSQL specific tests'
+test_deconstruct (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_condition) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_deferrable) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_include) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_index_type) ... skipped 'PostgreSQL specific tests'
+test_empty_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_empty_expressions) ... skipped 'PostgreSQL specific tests'
+test_eq (postgres_tests.test_constraints.ExclusionConstraintTests.test_eq) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_key_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_key_transform) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_params (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_params) ... skipped 'PostgreSQL specific tests'
+test_index_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_index_transform) ... skipped 'PostgreSQL specific tests'
+test_invalid_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_condition) ... skipped 'PostgreSQL specific tests'
+test_invalid_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_deferrable) ... skipped 'PostgreSQL specific tests'
+test_invalid_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_expressions) ... skipped 'PostgreSQL specific tests'
+test_invalid_include_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_include_type) ... skipped 'PostgreSQL specific tests'
+test_invalid_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_index_type) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred_with_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred_with_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_equal_cast (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_equal_cast) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps_custom (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps_custom) ... skipped 'PostgreSQL specific tests'
+test_repr (postgres_tests.test_constraints.ExclusionConstraintTests.test_repr) ... skipped 'PostgreSQL specific tests'
+test_spgist_include_not_supported (postgres_tests.test_constraints.ExclusionConstraintTests.test_spgist_include_not_supported) ... skipped 'PostgreSQL specific tests'
+test_table_create (postgres_tests.test_constraints.ExclusionConstraintTests.test_table_create) ... skipped 'PostgreSQL specific tests'
+test_validate_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_validate_with_custom_code_and_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_with_custom_code_and_condition) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest.tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+    ^^^^^^^^^^^^^^^^^
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/constraints/tests.py", line 11, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 51 tests in 0.017s
+
+FAILED (errors=1, skipped=50)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16560] Return Code: 1 
+[django__django__5.0] [django__django-16560] TestsTime: 0.8200626373291016 
+[django__django__5.0] [django__django-16560] Test script run successful 
+[django__django__5.0] [django__django-16560] Removing coverage 
+[django__django__5.0] [django__django-16560] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests postgres_tests.test_constraints 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16560] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application postgres_tests
+Importing application constraints
+Found 51 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, constraints, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table constraints_product
+    Creating table constraints_uniqueconstraintproduct
+    Creating table constraints_childuniqueconstraintproduct
+    Creating table constraints_uniqueconstraintconditionproduct
+    Creating table constraints_childmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_check_constraint_array_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_array_length (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_length) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_daterange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_daterange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_datetimerange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_datetimerange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_upper (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_upper) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_with_nulls (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_with_nulls) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_value (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_value) ... skipped 'PostgreSQL specific tests'
+test_opclass (postgres_tests.test_constraints.SchemaTests.test_opclass) ... skipped 'PostgreSQL specific tests'
+test_opclass_func (postgres_tests.test_constraints.SchemaTests.test_opclass_func) ... skipped 'PostgreSQL specific tests'
+test_opclass_include (postgres_tests.test_constraints.SchemaTests.test_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_opclass_multiple_columns (postgres_tests.test_constraints.SchemaTests.test_opclass_multiple_columns) ... skipped 'PostgreSQL specific tests'
+test_opclass_partial (postgres_tests.test_constraints.SchemaTests.test_opclass_partial) ... skipped 'PostgreSQL specific tests'
+tests (unittest.loader._FailedTest.tests) ... ERROR
+test_deconstruct (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_condition) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_deferrable) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_include) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_index_type) ... skipped 'PostgreSQL specific tests'
+test_empty_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_empty_expressions) ... skipped 'PostgreSQL specific tests'
+test_eq (postgres_tests.test_constraints.ExclusionConstraintTests.test_eq) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_key_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_key_transform) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_params (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_params) ... skipped 'PostgreSQL specific tests'
+test_index_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_index_transform) ... skipped 'PostgreSQL specific tests'
+test_invalid_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_condition) ... skipped 'PostgreSQL specific tests'
+test_invalid_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_deferrable) ... skipped 'PostgreSQL specific tests'
+test_invalid_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_expressions) ... skipped 'PostgreSQL specific tests'
+test_invalid_include_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_include_type) ... skipped 'PostgreSQL specific tests'
+test_invalid_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_index_type) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred_with_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred_with_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_equal_cast (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_equal_cast) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps_custom (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps_custom) ... skipped 'PostgreSQL specific tests'
+test_repr (postgres_tests.test_constraints.ExclusionConstraintTests.test_repr) ... skipped 'PostgreSQL specific tests'
+test_spgist_include_not_supported (postgres_tests.test_constraints.ExclusionConstraintTests.test_spgist_include_not_supported) ... skipped 'PostgreSQL specific tests'
+test_table_create (postgres_tests.test_constraints.ExclusionConstraintTests.test_table_create) ... skipped 'PostgreSQL specific tests'
+test_validate_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_validate_with_custom_code_and_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_with_custom_code_and_condition) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest.tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+    ^^^^^^^^^^^^^^^^^
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/constraints/tests.py", line 11, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 51 tests in 0.016s
+
+FAILED (errors=1, skipped=50)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16560] Return Code: 1 
+[django__django__5.0] [django__django-16560] TestsTime: 0.6293585300445557 
+[django__django__5.0] [django__django-16560] Test script run successful 
+[django__django__5.0] [django__django-16560] Removing coverage 
+[django__django__5.0] [django__django-16560] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests postgres_tests.test_constraints 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16560] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application postgres_tests
+Importing application constraints
+Found 51 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, constraints, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table constraints_product
+    Creating table constraints_uniqueconstraintproduct
+    Creating table constraints_childuniqueconstraintproduct
+    Creating table constraints_uniqueconstraintconditionproduct
+    Creating table constraints_childmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_deconstruct (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_condition) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_deferrable) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_include) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_index_type) ... skipped 'PostgreSQL specific tests'
+test_empty_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_empty_expressions) ... skipped 'PostgreSQL specific tests'
+test_eq (postgres_tests.test_constraints.ExclusionConstraintTests.test_eq) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_key_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_key_transform) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_params (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_params) ... skipped 'PostgreSQL specific tests'
+test_index_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_index_transform) ... skipped 'PostgreSQL specific tests'
+test_invalid_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_condition) ... skipped 'PostgreSQL specific tests'
+test_invalid_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_deferrable) ... skipped 'PostgreSQL specific tests'
+test_invalid_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_expressions) ... skipped 'PostgreSQL specific tests'
+test_invalid_include_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_include_type) ... skipped 'PostgreSQL specific tests'
+test_invalid_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_index_type) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred_with_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred_with_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_equal_cast (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_equal_cast) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps_custom (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps_custom) ... skipped 'PostgreSQL specific tests'
+test_repr (postgres_tests.test_constraints.ExclusionConstraintTests.test_repr) ... skipped 'PostgreSQL specific tests'
+test_spgist_include_not_supported (postgres_tests.test_constraints.ExclusionConstraintTests.test_spgist_include_not_supported) ... skipped 'PostgreSQL specific tests'
+test_table_create (postgres_tests.test_constraints.ExclusionConstraintTests.test_table_create) ... skipped 'PostgreSQL specific tests'
+test_validate_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_validate_with_custom_code_and_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_with_custom_code_and_condition) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_array_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_array_length (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_length) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_daterange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_daterange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_datetimerange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_datetimerange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_upper (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_upper) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_with_nulls (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_with_nulls) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_value (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_value) ... skipped 'PostgreSQL specific tests'
+test_opclass (postgres_tests.test_constraints.SchemaTests.test_opclass) ... skipped 'PostgreSQL specific tests'
+test_opclass_func (postgres_tests.test_constraints.SchemaTests.test_opclass_func) ... skipped 'PostgreSQL specific tests'
+test_opclass_include (postgres_tests.test_constraints.SchemaTests.test_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_opclass_multiple_columns (postgres_tests.test_constraints.SchemaTests.test_opclass_multiple_columns) ... skipped 'PostgreSQL specific tests'
+test_opclass_partial (postgres_tests.test_constraints.SchemaTests.test_opclass_partial) ... skipped 'PostgreSQL specific tests'
+tests (unittest.loader._FailedTest.tests) ... ERROR
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest.tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+    ^^^^^^^^^^^^^^^^^
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/constraints/tests.py", line 11, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 51 tests in 0.017s
+
+FAILED (errors=1, skipped=50)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16560] Return Code: 1 
+[django__django__5.0] [django__django-16560] TestsTime: 0.6844077110290527 
+[django__django__5.0] [django__django-16560] Test script run successful 
+[django__django__5.0] [django__django-16560] Removing coverage 
+[django__django__5.0] [django__django-16560] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests postgres_tests.test_constraints 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16560] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application postgres_tests
+Importing application constraints
+Found 51 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, constraints, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table constraints_product
+    Creating table constraints_uniqueconstraintproduct
+    Creating table constraints_childuniqueconstraintproduct
+    Creating table constraints_uniqueconstraintconditionproduct
+    Creating table constraints_childmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_check_constraint_array_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_array_length (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_length) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_daterange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_daterange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_datetimerange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_datetimerange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_upper (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_upper) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_with_nulls (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_with_nulls) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_value (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_value) ... skipped 'PostgreSQL specific tests'
+test_opclass (postgres_tests.test_constraints.SchemaTests.test_opclass) ... skipped 'PostgreSQL specific tests'
+test_opclass_func (postgres_tests.test_constraints.SchemaTests.test_opclass_func) ... skipped 'PostgreSQL specific tests'
+test_opclass_include (postgres_tests.test_constraints.SchemaTests.test_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_opclass_multiple_columns (postgres_tests.test_constraints.SchemaTests.test_opclass_multiple_columns) ... skipped 'PostgreSQL specific tests'
+test_opclass_partial (postgres_tests.test_constraints.SchemaTests.test_opclass_partial) ... skipped 'PostgreSQL specific tests'
+tests (unittest.loader._FailedTest.tests) ... ERROR
+test_deconstruct (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_condition) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_deferrable) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_include) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_index_type) ... skipped 'PostgreSQL specific tests'
+test_empty_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_empty_expressions) ... skipped 'PostgreSQL specific tests'
+test_eq (postgres_tests.test_constraints.ExclusionConstraintTests.test_eq) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_key_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_key_transform) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_params (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_params) ... skipped 'PostgreSQL specific tests'
+test_index_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_index_transform) ... skipped 'PostgreSQL specific tests'
+test_invalid_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_condition) ... skipped 'PostgreSQL specific tests'
+test_invalid_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_deferrable) ... skipped 'PostgreSQL specific tests'
+test_invalid_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_expressions) ... skipped 'PostgreSQL specific tests'
+test_invalid_include_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_include_type) ... skipped 'PostgreSQL specific tests'
+test_invalid_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_index_type) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred_with_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred_with_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_equal_cast (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_equal_cast) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps_custom (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps_custom) ... skipped 'PostgreSQL specific tests'
+test_repr (postgres_tests.test_constraints.ExclusionConstraintTests.test_repr) ... skipped 'PostgreSQL specific tests'
+test_spgist_include_not_supported (postgres_tests.test_constraints.ExclusionConstraintTests.test_spgist_include_not_supported) ... skipped 'PostgreSQL specific tests'
+test_table_create (postgres_tests.test_constraints.ExclusionConstraintTests.test_table_create) ... skipped 'PostgreSQL specific tests'
+test_validate_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_validate_with_custom_code_and_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_with_custom_code_and_condition) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest.tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+    ^^^^^^^^^^^^^^^^^
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/constraints/tests.py", line 11, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 51 tests in 0.014s
+
+FAILED (errors=1, skipped=50)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16560] Return Code: 1 
+[django__django__5.0] [django__django-16560] TestsTime: 0.6310815811157227 
+[django__django__5.0] [django__django-16560] Test script run successful 
+[django__django__5.0] [django__django-16560] Removing coverage 
+[django__django__5.0] [django__django-16560] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests postgres_tests.test_constraints 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16560] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application postgres_tests
+Importing application constraints
+Found 51 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, constraints, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table constraints_product
+    Creating table constraints_uniqueconstraintproduct
+    Creating table constraints_childuniqueconstraintproduct
+    Creating table constraints_uniqueconstraintconditionproduct
+    Creating table constraints_childmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_check_constraint_array_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_array_length (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_length) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_daterange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_daterange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_datetimerange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_datetimerange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_upper (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_upper) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_with_nulls (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_with_nulls) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_value (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_value) ... skipped 'PostgreSQL specific tests'
+test_opclass (postgres_tests.test_constraints.SchemaTests.test_opclass) ... skipped 'PostgreSQL specific tests'
+test_opclass_func (postgres_tests.test_constraints.SchemaTests.test_opclass_func) ... skipped 'PostgreSQL specific tests'
+test_opclass_include (postgres_tests.test_constraints.SchemaTests.test_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_opclass_multiple_columns (postgres_tests.test_constraints.SchemaTests.test_opclass_multiple_columns) ... skipped 'PostgreSQL specific tests'
+test_opclass_partial (postgres_tests.test_constraints.SchemaTests.test_opclass_partial) ... skipped 'PostgreSQL specific tests'
+tests (unittest.loader._FailedTest.tests) ... ERROR
+test_deconstruct (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_condition) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_deferrable) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_include) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_index_type) ... skipped 'PostgreSQL specific tests'
+test_empty_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_empty_expressions) ... skipped 'PostgreSQL specific tests'
+test_eq (postgres_tests.test_constraints.ExclusionConstraintTests.test_eq) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_key_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_key_transform) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_params (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_params) ... skipped 'PostgreSQL specific tests'
+test_index_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_index_transform) ... skipped 'PostgreSQL specific tests'
+test_invalid_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_condition) ... skipped 'PostgreSQL specific tests'
+test_invalid_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_deferrable) ... skipped 'PostgreSQL specific tests'
+test_invalid_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_expressions) ... skipped 'PostgreSQL specific tests'
+test_invalid_include_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_include_type) ... skipped 'PostgreSQL specific tests'
+test_invalid_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_index_type) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred_with_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred_with_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_equal_cast (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_equal_cast) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps_custom (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps_custom) ... skipped 'PostgreSQL specific tests'
+test_repr (postgres_tests.test_constraints.ExclusionConstraintTests.test_repr) ... skipped 'PostgreSQL specific tests'
+test_spgist_include_not_supported (postgres_tests.test_constraints.ExclusionConstraintTests.test_spgist_include_not_supported) ... skipped 'PostgreSQL specific tests'
+test_table_create (postgres_tests.test_constraints.ExclusionConstraintTests.test_table_create) ... skipped 'PostgreSQL specific tests'
+test_validate_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_validate_with_custom_code_and_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_with_custom_code_and_condition) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest.tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+    ^^^^^^^^^^^^^^^^^
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/constraints/tests.py", line 11, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 51 tests in 0.031s
+
+FAILED (errors=1, skipped=50)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16560] Return Code: 1 
+[django__django__5.0] [django__django-16560] TestsTime: 0.5555429458618164 
+[django__django__5.0] [django__django-16560] Test script run successful 
+[django__django__5.0] [django__django-16560] Removing coverage 
+[django__django__5.0] [django__django-16560] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests postgres_tests.test_constraints 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16560] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application postgres_tests
+Importing application constraints
+Found 51 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, constraints, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table constraints_product
+    Creating table constraints_uniqueconstraintproduct
+    Creating table constraints_childuniqueconstraintproduct
+    Creating table constraints_uniqueconstraintconditionproduct
+    Creating table constraints_childmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_check_constraint_array_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_array_length (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_length) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_daterange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_daterange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_datetimerange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_datetimerange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_upper (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_upper) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_with_nulls (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_with_nulls) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_value (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_value) ... skipped 'PostgreSQL specific tests'
+test_opclass (postgres_tests.test_constraints.SchemaTests.test_opclass) ... skipped 'PostgreSQL specific tests'
+test_opclass_func (postgres_tests.test_constraints.SchemaTests.test_opclass_func) ... skipped 'PostgreSQL specific tests'
+test_opclass_include (postgres_tests.test_constraints.SchemaTests.test_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_opclass_multiple_columns (postgres_tests.test_constraints.SchemaTests.test_opclass_multiple_columns) ... skipped 'PostgreSQL specific tests'
+test_opclass_partial (postgres_tests.test_constraints.SchemaTests.test_opclass_partial) ... skipped 'PostgreSQL specific tests'
+tests (unittest.loader._FailedTest.tests) ... ERROR
+test_deconstruct (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_condition) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_deferrable) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_include) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_index_type) ... skipped 'PostgreSQL specific tests'
+test_empty_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_empty_expressions) ... skipped 'PostgreSQL specific tests'
+test_eq (postgres_tests.test_constraints.ExclusionConstraintTests.test_eq) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_key_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_key_transform) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_params (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_params) ... skipped 'PostgreSQL specific tests'
+test_index_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_index_transform) ... skipped 'PostgreSQL specific tests'
+test_invalid_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_condition) ... skipped 'PostgreSQL specific tests'
+test_invalid_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_deferrable) ... skipped 'PostgreSQL specific tests'
+test_invalid_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_expressions) ... skipped 'PostgreSQL specific tests'
+test_invalid_include_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_include_type) ... skipped 'PostgreSQL specific tests'
+test_invalid_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_index_type) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred_with_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred_with_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_equal_cast (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_equal_cast) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps_custom (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps_custom) ... skipped 'PostgreSQL specific tests'
+test_repr (postgres_tests.test_constraints.ExclusionConstraintTests.test_repr) ... skipped 'PostgreSQL specific tests'
+test_spgist_include_not_supported (postgres_tests.test_constraints.ExclusionConstraintTests.test_spgist_include_not_supported) ... skipped 'PostgreSQL specific tests'
+test_table_create (postgres_tests.test_constraints.ExclusionConstraintTests.test_table_create) ... skipped 'PostgreSQL specific tests'
+test_validate_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_validate_with_custom_code_and_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_with_custom_code_and_condition) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest.tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+    ^^^^^^^^^^^^^^^^^
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/constraints/tests.py", line 11, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 51 tests in 0.015s
+
+FAILED (errors=1, skipped=50)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16560] Return Code: 1 
+[django__django__5.0] [django__django-16560] TestsTime: 0.5211925506591797 
+[django__django__5.0] [django__django-16560] Test script run successful 
+[django__django__5.0] [django__django-16560] Removing coverage 
+[django__django__5.0] [django__django-16560] Command: coverage run ./tests/runtests.py --verbosity 2 constraints.tests postgres_tests.test_constraints 
+[django__django__5.0] [django__django-16560] Subprocess args: {"cwd": "/opt/django__django", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[django__django__5.0] [django__django-16560] Std. Output:
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Testing against Django installed in '/opt/django__django/django' with up to 24 processes
+Importing application postgres_tests
+Importing application constraints
+Found 51 test(s).
+Skipping setup of unused database(s): other.
+Operations to perform:
+  Synchronize unmigrated apps: auth, constraints, contenttypes, messages, sessions, staticfiles
+  Apply all migrations: admin, postgres_tests, sites
+Synchronizing apps without migrations:
+  Creating tables...
+    Creating table django_content_type
+    Creating table auth_permission
+    Creating table auth_group
+    Creating table auth_user
+    Creating table django_session
+    Creating table constraints_product
+    Creating table constraints_uniqueconstraintproduct
+    Creating table constraints_childuniqueconstraintproduct
+    Creating table constraints_uniqueconstraintconditionproduct
+    Creating table constraints_childmodel
+    Running deferred SQL...
+Running migrations:
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying postgres_tests.0001_setup_extensions... OK
+  Applying postgres_tests.0002_create_test_models... OK
+  Applying sites.0001_initial... OK
+  Applying sites.0002_alter_domain_unique... OK
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Cloning test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+System check identified no issues (0 silenced).
+test_check_constraint_array_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_array_length (postgres_tests.test_constraints.SchemaTests.test_check_constraint_array_length) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_daterange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_daterange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_datetimerange_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_datetimerange_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_contains (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_contains) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_upper (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_upper) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_lower_with_nulls (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_lower_with_nulls) ... skipped 'PostgreSQL specific tests'
+test_check_constraint_range_value (postgres_tests.test_constraints.SchemaTests.test_check_constraint_range_value) ... skipped 'PostgreSQL specific tests'
+test_opclass (postgres_tests.test_constraints.SchemaTests.test_opclass) ... skipped 'PostgreSQL specific tests'
+test_opclass_func (postgres_tests.test_constraints.SchemaTests.test_opclass_func) ... skipped 'PostgreSQL specific tests'
+test_opclass_include (postgres_tests.test_constraints.SchemaTests.test_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_opclass_multiple_columns (postgres_tests.test_constraints.SchemaTests.test_opclass_multiple_columns) ... skipped 'PostgreSQL specific tests'
+test_opclass_partial (postgres_tests.test_constraints.SchemaTests.test_opclass_partial) ... skipped 'PostgreSQL specific tests'
+tests (unittest.loader._FailedTest.tests) ... ERROR
+test_deconstruct (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_condition) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_deferrable) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_include) ... skipped 'PostgreSQL specific tests'
+test_deconstruct_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_deconstruct_index_type) ... skipped 'PostgreSQL specific tests'
+test_empty_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_empty_expressions) ... skipped 'PostgreSQL specific tests'
+test_eq (postgres_tests.test_constraints.ExclusionConstraintTests.test_eq) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_key_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_key_transform) ... skipped 'PostgreSQL specific tests'
+test_expressions_with_params (postgres_tests.test_constraints.ExclusionConstraintTests.test_expressions_with_params) ... skipped 'PostgreSQL specific tests'
+test_index_transform (postgres_tests.test_constraints.ExclusionConstraintTests.test_index_transform) ... skipped 'PostgreSQL specific tests'
+test_invalid_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_condition) ... skipped 'PostgreSQL specific tests'
+test_invalid_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_deferrable) ... skipped 'PostgreSQL specific tests'
+test_invalid_expressions (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_expressions) ... skipped 'PostgreSQL specific tests'
+test_invalid_include_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_include_type) ... skipped 'PostgreSQL specific tests'
+test_invalid_index_type (postgres_tests.test_constraints.ExclusionConstraintTests.test_invalid_index_type) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_gist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_gist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_initially_deferred_with_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_initially_deferred_with_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_opclass_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_opclass_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_condition) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_include_deferrable (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_include_deferrable) ... skipped 'PostgreSQL specific tests'
+test_range_adjacent_spgist_opclass_include (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_adjacent_spgist_opclass_include) ... skipped 'PostgreSQL specific tests'
+test_range_equal_cast (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_equal_cast) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps) ... skipped 'PostgreSQL specific tests'
+test_range_overlaps_custom (postgres_tests.test_constraints.ExclusionConstraintTests.test_range_overlaps_custom) ... skipped 'PostgreSQL specific tests'
+test_repr (postgres_tests.test_constraints.ExclusionConstraintTests.test_repr) ... skipped 'PostgreSQL specific tests'
+test_spgist_include_not_supported (postgres_tests.test_constraints.ExclusionConstraintTests.test_spgist_include_not_supported) ... skipped 'PostgreSQL specific tests'
+test_table_create (postgres_tests.test_constraints.ExclusionConstraintTests.test_table_create) ... skipped 'PostgreSQL specific tests'
+test_validate_range_adjacent (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_range_adjacent) ... skipped 'PostgreSQL specific tests'
+test_validate_with_custom_code_and_condition (postgres_tests.test_constraints.ExclusionConstraintTests.test_validate_with_custom_code_and_condition) ... skipped 'PostgreSQL specific tests'
+
+======================================================================
+ERROR: tests (unittest.loader._FailedTest.tests)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 57, in testPartExecutor
+    yield
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 623, in run
+    self._callTestMethod(testMethod)
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/case.py", line 579, in _callTestMethod
+    if method() is not None:
+    ^^^^^^^^^^^^^^^^^
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 34, in testFailure
+    raise self._exception
+    ^^^^^^^^^^^^^^^^^
+ImportError: Failed to import test module: tests
+Traceback (most recent call last):
+  File "/opt/pyenv/versions/3.11.9/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/django__django/tests/constraints/tests.py", line 11, in <module>
+    import pytest
+ModuleNotFoundError: No module named 'pytest'
+
+
+----------------------------------------------------------------------
+Ran 51 tests in 0.019s
+
+FAILED (errors=1, skipped=50)
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ 
+[django__django__5.0] [django__django-16560] Return Code: 1 
+[django__django__5.0] [django__django-16560] TestsTime: 0.5883474349975586 
+[django__django__5.0] [django__django-16560] Test script run successful 
+[django__django__5.0] [django__django-16560] Removing coverage 
+[django__django__5.0] [django__django-16560] >>>>> Tests configfull pred
+ 
+[django__django__5.0] [django__django-16560] TestsTime: 0.0 
+[django__django__5.0] [django__django-16560] >>>>> Some Tests Failed 
+[django__django__5.0] [django__django-16560] >>>>> Unfiltered Tests Failed 

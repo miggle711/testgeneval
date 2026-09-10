@@ -1,0 +1,1366 @@
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Task Metadata:
+	- Instance ID: pytest-dev__pytest-10356
+	- Testbed: pytest-dev__pytest__7.2
+	- Evaluation Model: gpt-oss-120b_t=0.8
+	- Python version: Python 3.11.8
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: git config --global --add safe.directory /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: git -c advice.detachedHead=false checkout 3c1534944cbd34e8a41bc9e76818018fadefc9a1 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+Previous HEAD position was 572b5657d Merge pull request #10767 from alexhad6/fix-typo-in-python_api.py
+HEAD is now at 3c1534944 Merge pull request #10318 from pytest-dev/pre-commit-ci-update-config
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-10356_gold_init.patch 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-10356_gold.patch 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+Checking patch src/_pytest/mark/structures.py...
+Applied patch src/_pytest/mark/structures.py cleanly.
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Apply patch successful (gold) 
+>>>>> Applied Patch (gold)
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: git diff > /home/swe-bench/temp_pytest-dev__pytest-10356_test_init.patch 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": true, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: git restore testing/test_mark.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": true, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: git apply -v /home/swe-bench/temp_pytest-dev__pytest-10356_test.patch 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+Checking patch testing/test_mark.py...
+Applied patch testing/test_mark.py cleanly.
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Apply patch successful (test) 
+>>>>> Applied Patch (test)
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/test_mark.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_mark.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_mark.py F                                                   [100%]
+
+=================================== FAILURES ===================================
+__________________ test_parameterset_param_and_id_validation ___________________
+
+    def test_parameterset_param_and_id_validation():
+        # Normal creation with id string.
+        ps = ParameterSet.param(1, 2, id="my‑id")
+        assert isinstance(ps, ParameterSet)
+        assert ps.values == (1, 2)
+>       assert ps.id == "my‑id"
+E       AssertionError: assert 'my\\u2011id' == 'my‑id'
+E         - my‑id
+E         + my\u2011id
+
+testing/test_mark.py:73: AssertionError
+=========================== short test summary info ============================
+FAILED testing/test_mark.py::test_parameterset_param_and_id_validation - Asse...
+============================== 1 failed in 0.02s ===============================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 1 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] TestsTime: 1.2203361988067627 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/test_mark.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_mark.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_mark.py F                                                   [100%]
+
+=================================== FAILURES ===================================
+___________________ test_parameterset_extract_from_behaviour ___________________
+
+    def test_parameterset_extract_from_behaviour():
+        # Direct ``ParameterSet`` returns itself.
+        original = ParameterSet.param(10, 20, id="orig")
+        assert ParameterSet.extract_from(original) is original
+    
+        # ``force_tuple`` forces wrapping into a ParameterSet.
+        wrapped = ParameterSet.extract_from(42, force_tuple=True)
+        assert isinstance(wrapped, ParameterSet)
+        assert wrapped.values == (42,)
+    
+        # Without ``force_tuple`` a non‑tuple value is wrapped as a single element.
+        wrapped2 = ParameterSet.extract_from(99)
+        assert isinstance(wrapped2, ParameterSet)
+        # The legacy behaviour wraps the raw object as a single element.
+>       assert wrapped2.values == (99,)
+E       assert 99 == (99,)
+E        +  where 99 = ParameterSet(values=99, marks=[], id=None).values
+
+testing/test_mark.py:84: AssertionError
+=========================== short test summary info ============================
+FAILED testing/test_mark.py::test_parameterset_extract_from_behaviour - asser...
+============================== 1 failed in 0.02s ===============================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 1 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] TestsTime: 0.5251212120056152 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/test_mark.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_mark.py .                                                   [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/test_mark.py::test_mark_combination_and_param_ids_logic
+============================== 1 passed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] TestsTime: 0.499417781829834 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/test_mark.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_mark.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_mark.py F                                                   [100%]
+
+=================================== FAILURES ===================================
+______________ test_markdecorator_calls_on_functions_and_classes _______________
+'custom' not found in `markers` configuration option
+=========================== short test summary info ============================
+FAILED testing/test_mark.py::test_markdecorator_calls_on_functions_and_classes
+============================== 1 failed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 1 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] TestsTime: 0.49661731719970703 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/test_mark.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_mark.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_mark.py F                                                   [100%]
+
+=================================== FAILURES ===================================
+__________________ test_markdecorator_with_args_and_chaining ___________________
+'base' not found in `markers` configuration option
+=========================== short test summary info ============================
+FAILED testing/test_mark.py::test_markdecorator_with_args_and_chaining
+============================== 1 failed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 1 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] TestsTime: 0.5577292442321777 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/test_mark.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_mark.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_mark.py F                                                   [100%]
+
+=================================== FAILURES ===================================
+_____________________ test_store_mark_and_unpack_with_mro ______________________
+'base' not found in `markers` configuration option
+=========================== short test summary info ============================
+FAILED testing/test_mark.py::test_store_mark_and_unpack_with_mro
+============================== 1 failed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 1 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] TestsTime: 0.5082452297210693 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/test_mark.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_mark.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 0 items / 1 error
+
+==================================== ERRORS ====================================
+____________________ ERROR collecting testing/test_mark.py _____________________
+src/_pytest/python.py:617: in _importtestmodule
+    mod = import_path(self.path, mode=importmode, root=self.config.rootpath)
+src/_pytest/pathlib.py:533: in import_path
+    importlib.import_module(module_name)
+../miniconda3/envs/pytest-dev__pytest__7.2/lib/python3.9/importlib/__init__.py:127: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+<frozen importlib._bootstrap>:1030: in _gcd_import
+    ???
+<frozen importlib._bootstrap>:1007: in _find_and_load
+    ???
+<frozen importlib._bootstrap>:986: in _find_and_load_unlocked
+    ???
+<frozen importlib._bootstrap>:680: in _load_unlocked
+    ???
+src/_pytest/assertion/rewrite.py:159: in exec_module
+    source_stat, co = _rewrite_test(fn, self.config)
+src/_pytest/assertion/rewrite.py:337: in _rewrite_test
+    tree = ast.parse(source, filename=strfn)
+../miniconda3/envs/pytest-dev__pytest__7.2/lib/python3.9/ast.py:50: in parse
+    return compile(source, filename, mode, flags,
+E     File "/home/swe-bench/pytest-dev__pytest/testing/test_mark.py", line 94
+E       )
+E        ^
+E   SyntaxError: unexpected EOF while parsing
+=========================== short test summary info ============================
+ERROR testing/test_mark.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+=============================== 1 error in 0.13s ===============================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 2 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] TestsTime: 0.6271328926086426 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/test_mark.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+ERROR conda.cli.main_run:execute(124): `conda run coverage run -m pytest -rA testing/test_mark.py` failed. (See above for error)
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_mark.py E                                                   [100%]
+
+==================================== ERRORS ====================================
+_________ ERROR at setup of test_get_empty_parameterset_mark_behaviour _________
+file /home/swe-bench/pytest-dev__pytest/testing/test_mark.py, line 68
+  def test_get_empty_parameterset_mark_behaviour(empty_option, expected_name, expected_kwargs):
+E       fixture 'empty_option' not found
+>       available fixtures: LineMatcher, _config_for_test, _pytest, _sys_snapshot, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, color_mapping, doctest_namespace, dummy_yaml_custom_test, linecomp, mock_timing, monkeypatch, pytestconfig, pytester, record_property, record_testsuite_property, record_xml_attribute, recwarn, restore_tracing, testdir, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory, tw_mock
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/home/swe-bench/pytest-dev__pytest/testing/test_mark.py:68
+=========================== short test summary info ============================
+ERROR testing/test_mark.py::test_get_empty_parameterset_mark_behaviour
+=============================== 1 error in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 1 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] TestsTime: 0.5250828266143799 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/test_mark.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_mark.py .                                                   [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/test_mark.py::test_get_empty_parameterset_mark_unknown_option
+============================== 1 passed in 0.00s ===============================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] TestsTime: 0.528752326965332 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/test_mark.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 1 item
+
+testing/test_mark.py .                                                   [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/test_mark.py::test_markgenerator_unknown_marker_warns
+============================== 1 passed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] TestsTime: 0.5440211296081543 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] >>>>> Tests configfull pred
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Test Script: conda run -n pytest-dev__pytest__7.2  coverage run -m pytest -rA testing/test_mark.py;
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: conda run -n pytest-dev__pytest__7.2 coverage run -m pytest -rA testing/test_mark.py 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+============================= test session starts ==============================
+platform linux -- Python 3.9.20, pytest-7.2.0.dev509+g572b5657d, pluggy-0.13.1
+rootdir: /home/swe-bench/pytest-dev__pytest, configfile: pyproject.toml
+collected 3 items
+
+testing/test_mark.py ...                                                 [100%]
+
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED testing/test_mark.py::test_mark_combination_and_param_ids_logic
+PASSED testing/test_mark.py::test_get_empty_parameterset_mark_unknown_option
+PASSED testing/test_mark.py::test_markgenerator_unknown_marker_warns
+============================== 3 passed in 0.01s ===============================
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] TestsTime: 0.5438709259033203 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] 
+>>>>> All Tests Passed
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Current Working Directory: /home/swe-bench/pytest-dev__pytest 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: conda run -n pytest-dev__pytest__7.2 coverage json -o coverage.json 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+Wrote JSON report to coverage.json
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] 
+CoverageLOG: 56.61764705882353%
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] 
+FunctionCoverageLOG: 38.88888888888889%
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Running mutation testing 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: conda run -n pytest-dev__pytest__7.2 cosmic-ray init mutation.toml mutation.sqlite 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 60} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: conda run -n pytest-dev__pytest__7.2 cosmic-ray exec mutation.toml mutation.sqlite 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2, "timeout": 3600} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: conda run -n pytest-dev__pytest__7.2 cr-rate mutation.sqlite --estimate --confidence 95.0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+58.82 58.82 58.82
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: conda run -n pytest-dev__pytest__7.2 cr-report mutation.sqlite 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+[job-id] 82dfe8692a7a4c5bafaff0e3f7839bc1
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] 993d114fbfe44fa3a327fd7202beffed
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_Sub 1
+worker outcome: normal, test outcome: killed
+[job-id] 786ceafe86704638b12ffcc22ea8ba3c
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_Mul 0
+worker outcome: normal, test outcome: survived
+[job-id] 78dd19e4be5d4e2c8143de5c35a66ba7
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_Mul 1
+worker outcome: normal, test outcome: killed
+[job-id] 1d7fd1eb1be749e9b9f93a88a076c16e
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 67c000a8a3714bd383226859f8811d74
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_Div 1
+worker outcome: normal, test outcome: killed
+[job-id] 99bd63f44cee4a9bab77615f96058774
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] a446c5f48bb5429f92838d50006e18b5
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_FloorDiv 1
+worker outcome: normal, test outcome: killed
+[job-id] f66c27827a714b5aa303995f90aecb11
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] af6e95ebcc36455a8405cbd0ba7965c4
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_Mod 1
+worker outcome: normal, test outcome: killed
+[job-id] fdffe59e5b3c4dd890eaec97e46f8bd2
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] ebc7b2c2bec145d8a129478d1bcbe469
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_Pow 1
+worker outcome: normal, test outcome: killed
+[job-id] 3b6668bf69204d46946a038da3005ee8
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] b7971ef54b88444190f57fe6428ba57c
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_RShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 54888b6489644a4fbbb54da4ddafd8d5
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] 8abd15411aa5452993fecc3f380b9abe
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_LShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 4be400d6396e40fb8e549aca86ebd3ab
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] a670f8932e724fc0b846be02cda09cd1
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_BitOr 1
+worker outcome: normal, test outcome: killed
+[job-id] 47c16aaa8fef4f8fa818fcd6c145c094
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 6c10004e91574da5b4d6bd958561a8cf
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_BitAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] 35fd282b4a1c4e91822d57d8b5399ff7
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] b6f23fa2e26741e586658bbbd8e00a3f
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Add_BitXor 1
+worker outcome: normal, test outcome: killed
+[job-id] c7fee2ed106b4d4bbe1c828549a1698c
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Add 0
+worker outcome: normal, test outcome: survived
+[job-id] aa1e2413f49a411e9e5b4ee3ae5e4ee0
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Add 1
+worker outcome: normal, test outcome: killed
+[job-id] 53f75c1014de4756a4fb528a3384560a
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Add 2
+worker outcome: normal, test outcome: killed
+[job-id] a1c0ad64573d4e8f8036abc1038bccb5
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Add 3
+worker outcome: normal, test outcome: killed
+[job-id] 3d33507cc1594da5a60678e4a5cc6f17
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Add 4
+worker outcome: normal, test outcome: killed
+[job-id] 0e84a1813a834a08a6c5a711dadacc2a
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Add 5
+worker outcome: normal, test outcome: killed
+[job-id] 62b232c0d47642f1a59f0c11b571b0cd
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Sub 0
+worker outcome: normal, test outcome: survived
+[job-id] acdf15c92e3e43f5965058162246e63f
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Sub 1
+worker outcome: normal, test outcome: killed
+[job-id] bffef22186d147fb904f91f8dd3d1d06
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Sub 2
+worker outcome: normal, test outcome: killed
+[job-id] ee2df1982c144f599bb14b5b0a4c169b
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Sub 3
+worker outcome: normal, test outcome: killed
+[job-id] 4b6c8f101d104941b9a7aabf446b6426
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Sub 4
+worker outcome: normal, test outcome: killed
+[job-id] eb0660f8bd574654930d12cb4abfae40
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Sub 5
+worker outcome: normal, test outcome: killed
+[job-id] 15b584c7ffe646199aca5c6d49efc7d2
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Div 0
+worker outcome: normal, test outcome: survived
+[job-id] 336b6f8dbef44511bc58d249a0d69825
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Div 1
+worker outcome: normal, test outcome: killed
+[job-id] e383d6da861a4f308ecace7b26ad8812
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Div 2
+worker outcome: normal, test outcome: survived
+[job-id] cfae686a7a894fb298b60529c765c5cc
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Div 3
+worker outcome: normal, test outcome: survived
+[job-id] ba1b46d39ff64950a453fc776ea5cd62
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Div 4
+worker outcome: normal, test outcome: survived
+[job-id] 1f5a40e376cc4dcbbf95b0fa28de4471
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Div 5
+worker outcome: normal, test outcome: survived
+[job-id] 55ab520597a946209d0419a1561c93c1
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_FloorDiv 0
+worker outcome: normal, test outcome: survived
+[job-id] 86531f417384492e852f576819ba9077
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_FloorDiv 1
+worker outcome: normal, test outcome: killed
+[job-id] c1872d863c6044e1beb877df498cbde1
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_FloorDiv 2
+worker outcome: normal, test outcome: killed
+[job-id] 59783319870347b888bdb420470e5934
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_FloorDiv 3
+worker outcome: normal, test outcome: killed
+[job-id] df5da476a08f4709becd27668ed810a3
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_FloorDiv 4
+worker outcome: normal, test outcome: killed
+[job-id] 106ed690132248d0ad65a5fc1b9bdddd
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_FloorDiv 5
+worker outcome: normal, test outcome: killed
+[job-id] b9825cc6c7284134b1983a702cbfbeb6
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Mod 0
+worker outcome: normal, test outcome: survived
+[job-id] 4ad883e619bc4664a0e09e51080dfb7d
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Mod 1
+worker outcome: normal, test outcome: killed
+[job-id] 8978aa59d0614c949ebb3a03368a8835
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Mod 2
+worker outcome: normal, test outcome: killed
+[job-id] e0ffacc2af8a4012a38056be991feffe
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Mod 3
+worker outcome: normal, test outcome: killed
+[job-id] 57fa9bce523347ebb8e8f91720ba0961
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Mod 4
+worker outcome: normal, test outcome: killed
+[job-id] ad01270e3d9446f194c434ca67fdef51
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Mod 5
+worker outcome: normal, test outcome: killed
+[job-id] 57b6e047201c4def991954e7e5f8a127
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Pow 0
+worker outcome: normal, test outcome: survived
+[job-id] 4f0d2f238ece4606aa752f9eff9d887d
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Pow 1
+worker outcome: normal, test outcome: killed
+[job-id] dcdd018a899c4b48b67a29d362addadd
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Pow 2
+worker outcome: normal, test outcome: killed
+[job-id] d6e1b3daf5224e31ba53bf8b4897fb71
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Pow 3
+worker outcome: normal, test outcome: killed
+[job-id] 71a7066b5bbb41a0aea52e276360714a
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Pow 4
+worker outcome: normal, test outcome: killed
+[job-id] 924c7ffcfb204362b51463e35c3773a6
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_Pow 5
+worker outcome: normal, test outcome: killed
+[job-id] 3c1adf3b5f5845ed9473b0fdeee26d82
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_RShift 0
+worker outcome: normal, test outcome: survived
+[job-id] d47a5594814146a4a665a5bd82e8b52f
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_RShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 0a5773fdcc1b4011bd9af032755568c2
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_RShift 2
+worker outcome: normal, test outcome: killed
+[job-id] 8ff398c402c34cd4bd1a67ab49639b1f
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_RShift 3
+worker outcome: normal, test outcome: killed
+[job-id] 999ad91233804a6fb0f852cbaade6537
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_RShift 4
+worker outcome: normal, test outcome: killed
+[job-id] c7c69a3f9cf74ae58d5d56fbf622138b
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_RShift 5
+worker outcome: normal, test outcome: killed
+[job-id] 64b1d25c35f04fa2998727a070e7e563
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_LShift 0
+worker outcome: normal, test outcome: survived
+[job-id] e76a2ba76f6f40eba588fbb70d29038c
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_LShift 1
+worker outcome: normal, test outcome: killed
+[job-id] 3a4b68e5438d424d9517871847e614ad
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_LShift 2
+worker outcome: normal, test outcome: killed
+[job-id] 34b3cd4b973b4feea3739c571fae4f09
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_LShift 3
+worker outcome: normal, test outcome: killed
+[job-id] 8691d592119b475cb1571bf00fbcfbff
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_LShift 4
+worker outcome: normal, test outcome: killed
+[job-id] 6084d9bddbe047a8a81489deea937dc7
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_LShift 5
+worker outcome: normal, test outcome: killed
+[job-id] d5afc4ee910f4476a396b1e575f7589e
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_BitOr 0
+worker outcome: normal, test outcome: survived
+[job-id] f4f0bef538824f73aad044b90fdde5cb
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_BitOr 1
+worker outcome: normal, test outcome: killed
+[job-id] d1ceebe65a0d4b31b6fbf07dc5860fae
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_BitOr 2
+worker outcome: normal, test outcome: killed
+[job-id] 40527867a3054581bbab4c758c7b77e5
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_BitOr 3
+worker outcome: normal, test outcome: killed
+[job-id] 44329d0efa754863b2ffbd12068a7c47
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_BitOr 4
+worker outcome: normal, test outcome: killed
+[job-id] 6284c02f438f47cea280273833babda0
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_BitOr 5
+worker outcome: normal, test outcome: killed
+[job-id] 021b35dcefc0460ab1d0b7d7f12a019f
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_BitAnd 0
+worker outcome: normal, test outcome: survived
+[job-id] 4c8c78d7713947aa867bf615d02a31c7
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_BitAnd 1
+worker outcome: normal, test outcome: killed
+[job-id] d24846a702d04de5aafec9d50f8bc216
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_BitAnd 2
+worker outcome: normal, test outcome: killed
+[job-id] 0e178c0516504ee0aaaca65958127d55
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_BitAnd 3
+worker outcome: normal, test outcome: killed
+[job-id] e20a3188ab3e4237aca7d441ddb03371
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_BitAnd 4
+worker outcome: normal, test outcome: killed
+[job-id] a63ee4e7acf4407eaa506d6ceb559b80
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_BitAnd 5
+worker outcome: normal, test outcome: killed
+[job-id] cfbec7591015472c81ae8a2256837c0a
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_BitXor 0
+worker outcome: normal, test outcome: survived
+[job-id] e140de01b4554060871ae1ce6210c83e
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_BitXor 1
+worker outcome: normal, test outcome: killed
+[job-id] 03f007ebb42d4335992a3383eb50a7fd
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_BitXor 2
+worker outcome: normal, test outcome: killed
+[job-id] 2fc1599f2d7e42c3a5a9fb520d628a7f
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_BitXor 3
+worker outcome: normal, test outcome: killed
+[job-id] 15b6379133a0442182fe8d6ab2e62804
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_BitXor 4
+worker outcome: normal, test outcome: killed
+[job-id] 95794e26733c4b089d3f06514d819d44
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mul_BitXor 5
+worker outcome: normal, test outcome: killed
+[job-id] 71f000e890354388bd3b6977de08b762
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_Add 0
+worker outcome: normal, test outcome: killed
+[job-id] bce52b3e96ae489a81d6384016667ff8
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_Add 1
+worker outcome: normal, test outcome: survived
+[job-id] fd679a99a04e42c3861132f7a75812e6
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_Add 2
+worker outcome: normal, test outcome: killed
+[job-id] c6e8d6b480bf40aba32a6a2416ae8feb
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_Sub 0
+worker outcome: normal, test outcome: killed
+[job-id] 388359065606491a9d3449eb4877bc62
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_Sub 1
+worker outcome: normal, test outcome: survived
+[job-id] a85ee9a9aceb424591bad4ba55a72e33
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_Sub 2
+worker outcome: normal, test outcome: killed
+[job-id] c0ed7b1626b84f4680918f9cf5c0ab5e
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_Mul 0
+worker outcome: normal, test outcome: killed
+[job-id] a9f58956da1c4231a9c8000d9eee3cec
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_Mul 1
+worker outcome: normal, test outcome: survived
+[job-id] b2435d0279d54d14a8be4ad2a2c696f2
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_Mul 2
+worker outcome: normal, test outcome: killed
+[job-id] e84fb19a5b484a739c64ac2e7605f13e
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_Div 0
+worker outcome: normal, test outcome: killed
+[job-id] 08741f74395f4dfe80d1fe5fd9f4cfa9
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_Div 1
+worker outcome: normal, test outcome: survived
+[job-id] 1959f0e34a4348dc9d73469a9452c02b
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_Div 2
+worker outcome: normal, test outcome: killed
+[job-id] 92504cf6543343f7992da5fed845bdbe
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_FloorDiv 0
+worker outcome: normal, test outcome: killed
+[job-id] da3d71986bbd4a63bee3d24577a53eb2
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_FloorDiv 1
+worker outcome: normal, test outcome: survived
+[job-id] 54a05229a1fb429eb2bdcd2946a25986
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_FloorDiv 2
+worker outcome: normal, test outcome: killed
+[job-id] 9d199d772be044ca91e64489bf86903b
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_Pow 0
+worker outcome: normal, test outcome: killed
+[job-id] d23b65ed6291440eb75af6d9c7c47e8b
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_Pow 1
+worker outcome: normal, test outcome: survived
+[job-id] 2fa9692b4e6149929be4f4d111d7f4d9
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_Pow 2
+worker outcome: normal, test outcome: killed
+[job-id] 915495055af94b4696ece62d69ff21cf
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_RShift 0
+worker outcome: normal, test outcome: killed
+[job-id] bf03f11a39304fdfa15acac053a1ee8f
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_RShift 1
+worker outcome: normal, test outcome: survived
+[job-id] d4ab7c546ce74ddcb2545e91860eed6b
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_RShift 2
+worker outcome: normal, test outcome: killed
+[job-id] 238625b4bbb94f8989613301df90beee
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_LShift 0
+worker outcome: normal, test outcome: killed
+[job-id] 3e36c2cb6a0c4727962fbc8dbd88eaa2
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_LShift 1
+worker outcome: normal, test outcome: survived
+[job-id] 1d4de9114a6c4007bf22ffdc61e8bea8
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_LShift 2
+worker outcome: normal, test outcome: killed
+[job-id] 612dad8184df4afa891bddcc624ccb60
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_BitOr 0
+worker outcome: normal, test outcome: killed
+[job-id] 6bf5311f0668410e9818272a45347aeb
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_BitOr 1
+worker outcome: normal, test outcome: survived
+[job-id] db78fea01c344256b39e0f7abc2a10fc
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_BitOr 2
+worker outcome: normal, test outcome: killed
+[job-id] 51ef2c70e7d24e13b4a4c6ec5ed7ddeb
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_BitAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] 19b7d6e8f12249d28b6711f7095a3d93
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_BitAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 68b166c8a9eb458f982140bd0aaaff6f
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_BitAnd 2
+worker outcome: normal, test outcome: killed
+[job-id] 1e7999e679de4dfa82ae78657a8615a5
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_BitXor 0
+worker outcome: normal, test outcome: killed
+[job-id] e46e0f00bb014c02bad2350ada849862
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_BitXor 1
+worker outcome: normal, test outcome: survived
+[job-id] 3c8c381181f345afa510976929123153
+src/_pytest/mark/structures.py core/ReplaceBinaryOperator_Mod_BitXor 2
+worker outcome: normal, test outcome: killed
+[job-id] f934309c68ef4bc7926b609dc49a1689
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_NotEq 0
+worker outcome: normal, test outcome: killed
+[job-id] 8f6e41e4de4b45fa93f944081882f625
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_NotEq 1
+worker outcome: normal, test outcome: killed
+[job-id] 0a7fd797d4684251b9ed25d7a3cf2687
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_NotEq 2
+worker outcome: normal, test outcome: survived
+[job-id] 0fae9a86e11d414fa15963844e925f34
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_NotEq 3
+worker outcome: normal, test outcome: killed
+[job-id] 7360afc3f9b44f46a1fa8ab4694c0f0e
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_NotEq 4
+worker outcome: normal, test outcome: killed
+[job-id] d351917b189c44fd89af12d3e44ad49b
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_NotEq 5
+worker outcome: normal, test outcome: survived
+[job-id] 8442e0403d924ccaa0092a91fd123d72
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_NotEq 6
+worker outcome: normal, test outcome: killed
+[job-id] 134ba8ea3fe54ffabd8a170685736de1
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_Lt 0
+worker outcome: normal, test outcome: killed
+[job-id] f423ccb9b4944032906c1064413862d6
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] a73c503009354f7486bf688b127842ab
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_Lt 2
+worker outcome: normal, test outcome: survived
+[job-id] 79780b6fbde4406c94132c67a3c6db1e
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_Lt 3
+worker outcome: normal, test outcome: killed
+[job-id] d54f72a5721246cb8f9ecc5c4bcab49f
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_Lt 4
+worker outcome: normal, test outcome: killed
+[job-id] 5b07c97d639342de82815a7c714d943f
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_Lt 5
+worker outcome: normal, test outcome: survived
+[job-id] fdb4f134ebbf4804ae7086d2231bd882
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_Lt 6
+worker outcome: normal, test outcome: survived
+[job-id] 37f29b71a5214dbeb950bbcd4fc316b4
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_LtE 0
+worker outcome: normal, test outcome: killed
+[job-id] 114ac641585c48e1b9861ebfc882713d
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] d709b88fdd65441d9205db597e568f23
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_LtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 38727effe7654299b56fd09cfa3d4a9e
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_LtE 3
+worker outcome: normal, test outcome: survived
+[job-id] 753b2e726a954e2ca687be403cefdf90
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_LtE 4
+worker outcome: normal, test outcome: survived
+[job-id] 1f570a4a8dcf449782b67221ecb6e2ee
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_LtE 5
+worker outcome: normal, test outcome: survived
+[job-id] 50781c08fd2046e8bea6f09b406bf9c3
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_LtE 6
+worker outcome: normal, test outcome: survived
+[job-id] c424ec572ec643efb368a3023d0b97cf
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 50adb658937c4d67aba236539e21af5a
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_Gt 1
+worker outcome: normal, test outcome: killed
+[job-id] 24aa8851bcf542ac9abb51104e963fcb
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_Gt 2
+worker outcome: normal, test outcome: survived
+[job-id] 113108ac0aad4079bcaee0082e4a8440
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_Gt 3
+worker outcome: normal, test outcome: killed
+[job-id] d9ab97fecb1c43ddb6802cc6c598d233
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_Gt 4
+worker outcome: normal, test outcome: killed
+[job-id] 6adc8be298454150b28e4cde03a4f662
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_Gt 5
+worker outcome: normal, test outcome: survived
+[job-id] d6dae95d79af4887a231a811eef8460e
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_Gt 6
+worker outcome: normal, test outcome: killed
+[job-id] 023d2acbea6b4f298bb8ffe12f03ab1c
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 0b16b37c9e4c43b5a97d52d6b00423c9
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_GtE 1
+worker outcome: normal, test outcome: killed
+[job-id] 65f100e55dd64c33841544785e738afc
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_GtE 2
+worker outcome: normal, test outcome: survived
+[job-id] 1309684298e6400887f485b87cd6be45
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_GtE 3
+worker outcome: normal, test outcome: survived
+[job-id] 2db0f4b1046443a78063f1fc11c7e5c3
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_GtE 4
+worker outcome: normal, test outcome: survived
+[job-id] dd41bdbd540c49d8b49482b9a8fbd3c0
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_GtE 5
+worker outcome: normal, test outcome: survived
+[job-id] b254c6e684414d12ae62344f396d26b1
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_GtE 6
+worker outcome: normal, test outcome: killed
+[job-id] 78e32ae45b7845829c0e8559ad1a7021
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 4d6ce645240b4c5799cf0a075a6abcbc
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 5c8f2b1f26014c569252ac6abf9c7206
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] 5dace664b75443d2b13c1f8a70bfe792
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_Is 3
+worker outcome: normal, test outcome: survived
+[job-id] db315174183549d78d16f6c9efb86467
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_Is 4
+worker outcome: normal, test outcome: survived
+[job-id] 5d9cd1903fbd4d29b421e5b4362104f6
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_IsNot 0
+worker outcome: normal, test outcome: killed
+[job-id] 5084874f65c1452aac070a1013b88b09
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_IsNot 1
+worker outcome: normal, test outcome: killed
+[job-id] 7931e505aab84d7ca04f9bf734e2b40b
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_IsNot 2
+worker outcome: normal, test outcome: killed
+[job-id] cb80298a4f514afcaedc6c9d07771621
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_IsNot 3
+worker outcome: normal, test outcome: killed
+[job-id] f31f64d5f05b4395bcfcc533bc6b7a76
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Eq_IsNot 4
+worker outcome: normal, test outcome: killed
+[job-id] 0ceb866ce2dd441bbe2bf99ae2b1da05
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_NotEq_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] b48bb05371464052bcfeac01984b0f21
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_NotEq_Eq 1
+worker outcome: normal, test outcome: survived
+[job-id] 09620e2222a34f6586cf4a69b41a8772
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_NotEq_Lt 0
+worker outcome: normal, test outcome: survived
+[job-id] 995843ef4aaf483599a804cab14f7f5b
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_NotEq_Lt 1
+worker outcome: normal, test outcome: survived
+[job-id] 8e45e721223f4c20bdb4e1a7d3800476
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_NotEq_LtE 0
+worker outcome: normal, test outcome: survived
+[job-id] a098794bcfe24e7887c0e44146ee4677
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_NotEq_LtE 1
+worker outcome: normal, test outcome: survived
+[job-id] ed13b8f84ab14ea9aff29883bb3ba433
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_NotEq_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] 482d87079f1b4b1bb7f155f8afe40ce9
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_NotEq_Gt 1
+worker outcome: normal, test outcome: survived
+[job-id] d46aa85ec011494d91699649b9d64a50
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_NotEq_GtE 0
+worker outcome: normal, test outcome: survived
+[job-id] 9882a41c596f409d94e3feae4e5b387c
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_NotEq_GtE 1
+worker outcome: normal, test outcome: survived
+[job-id] 2f2b00cf90ea44f492e5ca0927b22872
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_NotEq_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 1d2b627c07114d038f008b22bc8bc5a0
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_NotEq_Is 1
+worker outcome: normal, test outcome: survived
+[job-id] 745b1f5efe5349b7a7b636e624accafb
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_NotEq_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] 747ac387f16b4ecabd0d82b67521bf97
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_NotEq_IsNot 1
+worker outcome: normal, test outcome: survived
+[job-id] 3b562fa7ce4a4a06a15e9d1cfc73c7ee
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_GtE_Eq 0
+worker outcome: normal, test outcome: survived
+[job-id] c9cfca19fe8a4c3f962245621d1e4f7b
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_GtE_NotEq 0
+worker outcome: normal, test outcome: killed
+[job-id] 4d2c3442744b4e4ea281c5583315e45c
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_GtE_Lt 0
+worker outcome: normal, test outcome: killed
+[job-id] d8ae04636cea4346928ab5c6321cc1b7
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_GtE_LtE 0
+worker outcome: normal, test outcome: killed
+[job-id] 90f70663759e484faec81e7f3deefdce
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_GtE_Gt 0
+worker outcome: normal, test outcome: survived
+[job-id] fff2e69aa370460ba2b17874891827a5
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_Is_IsNot 0
+worker outcome: normal, test outcome: survived
+[job-id] bf301cc63a4a485f927dad8cffd7681a
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_IsNot_Is 0
+worker outcome: normal, test outcome: survived
+[job-id] 8e3fa000c0164b09a446aaf6d7b0bbb8
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_IsNot_Is 1
+worker outcome: normal, test outcome: killed
+[job-id] 609dd95d07f04c1689347e7e83e62a06
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_IsNot_Is 2
+worker outcome: normal, test outcome: survived
+[job-id] 4afc9353e60a40298b0493016f01ef0b
+src/_pytest/mark/structures.py core/ReplaceComparisonOperator_IsNot_Is 3
+worker outcome: normal, test outcome: survived
+[job-id] fbda0d9d73424ba3a8f44d0643c8841f
+src/_pytest/mark/structures.py core/ReplaceUnaryOperator_Delete_Not 0
+worker outcome: normal, test outcome: survived
+[job-id] 5c437dd2274c4515b39d24477db994c0
+src/_pytest/mark/structures.py core/ReplaceUnaryOperator_Delete_Not 1
+worker outcome: normal, test outcome: survived
+[job-id] 7da48210b3e34f4482fef6d1da4767e5
+src/_pytest/mark/structures.py core/ReplaceUnaryOperator_Delete_Not 2
+worker outcome: normal, test outcome: survived
+[job-id] 81e41251cb01406aa26dcd373303172a
+src/_pytest/mark/structures.py core/ReplaceUnaryOperator_Delete_Not 3
+worker outcome: normal, test outcome: survived
+[job-id] 3cfd76d1e28d49d28c20533c6ad4fac4
+src/_pytest/mark/structures.py core/AddNot 0
+worker outcome: normal, test outcome: killed
+[job-id] 92677c1c953e471b88ef8c2bba127d1b
+src/_pytest/mark/structures.py core/AddNot 1
+worker outcome: normal, test outcome: killed
+[job-id] fb5358b6330448fe94fa321bfa65169f
+src/_pytest/mark/structures.py core/AddNot 2
+worker outcome: normal, test outcome: survived
+[job-id] ff3be7ac5beb48a0aa255df5c6a3436c
+src/_pytest/mark/structures.py core/AddNot 3
+worker outcome: normal, test outcome: survived
+[job-id] cd3a6d3af9c54635803c9e3e0ecf0682
+src/_pytest/mark/structures.py core/AddNot 4
+worker outcome: normal, test outcome: survived
+[job-id] 2f347892495942678db1ada4fd6dc7bb
+src/_pytest/mark/structures.py core/AddNot 5
+worker outcome: normal, test outcome: survived
+[job-id] e80492b94ea8438aa41910c23e34ea44
+src/_pytest/mark/structures.py core/AddNot 6
+worker outcome: normal, test outcome: survived
+[job-id] f631284d113d4a2ebd0932880eef357c
+src/_pytest/mark/structures.py core/AddNot 7
+worker outcome: normal, test outcome: survived
+[job-id] 09a0ceec57fc489fba2d1f8245fe4325
+src/_pytest/mark/structures.py core/AddNot 8
+worker outcome: normal, test outcome: survived
+[job-id] c4eb7851121644049a527d7ffae42db6
+src/_pytest/mark/structures.py core/AddNot 9
+worker outcome: normal, test outcome: survived
+[job-id] f95102e5b47b4775b37992eeb089420e
+src/_pytest/mark/structures.py core/AddNot 10
+worker outcome: normal, test outcome: survived
+[job-id] 43f33448acd8442da133c1045feef894
+src/_pytest/mark/structures.py core/AddNot 11
+worker outcome: normal, test outcome: killed
+[job-id] 7c52d3f227134cfca2cb313fe0a794d5
+src/_pytest/mark/structures.py core/AddNot 12
+worker outcome: normal, test outcome: killed
+[job-id] 533ef2764a884d8e95e260315411defc
+src/_pytest/mark/structures.py core/AddNot 13
+worker outcome: normal, test outcome: killed
+[job-id] d58cd756c33f435b9f57a9a491a6e15b
+src/_pytest/mark/structures.py core/AddNot 14
+worker outcome: normal, test outcome: survived
+[job-id] e88111a1c24c4145bac2f1da0a6eb32e
+src/_pytest/mark/structures.py core/AddNot 15
+worker outcome: normal, test outcome: survived
+[job-id] 63e72a5644434443ab8f301ff71068ad
+src/_pytest/mark/structures.py core/AddNot 16
+worker outcome: normal, test outcome: killed
+[job-id] 519a873fd260482f93fde8eecc946228
+src/_pytest/mark/structures.py core/AddNot 17
+worker outcome: normal, test outcome: survived
+[job-id] f759cecf458246d5a3cd9acd03cb6227
+src/_pytest/mark/structures.py core/AddNot 18
+worker outcome: normal, test outcome: survived
+[job-id] 6c42959e13574f6c99dc0a93d3386b0b
+src/_pytest/mark/structures.py core/AddNot 19
+worker outcome: normal, test outcome: killed
+[job-id] c3e587f3829045e0a21fd3eddb2b8d8a
+src/_pytest/mark/structures.py core/AddNot 20
+worker outcome: normal, test outcome: survived
+[job-id] 0128893c6e954eb38203a32cacf1385e
+src/_pytest/mark/structures.py core/AddNot 21
+worker outcome: normal, test outcome: survived
+[job-id] bd1146a9eea743b0a6251e59b0b3508f
+src/_pytest/mark/structures.py core/AddNot 22
+worker outcome: normal, test outcome: killed
+[job-id] 8e1d1158ef084a08bc22208b33ef9c7e
+src/_pytest/mark/structures.py core/AddNot 23
+worker outcome: normal, test outcome: killed
+[job-id] 0541588543384e8189574697ceb77625
+src/_pytest/mark/structures.py core/AddNot 24
+worker outcome: normal, test outcome: killed
+[job-id] c767aa2715d347568440651ba1e3f8fd
+src/_pytest/mark/structures.py core/AddNot 25
+worker outcome: normal, test outcome: killed
+[job-id] 980174e986e44ffcbd68895c36ce0112
+src/_pytest/mark/structures.py core/AddNot 26
+worker outcome: normal, test outcome: survived
+[job-id] 09deb1f1b3054654baa7f73fa0e382e0
+src/_pytest/mark/structures.py core/AddNot 27
+worker outcome: normal, test outcome: killed
+[job-id] ede26f6ef7484268b6d6ab6936a0d63d
+src/_pytest/mark/structures.py core/AddNot 28
+worker outcome: normal, test outcome: killed
+[job-id] a2ad70ab84d1448dbdf31678d2e62fe8
+src/_pytest/mark/structures.py core/AddNot 29
+worker outcome: normal, test outcome: killed
+[job-id] fb8fa8c6af094652b4322e8367158014
+src/_pytest/mark/structures.py core/AddNot 30
+worker outcome: normal, test outcome: survived
+[job-id] acd1267a83084fd192d2539ca7b3d689
+src/_pytest/mark/structures.py core/AddNot 31
+worker outcome: normal, test outcome: survived
+[job-id] 2e316e0b52d84e8fabd47e22cf3c7875
+src/_pytest/mark/structures.py core/AddNot 32
+worker outcome: normal, test outcome: survived
+[job-id] ea450d97bccc489f8f454e782b831c5b
+src/_pytest/mark/structures.py core/ReplaceTrueWithFalse 0
+worker outcome: normal, test outcome: survived
+[job-id] f2ed50acaf3c45e5b4491267ba07efab
+src/_pytest/mark/structures.py core/ReplaceTrueWithFalse 1
+worker outcome: normal, test outcome: survived
+[job-id] 62c1ccee500c4e0e91cc44ea25bac552
+src/_pytest/mark/structures.py core/ReplaceTrueWithFalse 2
+worker outcome: normal, test outcome: killed
+[job-id] 0f57f593dcfa44efa63a2ffd527915f0
+src/_pytest/mark/structures.py core/ReplaceTrueWithFalse 3
+worker outcome: normal, test outcome: survived
+[job-id] b3979c588e3f4f9e8a29cff82406f5cc
+src/_pytest/mark/structures.py core/ReplaceTrueWithFalse 4
+worker outcome: normal, test outcome: survived
+[job-id] 144fcbd7dd0540f79f3b0f4d6e686949
+src/_pytest/mark/structures.py core/ReplaceTrueWithFalse 5
+worker outcome: normal, test outcome: survived
+[job-id] dcbb6b9f6b4b4eeb88d394c727c64cec
+src/_pytest/mark/structures.py core/ReplaceTrueWithFalse 6
+worker outcome: normal, test outcome: survived
+[job-id] 54c04d00da2e4ea7b8454deb1d5354a7
+src/_pytest/mark/structures.py core/ReplaceTrueWithFalse 7
+worker outcome: normal, test outcome: survived
+[job-id] 100fd0cb558c4362b67649586b15709c
+src/_pytest/mark/structures.py core/ReplaceTrueWithFalse 8
+worker outcome: normal, test outcome: survived
+[job-id] 2052703bf2cb40ea8268d86815065f93
+src/_pytest/mark/structures.py core/ReplaceTrueWithFalse 9
+worker outcome: normal, test outcome: survived
+[job-id] 797f10c8e96f460bb688cd06317bb9cd
+src/_pytest/mark/structures.py core/ReplaceTrueWithFalse 10
+worker outcome: normal, test outcome: survived
+[job-id] e5817b3cbbfc408cb49796fd11dfe19e
+src/_pytest/mark/structures.py core/ReplaceTrueWithFalse 11
+worker outcome: normal, test outcome: survived
+[job-id] caf35635be37428999e3448287cf7948
+src/_pytest/mark/structures.py core/ReplaceFalseWithTrue 0
+worker outcome: normal, test outcome: survived
+[job-id] 15ae1a16070341ea93230993cc0a9e0c
+src/_pytest/mark/structures.py core/ReplaceFalseWithTrue 1
+worker outcome: normal, test outcome: survived
+[job-id] 97e2d8715082421a8e3c59a2585f7abd
+src/_pytest/mark/structures.py core/ReplaceFalseWithTrue 2
+worker outcome: normal, test outcome: survived
+[job-id] 18ac416cb279439095f78b2c30897edb
+src/_pytest/mark/structures.py core/ReplaceFalseWithTrue 3
+worker outcome: normal, test outcome: survived
+[job-id] 764651a7a422419aad0ad87680e0f8d6
+src/_pytest/mark/structures.py core/ReplaceFalseWithTrue 4
+worker outcome: normal, test outcome: killed
+[job-id] 9eeb8b7f5c74463b86880fda2153adae
+src/_pytest/mark/structures.py core/ReplaceFalseWithTrue 5
+worker outcome: normal, test outcome: survived
+[job-id] 5a5bf188f46b4ebe9f443b6393e18d0b
+src/_pytest/mark/structures.py core/ReplaceFalseWithTrue 6
+worker outcome: normal, test outcome: survived
+[job-id] dfdca5ac3f22493f842d1bb16a66dc94
+src/_pytest/mark/structures.py core/ReplaceFalseWithTrue 7
+worker outcome: normal, test outcome: survived
+[job-id] cb50ece8b2cc41b193aa70a79c535c92
+src/_pytest/mark/structures.py core/ReplaceFalseWithTrue 8
+worker outcome: normal, test outcome: killed
+[job-id] 4bfe7308ca7848b98ec4446bfdfe63eb
+src/_pytest/mark/structures.py core/ReplaceFalseWithTrue 9
+worker outcome: normal, test outcome: survived
+[job-id] 0357e2a26ce643bc8391e66d99f062dc
+src/_pytest/mark/structures.py core/ReplaceFalseWithTrue 10
+worker outcome: normal, test outcome: survived
+[job-id] 74cf46c3d6c3403cbe7711bbf68d7aed
+src/_pytest/mark/structures.py core/ReplaceFalseWithTrue 11
+worker outcome: normal, test outcome: survived
+[job-id] 2927e66c53024ebfae370b0960af82de
+src/_pytest/mark/structures.py core/ReplaceFalseWithTrue 12
+worker outcome: normal, test outcome: survived
+[job-id] d8d536b91fc44c91a9297c540945ef4b
+src/_pytest/mark/structures.py core/ReplaceAndWithOr 0
+worker outcome: normal, test outcome: survived
+[job-id] d748fdd9e57e4ab580f534c2538da109
+src/_pytest/mark/structures.py core/ReplaceAndWithOr 1
+worker outcome: normal, test outcome: survived
+[job-id] 081b846c86054da4b7b46c8c774c6eae
+src/_pytest/mark/structures.py core/ReplaceAndWithOr 2
+worker outcome: normal, test outcome: survived
+[job-id] 1aa7648aa8b04b07b57a47d2162d5c41
+src/_pytest/mark/structures.py core/ReplaceAndWithOr 3
+worker outcome: normal, test outcome: survived
+[job-id] 954bbe0c07454250951cea2c18996ba3
+src/_pytest/mark/structures.py core/ReplaceOrWithAnd 0
+worker outcome: normal, test outcome: killed
+[job-id] deb26740e2be44679c30d68f7d44cbac
+src/_pytest/mark/structures.py core/ReplaceOrWithAnd 1
+worker outcome: normal, test outcome: survived
+[job-id] 07dc91610f9245bbaf398fad04802f95
+src/_pytest/mark/structures.py core/ReplaceOrWithAnd 2
+worker outcome: normal, test outcome: survived
+[job-id] f09265b060e94487b34a1212d4044f47
+src/_pytest/mark/structures.py core/ReplaceOrWithAnd 3
+worker outcome: normal, test outcome: survived
+[job-id] 775d71a637c8416790631e3834a15cb9
+src/_pytest/mark/structures.py core/ExceptionReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] c80d8886a1af4d4cb754b1668150cfbf
+src/_pytest/mark/structures.py core/NumberReplacer 0
+worker outcome: normal, test outcome: survived
+[job-id] 5616adb9679448dd8c4e683c57af5643
+src/_pytest/mark/structures.py core/NumberReplacer 1
+worker outcome: normal, test outcome: survived
+[job-id] e887025f104d4273a46befe17bf85138
+src/_pytest/mark/structures.py core/NumberReplacer 2
+worker outcome: normal, test outcome: survived
+[job-id] b80c73f35b7f427997775556bcdab63b
+src/_pytest/mark/structures.py core/NumberReplacer 3
+worker outcome: normal, test outcome: survived
+[job-id] 4f71e45c6b5e442f981245c8d9792d7a
+src/_pytest/mark/structures.py core/NumberReplacer 4
+worker outcome: normal, test outcome: survived
+[job-id] 64934854f13a46f0a675723b02fd7a52
+src/_pytest/mark/structures.py core/NumberReplacer 5
+worker outcome: normal, test outcome: survived
+[job-id] 74b5ca200e9f47fab65e5f8cc8ccd675
+src/_pytest/mark/structures.py core/NumberReplacer 6
+worker outcome: normal, test outcome: survived
+[job-id] ceb021dc2446413a96532c6517ec1d0f
+src/_pytest/mark/structures.py core/NumberReplacer 7
+worker outcome: normal, test outcome: survived
+[job-id] 760ad8da6e9e470b8a08302a797b729c
+src/_pytest/mark/structures.py core/NumberReplacer 8
+worker outcome: normal, test outcome: survived
+[job-id] 7cd725fea96b47128c456f9fdad45685
+src/_pytest/mark/structures.py core/NumberReplacer 9
+worker outcome: normal, test outcome: survived
+[job-id] fc92054842be438686b70af5565d7812
+src/_pytest/mark/structures.py core/NumberReplacer 10
+worker outcome: normal, test outcome: survived
+[job-id] d1bcced58fb74aee9c2a487a7c990afa
+src/_pytest/mark/structures.py core/NumberReplacer 11
+worker outcome: normal, test outcome: survived
+[job-id] 85e7de118b3442b5a7398462409d3b50
+src/_pytest/mark/structures.py core/NumberReplacer 12
+worker outcome: normal, test outcome: survived
+[job-id] 75ae803f01d34e08bc39f061fdce354c
+src/_pytest/mark/structures.py core/NumberReplacer 13
+worker outcome: normal, test outcome: survived
+[job-id] 2a41ca8b07a7420fb8f69bb947262c26
+src/_pytest/mark/structures.py core/NumberReplacer 14
+worker outcome: normal, test outcome: survived
+[job-id] c9066331fae142e5b1b3aa37f7806b06
+src/_pytest/mark/structures.py core/NumberReplacer 15
+worker outcome: normal, test outcome: survived
+[job-id] a16ffbe2cd094d22b8637fdd15293c17
+src/_pytest/mark/structures.py core/NumberReplacer 16
+worker outcome: normal, test outcome: survived
+[job-id] b91ae8a2437144d6a55d87d906b2a9c4
+src/_pytest/mark/structures.py core/NumberReplacer 17
+worker outcome: normal, test outcome: survived
+[job-id] befbbab21483454299ad034b8216d8d9
+src/_pytest/mark/structures.py core/NumberReplacer 18
+worker outcome: normal, test outcome: survived
+[job-id] 7d7da1217e444658bb6341e3e51dc7ce
+src/_pytest/mark/structures.py core/NumberReplacer 19
+worker outcome: normal, test outcome: survived
+[job-id] 32a0f46e8a1e4d97b43cf05190343cda
+src/_pytest/mark/structures.py core/RemoveDecorator 0
+worker outcome: normal, test outcome: survived
+[job-id] 4015d1d5490f42d48275a9a8413d1db0
+src/_pytest/mark/structures.py core/RemoveDecorator 1
+worker outcome: normal, test outcome: survived
+[job-id] 97abd187a4324bf0925a123a7129cc3e
+src/_pytest/mark/structures.py core/RemoveDecorator 2
+worker outcome: normal, test outcome: survived
+[job-id] 1cbac8493c334699b6ffa86c41ab11ba
+src/_pytest/mark/structures.py core/RemoveDecorator 3
+worker outcome: normal, test outcome: survived
+[job-id] 8d802ad3fb5340f191a045a42d86618d
+src/_pytest/mark/structures.py core/RemoveDecorator 4
+worker outcome: normal, test outcome: survived
+[job-id] 7dbcfa82116142e1b3af104520cf1ce3
+src/_pytest/mark/structures.py core/RemoveDecorator 5
+worker outcome: normal, test outcome: survived
+[job-id] a6c05be59934490e9da34afa526db730
+src/_pytest/mark/structures.py core/RemoveDecorator 6
+worker outcome: normal, test outcome: survived
+[job-id] e83424911502498b82ec0b6236aed9f3
+src/_pytest/mark/structures.py core/RemoveDecorator 7
+worker outcome: normal, test outcome: survived
+[job-id] 026830ad1a094b2fbfe31a61a0ae8b7f
+src/_pytest/mark/structures.py core/RemoveDecorator 8
+worker outcome: normal, test outcome: survived
+[job-id] 7c8d7d4433e94b50a22ad8bae3c2a8e2
+src/_pytest/mark/structures.py core/RemoveDecorator 9
+worker outcome: normal, test outcome: survived
+[job-id] 05b0bb86c05d4c249762ac6da7151d4c
+src/_pytest/mark/structures.py core/RemoveDecorator 10
+worker outcome: normal, test outcome: survived
+[job-id] 59058f5acb9d4f1aaf291845871033d8
+src/_pytest/mark/structures.py core/RemoveDecorator 11
+worker outcome: normal, test outcome: survived
+[job-id] 41200e00771445948a45cdd9449730f7
+src/_pytest/mark/structures.py core/RemoveDecorator 12
+worker outcome: normal, test outcome: survived
+[job-id] 0e8f600065ab486d98a964d99cb171ff
+src/_pytest/mark/structures.py core/RemoveDecorator 13
+worker outcome: normal, test outcome: survived
+[job-id] 16a6957e73544629b6f0d20a5210a9ff
+src/_pytest/mark/structures.py core/RemoveDecorator 14
+worker outcome: normal, test outcome: survived
+[job-id] cb6a789d2d8c47309d2ecf80505a506e
+src/_pytest/mark/structures.py core/RemoveDecorator 15
+worker outcome: normal, test outcome: survived
+[job-id] 821f318b38514c7bba17c87a91ed0e67
+src/_pytest/mark/structures.py core/RemoveDecorator 16
+worker outcome: normal, test outcome: survived
+[job-id] 008950910d0a45acab55b24fb9c8714b
+src/_pytest/mark/structures.py core/RemoveDecorator 17
+worker outcome: normal, test outcome: survived
+[job-id] 770e24b13c5b44dab6aaf33d9bfa18d1
+src/_pytest/mark/structures.py core/RemoveDecorator 18
+worker outcome: normal, test outcome: survived
+[job-id] bdac9239931d468f9e5a87780817e6a4
+src/_pytest/mark/structures.py core/RemoveDecorator 19
+worker outcome: normal, test outcome: survived
+[job-id] cb7dda60c8304eabab028ace5c07064c
+src/_pytest/mark/structures.py core/ZeroIterationForLoop 0
+worker outcome: normal, test outcome: survived
+[job-id] c0856b99ee7a457db94b3ed0363a81a6
+src/_pytest/mark/structures.py core/ZeroIterationForLoop 1
+worker outcome: normal, test outcome: survived
+[job-id] 61938d6f251641a0a8f94e62a7448e0e
+src/_pytest/mark/structures.py core/ZeroIterationForLoop 2
+worker outcome: normal, test outcome: survived
+[job-id] 9689b97f64ff43faa4a0d40103691ee2
+src/_pytest/mark/structures.py core/ZeroIterationForLoop 3
+worker outcome: normal, test outcome: survived
+[job-id] 3eeb40168dfc41febcdac30583cd1141
+src/_pytest/mark/structures.py core/ZeroIterationForLoop 4
+worker outcome: normal, test outcome: survived
+total jobs: 306
+complete: 306 (100.00%)
+surviving mutants: 180 (58.82%)
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] 
+MutationNum: 306 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] 
+MutationLOG: 41.18% 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] 
+MutationUncertainty: 0.0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Command: conda run -n pytest-dev__pytest__7.2 python -c from cosmic_ray.work_db import WorkDB
+db = WorkDB('mutation.sqlite', WorkDB.Mode.open)
+try:
+    job_ids_in_range = {
+        item.job_id
+        for item in db.work_items
+        for spec in item.mutations
+        if str(spec.module_path) == 'src/_pytest/mark/structures.py'
+        and ((358 <= spec.start_pos[0] <= 386) or (406 <= spec.start_pos[0] <= 414))
+    }
+    results = dict(db.results)
+    relevant = [jid for jid in job_ids_in_range if jid in results]
+    if relevant:
+        kills = sum(1 for jid in relevant if results[jid].is_killed)
+        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')
+    else:
+        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')
+finally:
+    db.close()
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Subprocess args: {"cwd": "/home/swe-bench/pytest-dev__pytest", "check": false, "shell": false, "universal_newlines": true, "stdout": -1, "stderr": -2} 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Std. Output:
+FUNC_MUTATION_RESULT 60.0 20
+
+ 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Return Code: 0 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] 
+FunctionMutationLOG: 60.0% 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] 
+FunctionMutationNum: 20 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Test script run successful 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing coverage 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] Removing cache 
+[pytest-dev__pytest__7.2] [pytest-dev__pytest-10356] >>>>> Unfiltered Tests Failed 
