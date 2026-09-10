@@ -16,7 +16,7 @@
 #     APPTAINER_IMAGES_DIR. Populate with:
 #       python scripts/pull_apptainer_images.py --makefile Makefile.testgeneval
 #     (rootless on a login node, or as its own CPU sbatch job for the
-#     full 77-image set; ~9 min each, ~12h total).
+#     full ~126-image set; ~9 min each, ~19h total).
 #   - CONDA_ENV: a conda env on M3 with this repo's evaluation deps
 #     (datasets, python-dotenv). Not the vLLM env; a plain one is fine.
 #

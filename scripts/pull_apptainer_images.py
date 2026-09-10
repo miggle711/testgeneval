@@ -21,8 +21,9 @@ Output filenames match what run_apptainer.py expects:
 {repo_name}_{version}.sif, e.g. astropy_astropy_5.1.sif, where repo_name
 is task_instance["repo"] with "/" replaced by "_".
 
-Full testgeneval Makefile defines 77 distinct testbed images (~40GB of
-.sif, ~11-12h total at ~9 min each); testgenevallite defines 38.
+Full testgeneval Makefile defines 126 distinct testbed images across
+12 repos (~110GB of .sif, ~19h total at ~9 min each); testgenevallite
+defines a subset.
 
 Usage:
     python scripts/pull_apptainer_images.py \
@@ -49,8 +50,17 @@ import sys
 # `kdjain/...`, do. So --namespace defaults to kdjain and the tag read
 # from the Makefile is rewritten to it, the same rewrite pull_images.py
 # does.
+#
+# The repo part is [a-z0-9_-]+, NOT [a-z0-9_]+: 4 of the 12 repos have
+# a hyphen (pylint-dev_pylint, pytest-dev_pytest, scikit-learn_scikit-learn,
+# sphinx-doc_sphinx) and dropping the hyphen from the class silently
+# skips all ~49 of their testbed images with no error. Regex backtracking
+# still resolves the "-testbed:" anchor correctly for every name shape:
+#   swe-bench-pylint-dev_pylint-testbed:2.10        -> pylint-dev_pylint, 2.10
+#   swe-bench-astropy_astropy-testbed:5.1           -> astropy_astropy, 5.1
+#   swe-bench-scikit-learn_scikit-learn-testbed:1.3 -> scikit-learn_scikit-learn, 1.3
 _TESTBED_RE = re.compile(
-    r"(?:aorwall|kdjain)/swe-bench-(?P<repo>[a-z0-9_]+)-testbed:(?P<version>[0-9.]+)"
+    r"(?:aorwall|kdjain)/swe-bench-(?P<repo>[a-z0-9_-]+)-testbed:(?P<version>[0-9.]+)"
 )
 
 
@@ -112,8 +122,22 @@ def main():
             print(f"WARNING: {var}={val} is not an existing directory.", file=sys.stderr)
 
     images = parse_makefile(args.makefile)
-    print(f"{len(images)} distinct testbed images in {args.makefile} "
-          f"(pulling from namespace '{args.namespace}')")
+    repos = sorted({repo for repo, _ in images})
+    print(f"{len(images)} distinct testbed images across {len(repos)} repos "
+          f"in {args.makefile} (pulling from namespace '{args.namespace}')")
+    print(f"  repos: {', '.join(repos)}")
+
+    # The full testgeneval Makefile covers 12 repos; testgenevallite a
+    # subset. Fewer than 8 almost certainly means the repo-name regex
+    # silently dropped the hyphenated ones (pylint-dev, pytest-dev,
+    # scikit-learn, sphinx-doc) -- catch it here, not after a multi-hour
+    # pull that quietly omits a third of the dataset.
+    if "testgenevallite" not in os.path.basename(args.makefile) and len(repos) < 8:
+        print(f"WARNING: only {len(repos)} repos parsed from a full "
+              f"Makefile that should have 12. The repo-name regex may be "
+              f"dropping hyphenated repo names. Not continuing.",
+              file=sys.stderr)
+        sys.exit(1)
 
     if args.dry_run:
         for repo, version in images:
