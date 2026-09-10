@@ -106,6 +106,11 @@ MODEL_LIMITS = {
     "openai/gpt-oss-20b": 131_072,
     "openai/gpt-oss-120b": 131_072,
     "meta-llama/Llama-4-Scout-17B-16E-Instruct": 128_000,
+    # TODO(testgeneval#50): replace the key with the exact DeepInfra model
+    # id string (deepinfra.com/models -> GPT-5 -> API tab) and the value
+    # with GPT-5's real context window from OpenAI's spec. Placeholder
+    # below is a guess, not a measured or confirmed value.
+    "gpt-5": 400_000,
 }
 
 # The cost per token for each model input.
@@ -117,6 +122,11 @@ MODEL_COST_PER_INPUT = {
     "Meta-Llama-3.1-405B-Instruct": 0,
     "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit": 0,
     "llama-3.1-8b-instant": 0,
+    # TODO(testgeneval#50): DeepInfra's real per-input-token price for
+    # GPT-5 (from its DeepInfra model page, NOT OpenAI's direct pricing).
+    # 0 here means calc_cost reports $0, use the DeepInfra dashboard as
+    # the real source of spend until this is filled in.
+    "gpt-5": 0,
 }
 
 # The cost per token for each model output.
@@ -128,6 +138,9 @@ MODEL_COST_PER_OUTPUT = {
     "Meta-Llama-3.1-405B-Instruct": 0,
     "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit": 0,
     "llama-3.1-8b-instant": 0,
+    # TODO(testgeneval#50): DeepInfra's real per-output-token price for
+    # GPT-5. See the MODEL_COST_PER_INPUT TODO above.
+    "gpt-5": 0,
 }
 
 # M3 shortlist entries below (added 2026-08-29, testgeneval#41): sized
@@ -184,6 +197,15 @@ OUTPUT_LIMITS = {
     "openai/gpt-oss-20b": 48_000,
     "openai/gpt-oss-120b": 48_000,
     "meta-llama/Llama-4-Scout-17B-16E-Instruct": 8_000,
+    # TODO(testgeneval#50): GPT-5 is a reasoning model, same class as
+    # gpt-oss, so this MUST be generous, not the 8_000 used for the
+    # non-reasoning models. gpt-oss needed 48_000 (testgeneval#40) to
+    # stop losing ~60% of completions to empty/None responses when the
+    # reasoning channel ate the whole budget. Set to GPT-5's real max
+    # output, then narrow after a real kjain14/testgenevallite
+    # calibration run measures actual completion lengths. Placeholder
+    # below matches gpt-oss's proven-safe value as a starting point.
+    "gpt-5": 48_000,
 }
 
 EPSILON = 1000
