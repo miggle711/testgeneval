@@ -592,7 +592,7 @@ kept for reference; the active work is the pass@5 column.
 | Qwen3-4B | instruct | Done (1198/1210) | Redoing (59964291, resumed from 311/1210 after a real 36h TIMEOUT, `--time=48:00:00`) |
 | Qwen3-4B | kg_only | Done (1208/1210) | Redoing (59964915, resumed from 750/1210 after a real 36h TIMEOUT, `--time=48:00:00`) |
 | Llama-3.1-8B | instruct | Done (1195/1210) | Redoing (59968456, resumed from 700/1210 after a real 36h TIMEOUT, `REQUEST_TIMEOUT=1800`, `--time=48:00:00`) |
-| Llama-3.1-8B | kg_only | Done (1208/1210) | Done (1148/1210), then Redoing (59966731, 62 real ids still missing after the first fixup, `REQUEST_TIMEOUT=1800`, see 2026-09-10 section); 29+ of the 62 are permanent context-length exclusions |
+| Llama-3.1-8B | kg_only | Done (1208/1210) | Done (1208/1210, real denominator 1208; `REQUEST_TIMEOUT=1800` fixup 59966731 recovered 60 of 62 previously-missing ids, only 2 real context-length exclusions left, see 2026-09-10 section) |
 | Qwen3-Coder-30B | instruct | Done (59870795) | Done (1210/1210) |
 | Qwen3-Coder-30B | kg_only | Done (59870796) | Done (1208/1210) |
 | Llama-4-Scout | instruct | Redoing (59967047, real config-contradiction OOM on the first attempt, see 2026-09-10 section; now on m3h H100) | Done (1123/1210) |
@@ -913,9 +913,23 @@ and there was no env var anywhere in the project to change it. Filed as
 testgeneval#49; fixed by adding a `REQUEST_TIMEOUT` env var (default
 600, preserving existing behavior) wired into both client construction
 sites and into `m3_run_inference.slurm`. Resubmitted as `59966731` with
-`REQUEST_TIMEOUT=1800`; this is the first real test of that code path,
-outcome (does the scikit-learn timeout pattern actually go away) not yet
-known as of this writing.
+`REQUEST_TIMEOUT=1800`.
+
+**Outcome, confirmed: the fix worked.** `59966731` completed clean in
+1h36m (`Read 1148`, `Filtered to 62`, `Done!`). Zero `Request timed out`
+this run, versus a flood the run before. Only 2 `Failed, skipping`, both
+genuine context-length overflows (`57537` input + 8000 output > 65536
+max, `BadRequestError`, unfixable by any timeout). `1148 + 62 - 2 = 1208`
+reconciles exactly; final file 1208/1210 unique ids, all at 5/5 samples,
+0 malformed, 0 duplicates. 60 of the 62 previously-failing ids recovered
+purely by raising the client timeout. This also means the earlier "33 of
+the 62 were previously-successful ids" observation was timeout noise, not
+a spreading problem, once requests were given enough time nearly all came
+back. Real denominator for this file is now 1208 (1210 minus 2 permanent
+context-length exclusions), up from the 1114 it was stuck at. testgeneval#49
+closed as resolved. Practical rule: set `REQUEST_TIMEOUT=1800` for any
+run against a slow-prompt-heavy subset (scikit-learn testbed in
+particular); the default stays 600.
 
 ### `MAX_MODEL_LEN=32768` regression on a gpt-oss-20B resubmit
 
