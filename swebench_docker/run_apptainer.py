@@ -120,6 +120,15 @@ async def run_apptainer_evaluation(
     with open(tmpfile_path, "w+") as f:
         json.dump(task_instance, f)
 
+    # evaluate_instance.py reads task_instance.json from a hardcoded
+    # /home/swe-bench/task_instance.json (with a base64 INSTANCE env var
+    # as its only fallback, which this path never sets). run_docker.py
+    # mounts it to that exact path regardless of base image; do the same
+    # rather than putting it next to the entrypoint. A pyenv image
+    # (django, requests, scikit-learn) has no /home/swe-bench, but
+    # --writable-tmpfs lets Apptainer create the mount point.
+    task_json_target = "/home/swe-bench/task_instance.json"
+
     apptainer_command = [
         "apptainer",
         "exec",
@@ -129,10 +138,13 @@ async def run_apptainer_evaluation(
         entrypoint_parent,
         "-B",
         f"{log_dir}:{container_log_dir}",
+        # :ro to match run_docker.py's deliberate read-only mount of
+        # swebench_docker -- keeps a __pycache__ or stray artifact write
+        # out of the user's checked-out fork on the host.
         "-B",
-        f"{swebench_docker_fork_dir}/swebench_docker:{entrypoint_parent}/swebench_docker",
+        f"{swebench_docker_fork_dir}/swebench_docker:{entrypoint_parent}/swebench_docker:ro",
         "-B",
-        f"{tmpfile_path}:{entrypoint_parent}/task_instance.json",
+        f"{tmpfile_path}:{task_json_target}",
         sif_path,
         entrypoint,
     ]
