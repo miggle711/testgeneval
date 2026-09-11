@@ -1280,3 +1280,84 @@ attempts, one killed by the path bug), a real concurrency/scale
 measurement (the current ~2-3 cores/instance estimate is from a single
 `top` snapshot, not measured under load), and this pyenv check
 (completed, see above, kept in the issue as a record).
+
+### A real concurrency race found and fixed: every container shared the host's real $HOME
+
+Started the real concurrency measurement (testgeneval#53 item 3): 40
+real instances (astropy, flask, django, limited to the 3 `.sif` files
+pulled so far) through `m3_run_evaluation.slurm` with
+`NUM_PROCESSES=8`. Real, immediate result: **24 failures, 0
+successes**, every one identical:
+
+```
+error: could not lock config file /home/<user>/.gitconfig: File exists
+```
+
+Real cause: `entrypoint.sh` runs `git config --global --add
+safe.directory ...` inside every container. Without an explicit
+`--home`, Apptainer maps the container's `$HOME` to the HOST user's
+real `$HOME`, not an isolated directory (`--cleanenv` strips
+environment variables, it does not isolate the filesystem). With 8
+containers running concurrently, all 8 raced to write the exact same
+real host file, `/home/<user>/.gitconfig`; git's own file locking meant
+only one writer at a time could win, every other concurrent attempt
+failed outright. Every earlier validation of this backend (astropy,
+flask, django, all in #52) ran `NUM_PROCESSES=1`, so this never
+surfaced, this is exactly the kind of bug a real concurrency test
+exists to catch and did.
+
+Fixed in `run_apptainer.py`: pass `--home` to a fresh
+`tempfile.mkdtemp()` directory per instance, cleaned up in the same
+`finally` block that already removes the `task_instance.json` tempfile.
+Real, confirmed result on resubmit: 0 `could not lock config file`
+errors, multiple real successful container runs (3+ confirmed within
+the first 40 minutes of a still-running job). Merged directly.
+
+### Real, hard limit on where `.sif` files can be built: not M3 compute nodes, not M3 login nodes either
+
+Attempting the real, full 126-image pull (testgeneval#53 item 1) as an
+`sbatch` job surfaced a second, separate, more serious real problem.
+Every `apptainer pull` attempt on a `comp`-partition compute node
+failed identically, at the `mksquashfs` SIF-creation step:
+
+```
+FATAL: ... while creating squashfs: /usr/libexec/apptainer/bin/mksquashfs command failed: exit status 1: proot error: ptrace(TRACEME): Operation not permitted
+```
+
+Reproduced on 3 different real compute nodes (`m3e107`, `m3e108`,
+`m3k032`), same exact crash every time; the documented `proot`
+workaround, `PROOT_NO_SECCOMP=1`, does not fix it, confirmed by testing
+it directly and getting the identical crash on a third node. Root cause
+traced directly: `grep "^$USER:" /etc/subuid /etc/subgid` returns
+empty on both a login node and a compute node, and `apptainer exec
+--fakeroot` reports "User not listed in /etc/subuid, trying
+root-mapped namespace". With no real subuid/subgid allocation, Apptainer
+has no path to genuine unprivileged user namespaces anywhere on this
+account, so it always falls back to the `proot` emulation layer for
+squashfs builds specifically. Login nodes tolerate that fallback
+(confirmed: 3/3 real pulls succeeded there earlier); compute nodes
+apply additional sandboxing that blocks it outright, confirmed real:
+even `cat /proc/sys/kernel/yama/ptrace_scope` fails with `Cannot
+allocate memory` inside a real compute-node job, consistent with a
+genuine, additional confinement layer not present on login nodes.
+
+This only affects `apptainer pull`/`build` (the squashfs-creation
+step). `apptainer exec` (running an already-built `.sif`, the actual
+evaluation path validated in #52) is unaffected, every real evaluation
+run in this project's history worked fine on compute nodes.
+
+But M3's own usage policy explicitly forbids heavyweight, long-running
+background processes on login nodes ("We will kill any heavyweight
+processes... repeat offense may revoke access"), and the real full
+126-image pull (~19h at the measured ~9 min/image rate) is
+unambiguously that kind of job. So neither compute nodes (crash) nor
+login nodes (forbidden) can run the real bulk pull on M3 as things
+stand. Filed as testgeneval#54, cross-linked from #53. Real, chosen
+workaround: build the `.sif` files off-M3 on a teammate's own Linux
+machine (no such restriction there), transfer to
+`/fs04/scratch2/al49/$USER/apptainer_images/` via `rsync`, the exact
+plan testgeneval#2 assumed originally, before the real discovery that
+rootless pull worked at all turned out to only be true on login nodes.
+Also worth an M3 helpdesk request for a real subuid/subgid allocation
+as the durable fix, which would remove this constraint for good, not
+filed as of this writing.
