@@ -103,7 +103,15 @@ def pull_one(namespace, repo, version, out_dir, force=False):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--makefile", default="Makefile.testgeneval", help="Path to the Makefile to read image references from.")
-    parser.add_argument("--out-dir", default=os.environ.get("APPTAINER_IMAGES_DIR", os.path.expanduser("~/apptainer_images")), help="Directory to write .sif files into (default: $APPTAINER_IMAGES_DIR).")
+    # Falls back to $HOME/apptainer_images if APPTAINER_IMAGES_DIR is
+    # unset. On M3 this is a real risk, not just a placeholder: a .sif
+    # file is hundreds of MB, and the home quota is small (20GB,
+    # confirmed real 2026-09-11 a related mistake filled it to 100%).
+    # Always pass --out-dir or export APPTAINER_IMAGES_DIR to a scratch
+    # path (e.g. /fs04/scratch2/al49/$USER/apptainer_images) when running
+    # this directly rather than through m3_pull_apptainer_images.slurm,
+    # which already sets it correctly.
+    parser.add_argument("--out-dir", default=os.environ.get("APPTAINER_IMAGES_DIR", os.path.expanduser("~/apptainer_images")), help="Directory to write .sif files into (default: $APPTAINER_IMAGES_DIR, or $HOME/apptainer_images if unset -- pass this explicitly on M3, see comment above).")
     parser.add_argument("--namespace", default="kdjain", help="Docker Hub namespace to pull testbed images from (default: kdjain, the fork's account whose images carry cosmic-ray; aorwall's do not).")
     parser.add_argument("--force", action="store_true", help="Re-pull and overwrite .sif files that already exist.")
     parser.add_argument("--dry-run", action="store_true", help="List what would be pulled and exit.")

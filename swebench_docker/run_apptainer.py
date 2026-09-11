@@ -53,7 +53,13 @@ dotenv.load_dotenv()
 # Where converted .sif files live on M3, one file per
 # {repo_name}_{version}.sif, e.g. astropy_astropy_5.0.sif -- matches the
 # repo_name sanitization run_docker.py already uses (task_instance["repo"]
-# with "/" replaced by "_").
+# with "/" replaced by "_"). Falls back to $HOME/apptainer_images if
+# APPTAINER_IMAGES_DIR is unset -- a real risk on M3, not just a
+# placeholder, given the small 20GB home quota (confirmed real
+# 2026-09-11 a related mistake filled it to 100%). Always export
+# APPTAINER_IMAGES_DIR to a scratch path (e.g.
+# /fs04/scratch2/al49/$USER/apptainer_images) before running anything
+# that imports this module directly.
 APPTAINER_IMAGES_DIR = os.environ.get(
     "APPTAINER_IMAGES_DIR", os.path.expanduser("~/apptainer_images")
 )

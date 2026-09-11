@@ -46,12 +46,20 @@
 # concurrent containers would otherwise hammer shared Lustre scratch and
 # become the bottleneck (Apptainer disk-pressure hangs are documented in
 # results/RUN_LOG.md). The .sif files and the pull cache stay on scratch.
+#
+# Default paths below are /fs04/scratch2/al49/$USER, NOT $HOME/al49_
+# scratch2 -- that path does not exist as a real symlink on M3 (an
+# earlier version of this script used it; mkdir -p silently created it
+# as a genuine new directory under $HOME instead of failing, filling the
+# 20GB home quota to 100% before anyone noticed, confirmed real
+# 2026-09-11). /fs04/scratch2/al49/$USER is the one path actually used
+# and confirmed working (788GB free) throughout this project.
 
 set -euo pipefail
 
 CONDA_ENV="${CONDA_ENV:-testgeneval}"
 PREDICTIONS_PATH="${PREDICTIONS_PATH:-CHANGE_ME}"
-LOG_DIR="${LOG_DIR:-$HOME/al49_scratch2/$USER/eval_logs}"
+LOG_DIR="${LOG_DIR:-/fs04/scratch2/al49/$USER/eval_logs}"
 SWE_BENCH_TASKS="${SWE_BENCH_TASKS:-kjain14/testgeneval}"
 NUM_PROCESSES="${NUM_PROCESSES:-8}"
 TIMEOUT="${TIMEOUT:-3600}"
@@ -61,7 +69,7 @@ NAMESPACE="${NAMESPACE:-kdjain}"
 # Where the converted .sif testbed images live. One file per
 # {repo_name}_{version}.sif (see run_apptainer.py). On scratch: they're
 # large, read-only, and read once per container start.
-APPTAINER_IMAGES_DIR="${APPTAINER_IMAGES_DIR:-$HOME/al49_scratch2/$USER/apptainer_images}"
+APPTAINER_IMAGES_DIR="${APPTAINER_IMAGES_DIR:-/fs04/scratch2/al49/$USER/apptainer_images}"
 
 # run_apptainer.py binds this repo's swebench_docker into the container.
 SWEBENCH_DOCKER_FORK_DIR="${SWEBENCH_DOCKER_FORK_DIR:-$SLURM_SUBMIT_DIR}"
@@ -85,7 +93,7 @@ mkdir -p "$APPTAINER_TMPDIR"
 trap 'rm -rf "$APPTAINER_TMPDIR"' EXIT
 
 export APPTAINER_TMPDIR
-export APPTAINER_CACHEDIR="$HOME/al49_scratch2/$USER/apptainer-cache"
+export APPTAINER_CACHEDIR="/fs04/scratch2/al49/$USER/apptainer-cache"
 export APPTAINER_IMAGES_DIR
 export SWEBENCH_DOCKER_FORK_DIR
 mkdir -p "$APPTAINER_CACHEDIR"

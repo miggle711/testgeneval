@@ -30,15 +30,25 @@
 # below -- if either defaults to /tmp or $HOME the final mksquashfs step
 # fills it and dies with "No space left on device" even when scratch has
 # terabytes free (confirmed real, same day).
+#
+# The default path below is /fs04/scratch2/al49/$USER, NOT $HOME/al49_
+# scratch (the real symlink -> /scratch/al49, a different, untested
+# mount) and NOT $HOME/al49_scratch2 (does not exist -- an earlier
+# version of this script used it, real bug: mkdir -p silently created
+# it as a genuine new directory under $HOME instead of failing, and it
+# filled the 20GB home quota to 100% before anyone noticed, confirmed
+# real 2026-09-11). /fs04/scratch2/al49/$USER is the one path actually
+# used and confirmed working (788GB free, apptainer pull tested
+# directly against it) throughout this project's real M3 work.
 
 set -euo pipefail
 
 CONDA_ENV="${CONDA_ENV:-testgeneval}"
 MAKEFILE="${MAKEFILE:-Makefile.testgeneval}"
-APPTAINER_IMAGES_DIR="${APPTAINER_IMAGES_DIR:-$HOME/al49_scratch2/$USER/apptainer_images}"
+APPTAINER_IMAGES_DIR="${APPTAINER_IMAGES_DIR:-/fs04/scratch2/al49/$USER/apptainer_images}"
 
-export APPTAINER_CACHEDIR="$HOME/al49_scratch2/$USER/apptainer-cache"
-export APPTAINER_TMPDIR="$HOME/al49_scratch2/$USER/apptainer-tmp"
+export APPTAINER_CACHEDIR="/fs04/scratch2/al49/$USER/apptainer-cache"
+export APPTAINER_TMPDIR="/fs04/scratch2/al49/$USER/apptainer-tmp"
 mkdir -p "$APPTAINER_CACHEDIR" "$APPTAINER_TMPDIR" "$APPTAINER_IMAGES_DIR"
 
 module load miniforge3
