@@ -29,12 +29,18 @@
 #     different nodes would each write to a different, invisible /tmp.
 #     generate_report.py reads every .eval.log from one directory.
 #   SWE_BENCH_TASKS: dataset id or path (default kjain14/testgeneval).
-#   NUM_PROCESSES: concurrent container evaluations. Each peaks at
-#     ~2-3 CPUs during a mutant's pytest run (measured 2026-09-11 on
-#     astropy). 24 cpus-per-task / ~3 = ~8 is a safe start; raise after
-#     watching real CPU and disk on one node. Per-user QOS cap is 256
-#     CPUs total across all your jobs (sacctmgr show qos), so ~4 of
-#     these jobs at NUM_PROCESSES up to ~20 each is the ceiling.
+#   NUM_PROCESSES: concurrent container evaluations. A real load test
+#     (2026-09-11, NUM_PROCESSES=8, 24-core node) found 8 already
+#     oversubscribes one node: load average ~93 on 24 cores (~4x),
+#     individual `coverage` processes ranged 47-514% CPU (pytest-xdist
+#     inside a container can spawn several workers for one mutant, not
+#     a flat 2-3 cores/instance the way an earlier single-snapshot
+#     estimate assumed). Real, safer default: 4-6, not 8, until xdist's
+#     own worker count is constrained inside the container. Memory was
+#     never the constraint (1.3TB free of 1.5TB on that node), CPU is.
+#     Per-user QOS cap is 256 CPUs total across all your jobs
+#     (sacctmgr show qos), so several of these jobs at NUM_PROCESSES
+#     4-6 each fits comfortably under that.
 #   TIMEOUT: per-instance seconds (default 3600). cosmic-ray mutation
 #     on a large repo genuinely takes 20-40 min; do not set this low.
 #   SKIP_MUTATION: set to 1 to skip cosmic-ray entirely (coverage only).
@@ -61,7 +67,7 @@ CONDA_ENV="${CONDA_ENV:-testgeneval}"
 PREDICTIONS_PATH="${PREDICTIONS_PATH:-CHANGE_ME}"
 LOG_DIR="${LOG_DIR:-/fs04/scratch2/al49/$USER/eval_logs}"
 SWE_BENCH_TASKS="${SWE_BENCH_TASKS:-kjain14/testgeneval}"
-NUM_PROCESSES="${NUM_PROCESSES:-8}"
+NUM_PROCESSES="${NUM_PROCESSES:-4}"
 TIMEOUT="${TIMEOUT:-3600}"
 SKIP_MUTATION="${SKIP_MUTATION:-0}"
 NAMESPACE="${NAMESPACE:-kdjain}"

@@ -1361,3 +1361,44 @@ rootless pull worked at all turned out to only be true on login nodes.
 Also worth an M3 helpdesk request for a real subuid/subgid allocation
 as the durable fix, which would remove this constraint for good, not
 filed as of this writing.
+
+### Real concurrency measured on a 24-core node: 8 is already oversubscribed
+
+With the `--home` race fixed above, real resource usage was measured
+directly (`top -bn1`, `free -h`, `nproc` on the live compute node) with
+`NUM_PROCESSES=8` running 40 real instances, ~47 minutes into a still-
+running job, 6 real successes confirmed by that point, 0 races.
+
+Real node: `m3e105`, 24 physical cores (`nproc`), 1.5TB RAM. Real,
+concrete numbers at that snapshot:
+
+- `load average: 93.47, 95.18, 92.85` on a 24-core node, roughly **4x
+  the physical core count**. `%Cpu(s)` showed `45.2 us, 11.1 sy, 43.1
+  id`, the node was genuinely ~43% idle despite that load average,
+  meaning many real processes were runnable but queued for a core, a
+  real sign of CPU contention, not yet total gridlock.
+- Real per-instance CPU varied far more than the earlier single-
+  snapshot estimate (~2-3 cores) suggested: individual `coverage`
+  processes at that moment ranged from `514.3%` down to `47.6%` CPU.
+  The high outlier is consistent with `pytest-xdist` (confirmed present
+  in the testbed Dockerfiles) spawning multiple parallel test workers
+  for a single mutant inside one container, briefly using 5+ cores at
+  once, not a flat, predictable per-instance cost.
+- Real memory was never a constraint: `1.3Ti free` of `1.5Ti` total, 24
+  cores were the real bottleneck, not RAM, at any concurrency level
+  tested so far.
+- Real concurrent work observed: ~7 active `cosmic-ray` process groups
+  at that snapshot, close to the requested `NUM_PROCESSES=8` (some
+  naturally finish/start between snapshots).
+
+**Real, corrected planning number: `NUM_PROCESSES=8` already
+oversubscribes a single 24-core `comp` node for this workload.** The
+earlier, unmeasured estimate (~2-3 cores/instance, ~48-64 safe
+concurrent under the 256-CPU per-user QOS cap) assumed a flatter,
+lower per-instance cost than what real load shows; the pytest-xdist
+spikes mean a real safe per-node concurrency is closer to
+`NUM_PROCESSES=4-6`, not 8, until xdist's own worker count is
+separately constrained inside the container (not yet attempted). This
+matters directly for `m3_run_evaluation.slurm`'s default
+`NUM_PROCESSES=8` and any real production eval run's sizing across
+several nodes.
