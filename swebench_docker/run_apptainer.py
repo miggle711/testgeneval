@@ -35,11 +35,24 @@
 #      entrypoint's parent directory, or evaluate_instance.py's
 #      `python -m swebench_docker.evaluate_instance` can't resolve the
 #      swebench_docker package (it's imported relative to cwd).
+#   4. Without an explicit --home, Apptainer maps the container's $HOME
+#      to the HOST user's real $HOME, not an isolated directory. Every
+#      earlier validation of this backend ran one instance at a time, so
+#      this never surfaced; a real NUM_PROCESSES>1 concurrency test
+#      (testgeneval#53) found it directly: two containers running
+#      entrypoint.sh concurrently both execute `git config --global
+#      --add safe.directory ...`, and both raced to write the SAME real
+#      host file, /home/<user>/.gitconfig, every one but the first
+#      losing with "could not lock config file: File exists". Fixed by
+#      passing --home to a fresh tempfile.mkdtemp() directory per
+#      instance, cleaned up in the same finally block that removes the
+#      task_instance.json tempfile.
 
 import asyncio
 import json
 import logging
 import os
+import shutil
 import subprocess
 import tempfile
 import time
@@ -126,6 +139,18 @@ async def run_apptainer_evaluation(
     with open(tmpfile_path, "w+") as f:
         json.dump(task_instance, f)
 
+    # A real, per-instance directory for --home, not the container default.
+    # Without an explicit --home, Apptainer maps the container's $HOME to
+    # the HOST user's real $HOME (confirmed real 2026-09-11: running two
+    # instances concurrently, both executed `git config --global --add
+    # safe.directory ...` inside entrypoint.sh, and both raced to write
+    # the SAME real host file, /home/<user>/.gitconfig -- one always lost
+    # with "could not lock config file: File exists". --cleanenv strips
+    # environment variables, it does not isolate the filesystem. Every
+    # earlier validation of this backend ran NUM_PROCESSES=1, so this
+    # never surfaced until a real concurrency test did.
+    home_dir = tempfile.mkdtemp(prefix="apptainer-home-")
+
     # evaluate_instance.py reads task_instance.json from a hardcoded
     # /home/swe-bench/task_instance.json (with a base64 INSTANCE env var
     # as its only fallback, which this path never sets). run_docker.py
@@ -140,6 +165,8 @@ async def run_apptainer_evaluation(
         "exec",
         "--writable-tmpfs",
         "--cleanenv",
+        "--home",
+        home_dir,
         "--pwd",
         entrypoint_parent,
         "-B",
@@ -214,3 +241,4 @@ async def run_apptainer_evaluation(
         )
     finally:
         os.unlink(tmpfile_path)
+        shutil.rmtree(home_dir, ignore_errors=True)
