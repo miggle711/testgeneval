@@ -595,8 +595,8 @@ kept for reference; the active work is the pass@5 column.
 | Llama-3.1-8B | kg_only | Done (1208/1210) | Done (1208/1210, real denominator 1208; `REQUEST_TIMEOUT=1800` fixup 59966731 recovered 60 of 62 previously-missing ids, only 2 real context-length exclusions left, see 2026-09-10 section) |
 | Qwen3-Coder-30B | instruct | Done (59870795) | Done (1210/1210) |
 | Qwen3-Coder-30B | kg_only | Done (59870796) | Done (1208/1210) |
-| Llama-4-Scout | instruct | Redoing (59967047, real config-contradiction OOM on the first attempt, see 2026-09-10 section; now on m3h H100) | Done (1123/1210) |
-| Llama-4-Scout | kg_only | Redoing (59967051, same cause, now on m3h H100) | Done (1186/1210) |
+| Llama-4-Scout | instruct | Done (59967047, 1199/1210, m3h H100, `MAX_MODEL_LEN=65536`/`MAX_NUM_SEQS=6` fix confirmed clean) | Done (1123/1210) |
+| Llama-4-Scout | kg_only | Done (59967051, 1208/1210, same fix, same node) | Done (1186/1210) |
 
 ### The real, root problem behind almost everything today
 
@@ -1165,3 +1165,118 @@ building and transferring before this can replace the local Docker
 evaluation path at full scale, see testgeneval#2 for the build process
 (has to happen off M3, M3 needs `sudo` for `apptainer build`/`pull`
 from Docker Hub, which regular accounts don't have).
+
+**The "needs sudo for pull" belief above was wrong, corrected 2026-09-11.**
+`apptainer pull docker://<image>` runs rootless on an M3 login node, no
+`sudo` required. Only `apptainer build` from a `.def` file needs root
+(M3's own docs' `sudo apptainer build alpine.sif docker://alpine`
+example is about `build`, not `pull`, and doesn't generalize the way it
+first reads). Confirmed real: an astropy testbed pulled and converted
+to a 902MB `.sif` in ~9 min with no elevated privileges. This changes
+the real, practical picture from "images have to be built off M3 and
+transferred" to "images can be pulled directly on M3."
+
+## Apptainer backend merged, correctness-validated against Docker, and a real home-quota incident (2026-09-11)
+
+The `feat/apptainer-backend` branch above (89 commits behind `main`,
+untouched since 2026-08-24) was rebased conflict-free and merged as
+testgeneval#52. Real, additional findings from bringing it current and
+actually exercising it, beyond the rootless-pull correction above.
+
+**Three real bugs found in review, all fixed before merge:**
+- `task_instance.json` was bound next to the entrypoint
+  (`{entrypoint_parent}/task_instance.json`), but `evaluate_instance.py`
+  reads it from a hardcoded `/home/swe-bench/task_instance.json` with no
+  real fallback (a base64 `INSTANCE` env var this path never sets). For
+  a conda repo (astropy, flask, sympy, ...) the entrypoint parent
+  happens to already be `/home/swe-bench`, so this worked by luck. For
+  every `PYENV_REPOS` repo (django, requests, scikit-learn), the
+  entrypoint parent is `/opt`, so the file landed at
+  `/opt/task_instance.json` and every one of those instances failed
+  with `ValueError`. Fixed by binding unconditionally to
+  `/home/swe-bench/task_instance.json`, matching `run_docker.py`.
+- The `swebench_docker` bind was read-write; `run_docker.py` mounts it
+  `:ro`. Low severity (a stray `__pycache__` write into the host's
+  checked-out fork), fixed to match.
+- `pull_apptainer_images.py`'s repo-name regex (`[a-z0-9_]+`) couldn't
+  match a hyphen, silently dropping 4 of 12 repos (`pylint-dev_pylint`,
+  `pytest-dev_pytest`, `scikit-learn_scikit-learn`, `sphinx-doc_sphinx`,
+  ~49 of the real 126 distinct testbed images) with no error, the
+  script just reported a wrong, lower "77 distinct images" count. Fixed
+  to `[a-z0-9_-]+` plus a sanity check that exits loudly if a full
+  Makefile parses fewer than 8 repos.
+
+**Correctness validated with an exact match against Docker, not just
+"it runs."** `pallets__flask-5014-16417`, 5 real samples (from
+Qwen2.5-Coder-7B-Instruct), evaluated through both backends on the
+fixed code. Every metric on every sample (`CoverageLOG`,
+`FunctionCoverageLOG`, `MutationLOG`, `FunctionMutationLOG`) matched to
+full floating-point precision between the Apptainer run on M3 (15m38s)
+and a Docker run on a local machine (28m23s). cosmic-ray's mutation
+selection is apparently deterministic given the same code, so even the
+mutation numbers lined up exactly, not just coverage. Flask is a conda
+repo, so this validated the conda bind path specifically; the pyenv
+bind fix was separately confirmed working with a real `django 3.0`
+instance (`django__django-10730-15721`), which completed cleanly
+(634.57s, no `ValueError`, real coverage/mutation numbers computed) on
+the same day.
+
+Real `.sif` sizes: astropy 5.1 (the largest real Docker testbed image,
+~3.6GB) converts to 902MB-949MB depending on namespace. **Must pull
+from the `kdjain` namespace, not `aorwall`**, confirmed real: an
+`aorwall` testbed image lacks `cosmic-ray` and this repo's
+`swebench_docker` (both are added by this fork's own Dockerfiles, not
+upstream's), so a mutation run against one fails outright with
+`ModuleNotFoundError: cosmic_ray`.
+
+**Real, corrected image count: 126 distinct testbed images across 12
+repos, not 77/8** (the pre-regex-fix miscount). At ~900MB worst case,
+~110GB total, well under the real 788GB free on `/fs04` at the time.
+
+### A real, active home-quota incident during the first full bulk pull
+
+`m3_pull_apptainer_images.slurm`'s default paths for
+`APPTAINER_IMAGES_DIR`/`APPTAINER_CACHEDIR`/`APPTAINER_TMPDIR` (and the
+matching defaults in `m3_run_evaluation.slurm`) were written as
+`$HOME/al49_scratch2/$USER/...`, a path that was never real, invented
+rather than checked, confirmed real 2026-09-11: `$HOME`'s only actual
+scratch-related symlinks are `al49 -> /projects/al49` and
+`al49_scratch -> /scratch/al49` (no `2`), and neither matches
+`/fs04/scratch2/al49/$USER`, the path this whole project has actually
+used and confirmed working (788GB free) all along. `mkdir -p` doesn't
+fail on a nonexistent parent the way a bad path assumption might
+suggest, it just silently creates a genuine new directory tree under
+`$HOME` instead. The first real bulk pull job ran for 27m40s writing
+real `.sif` files there before being caught, and combined with
+pre-existing legitimate usage (`.conda` 13GB, `.cache` 6.7GB,
+`.apptainer` cache 987MB, `.triton` 533MB against a 20GB total home
+quota), drove `$HOME` to 100% full, 146MB free, a real, active risk to
+anything else touching home (shell config, SLURM's own bookkeeping,
+other jobs). Caught before it broke anything else. Fixed: `rm -rf
+"$HOME/al49_scratch2"` recovered the wrongly-placed files (no real data
+lost, the correct real `.sif` copies already existed on `/fs04` from
+earlier manual testing), `rm -rf "$HOME/.apptainer"` recovered the
+default Apptainer cache (real, freed ~987MB), and both slurm scripts
+were corrected to default to `/fs04/scratch2/al49/$USER/...`, the path
+actually proven to work, not a second guess. `scripts/
+pull_apptainer_images.py` and `run_apptainer.py`'s own `$HOME/
+apptainer_images` fallback (used only if `APPTAINER_IMAGES_DIR` is
+unset and either is invoked directly, not through the now-fixed slurm
+wrappers) got warning comments rather than a changed default, since
+guessing a new default without testing it is exactly the mistake that
+caused this.
+
+Lesson: never invent a scratch path by pattern-matching an existing
+one's *name* (`HF_HOME`'s `al49_scratch` inspired the invented
+`al49_scratch2`) without confirming the real path exists, `readlink -f`
+or `ls -la` on the parent first. A path that merely looks plausible can
+silently succeed at creating itself under `$HOME` instead of failing
+loudly, and the real damage doesn't show up until the small home quota
+is nearly gone.
+
+Filed as testgeneval#53 to track the remaining real work: the full
+126-image pull at scale (in progress, job 60003349 after two earlier
+attempts, one killed by the path bug), a real concurrency/scale
+measurement (the current ~2-3 cores/instance estimate is from a single
+`top` snapshot, not measured under load), and this pyenv check
+(completed, see above, kept in the issue as a record).
