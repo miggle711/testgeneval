@@ -589,7 +589,7 @@ kept for reference; the active work is the pass@5 column.
 | gpt-oss-120B | kg_only | Done (1201/1210) | Done (1200/1201, 1 real id at 4/5, same cause) |
 | gpt-oss-20B | instruct | Done (1210/1210) | Done (1210/1210, fully clean) |
 | gpt-oss-20B | kg_only | Done (1210/1210) | Done (1209/1210 at 5/5, 1 id at 4/5, `django__django-14411-16029`, real `finish_reason=stop` + null content, see 2026-09-10 section) |
-| Qwen3-4B | instruct | Done (1198/1210) | Redoing (59964291, resumed from 311/1210 after a real 36h TIMEOUT, `--time=48:00:00`) |
+| Qwen3-4B | instruct | Done (1198/1210) | Redoing (60021634, resumed from 589/1210 after a second real TIMEOUT at 48h, `--time=60:00:00`; confirmed real, legitimate workload scale, not a bug, see below) |
 | Qwen3-4B | kg_only | Done (1208/1210) | Done (59964915, 985/1210, clean, resumed from 750/1210 after a real 36h TIMEOUT, `--time=48:00:00`, completed 2026-09-11) |
 | Llama-3.1-8B | instruct | Done (1199/1210, real denominator corrected 2026-09-12, see below) | Done (59968456, 1199/1210, clean, resumed from 700/1210 after a real 36h TIMEOUT, `REQUEST_TIMEOUT=1800`, `--time=48:00:00`, completed 2026-09-11) |
 | Llama-3.1-8B | kg_only | Done (1208/1210) | Done (1208/1210, real denominator 1208; `REQUEST_TIMEOUT=1800` fixup 59966731 recovered 60 of 62 previously-missing ids, only 2 real context-length exclusions left, see 2026-09-10 section) |
@@ -1508,3 +1508,80 @@ resubmit even ran). Root cause of the duplication not confirmed
 without the usual pre-move-aside step, the same class of collision
 documented earlier this project, but not traced to a specific real job
 this time).
+
+### Calibration before team handoff: 8 real, previously-untested repos, sequential + parallel + sharded, found one real, isolated bug
+
+Before handing the Apptainer backend to the team for full production
+runs, calibrated it against one real instance from each of the 8
+remaining, previously-untested repos (matplotlib, sympy, scikit-learn,
+sphinx-doc, pylint-dev, pytest-dev, pydata/xarray, mwaskom/seaborn),
+the ones not already exercised by the astropy/flask/django validation
+in #52 and the concurrency test above. `psf/requests` has real,
+pulled `.sif` files but zero real instances in the `kjain14/testgeneval`
+dataset itself, confirmed directly, so 8 is the real, complete
+remaining set, not a gap.
+
+Ran the same real 8-instance predictions file three ways: sequential
+(`NUM_PROCESSES=1`, one job), parallel (`NUM_PROCESSES=4`, one job),
+and sharded (`scripts/shard_predictions.py --num-shards 2`, two
+separate real jobs writing to the same shared `--log_dir`), the first
+real test of the sharding path end to end, never previously exercised.
+All three produced the identical real result: 7/8 real instances
+succeeded cleanly, 1/8 (`scikit-learn__scikit-learn-10198-16700`)
+failed with a real `FileNotFoundError: 'coverage'`. Sharding itself
+worked correctly, the 4+4 split was exact with no overlap, both shard
+jobs wrote their real `.eval.log` files to the shared directory with
+no collision.
+
+Traced the real scikit-learn failure to a genuine, pre-existing gap in
+the testbed image definitions: all 5 scikit-learn Dockerfiles
+(`0.20`-`1.4`) install a hardcoded package list with no
+`coverage`/`cosmic-ray`, and scikit-learn has no `requirements.txt` to
+fall back on, unlike every other repo. An initial grep pass
+(`"pip install coverage"`) over-flagged django (13/13) and sympy
+(13/13) as also missing it; both were real false positives (django
+installs via a separate `requirements.txt`, sympy bundles `coverage`
+into a combined `pip install` line on the version checked), caught and
+corrected before filing anything. A full, corrected sweep (does
+`coverage` appear anywhere in the Dockerfile OR a sibling
+`requirements.txt`) across all 18 real repos, 156 real Dockerfiles,
+confirmed scikit-learn's 5 files are the only genuine gap. Filed as
+testgeneval#55, fixed (added `coverage cosmic-ray` to all 5), with the
+real caveat that the already-pulled `.sif` files were built from the
+old, broken Docker Hub images, the Dockerfile fix alone does not take
+effect until those real images are rebuilt/repushed and re-pulled.
+
+Real, practical value confirmed: calibration caught one genuine,
+repo-specific bug in isolation, cheaply, before any real production
+run would have hit it mid-batch across possibly hundreds of real
+scikit-learn instances.
+
+### Qwen3-4B instruct pass@5's real, third timeout: confirmed genuine workload scale, not a bug
+
+The redone job above (`59964291`, resubmitted at `--time=48:00:00`
+after an earlier real 36h TIMEOUT) hit a second real `TIMEOUT`, 2 days
+0h1m elapsed, real file at 589/1210 lines (up from 311 at start).
+Investigated directly rather than just raising the time budget again:
+real per-instance rate near the end of the run ranged `128.54s/it` to
+`267.69s/it` (from the script's own progress bar), `Running: 16 reqs`
+(fully using the configured `MAX_CONCURRENCY=16`), `Waiting: 59-64
+reqs` (a real, substantial backlog, not idle capacity), `GPU KV cache
+usage` a healthy 21-47% throughout, real generation throughput staying
+strong (300-620 tokens/s) with no degradation over the full 48h run,
+and only 2 real `RetryError`s, 0 `Request timed out` (ruling out the
+testgeneval#49 timeout pattern entirely for this job).
+
+Real, honest conclusion: this is not a bug, a hang, or server
+degradation, it is genuinely this much real work at this real,
+confirmed rate. Qwen3-4B instruct's real prompts are large (already
+documented elsewhere in this project, mean ~11265 input tokens vs
+kg_only's ~5001), and 621 real remaining instances at the confirmed
+~200-270s/it real rate need on the order of 40+ real hours, more than
+either of the two time budgets tried so far. Resubmitted as
+`60021634` with `--time=60:00:00`, a real, generous margin above the
+estimate given the observed per-instance variance. Sharding the
+remaining instances across 2 real concurrent GPU jobs was considered
+and deliberately not used this time, the real gain (~2x wall-clock)
+did not justify the added real complexity of extracting exactly which
+ids are still missing and confirming no overlap, for what is
+ultimately a one-time job.
