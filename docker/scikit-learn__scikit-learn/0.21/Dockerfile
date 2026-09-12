@@ -20,6 +20,8 @@ RUN pip install numpy==1.19.2 scipy==1.5.2 cython==0.29.7 pytest==4.5.0 pandas m
 
 RUN git checkout 7813f7efb5b2012412888b69e73d76f2df2b50b6 .
 
+RUN python setup.py build_ext --inplace
+
 ENV TESTBED_NAME=scikit-learn__scikit-learn__0.21
 ENV IMAGE_TYPE=pyenv
 
