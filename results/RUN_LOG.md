@@ -590,8 +590,8 @@ kept for reference; the active work is the pass@5 column.
 | gpt-oss-20B | instruct | Done (1210/1210) | Done (1210/1210, fully clean) |
 | gpt-oss-20B | kg_only | Done (1210/1210) | Done (1209/1210 at 5/5, 1 id at 4/5, `django__django-14411-16029`, real `finish_reason=stop` + null content, see 2026-09-10 section) |
 | Qwen3-4B | instruct | Done (1198/1210) | Redoing (59964291, resumed from 311/1210 after a real 36h TIMEOUT, `--time=48:00:00`) |
-| Qwen3-4B | kg_only | Done (1208/1210) | Redoing (59964915, resumed from 750/1210 after a real 36h TIMEOUT, `--time=48:00:00`) |
-| Llama-3.1-8B | instruct | Done (1195/1210) | Redoing (59968456, resumed from 700/1210 after a real 36h TIMEOUT, `REQUEST_TIMEOUT=1800`, `--time=48:00:00`) |
+| Qwen3-4B | kg_only | Done (1208/1210) | Done (59964915, 985/1210, clean, resumed from 750/1210 after a real 36h TIMEOUT, `--time=48:00:00`, completed 2026-09-11) |
+| Llama-3.1-8B | instruct | Done (1199/1210, real denominator corrected 2026-09-12, see below) | Done (59968456, 1199/1210, clean, resumed from 700/1210 after a real 36h TIMEOUT, `REQUEST_TIMEOUT=1800`, `--time=48:00:00`, completed 2026-09-11) |
 | Llama-3.1-8B | kg_only | Done (1208/1210) | Done (1208/1210, real denominator 1208; `REQUEST_TIMEOUT=1800` fixup 59966731 recovered 60 of 62 previously-missing ids, only 2 real context-length exclusions left, see 2026-09-10 section) |
 | Qwen3-Coder-30B | instruct | Done (59870795) | Done (1210/1210) |
 | Qwen3-Coder-30B | kg_only | Done (59870796) | Done (1208/1210) |
@@ -1402,3 +1402,109 @@ separately constrained inside the container (not yet attempted). This
 matters directly for `m3_run_evaluation.slurm`'s default
 `NUM_PROCESSES=8` and any real production eval run's sizing across
 several nodes.
+
+### The concurrency test finished: 40/40 real successes, 0 races, one real (minor) OOM at exit
+
+The concurrency job above (job 60004046) kept running past the 47-
+minute snapshot documented earlier. Real, final `sacct` state:
+`OUT_OF_ME+` (`OUT_OF_MEMORY`), `ExitCode 0:125`, 4h46m elapsed. Read
+at face value this looks like the job failed; the real log tells a
+different, better story.
+
+Every one of the real 40 instances completed: `grep -c "Container ran
+successfully"` = 40, `grep -c "could not lock config file"` = 0. The
+script's own final lines printed correctly (`Done. Per-instance logs
+in ...`, `Build the report with: ...`), meaning the real work loop
+finished on its own terms, it was not killed mid-evaluation. The real
+`oom_kill` event fired at `22:30:17.709`, less than half a second after
+the very last instance's own `Container ran successfully` line at
+`22:30:17.326`. `generate_report.py` is never actually invoked by
+`m3_run_evaluation.slurm`, line 130's `echo "Build the report with:
+..."` is only a suggestion printed to the user, not a real call, so
+this was not a report-generation OOM. Most likely real cause: a
+transient memory spike during the script's own exit-time cleanup after
+a long run (Apptainer overlay teardown for the last container, plus
+Python's own garbage collection across everything the 4h46m run had
+accumulated), not a failure of the evaluation work itself.
+
+Real, honest conclusion: this is the single cleanest, most conclusive
+result of the whole concurrency investigation, not a new problem. The
+`--home` isolation fix holds completely under sustained real load (0
+races across all 40 instances, not just an early sample), and the
+OOM is a minor, cosmetic tail-end issue, not something that lost any
+real data (every instance's `.eval.log` in
+`/fs04/scratch2/al49/mvar0010/concurrency_test_logs` is real and
+intact). Practical fix for future long real runs: raise
+`m3_run_evaluation.slurm`'s `--mem` request slightly, or make
+`generate_report.py` a real, explicit step in the script rather than
+leaving it as a printed suggestion, so its own memory needs are
+accounted for rather than competing with whatever's still winding down
+from the eval loop. Not yet applied, low priority given the real work
+itself completed successfully.
+
+### A second, independent .sif source: built off-M3 via Docker, not just a teammate's native Linux machine
+
+While waiting for a teammate to build the full 126-image set natively
+(the real workaround chosen in testgeneval#54), a second, independent
+path was found and validated on a Mac: `quay.io/singularity/
+singularity:v3.11.4`, a real, existing Docker image containing a real
+Singularity/Apptainer binary. Docker Desktop on macOS runs a genuine
+Linux VM under the hood, distinct from a shared M3 compute node, so it
+does not carry the same ptrace/seccomp restriction documented above.
+Confirmed real: `docker run ... pull --force ... docker://kdjain/
+swe-bench-astropy_astropy-testbed:4.2` produced a real, correct 949MB
+`.sif`, matching the same real size seen from the M3 login-node pull,
+in ~8-9 minutes despite running under `amd64`-on-`arm64` emulation
+(the image is `linux/amd64`, the Mac is Apple Silicon).
+
+A resumable wrapper script (`apptainer_pull_docker.sh`, kept local, not
+committed, since it is Mac-specific and not part of the M3 workflow)
+looped this over the same real 126-image Makefile list, using the same
+atomic-rename-on-success pattern as `scripts/pull_apptainer_images.py`
+so a killed/interrupted run never leaves a file that looks done but
+isn't. One real portability bug found and fixed along the way: macOS
+ships bash 3.2 (Apple has not updated it in years over licensing), and
+`mapfile` (a bash 4+ builtin) silently failed with `command not found`
+followed by `unbound variable` on the very first run, producing zero
+real pulls with no useful error surfaced until the log was checked
+directly. Fixed by replacing the `mapfile`-into-array pattern with a
+temp file plus a `while read` loop, which needs no array and works
+identically on bash 3.2.
+
+Real, final result: **all 126 images pulled successfully, 0 failures**,
+~105GB total on disk, matching the ~110GB estimate. Confirms the
+off-M3 build path works from either a native Linux machine or a Mac
+with Docker Desktop, giving two independent, real sources for the same
+`.sif` set. Transfer to M3 uses the actual data-transfer node
+(`m3-dtn.massive.org.au`, confirmed via direct DNS lookup, not a
+login node) via `rsync`, per M3's own real distinction between login
+and DTN nodes for large transfers.
+
+### A second, real data-mixing incident found: Llama-3.1-8B instruct pass@5, 90 duplicate ids
+
+A routine status check (`wc -l` on the real output file) found
+1289 lines against a 1210-instance dataset, an immediate real red flag
+given this exact model already had one genuine mixing incident earlier
+in this project (see the 2026-09-07 section above). Audited the same
+way: grouped by real `id`, not `instance_id`. Real result: 1199 unique
+ids, 90 of them appearing twice, both real copies at full `{5: 5}`
+samples each (not a `k=1`/`k=5` mix like the earlier incident, genuine
+duplicate full rows this time). `1199 + 90 = 1289` reconciles exactly
+against the line count, confirming no other real corruption beyond the
+duplication itself.
+
+Fixed the same way as the earlier incident: grouped every real row by
+`id`, kept the last real occurrence per id, wrote a `.dedup` file,
+verified it independently (`malformed: 0`, `1199` unique ids, `{5:
+1199}` distribution) before touching the original. Original moved
+aside as `...jsonl.pre_dedup_backup` rather than deleted, dedup file
+promoted to the real filename. Real, final state: Llama-3.1-8B
+instruct pass@5 is genuinely clean at **1199/1210 (99.1%)**, corrected
+from the stale, wrong `1195/1210` figure the status table carried
+before this was caught (that number in turn came from a still-earlier,
+pre-dedup snapshot of this same file, from before job 59968456's real
+resubmit even ran). Root cause of the duplication not confirmed
+(most likely something touched this plain filename a second time
+without the usual pre-move-aside step, the same class of collision
+documented earlier this project, but not traced to a specific real job
+this time).
