@@ -71,6 +71,14 @@ NUM_PROCESSES="${NUM_PROCESSES:-4}"
 TIMEOUT="${TIMEOUT:-3600}"
 SKIP_MUTATION="${SKIP_MUTATION:-0}"
 NAMESPACE="${NAMESPACE:-kdjain}"
+# scikit-learn's 5 testbed .sif files (0.20-1.4) in APPTAINER_IMAGES_DIR
+# are NOT from this namespace -- 0.20/0.21/0.22/1.3 were rebuilt with a
+# coverage/cosmic-ray + build_ext fix (testgeneval#55, confirmed real
+# 2026-09-12: kdjain's originals are missing both `coverage` and the
+# compiled sklearn C extension) and pushed to miggy711/, pulled as
+# .sif, and already sitting in APPTAINER_IMAGES_DIR. Do NOT re-run
+# scripts/pull_apptainer_images.py for scikit-learn specifically, or it
+# will silently overwrite these with the old broken kdjain images.
 
 # Where the converted .sif testbed images live. One file per
 # {repo_name}_{version}.sif (see run_apptainer.py). On scratch: they're
