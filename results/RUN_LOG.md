@@ -1616,3 +1616,51 @@ Real, practical rule: when checking a model's real status, always
 involved, cross-check against its own
 `grep "Read.*already completed ids" slurm-<jobid>.out` line, which
 names the exact path and count it actually used.
+
+### Real finding: django's testbed has no pytest, and most generated tests for it import pytest anyway (2026-09-13)
+
+Before handing the pipeline to the team, ran a real pre-handoff dry
+run: 100 real instances, randomly sampled across 10 distinct repos
+from gpt-oss-20B's already-complete instruct pass@1 file (confirmed
+clean, 1210/1210), sharded 4 ways (`scripts/shard_predictions.py`),
+submitted as 4 real concurrent `m3_run_evaluation.slurm` jobs
+(`60029929`-`60029932`) writing to one shared `--log_dir`, a genuine
+test of both sharding and cross-job parallelism at a more realistic
+scale than the earlier 8-instance calibration.
+
+Found a real, severe, repo-specific gap partway through: 41 of the
+first 52 completed logs (79%) failed with
+`ModuleNotFoundError: No module named 'pytest'`. Broken down by repo,
+this was not spread evenly: **42 of 43 sampled django instances**
+hit it, every other repo in the sample (matplotlib, pytest-dev,
+mwaskom/seaborn, astropy) was clean.
+
+Traced the real source carefully rather than assuming (this looked at
+first like the same class of bug as testgeneval#55's scikit-learn
+`coverage` gap, but is not): confirmed directly that `django`'s base
+source at the exact eval commit has zero files importing `pytest`
+(`grep -rl '^import pytest' tests/` inside the real `.sif`, 0 matches)
+and that the real, live `kjain14/testgeneval` dataset's own
+`test_patch` field for the specific instance checked (731 real chars)
+also does not import `pytest`. The actual source: **4 of 5 real
+`gpt-oss-20b` samples for that instance wrote `import pytest` directly
+into their own generated test file** (genuine model output, not a
+testbed or dataset defect). django's real test suite has used plain
+`unittest` for its entire history, but pytest is common enough
+elsewhere in the Python ecosystem that models write it out of habit
+without checking what's actually available.
+
+**Decision: left as-is, not fixed.** Unlike the scikit-learn
+`coverage`/compiled-extension gaps (genuine omissions in an otherwise
+complete testbed, fixed in testgeneval#55), django's lack of `pytest`
+is not an oversight; its real test infrastructure is deliberately
+`unittest`-only project-wide. Installing `pytest` into the testbed
+would change what is being measured (silently rewarding any model
+that happens to write pytest-style tests, regardless of whether that
+matches the codebase's actual conventions) rather than fixing a
+broken environment. Documenting this prominently instead: **expect
+django's real pass@k/coverage/mutation numbers to be substantially
+suppressed for any model that defaults to pytest-style test
+generation, for reasons unrelated to test quality.** If this
+distortion turns out to matter for the real RQ2/RQ3 analysis, revisit
+as a disclosed limitation in the writeup rather than a pipeline fix.
