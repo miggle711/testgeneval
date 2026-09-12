@@ -1585,3 +1585,34 @@ and deliberately not used this time, the real gain (~2x wall-clock)
 did not justify the added real complexity of extracting exactly which
 ids are still missing and confirming no overlap, for what is
 ultimately a one-time job.
+
+### File-naming note: which prediction file is actually live (real confusion this caused, 2026-09-12)
+
+`results/{instruct,kg_only}/` accumulates several real files per model
+over a project's life, only one of which is ever live. Checked
+Meta-Llama-3.1-8B-Instruct's `__test__pass5.jsonl` (324/304 real
+lines) and, without cross-checking further, wrongly concluded this
+model's real pass@5 work was missing or lost. The actual live file
+(`__test.jsonl`, no suffix, the exact path `run_api.py` reads/writes
+via `OUTPUT_DIR/{model}__{dataset}__{temp}__test.jsonl`) was already
+correctly at 1199/1208, confirmed both by a fresh `wc -l` and by the
+real resume job's own `Read 1199 already completed ids from <path>`
+log line agreeing exactly.
+
+The real naming convention, reverse-engineered from this project's own
+past fixes (not written down anywhere before this entry):
+- `{model}__{dataset}__{temp}__test.jsonl` (no extra suffix) is the
+  only live file. This is the one to check for real current status.
+- `__pass1.jsonl` / `__pass5.jsonl` are point-in-time snapshots, made
+  when a resubmit changed `NUM_SAMPLES` or a dedup/split fix ran, and
+  frozen from that moment on.
+- `_original.jsonl` / `.pre_dedup_backup` are the pre-fix copy kept
+  before a corruption/dedup fix, for audit trail only.
+- A dated `_corrupted_*`/`_pre_*` subdirectory is an entire superseded
+  run, archived wholesale.
+
+Real, practical rule: when checking a model's real status, always
+`wc -l` the plain, unsuffixed filename, and if a resume job is
+involved, cross-check against its own
+`grep "Read.*already completed ids" slurm-<jobid>.out` line, which
+names the exact path and count it actually used.
