@@ -16,7 +16,7 @@ RUN git -c advice.detachedHead=false checkout 33a1f1690e7a7007633f59b6bee32017f4
 
 RUN pip install setuptools wheel
 
-RUN pip install numpy==1.26.4 scipy==1.13.0 cython==3.0.10 pytest==8.2.0 pandas==2.2.2 matplotlib==3.8.4 joblib==1.4.2 threadpoolctl==3.5.0
+RUN pip install numpy==1.26.4 scipy==1.13.0 cython==3.0.10 pytest==8.2.0 pandas==2.2.2 matplotlib==3.8.4 joblib==1.4.2 threadpoolctl==3.5.0 coverage cosmic-ray
 
 
 RUN git checkout 33a1f1690e7a7007633f59b6bee32017f4229864 .

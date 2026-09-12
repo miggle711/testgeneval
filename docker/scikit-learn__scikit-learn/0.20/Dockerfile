@@ -15,7 +15,7 @@ WORKDIR /opt/scikit-learn__scikit-learn
 RUN git -c advice.detachedHead=false checkout 55bf5d93e5674f13a1134d93a11fd0cd11aabcd1
 
 
-RUN pip install numpy==1.19.2 scipy==1.5.2 cython==0.29.7 pytest==4.5.0 pandas matplotlib==3.1.0 joblib threadpoolctl
+RUN pip install numpy==1.19.2 scipy==1.5.2 cython==0.29.7 pytest==4.5.0 pandas matplotlib==3.1.0 joblib threadpoolctl coverage cosmic-ray
 
 
 RUN git checkout 55bf5d93e5674f13a1134d93a11fd0cd11aabcd1 .
