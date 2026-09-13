@@ -7,9 +7,21 @@ Each shard is a valid predictions file on its own. run_evaluation.py's
 own --skip_existing plus the per-instance .eval.log naming means shards
 writing to the same --log_dir do not collide (one file per instance).
 
-Sharding is round-robin by line, not by repo, so each shard gets a
-roughly even mix of fast (requests, flask) and slow (sympy, matplotlib)
-instances rather than one shard drawing all the slow ones.
+Sharding is round-robin within each repo's own group of instances, not
+plain round-robin by line. A real 100-instance/4-shard dry run
+(2026-09-13) found plain round-robin (i % num_shards straight down the
+file) let one shard draw 7 of the sample's sympy instances against
+another's 3, even though the source file was already randomly
+shuffled -- repo membership correlates strongly with real per-instance
+runtime (mutation testing scales with file size: real observed range
+in that run was 82s to ~4.8h, with sympy/matplotlib instances
+dominating the slow end), so an uneven repo split directly produced a
+3.5x real wall-clock spread across the 4 shards (1h56m to 6h55m) for
+an equal 25-instances-per-shard split. Grouping by repo first and
+round-robining each group across shards guarantees no shard can draw a
+disproportionate share of any one repo. This narrows the real variance
+but does not eliminate it -- runtime still varies a lot between
+individual instances of the same repo, not just between repos.
 
 Usage:
     python scripts/shard_predictions.py \
@@ -29,6 +41,7 @@ import argparse
 import json
 import os
 import sys
+from collections import defaultdict
 
 
 def main():
@@ -47,25 +60,35 @@ def main():
     os.makedirs(args.out_dir, exist_ok=True)
 
     # Read all non-empty lines, validating each is JSON so a shard never
-    # contains a half-written line.
-    lines = []
+    # contains a half-written line. Group by repo (derived the same way
+    # as elsewhere in this project: instance_id with its trailing
+    # "-<pr_number>" stripped) so repo-correlated runtime doesn't let
+    # one shard draw a disproportionate share of a slow repo's
+    # instances (see the module docstring for the real, measured case
+    # that motivated this).
+    by_repo = defaultdict(list)
+    total = 0
     with open(args.predictions) as f:
         for n, line in enumerate(f, 1):
             line = line.strip()
             if not line:
                 continue
             try:
-                json.loads(line)
+                rec = json.loads(line)
             except json.JSONDecodeError as e:
                 sys.exit(f"line {n} of {args.predictions} is not valid JSON: {e}")
-            lines.append(line)
+            instance_id = rec.get("instance_id", "")
+            repo = instance_id.rsplit("-", 1)[0] if "-" in instance_id else instance_id
+            by_repo[repo].append(line)
+            total += 1
 
-    if not lines:
+    if total == 0:
         sys.exit(f"no rows in {args.predictions}")
 
     shards = [[] for _ in range(args.num_shards)]
-    for i, line in enumerate(lines):
-        shards[i % args.num_shards].append(line)
+    for repo_lines in by_repo.values():
+        for i, line in enumerate(repo_lines):
+            shards[i % args.num_shards].append(line)
 
     for i, shard_lines in enumerate(shards):
         path = os.path.join(args.out_dir, f"{args.prefix}-{i}.jsonl")
@@ -74,7 +97,7 @@ def main():
                 f.write(line + "\n")
         print(f"  {path}: {len(shard_lines)} rows")
 
-    print(f"{len(lines)} rows -> {args.num_shards} shards in {args.out_dir}")
+    print(f"{total} rows ({len(by_repo)} repos) -> {args.num_shards} shards in {args.out_dir}")
 
 
 if __name__ == "__main__":
