@@ -16,19 +16,27 @@ real team handoff plan (who is evaluating which model/arm).
 
 | Model | Arm | Real evaluation status |
 |---|---|---|
-| gpt-oss-20B | instruct | **Done (full scale, 2026-09-14)**, see below |
+| gpt-oss-20B | instruct (pass@1, pipeline validation only) | Done (full scale, 2026-09-14), see below. Not the real pass@5 metric, see note below the table. |
 | gpt-oss-20B | instruct (100-instance dry run) | Done (2026-09-13), superseded by the full-scale run above |
 | gpt-oss-120B | instruct | Not yet run, assigned to wtho0016 (testgeneval#56) |
 | gpt-oss-120B | kg_only | Not yet run, assigned to wtho0016 (testgeneval#56) |
 | gpt-oss-20B | kg_only | Not yet run, assigned to wlee0060 (testgeneval#56) |
 | Qwen3-Coder-30B | instruct | Not yet run, assigned to jliu0290 (testgeneval#56) |
 | Qwen3-Coder-30B | kg_only | Not yet run, assigned to jliu0290 (testgeneval#56) |
-| Llama-4-Scout | instruct | Not yet run, assigned to mvar0010 (testgeneval#56) |
-| Llama-4-Scout | kg_only | Not yet run, assigned to mvar0010 (testgeneval#56) |
-| Qwen3-4B | kg_only | Not yet run, assigned to mvar0010 (testgeneval#56) |
-| Llama-3.1-8B | kg_only | Not yet run, assigned to mvar0010 (testgeneval#56) |
-| Llama-3.1-8B | instruct | Not yet run, predictions only just completed (2026-09-13) |
+| Llama-4-Scout | instruct | **Running (2026-09-14), jobs 60078548/60078549**, mvar0010, see below |
+| Llama-4-Scout | kg_only | **Running (2026-09-14), jobs 60078550/60078551**, mvar0010, see below |
+| Qwen3-4B | kg_only | **Running (2026-09-14), jobs 60078552/60078553**, mvar0010, see below |
+| Llama-3.1-8B | kg_only | **Running (2026-09-14), jobs 60078554/60078555**, mvar0010, see below |
+| Llama-3.1-8B | instruct | **Running (2026-09-14), jobs 60078556/60078557**, mvar0010, see below |
 | Qwen3-4B | instruct | Not yet run, predictions still generating (job 60021634 as of this writing) |
+
+**None of the pass@5 rows above are actually complete yet.** The
+gpt-oss-20B row marked "Done" is a real, full-scale run of the
+*pass@1* file, used deliberately to stress-test the pipeline
+(sharding, parallelism, `generate_report.py`) before trusting it for
+the real metric; it does not count as gpt-oss-20B instruct's real
+pass@5 evaluation, which still needs to happen separately against
+that file.
 
 ### Real evaluation has not actually happened for any of this project's data
 
@@ -859,3 +867,45 @@ working correctly at genuine production scale**, not just in
 isolated/small-sample tests. This is the strongest real validation
 this pipeline has had before the team's own production runs
 (testgeneval#56).
+
+### First real pass@5 evaluation runs submitted, and a deliberate NUM_PROCESSES=8 test (2026-09-14)
+
+With the pipeline validated, submitted the first 5 real pass@5 files
+(mvar0010's testgeneval#56 assignments: Llama-4-Scout both arms,
+Qwen3-4B kg_only, Llama-3.1-8B both arms, the last of these completed
+just after #56 was filed). Each file sharded 2 ways
+(`scripts/shard_predictions.py`, the stratified fix), 10 real jobs
+total, using the full per-user job quota.
+
+**Deliberately tested `NUM_PROCESSES=8` for the first time**, double
+the value validated in the full-scale run above. Real justification:
+the full-scale run's own resource check found only 49-82 load average
+on 128-core nodes at `NUM_PROCESSES=4` with 3-4 jobs per node, real
+headroom well below the point the original `NUM_PROCESSES=8`
+oversubscription finding was measured at (a 24-core node, a
+structurally different, smaller real constraint). Not yet confirmed
+whether 8 actually delivers a real, proportional throughput gain on
+these bigger nodes, or just adds concurrent load without reducing real
+wall-clock, since the per-instance work itself (mutation testing) is
+not obviously parallelizable further within one instance.
+
+**Real timeout risk assessed before submitting, not after.** At the
+new shard size (~600-607 instances each, roughly 5x the full-scale
+run's 121-instance shards), naive extrapolation from the validated
+`NUM_PROCESSES=4` per-instance rate put real completion at 56-112
+hours, well past the script's default 24h `--time` limit -- these were
+knowingly submitted at the default anyway, since `--skip_existing`
+(already unconditional in `m3_run_evaluation.slurm`) makes a timeout
+genuinely low-cost: it checks each real instance's `.eval.log` in
+`LOG_DIR` and skips already-done ones, so a resubmit of the identical
+command after a timeout picks up exactly where it left off, no real
+progress lost. Chose to accept the timeout risk rather than
+pre-emptively over-shard or extend `--time` speculatively, and monitor
+real progress directly instead.
+
+Real job IDs: `60078548`/`60078549` (Llama-4-Scout instruct),
+`60078550`/`60078551` (Llama-4-Scout kg_only), `60078552`/`60078553`
+(Qwen3-4B kg_only), `60078554`/`60078555` (Llama-3.1-8B kg_only),
+`60078556`/`60078557` (Llama-3.1-8B instruct). All 10 started running
+within 2 minutes of submission, spread across 8 distinct real compute
+nodes.
