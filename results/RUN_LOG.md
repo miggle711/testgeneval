@@ -593,7 +593,7 @@ kept for reference; the active work is the pass@5 column.
 | gpt-oss-120B | kg_only | Done (1201/1210) | Done (1200/1201, 1 real id at 4/5, same cause) |
 | gpt-oss-20B | instruct | Done (1210/1210) | Done (1210/1210, fully clean) |
 | gpt-oss-20B | kg_only | Done (1210/1210) | Done (1209/1210 at 5/5, 1 id at 4/5, `django__django-14411-16029`, real `finish_reason=stop` + null content, see 2026-09-10 section) |
-| Qwen3-4B | instruct | Done (1198/1210) | Redoing (60021634, resumed from 589/1210 after a second real TIMEOUT at 48h, `--time=60:00:00`; confirmed real, legitimate workload scale, not a bug, see below) |
+| Qwen3-4B | instruct | Done (1198/1210) | Redoing (60091937, resumed from 748/1210 after 60021634 completed clean but real dominant cause was request timeouts, not context length; `REQUEST_TIMEOUT=1800`, `--time=24:00:00`, see 2026-09-14 section) |
 | Qwen3-4B | kg_only | Done (1208/1210) | Done (59964915, 985/1210, clean, resumed from 750/1210 after a real 36h TIMEOUT, `--time=48:00:00`, completed 2026-09-11) |
 | Llama-3.1-8B | instruct | Done (1199/1210, real denominator corrected 2026-09-12, see below) | Done (59968456, 1199/1210, clean, resumed from 700/1210 after a real 36h TIMEOUT, `REQUEST_TIMEOUT=1800`, `--time=48:00:00`, completed 2026-09-11) |
 | Llama-3.1-8B | kg_only | Done (1208/1210) | Done (1208/1210, real denominator 1208; `REQUEST_TIMEOUT=1800` fixup 59966731 recovered 60 of 62 previously-missing ids, only 2 real context-length exclusions left, see 2026-09-10 section) |
@@ -946,4 +946,38 @@ exceeds model's maximum context length (32768)`, confirmed directly
 from the job's own error log. Fixed by explicitly setting
 `MAX_MODEL_LEN=98304` on the real resubmit (same value already proven
 safe for Qwen3-Coder-30B).
+
+### Qwen3-4B instruct pass@5 (60021634) finished clean at 748/1210, real cause was timeouts, not context length (2026-09-14)
+
+The redone job from the real, confirmed-legitimate-workload-scale
+finding above completed cleanly (`COMPLETED`, exit `0:0`, 2 days
+0h23m against a 60h budget), but only wrote 748/1210 (61.8%). Real,
+direct diff against the dataset confirmed exactly 462 real missing
+ids, spanning a genuinely wide range of repos and real source-file
+sizes (2,642 to 332,254 real characters, mean ~69,500), ruling out a
+single, uniform cause on its face.
+
+An initial, narrower check (`grep -oE "value=[0-9]+"` on the log's
+real context-length error lines) misleadingly returned only 1 distinct
+value, `57537`, across all matches, looking at first like every real
+failure hit an identical, suspicious token count. Investigated
+further rather than trusting that number: the real breakdown of every
+error type in the log showed only 33 real `400` (context-length)
+errors, against 462 real `Failed, skipping` and **1435 real "Request
+timed out"** occurrences. The single-value grep result was a real
+artifact of that command only ever matching context-length errors
+specifically (the minority cause), not evidence every failure shared
+one cause.
+
+Confirmed the real, dominant cause instead: `REQUEST_TIMEOUT` was not
+set for this job (`~/.bash_history` and the job's own log both show no
+explicit value), so it ran at the OpenAI SDK's 600s default, the exact
+same real failure mode already found and fixed for Llama-3.1-8B
+kg_only earlier this project (`REQUEST_TIMEOUT=1800` recovered 60 of
+62 previously-missing ids there). Resubmitted with the same real fix
+(`REQUEST_TIMEOUT=1800`, job `60091937`, `--time=24:00:00` since this
+is a real resume against 462 remaining instances via `existing_ids`,
+not a fresh 1210-instance run), keeping `MAX_MODEL_LEN=65536`
+unchanged since context length was confirmed a minor, not dominant,
+real cause here.
 
