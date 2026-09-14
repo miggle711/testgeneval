@@ -909,3 +909,64 @@ Real job IDs: `60078548`/`60078549` (Llama-4-Scout instruct),
 `60078556`/`60078557` (Llama-3.1-8B instruct). All 10 started running
 within 2 minutes of submission, spread across 8 distinct real compute
 nodes.
+
+### Three real, sequential per-account setup gaps found onboarding the first teammate (2026-09-14)
+
+Handed off the first three real per-model assignments as GitHub
+sub-issues (testgeneval#57/#58/#59, linked under #56). wtho0016 was
+the first to actually try running them, and hit three separate, real,
+sequential blockers, each only surfacing once the previous one was
+fixed:
+
+1. **No `.sif` testbed images under her own account.** Real error:
+   `No .sif files in APPTAINER_IMAGES_DIR
+   (/fs04/scratch2/al49/wtho0016/apptainer_images)`. Pulling all 126
+   herself would take ~19h. Fixed by pointing `APPTAINER_IMAGES_DIR`
+   at mvar0010's already-populated copy instead, confirmed genuinely
+   group-readable (`getfacl`: `group::r-x` on both
+   `/fs04/scratch2/al49/mvar0010` and its `apptainer_images`
+   subdirectory, and her real group membership includes `al49`,
+   confirmed via `id wtho0016`).
+
+2. **No `testgeneval` conda env under her own account.** Real error:
+   `EnvironmentNameNotFound: Could not find conda environment:
+   testgeneval`. Each person's conda env is genuinely per-account (no
+   equivalent to the `.sif`-directory sharing trick, envs live under
+   each person's own `$HOME`/conda install), so this really does need
+   a real, one-time `conda env create -f testgeneval.yaml` per
+   teammate. Confirmed it's the plain `testgeneval` env this needs,
+   not `testgeneval-vllm` (`m3_run_evaluation.slurm`'s own
+   `CONDA_ENV` default is `testgeneval`; `testgeneval-vllm` is
+   `m3_run_inference.slurm`'s default, a heavier, inference-only env
+   nobody doing evaluation-only work needs).
+
+3. **A corrupted, incomplete HuggingFace dataset cache in her own
+   `$HOME`.** Real error, after the first two fixes let the job
+   actually start doing real work: `OSError: Cannot find data file`,
+   pointing at a `.incomplete/` path under
+   `~/.cache/huggingface/datasets/kjain14___testgeneval/...`. Traced
+   to real, genuine `$HOME` quota pressure, not bad luck: her own
+   `du -sh` showed `.cache` at 5.4GB and `.conda` at 13GB, a combined
+   18.4GB against M3's real ~20GB `$HOME` quota (the same real ceiling
+   documented in the earlier `$HOME`/`al49_scratch2` incident), almost
+   certainly what interrupted the original download partway through.
+   `lfs quota` cannot report real usage against `$HOME` directly
+   (confirmed again here, same limitation documented before: `/home`
+   is "not on a mounted Lustre filesystem"), and mvar0010 could not
+   inspect her `$HOME` contents directly either (real, expected
+   per-user permission denial, unlike the shared `al49` scratch
+   directories). Fixed two ways: cleared the real stale artifact
+   (`rm -rf ~/.cache/huggingface/datasets/downloads`, confirmed by her
+   own `ls` to have left only a stray, empty `.lock` file, no real
+   partial data), and, since simply retrying into the same tight
+   `$HOME` risked the identical interruption recurring, pointed
+   `HF_DATASETS_CACHE` at a fresh directory under her own scratch
+   space (`/fs04/scratch2/al49/wtho0016/hf-datasets-cache`) instead,
+   added to the `sbatch --export` list alongside
+   `APPTAINER_IMAGES_DIR`.
+
+All three fixes were folded directly into testgeneval#57/#58/#59's
+instructions (not just left as a reply to wtho0016), on the
+expectation that jliu0290 and wlee0060 would hit the identical three
+gaps on their own first real attempts otherwise, since none of them
+have ever run this pipeline under their own M3 accounts before.
