@@ -970,3 +970,56 @@ instructions (not just left as a reply to wtho0016), on the
 expectation that jliu0290 and wlee0060 would hit the identical three
 gaps on their own first real attempts otherwise, since none of them
 have ever run this pipeline under their own M3 accounts before.
+
+### A second, real scikit-learn 1.4 bug found via a teammate's real run: never rebuilt after #55, and also needed build_ext (2026-09-15, testgeneval#60)
+
+With 4 teammates' real jobs running in parallel, jliu0290 hit a real
+`FileNotFoundError: [Errno 2] No such file or directory: 'coverage'`
+on `scikit-learn__scikit-learn-26644-16933`, the exact same error
+class as testgeneval#55, but on 1.4, which that issue's own
+investigation had concluded was clean (136 real `.so` files, no fix
+needed, confirmed at the time by checking the already-published
+`-testbed:1.4` tag directly).
+
+Traced to two separate, real gaps:
+
+1. **1.4's real `.sif` on M3 genuinely predated the coverage/cosmic-ray
+   fix (commit 436d9b0), confirmed directly**: `apptainer exec` into
+   the live M3 file, `pyenv which coverage`/`pyenv which cosmic-ray`
+   both returned "command not found" under both pyenv versions present
+   in the image. The earlier #55 fix commit did touch 1.4's Dockerfile
+   too (its own message says "5 scikit-learn Dockerfiles"), but the
+   real `.sif` on M3 was pulled/verified before that commit existed in
+   this session's timeline and was never rebuilt afterward the way
+   0.20/0.21/0.22/1.3 were.
+
+2. **A genuinely fresh rebuild from the now-current Dockerfile also
+   lost the compiled C extension**, a real regression found while
+   fixing #1 (0 real `.so` files in the fresh build, versus the 136
+   the earlier, already-published tag had). Root cause: the real base
+   image `aorwall/swe-bench-scikit-learn_scikit-learn:bookworm-slim`
+   has 0 real `.so` files (confirmed directly, same finding #55
+   already made for the other 4 versions), and 1.4's own Dockerfile
+   never had a `build_ext` step. The earlier #55 verification checked
+   the already-published `-testbed:1.4` tag (which had the extension
+   compiled by whatever process built that specific tag upstream, not
+   by this fork's own Dockerfile), so a real gap in this fork's own
+   Dockerfile went unnoticed until an actual fresh rebuild exposed it.
+
+Fixed the same way as #55's other 4 versions: added
+`RUN python setup.py build_ext --inplace` to
+`docker/scikit-learn__scikit-learn/1.4/Dockerfile` (commit aa55d5d).
+Rebuilt locally (`--platform linux/amd64`), verified both fixes
+directly before pushing (136 real `.so` files, `coverage`/
+`cosmic-ray` both present), pushed to Docker Hub
+(`miggy711/swe-bench-scikit-learn_scikit-learn-testbed:1.4`), pulled
+back as a real `.sif` via `quay.io/singularity/singularity`,
+transferred to M3, replacing the broken copy in place at the same
+path every teammate's jobs already point at. Re-verified on the live
+M3 file after transfer: `coverage`/`cosmic-ray` present, 136 real
+`.so` files, matching the local pre-transfer verification exactly.
+
+No command changes needed on any teammate's end, since the fix
+replaced the file in place. Any real scikit-learn 1.4 results from
+before the transfer (2026-09-15, ~13:25 local time) are suspect and
+may need re-running; anything submitted after should be clean.
