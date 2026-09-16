@@ -106,6 +106,7 @@ MODEL_LIMITS = {
     "openai/gpt-oss-20b": 131_072,
     "openai/gpt-oss-120b": 131_072,
     "meta-llama/Llama-4-Scout-17B-16E-Instruct": 128_000,
+    "gpt-5": 400_000,
 }
 
 # The cost per token for each model input.
@@ -117,6 +118,7 @@ MODEL_COST_PER_INPUT = {
     "Meta-Llama-3.1-405B-Instruct": 0,
     "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit": 0,
     "llama-3.1-8b-instant": 0,
+    "gpt-5": 0.00000125,
 }
 
 # The cost per token for each model output.
@@ -128,6 +130,7 @@ MODEL_COST_PER_OUTPUT = {
     "Meta-Llama-3.1-405B-Instruct": 0,
     "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit": 0,
     "llama-3.1-8b-instant": 0,
+    "gpt-5": 0.00001,
 }
 
 # M3 shortlist entries below (added 2026-08-29, testgeneval#41): sized
@@ -184,6 +187,7 @@ OUTPUT_LIMITS = {
     "openai/gpt-oss-20b": 48_000,
     "openai/gpt-oss-120b": 48_000,
     "meta-llama/Llama-4-Scout-17B-16E-Instruct": 8_000,
+    "gpt-5": 48_000,
 }
 
 EPSILON = 1000
@@ -283,15 +287,24 @@ def call_chat(
         client = _thread_local.client
 
     try:
-        response = client.chat.completions.create(
-            model=model_name_or_path,
-            messages=messages,
-            temperature=temperature,
-            max_tokens=max_tokens,  # Adjust max_tokens as needed
-            top_p=top_p,
-            n=n,
-            **model_args,
-        )
+        if model_name_or_path == "gpt-5":
+            response = client.chat.completions.create(
+                model=model_name_or_path,
+                messages=messages,
+                max_completion_tokens=max_tokens,
+                n=n,
+                **model_args,
+            )
+        else:
+            response = client.chat.completions.create(
+                model=model_name_or_path,
+                messages=messages,
+                temperature=temperature,
+                max_tokens=max_tokens,  # Adjust max_tokens as needed
+                top_p=top_p,
+                n=n,
+                **model_args,
+            )
 
         input_tokens = response.usage.prompt_tokens
         # completion_tokens is the sum across all n completions, not
