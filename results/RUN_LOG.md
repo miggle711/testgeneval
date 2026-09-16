@@ -380,6 +380,17 @@ global git config to clear git's "dubious ownership" check on a
 directory they do not own; this is a one-time, per-teammate, local
 config change, not a repo-wide setting.
 
+**Correction, 2026-09-16: the "no one but mvar0010 commits into it" assumption
+above broke.** A teammate's own commit attempt into this shared clone left
+`.git/COMMIT_EDITMSG` and other objects owned by their account, which then
+blocked mvar0010 from committing or pulling (`Permission denied` on both,
+`git gc` did not fix it either -- see `CLAUDE.md`'s shared-clone gotcha for
+the full real incident). mvar0010's own git operations now happen in a
+separate, personal clone, `/fs04/scratch2/al49/kg-testing/testgeneval_mvar0010_own`,
+not the shared one above. The shared clone remains valid for teammates'
+submit-only `sbatch` usage, but is no longer where mvar0010's own commits
+happen.
+
 **L40S production batch status** (12 jobs, `mvar0010`'s account, matches
 the confirmed-safe `MAX_NUM_SEQS` values from the concurrency calibration
 rows above where available). First submission attempt (jobs 59566758
