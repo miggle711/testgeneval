@@ -30,7 +30,7 @@ Updated 2026-09-16. Real sub-issues per person: #57 (jliu0290), #58
 | Llama-4-Scout | instruct | **Done, 100%**, mvar0010 (#62) |
 | Llama-4-Scout | kg_only | **Done, 100%**, mvar0010 (#62) |
 | Qwen3-4B | kg_only | **Done, 100%**, mvar0010 (#62) |
-| Llama-3.1-8B | kg_only | 1207/1208, mvar0010 (#62), resubmitted for the real last instance |
+| Llama-3.1-8B | kg_only | **Done, 1208/1208**, mvar0010 (#62), confirmed via real .eval.log count matching combined shard size |
 | Llama-3.1-8B | instruct | 1048/1210, mvar0010 (#62), resubmitted for the real remainder |
 | Qwen3-4B | instruct | Not yet run, predictions complete (1199/1210, see RUN_LOG.md's 2026-09-14 entry), evaluation not yet started |
 
