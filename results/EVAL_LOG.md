@@ -23,7 +23,7 @@ Updated 2026-09-16. Real sub-issues per person: #57 (jliu0290), #58
 | gpt-oss-20B | instruct (100-instance dry run) | Done (2026-09-13), superseded by the full-scale run above |
 | gpt-oss-120B | instruct | wtho0016, in progress (#58) |
 | gpt-oss-120B | kg_only | wtho0016, in progress (#58) |
-| gpt-oss-20B | instruct | wlee0060, in progress (#59), resubmitted after a first real 10/10 TIMEOUT |
+| gpt-oss-20B | instruct | wlee0060, in progress (#59), resubmitted after a first real 10/10 TIMEOUT, confirmed RUNNING (jobs 60167462-471, all 10/10) |
 | gpt-oss-20B | kg_only | wlee0060, in progress (#59), same resubmit |
 | Qwen3-Coder-30B | instruct | jliu0290, in progress (#57), hit and fixed a real second scikit-learn 1.4 bug (#60) and a real catastrophic-backtracking hang (#61) along the way |
 | Qwen3-Coder-30B | kg_only | jliu0290, in progress (#57) |
