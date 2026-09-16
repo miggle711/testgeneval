@@ -14,21 +14,25 @@ real team handoff plan (who is evaluating which model/arm).
 
 ## Real evaluation status per model/arm (pass@5, the primary metric)
 
+Updated 2026-09-16. Real sub-issues per person: #57 (jliu0290), #58
+(wtho0016), #59 (wlee0060), #62 (mvar0010), all linked under #56.
+
 | Model | Arm | Real evaluation status |
 |---|---|---|
-| gpt-oss-20B | instruct (pass@1, pipeline validation only) | Done (full scale, 2026-09-14), see below. Not the real pass@5 metric, see note below the table. |
+| gpt-oss-20B | instruct (pass@1, pipeline validation only) | Done (full scale, 2026-09-14), see below. Not the real pass@5 metric. |
 | gpt-oss-20B | instruct (100-instance dry run) | Done (2026-09-13), superseded by the full-scale run above |
-| gpt-oss-120B | instruct | Not yet run, assigned to wtho0016 (testgeneval#56) |
-| gpt-oss-120B | kg_only | Not yet run, assigned to wtho0016 (testgeneval#56) |
-| gpt-oss-20B | kg_only | Not yet run, assigned to wlee0060 (testgeneval#56) |
-| Qwen3-Coder-30B | instruct | Not yet run, assigned to jliu0290 (testgeneval#56) |
-| Qwen3-Coder-30B | kg_only | Not yet run, assigned to jliu0290 (testgeneval#56) |
-| Llama-4-Scout | instruct | **Running (2026-09-14), jobs 60078548/60078549**, mvar0010, see below |
-| Llama-4-Scout | kg_only | **Running (2026-09-14), jobs 60078550/60078551**, mvar0010, see below |
-| Qwen3-4B | kg_only | **Running (2026-09-14), jobs 60078552/60078553**, mvar0010, see below |
-| Llama-3.1-8B | kg_only | **Running (2026-09-14), jobs 60078554/60078555**, mvar0010, see below |
-| Llama-3.1-8B | instruct | **Running (2026-09-14), jobs 60078556/60078557**, mvar0010, see below |
-| Qwen3-4B | instruct | Not yet run, predictions still generating (job 60021634 as of this writing) |
+| gpt-oss-120B | instruct | wtho0016, in progress (#58) |
+| gpt-oss-120B | kg_only | wtho0016, in progress (#58) |
+| gpt-oss-20B | instruct | wlee0060, in progress (#59), resubmitted after a first real 10/10 TIMEOUT |
+| gpt-oss-20B | kg_only | wlee0060, in progress (#59), same resubmit |
+| Qwen3-Coder-30B | instruct | jliu0290, in progress (#57), hit and fixed a real second scikit-learn 1.4 bug (#60) and a real catastrophic-backtracking hang (#61) along the way |
+| Qwen3-Coder-30B | kg_only | jliu0290, in progress (#57) |
+| Llama-4-Scout | instruct | **Done, 100%**, mvar0010 (#62) |
+| Llama-4-Scout | kg_only | **Done, 100%**, mvar0010 (#62) |
+| Qwen3-4B | kg_only | **Done, 100%**, mvar0010 (#62) |
+| Llama-3.1-8B | kg_only | 1207/1208, mvar0010 (#62), resubmitted for the real last instance |
+| Llama-3.1-8B | instruct | 1048/1210, mvar0010 (#62), resubmitted for the real remainder |
+| Qwen3-4B | instruct | Not yet run, predictions complete (1199/1210, see RUN_LOG.md's 2026-09-14 entry), evaluation not yet started |
 
 **None of the pass@5 rows above are actually complete yet.** The
 gpt-oss-20B row marked "Done" is a real, full-scale run of the
@@ -1023,3 +1027,51 @@ No command changes needed on any teammate's end, since the fix
 replaced the file in place. Any real scikit-learn 1.4 results from
 before the transfer (2026-09-15, ~13:25 local time) are suspect and
 may need re-running; anything submitted after should be clean.
+
+### Real catastrophic-backtracking regex bug found via a teammate's genuine 21h hang, fixed, checked for silent corruption across the whole project (2026-09-15/16, testgeneval#61)
+
+jliu0290 hit a real, reproducible infinite hang: `django__django-12396`
+consumed ~99% of one CPU core continuously for ~21 hours, no child
+processes, `timeout=3600` never firing, manually cancelled. Confirmed
+directly (not just from the description): `timeout 30 python3 -c
+"..."` reproducing `extract_preamble_classes_and_functions()` against
+the exact real generated test that hung (13,523 real chars, `@patch`
+decorator chains) genuinely killed the process at the 30s mark, exit
+code 124.
+
+Root cause: `class_pattern`/`test_method_pattern`/`test_function_pattern`'s
+decorator-repeat group had the shape `(\s*@...\s*)*`, a classic real
+catastrophic-backtracking pattern (two independently-backtracking
+`\s*` at each end of a repeated group). Not a subprocess call, pure
+Python regex execution in the main evaluation process, so no
+subprocess-level timeout could ever interrupt it.
+
+Fixed by anchoring each repeat on a literal `\n` instead of `\s*`,
+removing the ambiguity. Verified directly against the same real
+hanging content: `class_pattern.finditer()` went from a real >10s
+hang to 0.3ms (18 real matches), `test_method_pattern.finditer()`
+from >10s to 0.16ms (12 real matches).
+
+**Checked the real, complete scope before deciding whether a project-
+wide rerun was needed**, rather than assume: ran both the old and new
+regex against every real generated test in every real prediction file
+in the project (70,345 real predictions across 23 files). Real
+result: **0 mismatches** between old and new regex output on every
+input that did not hang the old one, confirming the bug's only real
+symptom is hanging, never silently wrong parsing, so no real evaluation
+data anywhere has been corrupted by this. **17 real hangs found**
+(12 distinct real instance ids, spanning django/sphinx/xarray/
+matplotlib/scikit-learn/pylint): `django__django-14727-16057`,
+`django__django-12503-15855`, `sphinx-doc__sphinx-9128-17042`,
+`django__django-12396-15845`, `django__django-13615-15954`,
+`django__django-15521-16119`, `django__django-16749-16207`,
+`pydata__xarray-6394-16538`, `matplotlib__matplotlib-23140-16282`,
+`scikit-learn__scikit-learn-7760-16935`, `sphinx-doc__sphinx-9155-17043`,
+`django__django-14996-16075`, `pylint-dev__pylint-5201-16594`.
+
+**Decision: no project-wide rerun needed.** These 12 real instances
+just need their real evaluation to actually run (or re-run, if a
+prior attempt hung and was manually killed/skipped) once the fix
+merges. Filed as PR #61, held open for real review rather than
+merged directly, since this touches shared parsing code every real
+evaluation run depends on.
