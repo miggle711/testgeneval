@@ -78,15 +78,21 @@ APPTAINER_IMAGES_DIR = os.environ.get(
     "APPTAINER_IMAGES_DIR", os.path.expanduser("~/apptainer_images")
 )
 
-# Host-side wall-clock cap on a single container run. Separate from the
-# `timeout` argument below, which is passed INTO the container as
-# APPTAINERENV_TIMEOUT and only bounds work the container itself chooses
-# to bound. A container that hangs before reaching that logic, or ignores
-# it, sits in process.communicate() forever with no cap -- confirmed real
-# 2026-09-17: one scikit-learn instance ran 18435s (5.1h) and grew until
-# the Slurm cgroup OOM-killed it at the job's 180G ceiling. Override with
-# APPTAINER_HOST_TIMEOUT if a specific repo legitimately needs longer.
-APPTAINER_HOST_TIMEOUT = int(os.environ.get("APPTAINER_HOST_TIMEOUT", 3600))
+# Margin added on top of `timeout` to get the host-side wall-clock cap.
+# - `timeout` alone doesn't bound the host: it's only passed INTO the
+#   container as APPTAINERENV_TIMEOUT, so a container that hangs before
+#   reaching that logic runs forever (confirmed real: 5.1h scikit-learn
+#   hang, Slurm OOM-killed at 180G).
+# - Deriving from `timeout` instead of a fixed constant means raising
+#   TIMEOUT in m3_run_evaluation.slurm for a slow repo actually raises
+#   the host cap too, not just the in-container one.
+# - The margin gives the container's own timeout logic a head start, so
+#   its clean failure wins the race in the normal case, not a generic
+#   host-side SIGKILL.
+# Set APPTAINER_HOST_TIMEOUT directly to override with a fixed value.
+APPTAINER_HOST_TIMEOUT_MARGIN = int(
+    os.environ.get("APPTAINER_HOST_TIMEOUT_MARGIN", 300)
+)
 
 
 def _entrypoint_path(repo: str) -> str:
@@ -215,6 +221,16 @@ async def run_apptainer_evaluation(
 
     start_time = time.time()
 
+    # Derived from this call's own `timeout` so raising TIMEOUT in
+    # m3_run_evaluation.slurm for a slow repo raises the host cap too,
+    # not just the in-container one. APPTAINER_HOST_TIMEOUT overrides
+    # with a fixed value when set.
+    host_timeout = int(
+        os.environ.get(
+            "APPTAINER_HOST_TIMEOUT", timeout + APPTAINER_HOST_TIMEOUT_MARGIN
+        )
+    )
+
     try:
         process = await asyncio.create_subprocess_exec(
             *apptainer_command,
@@ -225,7 +241,7 @@ async def run_apptainer_evaluation(
         )
         try:
             stdout, stderr = await asyncio.wait_for(
-                process.communicate(), timeout=APPTAINER_HOST_TIMEOUT
+                process.communicate(), timeout=host_timeout
             )
         except asyncio.TimeoutError:
             # start_new_session=True puts the child in its own process
@@ -240,7 +256,7 @@ async def run_apptainer_evaluation(
             await process.wait()
             logger.warning(
                 f"[{task_instance['id']}][{sif_path}]  Container exceeded "
-                f"host timeout of {APPTAINER_HOST_TIMEOUT}s, killed."
+                f"host timeout of {host_timeout}s, killed."
             )
             return
         str_stdout = stdout.decode() if stdout else ""
