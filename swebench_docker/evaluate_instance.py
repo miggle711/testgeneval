@@ -40,17 +40,26 @@ def indent_text(text, indent_level):
 
 
 def extract_preamble_classes_and_functions(code, tcm):
+    # Real catastrophic-backtracking bug, fixed: the old (\s*@...\s*)*
+    # shape could hang indefinitely on real generated tests with
+    # several stacked decorators (confirmed: django__django-12396-15845,
+    # reproduced hanging past a 30s timeout; fixed patterns run <1ms on
+    # the same input). Anchoring each repeat on a literal \n instead of
+    # \s* removes the backtracking ambiguity. Normalize CRLF first since
+    # \r isn't in the decorator char class and would otherwise make the
+    # \n anchor silently miss CRLF-terminated decorator lines.
+    code = code.replace("\r\n", "\n")
     class_pattern = re.compile(
-        r"(^(\s*@[\w\.\(\)\', ]+\s*)*^\s*class ([\w]+)\([^)]+\):)", re.MULTILINE
+        r"(^(?:\s*@[\w\.\(\)\', ]+\n)*\s*class ([\w]+)\([^)]+\):)", re.MULTILINE
     )
     # Capture methods with or without decorators
     test_method_pattern = re.compile(
-        r"(^(\s*@.*\s*)*^\s*def\s+test\w+\(.*\):)", re.MULTILINE
+        r"(^(?:\s*@.*\n)*\s*def\s+test\w+\(.*\):)", re.MULTILINE
     )
 
     # Capture functions with or without decorators
     test_function_pattern = re.compile(
-        r"(^(\s*@.*\s*)*^\s*def\s+test\w+\(.*\):)", re.MULTILINE
+        r"(^(?:\s*@.*\n)*\s*def\s+test\w+\(.*\):)", re.MULTILINE
     )
 
     preamble = ""
