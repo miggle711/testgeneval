@@ -32,7 +32,7 @@ Updated 2026-09-16. Real sub-issues per person: #57 (jliu0290), #58
 | Qwen3-4B | kg_only | **Done, 100%**, mvar0010 (#62) |
 | Llama-3.1-8B | kg_only | **Done, 1208/1208**, mvar0010 (#62), confirmed via real .eval.log count matching combined shard size |
 | Llama-3.1-8B | instruct | 1048/1210, mvar0010 (#62), resubmitted for the real remainder |
-| Qwen3-4B | instruct | Not yet run, predictions complete (1199/1210, see RUN_LOG.md's 2026-09-14 entry), evaluation not yet started |
+| Qwen3-4B | instruct | mvar0010 (#62), submitted 2026-09-16 (jobs 60167863/60167864, 2-way sharded, 602+597=1199, NUM_PROCESSES=8), queued overnight behind the Llama-3.1-8B instruct jobs above |
 
 **None of the pass@5 rows above are actually complete yet.** The
 gpt-oss-20B row marked "Done" is a real, full-scale run of the
