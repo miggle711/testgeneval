@@ -451,13 +451,14 @@ def openai_inference(
         with cost_lock:
             if state["cost_exceeded"]:
                 return None
-        output_dict = {"id": curr_id, "instance_id": datum["instance_id"]}
+        output_dict = {"id": curr_id, "instance_id": datum["instance_id"], "usage": {}}
         output_dict.update(basic_args)
         output_dict["preds_prompts"] = datum["preds_prompts"]
         output_dict["preds"] = {}
         failed = False
         for prompt_name, prompt_text in datum["preds_prompts"].items():
             prompt_predictions = []
+            prompt_usage = []
             if skip_full and prompt_name == "full":
                 continue
             if skip_completion and prompt_name != "full":
@@ -491,6 +492,14 @@ def openai_inference(
                         # None.replace(...), so one bad sample in an n>1
                         # batch does not throw away the other, real
                         # completions for this instance.
+                        prompt_usage.append({
+                            "finish_reason": choice.finish_reason,
+                            "completion_tokens": response.usage.completion_tokens,
+                            "reasoning_tokens": getattr(
+                                getattr(response.usage, "completion_tokens_details", None),
+                                "reasoning_tokens", None,
+                            ),
+                        })
                         if choice.message.content is None:
                             print(
                                 f"Warning: choice.message.content is None for "
@@ -524,6 +533,14 @@ def openai_inference(
                             no_system_message=no_system_message,
                         )
                         completion = response.choices[0].message.content
+                        prompt_usage.append({
+                            "finish_reason": response.choices[0].finish_reason,
+                            "completion_tokens": response.usage.completion_tokens,
+                            "reasoning_tokens": getattr(
+                                getattr(response.usage, "completion_tokens_details", None),
+                                "reasoning_tokens", None,
+                            ),
+                        })
                         if completion is None:
                             print(
                                 f"Warning: choice.message.content is None for "
@@ -544,6 +561,7 @@ def openai_inference(
                         print(f"Error: {e}")
                         failed = True
             output_dict["preds"][prompt_name] = prompt_predictions
+            output_dict["usage"][prompt_name] = prompt_usage
         if failed:
             print("Failed, skipping...")
             return None
