@@ -45,7 +45,10 @@ def extract_preamble_classes_and_functions(code, tcm):
     # several stacked decorators (confirmed: django__django-12396-15845,
     # reproduced hanging past a 30s timeout; fixed patterns run <1ms on
     # the same input). Anchoring each repeat on a literal \n instead of
-    # \s* removes the backtracking ambiguity.
+    # \s* removes the backtracking ambiguity. Normalize CRLF first since
+    # \r isn't in the decorator char class and would otherwise make the
+    # \n anchor silently miss CRLF-terminated decorator lines.
+    code = code.replace("\r\n", "\n")
     class_pattern = re.compile(
         r"(^(?:\s*@[\w\.\(\)\', ]+\n)*\s*class ([\w]+)\([^)]+\):)", re.MULTILINE
     )
