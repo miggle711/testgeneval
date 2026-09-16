@@ -53,6 +53,7 @@ import json
 import logging
 import os
 import shutil
+import signal
 import subprocess
 import tempfile
 import time
@@ -76,6 +77,16 @@ dotenv.load_dotenv()
 APPTAINER_IMAGES_DIR = os.environ.get(
     "APPTAINER_IMAGES_DIR", os.path.expanduser("~/apptainer_images")
 )
+
+# Host-side wall-clock cap on a single container run. Separate from the
+# `timeout` argument below, which is passed INTO the container as
+# APPTAINERENV_TIMEOUT and only bounds work the container itself chooses
+# to bound. A container that hangs before reaching that logic, or ignores
+# it, sits in process.communicate() forever with no cap -- confirmed real
+# 2026-09-17: one scikit-learn instance ran 18435s (5.1h) and grew until
+# the Slurm cgroup OOM-killed it at the job's 180G ceiling. Override with
+# APPTAINER_HOST_TIMEOUT if a specific repo legitimately needs longer.
+APPTAINER_HOST_TIMEOUT = int(os.environ.get("APPTAINER_HOST_TIMEOUT", 3600))
 
 
 def _entrypoint_path(repo: str) -> str:
@@ -210,8 +221,28 @@ async def run_apptainer_evaluation(
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             env=env,
+            start_new_session=True,
         )
-        stdout, stderr = await process.communicate()
+        try:
+            stdout, stderr = await asyncio.wait_for(
+                process.communicate(), timeout=APPTAINER_HOST_TIMEOUT
+            )
+        except asyncio.TimeoutError:
+            # start_new_session=True puts the child in its own process
+            # group; kill the whole group, not just the apptainer wrapper,
+            # or the container process it spawned can survive as an
+            # orphan and keep eating memory -- the exact failure mode this
+            # timeout exists to prevent.
+            try:
+                os.killpg(os.getpgid(process.pid), signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+            await process.wait()
+            logger.warning(
+                f"[{task_instance['id']}][{sif_path}]  Container exceeded "
+                f"host timeout of {APPTAINER_HOST_TIMEOUT}s, killed."
+            )
+            return
         str_stdout = stdout.decode() if stdout else ""
         str_stderr = stderr.decode() if stderr else ""
 
