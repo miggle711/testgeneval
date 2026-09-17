@@ -210,24 +210,43 @@ anything specific to one model or family. All temperature 0.2 jobs
 across all three tested models have been paused pending this decision;
 temperature 0.8 jobs are continuing as normal.
 
-**Revised shortlist** (2026-08-28), replacing the 2026-08-22 locked
-shortlist immediately below:
+**Confirmed shortlist, 7 models** (2026-08-28 revision, corrected
+2026-09-17 against `results/EVAL_LOG.md`'s real per-model/arm evaluation
+table -- the ground-truth source for what is actually running, not this
+document's own prose, which had drifted: GPT-5 was listed here as
+locked despite never being run anywhere, real production had already
+added Qwen3-4B-Instruct-2507 without this table being updated to match,
+and Qwen2.5-Coder-7B-Instruct had a real gap -- dropped from the
+original #56 handoff, silently missing from real evaluation until
+found and resubmitted 2026-09-17 -- this table's "confirmed real"
+notes below predate and do not reflect that gap):
 
 | Model | Tier | Notes |
 |---|---|---|
-| GPT-5 | XL | OpenAI API, not self-hosted on M3. Following TestGenEval appendix D.1 (arxiv.org/html/2410.00752v2). |
 | Llama-3.1-8B-Instruct | Small | FP16. Confirmed real 2026-08-29: runs on 1x L40S, not H100 (corrects an earlier speculative "1x H100" written before any real testing happened). MAX_NUM_SEQS=24 confirmed safe on one L40S; MAX_NUM_SEQS=32 spiked to 97.3% GPU KV cache usage in testing, real near-OOM risk, don't use 32 for this model. |
-| Qwen2.5-Coder-7B-Instruct | Small | No smaller Qwen3-Coder exists; also in ULT. Confirmed real 2026-08-29: runs on 1x L40S, MAX_NUM_SEQS=32 confirmed safe (stable 20-25% GPU KV cache usage, real headroom left even at that value). |
+| Qwen2.5-Coder-7B-Instruct | Small | No smaller Qwen3-Coder exists; also in ULT. Confirmed real 2026-08-29: runs on 1x L40S, MAX_NUM_SEQS=32 confirmed safe (stable 20-25% GPU KV cache usage, real headroom left even at that value). Real gap found 2026-09-17: never actually assigned under #56's original handoff, real evaluation was 0/1210 for both arms until then; resubmitted 4-way sharded (see EVAL_LOG.md). |
+| Qwen3-4B-Instruct-2507 | Small | Added to real production after this table's 2026-08-28 revision, not documented here until this correction. Confirmed real: runs on 1x L40S (`--gres=gpu:L40S:1`, see testgeneval#69). |
 | gpt-oss-20B | Medium | Native MXFP4 (see quantization note below). Real model id `openai/gpt-oss-20b`, 21B total/3.6B active params (MoE). 1x H100 is real and needed after all: MXFP4 requires GPU compute capability >= 9.0 (H100/B100-class), confirmed via vLLM's own gpt-oss support docs and real user reports on the model's HuggingFace discussion page. L40S is compute capability 8.9, below that threshold, MXFP4 falls back to dequantizing the model to bf16 there, which needs roughly 4x the ~16GB MXFP4 footprint (closer to 42GB), leaving little to no room for KV cache on a 48GB card. An earlier version of this row said L40S was enough, that was based on the model card's memory figure alone without checking the compute-capability requirement, corrected 2026-08-29 before any real M3 test was submitted on the wrong hardware. |
 | Qwen3-Coder-30B-A3B-Instruct | Medium | Successor to Qwen2.5-Coder, self-hostable. Confirmed real 2026-08-29: runs on 2x L40S with TENSOR_PARALLEL_SIZE=2, not H100 (corrects an earlier speculative "2x H100"). MAX_NUM_SEQS=32 confirmed safe but close to this model's real ceiling (41-60% GPU KV cache usage under sustained load), don't assume much headroom above 32 without retesting. |
 | gpt-oss-120B | Large | Native MXFP4 (see quantization note below). Real model id `openai/gpt-oss-120b`, 117B total/5.1B active params (MoE), model card states it fits on a single 80GB GPU, corrects an earlier speculative "2x H100": 1x H100 should be enough, not 2x. Not yet run or verified on M3. |
 | Llama-4-Scout-17B-16E-Instruct | Large | Meta's current-gen model (Apr 2025), cheaper than the 3.1 model it supplements. Also the current candidate for the BFS-depth/temperature sensitivity ablation, pending confirmation once real pass@1/pass@k numbers are in across this shortlist (see BFS-depth ablation section). Already confirmed real 2026-08-25 (see results/RUN_LOG.md): needs 4x H100 (~218GB at float16, doesn't fit the account's normal 4x L40S 192GB quota), TENSOR_PARALLEL_SIZE=4. |
 
+**GPT-5 (XL): confirmed in progress as of 2026-09-17, reported directly
+rather than yet visible in the logs.** Real open-source-vs-closed-source
+inclusion question is resolved: GPT-5 is being run. As of this writing
+`results/RUN_LOG.md`/`results/EVAL_LOG.md` do not yet show any GPT-5
+completion counts or job IDs, this line records the team's own real-time
+status report; update with real counts and a job/issue reference once
+those are confirmed in the logs, following this project's own
+established discipline (do not mark a model "Done" anywhere until a
+real, verified count exists, see the "confirmed real" pattern used
+throughout the table above).
+
 Every model needs a fresh `instruct` and `kg_only` run at both temp=0.2
-(pass@1) and temp=0.8 (pass@k=5): 4 runs per model, 28 runs total across
-the 7 models above. None of the runs completed so far in `results/RUN_LOG.md`
-use either of these temperatures, so none of them count toward this
-revised plan.
+(pass@1) and temp=0.8 (pass@k=5): 4 runs per model, 32 runs total across
+the 8 confirmed models above (the 7-model table plus GPT-5). None of the
+runs completed so far in `results/RUN_LOG.md` use either of these
+temperatures, so none of them count toward this revised plan.
 
 **pass@k=5 is currently blocked**, not just unimplemented cheaply.
 `run_api.py` hardcodes `num_samples` to 1 for this fork's `full` setting
