@@ -1051,3 +1051,33 @@ not a fresh 1210-instance run), keeping `MAX_MODEL_LEN=65536`
 unchanged since context length was confirmed a minor, not dominant,
 real cause here.
 
+### One-time migration: every live pass@5 predictions file renamed to include k5 (2026-09-17, testgeneval#65)
+
+testgeneval#65 (fixing the real filename-collision bug documented
+above) only changes how *new* filenames get computed -- it doesn't
+touch files already on disk. A PR review caught the real gap this
+leaves: the next resubmit of any currently in-flight job (Llama-3.1-8B
+instruct, Qwen3-4B instruct, Wan Mun's gpt-oss-120B, Sheryl's
+gpt-oss-20B -- all real, active, resubmitted-after-timeout jobs at the
+time) would compute a brand-new `k5`-suffixed filename, find nothing
+there, and silently restart from zero, orphaning all real completed
+generation in the old-named file with no error signal.
+
+Fixed with a one-time migration on M3, not code: backed up all 18 real,
+currently-live pass@5 (`NUM_SAMPLES=5`, `t=0.8`) predictions files
+first (`cp` to `/fs04/scratch2/al49/mvar0010/
+pre_k5_migration_backup_20260917/`, verified byte-identical via
+`md5sum` before touching anything), then `os.rename()`'d each to its
+new `k{num_samples}` pattern, e.g. `Meta-Llama-3.1-8B-Instruct__
+testgeneval__0.8__test.jsonl` -> `...__0.8__k5__test.jsonl`. Covers
+every model's `instruct`/`kg_only` files across both `testgeneval` and
+`testgenevallite`, including two files owned by `jliu0290` (the shared
+clone's `results/` directory is group-writable regardless of individual
+file ownership, unlike `.git/objects`, so no permission issue there).
+Verified post-migration: 0 old-pattern files remain, all 18 new `k5`
+files present, checksums match the backup exactly. Real files migrated:
+gpt-oss-120B, gpt-oss-20B, Llama-4-Scout, Meta-Llama-3.1-8B-Instruct
+(both dataset scales), Qwen2.5-Coder-7B (both dataset scales, both
+temperatures), Qwen3-4B-Instruct-2507 (both dataset scales),
+Qwen3-Coder-30B-A3B-Instruct (both dataset scales), both arms.
+
