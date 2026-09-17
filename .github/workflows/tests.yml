@@ -1,0 +1,33 @@
+name: tests
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # Real, minimal dependency set for the two test suites below --
+      # confirmed by grep against actual imports, not the full
+      # testgeneval.yaml/testgeneval.crossplatform.yaml conda envs
+      # (both far heavier: GPU/vLLM tooling neither suite needs, and
+      # a full conda solve is slow). No API keys needed -- these
+      # suites only exercise fake/mocked responses, never a real
+      # network call.
+      - name: Install test dependencies
+        run: |
+          pip install python-dotenv numpy openai tiktoken datasets frozendict tqdm tenacity
+
+      - name: Run swebench_docker tests
+        run: python -m unittest discover -s swebench_docker -p "test_*.py" -v
+
+      - name: Run inference tests
+        run: python -m unittest discover -s inference -p "test_*.py" -v
