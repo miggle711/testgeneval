@@ -44,6 +44,16 @@ def _has_any_pass_marker(config_block: str) -> bool:
     return ANY_TESTS_PASSED in config_block or ANY_TESTS_FAILED in config_block
 
 
+def _setting_name(config_block: str) -> str:
+    """First token of a real "Tests config" block, e.g. "full" -- the
+    same real setting name swebench_utils.py's own parser extracts via
+    `config.split("\n")[0].split()[0]`.
+    """
+    first_line = config_block.split("\n", 1)[0]
+    tokens = first_line.split()
+    return tokens[0] if tokens else ""
+
+
 def _inject_any_pass_marker(original_content: str, backfill_content: str) -> str:
     """Returns original_content with each of its real "Tests config"
     blocks getting the matching backfill block's any_tests_passed
@@ -51,10 +61,15 @@ def _inject_any_pass_marker(original_content: str, backfill_content: str) -> str
     the backfill block does.
 
     Matches blocks positionally (Nth "Tests config" block in original
-    <-> Nth in backfill) rather than by setting name, since both real
-    logs cover the exact same real predictions file and same real
-    settings in the same real order -- confirmed safe by the fact both
-    runs read from the identical PREDICTIONS_PATH.
+    <-> Nth in backfill), then confirms the real setting names actually
+    match before injecting -- same block *count* doesn't guarantee the
+    same *order*: run_evaluation.py iterates a task instance's real
+    predictions dict (`for setting in task_instance[KEY_PREDICTIONS]`),
+    so block order follows dict-insertion order in each run's own
+    predictions JSON, which two separately-built files aren't
+    guaranteed to preserve even for the same real settings. Confirmed
+    real via review: same count + different order would otherwise
+    silently inject the wrong setting's marker.
     """
     original_blocks = original_content.split(TESTS_CONFIG)
     backfill_blocks = backfill_content.split(TESTS_CONFIG)
@@ -69,6 +84,12 @@ def _inject_any_pass_marker(original_content: str, backfill_content: str) -> str
 
     merged_blocks = [original_blocks[0]]  # preamble before the first marker
     for orig_block, backfill_block in zip(original_blocks[1:], backfill_blocks[1:]):
+        if _setting_name(orig_block) != _setting_name(backfill_block):
+            # Same block count, different setting order -- same real
+            # risk as a count mismatch. Return the original unchanged;
+            # the caller reports this instance as unmerged rather than
+            # injecting into a block for the wrong setting.
+            return original_content
         if not _has_any_pass_marker(orig_block) and _has_any_pass_marker(backfill_block):
             marker = ANY_TESTS_PASSED if ANY_TESTS_PASSED in backfill_block else ANY_TESTS_FAILED
             orig_block = orig_block.rstrip("\n") + f"\n{marker}\n"
@@ -124,12 +145,20 @@ def main():
 
         merged_content = _inject_any_pass_marker(original_content, backfill_content)
         if merged_content == original_content and TESTS_CONFIG in backfill_content:
-            # Real signal the block-count mismatch path returned
-            # unchanged content -- worth surfacing, not silently
-            # treating as "already had the marker".
-            if len(original_content.split(TESTS_CONFIG)) != len(
-                backfill_content.split(TESTS_CONFIG)
-            ):
+            # Real signal a mismatch path (block count OR setting
+            # order/name) returned unchanged content -- worth
+            # surfacing, not silently treating as "already had the
+            # marker". Re-derive both mismatch conditions rather than
+            # having _inject_any_pass_marker report its own reason, to
+            # keep that function's return type a plain str.
+            orig_blocks = original_content.split(TESTS_CONFIG)
+            back_blocks = backfill_content.split(TESTS_CONFIG)
+            count_mismatch = len(orig_blocks) != len(back_blocks)
+            setting_mismatch = not count_mismatch and any(
+                _setting_name(o) != _setting_name(b)
+                for o, b in zip(orig_blocks[1:], back_blocks[1:])
+            )
+            if count_mismatch or setting_mismatch:
                 mismatched_blocks.append(filename)
 
         with open(os.path.join(args.out_dir, filename), "w") as f:
