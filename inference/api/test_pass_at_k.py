@@ -26,13 +26,16 @@ def fake_call_chat_multi_sample(model_name_or_path, prompt_text, *args, **kwargs
     n = kwargs.get("n", 1)
     choices = [
         SimpleNamespace(
-            message=SimpleNamespace(content=f"```{prompt_text}-sample{i}```")
+            message=SimpleNamespace(content=f"```{prompt_text}-sample{i}```"),
+            finish_reason="stop",
         )
         for i in range(n)
     ]
     response = SimpleNamespace(
         choices=choices,
-        usage=SimpleNamespace(prompt_tokens=10, completion_tokens=10 * n),
+        usage=SimpleNamespace(
+            prompt_tokens=10, completion_tokens=10 * n, completion_tokens_details=None
+        ),
     )
     return response, 0.0
 

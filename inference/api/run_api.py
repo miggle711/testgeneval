@@ -106,6 +106,7 @@ MODEL_LIMITS = {
     "openai/gpt-oss-20b": 131_072,
     "openai/gpt-oss-120b": 131_072,
     "meta-llama/Llama-4-Scout-17B-16E-Instruct": 128_000,
+    "gpt-5": 400_000,
 }
 
 # The cost per token for each model input.
@@ -117,6 +118,7 @@ MODEL_COST_PER_INPUT = {
     "Meta-Llama-3.1-405B-Instruct": 0,
     "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit": 0,
     "llama-3.1-8b-instant": 0,
+    "gpt-5": 0.00000125,
 }
 
 # The cost per token for each model output.
@@ -128,6 +130,7 @@ MODEL_COST_PER_OUTPUT = {
     "Meta-Llama-3.1-405B-Instruct": 0,
     "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit": 0,
     "llama-3.1-8b-instant": 0,
+    "gpt-5": 0.00001,
 }
 
 # M3 shortlist entries below (added 2026-08-29, testgeneval#41): sized
@@ -184,6 +187,7 @@ OUTPUT_LIMITS = {
     "openai/gpt-oss-20b": 48_000,
     "openai/gpt-oss-120b": 48_000,
     "meta-llama/Llama-4-Scout-17B-16E-Instruct": 8_000,
+    "gpt-5": 48_000,
 }
 
 EPSILON = 1000
@@ -283,15 +287,24 @@ def call_chat(
         client = _thread_local.client
 
     try:
-        response = client.chat.completions.create(
-            model=model_name_or_path,
-            messages=messages,
-            temperature=temperature,
-            max_tokens=max_tokens,  # Adjust max_tokens as needed
-            top_p=top_p,
-            n=n,
-            **model_args,
-        )
+        if model_name_or_path == "gpt-5":
+            response = client.chat.completions.create(
+                model=model_name_or_path,
+                messages=messages,
+                max_completion_tokens=max_tokens,
+                n=n,
+                **model_args,
+            )
+        else:
+            response = client.chat.completions.create(
+                model=model_name_or_path,
+                messages=messages,
+                temperature=temperature,
+                max_tokens=max_tokens,  # Adjust max_tokens as needed
+                top_p=top_p,
+                n=n,
+                **model_args,
+            )
 
         input_tokens = response.usage.prompt_tokens
         # completion_tokens is the sum across all n completions, not
@@ -438,13 +451,14 @@ def openai_inference(
         with cost_lock:
             if state["cost_exceeded"]:
                 return None
-        output_dict = {"id": curr_id, "instance_id": datum["instance_id"]}
+        output_dict = {"id": curr_id, "instance_id": datum["instance_id"], "usage": {}}
         output_dict.update(basic_args)
         output_dict["preds_prompts"] = datum["preds_prompts"]
         output_dict["preds"] = {}
         failed = False
         for prompt_name, prompt_text in datum["preds_prompts"].items():
             prompt_predictions = []
+            prompt_usage = []
             if skip_full and prompt_name == "full":
                 continue
             if skip_completion and prompt_name != "full":
@@ -478,6 +492,14 @@ def openai_inference(
                         # None.replace(...), so one bad sample in an n>1
                         # batch does not throw away the other, real
                         # completions for this instance.
+                        prompt_usage.append({
+                            "finish_reason": choice.finish_reason,
+                            "completion_tokens": response.usage.completion_tokens,
+                            "reasoning_tokens": getattr(
+                                getattr(response.usage, "completion_tokens_details", None),
+                                "reasoning_tokens", None,
+                            ),
+                        })
                         if choice.message.content is None:
                             print(
                                 f"Warning: choice.message.content is None for "
@@ -511,6 +533,14 @@ def openai_inference(
                             no_system_message=no_system_message,
                         )
                         completion = response.choices[0].message.content
+                        prompt_usage.append({
+                            "finish_reason": response.choices[0].finish_reason,
+                            "completion_tokens": response.usage.completion_tokens,
+                            "reasoning_tokens": getattr(
+                                getattr(response.usage, "completion_tokens_details", None),
+                                "reasoning_tokens", None,
+                            ),
+                        })
                         if completion is None:
                             print(
                                 f"Warning: choice.message.content is None for "
@@ -531,6 +561,7 @@ def openai_inference(
                         print(f"Error: {e}")
                         failed = True
             output_dict["preds"][prompt_name] = prompt_predictions
+            output_dict["usage"][prompt_name] = prompt_usage
         if failed:
             print("Failed, skipping...")
             return None
