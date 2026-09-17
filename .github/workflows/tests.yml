@@ -8,6 +8,13 @@ on:
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
+    env:
+      # Dummy value -- every test mocks the real API call, this only
+      # satisfies openai_inference's upfront "Must provide an api key"
+      # check (run_api.py), never used in a real network request.
+      # Confirmed real: without this, 8 real tests fail on a fresh
+      # checkout with no local .env (exactly CI's own situation).
+      OPENAI_API_KEY: "dummy-key-for-tests-only"
     steps:
       - uses: actions/checkout@v4
 
@@ -19,7 +26,7 @@ jobs:
       # confirmed by grep against actual imports, not the full
       # testgeneval.yaml/testgeneval.crossplatform.yaml conda envs
       # (both far heavier: GPU/vLLM tooling neither suite needs, and
-      # a full conda solve is slow). No API keys needed -- these
+      # a full conda solve is slow). No real API keys needed -- these
       # suites only exercise fake/mocked responses, never a real
       # network call.
       - name: Install test dependencies
