@@ -33,6 +33,8 @@ Updated 2026-09-16. Real sub-issues per person: #57 (jliu0290), #58
 | Llama-3.1-8B | kg_only | **Done, 1208/1208**, mvar0010 (#62), confirmed via real .eval.log count matching combined shard size |
 | Llama-3.1-8B | instruct | 1048/1210, mvar0010 (#62), resubmitted for the real remainder |
 | Qwen3-4B | instruct | mvar0010 (#62), submitted 2026-09-16 (jobs 60167863/60167864, 2-way sharded, 602+597=1199, NUM_PROCESSES=8), queued overnight behind the Llama-3.1-8B instruct jobs above |
+| Qwen2.5-Coder-7B | instruct | **Real gap found 2026-09-17: never assigned, not covered by #56's handoff.** Real, complete pass@5 predictions exist on disk (1210/1210), but only ever evaluated in small validation samples (134-instance diagnostic, 5-instance backend-correctness check), 47 real `.eval.log` files total, nowhere near 1210. Not yet assigned to anyone. |
+| Qwen2.5-Coder-7B | kg_only | Same gap, same real predictions completeness (1209/1210), not yet evaluated or assigned. |
 
 ### First confirmed real instance loss from the apptainer host-timeout bug (2026-09-17, testgeneval#64)
 

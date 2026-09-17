@@ -648,6 +648,30 @@ confirmed genuinely solid across the whole shortlist (real files,
 1179-1210 lines each, dated 2026-09-07 through 2026-09-15) -- this
 correction is scoped to pass@1 only.
 
+**Follow-up, same day: abandonment was deliberate, not neglect.**
+testgeneval#43 (already open, previously unresolved) documents the
+real reason pass@1 (temperature 0.2) was stopped: genuine repetition-
+loop decoding failures, confirmed for every model actually sampled
+(Llama-3.1-8B ~60%, Qwen3-4B ~40-45%, Qwen3-Coder-30B ~11% of
+completions). A same-day check of Qwen2.5-Coder-7B-Instruct (a 7th
+model in the real shortlist, missed by the table above since it isn't
+part of #56's tracked 6-model handoff) found the same real pattern at
+a lower rate (1.6% instruct, 3.3% kg_only) -- also affected, just less
+obviously. Decision closing #43: raise pass@1 to temperature 0.8, the
+one value already confirmed clean by real data for every model
+checked. This creates a real filename collision with pass@5 at the
+same temperature, fixed in testgeneval#65 (`k{num_samples}` added to
+the output filename) before any new pass@1 job is submitted. All 7
+confirmed/suspected-affected `t=0.2` files (Llama-3.1-8B, Qwen3-4B,
+Qwen3-Coder-30B both arms where they existed, Qwen2.5-Coder-7B both
+arms) archived to `results/{instruct,kg_only}/_archive/
+_repetition_loop_t02_20260917/` on M3 -- known-bad data, not deleted,
+kept for audit trail. Real, current scope: pass@1 needs a genuinely
+fresh `t=0.8` run for all 7 models, both arms, no partial data survives
+to resume from. Also surfaced in this same check: Qwen2.5-Coder-7B has
+real, complete pass@5 predictions on disk but was never assigned to
+anyone for evaluation, see EVAL_LOG.md's new gap entry.
+
 ### The real, root problem behind almost everything today
 
 Output filenames (built in `run_api.py`, e.g.
