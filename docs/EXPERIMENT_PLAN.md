@@ -543,6 +543,12 @@ needed, just logging that isn't currently in place:
 - Compare `kg_only` vs `instruct` prompt token counts directly. The
   funding proposal's existing token-cost measurements are the starting
   point for this comparison.
+- **Execution environment: all KG build-timing numbers must come from
+  `m3_build_kgs.slurm` runs on M3**, not a local machine or laptop.
+  Comparing timing across repos requires a consistent, controlled compute
+  environment — a number from someone's laptop is not comparable to one
+  from M3, and mixing sources would undermine any build-time comparison
+  reported in the paper.
 
 ## Known limitations
 
