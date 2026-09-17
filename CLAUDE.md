@@ -648,3 +648,20 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   When in doubt about which file is real, check `run_api.py`'s own resume log line
   (`grep "Read.*already completed ids" slurm-<jobid>.out`) against a fresh `wc -l` on the exact
   path it names — that's the only fully trustworthy real cross-check.
+- **Adding a new per-instance metric to evaluation (e.g. testgeneval#77's `any_pass_at_1`)
+  doesn't retroactively apply to existing logs, and a cheap targeted rerun to backfill it
+  creates a real directory-merge problem.** `get_logs_eval` reads every metric for one instance
+  (coverage, mutation, and now `any_tests_passed`) from the *same* single `.eval.log` file, and
+  `generate_report.py`/`get_eval_report` only reads from one `LOG_DIR` at a time. So: (1) any
+  log written before the new metric's code landed simply won't have it, real re-evaluation is
+  required, re-reading the old log is not enough; (2) `--skip_existing` only checks file
+  *existence*, not content, so re-running against the *same* `LOG_DIR` to backfill just the new
+  metric would find every instance's log already there and skip all of them, producing nothing
+  new; (3) the real fix, writing to a *new* `LOG_DIR` so the rerun genuinely executes, then
+  creates a second directory with the new metric but none of the original's expensive-to-compute
+  data (e.g. mutation scores, ~4-8x more expensive per instance than a coverage-only run, see the
+  `SKIP_MUTATION` gotcha above), two disjoint directories, neither of which alone gives the full
+  picture, and nothing in this codebase currently merges them. A cheap, mutation-skipped backfill
+  run is still worth it over a full expensive rerun, but needs a real merge step (reading both
+  directories per instance and combining fields) before `generate_report.py` can produce one
+  complete report, not yet written as of 2026-09-17, tracked in testgeneval#76.
