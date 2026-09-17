@@ -21,10 +21,10 @@ Updated 2026-09-16. Real sub-issues per person: #57 (jliu0290), #58
 |---|---|---|
 | gpt-oss-20B | instruct (pass@1, pipeline validation only) | Done (full scale, 2026-09-14), see below. Not the real pass@5 metric. |
 | gpt-oss-20B | instruct (100-instance dry run) | Done (2026-09-13), superseded by the full-scale run above |
-| gpt-oss-120B | instruct | wtho0016, in progress (#58) |
-| gpt-oss-120B | kg_only | wtho0016, in progress (#58) |
-| gpt-oss-20B | instruct | wlee0060, in progress (#59), resubmitted after a first real 10/10 TIMEOUT, confirmed RUNNING (jobs 60167462-471, all 10/10) |
-| gpt-oss-20B | kg_only | wlee0060, in progress (#59), same resubmit |
+| gpt-oss-120B | instruct | wtho0016, in progress (#58). Full team health check 2026-09-17: 7 evaluation jobs on her account showed OOM/TIMEOUT in sacct, all 7 confirmed genuinely complete via real .eval.log counts, no loss. Separately found and fixed a real write-access ACL gap blocking her pass@1 jobs (#68). |
+| gpt-oss-120B | kg_only | wtho0016, in progress (#58), same real findings as instruct above |
+| gpt-oss-20B | instruct | wlee0060, in progress (#59), resubmitted after a first real 10/10 TIMEOUT, confirmed RUNNING (jobs 60167462-471, all 10/10). Full team health check 2026-09-17: 5 more evaluation jobs on her account showed OOM in sacct, all confirmed genuinely complete, no loss. Separately hit a real torch inductor cache bug on her pass@1 Qwen3-4B jobs (#45), needs her own `rm -rf ~/.cache/vllm` fix. |
+| gpt-oss-20B | kg_only | wlee0060, in progress (#59), same resubmit, same real health-check findings as instruct above |
 | Qwen3-Coder-30B | instruct | jliu0290, in progress (#57), hit and fixed a real second scikit-learn 1.4 bug (#60) and a real catastrophic-backtracking hang (#61) along the way |
 | Qwen3-Coder-30B | kg_only | jliu0290, in progress (#57) |
 | Llama-4-Scout | instruct | **Done, 100%**, mvar0010 (#62) |
