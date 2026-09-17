@@ -858,6 +858,17 @@ TESTS_CONFIG: str = ">>>>> Tests config"
 TESTS_PASSED: str = ">>>>> All Tests Passed"
 UNFILTERED_TESTS_PASSED: str = ">>>>> Unfiltered Tests Passed"
 TESTS_TIMEOUT: str = ">>>>> Tests Timed Out"
+# RQ3 instrumentation (Any Pass@1): distinct from
+# TESTS_PASSED/TESTS_FAILED above, which are really "All Tests Passed"
+# semantics (a single whole-suite exit code) despite the generic-looking
+# name. These two record whether AT LEAST ONE per-test-case result
+# passed, from a real pytest --junitxml report when one exists (see
+# context_manager.py's run_tests_task). Falls back to the same
+# whole-suite signal as TESTS_PASSED/TESTS_FAILED for the rare
+# non-pytest test command (django/django's runtests.py, see
+# MAP_REPO_TO_TEST_CMD) where no per-test-case report is available.
+ANY_TESTS_PASSED: str = ">>>>> Any Test Passed"
+ANY_TESTS_FAILED: str = ">>>>> No Tests Passed"
 
 SETTING_PROMPT_MAP: Dict[str, str] = {
     "none": "none",
