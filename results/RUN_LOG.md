@@ -613,6 +613,41 @@ kept for reference; the active work is the pass@5 column.
 | Llama-4-Scout | instruct | Done (59967047, 1199/1210, m3h H100, `MAX_MODEL_LEN=65536`/`MAX_NUM_SEQS=6` fix confirmed clean) | Done (1123/1210) |
 | Llama-4-Scout | kg_only | Done (59967051, 1208/1210, same fix, same node) | Done (1186/1210) |
 
+**Correction, 2026-09-17: the pass@1 column above is stale and wrong for
+every model.** Checked real M3 state directly (file existence, real
+line counts against the actual `__testgeneval__0.2__test.jsonl` files,
+not this table) -- almost nothing claimed "Done" here is real:
+
+| Model | Arm | Real pass@1 predictions (2026-09-17) |
+|---|---|---|
+| gpt-oss-120B | instruct | MISSING (no full-dataset file exists anywhere on M3) |
+| gpt-oss-120B | kg_only | MISSING |
+| gpt-oss-20B | instruct | MISSING |
+| gpt-oss-20B | kg_only | MISSING |
+| Qwen3-Coder-30B | instruct | 136/1210, file dated 2026-08-29, untouched since |
+| Qwen3-Coder-30B | kg_only | MISSING |
+| Meta-Llama-3.1-8B-Instruct | instruct | 447/1210, dated 2026-08-29 |
+| Meta-Llama-3.1-8B-Instruct | kg_only | 780/1210, dated 2026-08-29 |
+| Qwen3-4B-Instruct-2507 | instruct | 150/1210, dated 2026-08-29 |
+| Qwen3-4B-Instruct-2507 | kg_only | 171/1210, dated 2026-08-29 |
+| Llama-4-Scout | instruct | MISSING |
+| Llama-4-Scout | kg_only | MISSING |
+
+Real root cause, confirmed by cross-checking every pass@1 file's real
+mtime against its pass@5 counterpart: every pass@1 file that exists is
+dated 2026-08-29, and every real pass@5 file is dated 2026-09-07 or
+later. Pass@1 generation was started once, got partway through (136-780
+of 1210 lines per model), then abandoned -- not overwritten by pass@5,
+since pass@5 work only began well after pass@1 already stopped. Real,
+current status: pass@1 generation is genuinely not done for any model
+in the shortlist, and needs a real plan (who runs what, which backend)
+before it can be evaluated at all -- there is no pass@1 evaluation work
+to speak of yet either, beyond one deliberate pipeline-validation run
+(gpt-oss-20B instruct, see EVAL_LOG.md). Pass@5, by contrast, is
+confirmed genuinely solid across the whole shortlist (real files,
+1179-1210 lines each, dated 2026-09-07 through 2026-09-15) -- this
+correction is scoped to pass@1 only.
+
 ### The real, root problem behind almost everything today
 
 Output filenames (built in `run_api.py`, e.g.
