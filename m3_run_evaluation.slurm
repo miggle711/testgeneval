@@ -43,6 +43,12 @@
 #     4-6 each fits comfortably under that.
 #   TIMEOUT: per-instance seconds (default 3600). cosmic-ray mutation
 #     on a large repo genuinely takes 20-40 min; do not set this low.
+#     Also sets the host-side kill ceiling (TIMEOUT + 300s by default,
+#     see APPTAINER_HOST_TIMEOUT_MARGIN/APPTAINER_HOST_TIMEOUT in
+#     run_apptainer.py) -- raise TIMEOUT here for a slow repo and the
+#     host cap raises with it, no separate knob needed.
+#   APPTAINER_HOST_TIMEOUT: (optional) override the host-side kill
+#     ceiling with a fixed value instead of deriving it from TIMEOUT.
 #   SKIP_MUTATION: set to 1 to skip cosmic-ray entirely (coverage only).
 #     Cuts per-instance time to ~3-5 min, but drops FunctionMutationLOG,
 #     the primary RQ2/RQ3 metric.
