@@ -1081,3 +1081,40 @@ gpt-oss-120B, gpt-oss-20B, Llama-4-Scout, Meta-Llama-3.1-8B-Instruct
 temperatures), Qwen3-4B-Instruct-2507 (both dataset scales),
 Qwen3-Coder-30B-A3B-Instruct (both dataset scales), both arms.
 
+## Real pass@1 (t=0.8, k1) generation status per model/arm (2026-09-17)
+
+ Real sub-issues per person: #66 (mvar0010), #67
+(jliu0290), #68 (wtho0016), #69 (wlee0060), all linked under #56. See
+the correction above for why this restarted from zero at t=0.8 rather
+than resuming any of the old t=0.2 data (all confirmed/suspected
+affected by real repetition-loop decoding failures, archived).
+
+| Model | Arm | Real predictions | Status | Owner |
+|---|---|---|---|---|
+| Llama-4-Scout | instruct | 0 | Queued (job 60177586), real m3h priority wait | mvar0010 (#66) |
+| Llama-4-Scout | kg_only | 0 | Queued (job 60187739) | wlee0060 (#69) |
+| Qwen2.5-Coder-7B | instruct | 1210/1210 | **Done** | mvar0010 (#66) |
+| Qwen2.5-Coder-7B | kg_only | 1209/1210 | **Done** | mvar0010 (#66) |
+| Qwen3-Coder-30B | instruct | 1210/1210 | **Done** (job 60179350, clean, 4h33m) | jliu0290 (#67) |
+| Qwen3-Coder-30B | kg_only | 0 as of last check | In progress (job 60188975, resubmitted clean after a real port collision on 60179383) | jliu0290 (#67) |
+| Qwen3-4B | instruct | 0 | **Failed** (job 60187740), real torch inductor cache bug (#45, recurring on this account), needs `rm -rf ~/.cache/vllm` + resubmit | wlee0060 (#69) |
+| Qwen3-4B | kg_only | 0 | Same real failure as instruct above | wlee0060 (#69) |
+| gpt-oss-120B | instruct | in progress | Running (job 60187499, confirmed healthy) | wtho0016 (#68) |
+| gpt-oss-120B | kg_only | in progress | Queued (job 60187491/60187492) | wtho0016 (#68) |
+| Meta-Llama-3.1-8B-Instruct | instruct | 253/1210 | In progress (job 60187500) | wtho0016 (#68) |
+| Meta-Llama-3.1-8B-Instruct | kg_only | 608/1210 | In progress (job 60187499) | wtho0016 (#68) |
+| gpt-oss-20B | instruct | 0 | Queued (job 60187737) | wlee0060 (#69) |
+| gpt-oss-20B | kg_only | 0 | Queued (job 60187738) | wlee0060 (#69) |
+
+Real, known real gotchas hit already: a port collision (`VLLM_PORT`
+already in use on the landing node) killed jobs fast for mvar0010
+(Qwen2.5-Coder-7B kg_only, resubmitted with a distinct port) and
+jliu0290 (Qwen3-Coder-30B kg_only, same fix); a missing
+`kg_prompts_depth2.json` in `testgeneval_mvar0010_own` (data file,
+never git-tracked, never copied over when that clone was created)
+killed one real job before being found and fixed; a real write-access
+ACL gap on `testgeneval_mvar0010_own` blocked wtho0016's jobs entirely
+until fixed with an explicit `setfacl` grant (#68); a real, recurring
+torch inductor compile-cache bug (#45) is blocking wlee0060's Qwen3-4B
+jobs specifically, needs her own account-local cache clear.
+
