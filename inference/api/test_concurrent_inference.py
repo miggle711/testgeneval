@@ -21,7 +21,17 @@ def fake_call_chat(model_name_or_path, prompt_text, *args, **kwargs):
     # distinguish max_concurrency=1 from >1.
     time.sleep(0.01)
     response = SimpleNamespace(
-        choices=[SimpleNamespace(message=SimpleNamespace(content=f"```{prompt_text}```"))]
+        choices=[
+            SimpleNamespace(
+                message=SimpleNamespace(content=f"```{prompt_text}```"),
+                finish_reason="stop",
+            )
+        ],
+        usage=SimpleNamespace(
+            prompt_tokens=1,
+            completion_tokens=1,
+            completion_tokens_details=None,
+        ),
     )
     return response, 0.0
 
