@@ -9,6 +9,7 @@ from enum import Enum
 from typing import Callable, Dict, Optional, Tuple
 
 from swebench_docker.constants import (
+    ANY_TESTS_PASSED,
     INSTALL_FAIL,
     KEY_ID,
     NON_TEST_EXTS,
@@ -78,6 +79,17 @@ def get_logs_eval(log_fp: str) -> Dict[str, dict]:
             setting = config_line[0]
 
             test_passed = TESTS_PASSED in config
+            # RQ3 instrumentation (Any Pass@1): a real, distinct signal
+            # from test_passed above -- test_passed is really "All Tests
+            # Passed" (see constants.py), this is "at least one test
+            # case passed", from context_manager.py's real per-test-case
+            # junitxml capture. Absent entirely on any log written before
+            # this instrumentation existed (an older log's config simply
+            # won't contain the marker), so any_test_passed is False for
+            # every pre-existing log, not a real "no test passed" result
+            # -- re-running evaluation is required to get real Any Pass@1
+            # data, not just re-reading old logs.
+            any_test_passed = ANY_TESTS_PASSED in config
 
             unfiltered_tests_passed = UNFILTERED_TESTS_PASSED in config
             unfiltered_tests_compiled = (
@@ -89,6 +101,7 @@ def get_logs_eval(log_fp: str) -> Dict[str, dict]:
             if setting not in results:
                 results[setting] = {
                     "tests_passed": [],
+                    "any_tests_passed": [],
                     "tests_compiled": [],
                     "coverage": [],
                     "test_time": [],
@@ -195,6 +208,7 @@ def get_logs_eval(log_fp: str) -> Dict[str, dict]:
                 )
 
             results[setting]["tests_passed"].append(test_passed)
+            results[setting]["any_tests_passed"].append(any_test_passed)
             results[setting]["tests_compiled"].append(test_compiled)
             results[setting]["coverage"].append(coverage)
             results[setting]["test_time"].append(test_time)
@@ -350,6 +364,13 @@ def get_eval_report(
 
     for setting in eval_sm:
         tests_passed = eval_sm[setting]["tests_passed"]
+        # RQ3 instrumentation (Any Pass@1): .get(..., []) rather than a
+        # bare [setting]["any_tests_passed"] index, since a log written
+        # before this instrumentation existed never populated this key
+        # at all (get_logs_eval only sets it going forward) -- an empty
+        # list here correctly produces no any_pass_at_k entries below
+        # (the len(...) >= k guard), rather than a KeyError on old data.
+        any_tests_passed = eval_sm[setting].get("any_tests_passed", [])
         unfiltered_tests_passed = (
             eval_sm[setting]["unfiltered_tests_passed"]
             if "unfiltered_tests_passed" in eval_sm[setting]
@@ -386,6 +407,17 @@ def get_eval_report(
             final_results[f"{setting}_av_coverage"] = eval_sm[setting]["coverage"][0]
 
         for k in VALID_K:
+            if len(any_tests_passed) >= k:
+                # RQ3 instrumentation: {setting}_pass_at_{k} above is
+                # really "All Tests Passed"@k semantics (see constants.py's
+                # TESTS_PASSED docstring) despite its generic-looking name,
+                # kept as-is for backward compatibility with existing
+                # report readers. This is the real "at least one test case
+                # passed"@k metric the paper's Methodology section
+                # actually describes as Any Pass@k.
+                final_results[f"{setting}_any_pass_at_{k}"] = any(
+                    any_tests_passed[:k]
+                )
             if len(tests_passed) >= k:
                 final_results[f"{setting}_pass_at_{k}"] = any(tests_passed[:k])
             if len(tests_passed) >= k:
@@ -400,6 +432,7 @@ def get_eval_report(
         for metric in eval_sm[setting]:
             if metric not in [
                 "tests_passed",
+                "any_tests_passed",
                 "tests_compiled",
                 "unfiltered_tests_passed",
                 "unfiltered_tests_compiled",

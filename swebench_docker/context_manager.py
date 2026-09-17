@@ -8,11 +8,14 @@ import os
 import shutil
 import subprocess
 import time
+import xml.etree.ElementTree as ET
 from logging import DEBUG, ERROR, INFO, Logger
 from traceback import format_exc
 from typing import Dict, Optional
 
 from swebench_docker.constants import (
+    ANY_TESTS_FAILED,
+    ANY_TESTS_PASSED,
     APPLY_PATCH_FAIL,
     APPLY_PATCH_PASS,
     INSTALL_FAIL,
@@ -596,6 +599,40 @@ class TaskEnvContextManager:
             if log_data:
                 self.log.write(f"{TESTS_TIMEOUT} after {self.timeout} seconds\n")
 
+    def _any_test_passed(self, junit_report_path: str, returncode: int) -> bool:
+        """Whether at least one individual test case passed (RQ3's Any
+        Pass@1), from a real pytest --junitxml report when one was
+        written.
+
+        A <testcase> counts as passed only if it has none of <failure>,
+        <error>, or <skipped> as a child -- a skipped test never actually
+        ran its assertions, so it isn't evidence of anything passing.
+
+        Falls back to the same whole-suite signal TESTS_PASSED/
+        TESTS_FAILED already use (returncode == 0) when no report exists
+        to parse: either the test_cmd never invoked pytest (django/
+        django's runtests.py, see MAP_REPO_TO_TEST_CMD in constants.py,
+        is the one real case in this project), or pytest crashed before
+        writing one (e.g. a real install/import failure during
+        collection). No per-test-case granularity is available in that
+        fallback case, same limitation the whole-suite signal always
+        had.
+        """
+        if not os.path.exists(junit_report_path):
+            return returncode == 0
+        try:
+            root = ET.parse(junit_report_path).getroot()
+        except ET.ParseError:
+            return returncode == 0
+        for testcase in root.iter("testcase"):
+            if (
+                testcase.find("failure") is None
+                and testcase.find("error") is None
+                and testcase.find("skipped") is None
+            ):
+                return True
+        return False
+
     def run_tests_task(self, instance: dict, log_data=True, skip_mutation=False):
         """
         Run tests for task instance
@@ -621,6 +658,20 @@ class TaskEnvContextManager:
                 test_cmd = f"{instance['test_cmd']}"
             else:
                 test_cmd = f"{self.cmd_conda_run} {instance['test_cmd']}"
+
+            # RQ3 instrumentation (Any Pass@1): append --junitxml to any
+            # pytest-invoked test_cmd so per-test-case results are
+            # available afterward, not just the whole-suite exit code.
+            # Safe to always append when pytest is present -- pytest
+            # writes this report regardless of whether tests pass, only
+            # a crash before collection (e.g. a real install/import
+            # failure) would leave it missing, same case _any_tests_passed
+            # already falls back on below. django/django's runtests.py
+            # (the one non-pytest test_cmd in this project, see
+            # MAP_REPO_TO_TEST_CMD in constants.py) is untouched, no
+            # --junitxml flag it would understand.
+            if "pytest" in test_cmd and "--junitxml" not in test_cmd:
+                test_cmd = f"{test_cmd} --junitxml=any-tests-report.xml"
 
             if log_data:
                 self.log.write(f"Test Script: {test_cmd};\n")
@@ -674,6 +725,18 @@ class TaskEnvContextManager:
                             instance, specifications, test_time, test_cmd
                         )
 
+                # RQ3 instrumentation (Any Pass@1): unlike TESTS_PASSED/
+                # TESTS_FAILED above, this must run regardless of which
+                # branch fired -- a whole-suite failure (out_test.returncode
+                # != 0) can still have individual passing test cases, which
+                # is the entire point of a distinct Any Pass@1 signal.
+                any_tests_passed = self._any_test_passed(
+                    "any-tests-report.xml", out_test.returncode
+                )
+                self.log.write(
+                    f"\n{ANY_TESTS_PASSED if any_tests_passed else ANY_TESTS_FAILED}\n"
+                )
+
             self.log.write(f"Test script run successful")
             return True, out_test.returncode == 0
         except subprocess.TimeoutExpired:
@@ -691,6 +754,9 @@ class TaskEnvContextManager:
             exit()
             # return False
         finally:
+            if os.path.exists("any-tests-report.xml"):
+                os.remove("any-tests-report.xml")
+
             if os.path.exists("mutation.sqlite"):
                 os.remove("mutation.sqlite")
 
