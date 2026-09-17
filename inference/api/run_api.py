@@ -657,7 +657,13 @@ def main(
         model_nickname = Path(model_name_or_path).name
 
     temperature = model_args["temperature"] if "temperature" in model_args else 0.2
-    output_file = f"{model_nickname}__{dataset_name_or_path.split('/')[-1]}__{temperature}__{split}"
+    # k{num_samples} avoids a real, confirmed collision: model/dataset/
+    # temperature alone don't distinguish a pass@1 run from a pass@5 run
+    # at the same temperature, so the later one's existing_ids read (and
+    # write) into the earlier one's file, silently mixing or no-op'ing
+    # real production data (testgeneval#43-adjacent incident, see
+    # RUN_LOG.md's "root problem" section).
+    output_file = f"{model_nickname}__{dataset_name_or_path.split('/')[-1]}__{temperature}__k{num_samples}__{split}"
     if shard_id is not None and num_shards is not None:
         output_file += f"__shard-{shard_id}__num_shards-{num_shards}"
     output_file = Path(output_dir, output_file + ".jsonl")

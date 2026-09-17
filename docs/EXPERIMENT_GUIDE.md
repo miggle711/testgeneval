@@ -326,7 +326,7 @@ MODEL_NICK="$(basename "<exact-model-id-from-step-3>")"
 
 mkdir -p "results/instruct/data_logs"
 python3 run_evaluation.py \
-  --predictions_path "results/instruct/testgenevallite/preds/${MODEL_NICK}_t=0.2__testgenevallite__test.jsonl" \
+  --predictions_path "results/instruct/testgenevallite/preds/${MODEL_NICK}__testgenevallite__0.2__k1__test.jsonl" \
   --log_dir "results/instruct/data_logs" \
   --swe_bench_tasks kjain14/testgenevallite \
   --num_processes 4
@@ -341,10 +341,12 @@ directories aren't tracked by git, so a fresh clone always needs the
 building locally, add `--namespace kdjain` here too.
 
 The exact predictions filename follows
-`{model_nickname}_t={temperature}__{dataset}__test.jsonl`
-(see `basic_args` in
-[run_api.py:409-411](../inference/api/run_api.py#L409-L411)) — if
-unsure, list the directory instead of retyping it by hand:
+`{model_nickname}__{dataset}__{temperature}__k{num_samples}__test.jsonl`
+(see `output_file` in
+[run_api.py:660](../inference/api/run_api.py#L660), the `k{num_samples}`
+segment is required since testgeneval#43, without it a pass@1 and pass@5
+run for the same model/arm/temperature would collide on the same file)
+-- if unsure, list the directory instead of retyping it by hand:
 
 ```bash
 python3 -c "

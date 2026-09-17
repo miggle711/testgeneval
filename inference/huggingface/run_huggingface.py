@@ -392,7 +392,7 @@ def main():
         dataset = load_dataset(args.dataset_name_or_path)
         dataset_nickname = args.dataset_name_or_path
 
-    output_file = f"{model_nickname}__{dataset_nickname}__{args.temperature}__test"
+    output_file = f"{model_nickname}__{dataset_nickname}__{args.temperature}__k{args.num_samples_generation}__test"
 
     if args.context_size != -1:
         output_file += f"__{args.context_size}"
