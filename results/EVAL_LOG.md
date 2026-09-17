@@ -14,27 +14,43 @@ real team handoff plan (who is evaluating which model/arm).
 
 ## Real evaluation status per model/arm (pass@5, the primary metric)
 
-Updated 2026-09-16. Real sub-issues per person: #57 (jliu0290), #58
-(wtho0016), #59 (wlee0060), #62 (mvar0010), all linked under #56.
+Updated 2026-09-17, full real audit against actual `.eval.log` counts on
+M3 for every model/arm, not just each person's own last report. Real
+sub-issues per person: #57 (jliu0290), #58 (wtho0016), #59 (wlee0060),
+#62 (mvar0010), all linked under #56. **8 of 14 real model/arm
+combinations are genuinely complete.**
 
-| Model | Arm | Real evaluation status |
-|---|---|---|
-| gpt-oss-20B | instruct (pass@1, pipeline validation only) | Done (full scale, 2026-09-14), see below. Not the real pass@5 metric. |
-| gpt-oss-20B | instruct (100-instance dry run) | Done (2026-09-13), superseded by the full-scale run above |
-| gpt-oss-120B | instruct | wtho0016, in progress (#58). Full team health check 2026-09-17: 7 evaluation jobs on her account showed OOM/TIMEOUT in sacct, all 7 confirmed genuinely complete via real .eval.log counts, no loss. Separately found and fixed a real write-access ACL gap blocking her pass@1 jobs (#68). |
-| gpt-oss-120B | kg_only | wtho0016, in progress (#58), same real findings as instruct above |
-| gpt-oss-20B | instruct | wlee0060, in progress (#59), resubmitted after a first real 10/10 TIMEOUT, confirmed RUNNING (jobs 60167462-471, all 10/10). Full team health check 2026-09-17: 5 more evaluation jobs on her account showed OOM in sacct, all confirmed genuinely complete, no loss. Separately hit a real torch inductor cache bug on her pass@1 Qwen3-4B jobs (#45), needs her own `rm -rf ~/.cache/vllm` fix. |
-| gpt-oss-20B | kg_only | wlee0060, in progress (#59), same resubmit, same real health-check findings as instruct above |
-| Qwen3-Coder-30B | instruct | jliu0290, in progress (#57), hit and fixed a real second scikit-learn 1.4 bug (#60) and a real catastrophic-backtracking hang (#61) along the way |
-| Qwen3-Coder-30B | kg_only | jliu0290, in progress (#57) |
-| Llama-4-Scout | instruct | **Done, 100%**, mvar0010 (#62) |
-| Llama-4-Scout | kg_only | **Done, 100%**, mvar0010 (#62) |
-| Qwen3-4B | kg_only | **Done, 100%**, mvar0010 (#62) |
-| Llama-3.1-8B | kg_only | **Done, 1208/1208**, mvar0010 (#62), confirmed via real .eval.log count matching combined shard size |
-| Llama-3.1-8B | instruct | 1048/1210, mvar0010 (#62), resubmitted for the real remainder |
-| Qwen3-4B | instruct | mvar0010 (#62), submitted 2026-09-16 (jobs 60167863/60167864, 2-way sharded, 602+597=1199, NUM_PROCESSES=8), queued overnight behind the Llama-3.1-8B instruct jobs above |
-| Qwen2.5-Coder-7B | instruct | **Real gap found 2026-09-17: never assigned, not covered by #56's handoff.** Real, complete pass@5 predictions exist on disk (1210/1210), but only ever evaluated in small validation samples (134-instance diagnostic, 5-instance backend-correctness check), 47 real `.eval.log` files total, nowhere near 1210. Not yet assigned to anyone. |
-| Qwen2.5-Coder-7B | kg_only | Same gap, same real predictions completeness (1209/1210), not yet evaluated or assigned. |
+| Model | Arm | Predictions | Real .eval.log count | Status | Owner |
+|---|---|---|---|---|---|
+| gpt-oss-120B | instruct | 1179 | 1118 | In progress, 61 remaining | wtho0016 (#58) |
+| gpt-oss-120B | kg_only | 1201 | 1201 | **Done** | wtho0016 (#58) |
+| gpt-oss-20B | instruct | 1210 | 1105 | In progress, 105 remaining | wlee0060 (#59) |
+| gpt-oss-20B | kg_only | 1210 | 1210 | **Done** | wlee0060 (#59) |
+| Qwen3-Coder-30B | instruct | 1210 | 1210 | **Done** | jliu0290 (#57) |
+| Qwen3-Coder-30B | kg_only | 1210 | 1210 | **Done** | jliu0290 (#57) |
+| Llama-4-Scout | instruct | 1199 | 1199 | **Done** | mvar0010 (#62) |
+| Llama-4-Scout | kg_only | 1208 | 1208 | **Done** | mvar0010 (#62) |
+| Llama-3.1-8B | instruct | 1210 | 1210 | **Done**, confirmed clean after the real #64 sympy-instance-loss fix | mvar0010 (#62) |
+| Llama-3.1-8B | kg_only | 1208 | 1208 | **Done** | mvar0010 (#62) |
+| Qwen3-4B | instruct | 1199 | 440 | In progress, 759 remaining (jobs 60167863/60167864) | mvar0010 (#62) |
+| Qwen3-4B | kg_only | 985 | 985 | **Done** | mvar0010 (#62) |
+| Qwen2.5-Coder-7B | instruct | 1210 | 0 as of 2026-09-16 (only small, deprecated validation samples existed) | Submitted 2026-09-17, 4-way sharded (jobs 60188807/808/809/810) | mvar0010 (#62), real gap found 2026-09-17, was never assigned under #56's original handoff |
+| Qwen2.5-Coder-7B | kg_only | 1209 | 0 as of 2026-09-16 | Submitted 2026-09-17, 4-way sharded (jobs 60188812/813/820/821) | mvar0010 (#62), same real gap |
+
+Superseded, kept for reference only: gpt-oss-20B instruct pass@1
+(temperature 0.2) full-scale run, done 2026-09-14, and its earlier
+100-instance dry run, done 2026-09-13 -- both explicitly pipeline
+validation, not the real pass@5 metric this table tracks.
+
+Real team health check, 2026-09-17: audited every real `sacct` entry
+for wtho0016 and wlee0060 from that day, not just jobs already known
+about. wtho0016: 7 evaluation jobs showed OOM/TIMEOUT in `sacct`, all
+7 confirmed genuinely complete via real `.eval.log` counts, no loss;
+separately found and fixed a real write-access ACL gap blocking her
+pass@1 jobs (#68). wlee0060: 5 more evaluation jobs showed OOM, all
+confirmed genuinely complete; separately hit a real torch inductor
+cache bug on her pass@1 Qwen3-4B jobs (#45), needs her own `rm -rf
+~/.cache/vllm` fix, not yet resolved as of this writing.
 
 ### First confirmed real instance loss from the apptainer host-timeout bug (2026-09-17, testgeneval#64)
 
