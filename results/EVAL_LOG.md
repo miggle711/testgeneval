@@ -34,6 +34,25 @@ Updated 2026-09-16. Real sub-issues per person: #57 (jliu0290), #58
 | Llama-3.1-8B | instruct | 1048/1210, mvar0010 (#62), resubmitted for the real remainder |
 | Qwen3-4B | instruct | mvar0010 (#62), submitted 2026-09-16 (jobs 60167863/60167864, 2-way sharded, 602+597=1199, NUM_PROCESSES=8), queued overnight behind the Llama-3.1-8B instruct jobs above |
 
+### First confirmed real instance loss from the apptainer host-timeout bug (2026-09-17, testgeneval#64)
+
+Job 60167493 (Llama-3.1-8B instruct, shard-0, 607 real ids) ran 7h08m
+and ended OOM. Unlike the earlier 20-job audit for #64 (all confirmed
+complete), this one genuinely was not: 51 of 607 real ids missing
+their `.eval.log`, all sympy (`sympy__sympy-18273`,
+`sympy__sympy-18667`, `sympy__sympy-18765`, `sympy__sympy-18922`,
+plus one duplicate id appearing twice in the missing list). Confirmed
+by comparing shard-0's real instance ids directly against the actual
+`.eval.log` files present, not just a raw count.
+
+This is the real, concrete case #64's fix targets: a slow sympy
+instance almost certainly hung unbounded pre-fix, and the resulting
+job-wide OOM cut off the rest of the shard's queue behind it. #64 was
+merged (c3fd1f0) before resubmitting, so this resubmit (job 60174850)
+runs protected -- if the same slow instance would have hung again, the
+new host-side timeout now catches it instead of taking the whole job
+down.
+
 **None of the pass@5 rows above are actually complete yet.** The
 gpt-oss-20B row marked "Done" is a real, full-scale run of the
 *pass@1* file, used deliberately to stress-test the pipeline
