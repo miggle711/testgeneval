@@ -39,18 +39,26 @@ not yet signed off by the team, see "Open decisions requiring
 sign-off."
 
 > **RQ1 (KG Construction Quality):** How accurately does the
-> repository-level KG capture code structure, dependencies, and API
-> relationships?
+> repository-level KG represent the structural relationships used for
+> context retrieval?
 
-> **RQ2 (Patch-Based Structural Retrieval):** How effectively can code
-> patches identify affected entities and retrieve relevant KG subgraphs?
+> **RQ2 (Patch-Based Subgraph Retrieval):** How accurately does
+> patch-based localisation identify modified code entities, and what
+> repository-level structural context can be retrieved from those
+> entities?
 
-> **RQ3 (Test Generation Correctness and Coverage):** To what extent does
-> patch-aware KG subgraph retrieval improve the correctness and coverage of
-> LLM-generated test cases compared to retrieval-free baselines?
+> **RQ3 (Test Generation Quality):** To what extent does patch-aware KG
+> retrieval improve the executability, target-function coverage, and
+> mutation-based fault-detection capability of LLM-generated tests
+> compared with a retrieval-free focal-file baseline?
 
-> **RQ4 (Efficiency):** What is the computational cost of the proposed
-> approach relative to the quality gains achieved?
+> **RQ4 (Efficiency):** What efficiency trade-offs does patch-aware KG
+> retrieval introduce relative to the retrieval-free baseline?
+
+(Wording aligned to the paper draft's Problem Statement and Research
+Questions section 2026-09-17; intent unchanged, this document's own
+surrounding scoping discussion below still applies to the aligned
+wording.)
 
 TestGenEval instances already
 come with `code_file` and `test_file` pre-selected by the benchmark itself,
