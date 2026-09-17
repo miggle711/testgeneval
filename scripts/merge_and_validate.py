@@ -18,10 +18,10 @@ import os
 import sys
 
 
-def find_shards(output_dir: str, model_nickname: str, dataset: str, temperature, num_shards: int):
+def find_shards(output_dir: str, model_nickname: str, dataset: str, temperature, num_samples, num_shards: int):
     pattern = os.path.join(
         output_dir,
-        f"{model_nickname}__{dataset}__{temperature}__test__shard-*__num_shards-{num_shards}.jsonl",
+        f"{model_nickname}__{dataset}__{temperature}__k{num_samples}__test__shard-*__num_shards-{num_shards}.jsonl",
     )
     shards = sorted(glob.glob(pattern))
     return shards
@@ -72,6 +72,11 @@ def main():
     )
     parser.add_argument("--dataset", type=str, default="testgeneval")
     parser.add_argument("--temperature", type=str, default="0")
+    parser.add_argument(
+        "--num_samples", type=int, default=1,
+        help="k in pass@k -- must match --num_samples used for generation, "
+             "part of the real output filename since testgeneval#43.",
+    )
     parser.add_argument("--num_shards", type=int, required=True)
     parser.add_argument(
         "--expected_total", type=int, default=None,
@@ -82,7 +87,8 @@ def main():
     args = parser.parse_args()
 
     shards = find_shards(
-        args.output_dir, args.model_nickname, args.dataset, args.temperature, args.num_shards
+        args.output_dir, args.model_nickname, args.dataset, args.temperature,
+        args.num_samples, args.num_shards
     )
     if len(shards) != args.num_shards:
         print(
@@ -95,7 +101,7 @@ def main():
 
     merged_path = os.path.join(
         args.output_dir,
-        f"{args.model_nickname}__{args.dataset}__{args.temperature}__test.jsonl",
+        f"{args.model_nickname}__{args.dataset}__{args.temperature}__k{args.num_samples}__test.jsonl",
     )
     print(f"Merging {len(shards)} shards into {merged_path}")
     for s in shards:

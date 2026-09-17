@@ -93,7 +93,7 @@ support Docker):
 
 ```bash
 mkdir -p results/instruct/data_logs   # must exist first, run_evaluation.py won't create it
-python3 run_evaluation.py --predictions_path results/instruct/<model>__testgeneval__0__test.jsonl \
+python3 run_evaluation.py --predictions_path results/instruct/<model>__testgeneval__0__k1__test.jsonl \
   --log_dir results/instruct/data_logs --swe_bench_tasks kjain14/testgeneval --num_processes 4
 ```
 
@@ -339,11 +339,14 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   within 900s`, not a crash or config error. Fixed by passing `VLLM_STARTUP_TIMEOUT=1800` on
   the submission. Larger models on more GPUs should be expected to need more startup room,
   not assumed to fit the same default that works for a single-GPU 7-8B model.
-- **Output filenames don't encode `NUM_SAMPLES`, so a real pass@1 job and a later real pass@5
-  job for the same model and arm silently collide on the same file.** `run_api.py` builds the
-  output filename from model, dataset, and temperature only. `existing_ids` then reads whatever
-  is already at that filename as "already done" regardless of what real sample count those rows
-  actually hold. Confirmed real 2026-09-07 across four separate cases: three real, silent no-ops
+- **Fixed 2026-09-17 (testgeneval#43-adjacent): output filenames now include `k{num_samples}`**
+  (e.g. `k1` for pass@1, `k5` for pass@5), across `run_api.py`, `run_pipeline.py`,
+  `run_huggingface.py`, and `scripts/merge_and_validate.py`. Before this fix, output filenames
+  didn't encode `NUM_SAMPLES`, so a real pass@1 job and a later real pass@5 job for the same
+  model and arm silently collided on the same file. `run_api.py` built the output filename from
+  model, dataset, and temperature only. `existing_ids` then read whatever was already at that
+  filename as "already done" regardless of what real sample count those rows actually held.
+  Confirmed real 2026-09-07 across four separate cases: three real, silent no-ops
   where a job assigned as pass@5 read the existing real pass@1 file, saw almost everything
   already "complete," and only real gap-filled a handful of missing instances at `k=1`, never
   actually generating real pass@5 data at all (gpt-oss-20B, Qwen3-4B, and twice for
@@ -351,12 +354,15 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   and one real, genuine data-mixing incident (Llama-3.1-8B) where a real pass@1 job and a real
   pass@5 job both actually ran into the same file, producing up to 7 real duplicate rows per
   id, a mix of `k=1` and `k=5` samples tangled together, accumulated across at least 16 separate
-  real jobs that had ever written to that one file. Fix: before submitting a job at a different
-  `NUM_SAMPLES` for a model and arm that already has real data, `mv` the existing file aside
-  first (e.g. append `__pass1`/`__pass5`), then confirm the resubmitted job's own log says
-  `Read 0 already completed ids` before trusting it's starting genuinely fresh. If a file has
-  already been silently mixed, group and deduplicate by the real `id` field, not `instance_id`,
-  two structurally distinct real tasks can share the same `instance_id` (confirmed real:
+  real jobs that had ever written to that one file. Workaround used at the time, now obsolete:
+  before submitting a job at a different `NUM_SAMPLES` for a model and arm that already had real
+  data, `mv` the existing file aside first (e.g. append `__pass1`/`__pass5`). With `k{num_samples}`
+  now in the filename, this manual step is no longer needed -- a pass@1 and pass@5 run for the
+  same model/arm/temperature genuinely can't collide anymore. Still worth confirming a resubmitted
+  job's own log says `Read 0 already completed ids` when starting a new, previously-never-run
+  sample count, as a sanity check. Any file mixed under the old pattern before this fix still
+  needs the old cleanup: group and deduplicate by the real `id` field, not `instance_id`, two
+  structurally distinct real tasks can share the same `instance_id` (confirmed real:
   `django__django-12091-15824` and `django__django-12091-15825`), so grouping by `instance_id`
   produces a false "duplicate" alarm.
 - **A committed evaluation report with a real, correct `generated` count can still mean real
@@ -625,7 +631,9 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   work was missing/lost, when the actual live file (`__test.jsonl`, no suffix — the exact path
   `run_api.py` reads/writes via `OUTPUT_DIR/{model}__{dataset}__{temp}__test.jsonl`) was already
   correctly at 1199/1208. The naming convention, reverse-engineered from RUN_LOG.md's real
-  incident write-ups (not documented anywhere before this):
+  incident write-ups (not documented anywhere before this; **the filename shape itself changed
+  2026-09-17 to add `k{num_samples}`, see the "output filenames now include k{num_samples}"
+  entry above, the pattern below is the pre-fix historical shape**):
     - `{model}__{dataset}__{temp}__test.jsonl` (no extra suffix) = **the only live file**.
       `run_api.py`'s own resume logic (`Read N already completed ids from <this path>`) always
       reads/writes here. This is the one to `wc -l` for a real status check.

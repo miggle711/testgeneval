@@ -142,7 +142,7 @@ Use `run_evaluation.py` directly instead, it's model-agnostic, no
 ```bash
 mkdir -p results/instruct/data_logs
 python3 run_evaluation.py \
-  --predictions_path results/instruct/<model>__testgeneval__0__test.jsonl \
+  --predictions_path results/instruct/<model>__testgeneval__0__k1__test.jsonl \
   --log_dir results/instruct/data_logs \
   --swe_bench_tasks kjain14/testgeneval \
   --num_processes 4
@@ -334,7 +334,10 @@ might already exist there without write access for you.
 Watch the job the same way as setup. When it's done you'll see
 `Done. Predictions written under ...`, and the output lands in
 `results/instruct/` (or `results/kg_only/`), named something like
-`Qwen3-4B-Instruct-2507__testgenevallite__0.2__test.jsonl`.
+`Qwen3-4B-Instruct-2507__testgenevallite__0.2__k1__test.jsonl` (the
+`k1`/`k5` segment is the real sample count, required since
+testgeneval#43 to keep a pass@1 and pass@5 run for the same model/arm/
+temperature from colliding on the same file).
 
 If a job dies partway through with an `OSError` mentioning disk quota
 or an input/output error, that is a real, team-wide `/fs04` filesystem
@@ -411,7 +414,7 @@ Pull the predictions file down with `scp` from your own machine, not
 from inside an M3 SSH session:
 
 ```bash
-scp <username>@m3.massive.org.au:/home/<username>/al49_scratch/kg-testing/testgeneval/results/instruct/Qwen3-4B-Instruct-2507__testgenevallite__0.2__test.jsonl .
+scp <username>@m3.massive.org.au:/home/<username>/al49_scratch/kg-testing/testgeneval/results/instruct/Qwen3-4B-Instruct-2507__testgenevallite__0.2__k1__test.jsonl .
 ```
 
 The dedicated transfer node (`m3-dtn.massive.org.au`) is meant for this

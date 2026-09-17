@@ -145,7 +145,7 @@ if __name__ == "__main__":
     pred_dir = os.path.join(base_dir, "preds")
     os.makedirs(pred_dir, exist_ok=True)
 
-    pred_output_filename = f"{model_suf}__{data_suf}__{args.temperature}__test.jsonl"
+    pred_output_filename = f"{model_suf}__{data_suf}__{args.temperature}__k{args.num_samples_full}__test.jsonl"
     print(pred_output_filename)
     preds_file = os.path.join(pred_dir, pred_output_filename)
 
