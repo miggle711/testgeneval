@@ -14,18 +14,19 @@ real team handoff plan (who is evaluating which model/arm).
 
 ## Real evaluation status per model/arm (pass@5, the primary metric)
 
-Updated 2026-09-17, full real audit against actual `.eval.log` counts on
-M3 for every model/arm, not just each person's own last report. Real
-sub-issues per person: #57 (jliu0290), #58 (wtho0016), #59 (wlee0060),
-#62 (mvar0010), all linked under #56. **8 of 14 real model/arm
-combinations are genuinely complete.**
+Updated 2026-09-19 for gpt-oss-20B instruct (see note below); everything
+else last audited 2026-09-17, full real audit against actual
+`.eval.log` counts on M3 for every model/arm, not just each person's
+own last report. Real sub-issues per person: #57 (jliu0290), #58
+(wtho0016), #59 (wlee0060), #62 (mvar0010), all linked under #56. **9 of
+14 real model/arm combinations are genuinely complete.**
 
 | Model | Arm | Predictions | Real .eval.log count | Status | Owner |
 |---|---|---|---|---|---|
 | gpt-oss-120B | instruct | 1179 | 1118 | In progress, 61 remaining | wtho0016 (#58) |
 | gpt-oss-120B | kg_only | 1201 | 1201 | **Done** | wtho0016 (#58) |
-| gpt-oss-20B | instruct | 1210 | 1105 | In progress, 105 remaining | wlee0060 (#59) |
-| gpt-oss-20B | kg_only | 1210 | 1210 | **Done** | wlee0060 (#59) |
+| gpt-oss-20B | instruct | 1210 | 1210 | **Done** (2026-09-19). Real 15-instance gap, all `sympy`, persisted across 3+ days of `--skip_existing` resubmits -- not a new bug, but a wrinkle on #64's host-timeout fix: the default `TIMEOUT=3600s` protecting job-wide throughput was too low for these specific instances, so they kept getting cleanly killed (no `.eval.log` written) on every attempt regardless of resubmit count. Fixed via a targeted re-run of just those 15 with `TIMEOUT=21600`. Real final numbers: `full_pass_at_5`=0.3615, `full_av_function_coverage`=62.44, `full_av_function_mutation_score`=39.93 | wlee0060 (#59) |
+| gpt-oss-20B | kg_only | 1210 | 1210 | **Done**. Real final numbers: `full_pass_at_5`=0.3724, `full_av_function_coverage`=74.63, `full_av_function_mutation_score`=55.04 | wlee0060 (#59) |
 | Qwen3-Coder-30B | instruct | 1210 | 1210 | **Done** | jliu0290 (#57) |
 | Qwen3-Coder-30B | kg_only | 1210 | 1210 | **Done** | jliu0290 (#57) |
 | Llama-4-Scout | instruct | 1199 | 1199 | **Done** | mvar0010 (#62) |
