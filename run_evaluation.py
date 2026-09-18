@@ -179,10 +179,10 @@ async def main(
                         skip_mutation=skip_mutation,
                     )
 
-            for setting in task_instance[KEY_PREDICTIONS]:
+            for ind, setting in enumerate(task_instance[KEY_PREDICTIONS]):
                 task = asyncio.create_task(
                     run_throttled(
-                        task_instance, namespace, log_dir, setting, timeout
+                        task_instance, namespace, log_dir, setting, ind, timeout=timeout
                     )
                 )
                 tasks.append(task)
