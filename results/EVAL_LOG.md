@@ -14,16 +14,15 @@ real team handoff plan (who is evaluating which model/arm).
 
 ## Real evaluation status per model/arm (pass@5, the primary metric)
 
-Updated 2026-09-19 for gpt-oss-20B instruct (see note below); everything
-else last audited 2026-09-17, full real audit against actual
-`.eval.log` counts on M3 for every model/arm, not just each person's
-own last report. Real sub-issues per person: #57 (jliu0290), #58
-(wtho0016), #59 (wlee0060), #62 (mvar0010), all linked under #56. **9 of
-14 real model/arm combinations are genuinely complete.**
+Updated 2026-09-22, full real audit against actual `.eval.log` counts
+on M3 for every model/arm, not just each person's own last report.
+Real sub-issues per person: #57 (jliu0290), #58 (wtho0016), #59
+(wlee0060), #62 (mvar0010), all linked under #56. **13 of 14 real
+model/arm combinations are genuinely complete.**
 
 | Model | Arm | Predictions | Real .eval.log count | Status | Owner |
 |---|---|---|---|---|---|
-| gpt-oss-120B | instruct | 1179 | 1118 | In progress, 61 remaining | wtho0016 (#58) |
+| gpt-oss-120B | instruct | 1179 | 1179 | **Done** | wtho0016 (#58) |
 | gpt-oss-120B | kg_only | 1201 | 1201 | **Done** | wtho0016 (#58) |
 | gpt-oss-20B | instruct | 1210 | 1210 | **Done** (2026-09-19). Real 15-instance gap, all `sympy`, persisted across 3+ days of `--skip_existing` resubmits -- not a new bug, but a wrinkle on #64's host-timeout fix: the default `TIMEOUT=3600s` protecting job-wide throughput was too low for these specific instances, so they kept getting cleanly killed (no `.eval.log` written) on every attempt regardless of resubmit count. Fixed via a targeted re-run of just those 15 with `TIMEOUT=21600`. Real final numbers: `full_pass_at_5`=0.3615, `full_av_function_coverage`=62.44, `full_av_function_mutation_score`=39.93 | wlee0060 (#59) |
 | gpt-oss-20B | kg_only | 1210 | 1210 | **Done**. Real final numbers: `full_pass_at_5`=0.3724, `full_av_function_coverage`=74.63, `full_av_function_mutation_score`=55.04 | wlee0060 (#59) |
@@ -33,10 +32,10 @@ own last report. Real sub-issues per person: #57 (jliu0290), #58
 | Llama-4-Scout | kg_only | 1208 | 1208 | **Done** | mvar0010 (#62) |
 | Llama-3.1-8B | instruct | 1210 | 1210 | **Done**, confirmed clean after the real #64 sympy-instance-loss fix | mvar0010 (#62) |
 | Llama-3.1-8B | kg_only | 1208 | 1208 | **Done** | mvar0010 (#62) |
-| Qwen3-4B | instruct | 1199 | 440 | In progress, 759 remaining (jobs 60167863/60167864) | mvar0010 (#62) |
-| Qwen3-4B | kg_only | 985 | 985 | **Done** | mvar0010 (#62) |
-| Qwen2.5-Coder-7B | instruct | 1210 | 0 as of 2026-09-16 (only small, deprecated validation samples existed) | Submitted 2026-09-17, 4-way sharded (jobs 60188807/808/809/810) | mvar0010 (#62), real gap found 2026-09-17, was never assigned under #56's original handoff |
-| Qwen2.5-Coder-7B | kg_only | 1209 | 0 as of 2026-09-16 | Submitted 2026-09-17, 4-way sharded (jobs 60188812/813/820/821) | mvar0010 (#62), same real gap |
+| Qwen3-4B | instruct | 1199 | 541 | **In progress**, 658 real instances stalled since 2026-09-17 -- the only 2 shards ever submitted (60167863/60167864, ~600 instances each, vs. the 4-5-way split used everywhere else) both genuinely hit the 24h SLURM wall-clock TIMEOUT, no further activity since. Re-sharded the missing 660 instances 5-way (130-136 each) and resubmitted 2026-09-22: 60362570-60362574 | mvar0010 (#62) |
+| Qwen3-4B | kg_only | 985 | 985 | **Done**. Any Pass@1 backfill also done, 968/985 (98.3%) usable -- 17 real instances show genuine test flakiness (non-deterministic pass/fail across repeated real evaluations of the same prediction), safely excluded by the pipeline's existing conservative default rather than forced to pick one outcome, see testgeneval#76 | mvar0010 (#62) |
+| Qwen2.5-Coder-7B | instruct | 1210 | 1210 | **Done** (2026-09-18) | mvar0010 (#62) |
+| Qwen2.5-Coder-7B | kg_only | 1209 | 1209 | **Done** (2026-09-18) | mvar0010 (#62) |
 
 Superseded, kept for reference only: gpt-oss-20B instruct pass@1
 (temperature 0.2) full-scale run, done 2026-09-14, and its earlier
