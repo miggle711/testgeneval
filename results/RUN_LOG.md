@@ -1119,11 +1119,10 @@ torch inductor compile-cache bug (#45) is blocking wlee0060's Qwen3-4B
 jobs specifically, needs her own account-local cache clear.
 
 
-## Real pass@1 generation status, updated 2026-09-22
+## Real pass@1 generation status, updated 2026-09-26
 
-The table above is a stale 2026-09-17/18 snapshot mid-crisis. Real,
-current state, checked directly against M3 predictions files and real
-job `sacct` states:
+Real, current state, checked directly against M3 predictions files and
+real job `sacct` states:
 
 | Model | Arm | Real pass@1 predictions | Owner |
 |---|---|---|---|
@@ -1135,29 +1134,31 @@ job `sacct` states:
 | Llama-3.1-8B | kg_only | **Done** (1186/1186) | wtho0016 (#68) |
 | gpt-oss-120B | instruct | **Done** (1179/1179) | wtho0016 (#68) |
 | gpt-oss-120B | kg_only | **Done** (1201/1201), resubmitted after a real port collision on the first attempt | wtho0016 (#68) |
-| Qwen3-4B | instruct | **Not started** -- real queue delay on `m3h`, job 60187740 hit #45's torch inductor cache bug, resubmitted, still queued | wlee0060 (#69) |
-| Qwen3-4B | kg_only | **Not started**, same real cause | wlee0060 (#69) |
-| gpt-oss-20B | instruct | **Not started** -- real queue delay on `m3h`, job 60187737 queued since 2026-09-17 | wlee0060 (#69) |
-| gpt-oss-20B | kg_only | **Not started**, same real cause | wlee0060 (#69) |
-| Llama-4-Scout | instruct | **In progress** -- first attempt (60177586) hit #45's cache bug, cache cleared and resubmitted 2026-09-22 as job 60362090, currently queued behind a real cluster maintenance window | mvar0010 (#66) |
-| Llama-4-Scout | kg_only | **Blocked** -- job 60187739 failed on a real 401, wlee0060's HF account lacks approved gated-model access for `meta-llama/Llama-4-Scout-17B-16E-Instruct`, needs her to request access and refresh her token, see testgeneval#69 | wlee0060 (#69) |
+| Qwen3-4B | instruct | **Done** (1204/1210), real. Original attempt hit #45's torch inductor cache bug; resubmitted 2026-09-25 by wlee0060 herself using scratch-based `VLLM_CACHE_ROOT`/`TORCHINDUCTOR_CACHE_DIR` (job 60443676), a more durable real fix than clearing `~/.cache/vllm` (which had been re-corrupting). 6 real ids still missing, not yet audited/backfilled | wlee0060 (#69) |
+| Qwen3-4B | kg_only | **Done** (1185/1210), same real fix (job 60443677), 25 real ids still missing, not yet audited/backfilled | wlee0060 (#69) |
+| gpt-oss-20B | instruct | **Done** (1179/1179), same real fix (job 60443674) | wlee0060 (#69) |
+| gpt-oss-20B | kg_only | **Done** (1201/1210), same real fix (job 60443675), 9 real ids still missing, not yet audited/backfilled | wlee0060 (#69) |
+| Llama-4-Scout | instruct | **In progress** -- hit #45's cache bug 3 separate times on mvar0010's account (cache re-corrupted between attempts, `TENSOR_PARALLEL_SIZE=4` may make this worse), fixed 2026-09-26 the same scratch-based-cache way as wlee0060's real fix above, resubmitted as job 60473848, currently queued (real `m3h` resource contention, not maintenance) | mvar0010 (#66) |
+| Llama-4-Scout | kg_only | **In progress** -- wlee0060's real HF gated-access issue resolved, resubmitted herself 2026-09-25 as job 60399158, currently queued (real estimate 2026-09-27) | wlee0060 (#69) |
 
-**10 of 14 real model/arm combinations are genuinely complete for pass@1 generation.**
+**12 of 14 real model/arm combinations are genuinely complete for pass@1 generation** (2 of those 12 have small real per-instance gaps not yet backfilled).
 
-## Real pass@1 evaluation status, updated 2026-09-22
+## Real pass@1 evaluation status, updated 2026-09-26
 
 | Model | Arm | Real .eval.log count | Status | Owner |
 |---|---|---|---|---|
-| Qwen3-Coder-30B | instruct | complete | **Done**, reports being generated | jliu0290 (#78) |
-| Qwen3-Coder-30B | kg_only | complete | **Done**, reports being generated | jliu0290 (#78) |
-| gpt-oss-120B | instruct | 1144/1179 | 35 real gaps (default `TIMEOUT` too short for slow stragglers, same class as testgeneval#59's finding, not a repeat of #86), rerun submitted 2026-09-22 (job 60362727, `TIMEOUT=21600`) | wtho0016 (#68) |
-| gpt-oss-120B | kg_only | 1177/1201 | 24 real gaps, same cause, rerun submitted (job 60362728) | wtho0016 (#68) |
-| Llama-3.1-8B | instruct | 1090/1123 | 33 real gaps, same cause, rerun submitted (job 60362729) | wtho0016 (#68) |
-| Llama-3.1-8B | kg_only | 1144/1186 | 42 real gaps, same cause, rerun submitted (job 60362730) | wtho0016 (#68) |
-| Qwen2.5-Coder-7B | instruct | 0 | Submitted 2026-09-22, 5-way sharded (jobs 60362642/644/646/648/649), queued behind maintenance | mvar0010 (#66) |
-| Qwen2.5-Coder-7B | kg_only | 0 | Submitted 2026-09-22, 5-way sharded (jobs 60362650-654), queued behind maintenance | mvar0010 (#66) |
-| Everything else | -- | -- | Generation not yet done (Qwen3-4B, gpt-oss-20B, Llama-4-Scout kg_only) or just resubmitted (Llama-4-Scout instruct) -- no eval possible yet | Sheryl / mvar0010 |
+| Qwen3-Coder-30B | instruct | 1235 (real retry-accumulation, genuinely complete) | **Done**, real eval data complete, report not yet generated | jliu0290 (#78) |
+| Qwen3-Coder-30B | kg_only | 1229 (same) | **Done**, same, report not yet generated | jliu0290 (#78) |
+| gpt-oss-120B | instruct | 1179/1179 | **Done**. 35 real gaps (default `TIMEOUT` too short for slow stragglers, same class as testgeneval#59's finding, not a repeat of #86) backfilled via a rerun (mvar0010's own account, due to a real ownership issue with `os.chmod`/`HF_DATASETS_CACHE` blocking a direct rerun into wtho0016's directories -- ran into mvar0010's own log dir instead, then copied the new real logs into wtho0016's real directory, additive only, no overwrite). Real reports generated 2026-09-26 | wtho0016 (#68) |
+| gpt-oss-120B | kg_only | 1201/1201 | **Done**, same real backfill process. Reports generated | wtho0016 (#68) |
+| Llama-3.1-8B | instruct | 1123/1123 | **Done**, same real backfill process. Reports generated | wtho0016 (#68) |
+| Llama-3.1-8B | kg_only | 1186/1186 | **Done**, same real backfill process. Reports generated | wtho0016 (#68) |
+| Qwen2.5-Coder-7B | instruct | 1210/1210 | **Done** (2026-09-24). Real reports generated | mvar0010 (#66) |
+| Qwen2.5-Coder-7B | kg_only | 1209/1209 | **Done** (2026-09-24). Real reports generated | mvar0010 (#66) |
+| gpt-oss-20B | instruct | -- | **In progress**, real generation just completed 2026-09-25, evaluation submitted 2026-09-26, 5-way sharded (jobs 60473966-970) | wlee0060 (#69), submitted by mvar0010 |
+| gpt-oss-20B | kg_only | -- | **In progress**, same, jobs 60473971-975 | wlee0060 (#69), submitted by mvar0010 |
+| Qwen3-4B | instruct | -- | **In progress**, same, jobs 60473976-980 | wlee0060 (#69), submitted by mvar0010 |
+| Qwen3-4B | kg_only | -- | **In progress**, same, jobs 60473981-985 | wlee0060 (#69), submitted by mvar0010 |
+| Llama-4-Scout | instruct + kg_only | -- | Not yet possible, generation still in progress for both | mvar0010 / wlee0060 |
 
-Real, confirmed cluster-wide maintenance window: 2026-09-23, 09:00-12:00,
-`ALL_NODES` reservation flag, no partition exempt -- delays every job
-queued through that window, no action needed, resumes automatically.
+**8 of 14 real model/arm combinations are genuinely complete for pass@1 evaluation.**

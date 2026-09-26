@@ -14,10 +14,10 @@ real team handoff plan (who is evaluating which model/arm).
 
 ## Real evaluation status per model/arm (pass@5, the primary metric)
 
-Updated 2026-09-22, full real audit against actual `.eval.log` counts
+Updated 2026-09-26, full real audit against actual `.eval.log` counts
 on M3 for every model/arm, not just each person's own last report.
 Real sub-issues per person: #57 (jliu0290), #58 (wtho0016), #59
-(wlee0060), #62 (mvar0010), all linked under #56. **13 of 14 real
+(wlee0060), #62 (mvar0010), all linked under #56. **14 of 14 real
 model/arm combinations are genuinely complete.**
 
 | Model | Arm | Predictions | Real .eval.log count | Status | Owner |
@@ -32,7 +32,7 @@ model/arm combinations are genuinely complete.**
 | Llama-4-Scout | kg_only | 1208 | 1208 | **Done** | mvar0010 (#62) |
 | Llama-3.1-8B | instruct | 1210 | 1210 | **Done**, confirmed clean after the real #64 sympy-instance-loss fix | mvar0010 (#62) |
 | Llama-3.1-8B | kg_only | 1208 | 1208 | **Done** | mvar0010 (#62) |
-| Qwen3-4B | instruct | 1199 | 541 | **In progress**, 658 real instances stalled since 2026-09-17 -- the only 2 shards ever submitted (60167863/60167864, ~600 instances each, vs. the 4-5-way split used everywhere else) both genuinely hit the 24h SLURM wall-clock TIMEOUT, no further activity since. Re-sharded the missing 660 instances 5-way (130-136 each) and resubmitted 2026-09-22: 60362570-60362574 | mvar0010 (#62) |
+| Qwen3-4B | instruct | 1199 | 1199 | **Done** (2026-09-24). 658 real instances had stalled since 2026-09-17 -- the only 2 shards ever submitted (60167863/60167864, ~600 instances each, vs. the 4-5-way split used everywhere else) both genuinely hit the 24h SLURM wall-clock TIMEOUT, no further activity since. Re-sharded the missing 660 instances 5-way (130-136 each) and resubmitted 2026-09-22 (60362570-60362574), completed 2026-09-24 (4 of 5 jobs hit a cosmetic tail-end OOM, real work confirmed complete before each kill) | mvar0010 (#62) |
 | Qwen3-4B | kg_only | 985 | 985 | **Done**. Any Pass@1 backfill also done, 968/985 (98.3%) usable -- 17 real instances show genuine test flakiness (non-deterministic pass/fail across repeated real evaluations of the same prediction), safely excluded by the pipeline's existing conservative default rather than forced to pick one outcome, see testgeneval#76 | mvar0010 (#62) |
 | Qwen2.5-Coder-7B | instruct | 1210 | 1210 | **Done** (2026-09-18) | mvar0010 (#62) |
 | Qwen2.5-Coder-7B | kg_only | 1209 | 1209 | **Done** (2026-09-18) | mvar0010 (#62) |
