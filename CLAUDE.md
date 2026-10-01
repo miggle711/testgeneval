@@ -665,3 +665,31 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   run is still worth it over a full expensive rerun, but needs a real merge step (reading both
   directories per instance and combining fields) before `generate_report.py` can produce one
   complete report, not yet written as of 2026-09-17, tracked in testgeneval#76.
+- **`--skip_existing` also silently no-ops a rerun meant to backfill a *partial* instance, same
+  real class of bug as the `any_pass_at_1` gotcha above but triggered differently.** A pass@5
+  instance whose evaluation got cut short (host-timeout kill mid-sample, see the
+  `APPTAINER_HOST_TIMEOUT` gotcha below) still has a real `.eval.log` file on disk, just with
+  fewer than 5 real `>>>>> Tests config` blocks. `--skip_existing` only checks that the file
+  *exists*, not that it has the real expected number of blocks, so resubmitting the exact same
+  instances against the same `LOG_DIR` finds every one "already done" and skips all of them --
+  confirmed real, hit twice independently (testgeneval#89, 2026-09-30/10-01). The real fix: move
+  every short/partial log out of `LOG_DIR` first (e.g. to a `_partial_backup/` subdirectory, not
+  deleted, kept for audit), *then* resubmit, so `--skip_existing` actually sees them as missing
+  and re-evaluates. A one-off script comparing each real log's block count against
+  `len(prediction["preds"][setting])` is the reliable way to find which ones are genuinely short.
+- **`APPTAINER_HOST_TIMEOUT` defaults to `TIMEOUT + 300`, and `TIMEOUT` covers the whole
+  instance (all pass@k samples), not one sample.** Confirmed real (testgeneval#89,
+  2026-10-01): at the script's bare default `TIMEOUT=3600`, the real host kill limit is only
+  3900s for an *entire* 5-sample pass@5 instance including cosmic-ray mutation testing per
+  passing sample -- comfortably enough for pass@1, not for 5 samples on a slow repo (Django,
+  astropy). The container gets killed partway through the later samples with no error, so the
+  job reports success while quietly producing partial logs for the slower instances. Real,
+  confirmed effect: because `full_pass_at_k` is only computed over instances with the real
+  expected number of samples, the cut-off instances (disproportionately ones the model *passes*,
+  since a passing sample runs real mutation testing too and takes longer) get dropped from the
+  denominator, making `full_pass_at_5` read **lower than it actually is** -- clearest where
+  pass@5 comes out lower than pass@1 for the same model/arm. Always set `TIMEOUT` explicitly for
+  a real pass@5 (or higher-k) run rather than relying on the default, and when `TIMEOUT` alone
+  isn't generous enough, override `APPTAINER_HOST_TIMEOUT` directly rather than inflating
+  `TIMEOUT` further (the two serve different real purposes: `TIMEOUT` is also passed to other
+  real per-sample logic, not just the host kill margin).
