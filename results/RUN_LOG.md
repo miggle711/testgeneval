@@ -1162,3 +1162,78 @@ real job `sacct` states:
 | Llama-4-Scout | instruct + kg_only | -- | Not yet possible, generation still in progress for both | mvar0010 / wlee0060 |
 
 **8 of 14 real model/arm combinations are genuinely complete for pass@1 evaluation.**
+
+## Real status update, 2026-10-06
+
+### Llama-4-Scout kg_only pass@5, real generation gap closed
+
+The real generation gap flagged in #89 (0/1208, "generation gap not
+eval") was closed by wlee0060, who ran the genuine 5-sample-per-instance
+pass@5 generation herself (job 60597670, completed 2026-10-02,
+1208/1210 real instances, logged in #89). Evaluation on this output
+was not yet started as of that comment.
+
+Evaluation submitted 2026-10-05 by mvar0010 (10-way sharded,
+`TIMEOUT=21600`, jobs 60732835-60732844), writing to
+`/fs04/scratch2/al49/mvar0010/eval_logs/llama4scout_kgonly_k5`. As of
+2026-10-06, 4 of 10 shards actively running (4-8h elapsed each), 6
+still queued on real scheduler priority, none failed.
+
+### Real token-expiry blocker and resolution (#87)
+
+Two real jobs stalled on an expired HF OAuth token on jliu0290's and
+wtho0016's own accounts (separate from either job's actual
+configuration, both confirmed correctly set up once checked): job
+60634141 (wtho0016's Qwen3-4B kg_only gap-fill) and job 60626840
+(jliu0290's Llama-4-Scout instruct pass@5 regen, confirmed via #57 as
+a real, intentional request, not a mix-up). wtho0016's `$HOME` was
+also separately found to be completely full, blocking even a token
+refresh (`OSError: [Errno 122] Disk quota exceeded` on the token
+write itself) -- real diagnostic commands (not blind cleanup) posted
+to #57.
+
+The Qwen3-4B gap-fill (wtho0016's job) was resubmitted under
+mvar0010's own account in the meantime (job 60732851, currently
+queued) to avoid blocking on her token specifically.
+
+### Real Qwen3-Coder-30B eval timeout, root cause confirmed (#87)
+
+Job 60692882 (jliu0290, one eval shard) survived the full 24h budget
+without completing -- the longest any shard has lasted, but still a
+real timeout. Log analysis found the real cause: `num_processes=1`
+(sequential container execution) combined with cosmic-ray generating
+up to 1284 real mutants for a single matplotlib source file, each
+requiring a ~2.3s full test-suite rerun. At that real rate, one
+passing sample's mutation testing alone can take ~49 minutes, times
+up to 5 samples under pass@5. Not a bug -- genuinely too much real
+work for the time budget on mutant-heavy files. Job also logged 9
+real `oom_kill` events, a separate issue not yet investigated. Full
+real detail in the #87 comment thread.
+
+### Real ablation study kicked off (#90)
+
+jliu0290 proposed a real pass@1 ablation on Qwen3-Coder-30B kg_only
+(highest pass@1 + most both-pass instances of any model), varying BFS
+retrieval depth and generation temperature: depth=1/T=0.8,
+depth=2/T=0.6, depth=2/T=1.0, against the existing depth=2/T=0.8
+baseline.
+
+Real finding before running anything: the existing
+`kg_prompts_depth2.json` (dated 2026-09-17) predates the real
+confidence-filtering fix for ambiguous `inherits`/`uses` edges
+(commit `522937d`, 2026-09-18) -- used for every `kg_only` job in the
+project so far. Using it for this ablation's depth=2 conditions while
+depth=1 used the fixed logic would have conflated "effect of depth"
+with "effect of the fix." Both depths were rebuilt fresh
+(`kg_prompts_depth1_ablation.json`, `kg_prompts_depth2_ablation.json`,
+both confirmed complete) under new filenames so the stale baseline
+file wasn't touched. **Open, undecided question**: whether every
+prior real `kg_only` result in the project (built against the stale
+file) needs a rerun or just a caveat in the writeup.
+
+Jobs split across wlee0060 (depth=1/T=0.8: job 60749277,
+depth=2/T=0.6: job 60749286, both confirmed using the correct
+`_ablation` prompt files) and wtho0016 (depth=2/T=1.0: job 60755690,
+exact config not yet independently confirmed). All 3 currently
+queued, real GPU scheduler priority, none started yet. Full detail
+and exact commands in #90.
