@@ -102,6 +102,8 @@ MODEL_LIMITS = {
     "llama-3.1-8b-instant": 128_000,
     "meta-llama/Meta-Llama-3.1-8B-Instruct": 128_000,
     "Qwen/Qwen3-Coder-30B-A3B-Instruct": 262_144,
+    # Same model via OpenRouter (lowercase id), testgeneval#90 ablation.
+    "qwen/qwen3-coder-30b-a3b-instruct": 262_144,
     "Qwen/Qwen3-4B-Instruct-2507": 262_144,
     "openai/gpt-oss-20b": 131_072,
     "openai/gpt-oss-120b": 131_072,
@@ -183,6 +185,7 @@ OUTPUT_LIMITS = {
     "llama-3.1-8b-instant": 8_192,
     "meta-llama/Meta-Llama-3.1-8B-Instruct": 8_000,
     "Qwen/Qwen3-Coder-30B-A3B-Instruct": 8_000,
+    "qwen/qwen3-coder-30b-a3b-instruct": 8_000,
     "Qwen/Qwen3-4B-Instruct-2507": 8_000,
     "openai/gpt-oss-20b": 48_000,
     "openai/gpt-oss-120b": 48_000,
