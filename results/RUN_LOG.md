@@ -1242,3 +1242,23 @@ depth=2/T=0.6: job 60749286, both confirmed using the correct
 exact config not yet independently confirmed). All 3 currently
 queued, real GPU scheduler priority, none started yet. Full detail
 and exact commands in #90.
+
+### Llama-4-Scout pass@1 eval OOM at the default 180G, real progress survives (2026-10-11/12)
+
+Sharded Llama-4-Scout pass@1 evaluation (instruct_k1, kg_only_k1,
+instruct_k5_real; testgeneval#92) hit real OOM on 3 of the 12 shards:
+instruct_k1 shard-0 (job 60829598), shard-1 (60829599), and
+instruct_k5_real shard-2 (60830233). All three exited `0:125` with
+MaxRSS ~188.7GB, just over the script's default `--mem=180G`.
+
+Real progress survived regardless -- checked actual `.eval.log`
+counts in the shared `LOG_DIR`, not just the job state: 1118/1199
+instruct_k1 and 1163/1208 kg_only_k1 logs already written across all
+12 shards combined, consistent with earlier findings (#62) that a
+job's own TIMEOUT/OOM label doesn't mean the work was lost.
+
+Resubmitted all 3 at `--mem=256G` with `--skip_existing` (jobs
+60928340, 60928341, 60928342), so only the genuinely missing
+instances get re-evaluated. Documented in CLAUDE.md's gotchas list
+so a future large-model eval starts at 256G rather than rediscovering
+this.
