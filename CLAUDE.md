@@ -16,10 +16,10 @@ fork only uses the `full` setting.
 
 The `kg_only` arm's prompts are pre-computed outside this repo by a companion project,
 `pycodekg` (repo `repo-kg-construction`), and handed to this repo as a JSON file
-(`kg_prompts.json`). This repo does not build knowledge graphs itself. `docs/EXPERIMENT_PLAN.md`
-(copied into this fork from `pycodekg`, its canonical source) describes the full cross-repo
-design and the locked model shortlist. `docs/funding-proposal.md` extends that shortlist with
-newer models the team is adding.
+(`kg_prompts.json`). This repo does not build knowledge graphs itself. The
+`fyp-paper` repo's `experiment_design/` directory is the canonical source for
+the full cross-repo design and model shortlist. `docs/funding-proposal.md`
+extends that shortlist with newer models the team is adding.
 
 ## Commands
 
@@ -149,11 +149,12 @@ overlapping/gapped shards across a resumed run.
 whole-file coverage/mutation score (the original TestGenEval metrics), and a function-scoped
 variant restricted to the lines the patch actually touched (`swebench_docker/target_range.py`
 resolves the target line range from the patch; `context_manager.py`'s
-`_log_function_coverage`/`_log_function_mutation_score` compute the scoped numbers). The
-function-scoped pair is the intended primary metric for the project's research questions (see
-`docs/EXPERIMENT_PLAN.md`'s Stage 5) since `kg_only` can structurally only write tests for the
-function it was shown, while `instruct` has the whole file and could pick up incidental credit
-elsewhere; whole-file numbers are kept as secondary/contextual.
+`_log_function_coverage`/`_log_function_mutation_score` compute the scoped numbers). Both are
+computed and reported; whether the whole-file or function-scoped figure serves as the primary
+metric is, as of this writing, still an open team decision (testgeneval#10) — `kg_only` can
+structurally only write tests for the function it was shown, while `instruct` has the whole file
+and could pick up incidental credit elsewhere, which argues for function-scoped as primary, but
+the team has not yet settled this.
 
 **Context-overflow losses are silent by design, not a bug.** When a model's real context window
 can't fit `instruct`'s flat-file prompt, `run_api.py`'s retry logic burns its budget against a

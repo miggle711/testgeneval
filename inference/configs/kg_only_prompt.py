@@ -18,8 +18,8 @@ class KGOnlyPrompt:
     No test content of any kind is shown to either arm under `full`, so
     this is a fair comparison to instruct's `full`-setting prompt on the
     test side; the completion settings (first/last/extra) are out of
-    scope for this arm (see miggle711/pycodekg's
-    docs/EXPERIMENT_PLAN.md for the scope decision).
+    scope for this arm (see the fyp-paper repo's experiment_design/
+    directory for the scope decision).
     """
 
     SYSTEM_MESSAGE = (

@@ -35,8 +35,8 @@ Both arms are told to focus on the same function, and neither is shown
 any existing test content, the comparison is meant to isolate
 *representation* (structured KG sections vs. a flat file), not have the
 two arms secretly doing different jobs. If you want the full reasoning
-behind that design, it's written up in the `pycodekg` repo's
-`docs/EXPERIMENT_PLAN.md`.
+behind that design, it's written up in the `fyp-paper` repo's
+`experiment_design/` directory.
 
 Evaluation has also grown a second pair of metrics. Coverage and
 mutation score were originally computed over the whole file. This fork
@@ -48,7 +48,7 @@ incidental credit elsewhere. Both the whole-file and function-scoped
 numbers get written to the results; treating function-scoped
 coverage/mutation score as the headline numbers (whole-file alongside as
 secondary/contextual) is proposed but not yet signed off by the team —
-see `EXPERIMENT_PLAN.md`'s "Open decisions requiring sign-off."
+see testgeneval#10.
 
 ## Setting up
 
@@ -256,8 +256,9 @@ sbatch --gres=gpu:L40S:1 --time=8:00:00 m3_run_inference.slurm
 ```
 
 `MODEL` needs to be a real HuggingFace model id, and should be one of the
-actual shortlisted models, see pycodekg's `docs/EXPERIMENT_PLAN.md` for
-the current list and their real, confirmed GPU requirements.
+actual shortlisted models, see the `fyp-paper` repo's `experiment_design/
+setup.md` for the current list and their real, confirmed GPU
+requirements.
 `DATASET_PATH` can be a HuggingFace dataset name, which vLLM downloads
 directly, or a local path to a dataset saved to disk and transferred
 over. `PROMPT_CONFIG` is `instruct` or `kg_only`. Both arms read

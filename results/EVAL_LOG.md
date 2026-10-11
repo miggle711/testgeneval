@@ -186,8 +186,8 @@ benchmark," and a bare percentage collapses that distinction.
 
 **"Does KG-augmented context outperform flat-file context for test
 generation, controlling for model?"** This is the actual research
-question (see docs/EXPERIMENT_PLAN.md), and fairness is
-stricter here. What matters is comparing instruct vs kg_only on the same
+question (see the fyp-paper repo's experiment_design/ directory), and
+fairness is stricter here. What matters is comparing instruct vs kg_only on the same
 instance set, per model. If instruct's flat-file prompt overflows a
 model's context on instance X but kg_only's more compact per-function
 view doesn't, that isn't noise to average away. It's potentially the
@@ -266,14 +266,15 @@ without crashing", the actual scientific output matches, including
 in testgeneval#27/#28.
 
 `FunctionCoverageLOG`/`FunctionMutationLOG` are this fork's own addition
-on top of the original TestGenEval benchmark (see
-`docs/EXPERIMENT_PLAN.md`'s Stage 5), scoped to just the lines of the
-patch's target function rather than the whole file. They're the intended
-primary comparison metric for RQ2/RQ3, since `kg_only` can structurally
-only generate tests for the function it was shown while `instruct` sees
-the whole file and could pick up incidental coverage or mutation kills
-elsewhere. Whole-file `CoverageLOG`/`MutationLOG` are the original
-benchmark's metrics, kept as secondary/contextual numbers. Worth noting
+on top of the original TestGenEval benchmark, scoped to just the lines
+of the patch's target function rather than the whole file. Both this
+and the whole-file `CoverageLOG`/`MutationLOG` are reported; which
+serves as the primary comparison metric for RQ2/RQ3 is, as of this
+writing, still an open team decision (testgeneval#10) — `kg_only` can
+structurally only generate tests for the function it was shown while
+`instruct` sees the whole file and could pick up incidental coverage or
+mutation kills elsewhere, which argues for function-scoped as primary,
+but the team has not yet settled this. Worth noting
 for this one instance: the function-scoped numbers are much lower than
 the whole-file ones (4.76% vs 35.98% coverage, 0% vs 12.37% mutation
 score), which is structurally plausible on a single instance (the

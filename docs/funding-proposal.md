@@ -2,8 +2,8 @@
 
 Patch-Aware Knowledge Graph Retrieval for LLM-Based Repository-Level
 Test Generation (ENG4702 FYP). Covers the compute needed to finish the
-`instruct` vs `kg_only` comparison described in
-`docs/EXPERIMENT_PLAN.md`.
+`instruct` vs `kg_only` comparison described in the `fyp-paper` repo's
+`experiment_design/` directory.
 
 ## What this is funding
 
