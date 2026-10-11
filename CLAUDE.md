@@ -694,3 +694,9 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   isn't generous enough, override `APPTAINER_HOST_TIMEOUT` directly rather than inflating
   `TIMEOUT` further (the two serve different real purposes: `TIMEOUT` is also passed to other
   real per-sample logic, not just the host kill margin).
+- **`m3_run_evaluation.slurm`'s default `--mem=180G` is not always enough for a large/MoE
+  model's eval shards.** Confirmed real (testgeneval#92, 2026-10-11/12): 3 Llama-4-Scout eval
+  shards (jobs 60829598, 60829599, 60830233) hit real OOM at exit code `0:125`, MaxRSS
+  ~188.7GB, just over the 180G request. Real progress survives a partial OOM (`--skip_existing`
+  resumes cleanly on resubmit, no need to restart the whole shard), but for a large model,
+  start at `--mem=256G` rather than waiting to hit this.
