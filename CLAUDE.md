@@ -700,3 +700,11 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   ~188.7GB, just over the 180G request. Real progress survives a partial OOM (`--skip_existing`
   resumes cleanly on resubmit, no need to restart the whole shard), but for a large model,
   start at `--mem=256G` rather than waiting to hit this.
+- **An `.eval.log` filename's instance id has a trailing `-<digits>` suffix that
+  `predictions.jsonl`'s own `instance_id` field does not.** Confirmed real 2026-10-12: a log is
+  named `<repo>__<repo>-<issue>-<suffix>.<model>_t=<temp>.full.eval.log` (e.g.
+  `astropy__astropy-12057-15650.Llama-4-Scout...`), but the matching prediction's
+  `instance_id` is just `astropy__astropy-12057`, no `-15650`. A naive set-difference
+  comparing bare log-derived ids against `instance_id`s (to find which instances still need
+  evaluating) will treat almost everything as missing, since the suffixed and bare forms never
+  match. Strip the trailing `-\d+` from the log filename's id portion before comparing.
