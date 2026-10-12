@@ -718,3 +718,14 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   of leaving it on shared scratch). Check a model's own tracking issue (#87, or its per-person
   generation/evaluation issue) for a real reported result before concluding its eval never
   happened just because a disk search came up empty.
+- **`$HOME`'s quota fills up again, this is a recurring real failure mode, not a one-time
+  fix.** Confirmed real again 2026-10-12, same account as the 2026-09-11 incident above: `.conda`
+  had grown back to 12GB and `.cache/huggingface` + `.cache/vllm` added another 5GB, pushing
+  `$HOME` to 100% full (`df -h ~` showing 0 available). Real, concrete symptom: 4 parallel
+  `m3_run_inference.slurm` generation jobs all failed at engine startup with
+  `OSError: [Errno 122] Disk quota exceeded` writing to `~/.cache/vllm` (the usage-reporting
+  thread) or the torch.compile cache, even though the model itself loaded fine first -- the
+  failure looks GPU/vLLM-related from the traceback (`EngineCore failed to start`) but the real
+  cause is `$HOME`, not CUDA or the model. If a generation job fails this way, check `df -h ~`
+  before debugging vLLM: `rm -rf ~/.cache/huggingface ~/.cache/vllm` is safe (both regenerate)
+  and was enough to recover real headroom (9GB freed) without touching `.conda`.
