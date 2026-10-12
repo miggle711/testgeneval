@@ -1285,3 +1285,47 @@ stripped first. Corrected, the real 5 missing instances were
 these ids and submitted it standalone (job 60941015, `comp`
 partition, `--mem=64G --time=4:00:00`) rather than resubmitting the
 whole shard.
+
+### Full real sweep across all open gaps (2026-10-12, #87/#90/#92)
+
+Checked every real gap across the main experiment and the ablation at
+once, cross-referencing the live M3 queue against every scratch
+location and #87's own history, rather than trusting any one earlier
+partial check.
+
+**Two false alarms, both from the search method, not real gaps:**
+- A real `gpt-5` eval directory under wtho0016's scratch (t=0.2)
+  looked like an untracked stray model. Traced to #50, explicitly
+  closed "GPT-5 removed from the evaluations (see #87)" -- real,
+  deliberate, already-resolved exploratory work, not a current gap.
+- Qwen3-4B and Qwen2.5-Coder-7B appeared to have zero real eval logs
+  in a first sweep, since that sweep only searched raw `.eval.log`
+  files on four known scratch dirs. #87's own history shows both are
+  substantively done (real pass@1 and pass@5 result tables already
+  posted there); the logs just live somewhere that first sweep didn't
+  check (likely zipped into issue attachments rather than sitting as
+  raw files). Searching for `.eval.log` files alone is not a reliable
+  way to confirm a model's real eval status -- check the model's own
+  tracking issue first.
+
+**One real, still-open gap found**: Qwen3-4B pass@5 kg_only is still
+985/1,210 per #87's own sample-completeness table. The 25-instance
+Qwen3-4B kg_only re-run (job 60909580, documented above) only fixed
+the **pass@1** file; the pass@5 kg_only file in
+`testgeneval_mvar0010_main` never had the same gap-fill applied, so
+RQ3's pass@5 numbers for Qwen3-4B kg_only are still missing those 225
+instances. Flagged to wlee0060 on #87, not yet resolved.
+
+**Previously-unsubmitted real work, now submitted:**
+- 3 of 4 `instruct_k5_real` shards (shards 0, 1, 3; only shard-2 was
+  actually running) -- jobs 60941161-63.
+- All 20 Qwen3-Coder-30B pass@5 eval shards (578/1210 instruct,
+  597/1208 kg_only missing, nothing queued for either) -- submitted
+  under mvar0010's account using jliu0290's existing `eval_logs` dirs
+  and `--skip_existing`, so his prior progress isn't duplicated: jobs
+  60941177-98 (some ids skipped by the scheduler). Real estimated
+  start times (SLURM backfill) staggered 12-15 Oct.
+
+After this sweep, every real known gap is either running, queued, or
+explicitly flagged as a pending team decision (the Qwen3-4B pass@5
+item above) -- nothing found was left fully unaddressed.

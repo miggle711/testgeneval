@@ -708,3 +708,13 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   comparing bare log-derived ids against `instance_id`s (to find which instances still need
   evaluating) will treat almost everything as missing, since the suffixed and bare forms never
   match. Strip the trailing `-\d+` from the log filename's id portion before comparing.
+- **Searching for raw `.eval.log` files on scratch is not a reliable way to confirm a model's
+  real eval status, and a miss there does not mean the work was never done.** Confirmed real
+  2026-10-12 (#87): a full sweep across every known `eval_logs` directory found zero real logs
+  for Qwen3-4B and Qwen2.5-Coder-7B, which looked like a major untracked gap. Both were in fact
+  already fully evaluated, with real pass@1 and pass@5 result tables already posted on #87 --
+  the underlying logs just weren't stored as raw files in any of the directories searched
+  (teammates have sometimes zipped eval output directly into a GitHub issue attachment instead
+  of leaving it on shared scratch). Check a model's own tracking issue (#87, or its per-person
+  generation/evaluation issue) for a real reported result before concluding its eval never
+  happened just because a disk search came up empty.
