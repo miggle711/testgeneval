@@ -1262,3 +1262,26 @@ Resubmitted all 3 at `--mem=256G` with `--skip_existing` (jobs
 instances get re-evaluated. Documented in CLAUDE.md's gotchas list
 so a future large-model eval starts at 256G rather than rediscovering
 this.
+
+### Chasing down the real instruct_k1 stragglers (2026-10-12)
+
+60928340 and 60928341 completed clean; 60928342 and several of the
+other original 12 instruct_k1/kg_only_k1 shards hit further real
+OOMs or TIMEOUTs over the following day (60829600, 60829601,
+60829604 all OOM'd; 60830231 TIMEOUT'd; 60830234 FAILED with a
+cascading `asyncio.CancelledError` during container wait, likely
+from the same node's memory pressure). Despite the job-level churn,
+kg_only_k1 finished fully (1208/1208) and instruct_k1 was down to
+just 5 real missing instances.
+
+A first attempt to find exactly which 5 by diffing `.eval.log`
+filenames against `instance_id` wrongly reported 1151 missing --
+log filenames carry a trailing `-<digits>` suffix `instance_id`
+does not (see CLAUDE.md), so the comparison needs that suffix
+stripped first. Corrected, the real 5 missing instances were
+`scikit-learn__scikit-learn-13447`, `scikit-learn__scikit-learn-13618`,
+`scikit-learn__scikit-learn-15119`, `sphinx-doc__sphinx-8117`,
+`sphinx-doc__sphinx-8729`. Built a 5-row predictions file from just
+these ids and submitted it standalone (job 60941015, `comp`
+partition, `--mem=64G --time=4:00:00`) rather than resubmitting the
+whole shard.
