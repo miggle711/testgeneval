@@ -33,7 +33,7 @@ model/arm combinations are genuinely complete.**
 | Llama-3.1-8B | instruct | 1210 | 1210 | **Done**, confirmed clean after the real #64 sympy-instance-loss fix | mvar0010 (#62) |
 | Llama-3.1-8B | kg_only | 1208 | 1208 | **Done** | mvar0010 (#62) |
 | Qwen3-4B | instruct | 1199 | 1199 | **Done** (2026-09-24). 658 real instances had stalled since 2026-09-17 -- the only 2 shards ever submitted (60167863/60167864, ~600 instances each, vs. the 4-5-way split used everywhere else) both genuinely hit the 24h SLURM wall-clock TIMEOUT, no further activity since. Re-sharded the missing 660 instances 5-way (130-136 each) and resubmitted 2026-09-22 (60362570-60362574), completed 2026-09-24 (4 of 5 jobs hit a cosmetic tail-end OOM, real work confirmed complete before each kill) | mvar0010 (#62) |
-| Qwen3-4B | kg_only | 985 | 985 | **Done at 985, but 985 is itself short -- real generation gap, not an eval gap.** The real predictions file (`testgeneval_mvar0010_main/results/kg_only/Qwen3-4B-Instruct-2507__testgeneval__0.8__k5__test.jsonl`) only has 985 rows against the full 1,210-instance dataset; eval genuinely covers everything that was ever generated. Confirmed real 2026-10-12: job 60909580's 25-instance re-run (#87, 2026-10-11) only ever targeted the **pass@1** kg_only file (now 1,210/1,210) -- pass@5 kg_only generation for the same 225 missing instances was never run. **Generation now submitted**: the 225 missing real dataset ids (by the dataset's real unique `id` field, not `instance_id`) filtered into their own dataset, sharded 4-way, running as 4 parallel 1x A100 jobs on `fit` (60942255, 60942256, 60942259, 60942260; T=0.8, 5 samples, existing `kg_prompts_depth2.json`, `MAX_MODEL_LEN=131072`). Will need evaluating once generation completes. | mvar0010 (#62), gap found and generation submitted by Claude (#87) |
+| Qwen3-4B | kg_only | 985 (now 1,210 generated) | 985 + 225 gap-fill | **Gap-fill generation (4 shards, 225 real missing ids) completed cleanly 2026-10-12.** Evaluation submitted as 4 parallel shards on `comp` (60950237-240): 60950237 completed 2026-10-12/13 (5h48m39s, exit 0:0); 60950238-240 still running as of this entry. Will post real `full_pass_at_5`/coverage/mutation figures to #87 once all 4 finish. | mvar0010 (#62), gap found, generation + eval submitted by Claude (#87) |
 | Qwen2.5-Coder-7B | instruct | 1210 | 1210 | **Done** (2026-09-18) | mvar0010 (#62) |
 | Qwen2.5-Coder-7B | kg_only | 1209 | 1209 | **Done** (2026-09-18) | mvar0010 (#62) |
 
@@ -1113,3 +1113,33 @@ prior attempt hung and was manually killed/skipped) once the fix
 merges. Filed as PR #61, held open for real review rather than
 merged directly, since this touches shared parsing code every real
 evaluation run depends on.
+
+### Ablation eval sequence (v2 handoff, testgeneval#90), 2026-10-12/13
+
+5 real cells total, run sequentially under `mvar0010`'s own account
+because `desktopq`'s QOS caps the account at exactly 1 job
+submitted/running at a time (`MaxSubmitPU=1`/`MaxJobsPU=1`), so each
+cell is submitted only once the previous one's job has actually
+exited -- not just once its eval logs look complete, since the final
+report-aggregation step can lag well behind the last `.eval.log`
+being written (confirmed real this run: depth2_t0.6's stdout looked
+stalled for ~45min with 160/160 logs already on disk, but it was
+genuinely still running -- one real container, `sympy__sympy-20639`,
+took 3639s/~60.6min on its own).
+
+Per Sheryl's v2 handoff README (#90): depth2_t0.8 and depth1_t0.8
+first (depth comparison), then depth2_t0.6 and depth2_t1.0
+(temperature comparison), then the 51-instance leaked-comparison set
+(`depth2_t0.8_leaked51`).
+
+Real completions so far, `desktop` partition, `--mem=64G
+--time=12:00:00`, `NUM_PROCESSES=4`, 160 instances each cell:
+
+- depth2_t0.8 (job 60940750): completed.
+- depth1_t0.8: completed.
+- depth2_t0.6 (job 60954237): completed 2026-10-13, 3h57m30s elapsed,
+  exit 0:0, 160/160 instances.
+
+depth2_t1.0 (job 60958242) submitted immediately after depth2_t0.6's
+exit, same partition/config. Remaining after that: only
+`depth2_t0.8_leaked51` (51 instances).
