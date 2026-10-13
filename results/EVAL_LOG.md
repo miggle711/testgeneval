@@ -1140,6 +1140,38 @@ Real completions so far, `desktop` partition, `--mem=64G
 - depth2_t0.6 (job 60954237): completed 2026-10-13, 3h57m30s elapsed,
   exit 0:0, 160/160 instances.
 
-depth2_t1.0 (job 60958242) submitted immediately after depth2_t0.6's
-exit, same partition/config. Remaining after that: only
-`depth2_t0.8_leaked51` (51 instances).
+depth2_t1.0 (job 60958242) completed 2026-10-13, 3h54m41s elapsed,
+exit 0:0. Remaining after that: only `depth2_t0.8_leaked51`
+(51 instances).
+
+### Real `chmod` ownership bug blocked Joe's entire Qwen3-Coder-30B pass@5 backlog for hours (2026-10-13, testgeneval#90)
+
+All 20 shards of Joe's Qwen3-Coder-30B pass@5 backlog (60941177-198,
+submitted under mvar0010's account since nothing was queued for it
+previously) had actually **FAILED within 3-11 seconds of starting**,
+not merely queued behind real cluster priority contention as assumed
+from `squeue` alone -- confirmed via `sacct`, which showed `FAILED`
+states that `squeue` no longer listed once the jobs had already
+exited.
+
+Real root cause: `run_evaluation.py` unconditionally calls
+`os.chmod(log_dir, 0o777)` on startup (to guarantee the directory is
+container-writable). The `log_dir` for these shards was under
+`/fs04/scratch2/al49/jliu0290/eval_logs/...`, owned by jliu0290. Even
+though the directory was already world-writable (`777`), POSIX only
+allows the **owner** of a path to `chmod` it -- permission bits don't
+matter. mvar0010's account hit `PermissionError: [Errno 1] Operation
+not permitted` on every single shard, every time, instantly.
+
+Fixed by resubmitting all 20 shards with `LOG_DIR` redirected to
+mvar0010-owned scratch (`/fs04/scratch2/al49/mvar0010/eval_logs/
+qwen3coder30b_k5real_{instruct,kgonly}`) instead, same predictions
+files as input. New job ids: 60971188-197 (instruct, 10 shards),
+60971203-212 (kg_only, 10 shards). Confirmed genuinely queued and
+running this time, not instant-failing. Results will need merging
+back with Joe's existing real output once done.
+
+**Lesson for anyone submitting a teammate's job under their own
+account:** point `LOG_DIR` at your own scratch, not theirs, even if
+their directory is already `777` -- ownership blocks `chmod`
+regardless of existing permission bits.

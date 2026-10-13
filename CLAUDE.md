@@ -212,6 +212,16 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   shared directory — confirmed real for two different teammates, jobs died in under a second with
   zero output and exit code `0:53`. Fix: `setfacl -R -m u:<username>:rwx <dir>` plus the `-d`
   variant for new files, run by someone who already has access.
+- **A world-writable (`777`) directory still rejects `chmod` from a non-owner account.**
+  `run_evaluation.py` unconditionally calls `os.chmod(log_dir, 0o777)` on startup. Confirmed real
+  2026-10-13: submitting a teammate's eval job under your own account, with `log_dir` pointed at
+  *their* scratch directory (even one already `777`), fails every shard instantly with
+  `PermissionError: [Errno 1] Operation not permitted` — POSIX only allows the path's owner (or
+  root) to `chmod` it, existing permission bits don't matter. All 20 of a teammate's shards
+  (testgeneval#90) failed within seconds of submission this way, looking like normal queue/priority
+  contention in `squeue` right up until they silently disappeared from the queue — only `sacct`
+  revealed the real `FAILED` state. Fix: point `LOG_DIR` at scratch *your own* account owns, never a
+  teammate's, when submitting their job under your account.
 - **A shared git checkout with commits from multiple accounts breaks `git pull`/`fetch` for
   everyone but each object's original owner** — `.git/objects` files get created owned by
   whoever committed them, no default ACL. Not fixable with `setfacl` (would need per-object
