@@ -287,5 +287,12 @@ async def run_apptainer_evaluation(
             f"[{task_instance['id']}][{sif_path}]  Error running container: {e}"
         )
     finally:
-        os.unlink(tmpfile_path)
+        # Under real OOM pressure (job 60941163, 2026-10-14), the kernel killing
+        # a task's subprocess mid-flight can leave this tmpfile already gone by
+        # the time cleanup runs here, raising FileNotFoundError and crashing the
+        # whole evaluation run instead of just this one instance.
+        try:
+            os.unlink(tmpfile_path)
+        except FileNotFoundError:
+            pass
         shutil.rmtree(home_dir, ignore_errors=True)
