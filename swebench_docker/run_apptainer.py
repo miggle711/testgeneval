@@ -100,6 +100,17 @@ APPTAINER_HOST_TIMEOUT_MARGIN = int(
 )
 
 
+def _entrypoint_path(repo: str) -> str:
+    """Real absolute entrypoint path inside the container, which differs
+    by base image (see module docstring point 2). Not something the host
+    side can introspect from the .sif without actually running it, so
+    this has to be a lookup, kept in sync with PYENV_REPOS.
+    """
+    if repo in PYENV_REPOS:
+        return "/opt/entrypoint.sh"
+    return "/home/swe-bench/entrypoint.sh"
+
+
 def host_timeout_for(timeout: int, n_samples: int, skip_mutation: bool) -> int:
     """Host-side wall-clock cap for one container, which evaluates all of an
     instance's samples in turn. Each sample can take up to `timeout` for its
@@ -113,17 +124,6 @@ def host_timeout_for(timeout: int, n_samples: int, skip_mutation: bool) -> int:
         return int(override)
     per_sample = timeout + (0 if skip_mutation else MUTATION_TIMEOUT)
     return max(1, n_samples) * per_sample + APPTAINER_HOST_TIMEOUT_MARGIN
-
-
-def _entrypoint_path(repo: str) -> str:
-    """Real absolute entrypoint path inside the container, which differs
-    by base image (see module docstring point 2). Not something the host
-    side can introspect from the .sif without actually running it, so
-    this has to be a lookup, kept in sync with PYENV_REPOS.
-    """
-    if repo in PYENV_REPOS:
-        return "/opt/entrypoint.sh"
-    return "/home/swe-bench/entrypoint.sh"
 
 
 async def run_apptainer_evaluation(
