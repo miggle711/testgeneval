@@ -15,7 +15,12 @@ when stage 2 lands.
 Guarantees enforced here rather than by convention:
   * model_name_or_path must be identical across both files (it embeds the
     temperature, e.g. "..._t=0.8", so this doubles as the config-freeze
-    check between stages).
+    check between stages). run_api.py records only the model's basename,
+    so two models with the same basename under different organisations
+    can not be told apart here; the project's models all have distinct
+    basenames.
+  * Neither stage may hold more samples per id than its k (--stage1_k,
+    --stage2_k), so a wrong file can not push the merged list past 5.
   * preds_prompts[prompt_name] must be identical per id between the two
     files -- a mismatch means the serialiser or dataset changed between
     stages, which would make the merged samples non-exchangeable.
@@ -24,7 +29,8 @@ Guarantees enforced here rather than by convention:
     population after stage 1 was reported. --include_stage2_only opts in.
   * For the same reason, an id whose stage-1 record has an empty preds list
     (run_api.py writes one when the sample's content came back None) is
-    kept exactly as stage 1 wrote it, with no stage-2 samples appended.
+    kept exactly as stage 1 wrote it, with no stage-2 samples appended. Its
+    prompts are still checked against stage 2's.
 
 Non-guarantees, by design:
   * usage lists are concatenated independently of preds, never zipped:
@@ -97,12 +103,47 @@ def check_model_consistency(stage1: dict, stage2: dict) -> str:
     return names.pop()
 
 
+def _check_prompts_match(curr_id, rec1, rec2, prompt_name, allow_prompt_mismatch, stats):
+    """The two stages must have seen the same prompt for an id, including
+    when stage 1 produced no sample: a mismatch means the serialiser or
+    dataset changed between stages."""
+    prompt1 = rec1.get("preds_prompts", {}).get(prompt_name)
+    prompt2 = rec2.get("preds_prompts", {}).get(prompt_name)
+    if prompt1 == prompt2:
+        return
+    if not allow_prompt_mismatch:
+        raise ValueError(
+            f"id {curr_id!r}: preds_prompts[{prompt_name!r}] differs "
+            f"between the two runs -- the serialiser or dataset "
+            f"changed between stages, so the samples are not "
+            f"exchangeable. Rerun one stage, or pass "
+            f"--allow_prompt_mismatch if this is a known, "
+            f"documented difference."
+        )
+    stats["prompt_mismatch_allowed"] += 1
+
+
+def _check_sample_counts(curr_id, rec1, rec2, prompt_name, stage1_k, stage2_k):
+    """A stage may hold fewer samples than its k (a None-content sample is
+    skipped), never more: a k=5 file given as stage 1, say, would push the
+    merged list past 5 and evaluation would silently use only the first 5."""
+    for label, rec, k in (("stage 1", rec1, stage1_k), ("stage 2", rec2, stage2_k)):
+        n = len(rec.get("preds", {}).get(prompt_name) or [])
+        if n > k:
+            raise ValueError(
+                f"id {curr_id!r}: {label} has {n} samples, more than its k={k}. "
+                f"Check that the right files were passed as --stage1 and --stage2."
+            )
+
+
 def merge_records(
     stage1: dict,
     stage2: dict,
     prompt_name: str,
     include_stage2_only: bool,
     allow_prompt_mismatch: bool,
+    stage1_k: int = 1,
+    stage2_k: int = 4,
 ) -> tuple[list, Counter]:
     """Returns (merged records in stage-1 order, stats Counter)."""
     stats = Counter()
@@ -114,6 +155,9 @@ def merge_records(
         rec2 = stage2.get(curr_id)
 
         stage1_preds = rec1.get("preds", {}).get(prompt_name)
+        if rec2 is not None:
+            _check_prompts_match(curr_id, rec1, rec2, prompt_name, allow_prompt_mismatch, stats)
+            _check_sample_counts(curr_id, rec1, rec2, prompt_name, stage1_k, stage2_k)
         if rec2 is None:
             stats["stage1_only"] += 1
         elif not stage1_preds:
@@ -125,20 +169,6 @@ def merge_records(
             # this id gets neither pass@1 nor pass@5, as before stage 2.
             stats["stage1_empty_not_merged"] += 1
         else:
-            prompt1 = rec1.get("preds_prompts", {}).get(prompt_name)
-            prompt2 = rec2.get("preds_prompts", {}).get(prompt_name)
-            if prompt1 != prompt2:
-                if not allow_prompt_mismatch:
-                    raise ValueError(
-                        f"id {curr_id!r}: preds_prompts[{prompt_name!r}] differs "
-                        f"between the two runs -- the serialiser or dataset "
-                        f"changed between stages, so the samples are not "
-                        f"exchangeable. Rerun one stage, or pass "
-                        f"--allow_prompt_mismatch if this is a known, "
-                        f"documented difference."
-                    )
-                stats["prompt_mismatch_allowed"] += 1
-
             preds1 = rec1.get("preds", {}).get(prompt_name)
             preds2 = rec2.get("preds", {}).get(prompt_name)
             if preds1 is None and preds2 is None:
@@ -168,6 +198,11 @@ def merge_records(
     stage2_only_ids = [i for i in stage2 if i not in stage1]
     if include_stage2_only:
         for curr_id in stage2_only_ids:
+            n = len(stage2[curr_id].get("preds", {}).get(prompt_name) or [])
+            if n > stage2_k:
+                raise ValueError(
+                    f"id {curr_id!r}: stage 2 has {n} samples, more than its k={stage2_k}."
+                )
             out = copy.deepcopy(stage2[curr_id])
             out.pop("_line", None)
             merged.append(out)
@@ -193,6 +228,10 @@ def main(argv=None):
         help="Merged k=5 predictions jsonl to write (must not exist unless --force)",
     )
     parser.add_argument("--prompt_name", type=str, default="full")
+    parser.add_argument("--stage1_k", type=int, default=1,
+                        help="Samples per instance in the stage-1 file (default 1)")
+    parser.add_argument("--stage2_k", type=int, default=4,
+                        help="Samples per instance in the stage-2 file (default 4)")
     parser.add_argument(
         "--expected_k", type=int, default=5,
         help="Informational: report how many merged records fall short of "
@@ -214,7 +253,12 @@ def main(argv=None):
     args = parser.parse_args(argv)
 
     for path in (args.stage1, args.stage2):
-        if os.path.abspath(path) == os.path.abspath(args.output):
+        # samefile also catches a symlink or hard link to an input, which
+        # --force would otherwise overwrite.
+        same = (os.path.abspath(path) == os.path.abspath(args.output)
+                or (os.path.exists(path) and os.path.exists(args.output)
+                    and os.path.samefile(path, args.output)))
+        if same:
             print(f"--output must not be an input file: {path}", file=sys.stderr)
             return 1
     if os.path.exists(args.output) and not args.force:
@@ -233,6 +277,7 @@ def main(argv=None):
         merged, stats = merge_records(
             stage1, stage2, args.prompt_name,
             args.include_stage2_only, args.allow_prompt_mismatch,
+            args.stage1_k, args.stage2_k,
         )
     except ValueError as e:
         print(f"ERROR: {e}", file=sys.stderr)

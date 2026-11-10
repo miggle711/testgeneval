@@ -205,6 +205,33 @@ class MergePassAtKRunsTest(unittest.TestCase):
         )
         self.assertEqual(rc, 1)
 
+    def test_too_many_samples_in_a_stage_is_fatal(self):
+        # A k=5 file given as stage 1 (or a k=5 file as stage 2) would push
+        # the merged list past 5; evaluation would silently use the first 5.
+        ok1 = self._write("k1.jsonl", [make_record("x-1", ["A"])])
+        ok2 = self._write("k4.jsonl", [make_record("x-1", ["B", "C", "D", "E"])])
+        big = self._write("k5.jsonl", [make_record("x-1", ["A", "B", "C", "D", "E"])])
+        self.assertEqual(self._run(big, ok2)[0], 1)
+        self.assertEqual(self._run(ok1, big, output_name="m2.jsonl")[0], 1)
+
+    def test_output_aliasing_an_input_is_fatal(self):
+        # A symlink or hard link to an input would be overwritten by --force.
+        s1 = self._write("k1.jsonl", [make_record("x-1", ["A"])])
+        s2 = self._write("k4.jsonl", [make_record("x-1", ["B", "C", "D", "E"])])
+        for make_alias in (os.symlink, os.link):
+            alias = os.path.join(self.dir, f"alias_{make_alias.__name__}.jsonl")
+            make_alias(s1, alias)
+            rc = merge_pass_at_k_runs.main(
+                ["--stage1", s1, "--stage2", s2, "--output", alias, "--force"]
+            )
+            self.assertEqual(rc, 1)
+            self.assertEqual(self._read(s1)[0]["preds"]["full"], ["A"])
+
+    def test_prompt_mismatch_is_fatal_even_with_empty_stage1(self):
+        s1 = self._write("k1.jsonl", [make_record("x-1", [], prompt="OLD PROMPT")])
+        s2 = self._write("k4.jsonl", [make_record("x-1", ["B"], prompt="NEW PROMPT")])
+        self.assertEqual(self._run(s1, s2)[0], 1)
+
 
 if __name__ == "__main__":
     unittest.main()
