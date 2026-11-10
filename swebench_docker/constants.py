@@ -853,6 +853,9 @@ INSTALL_TIMEOUT: str = ">>>>> Init Timed Out"
 RESET_FAILED: str = ">>>>> Reset Failed"
 TESTS_ERROR: str = ">>>>> Tests Errored"
 TESTS_FAILED: str = ">>>>> Some Tests Failed"
+# In-container limit (seconds) for one sample's cosmic-ray mutation run.
+# Separate from TIMEOUT, which limits each test command.
+MUTATION_TIMEOUT: int = 3600
 UNFILTERED_TESTS_FAILED: str = ">>>>> Unfiltered Tests Failed"
 TESTS_CONFIG: str = ">>>>> Tests config"
 TESTS_PASSED: str = ">>>>> All Tests Passed"
