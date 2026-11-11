@@ -215,12 +215,17 @@ def prompt_token_budget(model_name_or_path, server_max_model_len=None):
     return budget
 
 
-def calc_cost(model_name, input_tokens, output_tokens):
+def calc_cost(model_name, input_tokens, output_tokens, samples=1):
     """
     Calculates the cost of a response from the openai API.
 
     Args:
-    response (openai.ChatCompletion): The response from the API.
+    model_name: model whose per-token prices to use.
+    input_tokens: usage.prompt_tokens, counted once per request.
+    output_tokens: usage.completion_tokens, the sum over all n completions.
+    samples: n, the completions in the request. Logged so that
+        scripts/aggregate_token_counts.py can report output tokens per
+        sample: a pass@k request with n=k logs k completions' tokens.
 
     Returns:
     float: The cost of the response.
@@ -235,7 +240,8 @@ def calc_cost(model_name, input_tokens, output_tokens):
         + MODEL_COST_PER_OUTPUT.get(model_name, 0) * output_tokens
     )
     logger.info(
-        f"input_tokens={input_tokens}, output_tokens={output_tokens}, cost={cost:.2f}"
+        f"input_tokens={input_tokens}, output_tokens={output_tokens}, cost={cost:.2f}, "
+        f"samples={samples}"
     )
     return cost
 
@@ -331,9 +337,10 @@ def call_chat(
         input_tokens = response.usage.prompt_tokens
         # completion_tokens is the sum across all n completions, not
         # per-completion -- that's the real cost incurred, so calc_cost
-        # doesn't need adjusting for n > 1.
+        # doesn't need adjusting for n > 1. n is logged with it so token
+        # counts can be compared per sample (testgeneval#46).
         output_tokens = response.usage.completion_tokens
-        cost = calc_cost(model_name_or_path, input_tokens, output_tokens)
+        cost = calc_cost(model_name_or_path, input_tokens, output_tokens, samples=n)
         return response, cost
 
     except Exception as e:
