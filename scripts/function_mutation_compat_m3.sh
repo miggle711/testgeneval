@@ -26,6 +26,7 @@ PY
     export HF_HOME="$ROOT/hf-cache" HF_DATASETS_CACHE="$ROOT/hf-cache/datasets"
     export APPTAINER_IMAGES_DIR="$IMAGES" MUTATION_SCOPE=function SKIP_MUTATION=0 NUM_PROCESSES=1
     export TIMEOUT=3600 MUTATION_TIMEOUT=3600 CONDA_ENV=testgeneval SBATCH_EXPORT=ALL
+    export SWEBENCH_DOCKER_FORK_DIR="$REPO" SWE_BENCH_TASKS=kjain14/testgeneval
     unset APPTAINER_HOST_TIMEOUT
     cat > "$ROOT/run.sh" <<'BATCH'
 #!/usr/bin/env bash
@@ -37,6 +38,7 @@ apptainer exec --cleanenv --no-home "$COMPAT_IMAGES/django__django_3.0.sif" \
     'import pkg_resources; from cosmic_ray.work_db import WorkDB; print("cosmic-ray:",pkg_resources.get_distribution("cosmic-ray").version,"bulk API:",hasattr(WorkDB,"set_multiple_results"),"single API:",hasattr(WorkDB,"set_result"))'
 bash m3_run_evaluation.slurm
 BATCH
+    cd "$REPO"
     sbatch --parsable --partition=comp --cpus-per-task=8 --mem=32G --time=04:00:00 \
         --job-name=fm-compat --output="$ROOT/slurm-%j.out" "$ROOT/run.sh" > "$ROOT/job.txt"
     echo "Submitted $(cat "$ROOT/job.txt"); check with the same FUNCMUT_COMPAT_SCRATCH"
