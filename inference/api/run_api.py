@@ -196,6 +196,25 @@ OUTPUT_LIMITS = {
 EPSILON = 1000
 
 
+def prompt_token_budget(model_name_or_path, server_max_model_len=None):
+    """Tokens a prompt may use: the context window minus the output limit
+    and EPSILON. The context window is MODEL_LIMITS's entry, or the server's
+    own --max-model-len when that is smaller. vLLM rejects any request whose
+    prompt plus max_tokens exceeds its --max-model-len, so truncating to the
+    model's published context instead lost every longer prompt
+    (testgeneval#44). Raises ValueError when no room is left for a prompt."""
+    context = MODEL_LIMITS.get(model_name_or_path, 32_000)
+    if server_max_model_len:
+        context = min(context, server_max_model_len)
+    budget = context - OUTPUT_LIMITS.get(model_name_or_path, 4_096) - EPSILON
+    if budget <= 0:
+        raise ValueError(
+            f"{model_name_or_path}: a context of {context} tokens leaves no room "
+            f"for a prompt after the output limit and margin; raise MAX_MODEL_LEN"
+        )
+    return budget
+
+
 def calc_cost(model_name, input_tokens, output_tokens):
     """
     Calculates the cost of a response from the openai API.
@@ -379,8 +398,11 @@ def openai_inference(
     # conservative default rather than a KeyError. Add real entries once a
     # model's actual context window/output limit are known.
     default_output_limit = OUTPUT_LIMITS.get(model_name_or_path, 4_096)
-    model_limit = (
-        MODEL_LIMITS.get(model_name_or_path, 32_000) - default_output_limit - EPSILON
+    # SERVER_MAX_MODEL_LEN is the --max-model-len the vLLM server was started
+    # with (m3_run_inference.slurm exports it); unset for hosted APIs.
+    server_max_model_len = os.environ.get("SERVER_MAX_MODEL_LEN")
+    model_limit = prompt_token_budget(
+        model_name_or_path, int(server_max_model_len) if server_max_model_len else None
     )
 
     # Adjust dataset to truncate prompts to the last model_limit tokens
