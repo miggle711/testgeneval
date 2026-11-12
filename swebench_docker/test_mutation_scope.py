@@ -1,7 +1,8 @@
 # Target-function mutation (testgeneval#10): with mutation_scope "function",
 # only the target function's mutants run, and the score is over those. Runs
 # real cosmic-ray on a small module, so it is skipped where cosmic_ray is not
-# installed (the testbed images pin cosmic-ray==8.3.14). Run with:
+# installed. testgeneval.yaml pins cosmic-ray==8.3.14; the testbed Dockerfiles
+# install it unpinned. Run with:
 #   python -m unittest swebench_docker.test_mutation_scope -v
 
 import os
