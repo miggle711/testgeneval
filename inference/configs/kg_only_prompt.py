@@ -4,6 +4,7 @@ import json
 
 from datasets import Dataset, DatasetDict
 from inference.configs.config_utils import postprocess_python_output
+from inference.configs import shared_task
 
 
 class KGOnlyPrompt:
@@ -22,13 +23,9 @@ class KGOnlyPrompt:
     directory for the scope decision).
     """
 
-    SYSTEM_MESSAGE = (
-        "You are an expert Python software testing assistant. Your job "
-        "is to generate a complete test file for the given code, using "
-        "structural context about the function under test (no full "
-        "source file is provided -- work from the function's own source "
-        "and its callers/callees/related tests)."
-    )
+    # Shared with instruct (inference/configs/shared_task.py, fyp-paper#5
+    # decision B): only the context differs between the arms.
+    SYSTEM_MESSAGE = shared_task.SYSTEM_MESSAGE
 
     def __init__(self, prompts_path: str = "kg_prompts.json"):
         with open(prompts_path) as f:
@@ -57,17 +54,15 @@ class KGOnlyPrompt:
             if pre_computed is None:
                 missing.append(row_id)
                 continue
-            if "prompt" not in pre_computed:
-                # Real gap seen in practice: a kg_prompts.json built by an
-                # older pycodekg (the retired completion-setting schema,
-                # {first, last, extra} keys instead of a single "prompt")
-                # would otherwise KeyError deep in this loop with no
-                # diagnostic pointing at the actual mismatch.
+            if "context" not in pre_computed:
                 wrong_schema.append(row_id)
                 continue
-
+            targets = shared_task.target_names(
+                pre_computed.get("target_functions", []),
+                pre_computed.get("target_classes", []),
+            )
             new_data["preds_prompts"] = {
-                "full": pre_computed["prompt"],
+                "full": pre_computed["context"].rstrip() + "\n\n" + shared_task.task_text(targets),
             }
             new_arr.append(new_data)
 
@@ -80,10 +75,11 @@ class KGOnlyPrompt:
         if wrong_schema:
             raise ValueError(
                 f"{len(wrong_schema)} row(s) have a kg_prompts.json entry "
-                f"with no 'prompt' key -- likely built by an older "
-                f"pycodekg (the retired completion-setting schema had "
-                f"first/last/extra keys instead). Rebuild kg_prompts.json "
-                f"with the current build_kg_prompts.py: {wrong_schema[:5]}"
+                f"with no 'context' key -- built by an older pycodekg, whose "
+                f"entries carried a full 'prompt' with kg_only's own task "
+                f"wording. Rebuild kg_prompts.json with the current "
+                f"build_kg_prompts.py, so both arms share one task text: "
+                f"{wrong_schema[:5]}"
                 + (" ..." if len(wrong_schema) > 5 else "")
             )
 

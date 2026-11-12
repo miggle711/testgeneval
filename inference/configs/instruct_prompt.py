@@ -4,6 +4,7 @@ import json
 
 from datasets import Dataset, DatasetDict
 from inference.configs.config_utils import postprocess_python_output
+from inference.configs import shared_task
 
 
 class InstructPrompt:
@@ -36,7 +37,10 @@ class InstructPrompt:
             }
 
         self.SYSTEM_MESSAGE = "You are an expert Python software testing assistant. Your job is to complete the next test given a code file an some existing test context."
-        self.SYSTEM_MESSAGE_FULL = "You are an expert Python automated testing assistant. Your job is to generate a test file given a code file."
+        # The full setting's system message and task wording are shared
+        # with kg_only (inference/configs/shared_task.py, fyp-paper#5
+        # decision B); only the context above the task differs.
+        self.SYSTEM_MESSAGE_FULL = shared_task.SYSTEM_MESSAGE
 
         self.PROMPT_FULL = """Below is a code file:
 ```python
@@ -45,23 +49,13 @@ class InstructPrompt:
 
 The code file is called: {code_filename}
 
-Your job is to output a corresponding unit test file that obtains high coverage and invokes the code under test.
-{focus_line}
 Here are some examples of how to import {code_filename}, (you should use these as reference)
 
 ```python
 {imports}
 ```
 
-Each unit test must be a function starting with test_. Include all your test imports and setup before your first test. Do not
-run the tests in the file, just output a series of tests. Do not include a main method to run the tests.
-
-Only output the unit test Python file in this format:
-
-```python
-Unit test Python code (file level)
-```
-"""
+{task}"""
 
         self.PROMPT_FULL_NO_IMPORT = """Below is a code file:
 ```python
@@ -70,39 +64,7 @@ Unit test Python code (file level)
 
 The code file is called: {code_filename}
 
-Your job is to output a corresponding unit test file that obtains high coverage and invokes the code under test.
-{focus_line}
-Each unit test must be a function starting with test_. Include all your test imports and setup before your first test. Do not
-run the tests in the file, just output a series of tests. Do not include a main method to run the tests.
-
-Only output the unit test Python file in this format:
-
-```python
-Unit test Python code (file level)
-```
-"""
-
-        # Named per instance's changed function(s)/class(es), from
-        # target_functions/target_classes (merged in from pycodekg's
-        # build_kg_prompts.py output before add_prompts_to_dataset runs)
-        # -- not from patch/test_patch content itself, which stay
-        # evaluation-only for both arms. Matches kg_only's own
-        # patch-seeded subgraph, so both arms answer the same task
-        # ("focus on this function") rather than kg_only silently
-        # answering a narrower task than instruct's generic "test this
-        # file" wording (miggle711/pycodekg#125,
-        # miggle711/testgeneval#6). A patch can change more than one
-        # function -- both templates handle a single target or several.
-        # Empty when no targets are available for a row, so the prompt
-        # degrades to its original, unfocused wording rather than failing.
-        self.FOCUS_LINE_TEMPLATE_SINGLE = (
-            "\nPay particular attention to testing `{target}`, which was "
-            "recently modified.\n"
-        )
-        self.FOCUS_LINE_TEMPLATE_MULTI = (
-            "\nPay particular attention to testing {targets}, which were "
-            "recently modified.\n"
-        )
+{task}"""
 
         self.PROMPT_COMPLETION = """Below is a code file:
 ```python
@@ -148,27 +110,21 @@ Next unit test Python code
             )
             if self._target_by_id and not target_functions:
                 target_lookup_misses += 1
-            targets = [
-                f"{cls}.{fn}" if cls else fn
-                for fn, cls in zip(target_functions, target_classes)
-                if fn
-            ]
-            if len(targets) == 1:
-                focus_line = self.FOCUS_LINE_TEMPLATE_SINGLE.format(target=targets[0])
-            elif len(targets) > 1:
-                targets_str = ", ".join(f"`{t}`" for t in targets)
-                focus_line = self.FOCUS_LINE_TEMPLATE_MULTI.format(targets=targets_str)
-            else:
-                focus_line = ""
+            # Named per instance's changed function(s), from kg_prompts.json's
+            # target_functions/target_classes -- the same targets kg_only's
+            # prompt names, so both arms answer the same task.
+            task = shared_task.task_text(
+                shared_task.target_names(target_functions, target_classes)
+            )
 
             full_context = self.PROMPT_FULL.format(
                 code_src=code_src,
                 code_filename=new_data["code_file"],
                 imports="\n".join(new_data["local_imports"]),
-                focus_line=focus_line,
+                task=task,
             )
             full_context_no_import = self.PROMPT_FULL_NO_IMPORT.format(
-                code_src=code_src, code_filename=new_data["code_file"], focus_line=focus_line
+                code_src=code_src, code_filename=new_data["code_file"], task=task
             )
             first_context = self.PROMPT_COMPLETION.format(
                 code_src=code_src, test_src=new_data["preds_context"]["preamble"]
