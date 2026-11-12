@@ -8,6 +8,11 @@ the function score was filtered out of a whole-file run: when that run hit
 the mutation timeout, the target function's unfinished mutants silently
 dropped out of the score.
 
+Whether the target function holds any mutant at all decides whether an
+instance is eligible (fyp-paper#7, rule 3). That is a fact about the patched
+source, so count_script reads it from a work db that no generated test has
+touched, once per instance.
+
 cosmic_ray is only installed in the per-repo testbed env, so these are
 script texts run there with `python -c`, not code imported here.
 """
@@ -18,15 +23,21 @@ FILE = "file"
 FUNCTION = "function"
 SCOPES = (FILE, FUNCTION)
 
+# The per-sample mutation run's work db, and the one the per-instance count
+# uses. They are separate files because `cosmic-ray init` empties the db it
+# is given.
+RUN_DB = "mutation.sqlite"
+COUNT_DB = "mutation_count.sqlite"
 
-def _in_range_ids(code_file: str, ranges: List[Tuple[int, int]]) -> str:
-    """Script lines setting `in_range` to the job ids with a mutation in a
-    target range of code_file (a mutation's start line, as cosmic-ray
-    records it)."""
+
+def _in_range_ids(code_file: str, ranges: List[Tuple[int, int]], db: str = RUN_DB) -> str:
+    """Script lines setting `in_range` to the job ids in work db `db` with a
+    mutation in a target range of code_file (a mutation's start line, as
+    cosmic-ray records it)."""
     clause = " or ".join(f"({start} <= spec.start_pos[0] <= {end})" for start, end in ranges)
     return (
         "from cosmic_ray.work_db import WorkDB\n"
-        "db = WorkDB('mutation.sqlite', WorkDB.Mode.open)\n"
+        f"db = WorkDB({db!r}, WorkDB.Mode.open)\n"
         "in_range = {\n"
         "    item.job_id\n"
         "    for item in db.work_items\n"
@@ -34,6 +45,22 @@ def _in_range_ids(code_file: str, ranges: List[Tuple[int, int]]) -> str:
         f"    if str(spec.module_path) == {code_file!r}\n"
         f"    and ({clause})\n"
         "}\n"
+    )
+
+
+def count_script(code_file: str, ranges: List[Tuple[int, int]]) -> str:
+    """Count the mutants inside the target ranges in COUNT_DB, changing
+    nothing.
+
+    Prints `TARGET_MUTANT_COUNT <n>`. Run on a db that `cosmic-ray init` has
+    just filled, n is what every later sample's FunctionMutationTotal must
+    equal: both select from the same work items with the same ranges.
+    """
+    return _in_range_ids(code_file, ranges, COUNT_DB) + (
+        "try:\n"
+        "    print(f'TARGET_MUTANT_COUNT {len(in_range)}')\n"
+        "finally:\n"
+        "    db.close()\n"
     )
 
 

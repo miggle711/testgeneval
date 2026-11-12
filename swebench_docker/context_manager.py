@@ -31,9 +31,11 @@ from swebench_docker.constants import (
     PatchType,
 )
 from swebench_docker.mutation_scope import (
+    COUNT_DB,
     FILE as SCOPE_FILE,
     FUNCTION as SCOPE_FUNCTION,
     SCOPES,
+    count_script,
     score_script,
     skip_outside_script,
 )
@@ -41,6 +43,10 @@ from swebench_docker.swebench_utils import get_test_directives
 from swebench_docker.target_range import resolve_target_line_range
 
 logger_taskenv = logging.getLogger("taskenv")
+
+# Config for the per-instance target-mutant count. Its own file, like
+# COUNT_DB, so the count shares nothing with a sample's mutation run.
+COUNT_CONFIG = "mutation_count.toml"
 
 
 class LogWrapper:
@@ -385,6 +391,89 @@ class TaskEnvContextManager:
         func_covered = len(target_lines & executed) / len(relevant) * 100
         self.log.write(f"\nFunctionCoverageLOG: {func_covered}%\n")
 
+    def _cosmic_ray_prefix(self, specifications):
+        """A plain python image runs cosmic-ray directly, a conda one through
+        the testbed env."""
+        if "image" in specifications and specifications["image"] == "python":
+            return ""
+        return self.cmd_conda_run
+
+    def log_target_mutant_count(self, instance, specifications):
+        """Count the target function's mutants once for the instance, before
+        any generated test runs (fyp-paper#7, eligibility rule 3).
+
+        A sample logs FunctionMutationTotal only after its filtered suite
+        passes, so an instance where no sample passes used to leave no
+        record of whether its target holds a mutant. `cosmic-ray init` reads
+        only the source file and the config, never a test, so the count is
+        taken here from the patched source and has the same value whatever
+        was generated.
+
+        Logs one of
+          TargetMutantCount: <n>
+              the target holds n mutants (0: nothing to mutate);
+          TargetMutantCountFAIL: no target function range
+              the target could not be resolved from the patch;
+          TargetMutantCountFAIL: <anything else>
+              the count could not be taken, so it is unknown;
+        then TargetMutantCountTime, the seconds it took. A failure here is
+        logged and never stops the instance's evaluation.
+        """
+        start = time.time()
+        try:
+            outcome = self._count_target_mutants(
+                instance, self._cosmic_ray_prefix(specifications)
+            )
+        except subprocess.TimeoutExpired:
+            outcome = f"FAIL: cosmic-ray init timed out after {self.timeout} seconds"
+        except Exception as e:
+            outcome = f"FAIL: {e!r}"
+        finally:
+            for leftover in (COUNT_CONFIG, COUNT_DB):
+                if os.path.exists(leftover):
+                    os.remove(leftover)
+        self.log.write(f"\nTargetMutantCount{outcome}")
+        self.log.write(f"\nTargetMutantCountTime: {time.time() - start:.1f}")
+
+    def _count_target_mutants(self, instance, prefix):
+        """The log text after "TargetMutantCount": ": <n>" or "FAIL: <why>"."""
+        target_ranges = self._resolve_target_ranges(instance)
+        if not target_ranges:
+            return "FAIL: no target function range"
+        # init never runs the test command, so any command will do.
+        with open(COUNT_CONFIG, "w") as config_file:
+            config_file.write(
+                MUTATION_TEMPLATE.format(
+                    source_fp=instance["code_file"], timeout=10, test_cmd="true"
+                )
+            )
+        if os.path.exists(COUNT_DB):
+            os.remove(COUNT_DB)
+        init = self.exec(
+            f"{prefix}cosmic-ray init {COUNT_CONFIG} {COUNT_DB}".split(),
+            shell=False,
+            check=False,
+            timeout=self.timeout,
+        )
+        if init.returncode != 0:
+            return f"FAIL: cosmic-ray init exited {init.returncode}: {init.stdout}"
+        result = self.exec(
+            f"{prefix}python -c".split()
+            + [count_script(instance["code_file"], target_ranges)],
+            shell=False,
+            check=False,
+        )
+        output = str(result.stdout)
+        line = next(
+            (l for l in output.splitlines() if l.startswith("TARGET_MUTANT_COUNT")), None
+        )
+        if line is None:
+            return (
+                f"FAIL: subprocess exited {result.returncode}, "
+                f"no TARGET_MUTANT_COUNT line in output: {output}"
+            )
+        return f": {int(line.split()[1])}"
+
     def run_mutation_testing(self, instance, specifications, test_time, test_cmd):
         """Run cosmic-ray over the code file and log the scores.
 
@@ -401,12 +490,7 @@ class TaskEnvContextManager:
             )
             mutant_file.write(formatted_content)
 
-        # A plain python image runs cosmic-ray directly, a conda one through
-        # the testbed env.
-        if "image" in specifications and specifications["image"] == "python":
-            prefix = ""
-        else:
-            prefix = self.cmd_conda_run
+        prefix = self._cosmic_ray_prefix(specifications)
 
         self.exec(
             f"{prefix}cosmic-ray init mutation.toml mutation.sqlite".split(),

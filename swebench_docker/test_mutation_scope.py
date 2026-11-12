@@ -164,6 +164,44 @@ class MutationScopeTest(unittest.TestCase):
         self.assertNotIn("FunctionMutationFAIL", empty)
 
 
+    def test_count_taken_with_no_test_equals_the_total_a_passing_sample_logs(self):
+        # Eligibility rule 3 (fyp-paper#7): the count comes from the source
+        # alone, and is the FunctionMutationTotal of any sample that gets
+        # as far as mutation, in either scope.
+        os.remove("test_calc.py")
+        tcm = _manager("function")
+        tcm.log_target_mutant_count({"code_file": "calc.py"}, {})
+        count = _value(tcm.log.text, "TargetMutantCount")
+        self.assertGreater(count, 0)
+        self.assertEqual(sorted(os.listdir(".")), ["calc.py"])
+        with open("test_calc.py", "w") as f:
+            f.write(TEST)
+        for scope in ("function", "file"):
+            self.assertEqual(_value(self._run(scope), "FunctionMutationTotal"), count, scope)
+            os.remove("mutation.sqlite")
+
+    def test_count_leaves_a_finished_run_as_it_was(self):
+        self._run("function")
+        before = self._outcomes()
+        tcm = _manager("function")
+        tcm.log_target_mutant_count({"code_file": "calc.py"}, {})
+        self.assertIsNotNone(_value(tcm.log.text, "TargetMutantCount"))
+        self.assertEqual(self._outcomes(), before)
+
+    def test_count_of_a_target_with_no_mutant_is_zero(self):
+        tcm = _manager("function")
+        tcm._resolve_target_ranges = lambda instance: [(3, 4)]  # blank lines in calc.py
+        tcm.log_target_mutant_count({"code_file": "calc.py"}, {})
+        self.assertEqual(_value(tcm.log.text, "TargetMutantCount"), 0)
+        self.assertNotIn("FAIL", tcm.log.text)
+
+    def test_count_of_a_file_that_is_missing_fails_instead_of_reporting_zero(self):
+        tcm = _manager("function")
+        tcm.log_target_mutant_count({"code_file": "gone.py"}, {})
+        self.assertIn("\nTargetMutantCountFAIL: ", tcm.log.text)
+        self.assertIsNone(_value(tcm.log.text, "TargetMutantCount"))
+
+
 class ScopeValueTest(unittest.TestCase):
     def test_unknown_scope_is_rejected(self):
         with self.assertRaises(ValueError):
