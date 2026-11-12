@@ -27,6 +27,12 @@ Without the conda env active, call its interpreter directly, e.g. `/opt/anaconda
 - Keep commits one line, a short declarative sentence. Reasoning, detail, and evidence belong in the PR description, not the commit message.
 - Keep one concern per PR.
 
+## Comments
+
+Comment the why, never the what. Code already says what it does; a comment restating that is noise, delete it if nothing is lost without it. Write one only for something a reader couldn't infer unaided: a hidden constraint, a workaround for a specific real bug, a decision that looks wrong until you know the reason (`run_apptainer.py`'s notes on the OCI-entrypoint mangling and `run_api.py`'s `MODEL_LIMITS` registry are good examples already in this codebase, keep writing comments like those).
+
+No changelog-in-comments (referencing an issue/PR number or "added for X" dates the comment and rots as the code evolves; the PR description and git history are where that belongs). No commented-out code. Keep it to one idea, one or two lines, if it needs a paragraph the logic probably needs restructuring instead.
+
 ## Pull requests
 
 Link the issue in the first line (`Fixes #N` or, if the PR doesn't complete it, `Part of #N`).
