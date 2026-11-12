@@ -743,11 +743,14 @@ class TaskEnvContextManager:
                             instance, specifications, test_time, test_cmd
                         )
 
-                # RQ3 instrumentation (Any Pass@1): unlike TESTS_PASSED/
-                # TESTS_FAILED above, this must run regardless of which
-                # branch fired -- a whole-suite failure (out_test.returncode
-                # != 0) can still have individual passing test cases, which
-                # is the entire point of a distinct Any Pass@1 signal.
+                # Any-pass marker (testgeneval#77). It must run whichever
+                # branch fired: a suite that fails as a whole can still
+                # contain passing test cases. In the full setting this suite
+                # has already been filtered to the generated tests that
+                # passed on their own (see constants.py), so this is nearly
+                # the same signal as TESTS_PASSED. It is written only after
+                # coverage and mutation, so a run cut short in between has
+                # TESTS_PASSED but no any marker (testgeneval#94).
                 any_tests_passed = self._any_test_passed(
                     "any-tests-report.xml", out_test.returncode
                 )

@@ -109,6 +109,10 @@ TENSOR_PARALLEL_SIZE="${TENSOR_PARALLEL_SIZE:-1}"
 # 31.62 GiB was available). This experiment's prompts and generated
 # tests are nowhere near that long, so cap it.
 MAX_MODEL_LEN="${MAX_MODEL_LEN:-32768}"
+# run_api.py truncates prompts to fit this server limit, not just the
+# model's published context, so a long prompt is shortened instead of
+# rejected on every retry (testgeneval#44).
+export SERVER_MAX_MODEL_LEN="$MAX_MODEL_LEN"
 # Real, confirmed finding (testgeneval#46): vLLM does not honor the
 # per-request max_tokens this project sends via run_api.py's own
 # OUTPUT_LIMITS-driven call, real completions have been observed running

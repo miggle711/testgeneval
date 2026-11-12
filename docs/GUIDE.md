@@ -34,9 +34,8 @@ the `full` prompt. Two are supported, selected with `--prompt_config`:
 Both arms are told to focus on the same function, and neither is shown
 any existing test content, the comparison is meant to isolate
 *representation* (structured KG sections vs. a flat file), not have the
-two arms secretly doing different jobs. If you want the full reasoning
-behind that design, it's written up in the `fyp-paper` repo's
-`experiment_design/` directory.
+two arms secretly doing different jobs. The full reasoning behind
+that design is in the submitted paper (Section IV-B).
 
 Evaluation has also grown a second pair of metrics. Coverage and
 mutation score were originally computed over the whole file. This fork
@@ -251,14 +250,13 @@ the script:
 MODEL="Qwen/Qwen3-4B-Instruct-2507" \
 DATASET_PATH="kjain14/testgenevallite" \
 PROMPT_CONFIG="instruct" \
-TEMPERATURE="0.2" \
+TEMPERATURE="0.8" \
 sbatch --gres=gpu:L40S:1 --time=8:00:00 m3_run_inference.slurm
 ```
 
 `MODEL` needs to be a real HuggingFace model id, and should be one of the
-actual shortlisted models, see the `fyp-paper` repo's `experiment_design/
-setup.md` for the current list and their real, confirmed GPU
-requirements.
+seven models in the paper (Table II lists them with their GPU
+requirements).
 `DATASET_PATH` can be a HuggingFace dataset name, which vLLM downloads
 directly, or a local path to a dataset saved to disk and transferred
 over. `PROMPT_CONFIG` is `instruct` or `kg_only`. Both arms read
@@ -266,8 +264,8 @@ over. `PROMPT_CONFIG` is `instruct` or `kg_only`. Both arms read
 built separately in the pycodekg repo, `instruct` only reads it for
 target function naming, `kg_only` needs it for the real structural
 context too, and will fail outright without it. `TEMPERATURE` is
-`0.2` for the real pass@1 main results, `0.8` (with `NUM_SAMPLES="5"`)
-for pass@k where k equals 5.
+`0.8` for both pass@1 and pass@5 (add `NUM_SAMPLES="5"` for pass@5). At
+`0.2` many completions looped until the token cap (testgeneval#43).
 
 By default requests go to vLLM one at a time. `MAX_CONCURRENCY` (default
 1) raises that, so vLLM's continuous batching actually has multiple
@@ -286,7 +284,7 @@ models of the same size class needed genuinely different safe values.
 MODEL="Qwen/Qwen3-4B-Instruct-2507" \
 DATASET_PATH="kjain14/testgenevallite" \
 PROMPT_CONFIG="instruct" \
-TEMPERATURE="0.2" \
+TEMPERATURE="0.8" \
 MAX_NUM_SEQS="16" \
 MAX_CONCURRENCY="16" \
 sbatch --gres=gpu:L40S:1 --time=8:00:00 m3_run_inference.slurm
@@ -335,7 +333,7 @@ might already exist there without write access for you.
 Watch the job the same way as setup. When it's done you'll see
 `Done. Predictions written under ...`, and the output lands in
 `results/instruct/` (or `results/kg_only/`), named something like
-`Qwen3-4B-Instruct-2507__testgenevallite__0.2__k1__test.jsonl` (the
+`Qwen3-4B-Instruct-2507__testgenevallite__0.8__k1__test.jsonl` (the
 `k1`/`k5` segment is the real sample count, required since
 testgeneval#43 to keep a pass@1 and pass@5 run for the same model/arm/
 temperature from colliding on the same file).
@@ -365,16 +363,16 @@ Submit the same command several times, changing only `SHARD_ID` each
 time and keeping `NUM_SHARDS` the same across all of them:
 
 ```bash
-MODEL="Qwen/Qwen3-4B-Instruct-2507" DATASET_PATH="kjain14/testgenevallite" PROMPT_CONFIG="instruct" TEMPERATURE="0.2" NUM_SHARDS="4" SHARD_ID="0" sbatch --gres=gpu:L40S:1 --time=8:00:00 m3_run_inference.slurm
-MODEL="Qwen/Qwen3-4B-Instruct-2507" DATASET_PATH="kjain14/testgenevallite" PROMPT_CONFIG="instruct" TEMPERATURE="0.2" NUM_SHARDS="4" SHARD_ID="1" sbatch --gres=gpu:L40S:1 --time=8:00:00 m3_run_inference.slurm
-MODEL="Qwen/Qwen3-4B-Instruct-2507" DATASET_PATH="kjain14/testgenevallite" PROMPT_CONFIG="instruct" TEMPERATURE="0.2" NUM_SHARDS="4" SHARD_ID="2" sbatch --gres=gpu:L40S:1 --time=8:00:00 m3_run_inference.slurm
-MODEL="Qwen/Qwen3-4B-Instruct-2507" DATASET_PATH="kjain14/testgenevallite" PROMPT_CONFIG="instruct" TEMPERATURE="0.2" NUM_SHARDS="4" SHARD_ID="3" sbatch --gres=gpu:L40S:1 --time=8:00:00 m3_run_inference.slurm
+MODEL="Qwen/Qwen3-4B-Instruct-2507" DATASET_PATH="kjain14/testgenevallite" PROMPT_CONFIG="instruct" TEMPERATURE="0.8" NUM_SHARDS="4" SHARD_ID="0" sbatch --gres=gpu:L40S:1 --time=8:00:00 m3_run_inference.slurm
+MODEL="Qwen/Qwen3-4B-Instruct-2507" DATASET_PATH="kjain14/testgenevallite" PROMPT_CONFIG="instruct" TEMPERATURE="0.8" NUM_SHARDS="4" SHARD_ID="1" sbatch --gres=gpu:L40S:1 --time=8:00:00 m3_run_inference.slurm
+MODEL="Qwen/Qwen3-4B-Instruct-2507" DATASET_PATH="kjain14/testgenevallite" PROMPT_CONFIG="instruct" TEMPERATURE="0.8" NUM_SHARDS="4" SHARD_ID="2" sbatch --gres=gpu:L40S:1 --time=8:00:00 m3_run_inference.slurm
+MODEL="Qwen/Qwen3-4B-Instruct-2507" DATASET_PATH="kjain14/testgenevallite" PROMPT_CONFIG="instruct" TEMPERATURE="0.8" NUM_SHARDS="4" SHARD_ID="3" sbatch --gres=gpu:L40S:1 --time=8:00:00 m3_run_inference.slurm
 ```
 
 Each shard processes only its own slice (with 4 shards on the 160
 instance lite dataset, that's 40 instances each) and writes its own
 output file with a suffix showing which shard it is, something like
-`Qwen3-4B-Instruct-2507__testgenevallite__0.2__test__shard-0__num_shards-4.jsonl`.
+`Qwen3-4B-Instruct-2507__testgenevallite__0.8__test__shard-0__num_shards-4.jsonl`.
 In practice, a single unsharded job on the real, current per-model
 concurrency values finishes in a few hours even on the full dataset,
 so sharding is now mostly useful for extra resilience against a
@@ -391,7 +389,7 @@ python3 scripts/merge_and_validate.py \
   --output_dir results/instruct \
   --model_nickname Qwen3-4B-Instruct-2507 \
   --dataset testgenevallite \
-  --temperature 0.2 \
+  --temperature 0.8 \
   --num_shards 4 \
   --expected_total 160
 ```
@@ -415,7 +413,7 @@ Pull the predictions file down with `scp` from your own machine, not
 from inside an M3 SSH session:
 
 ```bash
-scp <username>@m3.massive.org.au:/home/<username>/al49_scratch/kg-testing/testgeneval/results/instruct/Qwen3-4B-Instruct-2507__testgenevallite__0.2__k1__test.jsonl .
+scp <username>@m3.massive.org.au:/home/<username>/al49_scratch/kg-testing/testgeneval/results/instruct/Qwen3-4B-Instruct-2507__testgenevallite__0.8__k1__test.jsonl .
 ```
 
 The dedicated transfer node (`m3-dtn.massive.org.au`) is meant for this
