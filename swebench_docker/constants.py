@@ -853,20 +853,32 @@ INSTALL_TIMEOUT: str = ">>>>> Init Timed Out"
 RESET_FAILED: str = ">>>>> Reset Failed"
 TESTS_ERROR: str = ">>>>> Tests Errored"
 TESTS_FAILED: str = ">>>>> Some Tests Failed"
+# In-container limit (seconds) for one sample's cosmic-ray mutation run.
+# Separate from TIMEOUT, which limits each test command.
+MUTATION_TIMEOUT: int = 3600
 UNFILTERED_TESTS_FAILED: str = ">>>>> Unfiltered Tests Failed"
 TESTS_CONFIG: str = ">>>>> Tests config"
 TESTS_PASSED: str = ">>>>> All Tests Passed"
 UNFILTERED_TESTS_PASSED: str = ">>>>> Unfiltered Tests Passed"
 TESTS_TIMEOUT: str = ">>>>> Tests Timed Out"
-# RQ3 instrumentation (Any Pass@1): distinct from
-# TESTS_PASSED/TESTS_FAILED above, which are really "All Tests Passed"
-# semantics (a single whole-suite exit code) despite the generic-looking
-# name. These two record whether AT LEAST ONE per-test-case result
-# passed, from a real pytest --junitxml report when one exists (see
-# context_manager.py's run_tests_task). Falls back to the same
-# whole-suite signal as TESTS_PASSED/TESTS_FAILED for the rare
-# non-pytest test command (django/django's runtests.py, see
-# MAP_REPO_TO_TEST_CMD) where no per-test-case report is available.
+# What the markers mean (testgeneval#94). evaluate_instance.py's
+# full_processing runs each generated test on its own, drops the ones that
+# fail, then runs the remaining tests together. TESTS_PASSED/TESTS_FAILED
+# are that last run's exit code, so despite the "All Tests Passed" text,
+# TESTS_PASSED means at least one generated test passes (and the ones that
+# pass on their own also pass together): TestGenEval's pass@k. With no test
+# left after filtering, TESTS_FAILED is written. UNFILTERED_TESTS_PASSED is
+# written only when that run passes and no test was dropped, so it means
+# every generated test passes: TestGenEval's all pass@k.
+#
+# ANY_TESTS_PASSED/ANY_TESTS_FAILED (testgeneval#77) record whether at least
+# one test case passed in that same, already filtered, run, from a pytest
+# --junitxml report when one exists (see context_manager.py's
+# run_tests_task), and fall back to the exit code for django/django's
+# runtests.py. So any_pass_at_k measures nearly the same thing as pass_at_k
+# and should never be lower. It is lower in some reports, most likely
+# because the marker is written only after coverage and mutation and is
+# missing when those are cut short (testgeneval#94).
 ANY_TESTS_PASSED: str = ">>>>> Any Test Passed"
 ANY_TESTS_FAILED: str = ">>>>> No Tests Passed"
 

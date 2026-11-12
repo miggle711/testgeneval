@@ -59,7 +59,12 @@ import tempfile
 import time
 
 import dotenv
-from swebench_docker.constants import MAP_VERSION_TO_INSTALL, PYENV_REPOS
+from swebench_docker.constants import (
+    KEY_PREDICTIONS,
+    MAP_VERSION_TO_INSTALL,
+    MUTATION_TIMEOUT,
+    PYENV_REPOS,
+)
 
 logger = logging.getLogger(__name__)
 dotenv.load_dotenv()
@@ -95,6 +100,20 @@ APPTAINER_HOST_TIMEOUT_MARGIN = int(
 )
 
 
+# Repos whose test command needs more space than --writable-tmpfs gives. That
+# area is capped by Apptainer's `sessiondir max size`, 64 MB on M3, and sphinx's
+# `tox` run fills it while packaging, so its tests never start. An overlay
+# directory keeps the image's contents and puts writes on real disk instead.
+REPOS_NEEDING_DISK_OVERLAY = {"sphinx-doc/sphinx"}
+
+
+def _writable_args(overlay_dir):
+    """Apptainer arguments for the container's writable layer."""
+    if overlay_dir:
+        return ["--overlay", overlay_dir]
+    return ["--writable-tmpfs"]
+
+
 def _entrypoint_path(repo: str) -> str:
     """Real absolute entrypoint path inside the container, which differs
     by base image (see module docstring point 2). Not something the host
@@ -104,6 +123,21 @@ def _entrypoint_path(repo: str) -> str:
     if repo in PYENV_REPOS:
         return "/opt/entrypoint.sh"
     return "/home/swe-bench/entrypoint.sh"
+
+
+def host_timeout_for(timeout: int, n_samples: int, skip_mutation: bool) -> int:
+    """Host-side wall-clock cap for one container, which evaluates all of an
+    instance's samples in turn. Each sample can take up to `timeout` for its
+    tests plus MUTATION_TIMEOUT for mutation (unless skipped), so the cap
+    grows with the sample count: a single cap for the whole container used
+    to kill pass@5's later samples partway, mostly passing ones, since only
+    those run mutation. APPTAINER_HOST_TIMEOUT overrides with a fixed value.
+    """
+    override = os.environ.get("APPTAINER_HOST_TIMEOUT")
+    if override:
+        return int(override)
+    per_sample = timeout + (0 if skip_mutation else MUTATION_TIMEOUT)
+    return max(1, n_samples) * per_sample + APPTAINER_HOST_TIMEOUT_MARGIN
 
 
 async def run_apptainer_evaluation(
@@ -177,10 +211,14 @@ async def run_apptainer_evaluation(
     # --writable-tmpfs lets Apptainer create the mount point.
     task_json_target = "/home/swe-bench/task_instance.json"
 
+    overlay_dir = None
+    if task_instance["repo"] in REPOS_NEEDING_DISK_OVERLAY:
+        overlay_dir = tempfile.mkdtemp(prefix="apptainer-overlay-")
+
     apptainer_command = [
         "apptainer",
         "exec",
-        "--writable-tmpfs",
+        *_writable_args(overlay_dir),
         "--cleanenv",
         "--home",
         home_dir,
@@ -221,15 +259,12 @@ async def run_apptainer_evaluation(
 
     start_time = time.time()
 
-    # Derived from this call's own `timeout` so raising TIMEOUT in
-    # m3_run_evaluation.slurm for a slow repo raises the host cap too,
-    # not just the in-container one. APPTAINER_HOST_TIMEOUT overrides
-    # with a fixed value when set.
-    host_timeout = int(
-        os.environ.get(
-            "APPTAINER_HOST_TIMEOUT", timeout + APPTAINER_HOST_TIMEOUT_MARGIN
-        )
-    )
+    # Derived from this call's own `timeout` and sample count, so raising
+    # TIMEOUT in m3_run_evaluation.slurm raises the host cap too, and a
+    # pass@5 container gets room for all five samples (see host_timeout_for).
+    samples = task_instance.get(KEY_PREDICTIONS, {}).get(setting)
+    n_samples = len(samples) if isinstance(samples, list) else 1
+    host_timeout = host_timeout_for(timeout, n_samples, skip_mutation)
 
     try:
         process = await asyncio.create_subprocess_exec(
@@ -296,3 +331,5 @@ async def run_apptainer_evaluation(
         except FileNotFoundError:
             pass
         shutil.rmtree(home_dir, ignore_errors=True)
+        if overlay_dir:
+            shutil.rmtree(overlay_dir, ignore_errors=True)
