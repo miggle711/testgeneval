@@ -72,6 +72,8 @@ class CountLogTest(unittest.TestCase):
         os.chdir(tmp.name)
         self.addCleanup(tmp.cleanup)
         self.addCleanup(os.chdir, cwd)
+        with open("calc.py", "w") as source:
+            source.write("def target(x):\n    return x + 1\n")
 
     def _count(self, tcm, specifications=None):
         tcm.log_target_mutant_count(INSTANCE, specifications or {})
@@ -103,6 +105,16 @@ class CountLogTest(unittest.TestCase):
         self.assertEqual(len(tcm.exec.commands), 1)
         self.assertNotIn("no target function range", log)
         self.assertNotIn("\nTargetMutantCount: ", log)
+
+    def test_a_missing_source_fails_before_target_resolution_or_cosmic_ray(self):
+        os.remove("calc.py")
+        tcm = _manager([])
+        with patch.object(tcm, "_resolve_target_ranges") as resolve:
+            log = self._count(tcm)
+        self.assertIn("\nTargetMutantCountFAIL: source file not found: calc.py", log)
+        self.assertNotIn("\nTargetMutantCount: ", log)
+        resolve.assert_not_called()
+        self.assertEqual(tcm.exec.commands, [])
 
     def test_a_count_script_that_prints_no_count_is_not_logged_as_zero(self):
         tcm = _manager([(0, ""), (1, "Traceback: no such table")])
@@ -138,7 +150,7 @@ class CountLogTest(unittest.TestCase):
         self.assertNotIn("mutation.sqlite", " ".join(init))
         self.assertNotEqual(COUNT_DB, "mutation.sqlite")
         self.assertNotEqual(COUNT_CONFIG, "mutation.toml")
-        self.assertEqual(os.listdir("."), [])
+        self.assertEqual(os.listdir("."), ["calc.py"])
 
     def test_the_script_reads_the_count_db_only(self):
         script = count_script("calc.py", [(5, 8)])

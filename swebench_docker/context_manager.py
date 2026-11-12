@@ -437,6 +437,9 @@ class TaskEnvContextManager:
 
     def _count_target_mutants(self, instance, prefix):
         """The log text after "TargetMutantCount": ": <n>" or "FAIL: <why>"."""
+        # Older cosmic-ray init can succeed with an empty DB for a missing file.
+        if not os.path.isfile(instance["code_file"]):
+            return f"FAIL: source file not found: {instance['code_file']}"
         target_ranges = self._resolve_target_ranges(instance)
         if not target_ranges:
             return "FAIL: no target function range"
