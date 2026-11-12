@@ -1,15 +1,18 @@
 # Target-function mutation (testgeneval#10): with mutation_scope "function",
 # only the target function's mutants run, and the score is over those. Runs
 # real cosmic-ray on a small module, so it is skipped where cosmic_ray is not
-# installed (the testbed images pin cosmic-ray==8.3.14). Run with:
+# installed. Testbed images may contain older releases. Run with:
 #   python -m unittest swebench_docker.test_mutation_scope -v
 
+import contextlib
+import io
 import os
 import re
 import subprocess
 import sys
 import tempfile
 import unittest
+from types import ModuleType, SimpleNamespace
 from unittest.mock import patch
 
 from swebench_docker.context_manager import ExecWrapper, TaskEnvContextManager
@@ -168,6 +171,48 @@ class ScopeValueTest(unittest.TestCase):
     def test_unknown_scope_is_rejected(self):
         with self.assertRaises(ValueError):
             TaskEnvContextManager({}, "full", "t", ".", ".", mutation_scope="files")
+
+
+class LegacySkipApiTest(unittest.TestCase):
+    def test_skip_script_works_without_bulk_api_and_preserves_target_and_completed_jobs(self):
+        from swebench_docker.mutation_scope import skip_outside_script
+
+        def item(job_id, line):
+            return SimpleNamespace(job_id=job_id, mutations=[SimpleNamespace(
+                module_path="calc.py", start_pos=(line, 0))])
+
+        class LegacyDB:
+            class Mode:
+                open = "open"
+
+            def __init__(self, path, mode):
+                self.work_items = [item("target", 6), item("outside", 2), item("completed", 1)]
+                self.pending_work_items = self.work_items[:2]
+                self.saved = {}
+                self.closed = False
+
+            def set_result(self, job_id, result):
+                self.saved[job_id] = result
+
+            def close(self):
+                self.closed = True
+
+        db = LegacyDB("mutation.sqlite", "open")
+        work_db = ModuleType("cosmic_ray.work_db")
+        work_db.WorkDB = lambda *args: db
+        work_db.WorkDB.Mode = LegacyDB.Mode
+        work_item = ModuleType("cosmic_ray.work_item")
+        work_item.WorkResult = SimpleNamespace
+        work_item.WorkerOutcome = SimpleNamespace(SKIPPED="skipped")
+        modules = {"cosmic_ray": ModuleType("cosmic_ray"),
+                   "cosmic_ray.work_db": work_db, "cosmic_ray.work_item": work_item}
+        output = io.StringIO()
+        with patch.dict(sys.modules, modules), contextlib.redirect_stdout(output):
+            exec(skip_outside_script("calc.py", TARGET), {})
+        self.assertEqual(set(db.saved), {"outside"})
+        self.assertEqual(db.saved["outside"].worker_outcome, "skipped")
+        self.assertTrue(db.closed)
+        self.assertIn("FUNC_MUTANTS_IN_RANGE 1", output.getvalue())
 
 
 if __name__ == "__main__":
