@@ -95,6 +95,20 @@ APPTAINER_HOST_TIMEOUT_MARGIN = int(
 )
 
 
+# Repos whose test command needs more space than --writable-tmpfs gives. That
+# area is capped by Apptainer's `sessiondir max size`, 64 MB on M3, and sphinx's
+# `tox` run fills it while packaging, so its tests never start. An overlay
+# directory keeps the image's contents and puts writes on real disk instead.
+REPOS_NEEDING_DISK_OVERLAY = {"sphinx-doc/sphinx"}
+
+
+def _writable_args(overlay_dir):
+    """Apptainer arguments for the container's writable layer."""
+    if overlay_dir:
+        return ["--overlay", overlay_dir]
+    return ["--writable-tmpfs"]
+
+
 def _entrypoint_path(repo: str) -> str:
     """Real absolute entrypoint path inside the container, which differs
     by base image (see module docstring point 2). Not something the host
@@ -177,10 +191,14 @@ async def run_apptainer_evaluation(
     # --writable-tmpfs lets Apptainer create the mount point.
     task_json_target = "/home/swe-bench/task_instance.json"
 
+    overlay_dir = None
+    if task_instance["repo"] in REPOS_NEEDING_DISK_OVERLAY:
+        overlay_dir = tempfile.mkdtemp(prefix="apptainer-overlay-")
+
     apptainer_command = [
         "apptainer",
         "exec",
-        "--writable-tmpfs",
+        *_writable_args(overlay_dir),
         "--cleanenv",
         "--home",
         home_dir,
@@ -296,3 +314,5 @@ async def run_apptainer_evaluation(
         except FileNotFoundError:
             pass
         shutil.rmtree(home_dir, ignore_errors=True)
+        if overlay_dir:
+            shutil.rmtree(overlay_dir, ignore_errors=True)
