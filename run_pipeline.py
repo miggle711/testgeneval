@@ -131,6 +131,26 @@ if __name__ == "__main__":
     if model_suf == "Meta-Llama-3.1-405B-Instruct":
         args.model = model_suf
 
+    API_MODELS = [
+        "gpt-4o-2024-05-13",
+        "gpt-4-0613",
+        "gpt-4-turbo-2024-04-09",
+        "gpt-3.5-turbo-0125",
+        "Meta-Llama-3.1-405B-Instruct",
+        "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit",
+        "llama-3.1-8b-instant",
+    ]
+    if args.model in API_MODELS:
+        if (not args.skip_full and not args.skip_completion
+                and args.num_samples_full != args.num_samples_completion):
+            parser.error(
+                "The API backend uses one sample count for all active settings. "
+                "Use equal --num_samples_full/--num_samples_completion values, "
+                "or select one setting with --skip_completion or --skip_full."
+            )
+        api_samples = args.num_samples_completion if args.skip_full else args.num_samples_full
+    output_samples = api_samples if args.model in API_MODELS else args.num_samples_full
+
     print(
         f"Running pipeline for {args.model} with pass@{args.num_samples_full} (full) and pass@{args.num_samples_completion} (completion) on {data_suf}"
     )
@@ -145,22 +165,13 @@ if __name__ == "__main__":
     pred_dir = os.path.join(base_dir, "preds")
     os.makedirs(pred_dir, exist_ok=True)
 
-    pred_output_filename = f"{model_suf}__{data_suf}__{args.temperature}__k{args.num_samples_full}__test.jsonl"
+    pred_output_filename = f"{model_suf}__{data_suf}__{args.temperature}__k{output_samples}__test.jsonl"
     print(pred_output_filename)
     preds_file = os.path.join(pred_dir, pred_output_filename)
 
     if os.path.exists(preds_file) and args.rerun_preds:
         os.remove(preds_file)
 
-    API_MODELS = [
-        "gpt-4o-2024-05-13",
-        "gpt-4-0613",
-        "gpt-4-turbo-2024-04-09",
-        "gpt-3.5-turbo-0125",
-        "Meta-Llama-3.1-405B-Instruct",
-        "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit",
-        "llama-3.1-8b-instant",
-    ]
     if not os.path.exists(preds_file):
         if args.model in API_MODELS:
             model_extra_cmd = ["--model_args", f"temperature={args.temperature}"]
@@ -184,15 +195,10 @@ if __name__ == "__main__":
                 dataset_name_or_path,
                 "--output_dir",
                 pred_dir,
-                # run_api.py only accepts a single --num_samples (used for
-                # every completion setting; 'full' is hardcoded to 1 sample
-                # internally) -- --num_samples_full/--num_samples_completion
-                # aren't real run_api.py flags, this previously errored for
-                # every API model, not just a local one.
                 "--num_samples",
-                str(args.num_samples_completion),
+                str(api_samples),
             ] + model_extra_cmd
-            subprocess.run(model_cmd)
+            subprocess.run(model_cmd, check=True)
         elif args.model != "baseline":
             model_extra_cmd = ["--skip_full"] if args.skip_full else []
             model_extra_cmd += ["--skip_completion"] if args.skip_completion else []
@@ -215,7 +221,7 @@ if __name__ == "__main__":
                 str(args.temperature),
             ]
             model_cmd += model_extra_cmd
-            subprocess.run(model_cmd)
+            subprocess.run(model_cmd, check=True)
 
     # Run evaluation
     extra_cmd = ["--skip_existing"] if not args.rerun_eval else []
@@ -273,5 +279,5 @@ if __name__ == "__main__":
             dataset_name_or_path,
         ]
 
-    subprocess.run(eval_cmd)
-    subprocess.run(report_cmd)
+    subprocess.run(eval_cmd, check=True)
+    subprocess.run(report_cmd, check=True)
