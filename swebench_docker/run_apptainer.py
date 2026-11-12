@@ -232,6 +232,8 @@ async def run_apptainer_evaluation(
         "APPTAINERENV_TIMEOUT": str(timeout),
         "APPTAINERENV_ONLY_BASELINE": str(only_baseline),
         "APPTAINERENV_SKIP_MUTATION": str(skip_mutation),
+        "APPTAINERENV_MUTATION_SCOPE": os.environ.get("MUTATION_SCOPE", "file"),
+        "APPTAINERENV_MUTATION_TIMEOUT": str(MUTATION_TIMEOUT),
     }
 
     cmd_string = " ".join(apptainer_command)

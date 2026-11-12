@@ -30,6 +30,13 @@ from swebench_docker.constants import (
     TESTS_TIMEOUT,
     PatchType,
 )
+from swebench_docker.mutation_scope import (
+    FILE as SCOPE_FILE,
+    FUNCTION as SCOPE_FUNCTION,
+    SCOPES,
+    score_script,
+    skip_outside_script,
+)
 from swebench_docker.swebench_utils import get_test_directives
 from swebench_docker.target_range import resolve_target_line_range
 
@@ -110,7 +117,10 @@ class TaskEnvContextManager:
         mutation_timeout: Optional[int] = None,
         is_eval: bool = True,
         image_type: str = "conda",
+        mutation_scope: str = SCOPE_FILE,
     ):
+        if mutation_scope not in SCOPES:
+            raise ValueError(f"mutation_scope must be one of {SCOPES}, got {mutation_scope!r}")
         self.instance_id = task_instance[KEY_INSTANCE_ID]
         self.id = task_instance[KEY_ID]
         self.instance = task_instance
@@ -120,6 +130,7 @@ class TaskEnvContextManager:
         self.is_eval = is_eval
         self.image_type = image_type
         self.mutation_timeout = mutation_timeout
+        self.mutation_scope = mutation_scope
 
         model = task_instance[KEY_MODEL]
         if image_type == "conda":
@@ -375,6 +386,13 @@ class TaskEnvContextManager:
         self.log.write(f"\nFunctionCoverageLOG: {func_covered}%\n")
 
     def run_mutation_testing(self, instance, specifications, test_time, test_cmd):
+        """Run cosmic-ray over the code file and log the scores.
+
+        mutation_scope "file" mutates the whole file and logs the whole-file
+        score (MutationLOG) plus the target function's share of it.
+        "function" runs only the target function's mutants and logs only the
+        function score (testgeneval#10).
+        """
         with open("mutation.toml", "w") as mutant_file:
             formatted_content = MUTATION_TEMPLATE.format(
                 source_fp=instance["code_file"],
@@ -383,73 +401,54 @@ class TaskEnvContextManager:
             )
             mutant_file.write(formatted_content)
 
+        # A plain python image runs cosmic-ray directly, a conda one through
+        # the testbed env.
         if "image" in specifications and specifications["image"] == "python":
-            self.exec(
-                "cosmic-ray init mutation.toml mutation.sqlite".split(),
-                shell=False,
-                check=False,
-                timeout=self.timeout,
-            )
-            try:
-                self.exec(
-                    "cosmic-ray exec mutation.toml mutation.sqlite".split(),
-                    shell=False,
-                    check=False,
-                    timeout=self.mutation_timeout,
-                )
-            except subprocess.TimeoutExpired:
-                self.log.write("MutationTimeout")
-
-            output = str(
-                self.exec(
-                    "cr-rate mutation.sqlite  --estimate --confidence 95.0".split(),
-                    shell=False,
-                    check=False,
-                ).stdout
-            )
-            num_output = str(
-                self.exec(
-                    "cr-report mutation.sqlite".split(), shell=False, check=False
-                ).stdout
-            )
-            if "total jobs: " in num_output:
-                num_mutants = num_output.split("total jobs: ")[1].split("\n")[0]
-                self.log.write(f"\nMutationNum: {num_mutants}")
-
+            prefix = ""
         else:
+            prefix = self.cmd_conda_run
+
+        self.exec(
+            f"{prefix}cosmic-ray init mutation.toml mutation.sqlite".split(),
+            shell=False,
+            check=False,
+            timeout=self.timeout,
+        )
+        if self.mutation_scope == SCOPE_FUNCTION:
+            target_ranges = self._keep_only_target_mutants(instance, prefix)
+            if not target_ranges:
+                return
+        try:
             self.exec(
-                f"{self.cmd_conda_run} cosmic-ray init mutation.toml mutation.sqlite".split(),
+                f"{prefix}cosmic-ray exec mutation.toml mutation.sqlite".split(),
                 shell=False,
                 check=False,
-                timeout=self.timeout,
+                timeout=self.mutation_timeout,
             )
-            try:
-                self.exec(
-                    f"{self.cmd_conda_run} cosmic-ray exec mutation.toml mutation.sqlite".split(),
-                    shell=False,
-                    check=False,
-                    timeout=self.mutation_timeout,
-                )
-            except subprocess.TimeoutExpired:
-                self.log.write("MutationTimeout")
+        except subprocess.TimeoutExpired:
+            self.log.write("MutationTimeout")
 
-            output = str(
-                self.exec(
-                    f"{self.cmd_conda_run} cr-rate mutation.sqlite  --estimate --confidence 95.0".split(),
-                    shell=False,
-                    check=False,
-                ).stdout
-            )
-            num_output = str(
-                self.exec(
-                    f"{self.cmd_conda_run} cr-report mutation.sqlite".split(),
-                    shell=False,
-                    check=False,
-                ).stdout
-            )
-            if "total jobs: " in num_output:
-                num_mutants = num_output.split("total jobs: ")[1].split("\n")[0]
-                self.log.write(f"\nMutationNum: {num_mutants}")
+        if self.mutation_scope == SCOPE_FUNCTION:
+            self._log_function_mutation_score(instance, target_ranges)
+            return
+
+        output = str(
+            self.exec(
+                f"{prefix}cr-rate mutation.sqlite  --estimate --confidence 95.0".split(),
+                shell=False,
+                check=False,
+            ).stdout
+        )
+        num_output = str(
+            self.exec(
+                f"{prefix}cr-report mutation.sqlite".split(),
+                shell=False,
+                check=False,
+            ).stdout
+        )
+        if "total jobs: " in num_output:
+            num_mutants = num_output.split("total jobs: ")[1].split("\n")[0]
+            self.log.write(f"\nMutationNum: {num_mutants}")
 
         if len(output.strip().split(" ")) == 3:
             low, val, high = output.split(" ")
@@ -467,50 +466,58 @@ class TaskEnvContextManager:
 
         self._log_function_mutation_score(instance)
 
-    def _log_function_mutation_score(self, instance):
+    def _keep_only_target_mutants(self, instance, prefix):
+        """Mark every mutant outside the target function skipped, so
+        `cosmic-ray exec` runs only the target function's. Returns the
+        target ranges, or None when there is nothing to run: no target
+        range found (FunctionMutationFAIL), or no mutant inside it
+        (FunctionMutationTotal: 0)."""
+        target_ranges = self._resolve_target_ranges(instance)
+        if not target_ranges:
+            self.log.write("\nFunctionMutationFAIL: no target function range")
+            return None
+        script = skip_outside_script(instance["code_file"], target_ranges)
+        result = self.exec(
+            f"{prefix}python -c".split() + [script], shell=False, check=False
+        )
+        output = str(result.stdout)
+        line = next(
+            (l for l in output.splitlines() if l.startswith("FUNC_MUTANTS_IN_RANGE")), None
+        )
+        if line is None:
+            self.log.write(
+                f"\nFunctionMutationFAIL: subprocess exited {result.returncode}, "
+                f"no FUNC_MUTANTS_IN_RANGE line in output: {output}"
+            )
+            return None
+        if int(line.split()[1]) == 0:
+            self.log.write("\nFunctionMutationTotal: 0")
+            return None
+        return target_ranges
+
+    def _log_function_mutation_score(self, instance, target_ranges=None):
         """Mutation score over only the mutants inside the patch's target
-        function(s). Same formula as cosmic_ray's survival_rate, just a
-        filtered subset of mutation.sqlite instead of the whole file.
+        function(s): kills over the target mutants that have a result.
+
+        Logs FunctionMutationLOG (the score), FunctionMutationNum (target
+        mutants with a result) and FunctionMutationTotal (all target
+        mutants). Num below Total means the run timed out before every
+        target mutant finished.
 
         cosmic_ray is only installed inside the per-repo conda testbed env
         (self.cmd_conda_run), not the outer environment evaluate_instance.py
         itself runs in, so the WorkDB query has to happen as a subprocess in
-        that env rather than an in-process import. This is a bonus metric on
-        top of an otherwise-successful run, so any failure here (missing
-        module, corrupt db, etc) is swallowed instead of erroring the whole
-        instance's evaluation.
+        that env rather than an in-process import. Any failure here (missing
+        module, corrupt db, etc) is logged as FunctionMutationFAIL instead of
+        erroring the whole instance's evaluation.
         """
         try:
-            target_ranges = self._resolve_target_ranges(instance)
+            if target_ranges is None:
+                target_ranges = self._resolve_target_ranges(instance)
             if target_ranges is None:
                 return
 
-            range_clause = " or ".join(
-                f"({start} <= spec.start_pos[0] <= {end})"
-                for start, end in target_ranges
-            )
-            script = (
-                "from cosmic_ray.work_db import WorkDB\n"
-                f"db = WorkDB('mutation.sqlite', WorkDB.Mode.open)\n"
-                "try:\n"
-                "    job_ids_in_range = {\n"
-                "        item.job_id\n"
-                "        for item in db.work_items\n"
-                "        for spec in item.mutations\n"
-                f"        if str(spec.module_path) == {instance['code_file']!r}\n"
-                f"        and ({range_clause})\n"
-                "    }\n"
-                "    results = dict(db.results)\n"
-                "    relevant = [jid for jid in job_ids_in_range if jid in results]\n"
-                "    if relevant:\n"
-                "        kills = sum(1 for jid in relevant if results[jid].is_killed)\n"
-                "        print(f'FUNC_MUTATION_RESULT {(kills / len(relevant)) * 100} {len(relevant)}')\n"
-                "    else:\n"
-                "        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')\n"
-                "finally:\n"
-                "    db.close()\n"
-            )
-
+            script = score_script(instance["code_file"], target_ranges)
             result = self.exec(
                 f"{self.cmd_conda_run} python -c".split() + [script],
                 shell=False,
@@ -523,9 +530,10 @@ class TaskEnvContextManager:
             elif result_line := next(
                 (l for l in lines if l.startswith("FUNC_MUTATION_RESULT")), None
             ):
-                _, score, num = result_line.split()
+                _, score, num, total = result_line.split()
                 self.log.write(f"\nFunctionMutationLOG: {score}%")
                 self.log.write(f"\nFunctionMutationNum: {num}")
+                self.log.write(f"\nFunctionMutationTotal: {total}")
             else:
                 self.log.write(
                     f"\nFunctionMutationFAIL: subprocess exited "
