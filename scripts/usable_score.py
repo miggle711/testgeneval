@@ -12,9 +12,19 @@ mutation testing, so a lower pass rate counts against an arm:
   unknown   mutation was cut short or killed, the harness errored, or the
             sample is missing from the log: not a result (see variants below)
 
-An instance counts only if its target function has at least one mutant. Old
-logs can show that only when some sample in either arm reached mutation, so
-instances where none did are listed apart ("undetermined").
+An instance counts only if its target function has at least one mutant
+(fyp-paper#7, eligibility rule 3). The harness counts the target's mutants
+once per instance, before any sample runs, and logs `TargetMutantCount` ahead
+of the first sample. Where either arm's log has that line, it alone decides:
+the count comes from the patched source and the mutation configuration, which
+are the same in both arms, so one arm's count is enough. A count that failed,
+or that differs between the arms, leaves the instance undetermined, whatever
+its samples logged. The samples' FunctionMutationTotal is only compared with
+the count, and every difference is reported.
+
+Logs written before the count existed can show a mutant only when some
+sample in either arm reached mutation, so instances where none did are listed
+apart ("undetermined").
 
 Usage (one RUN:ARM:DIR per run; ARM is instruct or kg_only; DIR is searched
 for *.full.eval.log files, including in sub-directories):
@@ -48,10 +58,22 @@ UNFILTERED_PASSED = ">>>>> Unfiltered Tests Passed"
 UNFILTERED_FAILED = ">>>>> Unfiltered Tests Failed"
 STARTED = "Running mutation testing"
 NO_RANGE = "FunctionMutationFAIL: no target function range"
+# The per-instance count, written before the first sample. Each log line is
+# "<prefix> <message> \n" and these messages start with a newline, so they
+# begin a line of their own.
+COUNT = re.compile(r"^TargetMutantCount: (\d+)\s*$", re.M)
+COUNT_FAIL = re.compile(r"^TargetMutantCountFAIL: (.*)$", re.M)
+COUNT_NO_RANGE = "no target function range"
+
+NO_SAMPLE_REACHED = "undetermined (no sample reached mutation)"
+COUNT_FAILED = "undetermined (the count failed)"
+COUNTS_DIFFER = "undetermined (the arms' counts differ)"
+UNDETERMINED = (NO_SAMPLE_REACHED, COUNT_FAILED, COUNTS_DIFFER)
 
 ARMS = ("instruct", "kg_only")
 FIELDS = ["run", "arm", "instance", "repo", "sample", "outcome", "passed",
-          "unfiltered_passed", "func_score", "func_done", "func_total"]
+          "unfiltered_passed", "func_score", "func_done", "func_total",
+          "count_outcome", "target_count"]
 
 
 def num(pattern, text):
@@ -106,11 +128,29 @@ def classify(block):
     return out("unknown_mutation_killed")
 
 
+def read_count(head):
+    """(count_outcome, target_count) from the part of a log before its first
+    sample: ("counted", n), ("unresolved", None) when the target function
+    could not be found in the patch, ("failed", None) when the count could
+    not be taken, or ("", None) for a log with no count line."""
+    counts = {float(n) for n in COUNT.findall(head)}
+    fails = [reason.strip() for reason in COUNT_FAIL.findall(head)]
+    if len(counts) > 1 or (counts and fails):
+        return "failed", None
+    if counts:
+        return "counted", counts.pop()
+    if fails:
+        unresolved = all(reason.startswith(COUNT_NO_RANGE) for reason in fails)
+        return ("unresolved" if unresolved else "failed"), None
+    return "", None
+
+
 def read_log(path):
+    """The log's "full" sample blocks, and its per-instance count."""
     with open(path, errors="replace") as f:
-        content = f.read()
-    return [b for b in content.split(CONFIG)[1:]
-            if b.split("\n", 1)[0].strip().startswith("full")]
+        parts = f.read().split(CONFIG)
+    blocks = [b for b in parts[1:] if b.split("\n", 1)[0].strip().startswith("full")]
+    return blocks, read_count(parts[0])
 
 
 def collect(specs, k):
@@ -124,16 +164,17 @@ def collect(specs, k):
         for path in paths:
             instance = os.path.basename(path).partition(".")[0]
             try:
-                blocks = read_log(path)
+                blocks, count = read_log(path)
             except OSError:
                 continue
             # A repeated log for one instance: keep the fuller one.
-            if instance not in by_instance or len(blocks) > len(by_instance[instance]):
-                by_instance[instance] = blocks
+            if instance not in by_instance or len(blocks) > len(by_instance[instance][0]):
+                by_instance[instance] = (blocks, count)
         notes.append(f"{run} {arm}: {len(paths)} logs, {len(by_instance)} instances ({root})")
-        for instance, blocks in by_instance.items():
+        for instance, (blocks, count) in by_instance.items():
             base = {"run": run, "arm": arm, "instance": instance,
-                    "repo": instance.rsplit("-", 2)[0]}
+                    "repo": instance.rsplit("-", 2)[0],
+                    "count_outcome": count[0], "target_count": count[1]}
             for i, block in enumerate(blocks[:k]):
                 outcome, score, done, total = classify(block)
                 rows.append({**base, "sample": i, "outcome": outcome,
@@ -151,8 +192,10 @@ def load(path):
     with open(path, newline="") as f:
         rows = list(csv.DictReader(f))
     for r in rows:
-        for c in ("func_score", "func_done", "func_total"):
-            r[c] = float(r[c]) if r[c] not in ("", None) else None
+        # A CSV written before the count existed has no count columns.
+        r["count_outcome"] = r.get("count_outcome") or ""
+        for c in ("func_score", "func_done", "func_total", "target_count"):
+            r[c] = float(r[c]) if r.get(c) not in ("", None) else None
         for c in ("sample", "passed", "unfiltered_passed"):
             r[c] = int(r[c])
     return rows
@@ -183,6 +226,61 @@ def flag_short_runs(rows):
             r["outcome"] = "unknown_mutation_incomplete"
             flagged += 1
     return flagged
+
+
+def eligibility(rs):
+    """Whether an instance counts, from its samples' rows in both arms."""
+    lines = {(r["count_outcome"], r["target_count"]) for r in rs if r["count_outcome"]}
+    if lines:
+        counts = {n for outcome, n in lines if outcome == "counted"}
+        if len(counts) > 1:
+            return COUNTS_DIFFER
+        if counts:
+            return "eligible" if counts.pop() > 0 else "no target mutants"
+        if any(outcome == "unresolved" for outcome, _ in lines):
+            return "target unresolved"
+        return COUNT_FAILED
+    # No count line in either arm's log: all there is to go on is the samples.
+    if any((r["func_total"] or r["func_done"] or 0) > 0 for r in rs):
+        return "eligible"
+    if any(r["outcome"] == "target_unresolved" for r in rs):
+        return "target unresolved"
+    if any(r["outcome"] == "no_target_mutants" for r in rs):
+        return "no target mutants"
+    return NO_SAMPLE_REACHED
+
+
+def names(instances, limit=10):
+    listed = ", ".join(sorted(instances)[:limit])
+    return listed + (f", and {len(instances) - limit} more" if len(instances) > limit else "")
+
+
+def count_checks(both, status):
+    """Report lines comparing the per-instance count with what the samples
+    logged. Empty when no log has a count line."""
+    counted = {i for i, arms in both.items()
+               if any(r["count_outcome"] for arm in ARMS for r in arms[arm])}
+    if not counted:
+        return []
+    lines = [f"   Decided by the per-instance count: {len(counted)}; "
+             f"by the samples (no count line in either arm's log): {len(both) - len(counted)}"]
+    wrong = [(i, r) for i in counted for arm in ARMS for r in both[i][arm]
+             if r["count_outcome"] == "counted" and r["func_total"] is not None
+             and r["func_total"] != r["target_count"]]
+    lines.append(f"   Samples whose FunctionMutationTotal differs from their log's count: "
+                 f"{len(wrong)}" + (f", in {names({i for i, _ in wrong})}" if wrong else ""))
+    apart = {i for i in counted
+             if len({(r["count_outcome"], r["target_count"])
+                     for arm in ARMS for r in both[i][arm] if r["count_outcome"]}) > 1}
+    lines.append(f"   Instances whose two arms log a different count line: {len(apart)}"
+                 + (f": {names(apart)}" if apart else ""))
+    failed = {i for i in counted if status[i] == COUNT_FAILED}
+    if failed:
+        with_total = {i for i in failed
+                      if any(r["func_total"] for arm in ARMS for r in both[i][arm])}
+        lines.append(f"   Instances whose count failed: {len(failed)}, of which "
+                     f"{len(with_total)} have a sample that logs a total above 0: {names(failed)}")
+    return lines
 
 
 def value(r, variant):
@@ -253,24 +351,17 @@ def analyse(rows, k):
         for r in sel:
             per[r["instance"]][r["arm"]].append(r)
         both = {i: a for i, a in per.items() if all(arm in a for arm in ARMS)}
-        status = {}
-        for inst, arms in both.items():
-            rs = [r for arm in ARMS for r in arms[arm]]
-            if any((r["func_total"] or r["func_done"] or 0) > 0 for r in rs):
-                status[inst] = "eligible"
-            elif any(r["outcome"] == "target_unresolved" for r in rs):
-                status[inst] = "target unresolved"
-            elif any(r["outcome"] == "no_target_mutants" for r in rs):
-                status[inst] = "no target mutants"
-            else:
-                status[inst] = "undetermined (no sample reached mutation)"
+        status = {inst: eligibility([r for arm in ARMS for r in arms[arm]])
+                  for inst, arms in both.items()}
         print(f"\n2. Instances: {len(per)} in either arm, {len(both)} in both")
         for s, n in Counter(status.values()).most_common():
             print(f"   {n:5}  {s}")
+        for line in count_checks(both, status):
+            print(line)
 
         eligible = {i: a for i, a in both.items() if status[i] == "eligible"}
         with_undetermined = {i: a for i, a in both.items()
-                             if status[i] in ("eligible", "undetermined (no sample reached mutation)")}
+                             if status[i] == "eligible" or status[i] in UNDETERMINED}
         print("\n3. Usable target-function mutation, kg_only minus instruct "
               "(95% interval, by instance)")
         print(f"   {'how unknown samples are handled':46} {'inst.':>5}  {'instruct':>8} "

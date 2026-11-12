@@ -1,6 +1,7 @@
 # Copyright (c) Meta Platforms, Inc. and affiliates.
 
 import contextlib
+import csv
 import importlib.util
 import io
 import os
@@ -79,6 +80,78 @@ def scored(score, done, total):
         f"\nFunctionMutationNum: {done}",
         f"\nFunctionMutationTotal: {total}",
     )
+
+
+def head(*messages):
+    """What the harness logs before the first sample. The per-instance count
+    (testgeneval#108, TaskEnvContextManager.log_target_mutant_count) goes
+    here, through the same LogWrapper.write as everything else."""
+    return "Task Metadata:\n" + "".join(f"{PREFIX} {m} \n" for m in messages)
+
+
+def counted(n):
+    return head(f"\nTargetMutantCount: {n}", "\nTargetMutantCountTime: 0.6")
+
+
+COUNT_UNRESOLVED = head("\nTargetMutantCountFAIL: no target function range",
+                        "\nTargetMutantCountTime: 0.0")
+COUNT_FAILED = head("\nTargetMutantCountFAIL: cosmic-ray init exited 66: Could not find\nmodule path gone.py",
+                    "\nTargetMutantCountTime: 0.3")
+
+
+def write_log(root, arm, instance, blocks, before="Task Metadata:\n"):
+    # Logs sit one directory down, as run_evaluation.py writes them.
+    folder = os.path.join(root, arm, "model")
+    os.makedirs(folder, exist_ok=True)
+    with open(os.path.join(folder, f"{instance}.model.full.eval.log"), "w") as f:
+        f.write(before + TESTS_CONFIG.join([""] + blocks))
+
+
+def run_main(*argv):
+    out = io.StringIO()
+    old = sys.argv
+    sys.argv = ["usable_score.py", *argv]
+    try:
+        with contextlib.redirect_stdout(out):
+            usable_score.main()
+    finally:
+        sys.argv = old
+    return out.getvalue()
+
+
+class TestReadCount(unittest.TestCase):
+    def test_each_outcome_of_the_count(self):
+        self.assertEqual(usable_score.read_count(counted(8)), ("counted", 8.0))
+        # No mutant in the target is a count, not a failure.
+        self.assertEqual(usable_score.read_count(counted(0)), ("counted", 0.0))
+        self.assertEqual(usable_score.read_count(COUNT_UNRESOLVED), ("unresolved", None))
+        self.assertEqual(usable_score.read_count(COUNT_FAILED), ("failed", None))
+
+    def test_a_log_with_no_count_line_is_told_apart_from_a_failed_count(self):
+        self.assertEqual(usable_score.read_count(head()), ("", None))
+        # What ExecWrapper logs while the count runs is not the count.
+        noise = head(
+            "Command: conda run -n testbed python -c print(f'TARGET_MUTANT_COUNT {len(in_range)}')",
+            "Std. Output: TARGET_MUTANT_COUNT 8\n",
+            "\nTargetMutantCountTime: 0.6",
+        )
+        self.assertEqual(usable_score.read_count(noise), ("", None))
+
+    def test_count_lines_that_contradict_each_other_are_a_failed_count(self):
+        twice = head("\nTargetMutantCount: 8", "\nTargetMutantCount: 9")
+        self.assertEqual(usable_score.read_count(twice), ("failed", None))
+        both = head("\nTargetMutantCount: 8", "\nTargetMutantCountFAIL: no target function range")
+        self.assertEqual(usable_score.read_count(both), ("failed", None))
+
+    def test_only_what_comes_before_the_first_sample_is_read(self):
+        tmp = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, tmp, ignore_errors=True)
+        inside = block("TestsTime: 0.0", TESTS_FAILED, "\nTargetMutantCount: 8",
+                       UNFILTERED_TESTS_FAILED)
+        write_log(tmp, "instruct", "django__django-1-1", [inside])
+        path = os.path.join(tmp, "instruct", "model", "django__django-1-1.model.full.eval.log")
+        blocks, count = usable_score.read_log(path)
+        self.assertEqual((len(blocks), count), (1, ("", None)))
 
 
 class TestClassify(unittest.TestCase):
@@ -197,11 +270,7 @@ class TestFromLogs(unittest.TestCase):
             ("kg_only", self.C): [NO_TEST_PASSED, NO_TEST_PASSED],
         }
         for (arm, instance), blocks in logs.items():
-            # Logs sit one directory down, as run_evaluation.py writes them.
-            folder = os.path.join(self.tmp, arm, "model")
-            os.makedirs(folder, exist_ok=True)
-            with open(os.path.join(folder, f"{instance}.model.full.eval.log"), "w") as f:
-                f.write("Task Metadata:\n" + TESTS_CONFIG.join([""] + blocks))
+            write_log(self.tmp, arm, instance, blocks)
         self.specs = [f"M:{arm}:{os.path.join(self.tmp, arm)}" for arm in usable_score.ARMS]
 
     def test_every_sample_gets_a_row_and_other_settings_are_ignored(self):
@@ -228,20 +297,9 @@ class TestFromLogs(unittest.TestCase):
         self.assertEqual(sorted(usable_score.paired(per, "unknown_as_zero", 2)),
                          [(20.0, 50.0), (25.0, 75.0)])
 
-    def run_main(self, *argv):
-        out = io.StringIO()
-        old = sys.argv
-        sys.argv = ["usable_score.py", *argv]
-        try:
-            with contextlib.redirect_stdout(out):
-                usable_score.main()
-        finally:
-            sys.argv = old
-        return out.getvalue()
-
     def test_report_and_rerun_from_csv(self):
         csv_path = os.path.join(self.tmp, "usable_score.csv")
-        report = self.run_main("--out", csv_path, "--k", "2", *self.specs)
+        report = run_main("--out", csv_path, "--k", "2", *self.specs)
         lines = [" ".join(line.split()) for line in report.splitlines()]
         self.assertIn("2 eligible", lines)
         self.assertIn("1 undetermined (no sample reached mutation)", lines)
@@ -252,8 +310,127 @@ class TestFromLogs(unittest.TestCase):
         with_c = next(l for l in lines if l.startswith("left out, plus undetermined instances"))
         self.assertIn("3 21.7 41.7 +20.0", with_c)
         self.assertIn("instances with all 2 samples known, both arms too few instances (1)", lines)
+        # No log here has a count line, so nothing is said about the count.
+        self.assertNotIn("per-instance count", report)
 
-        again = self.run_main("--from-csv", csv_path, "--k", "2")
+        again = run_main("--from-csv", csv_path, "--k", "2")
+        self.assertEqual(again, report[report.index("\nSamples re-marked"):])
+
+    def test_a_csv_written_before_the_count_columns_existed_still_loads(self):
+        csv_path = os.path.join(self.tmp, "usable_score.csv")
+        report = run_main("--out", csv_path, "--k", "2", *self.specs)
+        with open(csv_path, newline="") as f:
+            rows = list(csv.DictReader(f))
+        old_fields = [c for c in usable_score.FIELDS if c not in ("count_outcome", "target_count")]
+        with open(csv_path, "w", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=old_fields, extrasaction="ignore")
+            w.writeheader()
+            w.writerows(rows)
+        again = run_main("--from-csv", csv_path, "--k", "2")
+        self.assertEqual(again, report[report.index("\nSamples re-marked"):])
+
+
+class TestEligibilityFromTheCount(unittest.TestCase):
+    """Logs that carry the per-instance count, 2 samples each.
+
+                  count (instruct, kg_only)   samples (instruct; kg_only)
+    A (11111-1)   4, 4                        score 50, no test passed; score 100, score 50
+    B (22222-2)   no count line               score 40, (missing); suite failed, score 100
+    C (33333-3)   8, 8                        no test passed anywhere
+    D (44444-4)   0, 0                        no test passed anywhere
+    E (55555-5)   unresolved, unresolved      no test passed anywhere
+    F (66666-6)   failed, failed              score 50 (total 4), no test passed; none passed
+    G (77777-7)   4, failed                   no test passed anywhere
+    H (88888-8)   4, 5                        no test passed anywhere
+    I (99999-9)   4, 4                        score 50 (total 5), no test passed; none passed
+    """
+
+    A, B, C = TestFromLogs.A, TestFromLogs.B, TestFromLogs.C
+    D, E, F = "django__django-44444-4", "django__django-55555-5", "django__django-66666-6"
+    G, H, I = "django__django-77777-7", "django__django-88888-8", "django__django-99999-9"
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.tmp, ignore_errors=True)
+        self.specs = [f"M:{arm}:{os.path.join(self.tmp, arm)}" for arm in usable_score.ARMS]
+        nothing = [NO_TEST_PASSED, NO_TEST_PASSED]
+        plain = "Task Metadata:\n"
+        logs = {
+            self.A: ((counted(4), [scored(50.0, 4, 4), NO_TEST_PASSED]),
+                     (counted(4), [scored(100.0, 4, 4), scored(50.0, 4, 4)])),
+            self.B: ((plain, [scored(40.0, 5, 5)]), (plain, [SUITE_FAILED, scored(100.0, 5, 5)])),
+            self.C: ((counted(8), nothing), (counted(8), nothing)),
+            self.D: ((counted(0), nothing), (counted(0), nothing)),
+            self.E: ((COUNT_UNRESOLVED, nothing), (COUNT_UNRESOLVED, nothing)),
+            self.F: ((COUNT_FAILED, [scored(50.0, 4, 4), NO_TEST_PASSED]), (COUNT_FAILED, nothing)),
+            self.G: ((counted(4), nothing), (COUNT_FAILED, nothing)),
+            self.H: ((counted(4), nothing), (counted(5), nothing)),
+            self.I: ((counted(4), [scored(50.0, 5, 5), NO_TEST_PASSED]), (counted(4), nothing)),
+        }
+        for instance, arms in logs.items():
+            for arm, (before, blocks) in zip(usable_score.ARMS, arms):
+                write_log(self.tmp, arm, instance, blocks, before)
+
+    def statuses(self):
+        rows, _ = usable_score.collect(self.specs, k=2)
+        per = defaultdict(list)
+        for r in rows:
+            per[r["instance"]].append(r)
+        return {i: usable_score.eligibility(rs) for i, rs in per.items()}
+
+    def test_the_count_decides_and_the_samples_do_not(self):
+        got = self.statuses()
+        self.assertEqual(got[self.A], "eligible")
+        # The reason for the count: no sample reached mutation, and the
+        # instance is still known to have target mutants.
+        self.assertEqual(got[self.C], "eligible")
+        self.assertEqual(got[self.D], "no target mutants")
+        self.assertEqual(got[self.E], "target unresolved")
+        # A failed count is unknown, even though a sample logged a total.
+        self.assertEqual(got[self.F], "undetermined (the count failed)")
+        # The count does not depend on the arm, so one arm's count is enough.
+        self.assertEqual(got[self.G], "eligible")
+        self.assertEqual(got[self.H], "undetermined (the arms' counts differ)")
+        # A sample that disagrees with the count is reported, not obeyed.
+        self.assertEqual(got[self.I], "eligible")
+        # No count line in either arm: decided from the samples, as before.
+        self.assertEqual(got[self.B], "eligible")
+
+    def test_every_sample_row_carries_its_logs_count(self):
+        rows, _ = usable_score.collect(self.specs, k=2)
+        got = {(r["arm"], r["instance"]): (r["count_outcome"], r["target_count"]) for r in rows}
+        self.assertEqual(got[("instruct", self.G)], ("counted", 4.0))
+        self.assertEqual(got[("kg_only", self.G)], ("failed", None))
+        self.assertEqual(got[("kg_only", self.E)], ("unresolved", None))
+        # B's instruct log has one sample; the row for the missing one has no count either.
+        self.assertEqual(got[("instruct", self.B)], ("", None))
+
+    def test_report_and_rerun_from_csv(self):
+        csv_path = os.path.join(self.tmp, "usable_score.csv")
+        report = run_main("--out", csv_path, "--k", "2", *self.specs)
+        lines = [" ".join(line.split()) for line in report.splitlines()]
+        self.assertIn("5 eligible", lines)   # A, B, C, G, I
+        self.assertIn("1 no target mutants", lines)
+        self.assertIn("1 target unresolved", lines)
+        self.assertIn("1 undetermined (the count failed)", lines)
+        self.assertIn("1 undetermined (the arms' counts differ)", lines)
+        self.assertNotIn("undetermined (no sample reached mutation)", report)
+        self.assertIn("Decided by the per-instance count: 8; by the samples "
+                      "(no count line in either arm's log): 1", lines)
+        self.assertIn("Samples whose FunctionMutationTotal differs from their log's count: 1, "
+                      f"in {self.I}", lines)
+        self.assertIn("Instances whose two arms log a different count line: 2: "
+                      f"{self.G}, {self.H}", lines)
+        self.assertIn("Instances whose count failed: 1, of which 1 have a sample that logs "
+                      f"a total above 0: {self.F}", lines)
+        # A +50, B +10, I 0 - 25 = -25, and C and G 0 in both arms: 35 / 5 = +7.
+        known = next(l for l in lines if l.startswith("left out (mean of the known samples)"))
+        self.assertIn("5 18.0 25.0 +7.0", known)
+        # Plus F (0 - 25) and H (0 - 0), whose eligibility is unknown: 10 / 7.
+        with_unknown = next(l for l in lines if l.startswith("left out, plus undetermined instances"))
+        self.assertIn("7 16.4 17.9 +1.4", with_unknown)
+
+        again = run_main("--from-csv", csv_path, "--k", "2")
         self.assertEqual(again, report[report.index("\nSamples re-marked"):])
 
 
