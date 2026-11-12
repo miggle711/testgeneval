@@ -114,6 +114,15 @@ def _writable_args(overlay_dir):
     return ["--writable-tmpfs"]
 
 
+class ApptainerUnavailableError(RuntimeError):
+    """The apptainer binary cannot be launched, so no instance can be evaluated.
+
+    Kept separate from a single container failing: that is routine and
+    only costs one instance, this one would leave every outcome category
+    of the report empty while its generated count still looks complete.
+    """
+
+
 def _entrypoint_path(repo: str) -> str:
     """Real absolute entrypoint path inside the container, which differs
     by base image (see module docstring point 2). Not something the host
@@ -317,6 +326,11 @@ async def run_apptainer_evaluation(
             logger.info(
                 f"[{task_instance['id']}][{sif_path}]  Container ran successfully in {elapsed_time} seconds."
             )
+    except FileNotFoundError as e:
+        raise ApptainerUnavailableError(
+            "The apptainer binary was not found on PATH, nothing can be "
+            "evaluated. Run on a node that has Apptainer available."
+        ) from e
     except Exception as e:
         logger.warning(
             f"[{task_instance['id']}][{sif_path}]  Error running container: {e}"

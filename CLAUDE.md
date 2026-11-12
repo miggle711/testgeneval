@@ -390,7 +390,9 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   before trusting a committed evaluation report reflects real, actual test execution, a nonempty
   `generated`/`total_predictions` count alone is not evidence evaluation ran. `run_docker.py` now
   raises `DockerUnavailableError` when the `docker` CLI is missing or the daemon is unreachable,
-  so this case stops the run. A single container failing is still only a warning.
+  so this case stops the run, and `run_apptainer.py` raises `ApptainerUnavailableError` the
+  same way when the `apptainer` binary is missing. A single container failing is still only a
+  warning.
 - **Pulling this project's evaluation Docker images (`scripts/pull_images.py`) is fast per
   image but real, cumulative local disk usage can exceed expectations fast.** Confirmed real
   2026-09-07: all 102 real, distinct images in `Makefile.testgenevallite` pulled in roughly 15
