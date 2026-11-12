@@ -1,5 +1,7 @@
 """Pipeline requests and downstream filenames must describe the same samples."""
 
+import argparse
+import ast
 import contextlib
 import io
 from pathlib import Path
@@ -45,6 +47,39 @@ class PipelineGenerationCountTest(unittest.TestCase):
             self.assertEqual(error.exception.code, 2)
             run.assert_not_called()
             self.assertEqual(list(Path(results).iterdir()), [])
+
+    def test_huggingface_command_uses_its_real_parser_flags(self):
+        # Load the real parser without importing GPU/model dependencies.
+        source = SCRIPT.parent / "inference/huggingface/run_huggingface.py"
+        node = next(n for n in ast.parse(source.read_text()).body
+                    if isinstance(n, ast.FunctionDef) and n.name == "parse_args")
+        namespace = {"argparse": argparse}
+        exec(compile(ast.Module(body=[node], type_ignores=[]), str(source), "exec"), namespace)
+        with tempfile.TemporaryDirectory() as results:
+            argv = [str(SCRIPT), "--model", "meta-llama/CodeLlama-7b-Instruct-hf",
+                    "--results_dir", results, "--dataset_name_or_path", "kjain14/testgeneval",
+                    "--skip_completion", "--num_samples_full", "5"]
+            with patch.object(sys, "argv", argv), patch("subprocess.run") as run:
+                with contextlib.redirect_stdout(io.StringIO()):
+                    runpy.run_path(str(SCRIPT), run_name="__main__")
+            command = run.call_args_list[0].args[0]
+            with patch.object(sys, "argv", ["run_huggingface.py", *command[3:]]):
+                args = namespace["parse_args"]()
+            self.assertEqual(args.num_samples_generation, 5)
+            from inference.prediction_paths import prediction_stem
+            generated = Path(args.output_dir) / (prediction_stem(
+                args.model_name_or_path, args.dataset_name_or_path, args.temperature,
+                args.num_samples_generation, args.context_size) + ".jsonl")
+            evaluation = run.call_args_list[1].args[0]
+            self.assertEqual(str(generated), evaluation[evaluation.index("--predictions_path") + 1])
+
+    def test_huggingface_kg_only_cannot_silently_use_an_instruct_prompt(self):
+        with tempfile.TemporaryDirectory() as results:
+            with self.assertRaises(SystemExit) as error:
+                self.run_pipeline(results, "--model", "meta-llama/CodeLlama-7b-Instruct-hf",
+                                  "--prompt_config", "kg_only", "--skip_completion",
+                                  runner=lambda *a, **k: self.fail("started unsupported KG generation"))
+            self.assertEqual(error.exception.code, 2)
 
     def test_stage_failure_stops_the_pipeline_before_later_stages(self):
         for fail_at in range(3):

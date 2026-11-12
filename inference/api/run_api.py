@@ -14,6 +14,8 @@ from argparse import ArgumentParser
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
+from inference.prediction_paths import prediction_stem
+
 import dotenv
 import numpy as np
 import openai
@@ -719,7 +721,7 @@ def main(
     # write) into the earlier one's file, silently mixing or no-op'ing
     # real production data (testgeneval#43-adjacent incident, see
     # RUN_LOG.md's "root problem" section).
-    output_file = f"{model_nickname}__{dataset_name_or_path.split('/')[-1]}__{temperature}__k{num_samples}__{split}"
+    output_file = prediction_stem(model_nickname, dataset_name_or_path, temperature, num_samples, split=split)
     if shard_id is not None and num_shards is not None:
         output_file += f"__shard-{shard_id}__num_shards-{num_shards}"
     output_file = Path(output_dir, output_file + ".jsonl")

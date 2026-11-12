@@ -5,6 +5,7 @@ import os
 import subprocess
 
 from swebench_docker.constants import VALID_K
+from inference.prediction_paths import prediction_stem
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -149,7 +150,10 @@ if __name__ == "__main__":
                 "or select one setting with --skip_completion or --skip_full."
             )
         api_samples = args.num_samples_completion if args.skip_full else args.num_samples_full
-    output_samples = api_samples if args.model in API_MODELS else args.num_samples_full
+    if args.model not in API_MODELS and args.model != "baseline" and args.prompt_config == "kg_only":
+        parser.error("The HuggingFace backend does not support --prompt_config kg_only; "
+                     "use the API runner with a served model instead.")
+    output_samples = args.num_samples_completion if args.skip_full else args.num_samples_full
 
     print(
         f"Running pipeline for {args.model} with pass@{args.num_samples_full} (full) and pass@{args.num_samples_completion} (completion) on {data_suf}"
@@ -165,7 +169,9 @@ if __name__ == "__main__":
     pred_dir = os.path.join(base_dir, "preds")
     os.makedirs(pred_dir, exist_ok=True)
 
-    pred_output_filename = f"{model_suf}__{data_suf}__{args.temperature}__k{output_samples}__test.jsonl"
+    pred_output_filename = prediction_stem(
+        model_suf, dataset_name_or_path, args.temperature, output_samples
+    ) + ".jsonl"
     print(pred_output_filename)
     preds_file = os.path.join(pred_dir, pred_output_filename)
 
@@ -215,7 +221,7 @@ if __name__ == "__main__":
                 pred_dir,
                 "--num_samples_completion",
                 str(args.num_samples_completion),
-                "--num_samples_full",
+                "--num_samples_generation",
                 str(args.num_samples_full),
                 "--temperature",
                 str(args.temperature),
