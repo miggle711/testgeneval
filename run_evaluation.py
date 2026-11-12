@@ -12,6 +12,8 @@ from swebench_docker.constants import (
     KEY_INSTANCE_ID,
     KEY_MODEL,
     KEY_PREDICTIONS,
+    UNFILTERED_TESTS_FAILED,
+    UNFILTERED_TESTS_PASSED,
     MAP_REPO_TO_TEST_FRAMEWORK,
 )
 from swebench_docker.run_apptainer import run_apptainer_evaluation
@@ -51,6 +53,28 @@ def validate_predictions(predictions_path, tasks_ids):
             + "found in the tasks file and will not be considered: "
             + ", ".join(not_in_tasks)
         )
+
+
+def completed_samples(log_file: str) -> int:
+    """How many samples a `full` setting log finished. Each finished sample
+    ends with one Unfiltered Tests Passed/Failed marker; a container killed
+    partway leaves fewer than there are samples."""
+    with open(log_file, errors="replace") as f:
+        content = f.read()
+    return content.count(UNFILTERED_TESTS_PASSED) + content.count(UNFILTERED_TESTS_FAILED)
+
+
+def set_aside_partial_log(log_file: str) -> str:
+    """Rename an incomplete log to <log>.partial (or .partial.N if that is
+    taken), keeping it for audit, so a rerun writes a fresh log rather than
+    adding samples to the old one. Returns the new path."""
+    dest = f"{log_file}.partial"
+    n = 1
+    while os.path.exists(dest):
+        dest = f"{log_file}.partial.{n}"
+        n += 1
+    os.rename(log_file, dest)
+    return dest
 
 
 async def main(
@@ -114,6 +138,18 @@ async def main(
                 log_file_name = f"{p[KEY_ID]}.{p[KEY_MODEL]}.{setting}.eval.log"
                 log_file = os.path.join(log_dir, log_file_name)
                 if not os.path.exists(log_file):
+                    all_exist = False
+                    break
+                # A log existing is not enough: a container killed partway
+                # leaves a log with fewer finished samples than there are.
+                samples = p[KEY_PREDICTIONS][setting]
+                expected = len(samples) if isinstance(samples, list) else 1
+                if setting == "full" and completed_samples(log_file) < expected:
+                    moved = set_aside_partial_log(log_file)
+                    logger.info(
+                        f"{log_file_name}: fewer than {expected} samples finished, "
+                        f"re-evaluating (partial log kept as {os.path.basename(moved)})"
+                    )
                     all_exist = False
                     break
             if not all_exist:

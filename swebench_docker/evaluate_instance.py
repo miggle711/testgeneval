@@ -11,6 +11,7 @@ import sys
 from typing import Optional, Tuple
 
 from swebench_docker.constants import (
+    MUTATION_TIMEOUT,
     KEY_BASELINES,
     KEY_MODEL,
     KEY_PREDICTIONS,
@@ -388,7 +389,7 @@ def main(
         repo_dir,
         log_dir,
         timeout=timeout,
-        mutation_timeout=3600,
+        mutation_timeout=MUTATION_TIMEOUT,
         image_type=image_type,
     ) as tcm:
         test_patch = task_instance["test_patch"]

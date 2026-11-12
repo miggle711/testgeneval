@@ -41,12 +41,14 @@
 #     Per-user QOS cap is 256 CPUs total across all your jobs
 #     (sacctmgr show qos), so several of these jobs at NUM_PROCESSES
 #     4-6 each fits comfortably under that.
-#   TIMEOUT: per-instance seconds (default 3600). cosmic-ray mutation
-#     on a large repo genuinely takes 20-40 min; do not set this low.
-#     Also sets the host-side kill ceiling (TIMEOUT + 300s by default,
-#     see APPTAINER_HOST_TIMEOUT_MARGIN/APPTAINER_HOST_TIMEOUT in
-#     run_apptainer.py) -- raise TIMEOUT here for a slow repo and the
-#     host cap raises with it, no separate knob needed.
+#   TIMEOUT: seconds allowed for each test command in a sample (default
+#     3600); mutation has its own per-sample limit (MUTATION_TIMEOUT in
+#     constants.py, 3600). The host-side kill ceiling for a container is
+#     derived from both and scales with the instance's sample count:
+#     n_samples x (TIMEOUT + MUTATION_TIMEOUT) + 300s, or without the
+#     mutation part under SKIP_MUTATION=1 (see host_timeout_for in
+#     run_apptainer.py), so a pass@5 instance gets room for all five
+#     samples. Raise TIMEOUT for a slow repo and the cap rises with it.
 #   APPTAINER_HOST_TIMEOUT: (optional) override the host-side kill
 #     ceiling with a fixed value instead of deriving it from TIMEOUT.
 #   SKIP_MUTATION: set to 1 to skip cosmic-ray entirely (coverage only).
