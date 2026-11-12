@@ -24,6 +24,7 @@ Without the conda env active, call its interpreter directly, e.g. `/opt/anaconda
 - Branch from a fresh `main`.
 - Name the branch with a prefix that says what it is: `fix/`, `feat/`, `docs/`, `chore/`, `refactor/` or `test/`.
 - Start the commit title with the same prefix: `fix: ...`, `feat: ...`.
+- Keep commits one line, a short declarative sentence. Reasoning, detail, and evidence belong in the PR description, not the commit message.
 - Keep one concern per PR.
 
 ## Pull requests
