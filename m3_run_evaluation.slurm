@@ -112,6 +112,14 @@ APPTAINER_TMPDIR="/tmp/$USER-apptainer-$SLURM_JOB_ID"
 mkdir -p "$APPTAINER_TMPDIR"
 trap 'rm -rf "$APPTAINER_TMPDIR"' EXIT
 
+# run_evaluation.py loads SWE_BENCH_TASKS through datasets, which caches
+# about 4.5 GB for kjain14/testgeneval under ~/.cache/huggingface unless
+# HF_HOME says otherwise. Same per-user scratch path as
+# m3_run_inference.slurm, so both stages share one copy.
+HF_HOME="${HF_HOME:-/home/$USER/al49_scratch/$USER/hf-cache}"
+mkdir -p "$HF_HOME"
+export HF_HOME
+
 export APPTAINER_TMPDIR
 export APPTAINER_CACHEDIR="/fs04/scratch2/al49/$USER/apptainer-cache"
 export APPTAINER_IMAGES_DIR

@@ -16,6 +16,7 @@
 #     (datasets, openai, tiktoken, python-dotenv). Install on a GPU
 #     node, not the login node.
 #   HF_HOME: defaults to al49 scratch space now, override if needed.
+#   VLLM_CACHE_ROOT: vLLM's compile cache, also defaults to al49 scratch.
 #   MODEL: real HuggingFace model id for the model this job is for.
 #   PROMPT_CONFIG / KG_PROMPTS_PATH: kg_only needs a kg_prompts.json
 #     built locally (pycodekg's build_kg_prompts.py) and transferred.
@@ -149,8 +150,16 @@ DELETE_MODEL_AFTER_RUN="${DELETE_MODEL_AFTER_RUN:-0}"   # 1 = delete this model'
 # error).
 HF_HOME="${HF_HOME:-/home/$USER/al49_scratch/$USER/hf-cache}"
 
-mkdir -p "$OUTPUT_DIR" "$HF_HOME"
-export HF_HOME
+# vLLM's compile cache defaults to ~/.cache/vllm. $HOME has a small
+# quota, and once it is full the compiled kernel files get written
+# empty with no error, then vLLM dies at startup with
+# "InductorError: AttributeError: ... has no attribute 'get_args'".
+# Setting TORCHINDUCTOR_CACHE_DIR as well would do nothing: vLLM
+# overwrites it with a subdirectory of VLLM_CACHE_ROOT.
+VLLM_CACHE_ROOT="${VLLM_CACHE_ROOT:-/home/$USER/al49_scratch/$USER/vllm-cache}"
+
+mkdir -p "$OUTPUT_DIR" "$HF_HOME" "$VLLM_CACHE_ROOT"
+export HF_HOME VLLM_CACHE_ROOT
 
 # flashinfer (a vllm dependency) JIT compiles some CUDA kernels on
 # first use, which needs nvcc. The conda env has PyTorch's bundled
