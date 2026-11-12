@@ -69,11 +69,10 @@ class TestGetLogsEvalFunctionMetrics(unittest.TestCase):
         self.assertEqual(r["function_mutation_num"], [-1])
 
     def test_any_tests_passed_marker_is_captured(self):
-        # RQ3 instrumentation: ANY_TESTS_PASSED is a real, distinct
-        # marker from TESTS_PASSED (which is really "All Tests Passed"
-        # semantics, see constants.py) -- this test just confirms
-        # get_logs_eval actually reads it into a parallel list, same
-        # shape as tests_passed.
+        # ANY_TESTS_PASSED is a separate marker from TESTS_PASSED (see
+        # constants.py for what each means). This test only checks that
+        # get_logs_eval reads it into a parallel list, the same shape as
+        # tests_passed.
         content = (
             f"{TESTS_CONFIG_MARKER} full\n"
             "TestsTime: 1.5\n"
@@ -145,12 +144,11 @@ class TestGetEvalReportAveraging(unittest.TestCase):
         self.assertEqual(report["full_av_function_coverage"], 90.0)
 
     def test_any_pass_at_k_diverges_from_whole_suite_pass_at_k(self):
-        # RQ3's real reason for existing: a sample whose whole test
-        # suite fails (full_pass_at_1 -- really "All Tests Passed"@1,
-        # see constants.py) can still have full_any_pass_at_1 True, if
-        # at least one individual test case in that sample passed.
-        # These two metrics answering differently for the same sample
-        # is the entire point, not a bug to reconcile.
+        # The two metrics are computed independently: a sample whose
+        # filtered suite fails as a whole (full_pass_at_1 False) can still
+        # have full_any_pass_at_1 True, when tests that pass on their own
+        # fail when run together. See constants.py for what each marker
+        # means.
         eval_sm = {
             "full": {
                 "tests_passed": [False],

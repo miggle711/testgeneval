@@ -9,17 +9,15 @@ adapted for one specific comparison: a plain LLM baseline (`instruct`) against a
 structural context pulled from a knowledge graph (`kg_only`), both asked to generate a complete
 test file from scratch for a changed function. See `docs/GUIDE.md` for the full run workflow —
 it's the primary operational doc for this fork and should be read before running anything here.
-`results/RUN_LOG.md` is the single source of truth for what's actually been run: per-model
-completion counts, real failure causes, and job IDs — always check it before assuming a model's
-status. The upstream `README.md` still describes the original four-setting benchmark design; this
+`results/RUN_LOG.md` and `results/EVAL_LOG.md` are historical logs of runs up to mid-October 2026
+(incidents, job IDs, loss causes). Current per-model status is tracked in GitHub issues, so check
+the relevant issue before assuming a model's status. The upstream `README.md` still describes the original four-setting benchmark design; this
 fork only uses the `full` setting.
 
 The `kg_only` arm's prompts are pre-computed outside this repo by a companion project,
 `pycodekg` (repo `repo-kg-construction`), and handed to this repo as a JSON file
 (`kg_prompts.json`). This repo does not build knowledge graphs itself. The
-`fyp-paper` repo's `experiment_design/` directory is the canonical source for
-the full cross-repo design and model shortlist. `docs/funding-proposal.md`
-extends that shortlist with newer models the team is adding.
+submitted paper is the reference for the full cross-repo design and model list.
 
 ## Commands
 

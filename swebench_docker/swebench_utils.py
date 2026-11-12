@@ -79,16 +79,14 @@ def get_logs_eval(log_fp: str) -> Dict[str, dict]:
             setting = config_line[0]
 
             test_passed = TESTS_PASSED in config
-            # RQ3 instrumentation (Any Pass@1): a real, distinct signal
-            # from test_passed above -- test_passed is really "All Tests
-            # Passed" (see constants.py), this is "at least one test
-            # case passed", from context_manager.py's real per-test-case
-            # junitxml capture. Absent entirely on any log written before
-            # this instrumentation existed (an older log's config simply
-            # won't contain the marker), so any_test_passed is False for
-            # every pre-existing log, not a real "no test passed" result
-            # -- re-running evaluation is required to get real Any Pass@1
-            # data, not just re-reading old logs.
+            # test_passed: at least one generated test passes, after the
+            # failing ones are dropped (TestGenEval's pass@k; see
+            # constants.py for what each marker means).
+            # any_test_passed: at least one test case passes in that same
+            # filtered run (testgeneval#77). The marker is absent from logs
+            # written before #77, and from samples whose run stopped
+            # during coverage or mutation (testgeneval#94), so False here
+            # does not always mean that no test passed.
             any_test_passed = ANY_TESTS_PASSED in config
 
             unfiltered_tests_passed = UNFILTERED_TESTS_PASSED in config
@@ -408,13 +406,13 @@ def get_eval_report(
 
         for k in VALID_K:
             if len(any_tests_passed) >= k:
-                # RQ3 instrumentation: {setting}_pass_at_{k} above is
-                # really "All Tests Passed"@k semantics (see constants.py's
-                # TESTS_PASSED docstring) despite its generic-looking name,
-                # kept as-is for backward compatibility with existing
-                # report readers. This is the real "at least one test case
-                # passed"@k metric the paper's Methodology section
-                # actually describes as Any Pass@k.
+                # {setting}_pass_at_{k} below is TestGenEval's pass@k (at
+                # least one generated test passes) and
+                # {setting}_unfiltered_pass_at_{k} is their all pass@k
+                # (every generated test passes); see constants.py. This
+                # any-pass variant runs on the already filtered suite, so
+                # it adds little to pass_at_k, and it can read low when the
+                # marker is missing (testgeneval#94).
                 final_results[f"{setting}_any_pass_at_{k}"] = any(
                     any_tests_passed[:k]
                 )
