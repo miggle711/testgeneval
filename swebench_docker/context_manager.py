@@ -501,8 +501,10 @@ class TaskEnvContextManager:
 
         Logs FunctionMutationLOG (the score), FunctionMutationNum (target
         mutants with a result) and FunctionMutationTotal (all target
-        mutants). Num below Total means the run timed out before every
-        target mutant finished.
+        mutants). Num below Total means the run stopped before every target
+        mutant finished. "FunctionMutationFAIL: no target function range"
+        means the target could not be resolved from the patch, as opposed to
+        FunctionMutationTotal: 0 (resolved, but it holds no mutant).
 
         cosmic_ray is only installed inside the per-repo conda testbed env
         (self.cmd_conda_run), not the outer environment evaluate_instance.py
@@ -514,7 +516,9 @@ class TaskEnvContextManager:
         try:
             if target_ranges is None:
                 target_ranges = self._resolve_target_ranges(instance)
-            if target_ranges is None:
+            if not target_ranges:
+                # Kept apart from "no mutants in the target" below.
+                self.log.write("\nFunctionMutationFAIL: no target function range")
                 return
 
             script = score_script(instance["code_file"], target_ranges)
@@ -525,8 +529,14 @@ class TaskEnvContextManager:
             )
             output = str(result.stdout)
             lines = output.splitlines()
-            if any(line.startswith("FUNC_MUTATION_NO_MUTANTS_IN_RANGE") for line in lines):
-                pass
+            if none_line := next(
+                (l for l in lines if l.startswith("FUNC_MUTATION_NO_MUTANTS_IN_RANGE")), None
+            ):
+                # Resolved target, but no target mutant has a result: Total 0
+                # means it holds none; Total > 0 means none finished.
+                parts = none_line.split()
+                self.log.write("\nFunctionMutationNum: 0")
+                self.log.write(f"\nFunctionMutationTotal: {parts[1] if len(parts) > 1 else 0}")
             elif result_line := next(
                 (l for l in lines if l.startswith("FUNC_MUTATION_RESULT")), None
             ):

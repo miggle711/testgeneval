@@ -144,6 +144,26 @@ class MutationScopeTest(unittest.TestCase):
         self.assertTrue(all(o == "pending" for _, o in self._outcomes()))
 
 
+    def _file_scope_with_ranges(self, ranges):
+        tcm = _manager("file")
+        tcm._resolve_target_ranges = lambda instance: ranges
+        tcm.run_mutation_testing(
+            {"code_file": "calc.py"}, {}, test_time=1,
+            test_cmd=f"{sys.executable} -m pytest -q -x -p no:randomly test_calc.py",
+        )
+        return tcm.log.text
+
+    def test_unresolved_target_and_empty_target_are_logged_apart(self):
+        # Whole-file scope: an unresolved target and a target with no mutant
+        # used to both log nothing.
+        unresolved = self._file_scope_with_ranges(None)
+        self.assertIn("FunctionMutationFAIL: no target function range", unresolved)
+        os.remove("mutation.sqlite")
+        empty = self._file_scope_with_ranges([(3, 4)])  # blank lines in calc.py
+        self.assertEqual(_value(empty, "FunctionMutationTotal"), 0)
+        self.assertNotIn("FunctionMutationFAIL", empty)
+
+
 class ScopeValueTest(unittest.TestCase):
     def test_unknown_scope_is_rejected(self):
         with self.assertRaises(ValueError):

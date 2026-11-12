@@ -61,7 +61,8 @@ def score_script(code_file: str, ranges: List[Tuple[int, int]]) -> str:
 
     Prints `FUNC_MUTATION_RESULT <score> <done> <total>`, where done is how
     many of the total target mutants finished (fewer after a timeout), or
-    `FUNC_MUTATION_NO_MUTANTS_IN_RANGE`.
+    `FUNC_MUTATION_NO_MUTANTS_IN_RANGE <total>` when none finished (total 0:
+    the target holds no mutant).
     """
     return _in_range_ids(code_file, ranges) + (
         "try:\n"
@@ -72,7 +73,7 @@ def score_script(code_file: str, ranges: List[Tuple[int, int]]) -> str:
         "        kills = sum(1 for j in done if results[j].is_killed)\n"
         "        print(f'FUNC_MUTATION_RESULT {kills / len(done) * 100} {len(done)} {len(in_range)}')\n"
         "    else:\n"
-        "        print('FUNC_MUTATION_NO_MUTANTS_IN_RANGE')\n"
+        "        print(f'FUNC_MUTATION_NO_MUTANTS_IN_RANGE {len(in_range)}')\n"
         "finally:\n"
         "    db.close()\n"
     )
