@@ -732,6 +732,18 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   of leaving it on shared scratch). Check a model's own tracking issue (#87, or its per-person
   generation/evaluation issue) for a real reported result before concluding its eval never
   happened just because a disk search came up empty.
+- **`InductorError: AttributeError: module 'torch._inductor.runtime.compile_tasks.<hash>' has no
+  attribute 'get_args'` at vLLM startup means `$HOME` is full, not that the compile cache is
+  stale.** Confirmed real 2026-11-13 (job 62586666): `df -k ~` showed 0 KB available, and the
+  module the error names was a 0 byte file written by that same job, as was every other file
+  the job wrote under `~/.cache/vllm` (2 of 2, against 0 of 677 older files). The quota error
+  can be silent: a small write succeeds and a large one only raises `Disk quota exceeded` at
+  `close`, so the log often has no quota message at all. Every earlier case of this error
+  (testgeneval#45, #69) falls on the same accounts and days as explicit quota failures.
+  `rm -rf ~/.cache/vllm` only helps by freeing a little space, which is why it kept coming back.
+  Check `df -h ~` first. Both slurm scripts now keep their caches on scratch
+  (`VLLM_CACHE_ROOT` for inference, `HF_HOME` for evaluation, which was rebuilding a 4.5 GB
+  copy of `kjain14/testgeneval` under `~/.cache/huggingface` on every run).
 - **`$HOME`'s quota fills up again, this is a recurring real failure mode, not a one-time
   fix.** Confirmed real again 2026-10-12, same account as the 2026-09-11 incident above: `.conda`
   had grown back to 12GB and `.cache/huggingface` + `.cache/vllm` added another 5GB, pushing
