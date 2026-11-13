@@ -69,20 +69,6 @@ from swebench_docker.constants import (
 logger = logging.getLogger(__name__)
 dotenv.load_dotenv()
 
-# Where converted .sif files live on M3, one file per
-# {repo_name}_{version}.sif, e.g. astropy_astropy_5.0.sif -- matches the
-# repo_name sanitization run_docker.py already uses (task_instance["repo"]
-# with "/" replaced by "_"). Falls back to $HOME/apptainer_images if
-# APPTAINER_IMAGES_DIR is unset -- a real risk on M3, not just a
-# placeholder, given the small 20GB home quota (confirmed real
-# 2026-09-11 a related mistake filled it to 100%). Always export
-# APPTAINER_IMAGES_DIR to a scratch path (e.g.
-# /fs04/scratch2/al49/$USER/apptainer_images) before running anything
-# that imports this module directly.
-APPTAINER_IMAGES_DIR = os.environ.get(
-    "APPTAINER_IMAGES_DIR", os.path.expanduser("~/apptainer_images")
-)
-
 # Margin added on top of `timeout` to get the host-side wall-clock cap.
 # - `timeout` alone doesn't bound the host: it's only passed INTO the
 #   container as APPTAINERENV_TIMEOUT, so a container that hangs before
@@ -173,8 +159,21 @@ async def run_apptainer_evaluation(
     else:
         container_log_dir = "/opt/logs"
 
+    # Where converted .sif files live on M3, one file per
+    # {repo_name}_{version}.sif, e.g. astropy_astropy_5.0.sif -- matches the
+    # repo_name sanitization run_docker.py already uses. There is no default
+    # (#122): it used to fall back to $HOME/apptainer_images, where M3 has no
+    # images, so every instance was skipped with a warning and the run exited
+    # 0 having evaluated nothing. Read per call, so a value exported after
+    # import counts.
+    images_dir = os.environ.get("APPTAINER_IMAGES_DIR")
+    if not images_dir:
+        raise ValueError(
+            "APPTAINER_IMAGES_DIR must be set to the directory holding the "
+            ".sif testbed images (on M3, under /fs04/scratch2/<project>/$USER)."
+        )
     sif_path = os.path.join(
-        APPTAINER_IMAGES_DIR, f"{repo_name}_{task_instance['version']}.sif"
+        images_dir, f"{repo_name}_{task_instance['version']}.sif"
     )
     if not os.path.exists(sif_path):
         logger.warning(

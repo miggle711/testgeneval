@@ -28,8 +28,8 @@ class TestRunApptainerSurfacesUnavailableApptainer(unittest.TestCase):
         images_dir = tempfile.TemporaryDirectory()
         self.addCleanup(images_dir.cleanup)
         open(os.path.join(images_dir.name, "django_django_4.1.sif"), "w").close()
-        with patch.object(run_apptainer, "APPTAINER_IMAGES_DIR", images_dir.name), \
-             patch.dict(os.environ, {"SWEBENCH_DOCKER_FORK_DIR": "/fork"}), \
+        with patch.dict(os.environ, {"SWEBENCH_DOCKER_FORK_DIR": "/fork",
+                                     "APPTAINER_IMAGES_DIR": images_dir.name}), \
              patch(
                  "swebench_docker.run_apptainer.asyncio.create_subprocess_exec",
                  subprocess_exec,
@@ -49,6 +49,30 @@ class TestRunApptainerSurfacesUnavailableApptainer(unittest.TestCase):
         with self.assertLogs("swebench_docker.run_apptainer", level="WARNING"):
             self.run_with(AsyncMock(return_value=process))
 
+
+class TestImagesDirIsRequired(unittest.TestCase):
+    # Without it every instance used to be skipped as "No .sif found" in
+    # $HOME/apptainer_images and the run exited 0 having evaluated nothing.
+    def run_without_images_dir(self):
+        env = {k: v for k, v in os.environ.items() if k != "APPTAINER_IMAGES_DIR"}
+        env["SWEBENCH_DOCKER_FORK_DIR"] = "/fork"
+        with patch.dict(os.environ, env, clear=True):
+            asyncio.run(run_apptainer_evaluation(TASK_INSTANCE, "ns", "/tmp/logs", "full", 0))
+
+    def test_unset_images_dir_raises_instead_of_skipping(self):
+        with self.assertRaises(ValueError) as caught:
+            self.run_without_images_dir()
+        self.assertIn("APPTAINER_IMAGES_DIR", str(caught.exception))
+
+    def test_the_directory_set_at_call_time_is_used(self):
+        images_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(images_dir.cleanup)
+        with patch.dict(os.environ, {"APPTAINER_IMAGES_DIR": images_dir.name}):
+            with self.assertLogs("swebench_docker.run_apptainer", level="WARNING") as logs:
+                asyncio.run(
+                    run_apptainer_evaluation(TASK_INSTANCE, "ns", "/tmp/logs", "full", 0)
+                )
+        self.assertIn(images_dir.name, "\n".join(logs.output))
 
 class TestWritableArgs(unittest.TestCase):
     def test_default_is_the_in_memory_layer(self):
