@@ -98,9 +98,11 @@ DTYPE="${DTYPE:-float16}"
 # --shard_id/--num_shards default of processing everything in one job.
 SHARD_ID="${SHARD_ID:-}"
 NUM_SHARDS="${NUM_SHARDS:-}"
-# Each shard needs its own vLLM port so parallel jobs landing on the
-# same node don't collide. Offsets from a base port by shard id.
-VLLM_PORT="${VLLM_PORT:-$((8003 + ${SHARD_ID:-0}))}"
+# Port for this job's vLLM server. Left unset, a free one is picked once
+# python is available, further down. A fixed default let two jobs on one
+# node share a port, and one job's client then talked to the other job's
+# server.
+VLLM_PORT="${VLLM_PORT:-}"
 # GPUs to split the model across for one job (see the TENSOR_PARALLEL_SIZE
 # note above the TODO block). 1 keeps the existing single-GPU behavior.
 TENSOR_PARALLEL_SIZE="${TENSOR_PARALLEL_SIZE:-1}"
@@ -191,6 +193,11 @@ cd "$SLURM_SUBMIT_DIR"
 python -m inference.check_token_limits \
     --max_new_tokens "$MAX_NEW_TOKENS" --max_model_len "$MAX_MODEL_LEN"
 
+if [ -z "$VLLM_PORT" ]; then
+    VLLM_PORT="$(python -c 'import socket; s = socket.socket(); s.bind(("", 0)); print(s.getsockname()[1])')"
+fi
+echo "vllm port: $VLLM_PORT"
+
 # vLLM's own model loading (via transformers' hub code) doesn't reliably
 # pick up `hf auth login`'s cached token under sbatch, even though the
 # hf CLI does, export it explicitly so gated models (Llama, CodeGemma)
@@ -244,6 +251,15 @@ until curl -s -f "http://127.0.0.1:${VLLM_PORT}/v1/models" > /dev/null 2>&1; do
     sleep 5
     elapsed=$((elapsed + 5))
 done
+# Something answering on the port is not proof it is this job's server:
+# when the port is already taken, vllm fails to bind and the poll above is
+# answered by whoever holds it.
+served_models="$(curl -s -f "http://127.0.0.1:${VLLM_PORT}/v1/models" || true)"
+if ! kill -0 "$VLLM_PID" 2>/dev/null || ! grep -qF "\"$MODEL\"" <<< "$served_models"; then
+    echo "Port $VLLM_PORT answers but is not this job's vllm server for $MODEL." >&2
+    echo "Another server is on that port. Leave VLLM_PORT unset to get a free one." >&2
+    exit 1
+fi
 echo "vllm server ready after ${elapsed}s."
 
 # Only the full setting is in scope, skip completion.
