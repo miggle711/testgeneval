@@ -88,9 +88,9 @@ NAMESPACE="${NAMESPACE:-kdjain}"
 # coverage/cosmic-ray + build_ext fix (testgeneval#55, confirmed real
 # 2026-09-12: kdjain's originals are missing both `coverage` and the
 # compiled sklearn C extension) and pushed to miggy711/, pulled as
-# .sif, and already sitting in APPTAINER_IMAGES_DIR. Do NOT re-run
-# scripts/pull_apptainer_images.py for scikit-learn specifically, or it
-# will silently overwrite these with the old broken kdjain images.
+# .sif, and already sitting in APPTAINER_IMAGES_DIR. 1.4 is on miggy711/
+# too. scripts/pull_apptainer_images.py pulls scikit-learn from miggy711/
+# (its REPO_NAMESPACES, testgeneval#123), not from this namespace.
 
 # Where the converted .sif testbed images live. One file per
 # {repo_name}_{version}.sif (see run_apptainer.py). On scratch: they're
