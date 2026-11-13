@@ -4,9 +4,12 @@
 It sorts instances by length and continually writes the outputs to a specified file, so that the script can be stopped and restarted without losing progress.
 """
 
+import atexit
 import json
 import logging
 import os
+import socket
+import subprocess
 import threading
 import time
 import traceback
@@ -734,6 +737,79 @@ def parse_model_args(model_args):
     return kwargs
 
 
+def _lock_holder_alive(holder):
+    """Whether the job or process that wrote a lock file is still running.
+    Unknown counts as alive, so a lock is never taken over by mistake."""
+    job = holder.get("job")
+    if job:
+        if job == os.environ.get("SLURM_JOB_ID"):
+            return False  # this job, requeued: its earlier run is gone
+        try:
+            out = subprocess.run(["squeue", "-h", "-j", str(job), "-o", "%T"],
+                                 capture_output=True, text=True, timeout=60)
+        except (OSError, subprocess.TimeoutExpired):
+            return True
+        # A finished job prints nothing, or fails once it ages out of squeue
+        return out.returncode == 0 and out.stdout.strip() != ""
+    pid = holder.get("pid")
+    if pid and holder.get("host") == socket.gethostname():
+        try:
+            os.kill(int(pid), 0)
+        except ProcessLookupError:
+            return False
+        except PermissionError:
+            return True
+        return True
+    return True
+
+
+def acquire_output_lock(output_file):
+    """Take <output_file>.lock for the life of this process, so two jobs for
+    the same model, arm, temperature and k cannot both read the same
+    existing ids and append the same instances (testgeneval#124). The lock
+    file is created with an exclusive open and holds the Slurm job id, host
+    and pid; it does not rely on flock, which Lustre may not share across
+    nodes. A lock left by a job that is no longer running (killed at its
+    time limit, say) is replaced. Returns a function that releases it."""
+    path = f"{output_file}.lock"
+    me = {"job": os.environ.get("SLURM_JOB_ID"), "host": socket.gethostname(), "pid": os.getpid()}
+    for _ in range(2):
+        try:
+            fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+        except FileExistsError:
+            try:
+                with open(path) as f:
+                    holder = json.load(f)
+            except (OSError, ValueError):
+                holder = {}
+            if _lock_holder_alive(holder):
+                raise RuntimeError(
+                    f"{output_file} is being written by another run ({holder or 'unknown holder'}, "
+                    f"lock file {path}). Two writers would duplicate rows. If that run is "
+                    f"no longer going, delete the lock file and resubmit."
+                )
+            logger.warning(f"Replacing the lock left by a run that is no longer going: {holder}")
+            try:
+                os.remove(path)
+            except FileNotFoundError:
+                pass
+            continue
+        with os.fdopen(fd, "w") as f:
+            json.dump(me, f)
+
+        def release():
+            try:
+                with open(path) as f:
+                    if json.load(f) == me:
+                        os.remove(path)
+            except (OSError, ValueError):
+                pass
+
+        atexit.register(release)
+        return release
+    raise RuntimeError(f"Could not take the lock {path}")
+
+
 def main(
     dataset_name_or_path,
     split,
@@ -801,6 +877,7 @@ def main(
         output_file += f"__shard-{shard_id}__num_shards-{num_shards}"
     output_file = Path(output_dir, output_file + ".jsonl")
     logger.info(f"Will write to {output_file}")
+    release_lock = acquire_output_lock(output_file)
     existing_ids = set()
     if os.path.exists(output_file):
         with open(output_file) as f:
@@ -879,6 +956,7 @@ def main(
         )
     else:
         raise ValueError(f"Invalid model name or path {model_name_or_path}")
+    release_lock()
     logger.info(f"Done!")
 
 
