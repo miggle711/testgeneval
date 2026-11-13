@@ -22,25 +22,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--model",
         type=str,
-        help="Model name",
-        choices=[
-            "gpt-4o-2024-05-13",
-            "gpt-4-0613",
-            "gpt-4-turbo-2024-04-09",
-            "gpt-3.5-turbo-0125",
-            "meta-llama/CodeLlama-7b-Instruct-hf",
-            "meta-llama/Meta-Llama-3.1-8B-Instruct",
-            "meta-llama/CodeLlama-70b-Instruct-hf",
-            "meta-llama/Meta-Llama-3.1-70B-Instruct",
-            "meta-llama/Meta-Llama-3.1-405B-Instruct",
-            "deepseek-ai/DeepSeek-Coder-V2-Lite-Instruct",
-            "mistralai/Codestral-22B-v0.1",
-            "google/gemma-2-9b-it",
-            "google/gemma-2-27b-it",
-            "baseline",
-            "mlx-community/Meta-Llama-3.1-8B-Instruct-4bit",
-            "llama-3.1-8b-instant",
-        ],
+        help="API model name, HuggingFace model id, local checkpoint path, or baseline",
         required=True,
     )
     parser.add_argument(
