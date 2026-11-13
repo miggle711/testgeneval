@@ -70,12 +70,12 @@ PROMPT_CONFIG="${PROMPT_CONFIG:-instruct}"          # instruct | kg_only
 KG_PROMPTS_PATH="${KG_PROMPTS_PATH:-kg_prompts.json}"
 DATASET_PATH="${DATASET_PATH:-CHANGE_ME}"
 OUTPUT_DIR="${OUTPUT_DIR:-$PWD/results/${PROMPT_CONFIG}}"
-TEMPERATURE="${TEMPERATURE:-0.2}"
+TEMPERATURE="${TEMPERATURE:-0.8}"       # the rerun protocol's (fyp-paper#7)
 # Samples per instance for the full setting, k in pass@k when > 1 (needs
 # TEMPERATURE > 0 to produce genuinely different samples, not one
 # completion repeated num_samples times). Requested in one call via
 # run_api.py's own n parameter, not num_samples separate calls.
-NUM_SAMPLES="${NUM_SAMPLES:-1}"
+NUM_SAMPLES="${NUM_SAMPLES:-5}"         # the rerun protocol's k
 MAX_CONCURRENCY="${MAX_CONCURRENCY:-1}"   # requests in flight at once; match MAX_NUM_SEQS below
 # vLLM's own ceiling on concurrent sequences, MAX_CONCURRENCY can never
 # exceed this regardless of what's requested. 8 is safe for the large

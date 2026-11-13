@@ -107,6 +107,9 @@ MODEL_LIMITS = {
     # Same model via OpenRouter (lowercase id), testgeneval#90 ablation.
     "qwen/qwen3-coder-30b-a3b-instruct": 262_144,
     "Qwen/Qwen3-4B-Instruct-2507": 262_144,
+    # max_position_embeddings in the model's config.json; 131,072 needs YaRN
+    # rope scaling added to the config, which these runs do not (#42, #118).
+    "Qwen/Qwen2.5-Coder-7B-Instruct": 32_768,
     "openai/gpt-oss-20b": 131_072,
     "openai/gpt-oss-120b": 131_072,
     "meta-llama/Llama-4-Scout-17B-16E-Instruct": 128_000,
@@ -189,6 +192,7 @@ OUTPUT_LIMITS = {
     "Qwen/Qwen3-Coder-30B-A3B-Instruct": 8_000,
     "qwen/qwen3-coder-30b-a3b-instruct": 8_000,
     "Qwen/Qwen3-4B-Instruct-2507": 8_000,
+    "Qwen/Qwen2.5-Coder-7B-Instruct": 8_000,
     "openai/gpt-oss-20b": 48_000,
     "openai/gpt-oss-120b": 48_000,
     "meta-llama/Llama-4-Scout-17B-16E-Instruct": 8_000,
@@ -196,6 +200,10 @@ OUTPUT_LIMITS = {
 }
 
 EPSILON = 1000
+
+# The rerun protocol's temperature (fyp-paper#7, testgeneval#118). Used
+# when --model_args does not set one.
+DEFAULT_TEMPERATURE = 0.8
 
 
 def prompt_token_budget(model_name_or_path, server_max_model_len=None):
@@ -451,7 +459,9 @@ def openai_inference(
         openai.api_key = openai_key
         print(f"Using OpenAI key {'*' * max(0, len(openai_key)-5) + openai_key[-5:]}")
     print(model_args)
-    temperature = model_args.pop("temperature", 0.2)
+    # 0.8 is the protocol's temperature (fyp-paper#7); 0.2 caused repetition
+    # loops in every model tested (testgeneval#118).
+    temperature = model_args.pop("temperature", DEFAULT_TEMPERATURE)
     top_p = model_args.pop("top_p", 0.95 if temperature > 0 else 1)
     print(f"Using temperature={temperature}, top_p={top_p}")
     if num_samples > 1 and temperature == 0:
@@ -680,7 +690,7 @@ def main(
     skip_full,
     skip_completion=False,
     prompt_config="instruct",
-    kg_prompts_path="kg_prompts.json",
+    kg_prompts_path=None,
     no_system_message=False,
     max_concurrency=1,
 ):
@@ -692,28 +702,28 @@ def main(
         logger.warning(f"Received shard_id={shard_id} but num_shards is None, ignoring")
     model_args = parse_model_args(model_args)
 
+    # Both arms name the same target function(s), from kg_prompts.json, and
+    # cover the same instances (fyp-paper#7 §2, §3 rule 1). A path that was
+    # given but does not resolve is an error in both arms; it used to send
+    # instruct on without targets while kg_only refused (testgeneval#117).
+    # Only when no path is given at all does instruct run unfocused.
+    if kg_prompts_path is not None and not os.path.isfile(kg_prompts_path):
+        raise FileNotFoundError(
+            f"kg_prompts_path={kg_prompts_path!r} is not a file (cwd={os.getcwd()!r}). "
+            f"Pass an absolute path, or leave it out to run instruct without target names."
+        )
     if prompt_config == "kg_only":
+        if kg_prompts_path is None:
+            raise ValueError("--prompt_config kg_only needs --kg_prompts_path")
         from inference.configs.kg_only_prompt import KGOnlyPrompt
         prompt_info = KGOnlyPrompt(prompts_path=kg_prompts_path)
     else:
-        # Also reads kg_prompts_path for target_functions/target_classes,
-        # so instruct focuses on the same changed function(s) kg_only
-        # does. Falls back to unfocused prompts if the file doesn't
-        # exist -- logged loudly, since os.path.exists is resolved
-        # against whatever CWD this process happens to run from (e.g.
-        # via subprocess from run_pipeline.py or the M3 slurm script),
-        # so a real file elsewhere can silently miss with no other signal.
-        if os.path.exists(kg_prompts_path):
-            resolved_kg_prompts_path = kg_prompts_path
-        else:
-            resolved_kg_prompts_path = None
+        if kg_prompts_path is None:
             logger.warning(
-                f"kg_prompts_path={kg_prompts_path!r} not found relative to "
-                f"cwd={os.getcwd()!r} -- instruct will use unfocused prompts "
-                f"(no target function/class wording). If this file exists "
-                f"elsewhere, pass an absolute path."
+                "No --kg_prompts_path: instruct runs with unfocused prompts "
+                "(no target function/class named). Not a protocol run."
             )
-        prompt_info = InstructPrompt(kg_prompts_path=resolved_kg_prompts_path)
+        prompt_info = InstructPrompt(kg_prompts_path=kg_prompts_path)
 
     model_nickname = model_name_or_path
     if "checkpoint" in Path(model_name_or_path).name:
@@ -721,7 +731,7 @@ def main(
     else:
         model_nickname = Path(model_name_or_path).name
 
-    temperature = model_args["temperature"] if "temperature" in model_args else 0.2
+    temperature = model_args["temperature"] if "temperature" in model_args else DEFAULT_TEMPERATURE
     # k{num_samples} avoids a real, confirmed collision: model/dataset/
     # temperature alone don't distinguish a pass@1 run from a pass@5 run
     # at the same temperature, so the later one's existing_ids read (and
@@ -751,6 +761,20 @@ def main(
     if not split in dataset:
         raise ValueError(f"Invalid split {split} for dataset {dataset_name_or_path}")
     dataset = dataset[split]
+    if kg_prompts_path is not None:
+        with open(kg_prompts_path) as f:
+            covered = set(json.load(f))
+        uncovered = [i for i in dataset["id"] if i not in covered]
+        if uncovered:
+            # kg_only already raises on these rows; instruct used to generate
+            # them without a target named, so the arms covered different
+            # instances (testgeneval#117).
+            raise ValueError(
+                f"{len(uncovered)} row(s) of split {split!r} have no entry in "
+                f"{kg_prompts_path}, so no target is named for them: {uncovered[:5]}"
+                + (" ..." if len(uncovered) > 5 else "")
+                + ". Drop them from the dataset for both arms and report the count."
+            )
 
     print(dataset[0].keys())
     # Shard before filtering existing_ids, not after. Each shard's
@@ -887,7 +911,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--kg_prompts_path",
         type=str,
-        default="kg_prompts.json",
+        default=None,
         help="Path to a JSON file of pre-computed KG prompts "
              "(scripts/build_kg_prompts.py in pycodekg). Required content "
              "for --prompt_config kg_only; also read by --prompt_config "

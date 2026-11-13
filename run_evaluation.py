@@ -245,9 +245,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "--namespace",
         type=str,
-        help="Docker repository namespace",
+        help="Docker repository namespace (default: kdjain; aorwall's images lack cosmic-ray)",
         required=False,
-        default="aorwall",
+        default="kdjain",
     )
     parser.add_argument(
         "--skip_existing", action="store_true", help="(Optional) Skip existing logs"
@@ -255,8 +255,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--timeout",
         type=int,
-        help="(Optional) Timeout in seconds (default: 60)",
-        default=60,
+        help="(Optional) Timeout in seconds per test command (default: 3600, as m3_run_evaluation.slurm)",
+        default=3600,
     )
     parser.add_argument(
         "--num_processes",
