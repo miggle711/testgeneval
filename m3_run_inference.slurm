@@ -257,6 +257,18 @@ fi
 if [ "$NO_SYSTEM_MESSAGE" = "1" ]; then
     EXTRA_ARGS+=(--no_system_message)
 fi
+# Each request's sampling seed is derived from SEED (run_api.py's
+# request_seed) and recorded in its row. SEED=none sends no seed.
+SEED="${SEED:-0}"
+if [ "$SEED" = "none" ]; then
+    EXTRA_ARGS+=(--no_seed)
+else
+    EXTRA_ARGS+=(--seed "$SEED")
+fi
+# The model revision is part of the run's record: the snapshot(s) in the
+# HF cache this job loads from.
+echo "model $MODEL snapshot(s): $(ls "${HF_HOME:-$HOME/.cache/huggingface}/hub/models--${MODEL//\//--}/snapshots" 2>/dev/null | tr '\n' ' ' || true)"
+echo "sampling seed base: $SEED"
 
 LOCAL_MODEL_BASE_URL="http://127.0.0.1:${VLLM_PORT}/v1/" \
     python -m inference.api.run_api \
