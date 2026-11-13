@@ -149,6 +149,31 @@ def record_log_sources(
             os.replace(tmp, record)
 
 
+
+
+def make_log_dir_writable(log_dir: str) -> None:
+    """Make log_dir world-writable, so containers that do not run as its
+    owner can write logs there.
+
+    Only the owner may change a directory's mode, so an unconditional chmod
+    failed with PermissionError on a directory another account owns, even
+    one that was already 777 (#120: all 20 of a teammate's shards failed
+    this way). Nothing to do when the mode is already 777; when the chmod is
+    not allowed, warn and carry on, since group or other write access may
+    still be enough.
+    """
+    if os.stat(log_dir).st_mode & 0o777 == 0o777:
+        return
+    try:
+        os.chmod(log_dir, 0o777)
+    except PermissionError:
+        logger.warning(
+            f"Could not make {log_dir} world-writable (it belongs to another "
+            f"account). Containers can write logs there only if its "
+            f"permissions already allow it."
+        )
+
+
 async def main(
     predictions_path: str,
     swe_bench_tasks: str,
@@ -179,9 +204,7 @@ async def main(
     if not os.path.exists(log_dir) or not os.path.isdir(log_dir):
         raise ValueError("--log_dir must exist and point at a directory")
 
-    # Make sure that the log directory is world-writable so that we can write to it from
-    # within the container, even if we're not the root user.
-    os.chmod(log_dir, 0o777)
+    make_log_dir_writable(log_dir)
 
     tasks = list(get_eval_refs(swe_bench_tasks).values())
 
