@@ -303,7 +303,9 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   rather than a port collision, easy to misdiagnose. Fix: pass an explicit, distinct
   `VLLM_PORT` on every simultaneous submission (e.g. `VLLM_PORT=8003` / `VLLM_PORT=8004`) rather
   than relying on the default, especially for jobs likely to land on the same node (same
-  partition, submitted close together).
+  partition, submitted close together). `m3_run_inference.slurm` now picks a free port when
+  `VLLM_PORT` is unset and, once the port answers, checks that it is this job's own server
+  serving `$MODEL`, so this no longer needs doing by hand.
 - **`MODEL_LIMITS` (in `run_api.py`, used for client-side prompt truncation math) and
   `MAX_MODEL_LEN` (the actual `--max-model-len` passed to `vllm serve`, defaults to 32768) are
   two separate settings that must agree, and nothing checks that they do.** `MODEL_LIMITS`
