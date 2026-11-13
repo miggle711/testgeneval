@@ -179,6 +179,15 @@ def merge_records(
                 out.setdefault("preds", {})[prompt_name] = (
                     (preds1 or []) + (preds2 or [])
                 )
+                # The merged row holds both stages' samples, so its run
+                # identity is no longer stage 1's alone.
+                run1, run2 = rec1.get("run"), rec2.get("run")
+                if run1 and run2:
+                    out["run"] = {
+                        **run1,
+                        "num_samples": run1["num_samples"] + run2["num_samples"],
+                        "merged_from": [run1, run2],
+                    }
                 if preds1 is None or preds2 is None:
                     stats["missing_prompt_one_side"] += 1
 

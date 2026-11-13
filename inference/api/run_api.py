@@ -4,9 +4,11 @@
 It sorts instances by length and continually writes the outputs to a specified file, so that the script can be stopped and restarted without losing progress.
 """
 
+import hashlib
 import json
 import logging
 import os
+import subprocess
 import threading
 import time
 import traceback
@@ -354,6 +356,45 @@ def gpt_tokenize(string: str, encoding) -> int:
     return num_tokens
 
 
+def _file_md5(path):
+    digest = hashlib.md5()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _repo_commit():
+    """This checkout's commit, with "-dirty" when it has uncommitted changes.
+    None outside a git checkout."""
+    repo = Path(__file__).resolve().parents[2]
+    try:
+        commit = subprocess.run(
+            ["git", "rev-parse", "HEAD"], cwd=repo, capture_output=True, text=True, check=True
+        ).stdout.strip()
+        dirty = subprocess.run(
+            ["git", "status", "--porcelain", "--untracked-files=no"],
+            cwd=repo, capture_output=True, text=True, check=True,
+        ).stdout.strip()
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    return f"{commit}-dirty" if dirty else commit
+
+
+def run_identity(prompt_config, num_samples, temperature, kg_prompts_path):
+    """Which run a prediction row belongs to. Written into every row, since
+    the arm and sample count are otherwise only in the path the file was
+    saved under, and nothing ties a file to the kg_prompts.json or code it
+    came from. kg_prompts_md5 is None when instruct ran without that file."""
+    return {
+        "arm": prompt_config,
+        "num_samples": num_samples,
+        "temperature": temperature,
+        "kg_prompts_md5": _file_md5(kg_prompts_path) if kg_prompts_path else None,
+        "testgeneval_commit": _repo_commit(),
+    }
+
+
 def openai_inference(
     test_dataset,
     model_name_or_path,
@@ -370,6 +411,7 @@ def openai_inference(
     model_nickname=None,
     no_system_message=False,
     max_concurrency=1,
+    run=None,
 ):
     """
     Runs inference on a dataset using the openai API.
@@ -466,6 +508,8 @@ def openai_inference(
     basic_args = {
         "model_name_or_path": recorded_name + f"_t={temperature}",
     }
+    if run is not None:
+        basic_args["run"] = run
     print(f"Filtered to {len(test_dataset)} instances")
 
     # Shared across worker threads: a lock around both, since
@@ -693,6 +737,7 @@ def main(
     if prompt_config == "kg_only":
         from inference.configs.kg_only_prompt import KGOnlyPrompt
         prompt_info = KGOnlyPrompt(prompts_path=kg_prompts_path)
+        resolved_kg_prompts_path = kg_prompts_path
     else:
         # Also reads kg_prompts_path for target_functions/target_classes,
         # so instruct focuses on the same changed function(s) kg_only
@@ -792,6 +837,7 @@ def main(
             model_nickname=model_nickname,
             no_system_message=no_system_message,
             max_concurrency=max_concurrency,
+            run=run_identity(prompt_config, num_samples, temperature, resolved_kg_prompts_path),
         )
     else:
         raise ValueError(f"Invalid model name or path {model_name_or_path}")
