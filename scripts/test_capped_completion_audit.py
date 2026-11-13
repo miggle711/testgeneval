@@ -16,6 +16,9 @@ TESTS = "import pytest\n\n" + "".join(f"def test_{i}():\n    assert {i} == {i}\n
 LOOP_LINE = TESTS + "def test_loop():\n" + "    assert x == 1\n" * 80
 LOOP_BLOCK = TESTS + "def test_loop():\n" + "    a = f(1)\n    b = g(a)\n    assert b\n" * 20
 PROGRESSING = TESTS + "def test_cut():\n    value = compute(\n        1,"   # cut mid-call
+ENUMERATION = "import pytest\n\n" + "".join(
+    f"def test_get_host_with_forwarded_host_and_server_name{'_and_port' * i}():\n    assert host(i={i}) == {i}\n\n"
+    for i in range(8)) + "def test_get_host_with_forwarded_host_and_server_name_and_port_and_"
 UNCLEAR = "import pytest\n\nclass TestThing:\n    def helper(self):\n        return [\n            1,"
 STOPPED_BAD = "def test_a(:\n    pass\n"
 
@@ -43,6 +46,10 @@ class ClassifyTest(unittest.TestCase):
         self.assertEqual(c["category"], "progressing")
         self.assertEqual(c["complete_tests"], 3)
         self.assertFalse(c["parses"])
+
+    def test_name_enumeration_is_its_own_category(self):
+        self.assertEqual(audit.classify(ENUMERATION, "length")["category"], "enumeration")
+        self.assertEqual(audit.classify(PROGRESSING, "length")["category"], "progressing")
 
     def test_capped_with_no_complete_test_is_unclear(self):
         c = audit.classify(UNCLEAR, "length")

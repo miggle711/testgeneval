@@ -17,8 +17,13 @@ For capped samples:
   loop         the tail repeats: among the last 60 non-blank lines, at most
                a quarter are distinct, or one block of 1-8 lines repeats at
                least 4 times in a row at the end
-  progressing  not a loop, and the longest parseable prefix holds at least
-               one complete test function (def test_...)
+  enumeration  not a loop, but the last complete tests are variations built
+               by extending one name: among the last 8 test names, at least
+               6 share a prefix of 30 or more characters with another of them
+               (test_get_host_with_x_..._and_same_port and the like). The tail
+               is a combinatorial list, which more tokens would only extend
+  progressing  neither, and the longest parseable prefix holds at least one
+               complete test function (def test_...)
   unclear      neither: more tokens might or might not help. These are the
                cases for a small fixed 8k against 16k comparison
 
@@ -65,6 +70,39 @@ def is_loop(text):
     return False
 
 
+ENUM_LAST = 8
+ENUM_MIN = 6
+ENUM_PREFIX = 30
+
+
+def test_names(text):
+    """Names of complete test functions in the longest parseable prefix, in order."""
+    lines = text.splitlines()
+    for cut in range(len(lines), 0, -1):
+        try:
+            tree = ast.parse("\n".join(lines[:cut]))
+        except (SyntaxError, ValueError):
+            continue
+        found = [n for n in ast.walk(tree)
+                 if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and n.name.startswith("test")]
+        return [n.name for n in sorted(found, key=lambda n: n.lineno)]
+    return []
+
+
+def is_enumeration(names):
+    last = names[-ENUM_LAST:]
+    if len(last) < ENUM_MIN:
+        return False
+
+    def common(a, b):
+        n = 0
+        while n < min(len(a), len(b)) and a[n] == b[n]:
+            n += 1
+        return n
+    linked = sum(any(common(a, b) >= ENUM_PREFIX for b in last if b is not a) for a in last)
+    return linked >= ENUM_MIN
+
+
 def complete_tests(text):
     """Test functions (module level or in a class) in the longest prefix of
     whole lines that parses. Returns (count, prefix parses at full length)."""
@@ -95,6 +133,8 @@ def classify(text, finish_reason):
         return {"capped": False, "category": "stopped", "parses": parses(text)}
     if is_loop(text):
         category = "loop"
+    elif is_enumeration(test_names(text)):
+        category = "enumeration"
     else:
         tests, _ = complete_tests(text)
         category = "progressing" if tests else "unclear"
