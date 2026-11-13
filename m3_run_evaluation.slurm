@@ -28,6 +28,10 @@
 #     scratch, not /tmp -- /tmp is node-local, so sharded jobs on
 #     different nodes would each write to a different, invisible /tmp.
 #     generate_report.py reads every .eval.log from one directory.
+#     One directory per run: one arm, one sample count, one mutation
+#     setting. Log names carry only the id and model, so run_evaluation.py
+#     refuses a directory that already has logs from other predictions or
+#     settings. Shards and resubmits of the same predictions share it.
 #   SWE_BENCH_TASKS: dataset id or path (default kjain14/testgeneval).
 #   NUM_PROCESSES: concurrent container evaluations. A real load test
 #     (2026-09-11, NUM_PROCESSES=8, 24-core node) found 8 already
