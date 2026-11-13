@@ -9,17 +9,15 @@ adapted for one specific comparison: a plain LLM baseline (`instruct`) against a
 structural context pulled from a knowledge graph (`kg_only`), both asked to generate a complete
 test file from scratch for a changed function. See `docs/GUIDE.md` for the full run workflow —
 it's the primary operational doc for this fork and should be read before running anything here.
-`results/RUN_LOG.md` is the single source of truth for what's actually been run: per-model
-completion counts, real failure causes, and job IDs — always check it before assuming a model's
-status. The upstream `README.md` still describes the original four-setting benchmark design; this
+`results/RUN_LOG.md` and `results/EVAL_LOG.md` are historical logs of runs up to mid-October 2026
+(incidents, job IDs, loss causes). Current per-model status is tracked in GitHub issues, so check
+the relevant issue before assuming a model's status. The upstream `README.md` still describes the original four-setting benchmark design; this
 fork only uses the `full` setting.
 
 The `kg_only` arm's prompts are pre-computed outside this repo by a companion project,
 `pycodekg` (repo `repo-kg-construction`), and handed to this repo as a JSON file
 (`kg_prompts.json`). This repo does not build knowledge graphs itself. The
-`fyp-paper` repo's `experiment_design/` directory is the canonical source for
-the full cross-repo design and model shortlist. `docs/funding-proposal.md`
-extends that shortlist with newer models the team is adding.
+submitted paper is the reference for the full cross-repo design and model list.
 
 ## Commands
 
@@ -390,7 +388,11 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   entirely), and every real evaluation-outcome category silently stays empty with no visible
   error. Check `with_logs` (or any other real outcome category) directly in a `_report.json`
   before trusting a committed evaluation report reflects real, actual test execution, a nonempty
-  `generated`/`total_predictions` count alone is not evidence evaluation ran.
+  `generated`/`total_predictions` count alone is not evidence evaluation ran. `run_docker.py` now
+  raises `DockerUnavailableError` when the `docker` CLI is missing or the daemon is unreachable,
+  so this case stops the run, and `run_apptainer.py` raises `ApptainerUnavailableError` the
+  same way when the `apptainer` binary is missing. A single container failing is still only a
+  warning.
 - **Pulling this project's evaluation Docker images (`scripts/pull_images.py`) is fast per
   image but real, cumulative local disk usage can exceed expectations fast.** Confirmed real
   2026-09-07: all 102 real, distinct images in `Makefile.testgenevallite` pulled in roughly 15
@@ -460,7 +462,9 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   from the testgeneval#46 fix pattern. The model itself supports far more (real
   `text_config.max_position_embeddings` is 10485760). Fixed by passing `MAX_MODEL_LEN=65536`
   explicitly plus dropping to the conservative `MAX_NUM_SEQS=6` (the earlier OOM was at
-  `MAX_NUM_SEQS=16` even at the smaller 32768).
+  `MAX_NUM_SEQS=16` even at the smaller 32768). `m3_run_inference.slurm` now runs
+  `inference/check_token_limits.py` before `vllm serve` and exits if `MAX_NEW_TOKENS` is not
+  below `MAX_MODEL_LEN`.
 - **The default `gpu` partition has a real per-user GPU cap of 4 (`gpuq` QOS,
   `MaxTRESPerUser = gres/gpu=4`), which blocks concurrent large tensor-parallel jobs.**
   Confirmed real 2026-09-10: with two 1-GPU L40S jobs running, a 4-GPU job cannot start until
@@ -728,6 +732,18 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   of leaving it on shared scratch). Check a model's own tracking issue (#87, or its per-person
   generation/evaluation issue) for a real reported result before concluding its eval never
   happened just because a disk search came up empty.
+- **`InductorError: AttributeError: module 'torch._inductor.runtime.compile_tasks.<hash>' has no
+  attribute 'get_args'` at vLLM startup means `$HOME` is full, not that the compile cache is
+  stale.** Confirmed real 2026-11-13 (job 62586666): `df -k ~` showed 0 KB available, and the
+  module the error names was a 0 byte file written by that same job, as was every other file
+  the job wrote under `~/.cache/vllm` (2 of 2, against 0 of 677 older files). The quota error
+  can be silent: a small write succeeds and a large one only raises `Disk quota exceeded` at
+  `close`, so the log often has no quota message at all. Every earlier case of this error
+  (testgeneval#45, #69) falls on the same accounts and days as explicit quota failures.
+  `rm -rf ~/.cache/vllm` only helps by freeing a little space, which is why it kept coming back.
+  Check `df -h ~` first. Both slurm scripts now keep their caches on scratch
+  (`VLLM_CACHE_ROOT` for inference, `HF_HOME` for evaluation, which was rebuilding a 4.5 GB
+  copy of `kjain14/testgeneval` under `~/.cache/huggingface` on every run).
 - **`$HOME`'s quota fills up again, this is a recurring real failure mode, not a one-time
   fix.** Confirmed real again 2026-10-12, same account as the 2026-09-11 incident above: `.conda`
   had grown back to 12GB and `.cache/huggingface` + `.cache/vllm` added another 5GB, pushing

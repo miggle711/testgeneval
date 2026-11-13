@@ -1,5 +1,10 @@
 # Evaluation run log
 
+> **Historical log, last updated mid-October 2026.** Status tables here are snapshots, not
+> current status: current per-model status is tracked in this repo's GitHub issues. References
+> below to fyp-paper's `experiment_design/` and to `docs/funding-proposal.md` point to documents
+> that have since been removed; the submitted paper is now the reference for the design and models.
+
 Tracks real evaluation status per model/arm: whether `run_evaluation.py
 --backend apptainer` (via `m3_run_evaluation.slurm`) has actually been
 run, real completion counts, and real failure causes found along the

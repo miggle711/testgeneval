@@ -14,6 +14,8 @@ from argparse import ArgumentParser
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
+from inference.prediction_paths import prediction_stem
+
 import dotenv
 import numpy as np
 import openai
@@ -196,12 +198,36 @@ OUTPUT_LIMITS = {
 EPSILON = 1000
 
 
-def calc_cost(model_name, input_tokens, output_tokens):
+def prompt_token_budget(model_name_or_path, server_max_model_len=None):
+    """Tokens a prompt may use: the context window minus the output limit
+    and EPSILON. The context window is MODEL_LIMITS's entry, or the server's
+    own --max-model-len when that is smaller. vLLM rejects any request whose
+    prompt plus max_tokens exceeds its --max-model-len, so truncating to the
+    model's published context instead lost every longer prompt
+    (testgeneval#44). Raises ValueError when no room is left for a prompt."""
+    context = MODEL_LIMITS.get(model_name_or_path, 32_000)
+    if server_max_model_len:
+        context = min(context, server_max_model_len)
+    budget = context - OUTPUT_LIMITS.get(model_name_or_path, 4_096) - EPSILON
+    if budget <= 0:
+        raise ValueError(
+            f"{model_name_or_path}: a context of {context} tokens leaves no room "
+            f"for a prompt after the output limit and margin; raise MAX_MODEL_LEN"
+        )
+    return budget
+
+
+def calc_cost(model_name, input_tokens, output_tokens, samples=1):
     """
     Calculates the cost of a response from the openai API.
 
     Args:
-    response (openai.ChatCompletion): The response from the API.
+    model_name: model whose per-token prices to use.
+    input_tokens: usage.prompt_tokens, counted once per request.
+    output_tokens: usage.completion_tokens, the sum over all n completions.
+    samples: n, the completions in the request. Logged so that
+        scripts/aggregate_token_counts.py can report output tokens per
+        sample: a pass@k request with n=k logs k completions' tokens.
 
     Returns:
     float: The cost of the response.
@@ -216,7 +242,8 @@ def calc_cost(model_name, input_tokens, output_tokens):
         + MODEL_COST_PER_OUTPUT.get(model_name, 0) * output_tokens
     )
     logger.info(
-        f"input_tokens={input_tokens}, output_tokens={output_tokens}, cost={cost:.2f}"
+        f"input_tokens={input_tokens}, output_tokens={output_tokens}, cost={cost:.2f}, "
+        f"samples={samples}"
     )
     return cost
 
@@ -312,9 +339,10 @@ def call_chat(
         input_tokens = response.usage.prompt_tokens
         # completion_tokens is the sum across all n completions, not
         # per-completion -- that's the real cost incurred, so calc_cost
-        # doesn't need adjusting for n > 1.
+        # doesn't need adjusting for n > 1. n is logged with it so token
+        # counts can be compared per sample (testgeneval#46).
         output_tokens = response.usage.completion_tokens
-        cost = calc_cost(model_name_or_path, input_tokens, output_tokens)
+        cost = calc_cost(model_name_or_path, input_tokens, output_tokens, samples=n)
         return response, cost
 
     except Exception as e:
@@ -379,8 +407,11 @@ def openai_inference(
     # conservative default rather than a KeyError. Add real entries once a
     # model's actual context window/output limit are known.
     default_output_limit = OUTPUT_LIMITS.get(model_name_or_path, 4_096)
-    model_limit = (
-        MODEL_LIMITS.get(model_name_or_path, 32_000) - default_output_limit - EPSILON
+    # SERVER_MAX_MODEL_LEN is the --max-model-len the vLLM server was started
+    # with (m3_run_inference.slurm exports it); unset for hosted APIs.
+    server_max_model_len = os.environ.get("SERVER_MAX_MODEL_LEN")
+    model_limit = prompt_token_budget(
+        model_name_or_path, int(server_max_model_len) if server_max_model_len else None
     )
 
     # Adjust dataset to truncate prompts to the last model_limit tokens
@@ -697,7 +728,7 @@ def main(
     # write) into the earlier one's file, silently mixing or no-op'ing
     # real production data (testgeneval#43-adjacent incident, see
     # RUN_LOG.md's "root problem" section).
-    output_file = f"{model_nickname}__{dataset_name_or_path.split('/')[-1]}__{temperature}__k{num_samples}__{split}"
+    output_file = prediction_stem(model_nickname, dataset_name_or_path, temperature, num_samples, split=split)
     if shard_id is not None and num_shards is not None:
         output_file += f"__shard-{shard_id}__num_shards-{num_shards}"
     output_file = Path(output_dir, output_file + ".jsonl")

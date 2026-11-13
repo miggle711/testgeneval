@@ -16,6 +16,7 @@
 #     (datasets, openai, tiktoken, python-dotenv). Install on a GPU
 #     node, not the login node.
 #   HF_HOME: defaults to al49 scratch space now, override if needed.
+#   VLLM_CACHE_ROOT: vLLM's compile cache, also defaults to al49 scratch.
 #   MODEL: real HuggingFace model id for the model this job is for.
 #   PROMPT_CONFIG / KG_PROMPTS_PATH: kg_only needs a kg_prompts.json
 #     built locally (pycodekg's build_kg_prompts.py) and transferred.
@@ -109,6 +110,10 @@ TENSOR_PARALLEL_SIZE="${TENSOR_PARALLEL_SIZE:-1}"
 # 31.62 GiB was available). This experiment's prompts and generated
 # tests are nowhere near that long, so cap it.
 MAX_MODEL_LEN="${MAX_MODEL_LEN:-32768}"
+# run_api.py truncates prompts to fit this server limit, not just the
+# model's published context, so a long prompt is shortened instead of
+# rejected on every retry (testgeneval#44).
+export SERVER_MAX_MODEL_LEN="$MAX_MODEL_LEN"
 # Real, confirmed finding (testgeneval#46): vLLM does not honor the
 # per-request max_tokens this project sends via run_api.py's own
 # OUTPUT_LIMITS-driven call, real completions have been observed running
@@ -145,8 +150,16 @@ DELETE_MODEL_AFTER_RUN="${DELETE_MODEL_AFTER_RUN:-0}"   # 1 = delete this model'
 # error).
 HF_HOME="${HF_HOME:-/home/$USER/al49_scratch/$USER/hf-cache}"
 
-mkdir -p "$OUTPUT_DIR" "$HF_HOME"
-export HF_HOME
+# vLLM's compile cache defaults to ~/.cache/vllm. $HOME has a small
+# quota, and once it is full the compiled kernel files get written
+# empty with no error, then vLLM dies at startup with
+# "InductorError: AttributeError: ... has no attribute 'get_args'".
+# Setting TORCHINDUCTOR_CACHE_DIR as well would do nothing: vLLM
+# overwrites it with a subdirectory of VLLM_CACHE_ROOT.
+VLLM_CACHE_ROOT="${VLLM_CACHE_ROOT:-/home/$USER/al49_scratch/$USER/vllm-cache}"
+
+mkdir -p "$OUTPUT_DIR" "$HF_HOME" "$VLLM_CACHE_ROOT"
+export HF_HOME VLLM_CACHE_ROOT
 
 # flashinfer (a vllm dependency) JIT compiles some CUDA kernels on
 # first use, which needs nvcc. The conda env has PyTorch's bundled
@@ -172,6 +185,11 @@ export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:${LD_LIBRARY_PATH:-}"
 # SLURM sets SLURM_SUBMIT_DIR to the real directory sbatch was run
 # from, use that instead.
 cd "$SLURM_SUBMIT_DIR"
+
+# A MAX_NEW_TOKENS at or above MAX_MODEL_LEN otherwise only shows up as
+# a GPU OOM during vLLM worker startup, after the model has loaded.
+python -m inference.check_token_limits \
+    --max_new_tokens "$MAX_NEW_TOKENS" --max_model_len "$MAX_MODEL_LEN"
 
 # vLLM's own model loading (via transformers' hub code) doesn't reliably
 # pick up `hf auth login`'s cached token under sbatch, even though the

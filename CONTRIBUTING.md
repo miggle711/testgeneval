@@ -44,7 +44,7 @@ The description should show the change on real data, not just describe it:
 3. **After:** the same scenario with the new behaviour, ideally from a real run, not a hypothetical.
 4. **Tests:** what's covered and the suite result.
 
-`.github/workflows/tests.yml` runs the `swebench_docker` and `inference` unit test suites on every PR and push to `main`. It's a real CI gate the test suites must pass, not a stand-in for M3 validation, it mocks out any real network/GPU calls and can't exercise the Apptainer backend, inference against a real vLLM server, or evaluation at all. There's no branch protection requiring it to pass before merge, but a red run should be treated as a real blocker regardless.
+`.github/workflows/tests.yml` runs the `swebench_docker`, `inference` and `scripts` unit test suites on every PR and push to `main`. It's a real CI gate the test suites must pass, not a stand-in for M3 validation, it mocks out any real network/GPU calls and can't exercise the Apptainer backend, inference against a real vLLM server, or evaluation at all. There's no branch protection requiring it to pass before merge, but a red run should be treated as a real blocker regardless.
 
 CI passing is necessary but not sufficient for anything touching inference, evaluation, or the Apptainer backend. Before merging one of those:
 
