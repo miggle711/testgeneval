@@ -6,6 +6,7 @@ import json
 import logging
 import os
 import shutil
+import signal
 import subprocess
 import time
 import xml.etree.ElementTree as ET
@@ -374,6 +375,58 @@ class TaskEnvContextManager:
         func_covered = len(target_lines & executed) / len(relevant) * 100
         self.log.write(f"\nFunctionCoverageLOG: {func_covered}%\n")
 
+    def _run_cosmic_ray_exec(self, cmd, code_file):
+        """Run `cosmic-ray exec`, and leave the code file as it was (testgeneval#145).
+
+        cosmic-ray mutates the code file in place while it tests each mutant,
+        and puts it back only when that mutant's context manager exits. A
+        timeout used to kill just the direct child: on a plain python image
+        that is cosmic-ray itself, killed (SIGKILL) part-way through a mutant,
+        so the file stayed mutated; on a conda image it is the `conda run`
+        wrapper, so cosmic-ray kept running and mutating the file while the
+        instance's later samples ran. Either way later samples were evaluated
+        against altered code. So cosmic-ray runs in its own session, a timeout
+        kills the whole process group, and the code file is then compared with
+        a copy taken before and written back if it differs. The copy is taken
+        here, not from git: the file under test carries the uncommitted patch.
+        """
+        path = os.path.join(self.repo_dir, code_file)
+        with open(path, "rb") as f:
+            before = f.read()
+        self.log.write(f"Command: {' '.join(cmd)}", level=DEBUG)
+        proc = subprocess.Popen(
+            cmd,
+            cwd=self.repo_dir,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            universal_newlines=True,
+            start_new_session=True,
+        )
+        try:
+            out, _ = proc.communicate(timeout=self.mutation_timeout)
+            self.log.write(f"Std. Output:\n{out}", level=DEBUG)
+            self.log.write(f"Return Code: {proc.returncode}", level=DEBUG)
+        except subprocess.TimeoutExpired:
+            self.log.write("MutationTimeout")
+            try:
+                os.killpg(proc.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+            try:
+                proc.communicate(timeout=60)
+            except subprocess.TimeoutExpired:
+                # Something left the process group and still holds the pipe.
+                proc.kill()
+                proc.wait()
+                self.log.write("MutationCleanup: a process outside the group kept the output open")
+        finally:
+            with open(path, "rb") as f:
+                after = f.read()
+            if after != before:
+                with open(path, "wb") as f:
+                    f.write(before)
+                self.log.write(f"MutationCleanup: restored {code_file}")
+
     def run_mutation_testing(self, instance, specifications, test_time, test_cmd):
         with open("mutation.toml", "w") as mutant_file:
             formatted_content = MUTATION_TEMPLATE.format(
@@ -390,15 +443,10 @@ class TaskEnvContextManager:
                 check=False,
                 timeout=self.timeout,
             )
-            try:
-                self.exec(
-                    "cosmic-ray exec mutation.toml mutation.sqlite".split(),
-                    shell=False,
-                    check=False,
-                    timeout=self.mutation_timeout,
-                )
-            except subprocess.TimeoutExpired:
-                self.log.write("MutationTimeout")
+            self._run_cosmic_ray_exec(
+                "cosmic-ray exec mutation.toml mutation.sqlite".split(),
+                instance["code_file"],
+            )
 
             output = str(
                 self.exec(
@@ -423,15 +471,10 @@ class TaskEnvContextManager:
                 check=False,
                 timeout=self.timeout,
             )
-            try:
-                self.exec(
-                    f"{self.cmd_conda_run} cosmic-ray exec mutation.toml mutation.sqlite".split(),
-                    shell=False,
-                    check=False,
-                    timeout=self.mutation_timeout,
-                )
-            except subprocess.TimeoutExpired:
-                self.log.write("MutationTimeout")
+            self._run_cosmic_ray_exec(
+                f"{self.cmd_conda_run} cosmic-ray exec mutation.toml mutation.sqlite".split(),
+                instance["code_file"],
+            )
 
             output = str(
                 self.exec(
