@@ -356,6 +356,66 @@ def gpt_tokenize(string: str, encoding) -> int:
     return num_tokens
 
 
+# Phrases in the error a server returns when the prompt plus max_tokens does
+# not fit its context: vLLM's OpenAI server and the OpenAI API say "maximum
+# context length", vLLM's engine says "longer than the maximum model length".
+CONTEXT_LENGTH_PHRASES = ("maximum context length", "maximum model length")
+
+
+def skip_reason(error):
+    """prompt_too_long when the server refused the prompt as too long for its
+    context (protocol rule 4: the instance is excluded for this model), else
+    request_failed (an infrastructure failure: the instance stays unknown and
+    a resubmit tries it again)."""
+    text = str(error).lower()
+    if any(phrase in text for phrase in CONTEXT_LENGTH_PHRASES):
+        return "prompt_too_long"
+    return "request_failed"
+
+
+def skipped_path(output_file):
+    """Where the instances that got no prediction row are recorded, next to
+    the predictions file. Not .jsonl, so scripts that glob for prediction
+    files do not read it as one."""
+    return os.path.splitext(output_file)[0] + ".skipped.tsv"
+
+
+SKIPPED_COLUMNS = ("id", "instance_id", "model", "prompt", "reason", "detail")
+
+
+class SkipRecorder:
+    """Appends one tab-separated row per instance that got no prediction row:
+    id, instance_id, model, prompt (the setting, e.g. full), reason, detail.
+    A row that is already in the file is not written again, so a resubmit
+    does not repeat prompt_too_long rows. An id that later appears in the
+    predictions file was generated on a resubmit; an id in this file and not
+    in the predictions file is excluded, for the reason on its last row."""
+
+    def __init__(self, path):
+        self.path = path
+        self.lock = threading.Lock()
+        self.seen = set()
+        if os.path.exists(path):
+            with open(path) as f:
+                for line in f.read().splitlines()[1:]:
+                    cols = line.split("\t")
+                    if len(cols) >= 5:
+                        self.seen.add((cols[0], cols[3], cols[4]))
+
+    def record(self, curr_id, instance_id, model, prompt_name, reason, detail):
+        key = (str(curr_id), prompt_name, reason)
+        clean = " ".join(str(detail).split())[:500]
+        with self.lock:
+            if key in self.seen:
+                return
+            self.seen.add(key)
+            new_file = not os.path.exists(self.path)
+            with open(self.path, "a") as f:
+                if new_file:
+                    f.write("\t".join(SKIPPED_COLUMNS) + "\n")
+                f.write("\t".join([str(curr_id), str(instance_id), model, prompt_name, reason, clean]) + "\n")
+
+
 def openai_inference(
     test_dataset,
     model_name_or_path,
@@ -393,14 +453,6 @@ def openai_inference(
         actual API calls below. Defaults to model_name_or_path when there's
         no "/" to strip.
     """
-    # tiktoken only knows real OpenAI model names -- a locally served model
-    # (e.g. via LOCAL_MODEL_BASE_URL) falls back to gpt-4's encoding, which
-    # is a reasonable approximation for token-count-based truncation, not an
-    # exact match for the local model's own tokenizer.
-    try:
-        encoding = tiktoken.encoding_for_model(model_name_or_path)
-    except KeyError:
-        encoding = tiktoken.encoding_for_model("gpt-4")
     # .get(..., default): an unregistered model served via
     # LOCAL_MODEL_BASE_URL (e.g. one of the ~8 planned M3 models before
     # it's added to MODEL_LIMITS/OUTPUT_LIMITS) falls back to a
@@ -410,24 +462,18 @@ def openai_inference(
     # SERVER_MAX_MODEL_LEN is the --max-model-len the vLLM server was started
     # with (m3_run_inference.slurm exports it); unset for hosted APIs.
     server_max_model_len = os.environ.get("SERVER_MAX_MODEL_LEN")
-    model_limit = prompt_token_budget(
+    # Fails fast when the server's context leaves no room for a prompt. The
+    # budget is not used to cut prompts: protocol rule 4 (fyp-paper#7)
+    # excludes an instance whose prompt does not fit, so a prompt is sent
+    # whole and, when the server refuses it as too long, the instance is
+    # recorded as prompt_too_long in the skipped file and gets no row. The
+    # server counts the tokens with the model's own tokenizer and chat
+    # template; truncating here used GPT-4's tiktoken encoding for every
+    # model and kept only the end of the prompt, dropping the start of the
+    # instruct arm's code file without a record.
+    prompt_token_budget(
         model_name_or_path, int(server_max_model_len) if server_max_model_len else None
     )
-
-    # Adjust dataset to truncate prompts to the last model_limit tokens
-    def truncate_prompts(example):
-        truncated = {}
-        for key, prompt in example["preds_prompts"].items():
-            tokenized = encoding.encode(prompt)
-            if len(tokenized) > model_limit:
-                # Truncate to the last model_limit tokens and decode back to text
-                truncated[key] = encoding.decode(tokenized[-model_limit:])
-            else:
-                truncated[key] = prompt
-        example["preds_prompts"] = truncated
-        return example
-
-    test_dataset = test_dataset.map(truncate_prompts, load_from_cache_file=False)
 
     # LOCAL_MODEL_BASE_URL (e.g. http://127.0.0.1:8000/v1/ for a local
     # server, or https://api.groq.com/openai/v1/ for Groq: trailing slash
@@ -469,6 +515,7 @@ def openai_inference(
         "model_name_or_path": recorded_name + f"_t={temperature}",
     }
     print(f"Filtered to {len(test_dataset)} instances")
+    skips = SkipRecorder(skipped_path(output_file))
 
     # Shared across worker threads: a lock around both, since
     # ThreadPoolExecutor runs process_instance concurrently for
@@ -534,18 +581,24 @@ def openai_inference(
                                 "reasoning_tokens", None,
                             ),
                         })
-                        if choice.message.content is None:
+                        # A None content is the model returning no answer
+                        # (protocol: a generation failure, scored 0). It is
+                        # kept as an empty reply, which postprocess_fn turns
+                        # into the same prediction as a reply with no code
+                        # block, and flagged in usage, so the sample is
+                        # evaluated and scored instead of going missing.
+                        content = choice.message.content
+                        if content is None:
+                            prompt_usage[-1]["empty_content"] = True
                             print(
                                 f"Warning: choice.message.content is None for "
                                 f"{curr_id} (finish_reason="
                                 f"{choice.finish_reason}, "
                                 f"completion_tokens={response.usage.completion_tokens}"
-                                f"), skipping this sample"
+                                f"), kept as an empty reply"
                             )
-                            continue
-                        prompt_predictions.append(
-                            postprocess_fn(choice.message.content, True)
-                        )
+                            content = ""
+                        prompt_predictions.append(postprocess_fn(content, True))
                     with cost_lock:
                         state["total_cost"] += cost
                         if max_cost is not None and state["total_cost"] >= max_cost:
@@ -553,6 +606,8 @@ def openai_inference(
                             state["cost_exceeded"] = True
                 except Exception as e:
                     print(f"Error: {e}")
+                    skips.record(curr_id, datum["instance_id"], recorded_name,
+                                 prompt_name, skip_reason(e), e)
                     failed = True
             else:
                 for _ in range(num_samples):
@@ -576,13 +631,14 @@ def openai_inference(
                             ),
                         })
                         if completion is None:
+                            prompt_usage[-1]["empty_content"] = True
                             print(
                                 f"Warning: choice.message.content is None for "
                                 f"{curr_id} ({prompt_name}, completion_tokens="
                                 f"{response.usage.completion_tokens}), "
-                                f"skipping this sample"
+                                f"kept as an empty reply"
                             )
-                            continue
+                            completion = ""
                         prompt_predictions.append(
                             postprocess_fn(completion, False)
                         )
@@ -593,6 +649,8 @@ def openai_inference(
                                 state["cost_exceeded"] = True
                     except Exception as e:
                         print(f"Error: {e}")
+                        skips.record(curr_id, datum["instance_id"], recorded_name,
+                                     prompt_name, skip_reason(e), e)
                         failed = True
             output_dict["preds"][prompt_name] = prompt_predictions
             output_dict["usage"][prompt_name] = prompt_usage
