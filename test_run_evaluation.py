@@ -12,6 +12,7 @@ value actually reached the eval function's timeout parameter.
 """
 
 import asyncio
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -49,14 +50,15 @@ class TestRunEvaluationTimeoutWiring(unittest.TestCase):
             received_calls.append((args, kwargs))
             return None
 
+        # A real directory: main() records each log's source in it.
+        log_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(log_dir.cleanup)
+
         with patch("run_evaluation.get_eval_refs", return_value={task[KEY_ID]: task}), \
              patch("run_evaluation.validate_predictions", return_value=None), \
              patch("run_evaluation.get_instances", return_value=[prediction]), \
              patch("run_evaluation.get_test_directives", return_value=[]), \
              patch("run_evaluation.MAP_REPO_TO_TEST_FRAMEWORK", {"django/django": "pytest"}), \
-             patch("os.path.exists", return_value=True), \
-             patch("os.path.isdir", return_value=True), \
-             patch("os.chmod", return_value=None), \
              patch("run_evaluation.run_apptainer_evaluation", side_effect=fake_eval_fn), \
              patch("run_evaluation.run_docker_evaluation", side_effect=fake_eval_fn):
             asyncio.run(
@@ -64,7 +66,7 @@ class TestRunEvaluationTimeoutWiring(unittest.TestCase):
                     predictions_path="fake.jsonl",
                     swe_bench_tasks="fake_tasks.json",
                     namespace="fake-namespace",
-                    log_dir="/fake/log/dir",
+                    log_dir=log_dir.name,
                     timeout=CONFIGURED_TIMEOUT,
                     backend=backend,
                 )
