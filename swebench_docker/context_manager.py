@@ -706,19 +706,27 @@ class TaskEnvContextManager:
 
                     self.exec(coverage_data_cmd.split(), shell=False, check=False)
                     cov_success = False
-                    with open("coverage.json", "r") as cov_file:
-                        coverage_data = json.load(cov_file)
-                        if instance["code_file"] in coverage_data["files"].keys():
-                            file_data = coverage_data["files"][instance["code_file"]]
-                            cov_success = True
-                            self.log.write(
-                                f"\nCoverageLOG: {file_data['summary']['percent_covered']}%\n"
-                            )
-                            self._log_function_coverage(instance, file_data)
-                        else:
-                            self.log.write(
-                                f"\nCoverageFAIL:{instance['code_file']} not found in coverage data\n"
-                            )
+                    if not os.path.exists("coverage.json"):
+                        # `coverage json` wrote nothing (#125). The tests ran
+                        # and passed, so this is a coverage failure for this
+                        # sample, not an error that ends the instance.
+                        self.log.write(
+                            f"\nCoverageFAIL:{instance['code_file']} no coverage.json written\n"
+                        )
+                    else:
+                        with open("coverage.json", "r") as cov_file:
+                            coverage_data = json.load(cov_file)
+                            if instance["code_file"] in coverage_data["files"].keys():
+                                file_data = coverage_data["files"][instance["code_file"]]
+                                cov_success = True
+                                self.log.write(
+                                    f"\nCoverageLOG: {file_data['summary']['percent_covered']}%\n"
+                                )
+                                self._log_function_coverage(instance, file_data)
+                            else:
+                                self.log.write(
+                                    f"\nCoverageFAIL:{instance['code_file']} not found in coverage data\n"
+                                )
                     if cov_success and not skip_mutation:
                         self.log.write("Running mutation testing")
                         self.run_mutation_testing(
@@ -751,11 +759,18 @@ class TaskEnvContextManager:
         except Exception as e:
             # Test command run failed
             self.log.write(f"Test script run failed", level=ERROR)
-            if log_data:
-                self.log.write(f"{TESTS_ERROR}: {e}")
             self.log.write(format_exc(), level=ERROR)
-            exit()
-            # return False
+            if not log_data:
+                # A per-test filtering run. Returning "failed" here would
+                # silently drop a generated test for a harness fault, which
+                # scores as a generation failure. Raise instead: the instance
+                # stops, with a non-zero exit the host reports (#125).
+                raise
+            # The sample's own run: record it as errored and let the
+            # instance's remaining samples run. exit() used to end the
+            # container here with status 0, losing them all (#125).
+            self.log.write(f"{TESTS_ERROR}: {e}")
+            return False, False
         finally:
             if os.path.exists("any-tests-report.xml"):
                 os.remove("any-tests-report.xml")
