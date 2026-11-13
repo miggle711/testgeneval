@@ -35,6 +35,14 @@ for *.full.eval.log files, including in sub-directories):
 Re-run the analysis from the CSV, anywhere:
     python3 scripts/usable_score.py --from-csv usable_score.csv --k 5
 
+Instances generation skipped (testgeneval#134 writes them, with a reason, to
+<predictions stem>.skipped.tsv) are read with --skipped RUN:ARM:FILE, once per
+file. An instance whose prompt the server refused as too long in either arm
+(reason prompt_too_long) is excluded for that run in both arms (fyp-paper#7,
+rule 4) and counted, unless that arm has a log for it after all (a resubmit
+generated it). Without --skipped, such an instance has a log in one arm only
+and is left out of the paired analysis without being counted.
+
 The intervals are bootstrap intervals over instances with a fixed seed. They
 are not corrected for the five ways of handling unknown samples shown side by
 side. This is a description of logs, not the confirmatory analysis.
@@ -324,7 +332,36 @@ def show(label, pairs):
           f"[{lo:+.1f}, {hi:+.1f}]")
 
 
-def analyse(rows, k):
+TOO_LONG = "prompt_too_long"
+RULE4 = "excluded: prompt too long for the model (rule 4)"
+
+
+def read_skipped(specs):
+    """{(run, arm): {id: reason}} from RUN:ARM:FILE specs, the last row per id."""
+    out = defaultdict(dict)
+    for spec in specs:
+        run, arm, path = spec.split(":", 2)
+        if arm not in ARMS:
+            raise SystemExit(f"{spec}: arm must be one of {ARMS}")
+        with open(path, newline="") as f:
+            for r in csv.DictReader(f, delimiter="\t"):
+                out[(run, arm)][r["id"]] = r["reason"]
+    return out
+
+
+def rule4_excluded(run, per, skipped):
+    """Instances of a run excluded under rule 4: refused as too long in an arm
+    that has no log for them."""
+    out = set()
+    for arm in ARMS:
+        for i, reason in skipped.get((run, arm), {}).items():
+            if reason == TOO_LONG and arm not in per.get(i, {}):
+                out.add(i)
+    return out
+
+
+def analyse(rows, k, skipped=None):
+    skipped = skipped or {}
     flagged = flag_short_runs(rows)
     print(f"\nSamples re-marked incomplete (fewer target mutants than another sample "
           f"of the same instance): {flagged}")
@@ -350,12 +387,23 @@ def analyse(rows, k):
         per = defaultdict(lambda: defaultdict(list))
         for r in sel:
             per[r["instance"]][r["arm"]].append(r)
-        both = {i: a for i, a in per.items() if all(arm in a for arm in ARMS)}
+        too_long = rule4_excluded(run, per, skipped)
+        both = {i: a for i, a in per.items()
+                if all(arm in a for arm in ARMS) and i not in too_long}
         status = {inst: eligibility([r for arm in ARMS for r in arms[arm]])
                   for inst, arms in both.items()}
-        print(f"\n2. Instances: {len(per)} in either arm, {len(both)} in both")
+        print(f"\n2. Instances: {len(per | dict.fromkeys(too_long))} in either arm or skipped "
+              f"for being too long, {len(both)} in both arms and not excluded")
+        if too_long:
+            print(f"   {len(too_long):5}  {RULE4}")
         for s, n in Counter(status.values()).most_common():
             print(f"   {n:5}  {s}")
+        for arm in ARMS:
+            failed = {i for i, why in skipped.get((run, arm), {}).items()
+                      if why != TOO_LONG and arm not in per.get(i, {})}
+            if failed:
+                print(f"   {arm}: {len(failed)} instance(s) without a prediction for another "
+                      f"reason (request_failed; unknown, not excluded): {names(failed)}")
         for line in count_checks(both, status):
             print(line)
 
@@ -394,7 +442,10 @@ def main():
     ap.add_argument("--out", help="write the per-sample CSV here")
     ap.add_argument("--from-csv", help="analyse a CSV written earlier instead of reading logs")
     ap.add_argument("--k", type=int, default=5, help="samples per instance (default 5)")
+    ap.add_argument("--skipped", action="append", default=[], metavar="RUN:ARM:FILE",
+                    help="a <predictions stem>.skipped.tsv from generation; repeat per file")
     args = ap.parse_args()
+    skipped = read_skipped(args.skipped)
     if args.from_csv:
         rows = load(args.from_csv)
     else:
@@ -409,7 +460,7 @@ def main():
             w.writeheader()
             w.writerows(rows)
         print(f"Wrote {args.out} ({len(rows)} samples)")
-    analyse(rows, args.k)
+    analyse(rows, args.k, skipped)
 
 
 if __name__ == "__main__":

@@ -434,5 +434,59 @@ class TestEligibilityFromTheCount(unittest.TestCase):
         self.assertEqual(again, report[report.index("\nSamples re-marked"):])
 
 
+class TestSkippedInstances(unittest.TestCase):
+    """Generation's <stem>.skipped.tsv (testgeneval#134) read with --skipped.
+
+    P  instruct refused as too long, no instruct log      -> rule 4, both arms out
+    Q  logged in both arms                                -> counted
+    R  instruct request_failed, no instruct log           -> reported, not excluded
+    S  instruct refused as too long, but logged after all -> counted (a resubmit)
+    """
+
+    P, Q, R, S = (f"django__django-{n}" for n in ("10001-1", "10002-2", "10003-3", "10004-4"))
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.tmp, ignore_errors=True)
+        self.specs = [f"M:{arm}:{os.path.join(self.tmp, arm)}" for arm in usable_score.ARMS]
+        two = [scored(50.0, 4, 4), scored(100.0, 4, 4)]
+        for inst in (self.Q, self.S):
+            for arm in usable_score.ARMS:
+                write_log(self.tmp, arm, inst, two, counted(4))
+        for inst in (self.P, self.R):
+            write_log(self.tmp, "kg_only", inst, two, counted(4))
+        self.tsv = os.path.join(self.tmp, "instruct.skipped.tsv")
+        with open(self.tsv, "w") as f:
+            f.write("id\tinstance_id\tmodel\tprompt\treason\tdetail\n")
+            f.write(f"{self.P}\tx\tm\tfull\tprompt_too_long\tThis model's maximum context length\n")
+            f.write(f"{self.R}\tx\tm\tfull\trequest_failed\tRequest timed out.\n")
+            f.write(f"{self.S}\tx\tm\tfull\tprompt_too_long\tThis model's maximum context length\n")
+
+    def report(self, *extra):
+        return run_main("--out", os.path.join(self.tmp, "s.csv"), "--k", "2", *self.specs, *extra)
+
+    def test_too_long_in_one_arm_is_counted_under_rule_4(self):
+        report = self.report("--skipped", f"M:instruct:{self.tsv}")
+        self.assertIn(f"    1  {usable_score.RULE4}", report)
+        self.assertIn("2 in both arms and not excluded", report)
+
+    def test_request_failed_is_reported_and_not_excluded(self):
+        report = self.report("--skipped", f"M:instruct:{self.tsv}")
+        self.assertIn("instruct: 1 instance(s) without a prediction for another reason", report)
+        self.assertIn(self.R, report)
+
+    def test_rule4_set_is_only_the_too_long_instances_without_a_log(self):
+        rows, _ = usable_score.collect(self.specs, k=2)
+        per = defaultdict(lambda: defaultdict(list))
+        for r in rows:
+            per[r["instance"]][r["arm"]].append(r)
+        skipped = usable_score.read_skipped([f"M:instruct:{self.tsv}"])
+        self.assertEqual(usable_score.rule4_excluded("M", per, skipped), {self.P})
+
+    def test_without_skipped_nothing_is_counted_under_rule_4(self):
+        report = self.report()
+        self.assertNotIn(usable_score.RULE4, report)
+
+
 if __name__ == "__main__":
     unittest.main()
