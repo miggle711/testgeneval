@@ -388,7 +388,11 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   entirely), and every real evaluation-outcome category silently stays empty with no visible
   error. Check `with_logs` (or any other real outcome category) directly in a `_report.json`
   before trusting a committed evaluation report reflects real, actual test execution, a nonempty
-  `generated`/`total_predictions` count alone is not evidence evaluation ran.
+  `generated`/`total_predictions` count alone is not evidence evaluation ran. `run_docker.py` now
+  raises `DockerUnavailableError` when the `docker` CLI is missing or the daemon is unreachable,
+  so this case stops the run, and `run_apptainer.py` raises `ApptainerUnavailableError` the
+  same way when the `apptainer` binary is missing. A single container failing is still only a
+  warning.
 - **Pulling this project's evaluation Docker images (`scripts/pull_images.py`) is fast per
   image but real, cumulative local disk usage can exceed expectations fast.** Confirmed real
   2026-09-07: all 102 real, distinct images in `Makefile.testgenevallite` pulled in roughly 15
@@ -458,7 +462,9 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   from the testgeneval#46 fix pattern. The model itself supports far more (real
   `text_config.max_position_embeddings` is 10485760). Fixed by passing `MAX_MODEL_LEN=65536`
   explicitly plus dropping to the conservative `MAX_NUM_SEQS=6` (the earlier OOM was at
-  `MAX_NUM_SEQS=16` even at the smaller 32768).
+  `MAX_NUM_SEQS=16` even at the smaller 32768). `m3_run_inference.slurm` now runs
+  `inference/check_token_limits.py` before `vllm serve` and exits if `MAX_NEW_TOKENS` is not
+  below `MAX_MODEL_LEN`.
 - **The default `gpu` partition has a real per-user GPU cap of 4 (`gpuq` QOS,
   `MaxTRESPerUser = gres/gpu=4`), which blocks concurrent large tensor-parallel jobs.**
   Confirmed real 2026-09-10: with two 1-GPU L40S jobs running, a 4-GPU job cannot start until

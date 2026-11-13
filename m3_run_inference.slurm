@@ -177,6 +177,11 @@ export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:${LD_LIBRARY_PATH:-}"
 # from, use that instead.
 cd "$SLURM_SUBMIT_DIR"
 
+# A MAX_NEW_TOKENS at or above MAX_MODEL_LEN otherwise only shows up as
+# a GPU OOM during vLLM worker startup, after the model has loaded.
+python -m inference.check_token_limits \
+    --max_new_tokens "$MAX_NEW_TOKENS" --max_model_len "$MAX_MODEL_LEN"
+
 # vLLM's own model loading (via transformers' hub code) doesn't reliably
 # pick up `hf auth login`'s cached token under sbatch, even though the
 # hf CLI does, export it explicitly so gated models (Llama, CodeGemma)
