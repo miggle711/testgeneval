@@ -359,6 +359,7 @@ def main(
     image_type: str = "conda",
     only_baseline: bool = False,
     skip_mutation: bool = False,
+    mutation_scope: str = "file",
 ):
     logger.info(
         "Instance ID: "
@@ -391,6 +392,7 @@ def main(
         timeout=timeout,
         mutation_timeout=MUTATION_TIMEOUT,
         image_type=image_type,
+        mutation_scope=mutation_scope,
     ) as tcm:
         test_patch = task_instance["test_patch"]
         if not tcm.apply_patch(
@@ -462,4 +464,5 @@ if __name__ == "__main__":
         image_type=os.getenv("IMAGE_TYPE", "conda"),
         only_baseline=os.getenv("ONLY_BASELINE") == "True",
         skip_mutation=os.getenv("SKIP_MUTATION") == "True",
+        mutation_scope=os.getenv("MUTATION_SCOPE", "file"),
     )

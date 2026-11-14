@@ -8,6 +8,7 @@ import json
 import logging
 import os
 
+from swebench_docker.mutation_scope import SCOPES
 from swebench_docker.constants import (
     KEY_ID,
     KEY_INSTANCE_ID,
@@ -379,5 +380,18 @@ if __name__ == "__main__":
              "rootless on an M3 login node, see "
              "swebench_docker/run_apptainer.py and testgeneval#2).",
     )
-    args = parser.parse_args()
-    asyncio.run(main(**vars(args)))
+    parser.add_argument(
+        "--mutation_scope",
+        choices=SCOPES,
+        default=os.environ.get("MUTATION_SCOPE", "file"),
+        help="(Optional) 'file' (default) mutates the whole code file and "
+             "logs the whole-file score plus the target function's share. "
+             "'function' runs only the target function's mutants and logs "
+             "only the function score (testgeneval#10). Also read from the "
+             "MUTATION_SCOPE env var. Use a fresh --log_dir when switching: "
+             "--skip_existing does not look at which scope a log used.",
+    )
+    args = vars(parser.parse_args())
+    # Passed to the container as an env var by run_docker/run_apptainer.
+    os.environ["MUTATION_SCOPE"] = args.pop("mutation_scope")
+    asyncio.run(main(**args))

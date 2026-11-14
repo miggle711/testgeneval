@@ -134,6 +134,7 @@ class MutationTimeoutCleanup(unittest.TestCase):
             repo_dir=self.repo,
             timeout=60,
             mutation_timeout=mutation_timeout,
+            mutation_scope="file",
             cmd_conda_run="conda run -n testbed " if conda else "",
             log=FakeLog(),
             _log_function_mutation_score=lambda instance: None,
