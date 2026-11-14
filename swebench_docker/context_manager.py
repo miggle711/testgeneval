@@ -500,9 +500,12 @@ class TaskEnvContextManager:
         function(s): kills over the target mutants that have a result.
 
         Logs FunctionMutationLOG (the score), FunctionMutationNum (target
-        mutants with a result) and FunctionMutationTotal (all target
-        mutants). Num below Total means the run stopped before every target
-        mutant finished. "FunctionMutationFAIL: no target function range"
+        mutants cosmic-ray tested), FunctionMutationTotal (all target
+        mutants) and FunctionMutationUntested (target mutants with a result
+        but not tested: worker outcome no-test, exception or abnormal; these
+        are left out of the score, not counted as kills). Num below Total
+        means the run stopped before every target mutant finished, or some
+        were untested. "FunctionMutationFAIL: no target function range"
         means the target could not be resolved from the patch, as opposed to
         FunctionMutationTotal: 0 (resolved, but it holds no mutant).
 
@@ -529,6 +532,10 @@ class TaskEnvContextManager:
             )
             output = str(result.stdout)
             lines = output.splitlines()
+            if untested_line := next(
+                (l for l in lines if l.startswith("FUNC_MUTATION_UNTESTED")), None
+            ):
+                self.log.write(f"\nFunctionMutationUntested: {untested_line.split()[1]}")
             if none_line := next(
                 (l for l in lines if l.startswith("FUNC_MUTATION_NO_MUTANTS_IN_RANGE")), None
             ):

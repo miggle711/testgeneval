@@ -60,18 +60,29 @@ def skip_outside_script(code_file: str, ranges: List[Tuple[int, int]]) -> str:
 
 
 def score_script(code_file: str, ranges: List[Tuple[int, int]]) -> str:
-    """Kill rate over the target function's mutants that have a result.
+    """Kill rate over the target function's mutants that cosmic-ray tested.
 
-    Prints `FUNC_MUTATION_RESULT <score> <done> <total>`, where done is how
-    many of the total target mutants finished (fewer after a timeout), or
-    `FUNC_MUTATION_NO_MUTANTS_IN_RANGE <total>` when none finished (total 0:
-    the target holds no mutant).
+    Only mutants whose worker outcome is "normal" count: the test command ran
+    against the mutant and passed or failed. cosmic-ray's own `is_killed`
+    treats every outcome but SURVIVED as a kill, so a mutant it could not
+    test (worker outcome "no-test", "exception" or "abnormal", for example
+    when the mutated module fails to import in the worker) would otherwise
+    count as killed and raise the score.
+
+    Prints `FUNC_MUTATION_UNTESTED <n>`, the target mutants with a result
+    other than "normal" or "skipped", then either
+    `FUNC_MUTATION_RESULT <score> <done> <total>`, where done is how many of
+    the total target mutants were tested (fewer after a timeout or when some
+    were untested), or `FUNC_MUTATION_NO_MUTANTS_IN_RANGE <total>` when none
+    was tested (total 0: the target holds no mutant).
     """
     return _in_range_ids(code_file, ranges) + (
         "try:\n"
         "    results = dict(db.results)\n"
-        "    done = [j for j in in_range if j in results\n"
-        "            and results[j].worker_outcome != 'skipped']\n"
+        "    finished = [j for j in in_range if j in results\n"
+        "                and results[j].worker_outcome != 'skipped']\n"
+        "    done = [j for j in finished if results[j].worker_outcome == 'normal']\n"
+        "    print(f'FUNC_MUTATION_UNTESTED {len(finished) - len(done)}')\n"
         "    if done:\n"
         "        kills = sum(1 for j in done if results[j].is_killed)\n"
         "        print(f'FUNC_MUTATION_RESULT {kills / len(done) * 100} {len(done)} {len(in_range)}')\n"
