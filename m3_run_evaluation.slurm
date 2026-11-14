@@ -28,6 +28,10 @@
 #     scratch, not /tmp -- /tmp is node-local, so sharded jobs on
 #     different nodes would each write to a different, invisible /tmp.
 #     generate_report.py reads every .eval.log from one directory.
+#     One directory per run: one arm, one sample count, one mutation
+#     setting. Log names carry only the id and model, so run_evaluation.py
+#     refuses a directory that already has logs from other predictions or
+#     settings. Shards and resubmits of the same predictions share it.
 #   SWE_BENCH_TASKS: dataset id or path (default kjain14/testgeneval).
 #   NUM_PROCESSES: concurrent container evaluations. A real load test
 #     (2026-09-11, NUM_PROCESSES=8, 24-core node) found 8 already
@@ -92,9 +96,9 @@ NAMESPACE="${NAMESPACE:-kdjain}"
 # coverage/cosmic-ray + build_ext fix (testgeneval#55, confirmed real
 # 2026-09-12: kdjain's originals are missing both `coverage` and the
 # compiled sklearn C extension) and pushed to miggy711/, pulled as
-# .sif, and already sitting in APPTAINER_IMAGES_DIR. Do NOT re-run
-# scripts/pull_apptainer_images.py for scikit-learn specifically, or it
-# will silently overwrite these with the old broken kdjain images.
+# .sif, and already sitting in APPTAINER_IMAGES_DIR. 1.4 is on miggy711/
+# too. scripts/pull_apptainer_images.py pulls scikit-learn from miggy711/
+# (its REPO_NAMESPACES, testgeneval#123), not from this namespace.
 
 # Where the converted .sif testbed images live. One file per
 # {repo_name}_{version}.sif (see run_apptainer.py). On scratch: they're
@@ -121,6 +125,14 @@ mkdir -p "$LOG_DIR"
 APPTAINER_TMPDIR="/tmp/$USER-apptainer-$SLURM_JOB_ID"
 mkdir -p "$APPTAINER_TMPDIR"
 trap 'rm -rf "$APPTAINER_TMPDIR"' EXIT
+
+# run_evaluation.py loads SWE_BENCH_TASKS through datasets, which caches
+# about 4.5 GB for kjain14/testgeneval under ~/.cache/huggingface unless
+# HF_HOME says otherwise. Same per-user scratch path as
+# m3_run_inference.slurm, so both stages share one copy.
+HF_HOME="${HF_HOME:-/home/$USER/al49_scratch/$USER/hf-cache}"
+mkdir -p "$HF_HOME"
+export HF_HOME
 
 export APPTAINER_TMPDIR
 export APPTAINER_CACHEDIR="/fs04/scratch2/al49/$USER/apptainer-cache"

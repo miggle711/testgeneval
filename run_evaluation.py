@@ -4,6 +4,7 @@
 import argparse
 import asyncio
 import hashlib
+import json
 import logging
 import os
 
@@ -78,6 +79,102 @@ def set_aside_partial_log(log_file: str) -> str:
     return dest
 
 
+SOURCE_SUFFIX = ".source.json"
+
+
+def log_source(samples, skip_mutation: bool) -> dict:
+    """What a log's results come from: the generated samples it scores and
+    the settings that change what gets scored. A log is named by id, model
+    and setting only, so the two arms, two sample counts or two mutation
+    settings of one model all map to the same file name."""
+    return {
+        "samples_sha256": hashlib.sha256(
+            json.dumps(samples, sort_keys=True).encode()
+        ).hexdigest(),
+        "num_samples": len(samples) if isinstance(samples, list) else 1,
+        "skip_mutation": skip_mutation,
+        "mutation_scope": os.environ.get("MUTATION_SCOPE", "file"),
+    }
+
+
+def _log_path(log_dir: str, prediction: dict, setting: str) -> str:
+    return os.path.join(
+        log_dir, f"{prediction[KEY_ID]}.{prediction[KEY_MODEL]}.{setting}.eval.log"
+    )
+
+
+def check_log_sources(predictions: list, log_dir: str, skip_mutation: bool) -> None:
+    """Raise if log_dir already holds a log for one of these instances that
+    was produced from other samples or settings. Without this the second run
+    is either skipped as already done or replaces the first run's log, and
+    both look like a normal run. Compared per instance, so shards and
+    resubmits of the same predictions still share a directory. Logs written
+    before this check existed have no record and are not checked."""
+    clashes = []
+    for p in predictions:
+        for setting, samples in p.get(KEY_PREDICTIONS, {}).items():
+            log_file = _log_path(log_dir, p, setting)
+            record = log_file + SOURCE_SUFFIX
+            if not (os.path.exists(log_file) and os.path.exists(record)):
+                continue
+            with open(record) as f:
+                recorded = json.load(f)
+            expected = log_source(samples, skip_mutation)
+            differing = sorted(k for k in expected if recorded.get(k) != expected[k])
+            if differing:
+                clashes.append((p[KEY_ID], differing, recorded.get("predictions_path")))
+    if clashes:
+        instance, differing, recorded_from = clashes[0]
+        raise ValueError(
+            f"{len(clashes)} instance(s) in {log_dir} already have a log from "
+            f"different predictions or settings. First: {instance} differs in "
+            f"{', '.join(differing)} (its log was evaluated from {recorded_from}). "
+            f"A log directory holds one run: one arm, one sample count, one "
+            f"mutation setting. Use a separate --log_dir for this run."
+        )
+
+
+def record_log_sources(
+    predictions: list, log_dir: str, skip_mutation: bool, predictions_path: str
+) -> None:
+    """Write each log's source record before its container starts."""
+    for p in predictions:
+        for setting, samples in p.get(KEY_PREDICTIONS, {}).items():
+            record = _log_path(log_dir, p, setting) + SOURCE_SUFFIX
+            source = {**log_source(samples, skip_mutation), "predictions_path": predictions_path}
+            # Replace in one step: a job killed mid-write must not leave a
+            # truncated record that blocks the resubmit.
+            tmp = f"{record}.{os.getpid()}.tmp"
+            with open(tmp, "w") as f:
+                json.dump(source, f)
+            os.replace(tmp, record)
+
+
+
+
+def make_log_dir_writable(log_dir: str) -> None:
+    """Make log_dir world-writable, so containers that do not run as its
+    owner can write logs there.
+
+    Only the owner may change a directory's mode, so an unconditional chmod
+    failed with PermissionError on a directory another account owns, even
+    one that was already 777 (#120: all 20 of a teammate's shards failed
+    this way). Nothing to do when the mode is already 777; when the chmod is
+    not allowed, warn and carry on, since group or other write access may
+    still be enough.
+    """
+    if os.stat(log_dir).st_mode & 0o777 == 0o777:
+        return
+    try:
+        os.chmod(log_dir, 0o777)
+    except PermissionError:
+        logger.warning(
+            f"Could not make {log_dir} world-writable (it belongs to another "
+            f"account). Containers can write logs there only if its "
+            f"permissions already allow it."
+        )
+
+
 async def main(
     predictions_path: str,
     swe_bench_tasks: str,
@@ -108,9 +205,7 @@ async def main(
     if not os.path.exists(log_dir) or not os.path.isdir(log_dir):
         raise ValueError("--log_dir must exist and point at a directory")
 
-    # Make sure that the log directory is world-writable so that we can write to it from
-    # within the container, even if we're not the root user.
-    os.chmod(log_dir, 0o777)
+    make_log_dir_writable(log_dir)
 
     tasks = list(get_eval_refs(swe_bench_tasks).values())
 
@@ -127,6 +222,8 @@ async def main(
         logger.info("No predictions to evaluate")
         return
 
+    check_log_sources(predictions, log_dir, skip_mutation)
+
     # Remove predictions that have already been evaluated
     if skip_existing:
         # Skip logs that already exist
@@ -136,8 +233,8 @@ async def main(
             if KEY_PREDICTIONS not in p:
                 continue
             for setting in p[KEY_PREDICTIONS]:
-                log_file_name = f"{p[KEY_ID]}.{p[KEY_MODEL]}.{setting}.eval.log"
-                log_file = os.path.join(log_dir, log_file_name)
+                log_file = _log_path(log_dir, p, setting)
+                log_file_name = os.path.basename(log_file)
                 if not os.path.exists(log_file):
                     all_exist = False
                     break
@@ -166,6 +263,8 @@ async def main(
             predictions = predictions_filtered
     else:
         logger.info(f"# of predictions to evaluate: {len(predictions)}")
+
+    record_log_sources(predictions, log_dir, skip_mutation, predictions_path)
 
     task_instances = []
 
@@ -246,9 +345,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "--namespace",
         type=str,
-        help="Docker repository namespace",
+        help="Docker repository namespace (default: kdjain; aorwall's images lack cosmic-ray)",
         required=False,
-        default="aorwall",
+        default="kdjain",
     )
     parser.add_argument(
         "--skip_existing", action="store_true", help="(Optional) Skip existing logs"
@@ -256,8 +355,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--timeout",
         type=int,
-        help="(Optional) Timeout in seconds (default: 60)",
-        default=60,
+        help="(Optional) Timeout in seconds per test command (default: 3600, as m3_run_evaluation.slurm)",
+        default=3600,
     )
     parser.add_argument(
         "--num_processes",
