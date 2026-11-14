@@ -7,7 +7,9 @@
 # None.replace(...); with num_samples > 1, that exception discarded the
 # whole instance's predictions, including any real, good completions
 # among the n requested. Fixed to skip only the None sample and keep the
-# rest.
+# rest. Since fyp-paper#7's decision that a None completion is a generation
+# failure (scored 0), the None sample is kept as an empty reply instead of
+# being skipped, so the instance still has all n samples.
 
 import json
 import tempfile
@@ -80,22 +82,23 @@ class TestNoneContentGuard(unittest.TestCase):
             lines = output_file.read_text().splitlines()
         return [json.loads(line) for line in lines]
 
-    def test_none_samples_are_skipped_not_crashed_on(self):
+    def test_none_samples_are_kept_as_empty_not_crashed_on(self):
         records = self._run(num_samples=5, fake=fake_call_chat_with_none_content)
         # Instance is not dropped just because some of its 5 samples came
         # back None.
         self.assertEqual(len(records), 1)
         preds = records[0]["preds"]["full"]
-        # Only the 3 real completions survive, the 2 None ones are
-        # skipped rather than crashing postprocess_fn.
-        self.assertEqual(len(preds), 3)
+        # All 5 samples are kept; the 2 None ones as empty replies rather
+        # than crashing postprocess_fn.
+        self.assertEqual(len(preds), 5)
+        self.assertEqual([preds[1], preds[3]], ["", ""])
 
     def test_all_none_samples_yields_empty_predictions_not_a_crash(self):
         records = self._run(num_samples=5, fake=fake_call_chat_all_none)
         # The instance still gets written (not silently dropped as
-        # "failed"), just with no predictions for this prompt.
+        # "failed"), with 5 empty replies for this prompt.
         self.assertEqual(len(records), 1)
-        self.assertEqual(records[0]["preds"]["full"], [])
+        self.assertEqual(records[0]["preds"]["full"], [""] * 5)
 
 
 if __name__ == "__main__":

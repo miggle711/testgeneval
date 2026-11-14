@@ -52,6 +52,7 @@ class FakeLog:
 
 def _manager(scope, mutation_timeout=600):
     tcm = TaskEnvContextManager.__new__(TaskEnvContextManager)
+    tcm.repo_dir = os.getcwd()
     tcm.cmd_conda_run = ""
     tcm.timeout = 600
     tcm.mutation_timeout = mutation_timeout

@@ -18,6 +18,22 @@ dotenv.load_dotenv()
 
 # Needs to be a fully qualified path for log dir
 
+# What the docker CLI prints when it cannot reach a daemon at all. The
+# wording changed between docker releases, both are seen in practice.
+DOCKER_DAEMON_UNREACHABLE_MARKERS = (
+    "cannot connect to the docker daemon",
+    "failed to connect to the docker api",
+)
+
+
+class DockerUnavailableError(RuntimeError):
+    """Docker itself cannot run here, so no instance can be evaluated.
+
+    Kept separate from a single container failing: that is routine and
+    only costs one instance, this one would leave every outcome category
+    of the report empty while its generated count still looks complete.
+    """
+
 
 async def run_docker_evaluation(
     task_instance: dict,
@@ -161,6 +177,15 @@ async def run_docker_evaluation(
 
         elapsed_time = time.time() - start_time
 
+        if process.returncode != 0 and any(
+            marker in str_stdout.lower()
+            for marker in DOCKER_DAEMON_UNREACHABLE_MARKERS
+        ):
+            raise DockerUnavailableError(
+                f"Docker daemon is not reachable, nothing can be evaluated. "
+                f"Start Docker and rerun. docker said: {str_stdout.strip()}"
+            )
+
         if process.returncode != 0:
             logger.warning(
                 f"[{task_instance['id']}][{docker_image}]  Error running container:"
@@ -179,6 +204,13 @@ async def run_docker_evaluation(
             logger.info(
                 f"[{task_instance['id']}][{docker_image}]  Container ran successfully in {elapsed_time} seconds."
             )
+    except DockerUnavailableError:
+        raise
+    except FileNotFoundError as e:
+        raise DockerUnavailableError(
+            "The docker CLI was not found on PATH, nothing can be evaluated. "
+            "Run evaluation on a machine with Docker, or pass --backend apptainer."
+        ) from e
     except Exception as e:
         logger.warning(
             f"[{task_instance['id']}][{docker_image}]  Error running container: {e}"
