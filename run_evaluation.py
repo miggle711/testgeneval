@@ -82,11 +82,23 @@ def set_aside_partial_log(log_file: str) -> str:
 SOURCE_SUFFIX = ".source.json"
 
 
-def log_source(samples, skip_mutation: bool) -> dict:
+# Added to the record after the first version: records written before carry
+# none of these keys, and are compared on the others only (see
+# check_log_sources), so existing log directories keep working.
+TIMEOUT_KEYS = ("timeout", "mutation_timeout")
+
+
+def log_source(samples, skip_mutation: bool, timeout=None) -> dict:
     """What a log's results come from: the generated samples it scores and
     the settings that change what gets scored. A log is named by id, model
     and setting only, so the two arms, two sample counts or two mutation
-    settings of one model all map to the same file name."""
+    settings of one model all map to the same file name.
+
+    The timeouts are part of it: a test command or a mutation run that
+    stops at its limit is scored differently (fyp-paper#7 section 4), so a
+    log made at 3600 s is not a log made at 7200 s. mutation_timeout is
+    read as swebench_docker.constants reads it, and is None when mutation
+    is skipped, where it has no effect."""
     return {
         "samples_sha256": hashlib.sha256(
             json.dumps(samples, sort_keys=True).encode()
@@ -94,6 +106,8 @@ def log_source(samples, skip_mutation: bool) -> dict:
         "num_samples": len(samples) if isinstance(samples, list) else 1,
         "skip_mutation": skip_mutation,
         "mutation_scope": os.environ.get("MUTATION_SCOPE", "file"),
+        "timeout": timeout,
+        "mutation_timeout": None if skip_mutation else int(os.environ.get("MUTATION_TIMEOUT", "3600")),
     }
 
 
@@ -103,7 +117,7 @@ def _log_path(log_dir: str, prediction: dict, setting: str) -> str:
     )
 
 
-def check_log_sources(predictions: list, log_dir: str, skip_mutation: bool) -> None:
+def check_log_sources(predictions: list, log_dir: str, skip_mutation: bool, timeout=None) -> None:
     """Raise if log_dir already holds a log for one of these instances that
     was produced from other samples or settings. Without this the second run
     is either skipped as already done or replaces the first run's log, and
@@ -119,8 +133,11 @@ def check_log_sources(predictions: list, log_dir: str, skip_mutation: bool) -> N
                 continue
             with open(record) as f:
                 recorded = json.load(f)
-            expected = log_source(samples, skip_mutation)
-            differing = sorted(k for k in expected if recorded.get(k) != expected[k])
+            expected = log_source(samples, skip_mutation, timeout)
+            differing = sorted(
+                k for k in expected
+                if (k in recorded or k not in TIMEOUT_KEYS) and recorded.get(k) != expected[k]
+            )
             if differing:
                 clashes.append((p[KEY_ID], differing, recorded.get("predictions_path")))
     if clashes:
@@ -130,18 +147,19 @@ def check_log_sources(predictions: list, log_dir: str, skip_mutation: bool) -> N
             f"different predictions or settings. First: {instance} differs in "
             f"{', '.join(differing)} (its log was evaluated from {recorded_from}). "
             f"A log directory holds one run: one arm, one sample count, one "
-            f"mutation setting. Use a separate --log_dir for this run."
+            f"mutation setting, one pair of timeouts. Use a separate --log_dir "
+            f"for this run."
         )
 
 
 def record_log_sources(
-    predictions: list, log_dir: str, skip_mutation: bool, predictions_path: str
+    predictions: list, log_dir: str, skip_mutation: bool, predictions_path: str, timeout=None
 ) -> None:
     """Write each log's source record before its container starts."""
     for p in predictions:
         for setting, samples in p.get(KEY_PREDICTIONS, {}).items():
             record = _log_path(log_dir, p, setting) + SOURCE_SUFFIX
-            source = {**log_source(samples, skip_mutation), "predictions_path": predictions_path}
+            source = {**log_source(samples, skip_mutation, timeout), "predictions_path": predictions_path}
             # Replace in one step: a job killed mid-write must not leave a
             # truncated record that blocks the resubmit.
             tmp = f"{record}.{os.getpid()}.tmp"
@@ -222,7 +240,7 @@ async def main(
         logger.info("No predictions to evaluate")
         return
 
-    check_log_sources(predictions, log_dir, skip_mutation)
+    check_log_sources(predictions, log_dir, skip_mutation, timeout)
 
     # Remove predictions that have already been evaluated
     if skip_existing:
@@ -264,7 +282,7 @@ async def main(
     else:
         logger.info(f"# of predictions to evaluate: {len(predictions)}")
 
-    record_log_sources(predictions, log_dir, skip_mutation, predictions_path)
+    record_log_sources(predictions, log_dir, skip_mutation, predictions_path, timeout)
 
     task_instances = []
 
