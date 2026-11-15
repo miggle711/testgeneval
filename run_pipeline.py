@@ -43,15 +43,15 @@ if __name__ == "__main__":
     parser.add_argument(
         "--namespace",
         type=str,
-        help="Docker repository namespace",
+        help="Docker repository namespace (default: kdjain, whose images carry cosmic-ray)",
         required=False,
-        default="aorwall",
+        default="kdjain",
     )
     parser.add_argument(
         "--num_processes", type=int, help="Number of processes to run", default=1
     )
     parser.add_argument(
-        "--temperature", type=float, help="(Optional) Model temperature", default=0.2
+        "--temperature", type=float, help="(Optional) Model temperature (default: 0.8, the rerun protocol's)", default=0.8
     )
     parser.add_argument(
         "--rerun_preds",
@@ -90,7 +90,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--kg_prompts_path",
         type=str,
-        default="kg_prompts.json",
+        default=None,
         help="Path to pre-computed KG prompts (scripts/build_kg_prompts.py "
              "in pycodekg). Required for --prompt_config kg_only; also "
              "read by 'instruct' for its target_function/target_class "
@@ -171,7 +171,8 @@ if __name__ == "__main__":
             # path also reads this, for its target_functions/target_classes
             # focus-line wording (miggle711/pycodekg#125, this repo's #6) --
             # not just kg_only, which needs it for the prompt content itself.
-            model_extra_cmd += ["--kg_prompts_path", args.kg_prompts_path]
+            if args.kg_prompts_path is not None:
+                model_extra_cmd += ["--kg_prompts_path", args.kg_prompts_path]
             # Run model prediction
             model_cmd = [
                 "python",

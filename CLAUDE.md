@@ -148,20 +148,21 @@ whole-file coverage/mutation score (the original TestGenEval metrics), and a fun
 variant restricted to the lines the patch actually touched (`swebench_docker/target_range.py`
 resolves the target line range from the patch; `context_manager.py`'s
 `_log_function_coverage`/`_log_function_mutation_score` compute the scoped numbers). Both are
-computed and reported; whether the whole-file or function-scoped figure serves as the primary
-metric is, as of this writing, still an open team decision (testgeneval#10) — `kg_only` can
-structurally only write tests for the function it was shown, while `instruct` has the whole file
-and could pick up incidental credit elsewhere, which argues for function-scoped as primary, but
-the team has not yet settled this.
+computed and reported. Decided 12 Nov 2026 (testgeneval#10, fyp-paper#5 section 1): the primary
+outcome is usable target-function mutation, with mutation run on the target function only and
+the same mutant set in both arms (`MUTATION_SCOPE=function`, #111; per-instance mutant count,
+#108; scored by `scripts/usable_score.py`). Whole-file scores are secondary. The protocol is in
+fyp-paper#7.
 
-**Context-overflow losses are silent by design, not a bug.** When a model's real context window
-can't fit `instruct`'s flat-file prompt, `run_api.py`'s retry logic burns its budget against a
-guaranteed-to-fail request, then skips the instance with no record in the output file itself
-(only a log line). `results/RUN_LOG.md` tracks known per-model completion counts and loss causes
-separately for exactly this reason — a raw completed-count is not enough to tell "ran clean" from
-"lost instances to context overflow" when comparing models. Comparing bare pass percentages
-across models with different completion counts is the real fairness trap, not the losses
-themselves — see `RUN_LOG.md`'s "Two different fairness questions" section for the full argument.
+**Instances without a prediction are recorded, with a reason (since testgeneval#134).** A prompt
+the server refuses as too long for its context is not truncated: the instance gets no prediction
+row and is written to `<predictions stem>.skipped.tsv` as `prompt_too_long` (rule 4 in
+fyp-paper#7 then excludes it for that model in both arms, at scoring). Any other failed request
+is recorded as `request_failed` and retried on a resubmit. A completion the model returns empty
+is kept and scores 0 (`empty_content` in the row's `usage`). Runs before #134 lost such instances
+silently, which is why `results/RUN_LOG.md` tracked completion counts and loss causes by hand;
+comparing bare pass percentages across models with different completion counts is still the
+fairness trap its "Two different fairness questions" section describes.
 
 **`context_manager.py`'s mutation testing runs `cosmic-ray` as a subprocess inside the
 per-instance conda testbed env** (`self.cmd_conda_run`), never via direct import — `cosmic_ray`
@@ -304,7 +305,8 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   `VLLM_PORT` on every simultaneous submission (e.g. `VLLM_PORT=8003` / `VLLM_PORT=8004`) rather
   than relying on the default, especially for jobs likely to land on the same node (same
   partition, submitted close together).
-- **`MODEL_LIMITS` (in `run_api.py`, used for client-side prompt truncation math) and
+- **Historical (before testgeneval#134, which removed client-side truncation; `MODEL_LIMITS` now only
+  feeds `prompt_token_budget`'s start-up check):** **`MODEL_LIMITS` (in `run_api.py`, used for client-side prompt truncation math) and
   `MAX_MODEL_LEN` (the actual `--max-model-len` passed to `vllm serve`, defaults to 32768) are
   two separate settings that must agree, and nothing checks that they do.** `MODEL_LIMITS`
   can claim a model's full real published context (e.g. 262144 for Qwen3-Coder-30B-A3B-Instruct),

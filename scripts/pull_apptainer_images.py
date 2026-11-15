@@ -64,6 +64,19 @@ _TESTBED_RE = re.compile(
 )
 
 
+# Repos whose images in --namespace are broken, mapped to where the working
+# ones are. kdjain's five scikit-learn testbeds lack coverage, cosmic-ray and
+# the compiled sklearn extension (testgeneval#55); the rebuilt 0.20, 0.21,
+# 0.22, 1.3 and 1.4 are under miggy711 (testgeneval#123). Without this, a
+# fresh pull or --force silently produced the broken images.
+REPO_NAMESPACES = {"scikit-learn_scikit-learn": "miggy711"}
+
+
+def namespace_for(repo, default):
+    """The Docker Hub namespace to pull this repo's testbed images from."""
+    return REPO_NAMESPACES.get(repo, default)
+
+
 def parse_makefile(makefile_path):
     """Return a sorted, de-duplicated list of (repo, version) for every
     testbed image the Makefile references. The namespace in the Makefile
@@ -133,6 +146,9 @@ def main():
     repos = sorted({repo for repo, _ in images})
     print(f"{len(images)} distinct testbed images across {len(repos)} repos "
           f"in {args.makefile} (pulling from namespace '{args.namespace}')")
+    for repo, ns in sorted(REPO_NAMESPACES.items()):
+        if repo in repos:
+            print(f"  {repo}: from namespace '{ns}' instead (its '{args.namespace}' images are broken)")
     print(f"  repos: {', '.join(repos)}")
 
     # The full testgeneval Makefile covers 12 repos; testgenevallite a
@@ -149,7 +165,7 @@ def main():
 
     if args.dry_run:
         for repo, version in images:
-            print(f"  docker://{args.namespace}/swe-bench-{repo}-testbed:{version} -> "
+            print(f"  docker://{namespace_for(repo, args.namespace)}/swe-bench-{repo}-testbed:{version} -> "
                   f"{os.path.join(args.out_dir, sif_name(repo, version))}")
         return
 
@@ -158,10 +174,11 @@ def main():
     ok, failed = 0, []
     for i, (repo, version) in enumerate(images, 1):
         print(f"[{i}/{len(images)}] {repo} {version}")
-        if pull_one(args.namespace, repo, version, args.out_dir, force=args.force):
+        ns = namespace_for(repo, args.namespace)
+        if pull_one(ns, repo, version, args.out_dir, force=args.force):
             ok += 1
         else:
-            failed.append(f"{args.namespace}/swe-bench-{repo}-testbed:{version}")
+            failed.append(f"{ns}/swe-bench-{repo}-testbed:{version}")
 
     print(f"\ndone: {ok} ok, {len(failed)} failed")
     if failed:

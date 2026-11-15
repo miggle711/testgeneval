@@ -28,6 +28,10 @@
 #     scratch, not /tmp -- /tmp is node-local, so sharded jobs on
 #     different nodes would each write to a different, invisible /tmp.
 #     generate_report.py reads every .eval.log from one directory.
+#     One directory per run: one arm, one sample count, one mutation
+#     setting. Log names carry only the id and model, so run_evaluation.py
+#     refuses a directory that already has logs from other predictions or
+#     settings. Shards and resubmits of the same predictions share it.
 #   SWE_BENCH_TASKS: dataset id or path (default kjain14/testgeneval).
 #   NUM_PROCESSES: concurrent container evaluations. A real load test
 #     (2026-09-11, NUM_PROCESSES=8, 24-core node) found 8 already
@@ -54,6 +58,12 @@
 #   SKIP_MUTATION: set to 1 to skip cosmic-ray entirely (coverage only).
 #     Cuts per-instance time to ~3-5 min, but drops FunctionMutationLOG,
 #     the primary RQ2/RQ3 metric.
+#   MUTATION_SCOPE: "file" (default) mutates the whole code file;
+#     "function" runs only the target function's mutants and logs only
+#     FunctionMutationLOG (testgeneval#10). Use a fresh LOG_DIR when
+#     switching, since --skip_existing does not check the scope.
+#   MUTATION_TIMEOUT: per-sample seconds for the cosmic-ray run (default
+#     3600). Raise it for whole-file mutation; the host-side cap grows with it.
 #
 # APPTAINER_TMPDIR is forced to node-local /tmp below (fast local disk,
 # private to this job) -- the ephemeral squashfs overlay churn from many
@@ -78,15 +88,17 @@ SWE_BENCH_TASKS="${SWE_BENCH_TASKS:-kjain14/testgeneval}"
 NUM_PROCESSES="${NUM_PROCESSES:-4}"
 TIMEOUT="${TIMEOUT:-3600}"
 SKIP_MUTATION="${SKIP_MUTATION:-0}"
+export MUTATION_SCOPE="${MUTATION_SCOPE:-file}"
+export MUTATION_TIMEOUT="${MUTATION_TIMEOUT:-3600}"
 NAMESPACE="${NAMESPACE:-kdjain}"
 # scikit-learn's 5 testbed .sif files (0.20-1.4) in APPTAINER_IMAGES_DIR
 # are NOT from this namespace -- 0.20/0.21/0.22/1.3 were rebuilt with a
 # coverage/cosmic-ray + build_ext fix (testgeneval#55, confirmed real
 # 2026-09-12: kdjain's originals are missing both `coverage` and the
 # compiled sklearn C extension) and pushed to miggy711/, pulled as
-# .sif, and already sitting in APPTAINER_IMAGES_DIR. Do NOT re-run
-# scripts/pull_apptainer_images.py for scikit-learn specifically, or it
-# will silently overwrite these with the old broken kdjain images.
+# .sif, and already sitting in APPTAINER_IMAGES_DIR. 1.4 is on miggy711/
+# too. scripts/pull_apptainer_images.py pulls scikit-learn from miggy711/
+# (its REPO_NAMESPACES, testgeneval#123), not from this namespace.
 
 # Where the converted .sif testbed images live. One file per
 # {repo_name}_{version}.sif (see run_apptainer.py). On scratch: they're
@@ -151,6 +163,7 @@ fi
 echo "Evaluating $PREDICTIONS_PATH"
 echo "  log_dir=$LOG_DIR"
 echo "  num_processes=$NUM_PROCESSES timeout=$TIMEOUT skip_mutation=$SKIP_MUTATION"
+echo "  mutation_scope=$MUTATION_SCOPE mutation_timeout=$MUTATION_TIMEOUT"
 echo "  APPTAINER_TMPDIR=$APPTAINER_TMPDIR (node-local)"
 echo "  images=$APPTAINER_IMAGES_DIR ($(ls "$APPTAINER_IMAGES_DIR"/*.sif 2>/dev/null | wc -l) .sif files)"
 

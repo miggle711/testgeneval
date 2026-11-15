@@ -61,7 +61,11 @@ export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:${LD_LIBRARY_PATH:-}"
 # ..., openai.chat.completions.create), confirmed that still works
 # fine on openai 2.x. numpy is imported in run_api.py but never
 # actually used, so it doesn't need a specific version either.
-pip install vllm
+# Pinned so the rerun's environment can be rebuilt (fyp-paper#5 section 2):
+# 0.27.1 is the version in the env the pilot and the existing results ran
+# in. A newer version would change the serving stack under the comparison.
+VLLM_VERSION="${VLLM_VERSION:-0.27.1}"
+pip install "vllm==$VLLM_VERSION"
 
 pip install \
     "python-dotenv==1.0.1" \
