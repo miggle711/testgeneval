@@ -23,6 +23,23 @@ from datasets import Dataset
 from inference.api import run_api
 
 
+# "fake-model" is not a real model, so it has no OUTPUT_LIMITS / MODEL_LIMITS
+# entry; run_api refuses such a model rather than defaulting its limits. The
+# entries here are the values the old silent defaults gave it.
+_LIMITS = (patch.dict(run_api.OUTPUT_LIMITS, {"fake-model": 4_096}),
+           patch.dict(run_api.MODEL_LIMITS, {"fake-model": 32_000}))
+
+
+def setUpModule():
+    for p in _LIMITS:
+        p.start()
+
+
+def tearDownModule():
+    for p in _LIMITS:
+        p.stop()
+
+
 def fake_call_chat_with_none_content(model_name_or_path, prompt_text, *args, **kwargs):
     # 5 samples requested, 2 come back None (simulating gpt-oss losing
     # the final answer channel to a too-low output budget), 3 come back
