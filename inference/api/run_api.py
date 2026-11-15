@@ -210,7 +210,18 @@ EPSILON = 1000
 DEFAULT_TEMPERATURE = 0.8
 
 
-def prompt_token_budget(model_name_or_path, server_max_model_len=None):
+def output_limit_for(model_name_or_path, override=None):
+    """max_tokens for a request: the run's override when given (--output_limit,
+    OUTPUT_LIMIT in m3_run_inference.slurm; used by the Qwen3-4B 8k against
+    16k comparison, fyp-paper#5), else the model's OUTPUT_LIMITS entry."""
+    if override is not None:
+        if override <= 0:
+            raise ValueError(f"output limit must be positive, got {override}")
+        return override
+    return OUTPUT_LIMITS.get(model_name_or_path, 4_096)
+
+
+def prompt_token_budget(model_name_or_path, server_max_model_len=None, output_limit=None):
     """Tokens a prompt may use: the context window minus the output limit
     and EPSILON. The context window is MODEL_LIMITS's entry, or the server's
     own --max-model-len when that is smaller. vLLM rejects any request whose
@@ -220,7 +231,7 @@ def prompt_token_budget(model_name_or_path, server_max_model_len=None):
     context = MODEL_LIMITS.get(model_name_or_path, 32_000)
     if server_max_model_len:
         context = min(context, server_max_model_len)
-    budget = context - OUTPUT_LIMITS.get(model_name_or_path, 4_096) - EPSILON
+    budget = context - output_limit_for(model_name_or_path, output_limit) - EPSILON
     if budget <= 0:
         raise ValueError(
             f"{model_name_or_path}: a context of {context} tokens leaves no room "
@@ -474,6 +485,7 @@ def openai_inference(
     no_system_message=False,
     max_concurrency=1,
     seed_base=None,
+    output_limit=None,
 ):
     """
     Runs inference on a dataset using the openai API.
@@ -494,13 +506,17 @@ def openai_inference(
         that path. The real model_name_or_path is still used for the
         actual API calls below. Defaults to model_name_or_path when there's
         no "/" to strip.
+    output_limit (int): max_tokens for every full-setting request, in place
+        of the model's OUTPUT_LIMITS entry. None keeps the entry.
     """
     # .get(..., default): an unregistered model served via
     # LOCAL_MODEL_BASE_URL (e.g. one of the ~8 planned M3 models before
     # it's added to MODEL_LIMITS/OUTPUT_LIMITS) falls back to a
     # conservative default rather than a KeyError. Add real entries once a
     # model's actual context window/output limit are known.
-    default_output_limit = OUTPUT_LIMITS.get(model_name_or_path, 4_096)
+    default_output_limit = output_limit_for(model_name_or_path, output_limit)
+    print(f"Output limit (max_tokens): {default_output_limit}"
+          + (" (override)" if output_limit is not None else " (OUTPUT_LIMITS)"))
     # SERVER_MAX_MODEL_LEN is the --max-model-len the vLLM server was started
     # with (m3_run_inference.slurm exports it); unset for hosted APIs.
     server_max_model_len = os.environ.get("SERVER_MAX_MODEL_LEN")
@@ -514,7 +530,8 @@ def openai_inference(
     # model and kept only the end of the prompt, dropping the start of the
     # instruct arm's code file without a record.
     prompt_token_budget(
-        model_name_or_path, int(server_max_model_len) if server_max_model_len else None
+        model_name_or_path, int(server_max_model_len) if server_max_model_len else None,
+        output_limit,
     )
 
     # LOCAL_MODEL_BASE_URL (e.g. http://127.0.0.1:8000/v1/ for a local
@@ -869,6 +886,7 @@ def main(
     max_concurrency=1,
     seed=0,
     no_seed=False,
+    output_limit=None,
 ):
     if shard_id is None and num_shards is not None:
         logger.warning(
@@ -996,6 +1014,7 @@ def main(
             no_system_message=no_system_message,
             max_concurrency=max_concurrency,
             seed_base=None if no_seed else seed,
+            output_limit=output_limit,
         )
     else:
         raise ValueError(f"Invalid model name or path {model_name_or_path}")
@@ -1132,6 +1151,13 @@ if __name__ == "__main__":
         "--no_seed",
         action="store_true",
         help="Send no seed (the server samples without an explicit per-request seed).",
+    )
+    parser.add_argument(
+        "--output_limit",
+        type=int,
+        default=None,
+        help="max_tokens for every request, in place of the model's OUTPUT_LIMITS "
+        "entry (recorded in each row's sampling record). Default: the entry.",
     )
     args = parser.parse_args()
     print(args.model_args)

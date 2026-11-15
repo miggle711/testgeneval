@@ -275,6 +275,14 @@ if [ "$SEED" = "none" ]; then
 else
     EXTRA_ARGS+=(--seed "$SEED")
 fi
+# OUTPUT_LIMIT replaces the model's OUTPUT_LIMITS entry as every request's
+# max_tokens (the Qwen3-4B 8k against 16k comparison, fyp-paper#5). Unset
+# keeps the entry. Each row records the max_tokens it was sent with.
+OUTPUT_LIMIT="${OUTPUT_LIMIT:-}"
+if [ -n "$OUTPUT_LIMIT" ]; then
+    EXTRA_ARGS+=(--output_limit "$OUTPUT_LIMIT")
+fi
+echo "output limit: ${OUTPUT_LIMIT:-OUTPUT_LIMITS entry}"
 # The model revision is part of the run's record: the snapshot(s) in the
 # HF cache this job loads from.
 echo "model $MODEL snapshot(s): $(ls "${HF_HOME:-$HOME/.cache/huggingface}/hub/models--${MODEL//\//--}/snapshots" 2>/dev/null | tr '\n' ' ' || true)"
