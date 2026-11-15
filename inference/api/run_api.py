@@ -5,6 +5,7 @@ It sorts instances by length and continually writes the outputs to a specified f
 """
 
 import atexit
+import hashlib
 import json
 import logging
 import os
@@ -260,6 +261,20 @@ def calc_cost(model_name, input_tokens, output_tokens, samples=1):
 
 
 @retry(wait=wait_random_exponential(min=30, max=600), stop=stop_after_attempt(3))
+def request_seed(base_seed, instance_id, prompt_name, num_samples, request_index=0):
+    """The sampling seed sent with one request: a stable hash of the run's base
+    seed, the instance, the prompt setting, the number of samples requested
+    and the request's index. A resubmit of the same request gets the same
+    seed; a staged 1 + 4 run (k=1, then k=4) gets different seeds for its two
+    requests, so the second cannot repeat the first's draw. None when seeding
+    is off. This controls sampling, it does not guarantee identical output:
+    vLLM's batching and GPU arithmetic can still change it."""
+    if base_seed is None:
+        return None
+    key = f"{base_seed}|{instance_id}|{prompt_name}|k{num_samples}|r{request_index}"
+    return int.from_bytes(hashlib.sha256(key.encode()).digest()[:4], "big") & 0x7FFFFFFF
+
+
 def call_chat(
     model_name_or_path,
     inputs,
@@ -269,6 +284,7 @@ def call_chat(
     system_message,
     no_system_message=False,
     n=1,
+    seed=None,
     **model_args,
 ):
     """
@@ -327,6 +343,8 @@ def call_chat(
             )
         client = _thread_local.client
 
+    if seed is not None:
+        model_args = {**model_args, "seed": seed}
     try:
         if model_name_or_path == "gpt-5":
             response = client.chat.completions.create(
@@ -427,6 +445,18 @@ class SkipRecorder:
                 f.write("\t".join([str(curr_id), str(instance_id), model, prompt_name, reason, clean]) + "\n")
 
 
+def sampling_record(seed, temperature, top_p, max_tokens, n):
+    """What a prediction row records about how its samples were drawn."""
+    return {"seed": seed, "temperature": temperature, "top_p": top_p,
+            "max_tokens": max_tokens, "n": n}
+
+
+def served_by(response):
+    """The model name and system fingerprint the server reports, if any."""
+    return {"served_model": getattr(response, "model", None),
+            "system_fingerprint": getattr(response, "system_fingerprint", None)}
+
+
 def openai_inference(
     test_dataset,
     model_name_or_path,
@@ -443,6 +473,7 @@ def openai_inference(
     model_nickname=None,
     no_system_message=False,
     max_concurrency=1,
+    seed_base=None,
 ):
     """
     Runs inference on a dataset using the openai API.
@@ -565,6 +596,9 @@ def openai_inference(
                 # --num_samples for this setting; num_samples now applies
                 # here too, needed for pass@k evaluation (k=num_samples).
                 try:
+                    seed = request_seed(seed_base, curr_id, prompt_name, num_samples)
+                    output_dict.setdefault("sampling", {})[prompt_name] = sampling_record(
+                        seed, temperature, top_p, default_output_limit, num_samples)
                     response, cost = call_chat(
                         model_name_or_path,
                         prompt_text,
@@ -574,7 +608,9 @@ def openai_inference(
                         system_message_full,
                         no_system_message=no_system_message,
                         n=num_samples,
+                        seed=seed,
                     )
+                    output_dict["sampling"][prompt_name].update(served_by(response))
                     for choice in response.choices:
                         # message.content can come back None rather than
                         # an empty string, confirmed real for gpt-oss
@@ -623,8 +659,11 @@ def openai_inference(
                                  prompt_name, skip_reason(e), e)
                     failed = True
             else:
-                for _ in range(num_samples):
+                for request_index in range(num_samples):
                     try:
+                        seed = request_seed(seed_base, curr_id, prompt_name, 1, request_index)
+                        output_dict.setdefault("sampling", {}).setdefault(prompt_name, []).append(
+                            sampling_record(seed, temperature, top_p, 512, 1))
                         response, cost = call_chat(
                             model_name_or_path,
                             prompt_text,
@@ -633,6 +672,7 @@ def openai_inference(
                             512,
                             system_message,
                             no_system_message=no_system_message,
+                            seed=seed,
                         )
                         completion = response.choices[0].message.content
                         prompt_usage.append({
@@ -827,6 +867,8 @@ def main(
     kg_prompts_path=None,
     no_system_message=False,
     max_concurrency=1,
+    seed=0,
+    no_seed=False,
 ):
     if shard_id is None and num_shards is not None:
         logger.warning(
@@ -953,6 +995,7 @@ def main(
             model_nickname=model_nickname,
             no_system_message=no_system_message,
             max_concurrency=max_concurrency,
+            seed_base=None if no_seed else seed,
         )
     else:
         raise ValueError(f"Invalid model name or path {model_name_or_path}")
@@ -1076,6 +1119,19 @@ if __name__ == "__main__":
              "latency is unchanged) -- 4-8 is a reasonable starting point "
              "on a single GPU node, watch vLLM's own GPU KV cache usage "
              "log line to see how much headroom is actually left.",
+    )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=0,
+        help="Base for each request's sampling seed (request_seed: a hash of "
+             "this, the instance, the setting, the sample count and the "
+             "request index). Recorded in every row's 'sampling'.",
+    )
+    parser.add_argument(
+        "--no_seed",
+        action="store_true",
+        help="Send no seed (the server samples without an explicit per-request seed).",
     )
     args = parser.parse_args()
     print(args.model_args)

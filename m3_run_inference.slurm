@@ -178,6 +178,16 @@ conda activate "$CONDA_ENV"
 # LD_LIBRARY_PATH isn't always already set, :- keeps set -u happy.
 export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:${LD_LIBRARY_PATH:-}"
 
+# The vLLM version is part of the run's record (fyp-paper#5 section 2: the
+# rerun pins 0.27.1). Read from the installed package metadata, without
+# importing vllm. Set VLLM_REQUIRED_VERSION to refuse any other version.
+VLLM_VERSION="$(python -c 'import importlib.metadata as m; print(m.version("vllm"))' 2>/dev/null || echo unknown)"
+echo "vllm version: $VLLM_VERSION (env $CONDA_ENV)"
+if [ -n "${VLLM_REQUIRED_VERSION:-}" ] && [ "$VLLM_VERSION" != "$VLLM_REQUIRED_VERSION" ]; then
+    echo "vllm $VLLM_VERSION is installed in $CONDA_ENV, but VLLM_REQUIRED_VERSION=$VLLM_REQUIRED_VERSION. Stopping." >&2
+    exit 1
+fi
+
 # dirname "$0" is unreliable under sbatch, SLURM can stage or invoke
 # the script in a way that leaves it resolving to "." (confirmed
 # real on M3: python -m inference.api.run_api failed with
@@ -257,6 +267,18 @@ fi
 if [ "$NO_SYSTEM_MESSAGE" = "1" ]; then
     EXTRA_ARGS+=(--no_system_message)
 fi
+# Each request's sampling seed is derived from SEED (run_api.py's
+# request_seed) and recorded in its row. SEED=none sends no seed.
+SEED="${SEED:-0}"
+if [ "$SEED" = "none" ]; then
+    EXTRA_ARGS+=(--no_seed)
+else
+    EXTRA_ARGS+=(--seed "$SEED")
+fi
+# The model revision is part of the run's record: the snapshot(s) in the
+# HF cache this job loads from.
+echo "model $MODEL snapshot(s): $(ls "${HF_HOME:-$HOME/.cache/huggingface}/hub/models--${MODEL//\//--}/snapshots" 2>/dev/null | tr '\n' ' ' || true)"
+echo "sampling seed base: $SEED"
 
 LOCAL_MODEL_BASE_URL="http://127.0.0.1:${VLLM_PORT}/v1/" \
     python -m inference.api.run_api \

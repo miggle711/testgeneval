@@ -17,6 +17,7 @@ from swebench_docker.constants import (
     KEY_PREDICTIONS,
     KEY_TEST_FILE_PATH,
     MAP_REPO_TO_TEST_FRAMEWORK,
+    MAP_VERSION_TO_INSTALL,
     SETTING_PROMPT_MAP,
     TESTS_CONFIG,
     TESTS_FAILED,
@@ -359,6 +360,7 @@ def main(
     image_type: str = "conda",
     only_baseline: bool = False,
     skip_mutation: bool = False,
+    mutation_scope: str = "file",
 ):
     logger.info(
         "Instance ID: "
@@ -391,6 +393,7 @@ def main(
         timeout=timeout,
         mutation_timeout=MUTATION_TIMEOUT,
         image_type=image_type,
+        mutation_scope=mutation_scope,
     ) as tcm:
         test_patch = task_instance["test_patch"]
         if not tcm.apply_patch(
@@ -401,6 +404,17 @@ def main(
         ):
             logger.warning("Evaluation failed")
             sys.exit(1)
+
+        # Eligibility rule 3 (fyp-paper#7): whether the target function has
+        # a mutant is a fact about the patched source, so it is logged here,
+        # before any generated test runs and whether or not one passes. A
+        # run with mutation switched off has no mutation outcome to be
+        # eligible for, and stays free of cosmic-ray.
+        if not skip_mutation:
+            tcm.log_target_mutant_count(
+                task_instance,
+                MAP_VERSION_TO_INSTALL[task_instance["repo"]][task_instance["version"]],
+            )
 
         # Make baselines a list so the loop below works
         prompt_list = (
@@ -462,4 +476,5 @@ if __name__ == "__main__":
         image_type=os.getenv("IMAGE_TYPE", "conda"),
         only_baseline=os.getenv("ONLY_BASELINE") == "True",
         skip_mutation=os.getenv("SKIP_MUTATION") == "True",
+        mutation_scope=os.getenv("MUTATION_SCOPE", "file"),
     )
