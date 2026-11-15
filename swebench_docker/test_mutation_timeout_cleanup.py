@@ -143,6 +143,7 @@ class MutationTimeoutCleanup(unittest.TestCase):
                                               "universal_newlines": True, "stdout": subprocess.PIPE,
                                               "stderr": subprocess.STDOUT}, logger=m.log)
         m._run_cosmic_ray_exec = lambda cmd, code_file: TaskEnvContextManager._run_cosmic_ray_exec(m, cmd, code_file)
+        m._cosmic_ray_prefix = lambda specifications: TaskEnvContextManager._cosmic_ray_prefix(m, specifications)
         return m
 
     def run_mutation(self, mode, conda, mutation_timeout):

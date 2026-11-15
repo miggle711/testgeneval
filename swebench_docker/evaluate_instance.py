@@ -17,6 +17,7 @@ from swebench_docker.constants import (
     KEY_PREDICTIONS,
     KEY_TEST_FILE_PATH,
     MAP_REPO_TO_TEST_FRAMEWORK,
+    MAP_VERSION_TO_INSTALL,
     SETTING_PROMPT_MAP,
     TESTS_CONFIG,
     TESTS_FAILED,
@@ -403,6 +404,17 @@ def main(
         ):
             logger.warning("Evaluation failed")
             sys.exit(1)
+
+        # Eligibility rule 3 (fyp-paper#7): whether the target function has
+        # a mutant is a fact about the patched source, so it is logged here,
+        # before any generated test runs and whether or not one passes. A
+        # run with mutation switched off has no mutation outcome to be
+        # eligible for, and stays free of cosmic-ray.
+        if not skip_mutation:
+            tcm.log_target_mutant_count(
+                task_instance,
+                MAP_VERSION_TO_INSTALL[task_instance["repo"]][task_instance["version"]],
+            )
 
         # Make baselines a list so the loop below works
         prompt_list = (
