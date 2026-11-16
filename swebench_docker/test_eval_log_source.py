@@ -4,6 +4,7 @@ directory used to be skipped as already done, or to replace the first
 run's logs, with nothing in the output to show it."""
 
 import asyncio
+import json
 import os
 import tempfile
 import unittest
@@ -49,8 +50,11 @@ class TestLogDirHoldsOneRun(unittest.TestCase):
         self.log_dir = d.name
         self.log = os.path.join(self.log_dir, f"{ID}.{MODEL}.full.eval.log")
 
-    def evaluate(self, arm, k, predictions_path="preds.jsonl", skip_mutation=False, scope=None):
+    def evaluate(self, arm, k, predictions_path="preds.jsonl", skip_mutation=False, scope=None,
+                 timeout=900, mutation_timeout=None):
         env = {"MUTATION_SCOPE": scope} if scope else {}
+        if mutation_timeout is not None:
+            env["MUTATION_TIMEOUT"] = str(mutation_timeout)
         with patch("run_evaluation.get_eval_refs", return_value={ID: TASK}), \
              patch("run_evaluation.validate_predictions"), \
              patch("run_evaluation.get_instances", return_value=[prediction(arm, k)]), \
@@ -59,7 +63,8 @@ class TestLogDirHoldsOneRun(unittest.TestCase):
              patch.dict(os.environ, env):
             asyncio.run(run_evaluation.main(
                 predictions_path, "tasks", "kdjain", self.log_dir,
-                skip_existing=True, skip_mutation=skip_mutation, backend="apptainer",
+                skip_existing=True, timeout=timeout, skip_mutation=skip_mutation,
+                backend="apptainer",
             ))
 
     def first_line(self):
@@ -72,6 +77,8 @@ class TestLogDirHoldsOneRun(unittest.TestCase):
             "other arm, more samples": dict(arm="kg_only", k=5),
             "same predictions, mutation now skipped": dict(arm="instruct", k=1, skip_mutation=True),
             "same predictions, other mutation scope": dict(arm="instruct", k=1, scope="function"),
+            "same predictions, other test timeout": dict(arm="instruct", k=1, timeout=7200),
+            "same predictions, other mutation timeout": dict(arm="instruct", k=1, mutation_timeout=7200),
         }
         for name, second in second_runs.items():
             with self.subTest(name):
@@ -84,6 +91,40 @@ class TestLogDirHoldsOneRun(unittest.TestCase):
                 self.assertEqual(
                     [n for n in os.listdir(self.log_dir) if ".partial" in n], []
                 )
+
+    def test_the_record_holds_the_effective_timeouts(self):
+        self.evaluate("instruct", 1, timeout=3600, mutation_timeout=7200)
+        with open(self.log + run_evaluation.SOURCE_SUFFIX) as f:
+            record = json.load(f)
+        self.assertEqual((record["timeout"], record["mutation_timeout"]), (3600, 7200))
+
+    def test_mutation_timeout_is_not_compared_when_mutation_is_skipped(self):
+        self.evaluate("instruct", 1, skip_mutation=True, mutation_timeout=3600)
+        self.evaluate("instruct", 1, skip_mutation=True, mutation_timeout=7200)
+        self.assertEqual(self.first_line(), "evaluated: instruct sample 0")
+
+    def test_a_record_from_before_the_timeouts_is_still_accepted(self):
+        # Logs evaluated before this change have no timeout keys; they are
+        # checked on the other fields only, so their directories still work.
+        self.evaluate("instruct", 1)
+        record_path = self.log + run_evaluation.SOURCE_SUFFIX
+        with open(record_path) as f:
+            record = json.load(f)
+        for key in run_evaluation.TIMEOUT_KEYS:
+            del record[key]
+        with open(record_path, "w") as f:
+            json.dump(record, f)
+        self.evaluate("instruct", 1, timeout=7200)
+        self.assertEqual(self.first_line(), "evaluated: instruct sample 0")
+        with self.assertRaisesRegex(ValueError, "separate --log_dir"):
+            self.evaluate("kg_only", 1)
+
+    def test_the_default_mutation_timeout_matches_the_harness(self):
+        from swebench_docker import constants
+        with patch.dict(os.environ, {}, clear=False):
+            os.environ.pop("MUTATION_TIMEOUT", None)
+            source = run_evaluation.log_source(["s"], False, 900)
+        self.assertEqual(source["mutation_timeout"], constants.MUTATION_TIMEOUT)
 
     def test_the_same_predictions_from_another_file_share_the_directory(self):
         # A shard, or a resubmit from a copied file: same samples, new path.
