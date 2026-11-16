@@ -70,12 +70,12 @@ PROMPT_CONFIG="${PROMPT_CONFIG:-instruct}"          # instruct | kg_only
 KG_PROMPTS_PATH="${KG_PROMPTS_PATH:-kg_prompts.json}"
 DATASET_PATH="${DATASET_PATH:-CHANGE_ME}"
 OUTPUT_DIR="${OUTPUT_DIR:-$PWD/results/${PROMPT_CONFIG}}"
-TEMPERATURE="${TEMPERATURE:-0.2}"
+TEMPERATURE="${TEMPERATURE:-0.8}"       # the rerun protocol's (fyp-paper#7)
 # Samples per instance for the full setting, k in pass@k when > 1 (needs
 # TEMPERATURE > 0 to produce genuinely different samples, not one
 # completion repeated num_samples times). Requested in one call via
 # run_api.py's own n parameter, not num_samples separate calls.
-NUM_SAMPLES="${NUM_SAMPLES:-1}"
+NUM_SAMPLES="${NUM_SAMPLES:-5}"         # the rerun protocol's k
 MAX_CONCURRENCY="${MAX_CONCURRENCY:-1}"   # requests in flight at once; match MAX_NUM_SEQS below
 # vLLM's own ceiling on concurrent sequences, MAX_CONCURRENCY can never
 # exceed this regardless of what's requested. 8 is safe for the large
@@ -180,6 +180,16 @@ conda activate "$CONDA_ENV"
 # LD_LIBRARY_PATH isn't always already set, :- keeps set -u happy.
 export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:${LD_LIBRARY_PATH:-}"
 
+# The vLLM version is part of the run's record (fyp-paper#5 section 2: the
+# rerun pins 0.27.1). Read from the installed package metadata, without
+# importing vllm. Set VLLM_REQUIRED_VERSION to refuse any other version.
+VLLM_VERSION="$(python -c 'import importlib.metadata as m; print(m.version("vllm"))' 2>/dev/null || echo unknown)"
+echo "vllm version: $VLLM_VERSION (env $CONDA_ENV)"
+if [ -n "${VLLM_REQUIRED_VERSION:-}" ] && [ "$VLLM_VERSION" != "$VLLM_REQUIRED_VERSION" ]; then
+    echo "vllm $VLLM_VERSION is installed in $CONDA_ENV, but VLLM_REQUIRED_VERSION=$VLLM_REQUIRED_VERSION. Stopping." >&2
+    exit 1
+fi
+
 # dirname "$0" is unreliable under sbatch, SLURM can stage or invoke
 # the script in a way that leaves it resolving to "." (confirmed
 # real on M3: python -m inference.api.run_api failed with
@@ -273,6 +283,38 @@ fi
 if [ "$NO_SYSTEM_MESSAGE" = "1" ]; then
     EXTRA_ARGS+=(--no_system_message)
 fi
+# Each request's sampling seed is derived from SEED (run_api.py's
+# request_seed) and recorded in its row. SEED=none sends no seed.
+SEED="${SEED:-0}"
+if [ "$SEED" = "none" ]; then
+    EXTRA_ARGS+=(--no_seed)
+else
+    EXTRA_ARGS+=(--seed "$SEED")
+fi
+# OUTPUT_LIMIT replaces the model's OUTPUT_LIMITS entry as every request's
+# max_tokens (the Qwen3-4B 8k against 16k comparison, fyp-paper#5). Unset
+# keeps the entry. Each row records the max_tokens it was sent with.
+OUTPUT_LIMIT="${OUTPUT_LIMIT:-}"
+if [ -n "$OUTPUT_LIMIT" ]; then
+    EXTRA_ARGS+=(--output_limit "$OUTPUT_LIMIT")
+fi
+echo "output limit: ${OUTPUT_LIMIT:-OUTPUT_LIMITS entry}"
+# NO_IMPORTS=1 drops the "examples of how to import" block from instruct's
+# prompt (run_api.py --no_imports). Those examples are the dataset's
+# local_imports, the reference test file's imports, so the rerun leaves
+# them out (fyp-paper#7). kg_only's prompt has no such block. Each row's
+# preds_prompts shows which prompt it was sent.
+NO_IMPORTS="${NO_IMPORTS:-0}"
+case "$NO_IMPORTS" in
+    1) EXTRA_ARGS+=(--no_imports) ;;
+    0) ;;
+    *) echo "NO_IMPORTS must be 0 or 1, not '$NO_IMPORTS'" >&2; exit 1 ;;
+esac
+echo "import examples in instruct: $([ "$NO_IMPORTS" = 1 ] && echo "dropped (NO_IMPORTS=1)" || echo "kept (NO_IMPORTS=0)")"
+# The model revision is part of the run's record: the snapshot(s) in the
+# HF cache this job loads from.
+echo "model $MODEL snapshot(s): $(ls "${HF_HOME:-$HOME/.cache/huggingface}/hub/models--${MODEL//\//--}/snapshots" 2>/dev/null | tr '\n' ' ' || true)"
+echo "sampling seed base: $SEED"
 
 LOCAL_MODEL_BASE_URL="http://127.0.0.1:${VLLM_PORT}/v1/" \
     python -m inference.api.run_api \
