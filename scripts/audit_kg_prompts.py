@@ -81,7 +81,7 @@ def audit_target_function_coverage(dataset, kg_prompts_path):
     for row_id, entry in kg_prompts.items():
         if row_id not in dataset_ids:
             continue
-        if "prompt" not in entry:
+        if "context" not in entry:
             missing_prompt_key.append(row_id)
         target_functions = entry.get("target_functions", [])
         target_classes = entry.get("target_classes", [])
@@ -136,7 +136,7 @@ def main():
     print(f"Dataset instances missing from kg_prompts.json entirely: {len(missing_from_kg)}")
     if missing_from_kg[:10]:
         print(f"  sample: {missing_from_kg[:10]}")
-    print(f"kg_prompts.json entries missing 'prompt' key (would hard-fail kg_only): {len(missing_prompt_key)}")
+    print(f"kg_prompts.json entries missing 'context' key (would hard-fail kg_only): {len(missing_prompt_key)}")
     if missing_prompt_key[:10]:
         print(f"  sample: {missing_prompt_key[:10]}")
     print(f"kg_prompts.json entries with EMPTY target_functions AND target_classes")
