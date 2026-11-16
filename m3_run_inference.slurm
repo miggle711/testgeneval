@@ -235,6 +235,17 @@ VLLM_SERVE_ARGS=(
 if [ -n "$MAX_NEW_TOKENS" ]; then
     VLLM_SERVE_ARGS+=(--override-generation-config "{\"max_new_tokens\": $MAX_NEW_TOKENS}")
 fi
+# REASONING_PARSER: vLLM's --reasoning-parser for a model that writes its
+# reasoning into the reply, so the server returns it apart from the answer.
+# Its name depends on the model and the vLLM version; check it against the
+# pinned version's `vllm serve --help`. Exported so run_api.py records it in
+# each row. Unset for models that need none.
+REASONING_PARSER="${REASONING_PARSER:-}"
+export REASONING_PARSER
+if [ -n "$REASONING_PARSER" ]; then
+    VLLM_SERVE_ARGS+=(--reasoning-parser "$REASONING_PARSER")
+fi
+echo "reasoning parser: ${REASONING_PARSER:-none}"
 
 CUDA_VISIBLE_DEVICES=$(seq 0 $((TENSOR_PARALLEL_SIZE - 1)) | paste -sd, -) vllm serve "$MODEL" \
     "${VLLM_SERVE_ARGS[@]}" &
@@ -311,6 +322,14 @@ case "$NO_IMPORTS" in
     *) echo "NO_IMPORTS must be 0 or 1, not '$NO_IMPORTS'" >&2; exit 1 ;;
 esac
 echo "import examples in instruct: $([ "$NO_IMPORTS" = 1 ] && echo "dropped (NO_IMPORTS=1)" || echo "kept (NO_IMPORTS=0)")"
+# CHAT_TEMPLATE_KWARGS: a JSON object sent with every request as
+# chat_template_kwargs, e.g. '{"enable_thinking": false}' to turn a model's
+# thinking mode off. Recorded in each row. Unset sends none.
+CHAT_TEMPLATE_KWARGS="${CHAT_TEMPLATE_KWARGS:-}"
+if [ -n "$CHAT_TEMPLATE_KWARGS" ]; then
+    EXTRA_ARGS+=(--chat_template_kwargs "$CHAT_TEMPLATE_KWARGS")
+fi
+echo "chat template kwargs: ${CHAT_TEMPLATE_KWARGS:-none}"
 # The model revision is part of the run's record: the snapshot(s) in the
 # HF cache this job loads from.
 echo "model $MODEL snapshot(s): $(ls "${HF_HOME:-$HOME/.cache/huggingface}/hub/models--${MODEL//\//--}/snapshots" 2>/dev/null | tr '\n' ' ' || true)"

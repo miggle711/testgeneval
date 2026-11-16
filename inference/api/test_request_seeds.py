@@ -65,7 +65,9 @@ class InferenceRecordsSeedTest(unittest.TestCase):
         self.assertEqual(row["sampling"]["full"], {
             "seed": expected, "temperature": 0.8, "top_p": 0.95,
             "max_tokens": run_api.OUTPUT_LIMITS["Qwen/Qwen3-4B-Instruct-2507"], "n": 5,
-            "served_model": "served-model", "system_fingerprint": "fp-1"})
+            "served_model": "served-model", "system_fingerprint": "fp-1",
+            # the request settings every full-setting row also records
+            "max_model_len": None, "chat_template_kwargs": None, "reasoning_parser": None})
 
     def test_no_seed_sends_none_and_records_it(self):
         seen, row = self.run_inference(None)
