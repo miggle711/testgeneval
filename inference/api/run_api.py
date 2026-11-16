@@ -210,17 +210,47 @@ EPSILON = 1000
 DEFAULT_TEMPERATURE = 0.8
 
 
-def prompt_token_budget(model_name_or_path, server_max_model_len=None):
+def output_limit_for(model_name_or_path, override=None):
+    """max_tokens for a request: the run's override when given (--output_limit,
+    OUTPUT_LIMIT in m3_run_inference.slurm; used by the Qwen3-4B 8k against
+    16k comparison, fyp-paper#5), else the model's OUTPUT_LIMITS entry."""
+    if override is not None:
+        if override <= 0:
+            raise ValueError(f"output limit must be positive, got {override}")
+        return override
+    if model_name_or_path not in OUTPUT_LIMITS:
+        # A silent fallback gave an unlisted model a 4,096-token cap while
+        # every listed model has 8,000 or more, without any message. The
+        # protocol fixes each model's cap (fyp-paper#7 §2), so it must be
+        # chosen, not defaulted.
+        raise ValueError(
+            f"{model_name_or_path} has no OUTPUT_LIMITS entry: add one, or set its "
+            f"output limit explicitly (--output_limit; OUTPUT_LIMIT in m3_run_inference.slurm)"
+        )
+    return OUTPUT_LIMITS[model_name_or_path]
+
+
+def prompt_token_budget(model_name_or_path, server_max_model_len=None, output_limit=None):
     """Tokens a prompt may use: the context window minus the output limit
     and EPSILON. The context window is MODEL_LIMITS's entry, or the server's
     own --max-model-len when that is smaller. vLLM rejects any request whose
     prompt plus max_tokens exceeds its --max-model-len, so truncating to the
     model's published context instead lost every longer prompt
     (testgeneval#44). Raises ValueError when no room is left for a prompt."""
-    context = MODEL_LIMITS.get(model_name_or_path, 32_000)
-    if server_max_model_len:
-        context = min(context, server_max_model_len)
-    budget = context - OUTPUT_LIMITS.get(model_name_or_path, 4_096) - EPSILON
+    if model_name_or_path in MODEL_LIMITS:
+        context = MODEL_LIMITS[model_name_or_path]
+        if server_max_model_len:
+            context = min(context, server_max_model_len)
+    elif server_max_model_len:
+        # The serving context, given explicitly (SERVER_MAX_MODEL_LEN, which
+        # m3_run_inference.slurm sets to the server's --max-model-len).
+        context = server_max_model_len
+    else:
+        raise ValueError(
+            f"{model_name_or_path} has no MODEL_LIMITS entry and no serving context was "
+            f"given: add an entry, or set SERVER_MAX_MODEL_LEN to the server's --max-model-len"
+        )
+    budget = context - output_limit_for(model_name_or_path, output_limit) - EPSILON
     if budget <= 0:
         raise ValueError(
             f"{model_name_or_path}: a context of {context} tokens leaves no room "
@@ -275,6 +305,53 @@ def request_seed(base_seed, instance_id, prompt_name, num_samples, request_index
     return int.from_bytes(hashlib.sha256(key.encode()).digest()[:4], "big") & 0x7FFFFFFF
 
 
+# Reasoning a model writes into its reply, by format: Qwen3-style <think>
+# blocks, and Gemma 4's thought channel. Used only when the server did not
+# separate the reasoning itself (vLLM's --reasoning-parser; REASONING_PARSER
+# in m3_run_inference.slurm), which is the preferred route.
+REASONING_BLOCKS = (("<think>", "</think>"), ("<|channel>thought", "<channel|>"))
+
+
+def split_reasoning(text):
+    """(answer, status) for one reply.
+
+    Only reasoning before the answer is removed, so a test file that happens
+    to contain one of these strings is left alone:
+    - a block that opens at the start of the reply is removed up to its
+      closing marker;
+    - a closing marker with no opening one (the chat template can open the
+      block in the prompt) removes everything before it, but only when no
+      code fence comes before it.
+    A block that opens at the start and never closes means the reply ended
+    inside its reasoning: there is no final answer, and the code fences in
+    that reasoning are not taken as one. status is None when nothing was
+    found, "reasoning_stripped", or "reasoning_unfinished" (answer "")."""
+    rest, status = text, None
+    while True:
+        stripped = rest.lstrip()
+        for opening, closing in REASONING_BLOCKS:
+            if stripped.startswith(opening):
+                end = stripped.find(closing, len(opening))
+                if end == -1:
+                    return "", "reasoning_unfinished"
+                rest = stripped[end + len(closing):]
+                status = "reasoning_stripped"
+                break
+        else:
+            break
+    for _opening, closing in REASONING_BLOCKS:
+        end = rest.find(closing)
+        if end != -1 and "```" not in rest[:end]:
+            rest = rest[end + len(closing):]
+            status = "reasoning_stripped"
+    return (rest if status else text), status
+
+
+def reasoning_separated(message):
+    """True when the server returned the reasoning apart from the answer."""
+    return bool(getattr(message, "reasoning_content", None) or getattr(message, "reasoning", None))
+
+
 def call_chat(
     model_name_or_path,
     inputs,
@@ -285,10 +362,14 @@ def call_chat(
     no_system_message=False,
     n=1,
     seed=None,
+    chat_template_kwargs=None,
     **model_args,
 ):
     """
     Calls the OpenAI API to generate completions for the given inputs using the new API interface.
+    chat_template_kwargs (dict or None) is sent as the request's
+    chat_template_kwargs (e.g. {"enable_thinking": false}), which vLLM passes
+    to the model's chat template.
 
     Args:
         model_name_or_path (str): The name or path of the model to use.
@@ -345,6 +426,8 @@ def call_chat(
 
     if seed is not None:
         model_args = {**model_args, "seed": seed}
+    if chat_template_kwargs:
+        model_args = {**model_args, "extra_body": {"chat_template_kwargs": chat_template_kwargs}}
     try:
         if model_name_or_path == "gpt-5":
             response = client.chat.completions.create(
@@ -474,6 +557,8 @@ def openai_inference(
     no_system_message=False,
     max_concurrency=1,
     seed_base=None,
+    output_limit=None,
+    chat_template_kwargs=None,
 ):
     """
     Runs inference on a dataset using the openai API.
@@ -494,13 +579,17 @@ def openai_inference(
         that path. The real model_name_or_path is still used for the
         actual API calls below. Defaults to model_name_or_path when there's
         no "/" to strip.
+    output_limit (int): max_tokens for every full-setting request, in place
+        of the model's OUTPUT_LIMITS entry. None keeps the entry.
     """
     # .get(..., default): an unregistered model served via
     # LOCAL_MODEL_BASE_URL (e.g. one of the ~8 planned M3 models before
     # it's added to MODEL_LIMITS/OUTPUT_LIMITS) falls back to a
     # conservative default rather than a KeyError. Add real entries once a
     # model's actual context window/output limit are known.
-    default_output_limit = OUTPUT_LIMITS.get(model_name_or_path, 4_096)
+    default_output_limit = output_limit_for(model_name_or_path, output_limit)
+    print(f"Output limit (max_tokens): {default_output_limit}"
+          + (" (override)" if output_limit is not None else " (OUTPUT_LIMITS)"))
     # SERVER_MAX_MODEL_LEN is the --max-model-len the vLLM server was started
     # with (m3_run_inference.slurm exports it); unset for hosted APIs.
     server_max_model_len = os.environ.get("SERVER_MAX_MODEL_LEN")
@@ -514,8 +603,18 @@ def openai_inference(
     # model and kept only the end of the prompt, dropping the start of the
     # instruct arm's code file without a record.
     prompt_token_budget(
-        model_name_or_path, int(server_max_model_len) if server_max_model_len else None
+        model_name_or_path, int(server_max_model_len) if server_max_model_len else None,
+        output_limit,
     )
+    # Recorded with every row's full-setting samples: the serving context,
+    # the chat-template settings sent (e.g. thinking off) and the server's
+    # reasoning parser, so a row says how its replies were produced.
+    request_settings = {
+        "max_model_len": int(server_max_model_len) if server_max_model_len else None,
+        "chat_template_kwargs": chat_template_kwargs or None,
+        "reasoning_parser": os.environ.get("REASONING_PARSER") or None,
+    }
+    print(f"Request settings: {request_settings}")
 
     # LOCAL_MODEL_BASE_URL (e.g. http://127.0.0.1:8000/v1/ for a local
     # server, or https://api.groq.com/openai/v1/ for Groq: trailing slash
@@ -584,6 +683,7 @@ def openai_inference(
         for prompt_name, prompt_text in datum["preds_prompts"].items():
             prompt_predictions = []
             prompt_usage = []
+            prompt_raw = []
             if skip_full and prompt_name == "full":
                 continue
             if skip_completion and prompt_name != "full":
@@ -597,8 +697,10 @@ def openai_inference(
                 # here too, needed for pass@k evaluation (k=num_samples).
                 try:
                     seed = request_seed(seed_base, curr_id, prompt_name, num_samples)
-                    output_dict.setdefault("sampling", {})[prompt_name] = sampling_record(
-                        seed, temperature, top_p, default_output_limit, num_samples)
+                    output_dict.setdefault("sampling", {})[prompt_name] = {
+                        **sampling_record(seed, temperature, top_p, default_output_limit, num_samples),
+                        **request_settings,
+                    }
                     response, cost = call_chat(
                         model_name_or_path,
                         prompt_text,
@@ -609,6 +711,7 @@ def openai_inference(
                         no_system_message=no_system_message,
                         n=num_samples,
                         seed=seed,
+                        chat_template_kwargs=chat_template_kwargs,
                     )
                     output_dict["sampling"][prompt_name].update(served_by(response))
                     for choice in response.choices:
@@ -647,7 +750,20 @@ def openai_inference(
                                 f"), kept as an empty reply"
                             )
                             content = ""
-                        prompt_predictions.append(postprocess_fn(content, True))
+                        # The raw reply is kept for auditing; the test file
+                        # is extracted from the answer after any reasoning.
+                        prompt_raw.append(content)
+                        prompt_usage[-1]["reasoning_separated"] = reasoning_separated(choice.message)
+                        answer, reasoning_status = split_reasoning(content)
+                        if reasoning_status:
+                            prompt_usage[-1]["reasoning_in_content"] = reasoning_status
+                        if reasoning_status == "reasoning_unfinished":
+                            # Ended inside its reasoning: no final answer,
+                            # scored like an empty reply (fyp-paper#7 §4).
+                            prompt_usage[-1]["no_final_answer"] = True
+                            print(f"Warning: {curr_id} reply ended inside its reasoning "
+                                  f"(finish_reason={choice.finish_reason}); no final answer")
+                        prompt_predictions.append(postprocess_fn(answer, True))
                     with cost_lock:
                         state["total_cost"] += cost
                         if max_cost is not None and state["total_cost"] >= max_cost:
@@ -707,6 +823,8 @@ def openai_inference(
                         failed = True
             output_dict["preds"][prompt_name] = prompt_predictions
             output_dict["usage"][prompt_name] = prompt_usage
+            if prompt_raw:
+                output_dict.setdefault("raw", {})[prompt_name] = prompt_raw
         if failed:
             print("Failed, skipping...")
             return None
@@ -869,7 +987,13 @@ def main(
     max_concurrency=1,
     seed=0,
     no_seed=False,
+    output_limit=None,
+    chat_template_kwargs=None,
 ):
+    if isinstance(chat_template_kwargs, str):
+        chat_template_kwargs = json.loads(chat_template_kwargs) if chat_template_kwargs.strip() else None
+    if chat_template_kwargs is not None and not isinstance(chat_template_kwargs, dict):
+        raise ValueError(f"chat_template_kwargs must be a JSON object, got {chat_template_kwargs!r}")
     if shard_id is None and num_shards is not None:
         logger.warning(
             f"Received num_shards={num_shards} but shard_id is None, ignoring"
@@ -996,6 +1120,8 @@ def main(
             no_system_message=no_system_message,
             max_concurrency=max_concurrency,
             seed_base=None if no_seed else seed,
+            output_limit=output_limit,
+            chat_template_kwargs=chat_template_kwargs,
         )
     else:
         raise ValueError(f"Invalid model name or path {model_name_or_path}")
@@ -1132,6 +1258,20 @@ if __name__ == "__main__":
         "--no_seed",
         action="store_true",
         help="Send no seed (the server samples without an explicit per-request seed).",
+    )
+    parser.add_argument(
+        "--output_limit",
+        type=int,
+        default=None,
+        help="max_tokens for every request, in place of the model's OUTPUT_LIMITS "
+        "entry (recorded in each row's sampling record). Default: the entry.",
+    )
+    parser.add_argument(
+        "--chat_template_kwargs",
+        type=str,
+        default=None,
+        help='JSON object sent as each request\'s chat_template_kwargs, e.g. '
+        '\'{"enable_thinking": false}\' (recorded in each row\'s sampling record).',
     )
     args = parser.parse_args()
     print(args.model_args)
