@@ -19,6 +19,7 @@ from inference.configs.gemma2_prompt import Gemma2Prompt
 from inference.configs.instruct_prompt import InstructPrompt
 from inference.configs.llama3_prompt import Llama3Prompt
 from inference.huggingface.generator import Generator
+from inference.prediction_paths import prediction_stem
 from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from vllm import LLM, SamplingParams
@@ -387,15 +388,13 @@ def main():
 
     if Path(args.dataset_name_or_path).exists():
         dataset = load_from_disk(args.dataset_name_or_path)
-        dataset_nickname = Path(args.dataset_name_or_path).name
     else:
         dataset = load_dataset(args.dataset_name_or_path)
-        dataset_nickname = args.dataset_name_or_path
 
-    output_file = f"{model_nickname}__{dataset_nickname}__{args.temperature}__k{args.num_samples_generation}__test"
-
-    if args.context_size != -1:
-        output_file += f"__{args.context_size}"
+    output_samples = args.num_samples_completion if args.skip_full else args.num_samples_generation
+    output_file = prediction_stem(
+        model_nickname, args.dataset_name_or_path, args.temperature, output_samples, args.context_size
+    )
 
     output_file_raw = output_file + "__raw"
     output_file_prompt = output_file + "__prompt"

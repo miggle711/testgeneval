@@ -148,20 +148,21 @@ whole-file coverage/mutation score (the original TestGenEval metrics), and a fun
 variant restricted to the lines the patch actually touched (`swebench_docker/target_range.py`
 resolves the target line range from the patch; `context_manager.py`'s
 `_log_function_coverage`/`_log_function_mutation_score` compute the scoped numbers). Both are
-computed and reported; whether the whole-file or function-scoped figure serves as the primary
-metric is, as of this writing, still an open team decision (testgeneval#10) — `kg_only` can
-structurally only write tests for the function it was shown, while `instruct` has the whole file
-and could pick up incidental credit elsewhere, which argues for function-scoped as primary, but
-the team has not yet settled this.
+computed and reported. Decided 12 Nov 2026 (testgeneval#10, fyp-paper#5 section 1): the primary
+outcome is usable target-function mutation, with mutation run on the target function only and
+the same mutant set in both arms (`MUTATION_SCOPE=function`, #111; per-instance mutant count,
+#108; scored by `scripts/usable_score.py`). Whole-file scores are secondary. The protocol is in
+fyp-paper#7.
 
-**Context-overflow losses are silent by design, not a bug.** When a model's real context window
-can't fit `instruct`'s flat-file prompt, `run_api.py`'s retry logic burns its budget against a
-guaranteed-to-fail request, then skips the instance with no record in the output file itself
-(only a log line). `results/RUN_LOG.md` tracks known per-model completion counts and loss causes
-separately for exactly this reason — a raw completed-count is not enough to tell "ran clean" from
-"lost instances to context overflow" when comparing models. Comparing bare pass percentages
-across models with different completion counts is the real fairness trap, not the losses
-themselves — see `RUN_LOG.md`'s "Two different fairness questions" section for the full argument.
+**Instances without a prediction are recorded, with a reason (since testgeneval#134).** A prompt
+the server refuses as too long for its context is not truncated: the instance gets no prediction
+row and is written to `<predictions stem>.skipped.tsv` as `prompt_too_long` (rule 4 in
+fyp-paper#7 then excludes it for that model in both arms, at scoring). Any other failed request
+is recorded as `request_failed` and retried on a resubmit. A completion the model returns empty
+is kept and scores 0 (`empty_content` in the row's `usage`). Runs before #134 lost such instances
+silently, which is why `results/RUN_LOG.md` tracked completion counts and loss causes by hand;
+comparing bare pass percentages across models with different completion counts is still the
+fairness trap its "Two different fairness questions" section describes.
 
 **`context_manager.py`'s mutation testing runs `cosmic-ray` as a subprocess inside the
 per-instance conda testbed env** (`self.cmd_conda_run`), never via direct import — `cosmic_ray`
@@ -303,8 +304,11 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   rather than a port collision, easy to misdiagnose. Fix: pass an explicit, distinct
   `VLLM_PORT` on every simultaneous submission (e.g. `VLLM_PORT=8003` / `VLLM_PORT=8004`) rather
   than relying on the default, especially for jobs likely to land on the same node (same
-  partition, submitted close together).
-- **`MODEL_LIMITS` (in `run_api.py`, used for client-side prompt truncation math) and
+  partition, submitted close together). `m3_run_inference.slurm` now picks a free port when
+  `VLLM_PORT` is unset and, once the port answers, checks that it is this job's own server
+  serving `$MODEL`, so this no longer needs doing by hand.
+- **Historical (before testgeneval#134, which removed client-side truncation; `MODEL_LIMITS` now only
+  feeds `prompt_token_budget`'s start-up check):** **`MODEL_LIMITS` (in `run_api.py`, used for client-side prompt truncation math) and
   `MAX_MODEL_LEN` (the actual `--max-model-len` passed to `vllm serve`, defaults to 32768) are
   two separate settings that must agree, and nothing checks that they do.** `MODEL_LIMITS`
   can claim a model's full real published context (e.g. 262144 for Qwen3-Coder-30B-A3B-Instruct),
@@ -388,7 +392,11 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   entirely), and every real evaluation-outcome category silently stays empty with no visible
   error. Check `with_logs` (or any other real outcome category) directly in a `_report.json`
   before trusting a committed evaluation report reflects real, actual test execution, a nonempty
-  `generated`/`total_predictions` count alone is not evidence evaluation ran.
+  `generated`/`total_predictions` count alone is not evidence evaluation ran. `run_docker.py` now
+  raises `DockerUnavailableError` when the `docker` CLI is missing or the daemon is unreachable,
+  so this case stops the run, and `run_apptainer.py` raises `ApptainerUnavailableError` the
+  same way when the `apptainer` binary is missing. A single container failing is still only a
+  warning.
 - **Pulling this project's evaluation Docker images (`scripts/pull_images.py`) is fast per
   image but real, cumulative local disk usage can exceed expectations fast.** Confirmed real
   2026-09-07: all 102 real, distinct images in `Makefile.testgenevallite` pulled in roughly 15
@@ -458,7 +466,9 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   from the testgeneval#46 fix pattern. The model itself supports far more (real
   `text_config.max_position_embeddings` is 10485760). Fixed by passing `MAX_MODEL_LEN=65536`
   explicitly plus dropping to the conservative `MAX_NUM_SEQS=6` (the earlier OOM was at
-  `MAX_NUM_SEQS=16` even at the smaller 32768).
+  `MAX_NUM_SEQS=16` even at the smaller 32768). `m3_run_inference.slurm` now runs
+  `inference/check_token_limits.py` before `vllm serve` and exits if `MAX_NEW_TOKENS` is not
+  below `MAX_MODEL_LEN`.
 - **The default `gpu` partition has a real per-user GPU cap of 4 (`gpuq` QOS,
   `MaxTRESPerUser = gres/gpu=4`), which blocks concurrent large tensor-parallel jobs.**
   Confirmed real 2026-09-10: with two 1-GPU L40S jobs running, a 4-GPU job cannot start until
@@ -726,6 +736,18 @@ doesn't honor the image's Dockerfile `WORKDIR`, needs explicit `--pwd`.
   of leaving it on shared scratch). Check a model's own tracking issue (#87, or its per-person
   generation/evaluation issue) for a real reported result before concluding its eval never
   happened just because a disk search came up empty.
+- **`InductorError: AttributeError: module 'torch._inductor.runtime.compile_tasks.<hash>' has no
+  attribute 'get_args'` at vLLM startup means `$HOME` is full, not that the compile cache is
+  stale.** Confirmed real 2026-11-13 (job 62586666): `df -k ~` showed 0 KB available, and the
+  module the error names was a 0 byte file written by that same job, as was every other file
+  the job wrote under `~/.cache/vllm` (2 of 2, against 0 of 677 older files). The quota error
+  can be silent: a small write succeeds and a large one only raises `Disk quota exceeded` at
+  `close`, so the log often has no quota message at all. Every earlier case of this error
+  (testgeneval#45, #69) falls on the same accounts and days as explicit quota failures.
+  `rm -rf ~/.cache/vllm` only helps by freeing a little space, which is why it kept coming back.
+  Check `df -h ~` first. Both slurm scripts now keep their caches on scratch
+  (`VLLM_CACHE_ROOT` for inference, `HF_HOME` for evaluation, which was rebuilding a 4.5 GB
+  copy of `kjain14/testgeneval` under `~/.cache/huggingface` on every run).
 - **`$HOME`'s quota fills up again, this is a recurring real failure mode, not a one-time
   fix.** Confirmed real again 2026-10-12, same account as the 2026-09-11 incident above: `.conda`
   had grown back to 12GB and `.cache/huggingface` + `.cache/vllm` added another 5GB, pushing

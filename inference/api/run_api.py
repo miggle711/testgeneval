@@ -4,15 +4,21 @@
 It sorts instances by length and continually writes the outputs to a specified file, so that the script can be stopped and restarted without losing progress.
 """
 
+import atexit
+import hashlib
 import json
 import logging
 import os
+import socket
+import subprocess
 import threading
 import time
 import traceback
 from argparse import ArgumentParser
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+
+from inference.prediction_paths import prediction_stem
 
 import dotenv
 import numpy as np
@@ -105,6 +111,9 @@ MODEL_LIMITS = {
     # Same model via OpenRouter (lowercase id), testgeneval#90 ablation.
     "qwen/qwen3-coder-30b-a3b-instruct": 262_144,
     "Qwen/Qwen3-4B-Instruct-2507": 262_144,
+    # max_position_embeddings in the model's config.json; 131,072 needs YaRN
+    # rope scaling added to the config, which these runs do not (#42, #118).
+    "Qwen/Qwen2.5-Coder-7B-Instruct": 32_768,
     "openai/gpt-oss-20b": 131_072,
     "openai/gpt-oss-120b": 131_072,
     "meta-llama/Llama-4-Scout-17B-16E-Instruct": 128_000,
@@ -187,6 +196,7 @@ OUTPUT_LIMITS = {
     "Qwen/Qwen3-Coder-30B-A3B-Instruct": 8_000,
     "qwen/qwen3-coder-30b-a3b-instruct": 8_000,
     "Qwen/Qwen3-4B-Instruct-2507": 8_000,
+    "Qwen/Qwen2.5-Coder-7B-Instruct": 8_000,
     "openai/gpt-oss-20b": 48_000,
     "openai/gpt-oss-120b": 48_000,
     "meta-llama/Llama-4-Scout-17B-16E-Instruct": 8_000,
@@ -195,8 +205,23 @@ OUTPUT_LIMITS = {
 
 EPSILON = 1000
 
+# The rerun protocol's temperature (fyp-paper#7, testgeneval#118). Used
+# when --model_args does not set one.
+DEFAULT_TEMPERATURE = 0.8
 
-def prompt_token_budget(model_name_or_path, server_max_model_len=None):
+
+def output_limit_for(model_name_or_path, override=None):
+    """max_tokens for a request: the run's override when given (--output_limit,
+    OUTPUT_LIMIT in m3_run_inference.slurm; used by the Qwen3-4B 8k against
+    16k comparison, fyp-paper#5), else the model's OUTPUT_LIMITS entry."""
+    if override is not None:
+        if override <= 0:
+            raise ValueError(f"output limit must be positive, got {override}")
+        return override
+    return OUTPUT_LIMITS.get(model_name_or_path, 4_096)
+
+
+def prompt_token_budget(model_name_or_path, server_max_model_len=None, output_limit=None):
     """Tokens a prompt may use: the context window minus the output limit
     and EPSILON. The context window is MODEL_LIMITS's entry, or the server's
     own --max-model-len when that is smaller. vLLM rejects any request whose
@@ -206,7 +231,7 @@ def prompt_token_budget(model_name_or_path, server_max_model_len=None):
     context = MODEL_LIMITS.get(model_name_or_path, 32_000)
     if server_max_model_len:
         context = min(context, server_max_model_len)
-    budget = context - OUTPUT_LIMITS.get(model_name_or_path, 4_096) - EPSILON
+    budget = context - output_limit_for(model_name_or_path, output_limit) - EPSILON
     if budget <= 0:
         raise ValueError(
             f"{model_name_or_path}: a context of {context} tokens leaves no room "
@@ -215,12 +240,17 @@ def prompt_token_budget(model_name_or_path, server_max_model_len=None):
     return budget
 
 
-def calc_cost(model_name, input_tokens, output_tokens):
+def calc_cost(model_name, input_tokens, output_tokens, samples=1):
     """
     Calculates the cost of a response from the openai API.
 
     Args:
-    response (openai.ChatCompletion): The response from the API.
+    model_name: model whose per-token prices to use.
+    input_tokens: usage.prompt_tokens, counted once per request.
+    output_tokens: usage.completion_tokens, the sum over all n completions.
+    samples: n, the completions in the request. Logged so that
+        scripts/aggregate_token_counts.py can report output tokens per
+        sample: a pass@k request with n=k logs k completions' tokens.
 
     Returns:
     float: The cost of the response.
@@ -235,12 +265,27 @@ def calc_cost(model_name, input_tokens, output_tokens):
         + MODEL_COST_PER_OUTPUT.get(model_name, 0) * output_tokens
     )
     logger.info(
-        f"input_tokens={input_tokens}, output_tokens={output_tokens}, cost={cost:.2f}"
+        f"input_tokens={input_tokens}, output_tokens={output_tokens}, cost={cost:.2f}, "
+        f"samples={samples}"
     )
     return cost
 
 
 @retry(wait=wait_random_exponential(min=30, max=600), stop=stop_after_attempt(3))
+def request_seed(base_seed, instance_id, prompt_name, num_samples, request_index=0):
+    """The sampling seed sent with one request: a stable hash of the run's base
+    seed, the instance, the prompt setting, the number of samples requested
+    and the request's index. A resubmit of the same request gets the same
+    seed; a staged 1 + 4 run (k=1, then k=4) gets different seeds for its two
+    requests, so the second cannot repeat the first's draw. None when seeding
+    is off. This controls sampling, it does not guarantee identical output:
+    vLLM's batching and GPU arithmetic can still change it."""
+    if base_seed is None:
+        return None
+    key = f"{base_seed}|{instance_id}|{prompt_name}|k{num_samples}|r{request_index}"
+    return int.from_bytes(hashlib.sha256(key.encode()).digest()[:4], "big") & 0x7FFFFFFF
+
+
 def call_chat(
     model_name_or_path,
     inputs,
@@ -250,6 +295,7 @@ def call_chat(
     system_message,
     no_system_message=False,
     n=1,
+    seed=None,
     **model_args,
 ):
     """
@@ -308,6 +354,8 @@ def call_chat(
             )
         client = _thread_local.client
 
+    if seed is not None:
+        model_args = {**model_args, "seed": seed}
     try:
         if model_name_or_path == "gpt-5":
             response = client.chat.completions.create(
@@ -331,9 +379,10 @@ def call_chat(
         input_tokens = response.usage.prompt_tokens
         # completion_tokens is the sum across all n completions, not
         # per-completion -- that's the real cost incurred, so calc_cost
-        # doesn't need adjusting for n > 1.
+        # doesn't need adjusting for n > 1. n is logged with it so token
+        # counts can be compared per sample (testgeneval#46).
         output_tokens = response.usage.completion_tokens
-        cost = calc_cost(model_name_or_path, input_tokens, output_tokens)
+        cost = calc_cost(model_name_or_path, input_tokens, output_tokens, samples=n)
         return response, cost
 
     except Exception as e:
@@ -345,6 +394,78 @@ def gpt_tokenize(string: str, encoding) -> int:
     """Returns the number of tokens in a text string."""
     num_tokens = len(encoding.encode(string))
     return num_tokens
+
+
+# Phrases in the error a server returns when the prompt plus max_tokens does
+# not fit its context: vLLM's OpenAI server and the OpenAI API say "maximum
+# context length", vLLM's engine says "longer than the maximum model length".
+CONTEXT_LENGTH_PHRASES = ("maximum context length", "maximum model length")
+
+
+def skip_reason(error):
+    """prompt_too_long when the server refused the prompt as too long for its
+    context (protocol rule 4: the instance is excluded for this model), else
+    request_failed (an infrastructure failure: the instance stays unknown and
+    a resubmit tries it again)."""
+    text = str(error).lower()
+    if any(phrase in text for phrase in CONTEXT_LENGTH_PHRASES):
+        return "prompt_too_long"
+    return "request_failed"
+
+
+def skipped_path(output_file):
+    """Where the instances that got no prediction row are recorded, next to
+    the predictions file. Not .jsonl, so scripts that glob for prediction
+    files do not read it as one."""
+    return os.path.splitext(output_file)[0] + ".skipped.tsv"
+
+
+SKIPPED_COLUMNS = ("id", "instance_id", "model", "prompt", "reason", "detail")
+
+
+class SkipRecorder:
+    """Appends one tab-separated row per instance that got no prediction row:
+    id, instance_id, model, prompt (the setting, e.g. full), reason, detail.
+    A row that is already in the file is not written again, so a resubmit
+    does not repeat prompt_too_long rows. An id that later appears in the
+    predictions file was generated on a resubmit; an id in this file and not
+    in the predictions file is excluded, for the reason on its last row."""
+
+    def __init__(self, path):
+        self.path = path
+        self.lock = threading.Lock()
+        self.seen = set()
+        if os.path.exists(path):
+            with open(path) as f:
+                for line in f.read().splitlines()[1:]:
+                    cols = line.split("\t")
+                    if len(cols) >= 5:
+                        self.seen.add((cols[0], cols[3], cols[4]))
+
+    def record(self, curr_id, instance_id, model, prompt_name, reason, detail):
+        key = (str(curr_id), prompt_name, reason)
+        clean = " ".join(str(detail).split())[:500]
+        with self.lock:
+            if key in self.seen:
+                return
+            self.seen.add(key)
+            new_file = not os.path.exists(self.path)
+            with open(self.path, "a") as f:
+                if new_file:
+                    f.write("\t".join(SKIPPED_COLUMNS) + "\n")
+                f.write("\t".join([str(curr_id), str(instance_id), model, prompt_name, reason, clean]) + "\n")
+
+
+def sampling_record(seed, temperature, top_p, max_tokens, n):
+    """What a prediction row records about how its samples were drawn."""
+    return {"seed": seed, "temperature": temperature, "top_p": top_p,
+            "max_tokens": max_tokens, "n": n}
+
+
+def served_by(response):
+    """The model name and system fingerprint the server reports, if any."""
+    return {"served_model": getattr(response, "model", None),
+            "system_fingerprint": getattr(response, "system_fingerprint", None)}
 
 
 def openai_inference(
@@ -363,6 +484,8 @@ def openai_inference(
     model_nickname=None,
     no_system_message=False,
     max_concurrency=1,
+    seed_base=None,
+    output_limit=None,
 ):
     """
     Runs inference on a dataset using the openai API.
@@ -383,42 +506,33 @@ def openai_inference(
         that path. The real model_name_or_path is still used for the
         actual API calls below. Defaults to model_name_or_path when there's
         no "/" to strip.
+    output_limit (int): max_tokens for every full-setting request, in place
+        of the model's OUTPUT_LIMITS entry. None keeps the entry.
     """
-    # tiktoken only knows real OpenAI model names -- a locally served model
-    # (e.g. via LOCAL_MODEL_BASE_URL) falls back to gpt-4's encoding, which
-    # is a reasonable approximation for token-count-based truncation, not an
-    # exact match for the local model's own tokenizer.
-    try:
-        encoding = tiktoken.encoding_for_model(model_name_or_path)
-    except KeyError:
-        encoding = tiktoken.encoding_for_model("gpt-4")
     # .get(..., default): an unregistered model served via
     # LOCAL_MODEL_BASE_URL (e.g. one of the ~8 planned M3 models before
     # it's added to MODEL_LIMITS/OUTPUT_LIMITS) falls back to a
     # conservative default rather than a KeyError. Add real entries once a
     # model's actual context window/output limit are known.
-    default_output_limit = OUTPUT_LIMITS.get(model_name_or_path, 4_096)
+    default_output_limit = output_limit_for(model_name_or_path, output_limit)
+    print(f"Output limit (max_tokens): {default_output_limit}"
+          + (" (override)" if output_limit is not None else " (OUTPUT_LIMITS)"))
     # SERVER_MAX_MODEL_LEN is the --max-model-len the vLLM server was started
     # with (m3_run_inference.slurm exports it); unset for hosted APIs.
     server_max_model_len = os.environ.get("SERVER_MAX_MODEL_LEN")
-    model_limit = prompt_token_budget(
-        model_name_or_path, int(server_max_model_len) if server_max_model_len else None
+    # Fails fast when the server's context leaves no room for a prompt. The
+    # budget is not used to cut prompts: protocol rule 4 (fyp-paper#7)
+    # excludes an instance whose prompt does not fit, so a prompt is sent
+    # whole and, when the server refuses it as too long, the instance is
+    # recorded as prompt_too_long in the skipped file and gets no row. The
+    # server counts the tokens with the model's own tokenizer and chat
+    # template; truncating here used GPT-4's tiktoken encoding for every
+    # model and kept only the end of the prompt, dropping the start of the
+    # instruct arm's code file without a record.
+    prompt_token_budget(
+        model_name_or_path, int(server_max_model_len) if server_max_model_len else None,
+        output_limit,
     )
-
-    # Adjust dataset to truncate prompts to the last model_limit tokens
-    def truncate_prompts(example):
-        truncated = {}
-        for key, prompt in example["preds_prompts"].items():
-            tokenized = encoding.encode(prompt)
-            if len(tokenized) > model_limit:
-                # Truncate to the last model_limit tokens and decode back to text
-                truncated[key] = encoding.decode(tokenized[-model_limit:])
-            else:
-                truncated[key] = prompt
-        example["preds_prompts"] = truncated
-        return example
-
-    test_dataset = test_dataset.map(truncate_prompts, load_from_cache_file=False)
 
     # LOCAL_MODEL_BASE_URL (e.g. http://127.0.0.1:8000/v1/ for a local
     # server, or https://api.groq.com/openai/v1/ for Groq: trailing slash
@@ -442,7 +556,9 @@ def openai_inference(
         openai.api_key = openai_key
         print(f"Using OpenAI key {'*' * max(0, len(openai_key)-5) + openai_key[-5:]}")
     print(model_args)
-    temperature = model_args.pop("temperature", 0.2)
+    # 0.8 is the protocol's temperature (fyp-paper#7); 0.2 caused repetition
+    # loops in every model tested (testgeneval#118).
+    temperature = model_args.pop("temperature", DEFAULT_TEMPERATURE)
     top_p = model_args.pop("top_p", 0.95 if temperature > 0 else 1)
     print(f"Using temperature={temperature}, top_p={top_p}")
     if num_samples > 1 and temperature == 0:
@@ -460,6 +576,7 @@ def openai_inference(
         "model_name_or_path": recorded_name + f"_t={temperature}",
     }
     print(f"Filtered to {len(test_dataset)} instances")
+    skips = SkipRecorder(skipped_path(output_file))
 
     # Shared across worker threads: a lock around both, since
     # ThreadPoolExecutor runs process_instance concurrently for
@@ -496,6 +613,9 @@ def openai_inference(
                 # --num_samples for this setting; num_samples now applies
                 # here too, needed for pass@k evaluation (k=num_samples).
                 try:
+                    seed = request_seed(seed_base, curr_id, prompt_name, num_samples)
+                    output_dict.setdefault("sampling", {})[prompt_name] = sampling_record(
+                        seed, temperature, top_p, default_output_limit, num_samples)
                     response, cost = call_chat(
                         model_name_or_path,
                         prompt_text,
@@ -505,7 +625,9 @@ def openai_inference(
                         system_message_full,
                         no_system_message=no_system_message,
                         n=num_samples,
+                        seed=seed,
                     )
+                    output_dict["sampling"][prompt_name].update(served_by(response))
                     for choice in response.choices:
                         # message.content can come back None rather than
                         # an empty string, confirmed real for gpt-oss
@@ -525,18 +647,24 @@ def openai_inference(
                                 "reasoning_tokens", None,
                             ),
                         })
-                        if choice.message.content is None:
+                        # A None content is the model returning no answer
+                        # (protocol: a generation failure, scored 0). It is
+                        # kept as an empty reply, which postprocess_fn turns
+                        # into the same prediction as a reply with no code
+                        # block, and flagged in usage, so the sample is
+                        # evaluated and scored instead of going missing.
+                        content = choice.message.content
+                        if content is None:
+                            prompt_usage[-1]["empty_content"] = True
                             print(
                                 f"Warning: choice.message.content is None for "
                                 f"{curr_id} (finish_reason="
                                 f"{choice.finish_reason}, "
                                 f"completion_tokens={response.usage.completion_tokens}"
-                                f"), skipping this sample"
+                                f"), kept as an empty reply"
                             )
-                            continue
-                        prompt_predictions.append(
-                            postprocess_fn(choice.message.content, True)
-                        )
+                            content = ""
+                        prompt_predictions.append(postprocess_fn(content, True))
                     with cost_lock:
                         state["total_cost"] += cost
                         if max_cost is not None and state["total_cost"] >= max_cost:
@@ -544,10 +672,15 @@ def openai_inference(
                             state["cost_exceeded"] = True
                 except Exception as e:
                     print(f"Error: {e}")
+                    skips.record(curr_id, datum["instance_id"], recorded_name,
+                                 prompt_name, skip_reason(e), e)
                     failed = True
             else:
-                for _ in range(num_samples):
+                for request_index in range(num_samples):
                     try:
+                        seed = request_seed(seed_base, curr_id, prompt_name, 1, request_index)
+                        output_dict.setdefault("sampling", {}).setdefault(prompt_name, []).append(
+                            sampling_record(seed, temperature, top_p, 512, 1))
                         response, cost = call_chat(
                             model_name_or_path,
                             prompt_text,
@@ -556,6 +689,7 @@ def openai_inference(
                             512,
                             system_message,
                             no_system_message=no_system_message,
+                            seed=seed,
                         )
                         completion = response.choices[0].message.content
                         prompt_usage.append({
@@ -567,13 +701,14 @@ def openai_inference(
                             ),
                         })
                         if completion is None:
+                            prompt_usage[-1]["empty_content"] = True
                             print(
                                 f"Warning: choice.message.content is None for "
                                 f"{curr_id} ({prompt_name}, completion_tokens="
                                 f"{response.usage.completion_tokens}), "
-                                f"skipping this sample"
+                                f"kept as an empty reply"
                             )
-                            continue
+                            completion = ""
                         prompt_predictions.append(
                             postprocess_fn(completion, False)
                         )
@@ -584,6 +719,8 @@ def openai_inference(
                                 state["cost_exceeded"] = True
                     except Exception as e:
                         print(f"Error: {e}")
+                        skips.record(curr_id, datum["instance_id"], recorded_name,
+                                     prompt_name, skip_reason(e), e)
                         failed = True
             output_dict["preds"][prompt_name] = prompt_predictions
             output_dict["usage"][prompt_name] = prompt_usage
@@ -657,6 +794,79 @@ def parse_model_args(model_args):
     return kwargs
 
 
+def _lock_holder_alive(holder):
+    """Whether the job or process that wrote a lock file is still running.
+    Unknown counts as alive, so a lock is never taken over by mistake."""
+    job = holder.get("job")
+    if job:
+        if job == os.environ.get("SLURM_JOB_ID"):
+            return False  # this job, requeued: its earlier run is gone
+        try:
+            out = subprocess.run(["squeue", "-h", "-j", str(job), "-o", "%T"],
+                                 capture_output=True, text=True, timeout=60)
+        except (OSError, subprocess.TimeoutExpired):
+            return True
+        # A finished job prints nothing, or fails once it ages out of squeue
+        return out.returncode == 0 and out.stdout.strip() != ""
+    pid = holder.get("pid")
+    if pid and holder.get("host") == socket.gethostname():
+        try:
+            os.kill(int(pid), 0)
+        except ProcessLookupError:
+            return False
+        except PermissionError:
+            return True
+        return True
+    return True
+
+
+def acquire_output_lock(output_file):
+    """Take <output_file>.lock for the life of this process, so two jobs for
+    the same model, arm, temperature and k cannot both read the same
+    existing ids and append the same instances (testgeneval#124). The lock
+    file is created with an exclusive open and holds the Slurm job id, host
+    and pid; it does not rely on flock, which Lustre may not share across
+    nodes. A lock left by a job that is no longer running (killed at its
+    time limit, say) is replaced. Returns a function that releases it."""
+    path = f"{output_file}.lock"
+    me = {"job": os.environ.get("SLURM_JOB_ID"), "host": socket.gethostname(), "pid": os.getpid()}
+    for _ in range(2):
+        try:
+            fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+        except FileExistsError:
+            try:
+                with open(path) as f:
+                    holder = json.load(f)
+            except (OSError, ValueError):
+                holder = {}
+            if _lock_holder_alive(holder):
+                raise RuntimeError(
+                    f"{output_file} is being written by another run ({holder or 'unknown holder'}, "
+                    f"lock file {path}). Two writers would duplicate rows. If that run is "
+                    f"no longer going, delete the lock file and resubmit."
+                )
+            logger.warning(f"Replacing the lock left by a run that is no longer going: {holder}")
+            try:
+                os.remove(path)
+            except FileNotFoundError:
+                pass
+            continue
+        with os.fdopen(fd, "w") as f:
+            json.dump(me, f)
+
+        def release():
+            try:
+                with open(path) as f:
+                    if json.load(f) == me:
+                        os.remove(path)
+            except (OSError, ValueError):
+                pass
+
+        atexit.register(release)
+        return release
+    raise RuntimeError(f"Could not take the lock {path}")
+
+
 def main(
     dataset_name_or_path,
     split,
@@ -671,9 +881,12 @@ def main(
     skip_full,
     skip_completion=False,
     prompt_config="instruct",
-    kg_prompts_path="kg_prompts.json",
+    kg_prompts_path=None,
     no_system_message=False,
     max_concurrency=1,
+    seed=0,
+    no_seed=False,
+    output_limit=None,
 ):
     if shard_id is None and num_shards is not None:
         logger.warning(
@@ -683,28 +896,28 @@ def main(
         logger.warning(f"Received shard_id={shard_id} but num_shards is None, ignoring")
     model_args = parse_model_args(model_args)
 
+    # Both arms name the same target function(s), from kg_prompts.json, and
+    # cover the same instances (fyp-paper#7 §2, §3 rule 1). A path that was
+    # given but does not resolve is an error in both arms; it used to send
+    # instruct on without targets while kg_only refused (testgeneval#117).
+    # Only when no path is given at all does instruct run unfocused.
+    if kg_prompts_path is not None and not os.path.isfile(kg_prompts_path):
+        raise FileNotFoundError(
+            f"kg_prompts_path={kg_prompts_path!r} is not a file (cwd={os.getcwd()!r}). "
+            f"Pass an absolute path, or leave it out to run instruct without target names."
+        )
     if prompt_config == "kg_only":
+        if kg_prompts_path is None:
+            raise ValueError("--prompt_config kg_only needs --kg_prompts_path")
         from inference.configs.kg_only_prompt import KGOnlyPrompt
         prompt_info = KGOnlyPrompt(prompts_path=kg_prompts_path)
     else:
-        # Also reads kg_prompts_path for target_functions/target_classes,
-        # so instruct focuses on the same changed function(s) kg_only
-        # does. Falls back to unfocused prompts if the file doesn't
-        # exist -- logged loudly, since os.path.exists is resolved
-        # against whatever CWD this process happens to run from (e.g.
-        # via subprocess from run_pipeline.py or the M3 slurm script),
-        # so a real file elsewhere can silently miss with no other signal.
-        if os.path.exists(kg_prompts_path):
-            resolved_kg_prompts_path = kg_prompts_path
-        else:
-            resolved_kg_prompts_path = None
+        if kg_prompts_path is None:
             logger.warning(
-                f"kg_prompts_path={kg_prompts_path!r} not found relative to "
-                f"cwd={os.getcwd()!r} -- instruct will use unfocused prompts "
-                f"(no target function/class wording). If this file exists "
-                f"elsewhere, pass an absolute path."
+                "No --kg_prompts_path: instruct runs with unfocused prompts "
+                "(no target function/class named). Not a protocol run."
             )
-        prompt_info = InstructPrompt(kg_prompts_path=resolved_kg_prompts_path)
+        prompt_info = InstructPrompt(kg_prompts_path=kg_prompts_path)
 
     model_nickname = model_name_or_path
     if "checkpoint" in Path(model_name_or_path).name:
@@ -712,18 +925,19 @@ def main(
     else:
         model_nickname = Path(model_name_or_path).name
 
-    temperature = model_args["temperature"] if "temperature" in model_args else 0.2
+    temperature = model_args["temperature"] if "temperature" in model_args else DEFAULT_TEMPERATURE
     # k{num_samples} avoids a real, confirmed collision: model/dataset/
     # temperature alone don't distinguish a pass@1 run from a pass@5 run
     # at the same temperature, so the later one's existing_ids read (and
     # write) into the earlier one's file, silently mixing or no-op'ing
     # real production data (testgeneval#43-adjacent incident, see
     # RUN_LOG.md's "root problem" section).
-    output_file = f"{model_nickname}__{dataset_name_or_path.split('/')[-1]}__{temperature}__k{num_samples}__{split}"
+    output_file = prediction_stem(model_nickname, dataset_name_or_path, temperature, num_samples, split=split)
     if shard_id is not None and num_shards is not None:
         output_file += f"__shard-{shard_id}__num_shards-{num_shards}"
     output_file = Path(output_dir, output_file + ".jsonl")
     logger.info(f"Will write to {output_file}")
+    release_lock = acquire_output_lock(output_file)
     existing_ids = set()
     if os.path.exists(output_file):
         with open(output_file) as f:
@@ -742,6 +956,20 @@ def main(
     if not split in dataset:
         raise ValueError(f"Invalid split {split} for dataset {dataset_name_or_path}")
     dataset = dataset[split]
+    if kg_prompts_path is not None:
+        with open(kg_prompts_path) as f:
+            covered = set(json.load(f))
+        uncovered = [i for i in dataset["id"] if i not in covered]
+        if uncovered:
+            # kg_only already raises on these rows; instruct used to generate
+            # them without a target named, so the arms covered different
+            # instances (testgeneval#117).
+            raise ValueError(
+                f"{len(uncovered)} row(s) of split {split!r} have no entry in "
+                f"{kg_prompts_path}, so no target is named for them: {uncovered[:5]}"
+                + (" ..." if len(uncovered) > 5 else "")
+                + ". Drop them from the dataset for both arms and report the count."
+            )
 
     print(dataset[0].keys())
     # Shard before filtering existing_ids, not after. Each shard's
@@ -785,9 +1013,12 @@ def main(
             model_nickname=model_nickname,
             no_system_message=no_system_message,
             max_concurrency=max_concurrency,
+            seed_base=None if no_seed else seed,
+            output_limit=output_limit,
         )
     else:
         raise ValueError(f"Invalid model name or path {model_name_or_path}")
+    release_lock()
     logger.info(f"Done!")
 
 
@@ -878,7 +1109,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--kg_prompts_path",
         type=str,
-        default="kg_prompts.json",
+        default=None,
         help="Path to a JSON file of pre-computed KG prompts "
              "(scripts/build_kg_prompts.py in pycodekg). Required content "
              "for --prompt_config kg_only; also read by --prompt_config "
@@ -907,6 +1138,26 @@ if __name__ == "__main__":
              "latency is unchanged) -- 4-8 is a reasonable starting point "
              "on a single GPU node, watch vLLM's own GPU KV cache usage "
              "log line to see how much headroom is actually left.",
+    )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=0,
+        help="Base for each request's sampling seed (request_seed: a hash of "
+             "this, the instance, the setting, the sample count and the "
+             "request index). Recorded in every row's 'sampling'.",
+    )
+    parser.add_argument(
+        "--no_seed",
+        action="store_true",
+        help="Send no seed (the server samples without an explicit per-request seed).",
+    )
+    parser.add_argument(
+        "--output_limit",
+        type=int,
+        default=None,
+        help="max_tokens for every request, in place of the model's OUTPUT_LIMITS "
+        "entry (recorded in each row's sampling record). Default: the entry.",
     )
     args = parser.parse_args()
     print(args.model_args)
