@@ -860,6 +860,12 @@ TESTS_FAILED: str = ">>>>> Some Tests Failed"
 # hit 3600 on most passing matplotlib and seaborn samples); both runners pass
 # it into the container, and the host-side cap grows with it.
 MUTATION_TIMEOUT: int = int(os.environ.get("MUTATION_TIMEOUT", "3600"))
+# Limit for every harness subprocess that sets none of its own: setup checks,
+# git operations, `coverage json`, the mutation count and scoring scripts.
+# They normally take seconds; a hang in one would otherwise run until the
+# host watchdog, which could only account for it as unbounded (fyp-paper#7,
+# open item 4). Test commands keep TIMEOUT, the mutation run MUTATION_TIMEOUT.
+OVERHEAD_TIMEOUT: int = int(os.environ.get("OVERHEAD_TIMEOUT", "600"))
 UNFILTERED_TESTS_FAILED: str = ">>>>> Unfiltered Tests Failed"
 TESTS_CONFIG: str = ">>>>> Tests config"
 TESTS_PASSED: str = ">>>>> All Tests Passed"

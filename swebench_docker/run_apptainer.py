@@ -63,6 +63,7 @@ from swebench_docker.constants import (
     KEY_PREDICTIONS,
     MAP_VERSION_TO_INSTALL,
     MUTATION_TIMEOUT,
+    OVERHEAD_TIMEOUT,
     PYENV_REPOS,
 )
 
@@ -120,10 +121,21 @@ def _entrypoint_path(repo: str) -> str:
     return "/home/swe-bench/entrypoint.sh"
 
 
+# Steps that use OVERHEAD_TIMEOUT (no limit of their own), per the call sites
+# in context_manager.py: per instance, the setup checks, the git operations
+# that apply the patch, and the mutant-count script; per test run, `coverage
+# json`; per sample with mutation, the scripts that skip non-target mutants
+# and score the rest (or cr-rate and cr-report at whole-file scope).
+OVERHEAD_STEPS_PER_INSTANCE = 12
+OVERHEAD_STEPS_PER_RUN = 1
+OVERHEAD_STEPS_PER_MUTATION = 2
+
+
 def filter_runs(sample) -> int:
     """How many test-command runs filtering makes for one sample: one per test
-    method and test function, parsed with the same patterns evaluate_instance
-    uses (full_processing), so the count can't drift from what actually runs."""
+    method and test function, parsed with the same function evaluate_instance
+    uses (full_processing), so the count can't drift from what actually runs.
+    Pattern matching only; no generated code runs on the host."""
     from swebench_docker.evaluate_instance import extract_preamble_classes_and_functions
     try:
         _, classes, functions = extract_preamble_classes_and_functions(sample or "", None)
@@ -132,24 +144,32 @@ def filter_runs(sample) -> int:
     return len(functions) + sum(len(methods) for _, methods, _ in classes)
 
 
-def host_timeout_for(timeout: int, n_samples: int, skip_mutation: bool, samples=None) -> int:
-    """Host-side wall-clock cap for one container, which evaluates all of an
-    instance's samples in turn.
+def host_timeout_for(timeout: int, n_samples: int, skip_mutation: bool, samples=None,
+                     filtered: bool = True) -> int:
+    """Host-side wall-clock budget for one container, which evaluates all of an
+    instance's samples in turn (fyp-paper#7, open item 4: a budget of one
+    `timeout` per sample killed sphinx-7305 and sphinx-10353 before their last
+    samples were evaluated, while every step inside was within its own limit).
 
-    With the samples' texts, the cap is the sum of the limits the harness
-    already enforces inside the container, so it never cuts work those limits
-    allow (fyp-paper#7 open item 4: on Sphinx, a cap of one TIMEOUT per sample
-    killed sphinx-7305 before its last samples were evaluated):
-    - once per instance: the setup command and, with mutation, the target
-      mutant count (`cosmic-ray init`), each up to `timeout`;
-    - per sample: one filtering run per test method and test function, then
-      one combined run, each up to `timeout`; with mutation, `cosmic-ray init`
-      (up to `timeout`) and the mutation run (up to MUTATION_TIMEOUT).
-    `coverage json` has no limit of its own; the margin covers it.
+    With the samples' texts, the budget is
 
-    Without the texts (samples=None), the earlier estimate of one `timeout`
-    per sample plus MUTATION_TIMEOUT. APPTAINER_HOST_TIMEOUT overrides with a
-    fixed value either way.
+        B = B_instance + sum over samples of B_sample + margin
+
+    built from limits the harness enforces inside the container:
+    - B_instance: the setup command (`timeout`); with mutation, the target
+      mutant count (`cosmic-ray init`, `timeout`); and its overhead steps;
+    - B_sample: its test runs, each up to `timeout` plus `coverage json`
+      (overhead): with filtering (the `full` setting), one per test method and
+      function plus the combined run; otherwise one. With mutation,
+      `cosmic-ray init` (`timeout`), the mutation run (MUTATION_TIMEOUT) and
+      its reporting steps (overhead);
+    - overhead steps are bounded by OVERHEAD_TIMEOUT each.
+
+    It is a ceiling: steps normally finish far inside their limits, so fast
+    instances aren't held longer; it only decides when a hung container is
+    killed. Without the texts (samples=None), the earlier estimate of one
+    `timeout` plus MUTATION_TIMEOUT per sample. APPTAINER_HOST_TIMEOUT
+    overrides with a fixed value either way.
     """
     override = os.environ.get("APPTAINER_HOST_TIMEOUT")
     if override:
@@ -157,10 +177,41 @@ def host_timeout_for(timeout: int, n_samples: int, skip_mutation: bool, samples=
     if samples is None:
         per_sample = timeout + (0 if skip_mutation else MUTATION_TIMEOUT)
         return max(1, n_samples) * per_sample + APPTAINER_HOST_TIMEOUT_MARGIN
-    mutation = 0 if skip_mutation else timeout + MUTATION_TIMEOUT
-    per_instance = timeout + (0 if skip_mutation else timeout)
-    per_samples = sum((filter_runs(sample) + 1) * timeout + mutation for sample in samples)
-    return per_instance + max(per_samples, timeout) + APPTAINER_HOST_TIMEOUT_MARGIN
+    o = OVERHEAD_TIMEOUT
+    b_instance = timeout + OVERHEAD_STEPS_PER_INSTANCE * o + (0 if skip_mutation else timeout)
+    mutation = 0 if skip_mutation else timeout + MUTATION_TIMEOUT + OVERHEAD_STEPS_PER_MUTATION * o
+    per_run = timeout + OVERHEAD_STEPS_PER_RUN * o
+    b_samples = sum(((filter_runs(sample) + 1) if filtered else 1) * per_run + mutation
+                    for sample in samples)
+    return b_instance + max(b_samples, per_run) + APPTAINER_HOST_TIMEOUT_MARGIN
+
+
+def parse_slurm_time(text):
+    """Seconds in a Slurm time string ([D-]HH:MM:SS, MM:SS or SS), or None
+    for UNLIMITED, NOT_SET or anything unreadable."""
+    text = (text or "").strip()
+    try:
+        days, _, rest = text.rpartition("-")
+        parts = [int(x) for x in rest.split(":")]
+        while len(parts) < 3:
+            parts.insert(0, 0)
+        h, m, sec = parts[-3:]
+        return (int(days) if days else 0) * 86400 + h * 3600 + m * 60 + sec
+    except ValueError:
+        return None
+
+
+def slurm_seconds_left():
+    """Seconds left in the enclosing Slurm job, or None outside one."""
+    job = os.environ.get("SLURM_JOB_ID")
+    if not job:
+        return None
+    try:
+        out = subprocess.run(["squeue", "-h", "-j", job, "-o", "%L"], capture_output=True,
+                             text=True, timeout=30).stdout
+    except Exception:
+        return None
+    return parse_slurm_time(out)
 
 
 async def run_apptainer_evaluation(
@@ -288,6 +339,7 @@ async def run_apptainer_evaluation(
         "APPTAINERENV_SKIP_MUTATION": str(skip_mutation),
         "APPTAINERENV_MUTATION_SCOPE": os.environ.get("MUTATION_SCOPE", "file"),
         "APPTAINERENV_MUTATION_TIMEOUT": str(MUTATION_TIMEOUT),
+        "APPTAINERENV_OVERHEAD_TIMEOUT": str(OVERHEAD_TIMEOUT),
     }
 
     cmd_string = " ".join(apptainer_command)
@@ -303,9 +355,17 @@ async def run_apptainer_evaluation(
     samples = task_instance.get(KEY_PREDICTIONS, {}).get(setting)
     n_samples = len(samples) if isinstance(samples, list) else 1
     texts = samples if isinstance(samples, list) else [samples]
-    host_timeout = host_timeout_for(timeout, n_samples, skip_mutation, samples=texts)
+    host_timeout = host_timeout_for(timeout, n_samples, skip_mutation, samples=texts,
+                                    filtered=(setting == "full"))
     logger.info(f"[{task_instance['id']}] host timeout {host_timeout}s "
                 f"(sum of the inner limits over {n_samples} sample(s))")
+    left = slurm_seconds_left()
+    if left is not None and host_timeout > left:
+        # The watchdog is no longer the binding limit: Slurm may end the job
+        # first, cutting this container's later samples.
+        logger.warning(f"[{task_instance['id']}] host timeout {host_timeout}s exceeds the "
+                       f"{left}s left in Slurm job {os.environ.get('SLURM_JOB_ID')}; "
+                       f"this container may be cut by the job's time limit")
 
     try:
         process = await asyncio.create_subprocess_exec(

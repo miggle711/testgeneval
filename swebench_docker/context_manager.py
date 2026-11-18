@@ -25,6 +25,7 @@ from swebench_docker.constants import (
     KEY_MODEL,
     MAP_VERSION_TO_INSTALL,
     MUTATION_TEMPLATE,
+    OVERHEAD_TIMEOUT,
     TESTS_ERROR,
     TESTS_FAILED,
     TESTS_PASSED,
@@ -78,8 +79,11 @@ class ExecWrapper:
         self,
         subprocess_args: Optional[Dict] = None,
         logger: Optional[LogWrapper] = None,
+        default_timeout: Optional[int] = None,
     ):
         self.logger = logger
+        # Applied only to calls that set no timeout of their own.
+        self.default_timeout = default_timeout
         if subprocess_args is None:
             self.subprocess_args = {}
         else:
@@ -92,6 +96,8 @@ class ExecWrapper:
             else:
                 self.logger.write(f"Command: {cmd}", level=DEBUG)
             combined_args = {**self.subprocess_args, **kwargs}
+            if self.default_timeout is not None and combined_args.get("timeout") is None:
+                combined_args["timeout"] = self.default_timeout
             self.logger.write(
                 f"Subprocess args: {json.dumps(combined_args)}", level=DEBUG
             )
@@ -167,6 +173,7 @@ class TaskEnvContextManager:
                 "stderr": subprocess.STDOUT,
             },
             logger=self.log,
+            default_timeout=OVERHEAD_TIMEOUT,
         )
 
     def add_coverage_tox(self, config_file):
