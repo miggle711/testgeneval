@@ -316,13 +316,11 @@ by "vllm server did not become ready", raise
 `VLLM_STARTUP_TIMEOUT` (seconds, defaults to 900) rather than assuming
 something is broken.
 
-If two of your own jobs might land on the same M3 node at the same
-time, set `VLLM_PORT` explicitly and differently on each (for example
-`VLLM_PORT="8003"` on one and `VLLM_PORT="8004"` on the other). Left at
-its default, two jobs on the same node can silently end up talking to
-each other's model server instead of their own, producing confusing
-"model does not exist" errors that look like a typo rather than a real
-port collision.
+Each job picks a free port for its own model server, so two jobs on the
+same M3 node no longer collide. Leave `VLLM_PORT` unset unless you need
+a specific port. If you do set it and another server already holds that
+port, the job stops with "Port N answers but is not this job's vllm
+server" rather than sending its requests to the other model.
 
 Both scripts default `HF_HOME` to project scratch space rather than your
 M3 home directory. Specifically, each user gets their own subfolder

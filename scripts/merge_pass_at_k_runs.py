@@ -123,6 +123,33 @@ def _check_prompts_match(curr_id, rec1, rec2, prompt_name, allow_prompt_mismatch
     stats["prompt_mismatch_allowed"] += 1
 
 
+def _prompt_tokens(rec, prompt_name):
+    """The server's prompt token count for this setting's request, or None.
+    Only the full setting's sampling record is a dict (one request); the
+    completion settings record a list of single-sample requests."""
+    sampling = (rec.get("sampling") or {}).get(prompt_name)
+    return sampling.get("prompt_tokens") if isinstance(sampling, dict) else None
+
+
+def _check_prompt_tokens_match(curr_id, rec1, rec2, prompt_name):
+    """The same prompt on the same server gives the same token count. A
+    difference means the tokenizer, chat template or model changed between
+    stages, so the samples are not exchangeable; the merged record would
+    otherwise keep stage 1's count and never check stage 2's. Skipped when
+    either side has no count (files before testgeneval#154, or a server that
+    omits usage). --allow_prompt_mismatch does not cover this: identical
+    prompt text with a different count is a serving change, not a known
+    prompt difference."""
+    t1, t2 = _prompt_tokens(rec1, prompt_name), _prompt_tokens(rec2, prompt_name)
+    if t1 is None or t2 is None or t1 == t2:
+        return
+    raise ValueError(
+        f"id {curr_id!r}: sampling[{prompt_name!r}]['prompt_tokens'] differs "
+        f"between the two runs ({t1} vs {t2}) -- the tokenizer, chat template "
+        f"or model changed between stages, so the samples are not exchangeable."
+    )
+
+
 def _check_sample_counts(curr_id, rec1, rec2, prompt_name, stage1_k, stage2_k):
     """A stage may hold fewer samples than its k (a None-content sample is
     skipped), never more: a k=5 file given as stage 1, say, would push the
@@ -157,6 +184,7 @@ def merge_records(
         stage1_preds = rec1.get("preds", {}).get(prompt_name)
         if rec2 is not None:
             _check_prompts_match(curr_id, rec1, rec2, prompt_name, allow_prompt_mismatch, stats)
+            _check_prompt_tokens_match(curr_id, rec1, rec2, prompt_name)
             _check_sample_counts(curr_id, rec1, rec2, prompt_name, stage1_k, stage2_k)
         if rec2 is None:
             stats["stage1_only"] += 1

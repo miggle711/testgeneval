@@ -1,6 +1,7 @@
 # Copyright (c) Meta Platforms, Inc. and affiliates.
 # Adapted from: https://github.com/aorwall/SWE-bench-docker/blob/main/swebench_docker/context_manager.py
 
+import os
 from enum import Enum
 from typing import Any, Collection, Dict, List, Sequence, Union
 
@@ -854,8 +855,17 @@ RESET_FAILED: str = ">>>>> Reset Failed"
 TESTS_ERROR: str = ">>>>> Tests Errored"
 TESTS_FAILED: str = ">>>>> Some Tests Failed"
 # In-container limit (seconds) for one sample's cosmic-ray mutation run.
-# Separate from TIMEOUT, which limits each test command.
-MUTATION_TIMEOUT: int = 3600
+# Separate from TIMEOUT, which limits each test command. Set the
+# MUTATION_TIMEOUT env var to raise it (e.g. for whole-file mutation, which
+# hit 3600 on most passing matplotlib and seaborn samples); both runners pass
+# it into the container, and the host-side cap grows with it.
+MUTATION_TIMEOUT: int = int(os.environ.get("MUTATION_TIMEOUT", "3600"))
+# Limit for every harness subprocess that sets none of its own: setup checks,
+# git operations, `coverage json`, the mutation count and scoring scripts.
+# They normally take seconds; a hang in one would otherwise run until the
+# host watchdog, which could only account for it as unbounded (fyp-paper#7,
+# open item 4). Test commands keep TIMEOUT, the mutation run MUTATION_TIMEOUT.
+OVERHEAD_TIMEOUT: int = int(os.environ.get("OVERHEAD_TIMEOUT", "600"))
 UNFILTERED_TESTS_FAILED: str = ">>>>> Unfiltered Tests Failed"
 TESTS_CONFIG: str = ">>>>> Tests config"
 TESTS_PASSED: str = ">>>>> All Tests Passed"

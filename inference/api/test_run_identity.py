@@ -19,7 +19,7 @@ ROW = {
     "code_file": "pkg/calc.py", "local_imports": [],
     "preds_context": {"preamble": "", "last_minus_one": "", "last": ""},
 }
-KG_PROMPTS = {"row-1": {"prompt": "KG context", "target_functions": ["add"], "target_classes": [None]}}
+KG_PROMPTS = {"row-1": {"context": "KG context", "target_functions": ["add"], "target_classes": [None]}}
 
 
 def fake_call_chat(*args, n=1, **kwargs):
@@ -29,7 +29,7 @@ def fake_call_chat(*args, n=1, **kwargs):
 
 
 class TestRunIdentityInRows(unittest.TestCase):
-    def generate(self, prompt_config, num_samples):
+    def generate(self, prompt_config, num_samples, with_kg_prompts=True, no_imports=False):
         d = tempfile.TemporaryDirectory()
         self.addCleanup(d.cleanup)
         dataset = os.path.join(d.name, "ds")
@@ -40,9 +40,10 @@ class TestRunIdentityInRows(unittest.TestCase):
         with patch.object(run_api, "call_chat", fake_call_chat), \
              patch.dict(os.environ, {"LOCAL_MODEL_BASE_URL": "http://x/v1/"}):
             run_api.main(
-                dataset, "test", "Qwen/Qwen3-4B-Instruct-2507", None, None, d.name, False,
+                dataset, "test", "Qwen/Qwen3-4B-Instruct-2507", None, None, d.name, no_imports,
                 "temperature=0.8", None, num_samples, False, skip_completion=True,
-                prompt_config=prompt_config, kg_prompts_path=kg_prompts,
+                prompt_config=prompt_config,
+                kg_prompts_path=kg_prompts if with_kg_prompts else None,
             )
         out = [f for f in os.listdir(d.name) if f.endswith(".jsonl")]
         with open(os.path.join(d.name, out[0])) as f:
@@ -60,6 +61,18 @@ class TestRunIdentityInRows(unittest.TestCase):
                     (prompt_config, num_samples, 0.8, kg_md5),
                 )
                 self.assertIn("testgeneval_commit", run)
+                self.assertIs(run["no_imports"], False)
+
+    def test_no_imports_is_recorded(self):
+        row, _ = self.generate("instruct", 5, no_imports=True)
+        self.assertIs(row["run"]["no_imports"], True)
+
+    def test_instruct_without_a_prompts_file_records_no_md5(self):
+        # main validates kg_prompts_path before the arms split, so instruct
+        # with no file is the unfocused case; its identity must still write
+        row, _ = self.generate("instruct", 1, with_kg_prompts=False)
+        self.assertIsNone(row["run"]["kg_prompts_md5"])
+        self.assertEqual(row["run"]["arm"], "instruct")
 
 
 if __name__ == "__main__":

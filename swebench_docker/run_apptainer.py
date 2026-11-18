@@ -63,25 +63,12 @@ from swebench_docker.constants import (
     KEY_PREDICTIONS,
     MAP_VERSION_TO_INSTALL,
     MUTATION_TIMEOUT,
+    OVERHEAD_TIMEOUT,
     PYENV_REPOS,
 )
 
 logger = logging.getLogger(__name__)
 dotenv.load_dotenv()
-
-# Where converted .sif files live on M3, one file per
-# {repo_name}_{version}.sif, e.g. astropy_astropy_5.0.sif -- matches the
-# repo_name sanitization run_docker.py already uses (task_instance["repo"]
-# with "/" replaced by "_"). Falls back to $HOME/apptainer_images if
-# APPTAINER_IMAGES_DIR is unset -- a real risk on M3, not just a
-# placeholder, given the small 20GB home quota (confirmed real
-# 2026-09-11 a related mistake filled it to 100%). Always export
-# APPTAINER_IMAGES_DIR to a scratch path (e.g.
-# /fs04/scratch2/al49/$USER/apptainer_images) before running anything
-# that imports this module directly.
-APPTAINER_IMAGES_DIR = os.environ.get(
-    "APPTAINER_IMAGES_DIR", os.path.expanduser("~/apptainer_images")
-)
 
 # Margin added on top of `timeout` to get the host-side wall-clock cap.
 # - `timeout` alone doesn't bound the host: it's only passed INTO the
@@ -134,19 +121,109 @@ def _entrypoint_path(repo: str) -> str:
     return "/home/swe-bench/entrypoint.sh"
 
 
-def host_timeout_for(timeout: int, n_samples: int, skip_mutation: bool) -> int:
-    """Host-side wall-clock cap for one container, which evaluates all of an
-    instance's samples in turn. Each sample can take up to `timeout` for its
-    tests plus MUTATION_TIMEOUT for mutation (unless skipped), so the cap
-    grows with the sample count: a single cap for the whole container used
-    to kill pass@5's later samples partway, mostly passing ones, since only
-    those run mutation. APPTAINER_HOST_TIMEOUT overrides with a fixed value.
+# Steps that use OVERHEAD_TIMEOUT (no limit of their own), per the call sites
+# in context_manager.py: per instance, the setup checks, the git operations
+# that apply the patch, and the mutant-count script; per test run, `coverage
+# json`; per sample with mutation, the scripts that skip non-target mutants
+# and score the rest (or cr-rate and cr-report at whole-file scope).
+OVERHEAD_STEPS_PER_INSTANCE = 12
+OVERHEAD_STEPS_PER_RUN = 1
+OVERHEAD_STEPS_PER_MUTATION = 2
+
+
+def filter_runs(sample) -> int:
+    """How many test-command runs filtering makes for one sample: one per test
+    method and test function, parsed with the same function evaluate_instance
+    uses (full_processing), so the count can't drift from what actually runs.
+    Pattern matching only; no generated code runs on the host."""
+    from swebench_docker.evaluate_instance import extract_preamble_classes_and_functions
+    try:
+        _, classes, functions = extract_preamble_classes_and_functions(sample or "", None)
+    except Exception:
+        return 1
+    return len(functions) + sum(len(methods) for _, methods, _ in classes)
+
+
+def host_timeout_for(timeout: int, n_samples: int, skip_mutation: bool, samples=None,
+                     filtered: bool = True) -> int:
+    """Host-side wall-clock budget for one container, which evaluates all of an
+    instance's samples in turn (fyp-paper#7, open item 4: a budget of one
+    `timeout` per sample killed sphinx-7305 and sphinx-10353 before their last
+    samples were evaluated, while every step inside was within its own limit).
+
+    With the samples' texts, the budget is
+
+        B = B_instance + sum over samples of B_sample + margin
+
+    built from limits the harness enforces inside the container:
+    - B_instance: the setup command (`timeout`); with mutation, the target
+      mutant count (`cosmic-ray init`, `timeout`); and its overhead steps;
+    - B_sample: its test runs, each up to `timeout` plus `coverage json`
+      (overhead): with filtering (the `full` setting), one per test method and
+      function plus the combined run; otherwise one. With mutation,
+      `cosmic-ray init` (`timeout`), the mutation run (MUTATION_TIMEOUT) and
+      its reporting steps (overhead);
+    - overhead steps are bounded by OVERHEAD_TIMEOUT each.
+
+    It is a ceiling: steps normally finish far inside their limits, so fast
+    instances aren't held longer; it only decides when a hung container is
+    killed. Without the texts (samples=None), the earlier estimate of one
+    `timeout` plus MUTATION_TIMEOUT per sample. APPTAINER_HOST_TIMEOUT
+    overrides with a fixed value either way.
     """
     override = os.environ.get("APPTAINER_HOST_TIMEOUT")
     if override:
         return int(override)
-    per_sample = timeout + (0 if skip_mutation else MUTATION_TIMEOUT)
-    return max(1, n_samples) * per_sample + APPTAINER_HOST_TIMEOUT_MARGIN
+    if samples is None:
+        per_sample = timeout + (0 if skip_mutation else MUTATION_TIMEOUT)
+        return max(1, n_samples) * per_sample + APPTAINER_HOST_TIMEOUT_MARGIN
+    o = OVERHEAD_TIMEOUT
+    b_instance = timeout + OVERHEAD_STEPS_PER_INSTANCE * o + (0 if skip_mutation else timeout)
+    mutation = 0 if skip_mutation else timeout + MUTATION_TIMEOUT + OVERHEAD_STEPS_PER_MUTATION * o
+    per_run = timeout + OVERHEAD_STEPS_PER_RUN * o
+    b_samples = sum(((filter_runs(sample) + 1) if filtered else 1) * per_run + mutation
+                    for sample in samples)
+    return b_instance + max(b_samples, per_run) + APPTAINER_HOST_TIMEOUT_MARGIN
+
+
+def slurm_budget_warning(host_timeout, instance_id):
+    """A warning when this container's budget exceeds the time left in the
+    enclosing Slurm job, so the job's limit, not the watchdog, may cut its
+    later samples; None otherwise (or outside Slurm)."""
+    left = slurm_seconds_left()
+    if left is not None and host_timeout > left:
+        return (f"[{instance_id}] host timeout {host_timeout}s exceeds the {left}s left in "
+                f"Slurm job {os.environ.get('SLURM_JOB_ID')}; this container may be cut by "
+                f"the job's time limit")
+    return None
+
+
+def parse_slurm_time(text):
+    """Seconds in a Slurm time string ([D-]HH:MM:SS, MM:SS or SS), or None
+    for UNLIMITED, NOT_SET or anything unreadable."""
+    text = (text or "").strip()
+    try:
+        days, _, rest = text.rpartition("-")
+        parts = [int(x) for x in rest.split(":")]
+        while len(parts) < 3:
+            parts.insert(0, 0)
+        h, m, sec = parts[-3:]
+        return (int(days) if days else 0) * 86400 + h * 3600 + m * 60 + sec
+    except ValueError:
+        return None
+
+
+def slurm_seconds_left():
+    """Seconds left in the enclosing Slurm job, or None outside one."""
+    job = os.environ.get("SLURM_JOB_ID")
+    if not job:
+        return None
+    try:
+        out = subprocess.run(["squeue", "-h", "-j", job, "-o", "%L"], capture_output=True,
+                             text=True, timeout=30).stdout
+    except Exception:
+        return None
+    return parse_slurm_time(out)
 
 
 async def run_apptainer_evaluation(
@@ -173,8 +250,21 @@ async def run_apptainer_evaluation(
     else:
         container_log_dir = "/opt/logs"
 
+    # Where converted .sif files live on M3, one file per
+    # {repo_name}_{version}.sif, e.g. astropy_astropy_5.0.sif -- matches the
+    # repo_name sanitization run_docker.py already uses. There is no default
+    # (#122): it used to fall back to $HOME/apptainer_images, where M3 has no
+    # images, so every instance was skipped with a warning and the run exited
+    # 0 having evaluated nothing. Read per call, so a value exported after
+    # import counts.
+    images_dir = os.environ.get("APPTAINER_IMAGES_DIR")
+    if not images_dir:
+        raise ValueError(
+            "APPTAINER_IMAGES_DIR must be set to the directory holding the "
+            ".sif testbed images (on M3, under /fs04/scratch2/<project>/$USER)."
+        )
     sif_path = os.path.join(
-        APPTAINER_IMAGES_DIR, f"{repo_name}_{task_instance['version']}.sif"
+        images_dir, f"{repo_name}_{task_instance['version']}.sif"
     )
     if not os.path.exists(sif_path):
         logger.warning(
@@ -259,6 +349,9 @@ async def run_apptainer_evaluation(
         "APPTAINERENV_TIMEOUT": str(timeout),
         "APPTAINERENV_ONLY_BASELINE": str(only_baseline),
         "APPTAINERENV_SKIP_MUTATION": str(skip_mutation),
+        "APPTAINERENV_MUTATION_SCOPE": os.environ.get("MUTATION_SCOPE", "file"),
+        "APPTAINERENV_MUTATION_TIMEOUT": str(MUTATION_TIMEOUT),
+        "APPTAINERENV_OVERHEAD_TIMEOUT": str(OVERHEAD_TIMEOUT),
     }
 
     cmd_string = " ".join(apptainer_command)
@@ -273,7 +366,14 @@ async def run_apptainer_evaluation(
     # pass@5 container gets room for all five samples (see host_timeout_for).
     samples = task_instance.get(KEY_PREDICTIONS, {}).get(setting)
     n_samples = len(samples) if isinstance(samples, list) else 1
-    host_timeout = host_timeout_for(timeout, n_samples, skip_mutation)
+    texts = samples if isinstance(samples, list) else [samples]
+    host_timeout = host_timeout_for(timeout, n_samples, skip_mutation, samples=texts,
+                                    filtered=(setting == "full"))
+    logger.info(f"[{task_instance['id']}] host timeout {host_timeout}s "
+                f"(sum of the inner limits over {n_samples} sample(s))")
+    warning = slurm_budget_warning(host_timeout, task_instance["id"])
+    if warning:
+        logger.warning(warning)
 
     try:
         process = await asyncio.create_subprocess_exec(

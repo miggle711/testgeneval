@@ -70,12 +70,12 @@ PROMPT_CONFIG="${PROMPT_CONFIG:-instruct}"          # instruct | kg_only
 KG_PROMPTS_PATH="${KG_PROMPTS_PATH:-kg_prompts.json}"
 DATASET_PATH="${DATASET_PATH:-CHANGE_ME}"
 OUTPUT_DIR="${OUTPUT_DIR:-$PWD/results/${PROMPT_CONFIG}}"
-TEMPERATURE="${TEMPERATURE:-0.2}"
+TEMPERATURE="${TEMPERATURE:-0.8}"       # the rerun protocol's (fyp-paper#7)
 # Samples per instance for the full setting, k in pass@k when > 1 (needs
 # TEMPERATURE > 0 to produce genuinely different samples, not one
 # completion repeated num_samples times). Requested in one call via
 # run_api.py's own n parameter, not num_samples separate calls.
-NUM_SAMPLES="${NUM_SAMPLES:-1}"
+NUM_SAMPLES="${NUM_SAMPLES:-5}"         # the rerun protocol's k
 MAX_CONCURRENCY="${MAX_CONCURRENCY:-1}"   # requests in flight at once; match MAX_NUM_SEQS below
 # vLLM's own ceiling on concurrent sequences, MAX_CONCURRENCY can never
 # exceed this regardless of what's requested. 8 is safe for the large
@@ -98,9 +98,11 @@ DTYPE="${DTYPE:-float16}"
 # --shard_id/--num_shards default of processing everything in one job.
 SHARD_ID="${SHARD_ID:-}"
 NUM_SHARDS="${NUM_SHARDS:-}"
-# Each shard needs its own vLLM port so parallel jobs landing on the
-# same node don't collide. Offsets from a base port by shard id.
-VLLM_PORT="${VLLM_PORT:-$((8003 + ${SHARD_ID:-0}))}"
+# Port for this job's vLLM server. Left unset, a free one is picked once
+# python is available, further down. A fixed default let two jobs on one
+# node share a port, and one job's client then talked to the other job's
+# server.
+VLLM_PORT="${VLLM_PORT:-}"
 # GPUs to split the model across for one job (see the TENSOR_PARALLEL_SIZE
 # note above the TODO block). 1 keeps the existing single-GPU behavior.
 TENSOR_PARALLEL_SIZE="${TENSOR_PARALLEL_SIZE:-1}"
@@ -178,6 +180,16 @@ conda activate "$CONDA_ENV"
 # LD_LIBRARY_PATH isn't always already set, :- keeps set -u happy.
 export LD_LIBRARY_PATH="$CONDA_PREFIX/lib:${LD_LIBRARY_PATH:-}"
 
+# The vLLM version is part of the run's record (fyp-paper#5 section 2: the
+# rerun pins 0.27.1). Read from the installed package metadata, without
+# importing vllm. Set VLLM_REQUIRED_VERSION to refuse any other version.
+VLLM_VERSION="$(python -c 'import importlib.metadata as m; print(m.version("vllm"))' 2>/dev/null || echo unknown)"
+echo "vllm version: $VLLM_VERSION (env $CONDA_ENV)"
+if [ -n "${VLLM_REQUIRED_VERSION:-}" ] && [ "$VLLM_VERSION" != "$VLLM_REQUIRED_VERSION" ]; then
+    echo "vllm $VLLM_VERSION is installed in $CONDA_ENV, but VLLM_REQUIRED_VERSION=$VLLM_REQUIRED_VERSION. Stopping." >&2
+    exit 1
+fi
+
 # dirname "$0" is unreliable under sbatch, SLURM can stage or invoke
 # the script in a way that leaves it resolving to "." (confirmed
 # real on M3: python -m inference.api.run_api failed with
@@ -190,6 +202,11 @@ cd "$SLURM_SUBMIT_DIR"
 # a GPU OOM during vLLM worker startup, after the model has loaded.
 python -m inference.check_token_limits \
     --max_new_tokens "$MAX_NEW_TOKENS" --max_model_len "$MAX_MODEL_LEN"
+
+if [ -z "$VLLM_PORT" ]; then
+    VLLM_PORT="$(python -c 'import socket; s = socket.socket(); s.bind(("", 0)); print(s.getsockname()[1])')"
+fi
+echo "vllm port: $VLLM_PORT"
 
 # vLLM's own model loading (via transformers' hub code) doesn't reliably
 # pick up `hf auth login`'s cached token under sbatch, even though the
@@ -218,6 +235,17 @@ VLLM_SERVE_ARGS=(
 if [ -n "$MAX_NEW_TOKENS" ]; then
     VLLM_SERVE_ARGS+=(--override-generation-config "{\"max_new_tokens\": $MAX_NEW_TOKENS}")
 fi
+# REASONING_PARSER: vLLM's --reasoning-parser for a model that writes its
+# reasoning into the reply, so the server returns it apart from the answer.
+# Its name depends on the model and the vLLM version; check it against the
+# pinned version's `vllm serve --help`. Exported so run_api.py records it in
+# each row. Unset for models that need none.
+REASONING_PARSER="${REASONING_PARSER:-}"
+export REASONING_PARSER
+if [ -n "$REASONING_PARSER" ]; then
+    VLLM_SERVE_ARGS+=(--reasoning-parser "$REASONING_PARSER")
+fi
+echo "reasoning parser: ${REASONING_PARSER:-none}"
 
 CUDA_VISIBLE_DEVICES=$(seq 0 $((TENSOR_PARALLEL_SIZE - 1)) | paste -sd, -) vllm serve "$MODEL" \
     "${VLLM_SERVE_ARGS[@]}" &
@@ -244,6 +272,15 @@ until curl -s -f "http://127.0.0.1:${VLLM_PORT}/v1/models" > /dev/null 2>&1; do
     sleep 5
     elapsed=$((elapsed + 5))
 done
+# Something answering on the port is not proof it is this job's server:
+# when the port is already taken, vllm fails to bind and the poll above is
+# answered by whoever holds it.
+served_models="$(curl -s -f "http://127.0.0.1:${VLLM_PORT}/v1/models" || true)"
+if ! kill -0 "$VLLM_PID" 2>/dev/null || ! grep -qF "\"$MODEL\"" <<< "$served_models"; then
+    echo "Port $VLLM_PORT answers but is not this job's vllm server for $MODEL." >&2
+    echo "Another server is on that port. Leave VLLM_PORT unset to get a free one." >&2
+    exit 1
+fi
 echo "vllm server ready after ${elapsed}s."
 
 # Only the full setting is in scope, skip completion.
@@ -257,6 +294,46 @@ fi
 if [ "$NO_SYSTEM_MESSAGE" = "1" ]; then
     EXTRA_ARGS+=(--no_system_message)
 fi
+# Each request's sampling seed is derived from SEED (run_api.py's
+# request_seed) and recorded in its row. SEED=none sends no seed.
+SEED="${SEED:-0}"
+if [ "$SEED" = "none" ]; then
+    EXTRA_ARGS+=(--no_seed)
+else
+    EXTRA_ARGS+=(--seed "$SEED")
+fi
+# OUTPUT_LIMIT replaces the model's OUTPUT_LIMITS entry as every request's
+# max_tokens (the Qwen3-4B 8k against 16k comparison, fyp-paper#5). Unset
+# keeps the entry. Each row records the max_tokens it was sent with.
+OUTPUT_LIMIT="${OUTPUT_LIMIT:-}"
+if [ -n "$OUTPUT_LIMIT" ]; then
+    EXTRA_ARGS+=(--output_limit "$OUTPUT_LIMIT")
+fi
+echo "output limit: ${OUTPUT_LIMIT:-OUTPUT_LIMITS entry}"
+# NO_IMPORTS=1 drops the "examples of how to import" block from instruct's
+# prompt (run_api.py --no_imports). Those examples are the dataset's
+# local_imports, the reference test file's imports, so the rerun leaves
+# them out (fyp-paper#7). kg_only's prompt has no such block. Each row's
+# preds_prompts shows which prompt it was sent.
+NO_IMPORTS="${NO_IMPORTS:-0}"
+case "$NO_IMPORTS" in
+    1) EXTRA_ARGS+=(--no_imports) ;;
+    0) ;;
+    *) echo "NO_IMPORTS must be 0 or 1, not '$NO_IMPORTS'" >&2; exit 1 ;;
+esac
+echo "import examples in instruct: $([ "$NO_IMPORTS" = 1 ] && echo "dropped (NO_IMPORTS=1)" || echo "kept (NO_IMPORTS=0)")"
+# CHAT_TEMPLATE_KWARGS: a JSON object sent with every request as
+# chat_template_kwargs, e.g. '{"enable_thinking": false}' to turn a model's
+# thinking mode off. Recorded in each row. Unset sends none.
+CHAT_TEMPLATE_KWARGS="${CHAT_TEMPLATE_KWARGS:-}"
+if [ -n "$CHAT_TEMPLATE_KWARGS" ]; then
+    EXTRA_ARGS+=(--chat_template_kwargs "$CHAT_TEMPLATE_KWARGS")
+fi
+echo "chat template kwargs: ${CHAT_TEMPLATE_KWARGS:-none}"
+# The model revision is part of the run's record: the snapshot(s) in the
+# HF cache this job loads from.
+echo "model $MODEL snapshot(s): $(ls "${HF_HOME:-$HOME/.cache/huggingface}/hub/models--${MODEL//\//--}/snapshots" 2>/dev/null | tr '\n' ' ' || true)"
+echo "sampling seed base: $SEED"
 
 LOCAL_MODEL_BASE_URL="http://127.0.0.1:${VLLM_PORT}/v1/" \
     python -m inference.api.run_api \
