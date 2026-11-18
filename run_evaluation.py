@@ -85,7 +85,7 @@ SOURCE_SUFFIX = ".source.json"
 # Added to the record after the first version: records written before carry
 # none of these keys, and are compared on the others only (see
 # check_log_sources), so existing log directories keep working.
-TIMEOUT_KEYS = ("timeout", "mutation_timeout")
+TIMEOUT_KEYS = ("timeout", "mutation_timeout", "overhead_timeout")
 
 
 def log_source(samples, skip_mutation: bool, timeout=None) -> dict:
@@ -108,6 +108,7 @@ def log_source(samples, skip_mutation: bool, timeout=None) -> dict:
         "mutation_scope": os.environ.get("MUTATION_SCOPE", "file"),
         "timeout": timeout,
         "mutation_timeout": None if skip_mutation else int(os.environ.get("MUTATION_TIMEOUT", "3600")),
+        "overhead_timeout": int(os.environ.get("OVERHEAD_TIMEOUT", "600")),
     }
 
 
