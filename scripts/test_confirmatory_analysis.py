@@ -369,6 +369,7 @@ class RobustnessTest(unittest.TestCase):
         bp = res["robustness"]["bounds_population"]
         self.assertEqual(bp["instances"], 12)                       # unchanged: eligibility not established
         self.assertEqual(bp["eligibility_unresolved"], {iid("ghost"): ca.NO_LOG})
+        self.assertEqual(bp["eligibility_unresolved_by_repo"], {"django/django": 1})
         self.assertEqual(bp["manifest"], len(expected))
         self.assertEqual(fate[iid("ghost")], "missing: no log in either arm")
         self.assertEqual(res["robustness"]["attrition_by_repo"]["django/django"]["instances"]

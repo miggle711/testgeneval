@@ -478,7 +478,9 @@ def analyse_model(model, rows, skipped, dev_ids, k, role="main", expected=None):
             "definition": ("conditional on established eligibility: confirmatory instances whose eligibility the "
                            "evaluations establish; not benchmark-wide"),
             "manifest": None if expected is None else len(expected),
-            "instances": len(pop), "eligibility_unresolved": dict(sorted(unresolved.items()))},
+            "instances": len(pop), "eligibility_unresolved": dict(sorted(unresolved.items())),
+            # outside the bounds altogether: their number and where they fall
+            "eligibility_unresolved_by_repo": dict(sorted(Counter(repo_of(i) for i in unresolved).items()))},
         "mean_d_bounds": mean_d_bounds(pop, k),
         "filtered_pass_at_k_bounds": pass_bounds(pop),
         "attrition_by_repo": attrition_by_repo(per, fate, dev_ids, expected),
@@ -771,7 +773,8 @@ def report(results, cross, breadth_out):
             print(f"    filtered pass@k bounds on {pb['instances']} instances ({pb['resolved_in_both_arms']} resolved "
                   f"in both): difference in [{pb['difference_low']:.3f}, {pb['difference_high']:.3f}]; {pb['rate']}")
         if rb["bounds_population"]["eligibility_unresolved"]:
-            print(f"    eligibility unresolved: {rb['bounds_population']['eligibility_unresolved']}")
+            print(f"    eligibility unresolved, outside the bounds ({len(rb['bounds_population']['eligibility_unresolved'])}): "
+                  f"by repository {rb['bounds_population']['eligibility_unresolved_by_repo']}")
         for repo, v in rb["by_repo"].items():
             loo = rb["leave_one_repo_out"].get(repo)
             print(f"    {repo:28} analysed {v['analysed']:4}/{v['eligible']:4} mean d "
