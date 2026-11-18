@@ -6,7 +6,18 @@ CSV per model, from that model's two arms' evaluation logs) and does only what
 the protocol fixes in advance. usable_score.py remains the descriptive tool;
 the classification of each sample is its `classify`, reused here unchanged.
 
-Per model (RUN in the CSV), on instances present in both arms:
+Inputs are checked before anything is computed: each CSV holds one run, and
+exactly one row per sample index 0..k-1 for every instance and arm it has
+(usable_score.py writes missing samples as unknown_missing rows); the
+development list matches the md5 recorded on #7; the breadth subset has no
+development ids and its weights file covers every repository in it with the
+subset's own sample sizes. Any failure stops the run.
+
+Models have one of two roles, each its own family for the Holm adjustment:
+main-study models (`--model`, run on every instance) and breadth models
+(`--breadth-model`, run on the breadth subset only).
+
+Per model, on instances present in both arms:
   1. Exclusions, counted by reason: rule 4 (prompt too long in either arm,
      from the skipped files), the target not resolved or with no mutants
      (rule 2/3, from the per-instance count), undetermined.
@@ -21,26 +32,34 @@ Per model (RUN in the CSV), on instances present in both arms:
   4. Statistics (section 6), on per-instance differences d = kg_only minus
      instruct of the mean over the k samples:
        - Wilcoxon signed-rank, two-sided; zero differences dropped (Wilcoxon's
-         method); tied |d| get average ranks; exact p when there are at most
-         25 non-zero differences and no ties, otherwise the normal
-         approximation with tie and continuity corrections;
+         method); tied |d| get average ranks. Up to 50 non-zero differences
+         the p is exact: the sign-permutation distribution over the observed
+         ranks, ties included. Above 50, the normal approximation with tie
+         and continuity corrections. It tests whether the differences are
+         symmetric about 0, not the mean gain;
        - matched-pairs rank-biserial r = (R+ - R-) / (R+ + R-) on the same ranks;
-       - mean d with a 95% percentile bootstrap interval, resampling
-         instances with all their samples (10,000 resamples, seed 0);
+       - mean d (the estimate of the gain) with a 95% percentile bootstrap
+         interval, resampling instances (10,000 resamples, seed 0), reported
+         separately from the Wilcoxon p;
        - filtered pass@5 (any of the k samples passed after filtering; it
          measures the generation-plus-filtering pipeline): exact two-sided
          McNemar on discordant instances, and a paired bootstrap interval of
          the difference in proportions;
-       - Holm adjustment across models, separately per outcome; alpha 0.05.
-  5. Across models: each model's mean d on the instances eligible and usable
-     for every model compared (descriptive).
+       - Holm adjustment, alpha 0.05, within four families: {main-study,
+         breadth} models x {primary, filtered pass@k}, on the confirmatory
+         population only. Sensitivity scorings and the population including
+         the development set are descriptive and not adjusted.
+  5. Across main-study models: each one's mean d on the instances eligible
+     and usable for all of them (descriptive).
   6. Breadth subset (`--breadth-ids`, `--breadth-weights`): per model, the
      weighted mean of d over the subset's usable instances,
-     sum(w d) / sum(w), with a stratified bootstrap (resampling within each
-     repository; repositories with fewer than 5 usable instances are pooled
-     into one stratum for resampling only, their weights unchanged), and the
-     subset's attrition (selected, excluded, unknown, analysed). The weights
-     correct for sampling only, not for exclusions or unknown samples.
+     sum(w d) / sum(w), with a stratified bootstrap resampling within each
+     repository, the strata the subset was drawn in. A repository with one
+     analysed instance contributes no resampling variance; how many there are
+     is reported, as a limitation of the interval. Also the subset's
+     attrition per id (analysed, unknown, excluded by reason, absent). The
+     weights correct for sampling only, not for exclusions or unknown
+     samples.
 
 Standard library only, so it runs in any environment; usable_score.py from the
 same folder.
@@ -48,12 +67,13 @@ same folder.
 Usage:
     python3 scripts/confirmatory_analysis.py --k 5 --dev-ids pilot_dev_ids.txt \\
         --model Scout:scout_usable_score.csv --skipped Scout:instruct:<file> ... \\
+        [--breadth-model Gemma:gemma_usable_score.csv ...] \\
         [--breadth-ids breadth_ids.txt --breadth-weights breadth_ids.weights.tsv] \\
         [--json results.json]
 """
 
 import argparse
-import itertools
+import hashlib
 import json
 import math
 import os
@@ -69,8 +89,10 @@ ARMS = us.ARMS
 ALPHA = 0.05
 N_BOOT = 10_000
 SEED = 0
-EXACT_MAX_N = 25
-SMALL_STRATUM = 5
+EXACT_MAX_N = 50
+DEV_MD5 = "0093dd887fa0d3a221e847fe82af476c"   # pilot_dev_ids.txt, recorded on #7, 12 Nov
+DEV_N = 151
+ROLES = ("main", "breadth")
 
 
 # ---------------------------------------------------------------- statistics
@@ -102,17 +124,21 @@ def wilcoxon(d):
     total = w_plus + w_minus
     r_rb = (w_plus - w_minus) / total
     ties = len(set(abs(x) for x in nz)) < n
-    if n <= EXACT_MAX_N and not ties:
-        # Exact null distribution of W+ over all 2^n sign assignments (ranks 1..n).
-        counts = [1] + [0] * (n * (n + 1) // 2)
-        for k in range(1, n + 1):
-            for s in range(len(counts) - 1, k - 1, -1):
-                counts[s] += counts[s - k]
-        total_cases = 2 ** n
-        w = min(w_plus, w_minus)
-        tail = sum(counts[s] for s in range(0, int(w) + 1)) / total_cases
-        p = min(1.0, 2 * tail)
-        method = "exact"
+    if n <= EXACT_MAX_N:
+        # Sign-permutation distribution of W+ given the observed ranks. Average
+        # ranks are multiples of 1/2, so work in doubled ranks (integers) and
+        # count, for every attainable sum, how many of the 2^n sign
+        # assignments give it.
+        doubled = [int(round(2 * r)) for r in ranks]
+        counts = [1] + [0] * sum(doubled)
+        for r2 in doubled:
+            for t in range(len(counts) - 1, r2 - 1, -1):
+                counts[t] += counts[t - r2]
+        centre = sum(doubled)            # twice the null mean, doubled: 2 * (sum/2)
+        obs = abs(2 * int(round(2 * w_plus)) - centre)
+        extreme = sum(c for t, c in enumerate(counts) if abs(2 * t - centre) >= obs)
+        p = min(1.0, extreme / 2 ** n)
+        method = "exact_with_ties" if ties else "exact"
     else:
         mean = n * (n + 1) / 4
         tie_counts = Counter(abs(x) for x in nz).values()
@@ -161,21 +187,19 @@ def weighted_mean(pairs):
 
 def stratified_boot_ci(items, n=N_BOOT, seed=SEED):
     """items: (stratum, weight, value). Percentile interval of the weighted
-    mean, resampling within strata; strata with fewer than SMALL_STRATUM
-    items are pooled into one stratum for resampling only."""
+    mean, resampling within each stratum as drawn. A stratum with a single
+    item is resampled as itself and adds no variance."""
     by = defaultdict(list)
     for stratum, w, v in items:
         by[stratum].append((w, v))
-    pooled = defaultdict(list)
-    for stratum, group in by.items():
-        pooled["__small__" if len(group) < SMALL_STRATUM else stratum].extend(group)
-    if sum(len(g) for g in pooled.values()) < 2:
+    if len(items) < 2:
         return None
     rnd = random.Random(seed)
+    groups = [by[k] for k in sorted(by)]
     stats = []
     for _ in range(n):
         sample = []
-        for group in pooled.values():
+        for group in groups:
             sample.extend(rnd.choices(group, k=len(group)))
         stats.append(weighted_mean(sample))
     stats.sort()
@@ -232,9 +256,79 @@ def pass_at_k(arms, k):
     return out
 
 
+# ----------------------------------------------------------------- validation
+
+def repo_of(instance_id):
+    """django__django-12091-15824 -> django/django (the weights file's form)."""
+    return instance_id.rsplit("-", 2)[0].replace("__", "/", 1)
+
+
+def check_rows(rows, k, source):
+    """One run per CSV, and exactly one row per sample index 0..k-1 for every
+    instance and arm present. Returns the run name the CSV holds."""
+    runs = {r["run"] for r in rows}
+    if len(runs) != 1:
+        raise SystemExit(f"{source}: expected one run, found {sorted(runs)}")
+    problems = []
+    by = defaultdict(list)
+    for r in rows:
+        if r["arm"] not in ARMS:
+            problems.append(f"{r['instance']}: unknown arm {r['arm']!r}")
+        by[(r["instance"], r["arm"])].append(r["sample"])
+    for (i, arm), samples in sorted(by.items()):
+        if sorted(samples) != list(range(k)):
+            problems.append(f"{i} {arm}: samples {sorted(samples)}, expected 0..{k - 1} once each")
+    if problems:
+        raise SystemExit(f"{source}: {len(problems)} problem(s), e.g.\n  " + "\n  ".join(problems[:10]))
+    return runs.pop()
+
+
+def read_dev_ids(path, expected_md5=DEV_MD5):
+    with open(path, "rb") as f:
+        data = f.read()
+    got = hashlib.md5(data).hexdigest()
+    if got != expected_md5:
+        raise SystemExit(f"{path}: md5 {got}, not the development set recorded on #7 ({expected_md5})")
+    ids = {l.strip() for l in data.decode().splitlines() if l.strip()}
+    if len(ids) != DEV_N:
+        raise SystemExit(f"{path}: {len(ids)} ids, expected {DEV_N}")
+    return ids
+
+
+def read_breadth(ids_path, weights_path, dev_ids):
+    """The subset and its per-repository weights, checked against each other."""
+    with open(ids_path) as f:
+        subset = [l.strip() for l in f if l.strip()]
+    if len(set(subset)) != len(subset):
+        raise SystemExit(f"{ids_path}: duplicate ids")
+    overlap = set(subset) & dev_ids
+    if overlap:
+        raise SystemExit(f"{ids_path}: {len(overlap)} development ids, e.g. {sorted(overlap)[:3]}")
+    weights, sizes = {}, {}
+    with open(weights_path) as f:
+        header = f.readline().rstrip("\n").split("\t")
+        if header != ["repo", "population", "sample", "weight"]:
+            raise SystemExit(f"{weights_path}: unexpected header {header}")
+        for n, line in enumerate(f, 2):
+            parts = line.rstrip("\n").split("\t")
+            try:
+                repo, pop, k, w = parts[0], int(parts[1]), int(parts[2]), float(parts[3])
+            except (IndexError, ValueError):
+                raise SystemExit(f"{weights_path}:{n}: cannot parse {line!r}")
+            if (repo in weights or not 0 < k <= pop or not math.isfinite(w) or w <= 0
+                    or abs(w - pop / k) > 1e-5 * max(1.0, w)):
+                raise SystemExit(f"{weights_path}:{n}: invalid or repeated row {line!r}")
+            weights[repo], sizes[repo] = w, k
+    drawn = Counter(repo_of(i) for i in subset)
+    if dict(drawn) != sizes:
+        bad = sorted(r for r in set(drawn) | set(sizes) if drawn.get(r) != sizes.get(r))
+        raise SystemExit(f"breadth ids and weights disagree on sample sizes for {bad}")
+    return subset, weights
+
+
 # ------------------------------------------------------------------- analysis
 
-def analyse_model(model, rows, skipped, dev_ids, k):
+def analyse_model(model, rows, skipped, dev_ids, k, role="main"):
     changed = apply_count_rule(rows)
     flagged = us.flag_short_runs(rows)
     per = defaultdict(lambda: defaultdict(list))
@@ -244,9 +338,8 @@ def analyse_model(model, rows, skipped, dev_ids, k):
     both = {i: a for i, a in per.items() if all(arm in a for arm in ARMS) and i not in too_long}
     status = {i: us.eligibility([r for arm in ARMS for r in a[arm]]) for i, a in both.items()}
     eligible = {i: a for i, a in both.items() if status[i] == "eligible"}
-    repo = {i: next(iter(a["instruct"]))["repo"] for i, a in eligible.items()}
 
-    result = {"model": model, "k": k,
+    result = {"model": model, "role": role, "k": k,
               "samples_count_mismatch_unknown": changed, "samples_flagged_incomplete": flagged,
               "exclusions": {"rule4_prompt_too_long": len(too_long),
                              **{s: n for s, n in Counter(status.values()).items() if s != "eligible"}},
@@ -298,16 +391,20 @@ def analyse_model(model, rows, skipped, dev_ids, k):
     fate.update({i: f"excluded: {s}" for i, s in status.items() if s != "eligible"})
     fate.update({i: ("analysed" if i in diffs["all_including_development"] else "unknown")
                  for i in eligible})
-    return result, diffs["confirmatory"], repo, fate
+    return result, diffs["confirmatory"], fate
 
 
 def holm_across(results):
-    for outcome, getter in (("primary", lambda p: p["primary"]["wilcoxon"]["p"]),
-                            ("filtered_pass_at_k", lambda p: p["filtered_pass_at_k"]["mcnemar_p"])):
-        ps = [getter(r["populations"]["confirmatory"]) for r in results]
-        for r, adj in zip(results, holm(ps)):
-            r["populations"]["confirmatory"].setdefault("holm", {})[outcome] = {
-                "p_adjusted": adj, "significant": adj < ALPHA}
+    """Holm within each family: role x outcome, confirmatory population."""
+    for role in ROLES:
+        members = [r for r in results if r["role"] == role]
+        for outcome, getter in (("primary", lambda p: p["primary"]["wilcoxon"]["p"]),
+                                ("filtered_pass_at_k", lambda p: p["filtered_pass_at_k"]["mcnemar_p"])):
+            ps = [getter(r["populations"]["confirmatory"]) for r in members]
+            for r, adj in zip(members, holm(ps)):
+                r["populations"]["confirmatory"].setdefault("holm", {})[outcome] = {
+                    "family": f"{role} models, {outcome}", "family_size": len(members),
+                    "p_adjusted": adj, "significant": adj < ALPHA}
 
 
 def across_models(diffs):
@@ -317,24 +414,21 @@ def across_models(diffs):
                        for m, d in diffs.items()}}
 
 
-def breadth(diffs, repos, fates, subset, weights):
+def breadth(diffs, fates, subset, weights):
     """Weighted estimate over the breadth subset, per model, with attrition:
     each selected id is analysed, excluded (by reason), unknown, or absent
     (no row in either arm, e.g. not generated)."""
     out = {}
     for model, d in diffs.items():
         attrition = Counter(fates[model].get(i, "absent") for i in subset)
-        items, no_weight = [], 0
-        for i in subset:
-            if i not in d:
-                continue
-            w = weights.get(repos[model][i])
-            if w is None:
-                no_weight += 1
-                continue
-            items.append((repos[model][i], w, d[i]))
-        out[model] = {"selected": len(subset), "attrition": dict(attrition), "no_weight": no_weight,
+        # read_breadth has checked every subset repository has a weight
+        items = [(repo_of(i), weights[repo_of(i)], d[i]) for i in subset if i in d]
+        per_stratum = Counter(st for st, _, _ in items)
+        out[model] = {"selected": len(subset), "attrition": dict(attrition),
                       "analysed": len(items),
+                      "strata_analysed": len(per_stratum),
+                      "strata_with_one_instance": sorted(st for st, c in per_stratum.items() if c == 1),
+                      "strata_with_none": sorted(set(weights) - set(per_stratum)),
                       "weighted_mean_d": weighted_mean([(w, v) for _, w, v in items]) if items else None,
                       "ci95_stratified": stratified_boot_ci(items),
                       "unweighted_mean_d": statistics.mean(v for _, _, v in items) if items else None}
@@ -343,24 +437,26 @@ def breadth(diffs, repos, fates, subset, weights):
 
 def report(results, cross, breadth_out):
     for r in results:
-        print(f"\n######## {r['model']}  (k = {r['k']})")
+        print(f"\n######## {r['model']}  ({r['role']} model, k = {r['k']})")
         print(f"  eligible instances: {r['eligible']}; exclusions: {r['exclusions']}")
         print(f"  samples made unknown by the count rule: {r['samples_count_mismatch_unknown']}; "
               f"re-marked incomplete: {r['samples_flagged_incomplete']}")
         for pop_name, pop in r["populations"].items():
-            print(f"  [{pop_name}]")
+            label = "" if pop_name == "confirmatory" else "  (descriptive, includes the development set)"
+            print(f"  [{pop_name}]{label}")
             for variant in ("primary", "unknown_as_zero", "timeout_unknown"):
                 v = pop[variant]
                 w = v["wilcoxon"]
                 print(f"    {variant:16} n={v['instances']:4} (dropped {v['dropped_unknown']}) "
                       f"mean d={v['mean_d'] if v['mean_d'] is None else round(v['mean_d'], 3)} "
-                      f"CI={v['ci95_mean_d']}  Wilcoxon p={w['p']:.4g} ({w['method']}) r={w['r']:.3f}")
+                      f"bootstrap CI={v['ci95_mean_d']} | Wilcoxon signed-rank p={w['p']:.4g} "
+                      f"({w['method']}) rank-biserial r={w['r']:.3f}")
             f = pop["filtered_pass_at_k"]
             print(f"    filtered pass@k n={f['instances']} instruct={f['instruct']} kg_only={f['kg_only']} "
                   f"McNemar p={f['mcnemar_p']:.4g} discordant={f['discordant']}")
             if "holm" in pop:
                 print(f"    Holm across models: {pop['holm']}")
-    print(f"\nAcross models (descriptive): {cross}")
+    print(f"\nAcross main-study models (descriptive): {cross}")
     if breadth_out:
         print(f"\nBreadth subset: {breadth_out}")
 
@@ -369,39 +465,45 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--k", type=int, default=5)
     ap.add_argument("--dev-ids", required=True)
-    ap.add_argument("--model", action="append", required=True, help="NAME:CSV (usable_score.py --out)")
+    ap.add_argument("--model", action="append", required=True,
+                    help="NAME:CSV of a main-study model (usable_score.py --out); NAME must match the CSV's run")
+    ap.add_argument("--breadth-model", action="append", default=[], help="NAME:CSV of a breadth-only model")
     ap.add_argument("--skipped", action="append", default=[], help="NAME:ARM:FILE")
     ap.add_argument("--breadth-ids")
     ap.add_argument("--breadth-weights")
     ap.add_argument("--json")
     args = ap.parse_args(argv)
+    if bool(args.breadth_ids) != bool(args.breadth_weights):
+        ap.error("--breadth-ids and --breadth-weights go together")
+    if args.breadth_model and not args.breadth_ids:
+        ap.error("--breadth-model needs --breadth-ids and --breadth-weights")
 
-    dev_ids = {l.strip() for l in open(args.dev_ids) if l.strip()}
+    dev_ids = read_dev_ids(args.dev_ids)
+    breadth_in = read_breadth(args.breadth_ids, args.breadth_weights, dev_ids) if args.breadth_ids else None
     skipped = us.read_skipped(args.skipped)
-    results, diffs, repos, fates = [], {}, {}, {}
-    for spec in args.model:
-        name, path = spec.split(":", 1)
-        rows = us.load(path)
-        for r in rows:
-            r["run"] = name
-        res, d, repo, fate = analyse_model(name, rows, skipped, dev_ids, args.k)
-        results.append(res); diffs[name] = d; repos[name] = repo; fates[name] = fate
+    results, diffs, fates = [], {}, {}
+    for role, specs in (("main", args.model), ("breadth", args.breadth_model)):
+        for spec in specs:
+            name, path = spec.split(":", 1)
+            if name in diffs:
+                raise SystemExit(f"model {name} given twice")
+            rows = us.load(path)
+            run = check_rows(rows, args.k, path)
+            if run != name:
+                raise SystemExit(f"{path} holds run {run!r}, not {name!r}")
+            res, d, fate = analyse_model(name, rows, skipped, dev_ids, args.k, role)
+            results.append(res); diffs[name] = d; fates[name] = fate
     holm_across(results)
-    cross = across_models(diffs)
-    breadth_out = None
-    if args.breadth_ids and args.breadth_weights:
-        subset = [l.strip() for l in open(args.breadth_ids) if l.strip()]
-        weights = {}
-        with open(args.breadth_weights) as f:
-            next(f)
-            for line in f:
-                repo, _pop, _k, w = line.rstrip("\n").split("\t")
-                weights[repo] = float(w)
-        breadth_out = breadth(diffs, repos, fates, subset, weights)
+    cross = across_models({m: d for m, d in diffs.items() if m in args_names(args.model)})
+    breadth_out = breadth(diffs, fates, *breadth_in) if breadth_in else None
     report(results, cross, breadth_out)
     if args.json:
         with open(args.json, "w") as f:
-            json.dump({"models": results, "across_models": cross, "breadth": breadth_out}, f, indent=2)
+            json.dump({"models": results, "across_main_models": cross, "breadth": breadth_out}, f, indent=2)
+
+
+def args_names(specs):
+    return {spec.split(":", 1)[0] for spec in specs}
 
 
 if __name__ == "__main__":
