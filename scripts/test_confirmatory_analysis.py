@@ -153,6 +153,7 @@ def build():
                      {(a, s): {"count": 0, "total": 0, "outcome": "no_target_mutants"}
                       for a in ("kg_only", "instruct") for s in range(5)})
     rows += [r for r in instance("long", [60] * 5, [50] * 5) if r["arm"] == "kg_only"]
+    rows += [r for r in instance("nolog", [60] * 5, [50] * 5) if r["arm"] == "instruct"]   # kg_only log missing
     skipped = {("M", "instruct"): {iid("long"): "prompt_too_long"}}
     return rows, skipped
 
@@ -192,11 +193,47 @@ class AnalyseModelTest(unittest.TestCase):
     def test_pass_at_k(self):
         rows, skipped = build()
         res, *_ = ca.analyse_model("M", rows, skipped, DEV, 5)
-        f = res["populations"]["confirmatory"]["filtered_pass_at_k"]
-        # harness error leaves that sample's test outcome unknown; every other one passed
-        self.assertEqual(f["instances"], 10)
+        conf = res["populations"]["confirmatory"]
+        f = conf["filtered_pass_at_k"]
+        # the harness error leaves one sample's test result unknown, but its
+        # four siblings are known passes, so filtered pass@5 is known
+        self.assertEqual(f["instances"], 11)
+        self.assertEqual(f["dropped_unknown"], 0)
         self.assertEqual(f["discordant"], {"kg_only_only": 0, "instruct_only": 0})
         self.assertEqual(f["mcnemar_p"], 1.0)
+        # pass@1 is complete case: that instance is dropped from it
+        self.assertEqual(conf["pass_at_1_mean_d"]["instances"], 10)
+        self.assertEqual(conf["pass_at_1_mean_d"]["dropped_unknown"], 1)
+
+    def test_filtered_pass_three_way(self):
+        p = lambda **kw: row(iid("x"), "kg_only", 0, **kw)
+        ok, fail, unk = p(), p(outcome="zero_suite_failed", passed=0), p(outcome="unknown_harness_error", passed=0)
+        self.assertEqual(ca.filtered_pass([fail, unk, ok]), 1)      # a known pass settles it
+        self.assertIsNone(ca.filtered_pass([fail, fail, unk]))      # could still have passed
+        self.assertEqual(ca.filtered_pass([fail] * 5), 0)
+        self.assertIsNone(ca.pass_share([ok, unk]))
+        self.assertEqual(ca.pass_share([ok, fail]), 0.5)
+
+    def test_mcnemar_counts_discordant_instances(self):
+        rows = []
+        fail = {"outcome": "zero_suite_failed", "passed": 0}
+        for n in range(6):   # kg_only passes, instruct never does
+            rows += instance(f"kg{n}", [60] * 5, [0] * 5, {("instruct", s): fail for s in range(5)})
+        rows += instance("inonly", [0] * 5, [50] * 5, {("kg_only", s): fail for s in range(5)})
+        res, *_ = ca.analyse_model("M", rows, {}, DEV, 5)
+        f = res["populations"]["confirmatory"]["filtered_pass_at_k"]
+        self.assertEqual(f["discordant"], {"kg_only_only": 6, "instruct_only": 1})
+        self.assertAlmostEqual(f["mcnemar_p"], 2 * (1 + 7) / 2 ** 7)
+
+    def test_missing_arm_log_is_attrition(self):
+        rows, skipped = build()
+        res, _, fate = ca.analyse_model("M", rows, skipped, DEV, 5)
+        self.assertEqual(res["missing_one_arm_log"], {"instruct": [], "kg_only": [iid("nolog")]})
+        self.assertEqual(fate[iid("nolog")], "missing: no kg_only log")
+        self.assertEqual(res["samples_missing_from_log"], 0)
+        rows[0]["outcome"] = "unknown_missing"
+        res, *_ = ca.analyse_model("M", rows, skipped, DEV, 5)
+        self.assertEqual(res["samples_missing_from_log"], 1)
 
     def test_holm_families_by_role(self):
         rows, skipped = build()
@@ -216,11 +253,12 @@ class AnalyseModelTest(unittest.TestCase):
     def test_breadth_attrition_and_strata(self):
         rows, skipped = build()
         res, d, fate = ca.analyse_model("M", rows, skipped, DEV, 5)
-        subset = [iid(n) for n in ("good0", "good1", "mismatch", "long", "neverrun")]
+        subset = [iid(n) for n in ("good0", "good1", "mismatch", "long", "nolog", "neverrun")]
         out = ca.breadth({"M": d}, {"M": fate}, subset, {"django/django": 2.5, "pallets/flask": 1.0})["M"]
         self.assertEqual(out["analysed"], 2)
         self.assertEqual(out["attrition"], {"analysed": 2, "unknown": 1,
-                                            "excluded: rule4_prompt_too_long": 1, "absent": 1})
+                                            "excluded: rule4_prompt_too_long": 1,
+                                            "missing: no kg_only log": 1, "absent": 1})
         self.assertEqual(out["strata_with_none"], ["pallets/flask"])
         self.assertAlmostEqual(out["weighted_mean_d"], 10.0)
 

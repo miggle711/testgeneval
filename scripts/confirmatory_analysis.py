@@ -7,8 +7,12 @@ the protocol fixes in advance. usable_score.py remains the descriptive tool;
 the classification of each sample is its `classify`, reused here unchanged.
 
 Inputs are checked before anything is computed: each CSV holds one run, and
-exactly one row per sample index 0..k-1 for every instance and arm it has
-(usable_score.py writes missing samples as unknown_missing rows); the
+exactly one row per sample index 0..k-1 for every instance and arm it has.
+A sample missing from an evaluation log is not an absent row:
+usable_score.py writes it as an unknown_missing row, so it is kept, scored
+unknown and counted. An instance with no log at all in one arm is kept as
+attrition too. A duplicate, extra or absent row can only come from a
+malformed CSV (a different k, or files concatenated), and stops the run; the
 development list matches the md5 recorded on #7; the breadth subset has no
 development ids and its weights file covers every repository in it with the
 subset's own sample sizes. Any failure stops the run.
@@ -41,23 +45,31 @@ Per model, on instances present in both arms:
        - mean d (the estimate of the gain) with a 95% percentile bootstrap
          interval, resampling instances (10,000 resamples, seed 0), reported
          separately from the Wilcoxon p;
-       - filtered pass@5 (any of the k samples passed after filtering; it
-         measures the generation-plus-filtering pipeline): exact two-sided
-         McNemar on discordant instances, and a paired bootstrap interval of
-         the difference in proportions;
+       - filtered pass@5 (it measures the generation-plus-filtering
+         pipeline), per instance and arm: true if any sample is known to
+         pass, false if all k are known not to pass, otherwise unknown. One
+         known pass settles it, so an unknown sibling does not discard it.
+         Instances known in both arms: exact two-sided McNemar on the
+         discordant ones, and a paired bootstrap interval of the difference;
+       - pass@1 (the mean over the k samples' pass indicators): complete
+         case, since a mean with an unknown term is not determined; the
+         difference of means with a bootstrap interval, descriptive;
        - Holm adjustment, alpha 0.05, within four families: {main-study,
          breadth} models x {primary, filtered pass@k}, on the confirmatory
          population only. Sensitivity scorings and the population including
-         the development set are descriptive and not adjusted.
+         the development set are descriptive and not adjusted. The headline
+         claim rests on the main-study primary family alone; the breadth
+         families are secondary and are not another route to it.
   5. Across main-study models: each one's mean d on the instances eligible
      and usable for all of them (descriptive).
-  6. Breadth subset (`--breadth-ids`, `--breadth-weights`): per model, the
+  6. Breadth subset (secondary; `--breadth-ids`, `--breadth-weights`): per model, the
      weighted mean of d over the subset's usable instances,
      sum(w d) / sum(w), with a stratified bootstrap resampling within each
      repository, the strata the subset was drawn in. A repository with one
      analysed instance contributes no resampling variance; how many there are
      is reported, as a limitation of the interval. Also the subset's
-     attrition per id (analysed, unknown, excluded by reason, absent). The
+     attrition per id (analysed, unknown, excluded by reason, missing an
+     arm's log, absent). The
      weights correct for sampling only, not for exclusions or unknown
      samples.
 
@@ -245,15 +257,17 @@ def test_known(r):
     return r["passed"] == 1 or r["outcome"].startswith("zero")
 
 
-def pass_at_k(arms, k):
-    """{arm: (any passed, share passed)} if every sample's test run is known."""
-    out = {}
-    for arm in ARMS:
-        rs = sorted(arms.get(arm, []), key=lambda r: r["sample"])[:k]
-        if len(rs) < k or not all(test_known(r) for r in rs):
-            return None
-        out[arm] = (int(any(r["passed"] for r in rs)), statistics.mean(r["passed"] for r in rs))
-    return out
+def filtered_pass(rs):
+    """1 if any sample is known to pass, 0 if every one is known not to,
+    None (unknown) otherwise."""
+    if any(r["passed"] == 1 for r in rs):
+        return 1
+    return 0 if all(test_known(r) for r in rs) else None
+
+
+def pass_share(rs):
+    """Share of samples passing, if every sample's test result is known."""
+    return statistics.mean(r["passed"] for r in rs) if all(test_known(r) for r in rs) else None
 
 
 # ----------------------------------------------------------------- validation
@@ -277,9 +291,14 @@ def check_rows(rows, k, source):
         by[(r["instance"], r["arm"])].append(r["sample"])
     for (i, arm), samples in sorted(by.items()):
         if sorted(samples) != list(range(k)):
-            problems.append(f"{i} {arm}: samples {sorted(samples)}, expected 0..{k - 1} once each")
+            seen = Counter(samples)
+            dup = sorted(x for x, n in seen.items() if n > 1)
+            extra = sorted(x for x in seen if not 0 <= x < k)
+            absent = sorted(set(range(k)) - set(seen))
+            problems.append(f"{i} {arm}: duplicate {dup}, outside 0..{k - 1} {extra}, absent {absent}")
     if problems:
-        raise SystemExit(f"{source}: {len(problems)} problem(s), e.g.\n  " + "\n  ".join(problems[:10]))
+        raise SystemExit(f"{source}: malformed CSV, {len(problems)} problem(s) (a sample missing from a log "
+                         f"is an unknown_missing row, never an absent one), e.g.\n  " + "\n  ".join(problems[:10]))
     return runs.pop()
 
 
@@ -336,11 +355,16 @@ def analyse_model(model, rows, skipped, dev_ids, k, role="main"):
         per[r["instance"]][r["arm"]].append(r)
     too_long = us.rule4_excluded(model, per, skipped)
     both = {i: a for i, a in per.items() if all(arm in a for arm in ARMS) and i not in too_long}
+    one_arm = {i: next(arm for arm in ARMS if arm not in a)
+               for i, a in per.items() if i not in both and i not in too_long}
+    missing_samples = sum(r["outcome"] == "unknown_missing" for r in rows)
     status = {i: us.eligibility([r for arm in ARMS for r in a[arm]]) for i, a in both.items()}
     eligible = {i: a for i, a in both.items() if status[i] == "eligible"}
 
     result = {"model": model, "role": role, "k": k,
               "samples_count_mismatch_unknown": changed, "samples_flagged_incomplete": flagged,
+              "samples_missing_from_log": missing_samples,
+              "missing_one_arm_log": {arm: sorted(i for i, a in one_arm.items() if a == arm) for arm in ARMS},
               "exclusions": {"rule4_prompt_too_long": len(too_long),
                              **{s: n for s, n in Counter(status.values()).items() if s != "eligible"}},
               "eligible": len(eligible), "populations": {}}
@@ -363,31 +387,36 @@ def analyse_model(model, rows, skipped, dev_ids, k, role="main"):
                             "ci95_mean_d": boot_mean_ci(vals), "wilcoxon": w}
             if variant == "primary":
                 diffs[pop_name] = d
-        # filtered pass@5 and pass@1 (mean over samples)
-        b = c = both_pass = neither = 0
+        # filtered pass@k (any known pass) and pass@1 (complete case)
+        b = c = both_pass = neither = unknown5 = unknown1 = 0
         p5 = {arm: [] for arm in ARMS}
         p1_d = []
         for i in ids:
-            pk = pass_at_k(eligible[i], k)
-            if pk is None:
-                continue
-            x, y = pk["instruct"][0], pk["kg_only"][0]
-            p5["instruct"].append(x); p5["kg_only"].append(y)
-            b += (y == 1 and x == 0); c += (x == 1 and y == 0)
-            both_pass += (x == 1 and y == 1); neither += (x == 0 and y == 0)
-            p1_d.append(pk["kg_only"][1] - pk["instruct"][1])
+            x, y = (filtered_pass(eligible[i][arm]) for arm in ARMS)
+            if x is None or y is None:
+                unknown5 += 1
+            else:
+                p5["instruct"].append(x); p5["kg_only"].append(y)
+                b += (y == 1 and x == 0); c += (x == 1 and y == 0)
+                both_pass += (x == 1 and y == 1); neither += (x == 0 and y == 0)
+            s1, s2 = (pass_share(eligible[i][arm]) for arm in ARMS)
+            if s1 is None or s2 is None:
+                unknown1 += 1
+            else:
+                p1_d.append(s2 - s1)
         n5 = len(p5["instruct"])
         diff5 = [y - x for x, y in zip(p5["instruct"], p5["kg_only"])]
         pop["filtered_pass_at_k"] = {
-            "instances": n5,
+            "instances": n5, "dropped_unknown": unknown5,
             "instruct": statistics.mean(p5["instruct"]) if n5 else None,
             "kg_only": statistics.mean(p5["kg_only"]) if n5 else None,
             "discordant": {"kg_only_only": b, "instruct_only": c}, "concordant": {"both": both_pass, "neither": neither},
             "mcnemar_p": mcnemar_exact(b, c), "ci95_difference": boot_mean_ci(diff5)}
-        pop["pass_at_1_mean_d"] = {"instances": len(p1_d), "mean_d": statistics.mean(p1_d) if p1_d else None,
+        pop["pass_at_1_mean_d"] = {"instances": len(p1_d), "dropped_unknown": unknown1, "mean_d": statistics.mean(p1_d) if p1_d else None,
                                    "ci95": boot_mean_ci(p1_d)}
         result["populations"][pop_name] = pop
-    fate = {i: "excluded: rule4_prompt_too_long" for i in too_long}
+    fate = {i: f"missing: no {arm} log" for i, arm in one_arm.items()}
+    fate.update({i: "excluded: rule4_prompt_too_long" for i in too_long})
     fate.update({i: f"excluded: {s}" for i, s in status.items() if s != "eligible"})
     fate.update({i: ("analysed" if i in diffs["all_including_development"] else "unknown")
                  for i in eligible})
@@ -440,7 +469,11 @@ def report(results, cross, breadth_out):
         print(f"\n######## {r['model']}  ({r['role']} model, k = {r['k']})")
         print(f"  eligible instances: {r['eligible']}; exclusions: {r['exclusions']}")
         print(f"  samples made unknown by the count rule: {r['samples_count_mismatch_unknown']}; "
-              f"re-marked incomplete: {r['samples_flagged_incomplete']}")
+              f"re-marked incomplete: {r['samples_flagged_incomplete']}; "
+              f"missing from their log: {r['samples_missing_from_log']}")
+        for arm, ids in r["missing_one_arm_log"].items():
+            if ids:
+                print(f"  no {arm} log ({len(ids)}): {', '.join(ids[:10])}{' ...' if len(ids) > 10 else ''}")
         for pop_name, pop in r["populations"].items():
             label = "" if pop_name == "confirmatory" else "  (descriptive, includes the development set)"
             print(f"  [{pop_name}]{label}")
@@ -452,13 +485,13 @@ def report(results, cross, breadth_out):
                       f"bootstrap CI={v['ci95_mean_d']} | Wilcoxon signed-rank p={w['p']:.4g} "
                       f"({w['method']}) rank-biserial r={w['r']:.3f}")
             f = pop["filtered_pass_at_k"]
-            print(f"    filtered pass@k n={f['instances']} instruct={f['instruct']} kg_only={f['kg_only']} "
+            print(f"    filtered pass@k n={f['instances']} (dropped {f['dropped_unknown']}) instruct={f['instruct']} kg_only={f['kg_only']} "
                   f"McNemar p={f['mcnemar_p']:.4g} discordant={f['discordant']}")
             if "holm" in pop:
                 print(f"    Holm across models: {pop['holm']}")
     print(f"\nAcross main-study models (descriptive): {cross}")
     if breadth_out:
-        print(f"\nBreadth subset: {breadth_out}")
+        print(f"\nBreadth subset (secondary): {breadth_out}")
 
 
 def main(argv=None):
