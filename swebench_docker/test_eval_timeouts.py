@@ -26,6 +26,7 @@ from swebench_docker.run_apptainer import (
     filter_runs,
     host_timeout_for,
     parse_slurm_time,
+    slurm_budget_warning,
     slurm_seconds_left,
 )
 
@@ -177,6 +178,25 @@ class SlurmTimeTest(unittest.TestCase):
         self.assertEqual(parse_slurm_time("45"), 45)
         self.assertIsNone(parse_slurm_time("UNLIMITED"))
         self.assertIsNone(parse_slurm_time(""))
+
+    def squeue_says(self, left):
+        def fake_run(cmd, **kwargs):
+            self.assertEqual(cmd[:4], ["squeue", "-h", "-j", "123"])
+            return SimpleNamespace(stdout=left + "\n", returncode=0)
+        return patch("swebench_docker.run_apptainer.subprocess.run", fake_run)
+
+    def test_warns_when_the_budget_exceeds_the_jobs_time_left(self):
+        with patch.dict(os.environ, {"SLURM_JOB_ID": "123"}), self.squeue_says("1-00:00:00"):
+            warning = slurm_budget_warning(200000, "inst-1")
+        self.assertIn("host timeout 200000s exceeds the 86400s left in Slurm job 123", warning)
+
+    def test_no_warning_when_the_job_has_time(self):
+        with patch.dict(os.environ, {"SLURM_JOB_ID": "123"}), self.squeue_says("3-00:00:00"):
+            self.assertIsNone(slurm_budget_warning(200000, "inst-1"))
+
+    def test_no_warning_for_an_unlimited_job(self):
+        with patch.dict(os.environ, {"SLURM_JOB_ID": "123"}), self.squeue_says("UNLIMITED"):
+            self.assertIsNone(slurm_budget_warning(200000, "inst-1"))
 
     def test_outside_slurm_there_is_no_limit(self):
         with patch.dict(os.environ, {}, clear=False):

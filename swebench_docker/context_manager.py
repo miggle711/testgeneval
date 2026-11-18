@@ -844,9 +844,18 @@ class TaskEnvContextManager:
                 self.log.write(f"Test Script: {test_cmd};\n")
 
             start = time.time()
-            out_test = self.exec(
-                test_cmd.split(), shell=False, timeout=self.timeout, check=False
-            )
+            try:
+                out_test = self.exec(
+                    test_cmd.split(), shell=False, timeout=self.timeout, check=False
+                )
+            except subprocess.TimeoutExpired:
+                # The generated tests' own command: the only timeout recorded
+                # as a test timeout (scored 0, fyp-paper#7 §4). Every other
+                # step's timeout is a harness fault, below.
+                self.log.write("Test script run timed out", level=ERROR)
+                if log_data:
+                    self.log.write(f"{TESTS_TIMEOUT} after {self.timeout} seconds\n")
+                return False, False
             end = time.time()
 
             test_time = end - start
@@ -871,9 +880,21 @@ class TaskEnvContextManager:
                             f"{self.cmd_conda_run} coverage json -o coverage.json"
                         )
 
-                    self.exec(coverage_data_cmd.split(), shell=False, check=False)
                     cov_success = False
-                    if not os.path.exists("coverage.json"):
+                    cov_timed_out = False
+                    try:
+                        self.exec(coverage_data_cmd.split(), shell=False, check=False)
+                    except subprocess.TimeoutExpired as e:
+                        # A harness step, not the tests: the sample's coverage
+                        # and mutation are unknown, never a test timeout.
+                        cov_timed_out = True
+                        self.log.write(
+                            f"\nCoverageFAIL:{instance['code_file']} harness step timed out "
+                            f"after {e.timeout}s: coverage json\n"
+                        )
+                    if cov_timed_out:
+                        pass
+                    elif not os.path.exists("coverage.json"):
                         # `coverage json` wrote nothing (#125). The tests ran
                         # and passed, so this is a coverage failure for this
                         # sample, not an error that ends the instance.
@@ -896,9 +917,22 @@ class TaskEnvContextManager:
                                 )
                     if cov_success and not skip_mutation:
                         self.log.write("Running mutation testing")
-                        self.run_mutation_testing(
-                            instance, specifications, test_time, test_cmd
-                        )
+                        try:
+                            self.run_mutation_testing(
+                                instance, specifications, test_time, test_cmd
+                            )
+                        except subprocess.TimeoutExpired as e:
+                            # A harness step of the mutation stage (`cosmic-ray
+                            # init`, or a counting or scoring script) hit its
+                            # limit: the mutation result is unknown. The
+                            # mutation run's own limit is MutationTimeout.
+                            marker = ("FunctionMutationFAIL"
+                                      if getattr(self, "mutation_scope", SCOPE_FILE) == SCOPE_FUNCTION
+                                      else "MutationFAIL")
+                            step = " ".join(e.cmd) if isinstance(e.cmd, list) else str(e.cmd)
+                            self.log.write(
+                                f"\n{marker}: harness step timed out after {e.timeout}s: {step[:120]}\n"
+                            )
 
                 # Any-pass marker (testgeneval#77). It must run whichever
                 # branch fired: a suite that fails as a whole can still
@@ -917,11 +951,16 @@ class TaskEnvContextManager:
 
             self.log.write(f"Test script run successful")
             return True, out_test.returncode == 0
-        except subprocess.TimeoutExpired:
-            # Test command run timed out
-            self.log.write("Test script run timed out", level=ERROR)
-            if log_data:
-                self.log.write(f"{TESTS_TIMEOUT} after {self.timeout} seconds\n")
+        except subprocess.TimeoutExpired as e:
+            # Any other step's limit (the test command's is handled where it
+            # runs): a harness fault, recorded as an error (unknown), never as
+            # a test timeout.
+            self.log.write("Harness step timed out", level=ERROR)
+            if not log_data:
+                # A per-test filtering run: dropping the test would score a
+                # harness fault as a generation failure (#125).
+                raise
+            self.log.write(f"{TESTS_ERROR}: harness step timed out after {e.timeout}s\n")
             return False, False
         except Exception as e:
             # Test command run failed

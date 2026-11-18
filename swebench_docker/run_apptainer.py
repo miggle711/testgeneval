@@ -186,6 +186,18 @@ def host_timeout_for(timeout: int, n_samples: int, skip_mutation: bool, samples=
     return b_instance + max(b_samples, per_run) + APPTAINER_HOST_TIMEOUT_MARGIN
 
 
+def slurm_budget_warning(host_timeout, instance_id):
+    """A warning when this container's budget exceeds the time left in the
+    enclosing Slurm job, so the job's limit, not the watchdog, may cut its
+    later samples; None otherwise (or outside Slurm)."""
+    left = slurm_seconds_left()
+    if left is not None and host_timeout > left:
+        return (f"[{instance_id}] host timeout {host_timeout}s exceeds the {left}s left in "
+                f"Slurm job {os.environ.get('SLURM_JOB_ID')}; this container may be cut by "
+                f"the job's time limit")
+    return None
+
+
 def parse_slurm_time(text):
     """Seconds in a Slurm time string ([D-]HH:MM:SS, MM:SS or SS), or None
     for UNLIMITED, NOT_SET or anything unreadable."""
@@ -359,13 +371,9 @@ async def run_apptainer_evaluation(
                                     filtered=(setting == "full"))
     logger.info(f"[{task_instance['id']}] host timeout {host_timeout}s "
                 f"(sum of the inner limits over {n_samples} sample(s))")
-    left = slurm_seconds_left()
-    if left is not None and host_timeout > left:
-        # The watchdog is no longer the binding limit: Slurm may end the job
-        # first, cutting this container's later samples.
-        logger.warning(f"[{task_instance['id']}] host timeout {host_timeout}s exceeds the "
-                       f"{left}s left in Slurm job {os.environ.get('SLURM_JOB_ID')}; "
-                       f"this container may be cut by the job's time limit")
+    warning = slurm_budget_warning(host_timeout, task_instance["id"])
+    if warning:
+        logger.warning(warning)
 
     try:
         process = await asyncio.create_subprocess_exec(
