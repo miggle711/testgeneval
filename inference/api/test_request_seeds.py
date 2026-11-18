@@ -35,7 +35,7 @@ class RequestSeedTest(unittest.TestCase):
 
 
 def fake_response(n):
-    usage = NS(prompt_tokens=1, completion_tokens=1, completion_tokens_details=None)
+    usage = NS(prompt_tokens=1234, completion_tokens=1, completion_tokens_details=None)
     return NS(choices=[NS(message=NS(content="```python\npass\n```"), finish_reason="stop")] * n,
               usage=usage, model="served-model", system_fingerprint="fp-1"), 0.0
 
@@ -66,8 +66,19 @@ class InferenceRecordsSeedTest(unittest.TestCase):
             "seed": expected, "temperature": 0.8, "top_p": 0.95,
             "max_tokens": run_api.OUTPUT_LIMITS["Qwen/Qwen3-4B-Instruct-2507"], "n": 5,
             "served_model": "served-model", "system_fingerprint": "fp-1",
+            "prompt_tokens": 1234,
             # the request settings every full-setting row also records
             "max_model_len": None, "chat_template_kwargs": None, "reasoning_parser": None})
+
+    def test_prompt_tokens_recorded_once_per_request_not_per_sample(self):
+        _, row = self.run_inference(7)
+        self.assertEqual(row["sampling"]["full"]["prompt_tokens"], 1234)
+        self.assertEqual(len(row["usage"]["full"]), 5)
+        self.assertTrue(all("prompt_tokens" not in u for u in row["usage"]["full"]))
+
+    def test_prompt_tokens_none_when_the_server_omits_usage(self):
+        self.assertIsNone(run_api.prompt_tokens(NS(usage=None)))
+        self.assertIsNone(run_api.prompt_tokens(NS()))
 
     def test_no_seed_sends_none_and_records_it(self):
         seen, row = self.run_inference(None)
