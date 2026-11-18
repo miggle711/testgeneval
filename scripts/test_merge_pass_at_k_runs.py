@@ -107,6 +107,37 @@ class MergePassAtKRunsTest(unittest.TestCase):
         rc, _ = self._run(s1, s2)
         self.assertEqual(rc, 1)
 
+    def _with_tokens(self, rec, tokens):
+        if tokens is not None:
+            rec["sampling"] = {"full": {"seed": 1, "n": 1, "prompt_tokens": tokens}}
+        return rec
+
+    def test_prompt_token_mismatch_is_fatal_even_when_prompts_allowed(self):
+        s1 = self._write("k1.jsonl", [self._with_tokens(make_record("x-1", ["A"]), 1200)])
+        s2 = self._write("k4.jsonl", [self._with_tokens(make_record("x-1", ["B"]), 1215)])
+        rc, out = self._run(s1, s2)
+        self.assertEqual(rc, 1)
+        self.assertFalse(os.path.exists(out))
+        rc, _ = self._run(s1, s2, extra_args=["--allow_prompt_mismatch", "--force"])
+        self.assertEqual(rc, 1)
+
+    def test_prompt_tokens_matching_or_absent_merge(self):
+        for t1, t2 in ((1200, 1200), (1200, None), (None, 1200), (None, None)):
+            with self.subTest(stage1=t1, stage2=t2):
+                s1 = self._write("k1.jsonl", [self._with_tokens(make_record("x-1", ["A"]), t1)])
+                s2 = self._write("k4.jsonl", [self._with_tokens(make_record("x-1", ["B"]), t2)])
+                rc, out = self._run(s1, s2, extra_args=["--force"])
+                self.assertEqual(rc, 0)
+                self.assertEqual(self._read(out)[0]["preds"]["full"], ["A", "B"])
+
+    def test_prompt_tokens_ignored_for_list_shaped_sampling(self):
+        # completion settings record one sampling entry per request (a list)
+        r1, r2 = make_record("x-1", ["A"]), make_record("x-1", ["B"])
+        r1["sampling"] = {"full": [{"prompt_tokens": 5}]}
+        r2["sampling"] = {"full": [{"prompt_tokens": 9}]}
+        rc, _ = self._run(self._write("k1.jsonl", [r1]), self._write("k4.jsonl", [r2]))
+        self.assertEqual(rc, 0)
+
     def test_prompt_mismatch_is_fatal_unless_allowed(self):
         s1 = self._write("k1.jsonl", [make_record("x-1", ["A"], prompt="OLD PROMPT")])
         s2 = self._write("k4.jsonl", [make_record("x-1", ["B"], prompt="NEW PROMPT")])
