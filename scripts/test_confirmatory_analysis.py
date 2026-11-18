@@ -362,6 +362,19 @@ class RobustnessTest(unittest.TestCase):
         self.assertTrue(all(t["kg_only_value_where_mean_d_is_zero"] is None and "positive" in t["note"]
                             for t in b["tipping"]))
 
+    def test_manifest_makes_no_log_instances_visible(self):
+        rows, skipped = build()
+        expected = {r["instance"] for r in rows} | {iid("ghost"), iid("dev0")}
+        res, _, fate = ca.analyse_model("M", rows, skipped, DEV, 5, expected=expected)
+        bp = res["robustness"]["bounds_population"]
+        self.assertEqual(bp["instances"], 12)                       # unchanged: eligibility not established
+        self.assertEqual(bp["eligibility_unresolved"], {iid("ghost"): ca.NO_LOG})
+        self.assertEqual(bp["manifest"], len(expected))
+        self.assertEqual(fate[iid("ghost")], "missing: no log in either arm")
+        self.assertEqual(res["robustness"]["attrition_by_repo"]["django/django"]["instances"]
+                         ["missing: no log in either arm"], 1)     # dev0 has logs; ghost is the one
+        self.assertIn("conditional on established eligibility", bp["definition"])
+
     def test_tipping_value_makes_mean_d_zero(self):
         rows = instance("tip", [50] * 5, [55] * 5, {("kg_only", 4): {"outcome": "unknown_harness_error", "passed": 0}})
         per = {iid("tip"): {"kg_only": [r for r in rows if r["arm"] == "kg_only"],
@@ -439,7 +452,8 @@ class PromptLengthTest(unittest.TestCase):
         tokens = {"instruct": {f"i{n}": 1000 for n in range(9)},
                   "kg_only": {f"i{n}": 1000 + 100 * n for n in range(9)}}
         out = ca.length_diagnostic(d, tokens)
-        self.assertEqual(out["instances"], 9)
+        self.assertEqual(out["pairs"], 9)
+        self.assertEqual(out["missing_token_counts"], {"instruct": 0, "kg_only": 0})
         self.assertAlmostEqual(out["spearman_token_difference_vs_d"], 1.0)
         self.assertEqual([t["mean_d"] for t in out["tertiles"]], [1.0, 4.0, 7.0])
 
@@ -450,12 +464,20 @@ class PromptLengthTest(unittest.TestCase):
         out = ca.length_diagnostic(d, tokens)
         self.assertEqual(len(out["tertiles"]), 1)
         self.assertEqual(out["tertiles"][0]["instances"], 6)
-        self.assertIsNone(out["spearman_token_difference_vs_d"])
+        self.assertTrue(out["spearman_token_difference_vs_d"].startswith("undefined"))
         # two distinct values: never a group mixing them, never one split
         tokens["kg_only"].update({"i4": 2000, "i5": 2000})
         groups = ca.length_diagnostic(d, tokens)["tertiles"]
         self.assertEqual(sorted(g["instances"] for g in groups), [2, 4])
         self.assertTrue(all(g["token_difference_range"][0] == g["token_difference_range"][1] for g in groups))
+
+    def test_diagnostic_counts_missing_tokens(self):
+        d = {f"i{n}": float(n) for n in range(5)}
+        tokens = {"instruct": {f"i{n}": 1000 for n in range(5)},
+                  "kg_only": {f"i{n}": 1000 + n for n in range(4)}}     # i4 has no kg_only count
+        out = ca.length_diagnostic(d, tokens)
+        self.assertEqual((out["pairs"], out["analysed_instances"]), (4, 5))
+        self.assertEqual(out["missing_token_counts"], {"instruct": 0, "kg_only": 1})
 
     def test_diagnostic_without_tokens(self):
         out = ca.length_diagnostic({"a": 1.0}, {"instruct": {}, "kg_only": {}})

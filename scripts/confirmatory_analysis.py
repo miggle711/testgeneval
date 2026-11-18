@@ -81,9 +81,14 @@ the identifier; its report states the definition.
 
 Robustness analyses, all descriptive and never Holm-adjusted (section 7 of
 the output; none is a route to the headline claim):
-  a. Missing-data bounds on a fixed population: every confirmatory instance
-     eligible from the evaluations it has, including one with no log in an
-     arm (all k samples unknown there). Known scores, and test-command
+  a. Missing-data bounds, conditional on established eligibility (not
+     benchmark-wide): every confirmatory instance whose eligibility the
+     evaluations establish, including one with no log in an arm (all k
+     samples unknown there). Expected instances come from a manifest
+     (`--expected-ids` for main-study models, the breadth subset for breadth
+     models), so an instance with no log in either arm is not invisible: its
+     eligibility is unresolved and it is listed with the other unresolved
+     ones. Known scores, and test-command
      timeouts scored 0, are kept; only unknown samples vary, over the
      score's range 0-100. Reported: the mean d with unknowns at 0 in
      kg_only and 100 in instruct (lower bound) and the reverse (upper), the
@@ -106,8 +111,10 @@ the output; none is a route to the headline claim):
   f. Prompt length (`--predictions`, predictions written since
      testgeneval#154 record the server's prompt_tokens once per request): the
      rank correlation between the arms' prompt-token difference and d, and
-     mean d by tertile of that difference. An association only: length
-     depends on the context strategy and on the instance.
+     mean d by tertile of that difference, with the number of pairs and the
+     instances missing a token count; the correlation is undefined when the
+     difference is constant. An association only: it cannot separate useful
+     structure from context selection, difficulty or repository effects.
 
 Standard library only, so it runs in any environment; usable_score.py from the
 same folder.
@@ -388,7 +395,7 @@ def read_breadth(ids_path, weights_path, dev_ids):
 
 # ------------------------------------------------------------------- analysis
 
-def analyse_model(model, rows, skipped, dev_ids, k, role="main"):
+def analyse_model(model, rows, skipped, dev_ids, k, role="main", expected=None):
     changed = apply_count_rule(rows)
     flagged = us.flag_short_runs(rows)
     per = defaultdict(lambda: defaultdict(list))
@@ -456,20 +463,25 @@ def analyse_model(model, rows, skipped, dev_ids, k, role="main"):
         pop["pass_at_1_mean_d"] = {"instances": len(p1_d), "dropped_unknown": unknown1, "mean_d": statistics.mean(p1_d) if p1_d else None,
                                    "ci95": boot_mean_ci(p1_d)}
         result["populations"][pop_name] = pop
-    fate = {i: f"missing: no {arm} log" for i, arm in one_arm.items()}
+    fate = {i: "missing: no log in either arm" for i in (expected or ()) if i not in per}
+    fate.update({i: f"missing: no {arm} log" for i, arm in one_arm.items()})
     fate.update({i: "excluded: rule4_prompt_too_long" for i in too_long})
     fate.update({i: f"excluded: {s}" for i, s in status.items() if s != "eligible"})
     fate.update({i: ("analysed" if i in diffs["all_including_development"] else "unknown")
                  for i in eligible})
     conf_pass = result["populations"]["confirmatory"]["filtered_pass_at_k"]
     conf_pass["population"] = "instances with filtered pass@k resolved in both arms"
-    pop, unresolved = bounds_population(per, both, status, too_long, dev_ids)
+    pop, unresolved = bounds_population(per, both, status, too_long, dev_ids, expected)
     conf_eligible = [i for i in eligible if i not in dev_ids]
     result["robustness"] = {
-        "bounds_population": {"instances": len(pop), "eligibility_unresolved": dict(sorted(unresolved.items()))},
+        "bounds_population": {
+            "definition": ("conditional on established eligibility: confirmatory instances whose eligibility the "
+                           "evaluations establish; not benchmark-wide"),
+            "manifest": None if expected is None else len(expected),
+            "instances": len(pop), "eligibility_unresolved": dict(sorted(unresolved.items()))},
         "mean_d_bounds": mean_d_bounds(pop, k),
         "filtered_pass_at_k_bounds": pass_bounds(pop),
-        "attrition_by_repo": attrition_by_repo(per, fate, dev_ids),
+        "attrition_by_repo": attrition_by_repo(per, fate, dev_ids, expected),
         "by_repo": by_repo(diffs["confirmatory"], conf_eligible),
         "leave_one_repo_out": leave_one_repo_out(diffs["confirmatory"]),
     }
@@ -485,11 +497,16 @@ def arm_known(rs, k):
     return sum(v for v in vals if v is not None), (k if not rs else sum(v is None for v in vals))
 
 
-def bounds_population(per, both, status, too_long, dev_ids):
-    """Confirmatory instances eligible from the evaluations they have (both
+NO_LOG = "undetermined (no log in either arm)"
+
+
+def bounds_population(per, both, status, too_long, dev_ids, expected=None):
+    """Confirmatory instances whose eligibility the evaluations establish (both
     arms, or the one arm with a log), and those whose eligibility is
-    unresolved."""
+    unresolved, including expected instances with no log in either arm."""
     pop, unresolved = {}, {}
+    for i in sorted(set(expected or ()) - set(per) - set(too_long) - set(dev_ids)):
+        unresolved[i] = NO_LOG
     for i, arms in per.items():
         if i in dev_ids or i in too_long:
             continue
@@ -556,13 +573,14 @@ def pass_bounds(pop):
             "difference_high": rate["kg_only"]["high"] - rate["instruct"]["low"]}
 
 
-def attrition_by_repo(per, fate, dev_ids):
+def attrition_by_repo(per, fate, dev_ids, expected=None):
     """Per repository: each confirmatory instance's fate, and its samples'
     outcomes per arm (test-command timeouts are their own outcome)."""
     out = defaultdict(lambda: {"instances": Counter(), "samples": {arm: Counter() for arm in ARMS}})
-    for i, arms in per.items():
+    for i in sorted(set(per) | set(expected or ())):
         if i in dev_ids:
             continue
+        arms = per.get(i, {})
         repo = repo_of(i)
         out[repo]["instances"][fate.get(i, "absent")] += 1
         for arm in ARMS:
@@ -623,8 +641,10 @@ def length_diagnostic(d, tokens):
     """tokens: {arm: {id: prompt_tokens}}. Association of the kg_only minus
     instruct prompt-token difference with d; descriptive only."""
     ids = [i for i in sorted(d) if all(tokens.get(arm, {}).get(i) is not None for arm in ARMS)]
+    missing = {arm: sum(tokens.get(arm, {}).get(i) is None for i in d) for arm in ARMS}
     if len(ids) < 3:
-        return {"instances": len(ids), "note": "too few instances with prompt_tokens in both arms "
+        return {"pairs": len(ids), "analysed_instances": len(d), "missing_token_counts": missing,
+                "note": "too few instances with prompt_tokens in both arms "
                 "(predictions before testgeneval#154 do not record them)"}
     diff = [tokens["kg_only"][i] - tokens["instruct"][i] for i in ids]
     vals = [d[i] for i in ids]
@@ -635,13 +655,15 @@ def length_diagnostic(d, tokens):
     groups = defaultdict(list)
     for t, x in enumerate(diff):
         groups[0 if x <= cuts[0] else 1 if x <= cuts[1] else 2].append(t)
-    return {"instances": len(ids),
+    rho = spearman(diff, vals)
+    return {"pairs": len(ids), "analysed_instances": len(d), "missing_token_counts": missing,
             "mean_prompt_tokens": {arm: statistics.mean(tokens[arm][i] for i in ids) for arm in ARMS},
-            "spearman_token_difference_vs_d": spearman(diff, vals),
+            "spearman_token_difference_vs_d": rho if rho is not None else "undefined (constant token difference or d)",
             "tertiles": [{"token_difference_range": [min(diff[t] for t in g), max(diff[t] for t in g)],
                           "instances": len(g), "mean_d": statistics.mean(vals[t] for t in g)}
                          for _, g in sorted(groups.items())],
-            "note": "association only: prompt length depends on the context strategy and the instance"}
+            "note": ("association only: cannot separate useful structure from context selection, "
+                     "difficulty or repository effects")}
 
 
 def read_prompt_tokens(specs):
@@ -734,7 +756,9 @@ def report(results, cross, breadth_out):
         print("  [robustness, descriptive, not adjusted]")
         b = rb["mean_d_bounds"]
         if b:
-            print(f"    missing-data bounds on {b['instances']} instances ({b['instances_with_unknown_samples']} with "
+            print(f"    missing-data bounds, conditional on established eligibility "
+                  f"(manifest: {rb['bounds_population']['manifest'] or 'none given, instances with no log are invisible'})")
+            print(f"    on {b['instances']} instances ({b['instances_with_unknown_samples']} with "
                   f"unknown samples; unknown samples {b['unknown_samples']}): mean d in "
                   f"[{b['lower_bound']:.3f}, {b['upper_bound']:.3f}]")
             print(f"    same value in both arms: " + ", ".join(f"{a}->{v:.3f}" for a, v in b["same_value_in_both_arms"].items()))
@@ -769,6 +793,9 @@ def main(argv=None):
                     help="NAME:CSV of a main-study model (usable_score.py --out); NAME must match the CSV's run")
     ap.add_argument("--breadth-model", action="append", default=[], help="NAME:CSV of a breadth-only model")
     ap.add_argument("--skipped", action="append", default=[], help="NAME:ARM:FILE")
+    ap.add_argument("--expected-ids", help="every instance id the main-study runs were asked to do (the run "
+                    "manifest, e.g. the dataset's 1,210 ids); without it an instance with no log in either "
+                    "arm is invisible to the bounds")
     ap.add_argument("--predictions", action="append", default=[],
                     help="NAME:ARM:predictions.jsonl, for the prompt-length diagnostic")
     ap.add_argument("--breadth-ids")
@@ -784,6 +811,10 @@ def main(argv=None):
     breadth_in = read_breadth(args.breadth_ids, args.breadth_weights, dev_ids) if args.breadth_ids else None
     skipped = us.read_skipped(args.skipped)
     tokens = read_prompt_tokens(args.predictions)
+    expected_main = None
+    if args.expected_ids:
+        with open(args.expected_ids) as f:
+            expected_main = {l.strip() for l in f if l.strip()}
     results, diffs, fates = [], {}, {}
     for role, specs in (("main", args.model), ("breadth", args.breadth_model)):
         for spec in specs:
@@ -794,7 +825,8 @@ def main(argv=None):
             run = check_rows(rows, args.k, path)
             if run != name:
                 raise SystemExit(f"{path} holds run {run!r}, not {name!r}")
-            res, d, fate = analyse_model(name, rows, skipped, dev_ids, args.k, role)
+            expected = expected_main if role == "main" else set(breadth_in[0])
+            res, d, fate = analyse_model(name, rows, skipped, dev_ids, args.k, role, expected)
             if any(m == name for m, _ in tokens):
                 res["prompt_length"] = length_diagnostic(d, {arm: tokens.get((name, arm), {}) for arm in ARMS})
             results.append(res); diffs[name] = d; fates[name] = fate
