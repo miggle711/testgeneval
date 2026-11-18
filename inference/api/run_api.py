@@ -540,6 +540,14 @@ def served_by(response):
             "system_fingerprint": getattr(response, "system_fingerprint", None)}
 
 
+def prompt_tokens(response):
+    """The server's input token count for one request (chat template and
+    system message included), or None. A request carries all n samples, so
+    this is per request: it belongs in the request's sampling record, once,
+    never in the per-sample usage entries."""
+    return getattr(getattr(response, "usage", None), "prompt_tokens", None)
+
+
 def openai_inference(
     test_dataset,
     model_name_or_path,
@@ -714,6 +722,7 @@ def openai_inference(
                         chat_template_kwargs=chat_template_kwargs,
                     )
                     output_dict["sampling"][prompt_name].update(served_by(response))
+                    output_dict["sampling"][prompt_name]["prompt_tokens"] = prompt_tokens(response)
                     for choice in response.choices:
                         # message.content can come back None rather than
                         # an empty string, confirmed real for gpt-oss
