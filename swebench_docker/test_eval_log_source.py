@@ -51,10 +51,12 @@ class TestLogDirHoldsOneRun(unittest.TestCase):
         self.log = os.path.join(self.log_dir, f"{ID}.{MODEL}.full.eval.log")
 
     def evaluate(self, arm, k, predictions_path="preds.jsonl", skip_mutation=False, scope=None,
-                 timeout=900, mutation_timeout=None):
+                 timeout=900, mutation_timeout=None, overhead_timeout=None):
         env = {"MUTATION_SCOPE": scope} if scope else {}
         if mutation_timeout is not None:
             env["MUTATION_TIMEOUT"] = str(mutation_timeout)
+        if overhead_timeout is not None:
+            env["OVERHEAD_TIMEOUT"] = str(overhead_timeout)
         with patch("run_evaluation.get_eval_refs", return_value={ID: TASK}), \
              patch("run_evaluation.validate_predictions"), \
              patch("run_evaluation.get_instances", return_value=[prediction(arm, k)]), \
@@ -79,6 +81,7 @@ class TestLogDirHoldsOneRun(unittest.TestCase):
             "same predictions, other mutation scope": dict(arm="instruct", k=1, scope="function"),
             "same predictions, other test timeout": dict(arm="instruct", k=1, timeout=7200),
             "same predictions, other mutation timeout": dict(arm="instruct", k=1, mutation_timeout=7200),
+            "same predictions, other overhead timeout": dict(arm="instruct", k=1, overhead_timeout=1200),
         }
         for name, second in second_runs.items():
             with self.subTest(name):

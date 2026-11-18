@@ -11,7 +11,7 @@ import tempfile
 import time
 
 import dotenv
-from swebench_docker.constants import MAP_VERSION_TO_INSTALL, MUTATION_TIMEOUT
+from swebench_docker.constants import MAP_VERSION_TO_INSTALL, MUTATION_TIMEOUT, OVERHEAD_TIMEOUT
 
 logger = logging.getLogger(__name__)
 dotenv.load_dotenv()
@@ -112,6 +112,8 @@ async def run_docker_evaluation(
             f"MUTATION_SCOPE={os.environ.get('MUTATION_SCOPE', 'file')}",
             "-e",
             f"MUTATION_TIMEOUT={MUTATION_TIMEOUT}",
+            "-e",
+            f"OVERHEAD_TIMEOUT={OVERHEAD_TIMEOUT}",
             docker_image,
         ]
     else:
@@ -152,6 +154,8 @@ async def run_docker_evaluation(
             f"MUTATION_SCOPE={os.environ.get('MUTATION_SCOPE', 'file')}",
             "-e",
             f"MUTATION_TIMEOUT={MUTATION_TIMEOUT}",
+            "-e",
+            f"OVERHEAD_TIMEOUT={OVERHEAD_TIMEOUT}",
             docker_image,
         ]
 
