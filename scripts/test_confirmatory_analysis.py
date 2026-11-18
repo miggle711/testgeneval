@@ -1,7 +1,10 @@
 """Tests for confirmatory_analysis.py: python3 -m unittest scripts.test_confirmatory_analysis"""
 
+import contextlib
 import hashlib
+import io
 import itertools
+import json
 import os
 import shutil
 import sys
@@ -333,6 +336,145 @@ class ValidationTest(unittest.TestCase):
         for label, (i, w) in cases.items():
             with self.subTest(label), self.assertRaises(SystemExit):
                 ca.read_breadth(*self.breadth_files(i, w), DEV)
+
+
+class RobustnessTest(unittest.TestCase):
+    def setUp(self):
+        rows, skipped = build()
+        self.res, self.d, self.fate = ca.analyse_model("M", rows, skipped, DEV, 5)
+        self.rb = self.res["robustness"]
+
+    def test_bounds_population_includes_a_missing_arm_and_excludes_the_rest(self):
+        # 8 good + mismatch + timeout + harness + nolog (kg_only log missing);
+        # not dev0, long (rule 4) or nomut (no target mutants)
+        self.assertEqual(self.rb["bounds_population"]["instances"], 12)
+        self.assertEqual(self.rb["bounds_population"]["eligibility_unresolved"], {})
+
+    def test_mean_d_bounds_by_hand(self):
+        b = self.rb["mean_d_bounds"]
+        # base: good 8 x 10, timeout +20 (its 0 is known), mismatch and harness
+        # (240 - 250) / 5 = -2 each, nolog (0 - 250) / 5 = -50 -> 46 / 12
+        self.assertEqual(b["unknown_samples"], {"kg_only": 7, "instruct": 0})
+        self.assertEqual(b["instances_with_unknown_samples"], 3)
+        self.assertAlmostEqual(b["lower_bound"], 46 / 12)
+        self.assertAlmostEqual(b["upper_bound"], 46 / 12 + 7 * 100 / (5 * 12))
+        self.assertAlmostEqual(b["same_value_in_both_arms"]["50.0"], 46 / 12 + 7 * 50 / 60)
+        self.assertTrue(all(t["kg_only_value_where_mean_d_is_zero"] is None and "positive" in t["note"]
+                            for t in b["tipping"]))
+
+    def test_tipping_value_makes_mean_d_zero(self):
+        rows = instance("tip", [50] * 5, [55] * 5, {("kg_only", 4): {"outcome": "unknown_harness_error", "passed": 0}})
+        per = {iid("tip"): {"kg_only": [r for r in rows if r["arm"] == "kg_only"],
+                            "instruct": [r for r in rows if r["arm"] == "instruct"]}}
+        b = ca.mean_d_bounds(per, 5)
+        t0 = b["tipping"][0]   # instruct unknowns at 0 (there are none)
+        self.assertAlmostEqual(t0["kg_only_value_where_mean_d_is_zero"], 75.0)   # (4*50 + 75)/5 = 55
+
+    def test_bounds_equal_the_primary_mean_with_no_unknowns(self):
+        rows = []
+        for n in range(4):
+            rows += instance(f"c{n}", [60 + n] * 5, [50] * 5)
+        res, d, _ = ca.analyse_model("M", rows, {}, DEV, 5)
+        b = res["robustness"]["mean_d_bounds"]
+        prim = res["populations"]["confirmatory"]["primary"]["mean_d"]
+        self.assertAlmostEqual(b["lower_bound"], prim)
+        self.assertAlmostEqual(b["upper_bound"], prim)
+
+    def test_pass_bounds(self):
+        pb = self.rb["filtered_pass_at_k_bounds"]
+        self.assertEqual(pb["instances"], 12)
+        self.assertEqual(pb["resolved_in_both_arms"], 11)          # nolog's kg_only is unresolved
+        self.assertAlmostEqual(pb["rate"]["kg_only"]["low"], 11 / 12)
+        self.assertAlmostEqual(pb["rate"]["kg_only"]["high"], 1.0)
+        self.assertAlmostEqual(pb["difference_low"], 11 / 12 - 1)
+        self.assertAlmostEqual(pb["difference_high"], 0.0)
+        self.assertEqual(self.res["populations"]["confirmatory"]["filtered_pass_at_k"]["population"],
+                         "instances with filtered pass@k resolved in both arms")
+
+    def test_attrition_lists_timeouts_and_fates(self):
+        a = self.rb["attrition_by_repo"]["django/django"]
+        self.assertEqual(a["samples"]["instruct"]["zero_test_timeout"], 1)
+        self.assertEqual(a["samples"]["kg_only"]["unknown_harness_error"], 1)
+        self.assertEqual(a["instances"]["missing: no kg_only log"], 1)
+        self.assertEqual(a["instances"]["analysed"], 9)
+        self.assertNotIn("dev0", str(a))
+
+    def test_by_repo_and_leave_one_out(self):
+        rows = []
+        for n in range(5):
+            rows += instance(f"a{n}", [70] * 5, [50] * 5)
+        for n in range(3):
+            rows += [dict(r, instance=f"pallets__flask-b{n}-1", repo="pallets__flask")
+                     for r in instance(f"b{n}", [40] * 5, [50] * 5)]
+        res, *_ = ca.analyse_model("M", rows, {}, DEV, 5)
+        br, loo = res["robustness"]["by_repo"], res["robustness"]["leave_one_repo_out"]
+        self.assertAlmostEqual(br["django/django"]["mean_d"], 20)
+        self.assertAlmostEqual(br["pallets/flask"]["mean_d"], -10)
+        self.assertEqual(br["pallets/flask"]["completion"], 1.0)
+        self.assertEqual(loo["django/django"]["instances"], 3)
+        self.assertAlmostEqual(loo["django/django"]["mean_d"], -10)
+        self.assertAlmostEqual(loo["pallets/flask"]["mean_d"], 20)
+
+
+class ReportTest(unittest.TestCase):
+    def test_report_prints_with_one_repository_and_missing_pieces(self):
+        rows, skipped = build()          # one repository: leaving it out leaves nothing
+        res, d, _ = ca.analyse_model("M", rows, skipped, DEV, 5)
+        res["prompt_length"] = ca.length_diagnostic(d, {"instruct": {}, "kg_only": {}})
+        ca.holm_across([res])
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            ca.report([res], ca.across_models({"M": d}), None)
+        self.assertIn("prospectively specified rerun", buf.getvalue())
+        self.assertIn("without it: -", buf.getvalue())
+
+
+class PromptLengthTest(unittest.TestCase):
+    def test_spearman(self):
+        self.assertAlmostEqual(ca.spearman([1, 2, 3, 4], [10, 20, 30, 45]), 1.0)
+        self.assertAlmostEqual(ca.spearman([1, 2, 3, 4], [4, 3, 2, 1]), -1.0)
+
+    def test_diagnostic(self):
+        d = {f"i{n}": float(n) for n in range(9)}
+        tokens = {"instruct": {f"i{n}": 1000 for n in range(9)},
+                  "kg_only": {f"i{n}": 1000 + 100 * n for n in range(9)}}
+        out = ca.length_diagnostic(d, tokens)
+        self.assertEqual(out["instances"], 9)
+        self.assertAlmostEqual(out["spearman_token_difference_vs_d"], 1.0)
+        self.assertEqual([t["mean_d"] for t in out["tertiles"]], [1.0, 4.0, 7.0])
+
+    def test_tied_differences_share_a_tertile(self):
+        d = {f"i{n}": float(n) for n in range(6)}
+        tokens = {"instruct": {f"i{n}": 1000 for n in range(6)},
+                  "kg_only": {f"i{n}": 1600 for n in range(6)}}
+        out = ca.length_diagnostic(d, tokens)
+        self.assertEqual(len(out["tertiles"]), 1)
+        self.assertEqual(out["tertiles"][0]["instances"], 6)
+        self.assertIsNone(out["spearman_token_difference_vs_d"])
+        # two distinct values: never a group mixing them, never one split
+        tokens["kg_only"].update({"i4": 2000, "i5": 2000})
+        groups = ca.length_diagnostic(d, tokens)["tertiles"]
+        self.assertEqual(sorted(g["instances"] for g in groups), [2, 4])
+        self.assertTrue(all(g["token_difference_range"][0] == g["token_difference_range"][1] for g in groups))
+
+    def test_diagnostic_without_tokens(self):
+        out = ca.length_diagnostic({"a": 1.0}, {"instruct": {}, "kg_only": {}})
+        self.assertIn("testgeneval#154", out["note"])
+
+    def test_read_prompt_tokens(self):
+        dirname = tempfile.mkdtemp()
+        try:
+            path = os.path.join(dirname, "p.jsonl")
+            with open(path, "w") as f:
+                f.write(json.dumps({"id": "a", "sampling": {"full": {"prompt_tokens": 12}}}) + "\n")
+                f.write(json.dumps({"id": "b"}) + "\n")                       # before #154
+            self.assertEqual(ca.read_prompt_tokens([f"M:kg_only:{path}"]), {("M", "kg_only"): {"a": 12, "b": None}})
+            with open(path, "a") as f:
+                f.write(json.dumps({"id": "a"}) + "\n")
+            with self.assertRaises(SystemExit):
+                ca.read_prompt_tokens([f"M:kg_only:{path}"])
+        finally:
+            shutil.rmtree(dirname)
 
 
 if __name__ == "__main__":

@@ -41,3 +41,12 @@ for _ in range(500):
     if b + c:
         worst = max(worst, abs(ca.mcnemar_exact(b, c) - stats.binomtest(b, b + c, 0.5).pvalue))
 print(f"{'McNemar exact (binomial test), b,c 0-80':44} cases  500  max |ours - scipy| = {worst:.1e}", flush=True)
+rnd, worst = random.Random(3), 0.0
+for _ in range(300):
+    n = rnd.randint(5, 300)
+    x = [rnd.choice([rnd.randint(0, 50) * 10, rnd.gauss(0, 500)]) for _ in range(n)]   # ties and continuous
+    y = [round(rnd.gauss(0, 20) * 5) / 5 for _ in range(n)]
+    ours = ca.spearman(x, y)
+    if ours is not None:
+        worst = max(worst, abs(ours - stats.spearmanr(x, y).statistic))
+print(f"{'Spearman rank correlation, ties, n 5-300':44} cases  300  max |ours - scipy| = {worst:.1e}", flush=True)
