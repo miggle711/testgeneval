@@ -125,10 +125,26 @@ Usage:
         [--breadth-model Gemma:gemma_usable_score.csv ...] \\
         [--breadth-ids breadth_ids.txt --breadth-weights breadth_ids.weights.tsv] \\
         [--predictions Scout:instruct:<predictions.jsonl> ...] [--json results.json]
+
+The BM25 comparison (fyp-paper#7, decision of 19 Nov) is a separate run of this
+script: usable_score.py scores the BM25 arm's logs in the baseline position and
+the same model's kg_only logs as kg_only, and this script runs on that one CSV
+with --comparison-label bm25. d is then kg_only minus BM25. As its own run, its
+Holm family holds only itself (one model: unadjusted), so it stays outside the
+primary families, as decided. The label renames the baseline arm in the report
+and the JSON; nothing in the computation changes. Only one --model, no breadth
+options and --expected-ids naming the BM25 instances:
+    python3 scripts/usable_score.py --out bm25.csv --k 5 \\
+        Qwen3-Coder-BM25:instruct:<bm25 eval logs> Qwen3-Coder-BM25:kg_only:<kg_only eval logs>
+    python3 scripts/confirmatory_analysis.py --k 5 --dev-ids pilot_dev_ids.txt \\
+        --model Qwen3-Coder-BM25:bm25.csv --skipped Qwen3-Coder-BM25:instruct:<bm25 skipped.tsv> ... \\
+        --expected-ids bm25_ids.txt --comparison-label bm25 [--json bm25_results.json]
 """
 
 import argparse
+import contextlib
 import hashlib
+import io
 import json
 import math
 import os
@@ -804,7 +820,17 @@ def main(argv=None):
     ap.add_argument("--breadth-ids")
     ap.add_argument("--breadth-weights")
     ap.add_argument("--json")
+    ap.add_argument("--comparison-label", default="instruct",
+                    help="name of the baseline arm in the report and JSON (bm25 for the BM25 comparison); "
+                         "only for a single-model secondary run")
     args = ap.parse_args(argv)
+    label = args.comparison_label
+    if label != "instruct":
+        if not label.replace("_", "").isalnum() or label == "kg_only":
+            ap.error("--comparison-label must be a plain name other than kg_only")
+        if len(args.model) != 1 or args.breadth_model or args.breadth_ids:
+            ap.error("--comparison-label is for a secondary comparison of its own: exactly one --model, "
+                     "no breadth options, so it never shares a Holm family with the primary analysis")
     if bool(args.breadth_ids) != bool(args.breadth_weights):
         ap.error("--breadth-ids and --breadth-weights go together")
     if args.breadth_model and not args.breadth_ids:
@@ -836,10 +862,33 @@ def main(argv=None):
     holm_across(results)
     cross = across_models({m: d for m, d in diffs.items() if m in args_names(args.model)})
     breadth_out = breadth(diffs, fates, *breadth_in) if breadth_in else None
-    report(results, cross, breadth_out)
+    out = {"models": results, "across_main_models": cross, "breadth": breadth_out}
+    if label == "instruct":
+        report(results, cross, breadth_out)
+    else:
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            report(results, cross, breadth_out)
+        print(f"Secondary comparison (fyp-paper#7, BM25 decision of 19 Nov): d = kg_only minus {label}, "
+              f"one model, its own Holm family (unadjusted), outside the primary families.")
+        print(buf.getvalue().replace("instruct", label), end="")
+        out = relabel_arm(out, label)
+        out["comparison"] = {"baseline_arm": label, "secondary": True}
     if args.json:
         with open(args.json, "w") as f:
-            json.dump({"models": results, "across_main_models": cross, "breadth": breadth_out}, f, indent=2)
+            json.dump(out, f, indent=2)
+
+
+def relabel_arm(obj, label):
+    """The baseline arm renamed in keys and string values, at every depth."""
+    if isinstance(obj, dict):
+        return {(k.replace("instruct", label) if isinstance(k, str) else k): relabel_arm(v, label)
+                for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [relabel_arm(v, label) for v in obj]
+    if isinstance(obj, str):
+        return obj.replace("instruct", label)
+    return obj
 
 
 def args_names(specs):

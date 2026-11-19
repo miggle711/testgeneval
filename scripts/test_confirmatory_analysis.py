@@ -1,6 +1,7 @@
 """Tests for confirmatory_analysis.py: python3 -m unittest scripts.test_confirmatory_analysis"""
 
 import contextlib
+import csv
 import hashlib
 import io
 import itertools
@@ -10,6 +11,7 @@ import shutil
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import confirmatory_analysis as ca  # noqa: E402
@@ -498,6 +500,64 @@ class PromptLengthTest(unittest.TestCase):
                 ca.read_prompt_tokens([f"M:kg_only:{path}"])
         finally:
             shutil.rmtree(dirname)
+
+
+class ComparisonLabelTest(unittest.TestCase):
+    """The BM25 comparison: one model's CSV, baseline arm relabelled (fyp-paper#7, 19 Nov)."""
+
+    def setUp(self):
+        self.dir = tempfile.mkdtemp()
+        rows, _ = build()
+        rows = [dict(r, run="MB") for r in rows]
+        self.csv = os.path.join(self.dir, "mb.csv")
+        with open(self.csv, "w", newline="") as f:
+            w = csv.DictWriter(f, fieldnames=ca.us.FIELDS)
+            w.writeheader()
+            for r in rows:
+                w.writerow({k: ("" if r.get(k) is None else r.get(k)) for k in ca.us.FIELDS})
+        self.skipped = os.path.join(self.dir, "skipped.tsv")
+        with open(self.skipped, "w") as f:
+            f.write("id\treason\n" + iid("long") + "\tprompt_too_long\n")
+
+    def tearDown(self):
+        shutil.rmtree(self.dir)
+
+    def run_main(self, *extra):
+        out_json = os.path.join(self.dir, f"out{len(extra)}.json")
+        argv = ["--k", "5", "--dev-ids", "unused", "--model", f"MB:{self.csv}",
+                "--skipped", f"MB:instruct:{self.skipped}", "--json", out_json, *extra]
+        buf = io.StringIO()
+        with mock.patch.object(ca, "read_dev_ids", return_value=DEV), contextlib.redirect_stdout(buf):
+            ca.main(argv)
+        with open(out_json) as f:
+            return buf.getvalue(), json.load(f)
+
+    def test_relabels_report_and_json_without_changing_numbers(self):
+        text0, plain = self.run_main()
+        text, bm = self.run_main("--comparison-label", "bm25")
+        self.assertNotIn("instruct", text)
+        self.assertNotIn("instruct", json.dumps(bm))
+        self.assertIn("kg_only minus bm25", text)
+        self.assertEqual(bm["comparison"], {"baseline_arm": "bm25", "secondary": True})
+        self.assertEqual(json.loads(json.dumps(plain).replace("instruct", "bm25")),
+                         {k: v for k, v in bm.items() if k != "comparison"})   # same numbers, renamed
+
+    def test_sign_is_kg_only_minus_baseline(self):
+        _, bm = self.run_main("--comparison-label", "bm25")
+        m = bm["models"][0]
+        primary = json.dumps(m)
+        self.assertIn("bm25", primary)
+        d = ca.analyse_model("MB", [dict(r, run="MB") for r in build()[0]],
+                             {("MB", "instruct"): {iid("long"): "prompt_too_long"}}, DEV, 5)[1]
+        self.assertTrue(all(v > 0 for v in d.values() if v))   # kg_only scored 60 against 50
+
+    def test_refuses_outside_a_single_model_run(self):
+        with self.assertRaises(SystemExit):
+            self.run_main("--comparison-label", "bm25", "--model", f"MB2:{self.csv}")
+        with self.assertRaises(SystemExit):
+            self.run_main("--comparison-label", "bm25", "--breadth-ids", "x", "--breadth-weights", "y")
+        with self.assertRaises(SystemExit):
+            self.run_main("--comparison-label", "kg_only")
 
 
 if __name__ == "__main__":
