@@ -4,11 +4,13 @@
 It sorts instances by length and continually writes the outputs to a specified file, so that the script can be stopped and restarted without losing progress.
 """
 
+import hashlib
 import atexit
 import hashlib
 import json
 import logging
 import os
+import subprocess
 import socket
 import subprocess
 import threading
@@ -468,6 +470,48 @@ def gpt_tokenize(string: str, encoding) -> int:
     return num_tokens
 
 
+def _file_md5(path):
+    digest = hashlib.md5()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _repo_commit():
+    """This checkout's commit, with "-dirty" when it has uncommitted changes.
+    None outside a git checkout."""
+    repo = Path(__file__).resolve().parents[2]
+    try:
+        commit = subprocess.run(
+            ["git", "rev-parse", "HEAD"], cwd=repo, capture_output=True, text=True, check=True
+        ).stdout.strip()
+        dirty = subprocess.run(
+            ["git", "status", "--porcelain", "--untracked-files=no"],
+            cwd=repo, capture_output=True, text=True, check=True,
+        ).stdout.strip()
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    return f"{commit}-dirty" if dirty else commit
+
+
+def run_identity(prompt_config, num_samples, temperature, kg_prompts_path, no_imports=False):
+    """Which run a prediction row belongs to. Written into every row, since
+    the arm and sample count are otherwise only in the path the file was
+    saved under, and nothing ties a file to the kg_prompts.json or code it
+    came from. kg_prompts_md5 is None when instruct ran without that file.
+    no_imports (NO_IMPORTS, testgeneval#149) changes instruct's prompt, so
+    it is part of the identity too (testgeneval#127, 16 Nov)."""
+    return {
+        "arm": prompt_config,
+        "num_samples": num_samples,
+        "temperature": temperature,
+        "no_imports": bool(no_imports),
+        "kg_prompts_md5": _file_md5(kg_prompts_path) if kg_prompts_path else None,
+        "testgeneval_commit": _repo_commit(),
+    }
+
+
 # Phrases in the error a server returns when the prompt plus max_tokens does
 # not fit its context: vLLM's OpenAI server and the OpenAI API say "maximum
 # context length", vLLM's engine says "longer than the maximum model length".
@@ -564,6 +608,7 @@ def openai_inference(
     model_nickname=None,
     no_system_message=False,
     max_concurrency=1,
+    run=None,
     seed_base=None,
     output_limit=None,
     chat_template_kwargs=None,
@@ -665,6 +710,8 @@ def openai_inference(
     basic_args = {
         "model_name_or_path": recorded_name + f"_t={temperature}",
     }
+    if run is not None:
+        basic_args["run"] = run
     print(f"Filtered to {len(test_dataset)} instances")
     skips = SkipRecorder(skipped_path(output_file))
 
@@ -1128,6 +1175,9 @@ def main(
             model_nickname=model_nickname,
             no_system_message=no_system_message,
             max_concurrency=max_concurrency,
+            # kg_prompts_path is None or an existing file here, in both arms
+            # (checked above, testgeneval#117), so it is what the run read.
+            run=run_identity(prompt_config, num_samples, temperature, kg_prompts_path, no_imports),
             seed_base=None if no_seed else seed,
             output_limit=output_limit,
             chat_template_kwargs=chat_template_kwargs,

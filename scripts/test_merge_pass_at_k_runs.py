@@ -66,6 +66,22 @@ class MergePassAtKRunsTest(unittest.TestCase):
         with open(path) as f:
             return [json.loads(line) for line in f]
 
+    def test_merged_row_identity_counts_both_stages(self):
+        # A merged row copied from stage 1 would otherwise still say one
+        # sample while holding five.
+        def with_run(rec, k):
+            rec["run"] = {"arm": "kg_only", "num_samples": k, "temperature": 0.8,
+                          "kg_prompts_md5": "abc", "testgeneval_commit": "c1"}
+            return rec
+
+        s1 = self._write("k1.jsonl", [with_run(make_record("a-1", ["s1"]), 1)])
+        s2 = self._write("k4.jsonl", [with_run(make_record("a-1", ["s2", "s3", "s4", "s5"]), 4)])
+        rc, out = self._run(s1, s2)
+        self.assertEqual(rc, 0)
+        run = self._read(out)[0]["run"]
+        self.assertEqual((run["arm"], run["num_samples"]), ("kg_only", 5))
+        self.assertEqual([r["num_samples"] for r in run["merged_from"]], [1, 4])
+
     def test_happy_path_stage1_samples_first(self):
         s1 = self._write("k1.jsonl", [
             make_record("django__django-1-1", ["S1_A"]),
